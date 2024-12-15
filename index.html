@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Today in DeFi Research</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/titillium-web/2.0.0/titillium-web.min.css" rel="stylesheet">
     <style>
-        /* Previous styles remain the same */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: #333;
         }
@@ -24,52 +24,48 @@
             padding: 0 24px;
         }
 
-        /* Add these new logo styles */
+        .hero {
+            background: linear-gradient(to bottom, #f9fafb, #ffffff);
+            border-bottom: 1px solid #e5e7eb;
+            padding: 64px 0;
+        }
+
         .logo {
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .logo img {
-            height: 24px;
+            height: 42px;
             width: auto;
+            display: block;
         }
 
-        .hero {
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 96px 0;
-        }
-
-        /* Updated hero h1 style */
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;  /* Changed from 300 to 700 for bold */
-            margin-bottom: 24px;
-            letter-spacing: -0.025em;
-        }
-
-        /* Rest of the styles remain the same */
-        .hero p {
-            font-size: 20px;
-            color: #666;
+        .hero-text {
+            font-size: 18px;
+            color: #555;
             max-width: 640px;
+            font-weight: 400;
+            margin-top: 24px;
+            letter-spacing: 0.01em;
         }
 
         .services {
-            padding: 96px 0;
+            padding: 80px 0;
         }
 
         .services h2 {
-            font-size: 36px;
-            font-weight: 300;
-            margin-bottom: 64px;
-            letter-spacing: -0.025em;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
         }
 
         .services-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 32px;
+            gap: 24px;
         }
 
         @media (min-width: 768px) {
@@ -80,37 +76,43 @@
 
         .service-card {
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            border-radius: 4px;
             padding: 32px;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
+            background: white;
         }
 
         .service-card:hover {
             border-color: #d1d5db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .service-card h3 {
             font-size: 20px;
             margin-bottom: 16px;
-            font-weight: 500;
+            font-weight: 600;
+            color: #1a1a1a;
         }
 
         .service-card p {
-            color: #666;
+            color: #555;
+            font-size: 16px;
+            line-height: 1.7;
         }
 
         .contact {
             background: #f9fafb;
             border-top: 1px solid #e5e7eb;
-            padding: 96px 0;
+            padding: 80px 0;
             text-align: center;
         }
 
         .contact h2 {
-            font-size: 36px;
-            font-weight: 300;
+            font-size: 32px;
+            font-weight: 600;
             margin-bottom: 32px;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.01em;
         }
 
         .contact-buttons {
@@ -125,16 +127,18 @@
             align-items: center;
             padding: 12px 32px;
             border: 2px solid #333;
-            border-radius: 6px;
+            border-radius: 4px;
             color: #333;
             text-decoration: none;
             transition: all 0.2s;
             font-size: 16px;
+            font-weight: 500;
         }
 
         .button:hover {
             background: #333;
             color: white;
+            transform: translateY(-1px);
         }
 
         .button svg {
@@ -146,6 +150,7 @@
             padding: 32px 0;
             text-align: center;
             color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -155,8 +160,7 @@
             <div class="logo">
                 <img src="Today in DeFi Research.svg" alt="Today in DeFi Research Logo">
             </div>
-            <h1>Today in DeFi Research</h1>
-            <p>Instituational-grade DeFi research for high-net-worth individuals and institutions. We provide detailed analysis and actionable insights.</p>
+            <p class="hero-text">Institutional-quality DeFi research for high-net-worth individuals and institutions. We provide detailed analysis and actionable insights.</p>
         </div>
     </div>
 
@@ -166,15 +170,15 @@
             <div class="services-grid">
                 <div class="service-card">
                     <h3>Farming Research</h3>
-                    <p>Finding and managing the best risk-adjusted yields for USD Stablecoins and major crypto assets including ETH, SOL, and BTC.</p>
+                    <p>Finding and managing the best risk-adjusted yields for USD Stablecoins and major crypto assets including ETH, BTC, and SOL.</p>
                 </div>
                 <div class="service-card">
                     <h3>Sector Analysis</h3>
-                    <p>Comprehensive analysis of all major DeFi sectors, helping you identify category leaders and investment opportunities.</p>
+                    <p>Valuation and Growth analysis of all major DeFi sectors, helping you identify category leaders, discover investment opportunities, and manage your portfolio.</p>
                 </div>
                 <div class="service-card">
                     <h3>Project Analysis</h3>
-                    <p>In-depth mechanism, risk, and economic analysis with detailed user guides for safe DeFi navigation.</p>
+                    <p>In-depth mechanism, risk, and economic analysis with detailed user guides to help you understand new DeFi projects.</p>
                 </div>
                 <div class="service-card">
                     <h3>Governance Analysis</h3>
