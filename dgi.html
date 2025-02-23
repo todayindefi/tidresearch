@@ -6,32 +6,314 @@
     <title>DeFi Growth Index - Today in DeFi Research</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/titillium-web/2.0.0/titillium-web.min.css" rel="stylesheet">
     <style>
-        /* Copy all styles from index.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --accent-red: #cc0000;
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
         }
 
-        /* Add all other styles from index.html */
-        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero section styling */
+        .hero {
+            background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+            border-bottom: 1px solid #e5e7eb;
+            padding: 48px 0;
+            position: relative;
+        }
+
+        .logo {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+        }
+
+        .hero-text {
+            font-size: 20px;
+            color: #666;
+            max-width: 640px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        /* Section styling */
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .section p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 16px;
+            max-width: 720px;
+        }
+
+        /* Table styling */
+        .constituents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .constituents-table th,
+        .constituents-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .constituents-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .constituents-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* List styling */
+        .criteria-list {
+            list-style: none;
+            margin: 24px 0;
+            padding: 0;
+        }
+
+        .criteria-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            color: #444;
+        }
+
+        .criteria-list li::before {
+            content: "•";
+            color: #158F46;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer styling */
+        footer {
+            padding: 48px 0;
+            background: #f9fafb;
+            color: #666;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: #158F46;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-top: 24px;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Disclaimer box */
+        .disclaimer {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .disclaimer h3 {
+            color: #111;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .disclaimer p {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="hero">
         <div class="container">
             <div class="logo">
-                <img src="Today in DeFi Research.svg" alt="Today in DeFi Research Logo">
+                <img src="Wordmark Green.svg" alt="DeFi Growth Index">
             </div>
-            <p class="hero-text">DeFi Growth Index</p>
+            <p class="hero-text">A curated index tracking innovative DeFi projects with strong growth potential</p>
         </div>
     </div>
 
-    <!-- Content to be added later -->
+    <div class="section">
+        <div class="container">
+            <h2>Overview</h2>
+            <p>The DeFi Growth Index (DGI) tracks the performance of early-stage DeFi projects that demonstrate innovative mechanisms and established market demand, with strong potential for significant growth in user base, transaction volume, and Total Value Locked (TVL).</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Index Constituents</h2>
+            <table class="constituents-table">
+                <thead>
+                    <tr>
+                        <th>Protocol</th>
+                        <th>Category</th>
+                        <th>TVL ($M)</th>
+                        <th>Market Cap ($M)</th>
+                        <th>Innovative Mechanism</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CoW</td>
+                        <td>DEX</td>
+                        <td>19</td>
+                        <td>142</td>
+                        <td>Intent-based swap</td>
+                    </tr>
+                    <tr>
+                        <td>Derive</td>
+                        <td>DEX/Vault</td>
+                        <td>99</td>
+                        <td>33</td>
+                        <td>Option-writing vaults</td>
+                    </tr>
+                    <tr>
+                        <td>Morpho</td>
+                        <td>Lending</td>
+                        <td>3,926</td>
+                        <td>468</td>
+                        <td>Modular lending</td>
+                    </tr>
+                    <tr>
+                        <td>Euler</td>
+                        <td>Lending</td>
+                        <td>196</td>
+                        <td>72</td>
+                        <td>Modular lending</td>
+                    </tr>
+                    <tr>
+                        <td>Fluid</td>
+                        <td>Lending/DEX/Loop</td>
+                        <td>864</td>
+                        <td>262</td>
+                        <td>Smart debt & collateral</td>
+                    </tr>
+                    <tr>
+                        <td>Maple</td>
+                        <td>Lending/RWA</td>
+                        <td>111</td>
+                        <td>86</td>
+                        <td>Institutional RWA-backed lending</td>
+                    </tr>
+                    <tr>
+                        <td>f(x) Protocol</td>
+                        <td>Stablecoin</td>
+                        <td>75</td>
+                        <td>3</td>
+                        <td>Overcollateralized stablecoin with leveraged token as buffer</td>
+                    </tr>
+                    <tr>
+                        <td>Bunni</td>
+                        <td>LIT</td>
+                        <td>11</td>
+                        <td>7</td>
+                        <td>Automatic liquidity management & rehypothecation</td>
+                    </tr>
+                    <tr>
+                        <td>IPOR</td>
+                        <td>IPOR</td>
+                        <td>16</td>
+                        <td>3</td>
+                        <td>Interest rate derivatives & optimized yield vaults</td>
+                    </tr>
+                    <tr>
+                        <td>Balancer</td>
+                        <td>BAL</td>
+                        <td>864</td>
+                        <td>125</td>
+                        <td>Automatic liquidity management & rehypothecation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Inclusion Criteria</h2>
+            <ul class="criteria-list">
+                <li>Market capitalization between $10 million and $1 billion</li>
+                <li>Listed on the Ethereum blockchain</li>
+                <li>Minimum 180 days of operation with demonstrated growth</li>
+                <li>Available on major DEXs with sufficient trading volume</li>
+                <li>Transparent tokenomics and supply schedule</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Rebalancing & Weighting</h2>
+            <p>The index is reviewed quarterly and rebalanced based on market capitalization. Constituents are weighted according to their relative market sizes, ensuring the portfolio reflects the natural distribution of the DeFi growth sector.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Governance</h2>
+            <p>DGI is governed by RSR stakers who participate in decision-making through proposals and voting. Governors oversee asset selection, risk management, and strategic adjustments while earning 50% of TVL and minting fees.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="disclaimer">
+                <h3>Risk Disclosure</h3>
+                <p>Participation in DGI involves significant risks including market volatility, smart contract risks, and regulatory uncertainty. Past performance does not indicate future results. Please read the full risk disclosure before participating.</p>
+            </div>
+            <a href="https://feature-dtf.register-app.pages.dev/ethereum/index-dtf/0x9a1741e151233a82cf69209a2f1bc7442b1fb29c/overview" class="cta-button" target="_blank" rel="noopener noreferrer">Trade DGI on Reserve Protocol</a>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
