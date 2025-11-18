@@ -1,3 +1,7 @@
 [build]
-  publish = "."
-  # No build command needed - this is a static HTML site
+command = ""
+publish = "."
+
+[build.environment]
+PYTHON_VERSION = ""
+NODE_VERSION = ""
