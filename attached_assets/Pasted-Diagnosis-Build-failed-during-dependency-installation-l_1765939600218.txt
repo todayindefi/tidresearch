@@ -1,0 +1,26 @@
+Diagnosis
+
+Build failed during dependency installation (line 9).
+The installer "mise" tried to install a Python version literally named "disable" and python-build cannot find that definition (line 11, line 14, line 16). The log shows "Error setting python version" (line 24) and the build aborts (line 25).
+Cause: a project file or Netlify environment setting is telling the build image to use the Python version "disable" (invalid). This can come from a runtime.txt, .python-version, Pipfile/Pipfile.lock, netlify.toml, or an environment variable (e.g. PYENV_VERSION / PYTHON_VERSION / MISE_*).
+Solution
+
+Search the repo and Netlify environment for where "disable" is coming from. Run locally in the project root:
+# search repo files for the literal string "disable"
+grep -nR "disable" .
+
+# check common python-config files
+grep -nR "python" runtime.txt .python-version Pipfile pyproject.toml netlify.toml || true
+
+# also inspect your Netlify Site > Site settings > Build & deploy > Environment for PYTHON_VERSION / PYENV_VERSION / MISE_* variables
+Fix the offending config:
+If you find a file containing "disable" (examples: runtime.txt, .python-version, Pipfile entry), either remove that line/file if the project doesn't need Python, or replace "disable" with a valid Python version (pyenv style). Examples:
+.python-version -> "3.11.4"
+runtime.txt -> "python-3.11.4"
+If the value comes from a Netlify environment variable (e.g. PYTHON_VERSION or PYENV_VERSION set to "disable"), remove the variable or set it to a valid version in Site settings > Build & deploy > Environment.
+Commit and push the change, then trigger a new Netlify build.
+Notes / examples
+
+If your project does not require Python for the build, simply remove any .python-version/runtime.txt or unset the environment variable that injects "disable". That will prevent mise from attempting to install Python.
+If you need Python, choose a valid version supported by pyenv (for example "3.11.4") and use that string in .python-version or the appropriate config.
+This will stop mise from trying to install the non-existent "disable" Python version and allow dependency installation to proceed.
