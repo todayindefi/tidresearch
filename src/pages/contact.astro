@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+---
+
+<BaseLayout title="Contact | TID Research" description="Get in touch with TID Research.">
+  <section class="container-page py-20 max-w-2xl">
+    <p class="eyebrow mb-4">Contact</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Let's talk.</h1>
+    <p class="text-muted-foreground mb-10 text-lg">
+      Tell us about your project and what you're looking to learn. We'll respond within one business day.
+    </p>
+
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="space-y-5"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <label class="block">
+          <span class="eyebrow mb-2 block">Name</span>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none"
+          />
+        </label>
+        <label class="block">
+          <span class="eyebrow mb-2 block">Email</span>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none font-mono"
+          />
+        </label>
+      </div>
+
+      <label class="block">
+        <span class="eyebrow mb-2 block">Organization</span>
+        <input
+          type="text"
+          name="organization"
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none"
+        />
+      </label>
+
+      <label class="block">
+        <span class="eyebrow mb-2 block">Message</span>
+        <textarea
+          name="message"
+          required
+          rows="6"
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none resize-y"
+        ></textarea>
+      </label>
+
+      <div class="pt-2">
+        <Button type="submit" size="lg">Send Message</Button>
+      </div>
+    </form>
+
+    <div class="mt-12 pt-8 border-t border-border/40 text-sm text-muted-foreground">
+      Or email us directly:
+      <a href="mailto:info@todayindefi.com" class="text-primary hover:underline font-mono ml-1">
+        info@todayindefi.com
+      </a>
+    </div>
+  </section>
+</BaseLayout>

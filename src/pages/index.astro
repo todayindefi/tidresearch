@@ -1,0 +1,181 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import Card from "@/components/ui/Card.astro";
+import RiskBadge from "@/components/report/RiskBadge.astro";
+import { getCollection } from "astro:content";
+import { ShieldCheck, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
+
+const services = [
+  {
+    href: "/services/risk",
+    title: "Risk Analysis",
+    description:
+      "Asset risk analysis and due diligence to support DeFi projects and institutions.",
+    Icon: ShieldCheck,
+  },
+  {
+    href: "/services/governance",
+    title: "Governance Services",
+    description:
+      "Professional DAO governance support — proposal tracking, analysis, and voting recommendations.",
+    Icon: Scale,
+  },
+  {
+    href: "/services/investment",
+    title: "Investment Analysis",
+    description:
+      "Valuation and growth-based analysis of DeFi sectors to identify category leaders and opportunities.",
+    Icon: TrendingUp,
+  },
+  {
+    href: "/services/portfolio",
+    title: "Portfolio Tracking",
+    description:
+      "Custom dashboards and spreadsheets to monitor and manage farming portfolios.",
+    Icon: LayoutDashboard,
+  },
+];
+
+const reports = (await getCollection("reports")).sort(
+  (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
+);
+const featured = reports.slice(0, 4);
+
+const dashboards = [
+  { slug: "crvusd", name: "crvUSD" },
+  { slug: "usdd", name: "USDD" },
+  { slug: "frax", name: "L-FRAX" },
+  { slug: "ousd", name: "OUSD" },
+];
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="relative min-h-[70vh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="/hero-bg.png" alt="" class="w-full h-full object-cover opacity-40" />
+      <div class="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"></div>
+    </div>
+    <div class="container-page relative z-10 py-24 text-center">
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05]">
+        Institutional<br />
+        <span class="text-primary">DeFi Research</span>
+      </h1>
+      <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+        Risk analysis, governance support, and investment insights — built on
+        rigorous on-chain data and live monitoring.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <Button href="/reports" size="lg">View Reports</Button>
+        <Button href="/contact" variant="outline" size="lg">Get in Touch</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="py-24">
+    <div class="container-page">
+      <div class="text-center mb-14">
+        <p class="eyebrow mb-3">Our Services</p>
+        <h2 class="text-3xl md:text-4xl font-bold">What we do for clients</h2>
+        <div class="h-1 w-16 bg-primary mx-auto mt-6"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          services.map(({ href, title, description, Icon }) => (
+            <Card href={href} hoverable>
+              <div class="flex items-start gap-4">
+                <div class="p-3 bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                  <Icon className="h-6 w-6 text-primary" />
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold uppercase tracking-wide group-hover:text-primary transition-colors mb-2">
+                    {title}
+                  </h3>
+                  <p class="text-muted-foreground text-sm leading-relaxed">{description}</p>
+                </div>
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Reports -->
+  {
+    featured.length > 0 && (
+      <section class="py-24 bg-card/30 border-y border-border/40">
+        <div class="container-page">
+          <div class="flex items-end justify-between mb-10">
+            <div>
+              <p class="eyebrow mb-3">Featured Research</p>
+              <h2 class="text-3xl md:text-4xl font-bold">Latest Reports</h2>
+            </div>
+            <a
+              href="/reports"
+              class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold inline-flex items-center gap-1"
+            >
+              All Reports <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {featured.map((r) => (
+              <Card href={`/reports/${r.data.slug}`} hoverable>
+                <div class="flex items-start justify-between gap-4 mb-3">
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="eyebrow">{r.data.category.replace("-", " ")}</span>
+                      {r.data.assessment_type === "full" && (
+                        <span class="eyebrow opacity-50">· Full</span>
+                      )}
+                    </div>
+                    <h3 class="text-2xl font-bold group-hover:text-primary transition-colors">
+                      {r.data.asset}
+                    </h3>
+                  </div>
+                  <RiskBadge score={r.data.overall_risk} label="Risk" />
+                </div>
+                <p class="text-sm text-muted-foreground font-mono">
+                  Last verified {new Date(r.data.last_verified).toISOString().slice(0, 10)}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Dashboards -->
+  <section class="py-24">
+    <div class="container-page">
+      <div class="text-center mb-14">
+        <p class="eyebrow mb-3">Live Data</p>
+        <h2 class="text-3xl md:text-4xl font-bold">On-chain Backing Dashboards</h2>
+        <p class="text-muted-foreground mt-4 max-w-2xl mx-auto">
+          Hourly on-chain monitoring of supply, collateral, and peg health.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          dashboards.map((d) => (
+            <Card
+              href={`/dashboards#${d.slug}`}
+              hoverable
+              class="text-center !p-8"
+            >
+              <div class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                {d.name}
+              </div>
+              <div class="text-xs text-muted-foreground uppercase tracking-wider font-mono">
+                Backing Monitor
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  variant?: "default" | "outline" | "muted";
+  class?: string;
+}
+
+const { variant = "default", class: className } = Astro.props;
+
+const variants = {
+  default: "bg-primary/15 text-primary border-primary/30",
+  outline: "bg-transparent text-foreground border-border",
+  muted: "bg-muted text-muted-foreground border-border",
+};
+
+const classes = cn(
+  "inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border rounded-none",
+  variants[variant],
+  className,
+);
+---
+
+<span class={classes}><slot /></span>

@@ -1,0 +1,43 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import RiskSidebar from "@/components/report/RiskSidebar.astro";
+import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
+
+interface Props {
+  data: any;
+  hasDashboard?: boolean;
+}
+
+const { data, hasDashboard = false } = Astro.props;
+const description = `${data.asset} risk assessment — ${data.category.replace("-", " ")} | TID Research`;
+---
+
+<BaseLayout title={`${data.asset} — Risk Assessment | TID Research`} description={description}>
+  <article class="container-page py-12">
+    <div class="mb-8">
+      <a
+        href="/reports"
+        class="text-xs uppercase tracking-wider text-muted-foreground hover:text-primary font-mono"
+      >
+        ← All Reports
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+      <div class="prose-report min-w-0">
+        <slot />
+        {
+          hasDashboard && (
+            <section class="not-prose mt-12">
+              <h2 class="text-2xl font-bold mb-4">Live Backing Dashboard</h2>
+              <DashboardEmbed slug={data.slug} height="700px" />
+            </section>
+          )
+        }
+      </div>
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <RiskSidebar data={data} />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

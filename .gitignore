@@ -1,6 +1,9 @@
 node_modules
 dist
+.astro
+.env
+.env.*
+!.env.example
 .DS_Store
-server/public
-vite.config.ts.*
-*.tar.gz
+*.log
+.netlify

@@ -1,0 +1,103 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import { ShieldCheck, Scale, TrendingUp, LayoutDashboard } from "lucide-react";
+
+export function getStaticPaths() {
+  return [
+    { params: { kind: "risk" } },
+    { params: { kind: "governance" } },
+    { params: { kind: "investment" } },
+    { params: { kind: "portfolio" } },
+  ];
+}
+
+const { kind } = Astro.params;
+
+const content: Record<
+  string,
+  { title: string; tagline: string; Icon: any; bullets: string[]; cta: string }
+> = {
+  risk: {
+    title: "Risk Analysis",
+    tagline:
+      "Independent, on-chain-first risk assessments for stablecoins, wrapped tokens, and yield-bearing assets.",
+    Icon: ShieldCheck,
+    bullets: [
+      "Standardized risk frameworks: peg mechanism, backing, liquidity, issuer, structural, redemption, volatility.",
+      "Per-chain risk overrides where deployment context materially changes exposure.",
+      "Live backing dashboards paired with each full assessment so risk can be re-verified continuously.",
+      "Diligence reports for protocols evaluating which assets to list, integrate, or accept as collateral.",
+    ],
+    cta: "Commission a risk report",
+  },
+  governance: {
+    title: "Governance Services",
+    tagline:
+      "Professional DAO governance support — proposal tracking, analysis, and voting recommendations.",
+    Icon: Scale,
+    bullets: [
+      "Proposal-by-proposal analysis with explicit voting recommendations and rationale.",
+      "Forum monitoring and stakeholder mapping for governance-active treasuries.",
+      "Delegate services: structured, transparent voting on behalf of token holders.",
+      "Custom governance briefings for funds and treasuries managing significant voting power.",
+    ],
+    cta: "Discuss governance support",
+  },
+  investment: {
+    title: "Investment Analysis",
+    tagline:
+      "Valuation and growth-based analysis of DeFi sectors to identify category leaders and opportunities.",
+    Icon: TrendingUp,
+    bullets: [
+      "Sector-level deep dives with quantitative competitive positioning.",
+      "Valuation models grounded in protocol revenue, token economics, and on-chain growth.",
+      "Thematic research on emerging primitives and category shifts.",
+      "Custom analysis for funds and family offices building DeFi exposure.",
+    ],
+    cta: "Request an investment briefing",
+  },
+  portfolio: {
+    title: "Portfolio Tracking",
+    tagline:
+      "Custom dashboards and spreadsheets to monitor and manage farming portfolios.",
+    Icon: LayoutDashboard,
+    bullets: [
+      "Position tracking across lending, LP, and yield strategies.",
+      "Risk-adjusted yield reporting with realized vs. expected breakdowns.",
+      "Custom dashboards built around each client's portfolio structure.",
+      "Operational support for ongoing position management.",
+    ],
+    cta: "Set up portfolio tracking",
+  },
+};
+
+const c = content[kind!];
+if (!c) return Astro.redirect("/404");
+const { Icon } = c;
+---
+
+<BaseLayout title={`${c.title} | TID Research`} description={c.tagline}>
+  <section class="container-page py-20 max-w-3xl">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="p-4 bg-primary/10 border border-primary/30">
+        <Icon className="h-8 w-8 text-primary" />
+      </div>
+      <p class="eyebrow">Services</p>
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">{c.title}</h1>
+    <p class="text-xl text-muted-foreground mb-12">{c.tagline}</p>
+
+    <div class="prose-report">
+      <h2>What's included</h2>
+      <ul>
+        {c.bullets.map((b) => <li>{b}</li>)}
+      </ul>
+    </div>
+
+    <div class="mt-12 flex flex-wrap gap-4">
+      <Button href="/contact" size="lg">{c.cta}</Button>
+      <Button href="/reports" variant="outline" size="lg">See sample work</Button>
+    </div>
+  </section>
+</BaseLayout>

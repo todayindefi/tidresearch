@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+---
+
+<BaseLayout title="About | TID Research" description="About TID Research — institutional-grade DeFi research.">
+  <section class="container-page py-20 max-w-3xl">
+    <p class="eyebrow mb-4">About</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-8">
+      Independent research for the on-chain economy.
+    </h1>
+    <div class="prose-report space-y-6">
+      <p>
+        TID Research provides institutional-grade DeFi research to DAOs, protocols,
+        funds, and institutions. We focus on rigorous, on-chain-first analysis —
+        asset risk, governance, valuation, and portfolio operations.
+      </p>
+      <p>
+        Every public report links to a live backing dashboard, so readers can verify
+        the data behind the conclusions in real time.
+      </p>
+      <h2>What sets us apart</h2>
+      <ul>
+        <li><strong>On-chain primary sources.</strong> We read contracts and oracles, not press releases.</li>
+        <li><strong>Live dashboards.</strong> Static reports paired with continuously updated monitoring.</li>
+        <li><strong>Institutional rigor.</strong> Standardized risk frameworks across asset classes.</li>
+      </ul>
+    </div>
+    <div class="mt-12">
+      <Button href="/contact" size="lg">Work with us</Button>
+    </div>
+  </section>
+</BaseLayout>

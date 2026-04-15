@@ -1,0 +1,29 @@
+---
+interface Props {
+  score: number;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const { score, label, size = "md" } = Astro.props;
+
+// 0-3 low (silver/green-ish neutral), 3-6 medium (amber), 6-10 high (red)
+function tone(s: number) {
+  if (s >= 6.5) return "bg-primary/20 text-primary border-primary/50";
+  if (s >= 4) return "bg-amber-500/15 text-amber-400 border-amber-500/40";
+  return "bg-emerald-500/15 text-emerald-400 border-emerald-500/40";
+}
+
+const sizeClass = {
+  sm: "px-1.5 py-0.5 text-xs",
+  md: "px-2.5 py-1 text-sm",
+  lg: "px-4 py-2 text-2xl",
+}[size];
+---
+
+<span
+  class={`inline-flex items-center gap-1 font-mono font-bold border rounded-none ${tone(score)} ${sizeClass}`}
+>
+  {label && <span class="opacity-70 font-normal mr-1">{label}</span>}
+  {score.toFixed(1)}
+</span>

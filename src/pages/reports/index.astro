@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReportsFilter from "@/components/islands/ReportsFilter.tsx";
+import { getCollection } from "astro:content";
+import { chainLabel } from "@/lib/chains";
+
+const all = await getCollection("reports");
+
+const rows = all
+  .map((r) => ({
+    slug: r.data.slug,
+    asset: r.data.asset,
+    category: r.data.category,
+    assessment_type: r.data.assessment_type,
+    chains: r.data.chains,
+    chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
+    overall_risk: r.data.overall_risk,
+    last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
+  }))
+  .sort((a, b) => b.last_verified.localeCompare(a.last_verified));
+---
+
+<BaseLayout
+  title="Risk Reports | TID Research"
+  description="Asset risk reports — stablecoins, wrapped tokens, vault shares. Filter by chain, category, and risk score."
+>
+  <section class="container-page py-16">
+    <div class="mb-10">
+      <p class="eyebrow mb-3">Research</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Risk Reports</h1>
+      <p class="text-muted-foreground max-w-2xl">
+        Independent risk assessments paired with live on-chain dashboards. Filter by
+        chain, category, or risk score.
+      </p>
+    </div>
+
+    {
+      rows.length > 0 ? (
+        <ReportsFilter client:load reports={rows} />
+      ) : (
+        <div class="border border-border bg-card p-12 text-center text-muted-foreground">
+          New reports coming soon.
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

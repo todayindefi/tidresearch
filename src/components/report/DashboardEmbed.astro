@@ -1,0 +1,30 @@
+---
+interface Props {
+  slug: string;
+  title?: string;
+  height?: string;
+}
+
+const { slug, title = "Live backing dashboard", height = "600px" } = Astro.props;
+const src = `https://todayindefi.github.io/backing-monitor/?asset=${encodeURIComponent(slug)}`;
+---
+
+<div class="border border-border bg-card">
+  <div class="flex items-center justify-between px-4 py-2 border-b border-border bg-background/50">
+    <span class="eyebrow">Live data</span>
+    <a
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-xs text-primary hover:underline font-mono"
+    >
+      Open in new tab ↗
+    </a>
+  </div>
+  <iframe
+    src={src}
+    title={title}
+    loading="lazy"
+    style={`width: 100%; height: ${height}; border: 0; display: block;`}
+  ></iframe>
+</div>

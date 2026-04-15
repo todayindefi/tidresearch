@@ -1,0 +1,119 @@
+---
+import RiskBadge from "./RiskBadge.astro";
+import Badge from "../ui/Badge.astro";
+import { chainLabel } from "@/lib/chains";
+
+interface Props {
+  data: any;
+}
+
+const { data } = Astro.props;
+
+const isStable = data.category === "stablecoin";
+
+const axes = isStable
+  ? [
+      { key: "peg_mechanism_risk", label: "Peg Mechanism" },
+      { key: "backing_risk", label: "Backing" },
+      { key: "liquidity_risk", label: "Liquidity" },
+      { key: "issuer_risk", label: "Issuer" },
+    ]
+  : [
+      { key: "volatility_risk", label: "Volatility" },
+      { key: "liquidity_risk", label: "Liquidity" },
+      { key: "structural_risk", label: "Structural" },
+      { key: "redemption_risk", label: "Redemption" },
+    ];
+
+const fmtUSD = (n?: number) =>
+  typeof n === "number"
+    ? n >= 1e9
+      ? `$${(n / 1e9).toFixed(2)}B`
+      : n >= 1e6
+        ? `$${(n / 1e6).toFixed(0)}M`
+        : `$${n.toLocaleString()}`
+    : null;
+
+const fmtDate = (d: Date) =>
+  new Date(d).toISOString().slice(0, 10);
+---
+
+<aside class="bg-card border border-border p-6 space-y-6 text-sm">
+  <div>
+    <div class="eyebrow mb-2">Overall Risk</div>
+    <RiskBadge score={data.overall_risk} size="lg" />
+  </div>
+
+  <div>
+    <div class="eyebrow mb-3">Risk Breakdown</div>
+    <div class="space-y-2">
+      {
+        axes.map((a) => (
+          <div class="flex items-center justify-between">
+            <span class="text-muted-foreground">{a.label}</span>
+            <RiskBadge score={data[a.key]} size="sm" />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="border-t border-border pt-4 space-y-3">
+    <div>
+      <div class="eyebrow mb-1">Category</div>
+      <div class="capitalize">{data.category.replace("-", " ")}</div>
+    </div>
+
+    {
+      isStable && data.peg_mechanism && (
+        <div>
+          <div class="eyebrow mb-1">Peg Mechanism</div>
+          <div class="capitalize">{data.peg_mechanism}</div>
+        </div>
+      )
+    }
+
+    {
+      isStable && data.issuer && (
+        <div>
+          <div class="eyebrow mb-1">Issuer</div>
+          <div>{data.issuer}</div>
+        </div>
+      )
+    }
+
+    {
+      isStable && fmtUSD(data.market_cap_approx) && (
+        <div>
+          <div class="eyebrow mb-1">Market Cap</div>
+          <div class="font-mono">{fmtUSD(data.market_cap_approx)}</div>
+        </div>
+      )
+    }
+
+    {
+      !isStable && data.underlying_assets?.length > 0 && (
+        <div>
+          <div class="eyebrow mb-1">Underlying</div>
+          <div class="flex flex-wrap gap-1">
+            {data.underlying_assets.map((u: string) => (
+              <Badge variant="muted">{u}</Badge>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    <div>
+      <div class="eyebrow mb-1">Chains</div>
+      <div class="flex flex-wrap gap-1">
+        {data.chains.map((c: string) => <Badge variant="outline">{chainLabel(c)}</Badge>)}
+      </div>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-1">Last Verified</div>
+      <div class="font-mono">{fmtDate(data.last_verified)}</div>
+    </div>
+  </div>
+</aside>

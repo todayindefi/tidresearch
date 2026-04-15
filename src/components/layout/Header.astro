@@ -1,0 +1,40 @@
+---
+import Button from "../ui/Button.astro";
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/reports", label: "Reports" },
+  { href: "/dashboards", label: "Dashboards" },
+  { href: "/services/risk", label: "Services" },
+  { href: "/about", label: "About" },
+];
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href.split("/").slice(0, 2).join("/"));
+---
+
+<nav
+  class="border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50"
+>
+  <div class="container-page h-20 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3" aria-label="TID Research home">
+      <img src="/wordmark.png" alt="TID Research" class="h-8 md:h-10 w-auto" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "text-sm uppercase tracking-wider font-semibold transition-colors",
+              isActive(item.href)
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+    <Button href="/contact" variant="outline" size="sm">Contact</Button>
+  </div>
+</nav>

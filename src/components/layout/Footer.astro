@@ -1,0 +1,46 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border/40 bg-card/30 mt-24">
+  <div class="container-page py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="md:col-span-2">
+      <img src="/wordmark.png" alt="TID Research" class="h-8 w-auto mb-4 opacity-80" />
+      <p class="text-sm text-muted-foreground max-w-sm">
+        Institutional-grade DeFi research: risk analysis, governance, investment, and
+        portfolio support.
+      </p>
+    </div>
+    <div>
+      <div class="eyebrow mb-3">Research</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/reports" class="hover:text-primary">Reports</a></li>
+        <li><a href="/dashboards" class="hover:text-primary">Dashboards</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow mb-3">Services</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/services/risk" class="hover:text-primary">Risk Analysis</a></li>
+        <li><a href="/services/governance" class="hover:text-primary">Governance</a></li>
+        <li><a href="/services/investment" class="hover:text-primary">Investment</a></li>
+        <li><a href="/services/portfolio" class="hover:text-primary">Portfolio</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border/40">
+    <div
+      class="container-page py-6 flex flex-col md:flex-row items-center justify-between gap-2"
+    >
+      <p class="text-xs text-muted-foreground/60 font-mono">
+        © {year} TID Research. All rights reserved.
+      </p>
+      <a
+        href="mailto:info@todayindefi.com"
+        class="text-xs text-muted-foreground hover:text-primary font-mono"
+      >
+        info@todayindefi.com
+      </a>
+    </div>
+  </div>
+</footer>
