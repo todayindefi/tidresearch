@@ -8,11 +8,11 @@ peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
 last_verified: "2026-03-28"
-peg_mechanism_risk: 5.5
-backing_risk: 5.0
-liquidity_risk: 6.0
-issuer_risk: 6.0
-overall_risk: 5.0
+peg_mechanism_score: 5.5
+backing_score: 5.0
+liquidity_score: 6.0
+issuer_score: 6.0
+overall_score: 5.0
 issuer: "Curve Finance"
 audited_reserves: false
 market_cap_approx: 264000000

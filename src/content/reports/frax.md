@@ -8,11 +8,11 @@ peg_mechanism: "hybrid"
 assessment_type: "full"
 date: "2026-03-29"
 last_verified: "2026-03-29"
-peg_mechanism_risk: 4.0
-backing_risk: 2.0
-liquidity_risk: 3.0
-issuer_risk: 5.0
-overall_risk: 2.5
+peg_mechanism_score: 4.0
+backing_score: 2.0
+liquidity_score: 3.0
+issuer_score: 5.0
+overall_score: 2.5
 issuer: "Frax Finance"
 audited_reserves: false
 market_cap_approx: 153000000

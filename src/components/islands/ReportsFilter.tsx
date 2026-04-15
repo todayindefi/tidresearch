@@ -7,27 +7,30 @@ export interface ReportRow {
   assessment_type: "full" | "light";
   chains: string[];
   chain_labels: string[];
-  overall_risk: number;
+  overall_score: number;
   last_verified: string;
 }
 
-const RISK_BANDS: Array<[string, (r: number) => boolean]> = [
+// Score direction: 10 = safest, 1 = riskiest.
+const SCORE_BANDS: Array<[string, (s: number) => boolean]> = [
   ["any", () => true],
-  ["low (<4)", (r) => r < 4],
-  ["medium (4-6.5)", (r) => r >= 4 && r < 6.5],
-  ["high (≥6.5)", (r) => r >= 6.5],
+  ["safe (≥7)", (s) => s >= 7],
+  ["medium (4–7)", (s) => s >= 4 && s < 7],
+  ["risky (<4)", (s) => s < 4],
 ];
 
-function tone(r: number) {
-  if (r >= 6.5) return "bg-primary/20 text-primary border-primary/50";
-  if (r >= 4) return "bg-amber-500/15 text-amber-400 border-amber-500/40";
-  return "bg-emerald-500/15 text-emerald-400 border-emerald-500/40";
+function tone(s: number) {
+  if (s >= 9) return "bg-emerald-500/15 text-emerald-400 border-emerald-500/50";
+  if (s >= 7) return "bg-lime-500/15 text-lime-400 border-lime-500/45";
+  if (s >= 5) return "bg-amber-500/15 text-amber-400 border-amber-500/45";
+  if (s >= 3) return "bg-orange-500/15 text-orange-400 border-orange-500/45";
+  return "bg-primary/20 text-primary border-primary/50";
 }
 
 export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
   const [category, setCategory] = useState<string>("all");
   const [chain, setChain] = useState<string>("all");
-  const [risk, setRisk] = useState<string>("any");
+  const [band, setBand] = useState<string>("any");
   const [q, setQ] = useState<string>("");
 
   const allCategories = useMemo(
@@ -40,23 +43,23 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
   );
 
   const filtered = useMemo(() => {
-    const riskFn = RISK_BANDS.find(([k]) => k === risk)?.[1] ?? (() => true);
+    const bandFn = SCORE_BANDS.find(([k]) => k === band)?.[1] ?? (() => true);
     const qq = q.trim().toLowerCase();
     return reports.filter((r) => {
       if (category !== "all" && r.category !== category) return false;
       if (chain !== "all" && !r.chain_labels.includes(chain)) return false;
-      if (!riskFn(r.overall_risk)) return false;
+      if (!bandFn(r.overall_score)) return false;
       if (qq && !r.asset.toLowerCase().includes(qq)) return false;
       return true;
     });
-  }, [reports, category, chain, risk, q]);
+  }, [reports, category, chain, band, q]);
 
   const selectClass =
     "bg-card border border-border focus:border-primary px-3 py-2 outline-none text-sm font-mono";
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
         <input
           type="search"
           placeholder="Search assets…"
@@ -84,17 +87,17 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
             </option>
           ))}
         </select>
-        <select value={risk} onChange={(e) => setRisk(e.target.value)} className={selectClass}>
-          {RISK_BANDS.map(([k]) => (
+        <select value={band} onChange={(e) => setBand(e.target.value)} className={selectClass}>
+          {SCORE_BANDS.map(([k]) => (
             <option key={k} value={k}>
-              Risk: {k}
+              Score: {k}
             </option>
           ))}
         </select>
       </div>
 
-      <p className="text-xs text-muted-foreground font-mono mb-4">
-        {filtered.length} of {reports.length} report{reports.length === 1 ? "" : "s"}
+      <p className="text-xs text-muted-foreground font-mono mb-6">
+        {filtered.length} of {reports.length} report{reports.length === 1 ? "" : "s"} · score 1–10 (higher = safer)
       </p>
 
       {filtered.length === 0 ? (
@@ -126,10 +129,10 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
                   </h3>
                 </div>
                 <span
-                  className={`inline-flex items-center gap-1 font-mono font-bold border px-2.5 py-1 text-sm shrink-0 ${tone(r.overall_risk)}`}
+                  className={`inline-flex items-center gap-1 font-mono font-bold border px-2.5 py-1 text-sm shrink-0 ${tone(r.overall_score)}`}
                 >
-                  <span className="opacity-70 font-normal mr-1">Risk</span>
-                  {r.overall_risk.toFixed(1)}
+                  <span className="opacity-70 font-normal mr-1">Score</span>
+                  {r.overall_score.toFixed(1)}
                 </span>
               </div>
               <div className="flex flex-wrap gap-1 mb-3">

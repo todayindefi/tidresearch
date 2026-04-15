@@ -1,4 +1,11 @@
 ---
+// Safety score badge. Scale: 1–10, higher = safer (credit-rating direction).
+// Color mapping per framework:
+//   9.0–10.0  green       (very safe)
+//   7.0–8.9   light green (safe)
+//   5.0–6.9   amber
+//   3.0–4.9   orange
+//   1.0–2.9   red         (avoid)
 interface Props {
   score: number;
   label?: string;
@@ -7,11 +14,12 @@ interface Props {
 
 const { score, label, size = "md" } = Astro.props;
 
-// 0-3 low (silver/green-ish neutral), 3-6 medium (amber), 6-10 high (red)
 function tone(s: number) {
-  if (s >= 6.5) return "bg-primary/20 text-primary border-primary/50";
-  if (s >= 4) return "bg-amber-500/15 text-amber-400 border-amber-500/40";
-  return "bg-emerald-500/15 text-emerald-400 border-emerald-500/40";
+  if (s >= 9) return "bg-emerald-500/15 text-emerald-400 border-emerald-500/50";
+  if (s >= 7) return "bg-lime-500/15 text-lime-400 border-lime-500/45";
+  if (s >= 5) return "bg-amber-500/15 text-amber-400 border-amber-500/45";
+  if (s >= 3) return "bg-orange-500/15 text-orange-400 border-orange-500/45";
+  return "bg-primary/20 text-primary border-primary/50";
 }
 
 const sizeClass = {

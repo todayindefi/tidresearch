@@ -13,16 +13,16 @@ const isStable = data.category === "stablecoin";
 
 const axes = isStable
   ? [
-      { key: "peg_mechanism_risk", label: "Peg Mechanism" },
-      { key: "backing_risk", label: "Backing" },
-      { key: "liquidity_risk", label: "Liquidity" },
-      { key: "issuer_risk", label: "Issuer" },
+      { key: "peg_mechanism_score", label: "Peg Mechanism" },
+      { key: "backing_score", label: "Backing" },
+      { key: "liquidity_score", label: "Liquidity" },
+      { key: "issuer_score", label: "Issuer" },
     ]
   : [
-      { key: "volatility_risk", label: "Volatility" },
-      { key: "liquidity_risk", label: "Liquidity" },
-      { key: "structural_risk", label: "Structural" },
-      { key: "redemption_risk", label: "Redemption" },
+      { key: "volatility_score", label: "Volatility" },
+      { key: "liquidity_score", label: "Liquidity" },
+      { key: "structural_score", label: "Structural" },
+      { key: "redemption_score", label: "Redemption" },
     ];
 
 const fmtUSD = (n?: number) =>
@@ -34,18 +34,20 @@ const fmtUSD = (n?: number) =>
         : `$${n.toLocaleString()}`
     : null;
 
-const fmtDate = (d: Date) =>
-  new Date(d).toISOString().slice(0, 10);
+const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
 ---
 
 <aside class="bg-card border border-border p-6 space-y-6 text-sm">
   <div>
-    <div class="eyebrow mb-2">Overall Risk</div>
-    <RiskBadge score={data.overall_risk} size="lg" />
+    <div class="eyebrow mb-2">Overall Score</div>
+    <RiskBadge score={data.overall_score} size="lg" />
+    <p class="text-xs text-muted-foreground mt-2">
+      Scale 1–10. Higher is safer.
+    </p>
   </div>
 
   <div>
-    <div class="eyebrow mb-3">Risk Breakdown</div>
+    <div class="eyebrow mb-3">Score Breakdown</div>
     <div class="space-y-2">
       {
         axes.map((a) => (

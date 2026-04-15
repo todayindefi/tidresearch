@@ -8,21 +8,21 @@ peg_mechanism: "hybrid"
 assessment_type: "full"
 date: "2026-03-31"
 last_verified: "2026-04-01"
-peg_mechanism_risk: 4.0
-backing_risk: 3.0
-liquidity_risk: 3.0
-issuer_risk: 2.0
-overall_risk: 3.5
+peg_mechanism_score: 4.0
+backing_score: 3.0
+liquidity_score: 3.0
+issuer_score: 2.0
+overall_score: 3.5
 issuer: "TRON DAO Reserve"
 audited_reserves: false
 market_cap_approx: 1344000000
 chain_overrides:
   eth:
-    liquidity_risk: 4.0
-    overall_risk: 4.0
+    liquidity_score: 4.0
+    overall_score: 4.0
   bsc:
-    liquidity_risk: 2.5
-    overall_risk: 3.0
+    liquidity_score: 2.5
+    overall_score: 3.0
 ---
 
 # USDD — Asset Risk Assessment (Full)

@@ -42,6 +42,9 @@ const reports = (await getCollection("reports")).sort(
 );
 const featured = reports.slice(0, 4);
 
+// Score direction: 10 = safest, 1 = riskiest.
+
+
 const dashboards = [
   { slug: "crvusd", name: "crvUSD" },
   { slug: "usdd", name: "USDD" },
@@ -135,7 +138,7 @@ const dashboards = [
                       {r.data.asset}
                     </h3>
                   </div>
-                  <RiskBadge score={r.data.overall_risk} label="Risk" />
+                  <RiskBadge score={r.data.overall_score} label="Score" />
                 </div>
                 <p class="text-sm text-muted-foreground font-mono">
                   Last verified {new Date(r.data.last_verified).toISOString().slice(0, 10)}

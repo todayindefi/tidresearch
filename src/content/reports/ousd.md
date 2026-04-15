@@ -8,11 +8,11 @@ peg_mechanism: "hybrid"
 assessment_type: "light"
 date: "2026-03-29"
 last_verified: "2026-03-29"
-peg_mechanism_risk: 5.5
-backing_risk: 4.5
-liquidity_risk: 5.0
-issuer_risk: 6.0
-overall_risk: 5.0
+peg_mechanism_score: 5.5
+backing_score: 4.5
+liquidity_score: 5.0
+issuer_score: 6.0
+overall_score: 5.0
 issuer: "Origin Protocol"
 audited_reserves: false
 market_cap_approx: 7500000

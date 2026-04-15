@@ -14,7 +14,7 @@ const rows = all
     assessment_type: r.data.assessment_type,
     chains: r.data.chains,
     chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
-    overall_risk: r.data.overall_risk,
+    overall_score: r.data.overall_score,
     last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
   }))
   .sort((a, b) => b.last_verified.localeCompare(a.last_verified));
