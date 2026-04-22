@@ -78,6 +78,22 @@ async function parseBody(request: Request): Promise<Record<string, string>> {
 }
 
 export default async (request: Request) => {
+  console.log(
+    "[DEBUG] env keys:",
+    Object.keys(process.env)
+      .filter((k) => /^(GATE|CURRENT|SITE|TOKEN|NODE|NETLIFY|URL|CONTEXT|DEPLOY)/i.test(k))
+      .sort()
+      .join(","),
+  );
+  console.log(
+    "[DEBUG] has GATE_HMAC_SECRET:",
+    !!process.env.GATE_HMAC_SECRET,
+    "has CURRENT_KID:",
+    !!process.env.CURRENT_KID,
+    "has SITE_ORIGIN:",
+    !!process.env.SITE_ORIGIN,
+  );
+
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
