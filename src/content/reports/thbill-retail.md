@@ -8,7 +8,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-22"
-last_verified: "2026-04-22"
+last_verified: "2026-04-23"
 featured: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
@@ -49,13 +49,17 @@ One audit from **Zenith Audits** covering the vault and bridge contracts. No bug
 
 The vault itself uses the standard ERC-4626 pattern (the common DeFi savings-vault interface), which is well-understood. Theo layers a proprietary "iToken" standard on top to handle pending-assets accounting across the 4-day off-chain settlement window. This is the novel part — it's not battle-tested outside Theo's own deployment.
 
-**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, Avalanche, HyperEVM, and Solana. This adds attack surface — a compromise on any one chain's bridge configuration could let forged tokens appear on another. Theo's DVN (the security layer that validates cross-chain messages) configuration has been audited and looks correct, but the model still stacks an extra trust assumption on top of the base vault.
+**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, Avalanche, HyperEVM, and Solana. Bridges are where recent attacks have concentrated — the rsETH exploit on 2026-04-18 ($292M loss) was a LayerZero OFT failure, the same architectural class thBILL uses. Worth looking at closely.
+
+**The good news:** an on-chain audit (2026-04-21) confirmed thBILL's active bridge pathways require **2–3 independent DVNs** per message — DVNs are the verifiers that sign off on cross-chain messages. rsETH's exploit hit a pathway that required only **1 DVN**, so compromising a single verifier was enough. thBILL's configuration means an attacker would need to compromise a quorum of independent providers, not just one. Structurally, thBILL is *not* vulnerable to the specific class of attack that broke rsETH — this is the configuration LayerZero recommended post-incident.
+
+**The caveats:** (1) the destination-chain adapter contracts — the code that actually mints thBILL when a cross-chain message arrives — were likely deployed after the single Zenith audit was completed, so that code surface is probably unaudited. A correct DVN config doesn't protect against a buggy adapter. (2) There are some residual default 1-DVN paths on inbound routes from obscure chains (Sei, Shimmer, Bitlayer, Sonic), exploitable only if Theo has explicitly configured the OApp for those chains — publicly it hasn't, but this couldn't be independently verified. (3) No publicly confirmed kill-switch on the bridge if something goes wrong.
 
 **Admin powers.** A 2-of-4 multisig can pause the contract in emergencies. A 3-of-5 owner multisig controls upgrades and parameter changes. There is **no timelock** on admin actions — changes can take effect immediately. Signer identities are not publicly disclosed. Practically: if Theo decides to change how the protocol works tomorrow, there's no notice period and no way for a holder to exit first.
 
 **What to watch:** the Zenith audit report (publicly available) and any announcements of contract upgrades, parameter changes, or redemption-policy changes. Read them carefully before they take effect.
 
-**Score: 5.5/10** — clean so far, but single audit + no bug bounty + no timelock + novel iToken component = limited margin of safety.
+**Score: 5.5/10** — clean so far, but single audit + no bug bounty + no timelock + novel iToken component + likely-unaudited bridge adapter = limited margin of safety.
 
 ## II. Economic / Market Risk
 
