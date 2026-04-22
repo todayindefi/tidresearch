@@ -77,31 +77,40 @@ async function parseBody(request: Request): Promise<Record<string, string>> {
   return out;
 }
 
+// Netlify V2 functions expose env vars via Netlify.env.get() in addition to
+// process.env. Prefer the Netlify API when available — some deployment
+// contexts populate one but not the other.
+function getEnv(name: string): string | undefined {
+  // @ts-expect-error Netlify global present at runtime on Netlify Functions v2.
+  const nf = typeof Netlify !== "undefined" ? Netlify?.env?.get?.(name) : undefined;
+  return nf ?? process.env[name];
+}
+
 export default async (request: Request) => {
   console.log(
-    "[DEBUG] env keys:",
-    Object.keys(process.env)
-      .filter((k) => /^(GATE|CURRENT|SITE|TOKEN|NODE|NETLIFY|URL|CONTEXT|DEPLOY)/i.test(k))
-      .sort()
-      .join(","),
+    "[DEBUG] process.env keys:",
+    Object.keys(process.env).sort().join(","),
   );
+  // @ts-expect-error Netlify global present at runtime.
+  const nfDefined = typeof Netlify !== "undefined";
+  console.log("[DEBUG] Netlify global defined:", nfDefined);
   console.log(
-    "[DEBUG] has GATE_HMAC_SECRET:",
-    !!process.env.GATE_HMAC_SECRET,
-    "has CURRENT_KID:",
-    !!process.env.CURRENT_KID,
-    "has SITE_ORIGIN:",
-    !!process.env.SITE_ORIGIN,
+    "[DEBUG] via getEnv — GATE:",
+    !!getEnv("GATE_HMAC_SECRET"),
+    "KID:",
+    !!getEnv("CURRENT_KID"),
+    "ORIGIN:",
+    !!getEnv("SITE_ORIGIN"),
   );
 
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
 
-  const secret = process.env.GATE_HMAC_SECRET;
-  const kid = process.env.CURRENT_KID ?? "v1";
-  const origin = process.env.SITE_ORIGIN ?? "https://tidresearch.com";
-  const ttlDays = Number(process.env.TOKEN_TTL_DAYS ?? 60);
+  const secret = getEnv("GATE_HMAC_SECRET");
+  const kid = getEnv("CURRENT_KID") ?? "v1";
+  const origin = getEnv("SITE_ORIGIN") ?? "https://tidresearch.com";
+  const ttlDays = Number(getEnv("TOKEN_TTL_DAYS") ?? 60);
 
   if (!secret) {
     console.error("GATE_HMAC_SECRET not set");
