@@ -17,8 +17,6 @@
  *   SITE_ORIGIN        Override base URL, default "https://tidresearch.com".
  *   TOKEN_TTL_DAYS     Default 60.
  */
-console.log("[BOOT] request-access module loaded at", new Date().toISOString());
-
 interface TokenPayload {
   email: string;
   slug: string;
@@ -89,22 +87,6 @@ function getEnv(name: string): string | undefined {
 }
 
 export default async (request: Request) => {
-  console.log(
-    "[DEBUG] process.env keys:",
-    Object.keys(process.env).sort().join(","),
-  );
-  // @ts-expect-error Netlify global present at runtime.
-  const nfDefined = typeof Netlify !== "undefined";
-  console.log("[DEBUG] Netlify global defined:", nfDefined);
-  console.log(
-    "[DEBUG] via getEnv — GATE:",
-    !!getEnv("GATE_HMAC_SECRET"),
-    "KID:",
-    !!getEnv("CURRENT_KID"),
-    "ORIGIN:",
-    !!getEnv("SITE_ORIGIN"),
-  );
-
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
