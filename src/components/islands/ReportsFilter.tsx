@@ -9,7 +9,17 @@ export interface ReportRow {
   chain_labels: string[];
   overall_score: number;
   last_verified: string;
+  featured?: boolean;
 }
+
+const CATEGORY_LABELS: Record<string, string> = {
+  stablecoin: "Stablecoin",
+  "wrapped-token": "Wrapped Token",
+  "vault-share": "Vault Share",
+  "tokenized-treasury": "RWA",
+};
+
+const categoryLabel = (c: string) => CATEGORY_LABELS[c] ?? c.replace("-", " ");
 
 // Score direction: 10 = safest, 1 = riskiest.
 const SCORE_BANDS: Array<[string, (s: number) => boolean]> = [
@@ -75,7 +85,7 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
           <option value="all">All categories</option>
           {allCategories.map((c) => (
             <option key={c} value={c}>
-              {c.replace("-", " ")}
+              {categoryLabel(c)}
             </option>
           ))}
         </select>
@@ -114,9 +124,14 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    {r.featured && (
+                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider border border-primary/60 bg-primary/10 text-primary font-semibold">
+                        New
+                      </span>
+                    )}
                     <span className="uppercase tracking-widest text-xs text-muted-foreground/80 font-semibold">
-                      {r.category.replace("-", " ")}
+                      {categoryLabel(r.category)}
                     </span>
                     {r.assessment_type === "full" && (
                       <span className="uppercase tracking-widest text-xs text-muted-foreground/40 font-semibold">

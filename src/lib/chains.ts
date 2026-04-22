@@ -19,6 +19,11 @@ const ALIASES: Record<string, string> = {
   scroll: "scroll",
   blast: "blast",
   hyperevm: "hyperevm",
+  avax: "avalanche",
+  avalanche: "avalanche",
+  polygon: "polygon",
+  matic: "polygon",
+  mantle: "mantle",
 };
 
 const LABELS: Record<string, string> = {
@@ -34,6 +39,9 @@ const LABELS: Record<string, string> = {
   scroll: "Scroll",
   blast: "Blast",
   hyperevm: "HyperEVM",
+  avalanche: "Avalanche",
+  polygon: "Polygon",
+  mantle: "Mantle",
 };
 
 export function normalizeChain(c: string): string {

@@ -2,8 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Button from "@/components/ui/Button.astro";
 import Card from "@/components/ui/Card.astro";
+import Badge from "@/components/ui/Badge.astro";
 import RiskBadge from "@/components/report/RiskBadge.astro";
 import { getCollection } from "astro:content";
+import { chainLabel } from "@/lib/chains";
 import { ShieldCheck, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
 
 const services = [
@@ -40,12 +42,18 @@ const services = [
 const reports = (await getCollection("reports")).sort(
   (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
 );
-const featured = reports.slice(0, 4);
+
+// Lead = explicitly featured, else newest. Remaining reports fill the strip.
+const lead = reports.find((r) => r.data.featured) ?? reports[0];
+const rest = reports.filter((r) => r.data.slug !== lead?.data.slug).slice(0, 4);
+
+const categoryLabel = (c: string) =>
+  c === "tokenized-treasury" ? "RWA" : c.replace("-", " ");
 
 // Score direction: 10 = safest, 1 = riskiest.
 
-
 const dashboards = [
+  { slug: "thbill", name: "thBILL" },
   { slug: "crvusd", name: "crvUSD" },
   { slug: "usdd", name: "USDD" },
   { slug: "frax", name: "L-FRAX" },
@@ -75,6 +83,89 @@ const dashboards = [
       </div>
     </div>
   </section>
+
+  <!-- Featured Reports -->
+  {
+    lead && (
+      <section class="py-24 bg-card/30 border-y border-border/40">
+        <div class="container-page">
+          <div class="flex items-end justify-between mb-10">
+            <div>
+              <p class="eyebrow mb-3">Featured Research</p>
+              <h2 class="text-3xl md:text-4xl font-bold">Latest Reports</h2>
+            </div>
+            <a
+              href="/reports"
+              class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold inline-flex items-center gap-1"
+            >
+              All Reports <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          <!-- Lead card -->
+          <Card href={`/reports/${lead.data.slug}`} hoverable class="!p-8 md:!p-10 mb-6 border-primary/40">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                  {lead.data.featured && <Badge>New</Badge>}
+                  <Badge variant="outline">{categoryLabel(lead.data.category)}</Badge>
+                  {lead.data.chains.slice(0, 3).map((c: string) => (
+                    <Badge variant="muted">{chainLabel(c)}</Badge>
+                  ))}
+                </div>
+                <h3 class="text-4xl md:text-5xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  {lead.data.asset}
+                </h3>
+                {(lead.data as any).issuer && (
+                  <p class="text-muted-foreground mb-4">
+                    Issuer: <span class="text-foreground">{(lead.data as any).issuer}</span>
+                    {(lead.data as any).credit_rating_equiv && (
+                      <span class="ml-3 font-mono text-xs opacity-70">
+                        ≈ {(lead.data as any).credit_rating_equiv}
+                      </span>
+                    )}
+                  </p>
+                )}
+                <p class="text-xs text-muted-foreground font-mono">
+                  Last verified {new Date(lead.data.last_verified).toISOString().slice(0, 10)}
+                </p>
+              </div>
+              <div class="shrink-0 flex flex-col items-start md:items-end gap-2">
+                <RiskBadge score={lead.data.overall_score} label="Overall Score" size="lg" />
+                <span class="text-xs text-muted-foreground font-mono">1–10 · higher = safer</span>
+              </div>
+            </div>
+          </Card>
+
+          {rest.length > 0 && (
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {rest.map((r) => (
+                <Card href={`/reports/${r.data.slug}`} hoverable>
+                  <div class="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <div class="flex items-center gap-2 mb-1">
+                        <span class="eyebrow">{categoryLabel(r.data.category)}</span>
+                        {r.data.assessment_type === "full" && (
+                          <span class="eyebrow opacity-50">· Full</span>
+                        )}
+                      </div>
+                      <h3 class="text-2xl font-bold group-hover:text-primary transition-colors">
+                        {r.data.asset}
+                      </h3>
+                    </div>
+                    <RiskBadge score={r.data.overall_score} label="Score" />
+                  </div>
+                  <p class="text-sm text-muted-foreground font-mono">
+                    Last verified {new Date(r.data.last_verified).toISOString().slice(0, 10)}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
 
   <!-- Services -->
   <section class="py-24">
@@ -106,53 +197,8 @@ const dashboards = [
     </div>
   </section>
 
-  <!-- Featured Reports -->
-  {
-    featured.length > 0 && (
-      <section class="py-24 bg-card/30 border-y border-border/40">
-        <div class="container-page">
-          <div class="flex items-end justify-between mb-10">
-            <div>
-              <p class="eyebrow mb-3">Featured Research</p>
-              <h2 class="text-3xl md:text-4xl font-bold">Latest Reports</h2>
-            </div>
-            <a
-              href="/reports"
-              class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              All Reports <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {featured.map((r) => (
-              <Card href={`/reports/${r.data.slug}`} hoverable>
-                <div class="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="eyebrow">{r.data.category.replace("-", " ")}</span>
-                      {r.data.assessment_type === "full" && (
-                        <span class="eyebrow opacity-50">· Full</span>
-                      )}
-                    </div>
-                    <h3 class="text-2xl font-bold group-hover:text-primary transition-colors">
-                      {r.data.asset}
-                    </h3>
-                  </div>
-                  <RiskBadge score={r.data.overall_score} label="Score" />
-                </div>
-                <p class="text-sm text-muted-foreground font-mono">
-                  Last verified {new Date(r.data.last_verified).toISOString().slice(0, 10)}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
   <!-- Dashboards -->
-  <section class="py-24">
+  <section class="py-24 bg-card/30 border-y border-border/40">
     <div class="container-page">
       <div class="text-center mb-14">
         <p class="eyebrow mb-3">Live Data</p>
@@ -161,7 +207,7 @@ const dashboards = [
           Hourly on-chain monitoring of supply, collateral, and peg health.
         </p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
         {
           dashboards.map((d) => (
             <Card

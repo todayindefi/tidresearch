@@ -16,13 +16,18 @@ const rows = all
     chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
     overall_score: r.data.overall_score,
     last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
+    featured: Boolean(r.data.featured),
   }))
-  .sort((a, b) => b.last_verified.localeCompare(a.last_verified));
+  .sort((a, b) => {
+    // Featured first, then most-recently verified.
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return b.last_verified.localeCompare(a.last_verified);
+  });
 ---
 
 <BaseLayout
   title="Risk Reports | TID Research"
-  description="Asset risk reports — stablecoins, wrapped tokens, vault shares. Filter by chain, category, and risk score."
+  description="Asset risk reports — tokenized treasuries (RWA), stablecoins, wrapped tokens, vault shares. Filter by chain, category, and risk score."
 >
   <section class="container-page py-16">
     <div class="mb-10">

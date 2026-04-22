@@ -1,8 +1,27 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
+import Badge from "@/components/ui/Badge.astro";
 
-const dashboards = [
+interface Dashboard {
+  slug: string;
+  name: string;
+  chain: string;
+  description: string;
+  category?: string;
+  url?: string;
+  embed?: boolean;
+}
+
+const dashboards: Dashboard[] = [
+  {
+    slug: "thbill",
+    name: "thBILL",
+    chain: "Ethereum + Arbitrum + Base + Avalanche + HyperEVM + Solana (canonical on Ethereum, LayerZero OFT elsewhere)",
+    description: "Tokenized US T-bill basket (RWA) — live backing, peg, and DeFi yield monitoring across chains.",
+    category: "RWA",
+    url: "https://todayindefi.github.io/thbill-risk-info/",
+  },
   { slug: "crvusd", name: "crvUSD", chain: "Ethereum", description: "CDP stablecoin with LLAMMA soft-liquidation, multi-market collateral." },
   { slug: "usdd", name: "USDD", chain: "Tron + Ethereum + BNB", description: "MakerDAO-fork stablecoin backed by TRX/USDT vaults and HTX Smart Allocator." },
   { slug: "frax", name: "L-FRAX", chain: "Ethereum", description: "Deprecated Frax Dollar — mixed collateral, ongoing wind-down monitoring." },
@@ -12,7 +31,7 @@ const dashboards = [
 
 <BaseLayout
   title="Dashboards | TID Research"
-  description="Live on-chain backing dashboards for monitored stablecoins."
+  description="Live on-chain backing dashboards for monitored assets — stablecoins and tokenized Treasuries."
 >
   <section class="container-page py-16">
     <div class="mb-10">
@@ -20,7 +39,7 @@ const dashboards = [
       <h1 class="text-4xl md:text-5xl font-bold mb-4">Backing Dashboards</h1>
       <p class="text-muted-foreground max-w-2xl">
         Hourly on-chain monitoring of supply, collateral, and peg health for each
-        monitored stablecoin.
+        monitored asset.
       </p>
     </div>
 
@@ -30,7 +49,10 @@ const dashboards = [
           <section id={d.slug}>
             <div class="flex items-end justify-between flex-wrap gap-2 mb-4">
               <div>
-                <h2 class="text-2xl font-bold">{d.name}</h2>
+                <div class="flex items-center gap-2 mb-1 flex-wrap">
+                  <h2 class="text-2xl font-bold">{d.name}</h2>
+                  {d.category && <Badge variant="outline">{d.category}</Badge>}
+                </div>
                 <p class="text-sm text-muted-foreground font-mono">{d.chain}</p>
               </div>
               <a
@@ -41,7 +63,13 @@ const dashboards = [
               </a>
             </div>
             <p class="text-muted-foreground mb-4 max-w-3xl">{d.description}</p>
-            <DashboardEmbed slug={d.slug} title={`${d.name} backing dashboard`} height="650px" />
+            <DashboardEmbed
+              slug={d.slug}
+              title={`${d.name} backing dashboard`}
+              height="650px"
+              url={d.url}
+              embed={d.embed ?? true}
+            />
           </section>
         ))
       }

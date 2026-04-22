@@ -9,21 +9,46 @@ interface Props {
 
 const { data } = Astro.props;
 
-const isStable = data.category === "stablecoin";
+type Axis = { key: string; label: string };
 
-const axes = isStable
-  ? [
-      { key: "peg_mechanism_score", label: "Peg Mechanism" },
-      { key: "backing_score", label: "Backing" },
-      { key: "liquidity_score", label: "Liquidity" },
-      { key: "issuer_score", label: "Issuer" },
-    ]
-  : [
-      { key: "volatility_score", label: "Volatility" },
-      { key: "liquidity_score", label: "Liquidity" },
-      { key: "structural_score", label: "Structural" },
-      { key: "redemption_score", label: "Redemption" },
-    ];
+const AXES_BY_CATEGORY: Record<string, Axis[]> = {
+  stablecoin: [
+    { key: "peg_mechanism_score", label: "Peg Mechanism" },
+    { key: "backing_score", label: "Backing" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "issuer_score", label: "Issuer" },
+  ],
+  "wrapped-token": [
+    { key: "volatility_score", label: "Volatility" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "structural_score", label: "Structural" },
+    { key: "redemption_score", label: "Redemption" },
+  ],
+  "vault-share": [
+    { key: "volatility_score", label: "Volatility" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "structural_score", label: "Structural" },
+    { key: "redemption_score", label: "Redemption" },
+  ],
+  "tokenized-treasury": [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "economic_score", label: "Economic" },
+    { key: "project_score", label: "Project" },
+    { key: "supply_integrity_score", label: "Supply Integrity" },
+  ],
+};
+
+const axes = AXES_BY_CATEGORY[data.category as string] ?? [];
+const isStable = data.category === "stablecoin";
+const isRwa = data.category === "tokenized-treasury";
+
+const weights: Record<string, number> | null = isRwa && data.score_weights
+  ? {
+      contract_score: data.score_weights.contract,
+      economic_score: data.score_weights.economic,
+      project_score: data.score_weights.project,
+    }
+  : null;
 
 const fmtUSD = (n?: number) =>
   typeof n === "number"
@@ -35,6 +60,9 @@ const fmtUSD = (n?: number) =>
     : null;
 
 const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
+
+const categoryLabel = (c: string) =>
+  c === "tokenized-treasury" ? "Tokenized Treasury (RWA)" : c.replace("-", " ");
 ---
 
 <aside class="bg-card border border-border p-6 space-y-6 text-sm">
@@ -43,6 +71,9 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     <RiskBadge score={data.overall_score} size="lg" />
     <p class="text-xs text-muted-foreground mt-2">
       Scale 1–10. Higher is safer.
+      {isRwa && weights && (
+        <span class="block mt-1">Weighted composite — see §IV.</span>
+      )}
     </p>
   </div>
 
@@ -50,12 +81,24 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     <div class="eyebrow mb-3">Score Breakdown</div>
     <div class="space-y-2">
       {
-        axes.map((a) => (
-          <div class="flex items-center justify-between">
-            <span class="text-muted-foreground">{a.label}</span>
-            <RiskBadge score={data[a.key]} size="sm" />
-          </div>
-        ))
+        axes.map((a) => {
+          const v = data[a.key];
+          if (typeof v !== "number") return null;
+          const w = weights?.[a.key];
+          return (
+            <div class="flex items-center justify-between">
+              <span class="text-muted-foreground">
+                {a.label}
+                {w && (
+                  <span class="text-muted-foreground/60 font-mono text-xs ml-1">
+                    {Math.round(w * 100)}%
+                  </span>
+                )}
+              </span>
+              <RiskBadge score={v} size="sm" />
+            </div>
+          );
+        })
       }
     </div>
   </div>
@@ -63,7 +106,7 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
   <div class="border-t border-border pt-4 space-y-3">
     <div>
       <div class="eyebrow mb-1">Category</div>
-      <div class="capitalize">{data.category.replace("-", " ")}</div>
+      <div class="capitalize">{categoryLabel(data.category)}</div>
     </div>
 
     {
@@ -76,7 +119,7 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     }
 
     {
-      isStable && data.issuer && (
+      (isStable || isRwa) && data.issuer && (
         <div>
           <div class="eyebrow mb-1">Issuer</div>
           <div>{data.issuer}</div>
@@ -85,7 +128,47 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     }
 
     {
-      isStable && fmtUSD(data.market_cap_approx) && (
+      isRwa && data.credit_rating_equiv && (
+        <div>
+          <div class="eyebrow mb-1">Credit Equivalent</div>
+          <div class="font-mono">{data.credit_rating_equiv}</div>
+        </div>
+      )
+    }
+
+    {
+      isRwa && data.legal_jurisdiction && (
+        <div>
+          <div class="eyebrow mb-1">Jurisdiction</div>
+          <div>{data.legal_jurisdiction}</div>
+        </div>
+      )
+    }
+
+    {
+      isRwa && typeof data.settlement_lag_days === "number" && (
+        <div>
+          <div class="eyebrow mb-1">Redemption</div>
+          <div class="font-mono">USDC · T+{data.settlement_lag_days}</div>
+        </div>
+      )
+    }
+
+    {
+      isRwa && data.underlying_managers?.length > 0 && (
+        <div>
+          <div class="eyebrow mb-1">Underlying Managers</div>
+          <ul class="space-y-1">
+            {data.underlying_managers.map((m: string) => (
+              <li class="text-xs">{m}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      (isStable || isRwa) && fmtUSD(data.market_cap_approx) && (
         <div>
           <div class="eyebrow mb-1">Market Cap</div>
           <div class="font-mono">{fmtUSD(data.market_cap_approx)}</div>
@@ -94,7 +177,7 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     }
 
     {
-      !isStable && data.underlying_assets?.length > 0 && (
+      !isStable && !isRwa && data.underlying_assets?.length > 0 && (
         <div>
           <div class="eyebrow mb-1">Underlying</div>
           <div class="flex flex-wrap gap-1">
