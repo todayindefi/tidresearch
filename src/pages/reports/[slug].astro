@@ -13,8 +13,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// Backing-monitor currently supports these slugs
-const DASHBOARD_SLUGS = new Set(["crvusd", "usdd", "frax", "ousd"]);
+// Slugs with a live dashboard. Most iframe backing-monitor by slug;
+// thBILL has its own standalone dashboard repo referenced via the
+// report's live_dashboard_url frontmatter field.
+const DASHBOARD_SLUGS = new Set(["crvusd", "usdd", "frax", "ousd", "thbill"]);
 const hasDashboard = DASHBOARD_SLUGS.has(entry.data.slug);
 ---
 
