@@ -5,10 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "tsx scripts/build-gated-slugs.ts",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "sync-reports": "tsx scripts/sync-reports.ts"
+    "sync-reports": "tsx scripts/sync-reports.ts",
+    "gated-slugs": "tsx scripts/build-gated-slugs.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

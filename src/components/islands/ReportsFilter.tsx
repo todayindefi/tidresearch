@@ -5,6 +5,7 @@ export interface ReportRow {
   asset: string;
   category: string;
   assessment_type: "full" | "light";
+  audience?: "retail" | "institutional";
   chains: string[];
   chain_labels: string[];
   overall_score: number;
@@ -116,10 +117,15 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filtered.map((r) => (
+          {filtered.map((r) => {
+            const isInstitutional = r.audience === "institutional";
+            const href = isInstitutional
+              ? `/reports/${r.slug}/request`
+              : `/reports/${r.slug}`;
+            return (
             <a
               key={r.slug}
-              href={`/reports/${r.slug}`}
+              href={href}
               className="block bg-card border border-border/60 hover:border-primary/60 transition-colors p-6 group"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
@@ -128,6 +134,11 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
                     {r.featured && (
                       <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider border border-primary/60 bg-primary/10 text-primary font-semibold">
                         New
+                      </span>
+                    )}
+                    {isInstitutional && (
+                      <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider border border-amber-500/60 bg-amber-500/10 text-amber-400 font-semibold">
+                        Request access
                       </span>
                     )}
                     <span className="uppercase tracking-widest text-xs text-muted-foreground/80 font-semibold">
@@ -164,7 +175,8 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
                 Last verified {r.last_verified}
               </p>
             </a>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

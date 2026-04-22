@@ -1,0 +1,45 @@
+---
+// Wraps every H2 section in the article body into a <details open>/<summary> pair
+// on the client, so readers can collapse long tables (DVN audits, peer comparison).
+// Progressive enhancement: without JS, sections render as the normal flat markdown.
+---
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-collapsible-root]");
+  if (root) {
+    // Collect sections: each H2 + following siblings up to the next H2.
+    const children = Array.from(root.children);
+    const sections: Array<{ heading: HTMLElement; body: HTMLElement[] }> = [];
+    let current: { heading: HTMLElement; body: HTMLElement[] } | null = null;
+    for (const el of children) {
+      if (el.tagName === "H2") {
+        current = { heading: el as HTMLElement, body: [] };
+        sections.push(current);
+      } else if (current) {
+        current.body.push(el as HTMLElement);
+      }
+    }
+
+    for (const section of sections) {
+      const details = document.createElement("details");
+      details.open = true;
+      details.className = "report-section";
+      const summary = document.createElement("summary");
+      summary.className = "report-section-summary";
+      // Move the H2's children into the summary so heading styles are preserved.
+      while (section.heading.firstChild) {
+        summary.appendChild(section.heading.firstChild);
+      }
+      summary.setAttribute("role", "button");
+      details.appendChild(summary);
+      for (const el of section.body) {
+        details.appendChild(el);
+      }
+      section.heading.replaceWith(details);
+      // Keep the original heading's id on the summary so in-page anchors still work.
+      if (section.heading.id) {
+        summary.id = section.heading.id;
+      }
+    }
+  }
+</script>

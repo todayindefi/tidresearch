@@ -1,0 +1,117 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const reports = await getCollection("reports");
+  return reports
+    .filter((r) => r.data.audience === "institutional")
+    .map((r) => ({ params: { slug: r.data.slug }, props: { entry: r } }));
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+const companionSlug: string | undefined = data.companion_report;
+---
+
+<BaseLayout
+  title={`Request ${data.asset} — Institutional Report | TID Research`}
+  description={`Request email access to the full institutional risk assessment for ${data.asset}.`}
+>
+  <section class="container-page py-16 max-w-2xl">
+    <div class="mb-8">
+      <a
+        href={companionSlug ? `/reports/${companionSlug}` : "/reports"}
+        class="text-xs uppercase tracking-wider text-muted-foreground hover:text-primary font-mono"
+      >
+        ← {companionSlug ? "Back to retail summary" : "All reports"}
+      </a>
+    </div>
+
+    <p class="eyebrow mb-3">Institutional access</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Request the full {data.asset} report</h1>
+    <p class="text-muted-foreground mb-8">
+      The institutional version covers full audit findings, bridge architecture, DVN
+      configuration, peer comparison, governance, and primary-redemption mechanics —
+      roughly {data.asset === "thBILL" ? "13,500" : "10,000+"} words. Leave your details
+      below and we'll email you a tokenized link. Expect a reply in under a business day.
+    </p>
+
+    <form
+      name="institutional-access"
+      method="POST"
+      action="/.netlify/functions/request-access"
+      class="space-y-5"
+    >
+      <input type="hidden" name="slug" value={data.slug} />
+      <input type="hidden" name="asset" value={data.asset} />
+      <p class="hidden" aria-hidden="true" style="display:none">
+        <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" /></label>
+      </p>
+
+      <div>
+        <label for="name" class="block text-sm font-mono uppercase tracking-wider mb-2">
+          Name
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-mono uppercase tracking-wider mb-2">
+          Work email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none"
+        />
+      </div>
+
+      <div>
+        <label for="firm" class="block text-sm font-mono uppercase tracking-wider mb-2">
+          Firm
+        </label>
+        <input
+          id="firm"
+          name="firm"
+          type="text"
+          required
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none"
+        />
+      </div>
+
+      <div>
+        <label for="use_case" class="block text-sm font-mono uppercase tracking-wider mb-2">
+          Use case (2 lines)
+        </label>
+        <textarea
+          id="use_case"
+          name="use_case"
+          rows="2"
+          required
+          class="w-full bg-card border border-border focus:border-primary px-3 py-2 outline-none font-mono text-sm"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors"
+      >
+        Request access
+      </button>
+    </form>
+
+    <p class="text-xs text-muted-foreground font-mono mt-8">
+      Your details are used only to send the access link and for follow-up about the
+      report. We don't sell or share contact information.
+    </p>
+  </section>
+</BaseLayout>

@@ -128,3 +128,41 @@
 .prose-report hr {
   @apply my-8 border-border;
 }
+
+/* Institutional render: long-form reading. Serif body, narrower measure,
+   roomier line-height. Layered on top of .prose-report. */
+.prose-institutional {
+  font-family: "Charter", "Iowan Old Style", "Source Serif Pro", Georgia, serif;
+  max-width: 65ch;
+  line-height: 1.7;
+}
+.prose-institutional h1,
+.prose-institutional h2,
+.prose-institutional h3 {
+  /* Keep headings in the default UI sans so they read as navigation, not body. */
+  font-family: var(--font-sans, ui-sans-serif, system-ui);
+}
+.prose-institutional p {
+  @apply my-5;
+}
+
+/* Collapsible section (added on the client by CollapsibleSections.astro). */
+.report-section > .report-section-summary {
+  @apply text-2xl mt-12 mb-4 pb-2 border-b border-border cursor-pointer;
+  font-family: var(--font-sans, ui-sans-serif, system-ui);
+  list-style: none;
+}
+.report-section > .report-section-summary::-webkit-details-marker {
+  display: none;
+}
+.report-section > .report-section-summary::before {
+  content: "▾";
+  @apply mr-2 text-muted-foreground text-base inline-block;
+  transition: transform 0.15s ease;
+}
+.report-section:not([open]) > .report-section-summary::before {
+  transform: rotate(-90deg);
+}
+.report-section:not([open]) > .report-section-summary {
+  @apply mb-0;
+}

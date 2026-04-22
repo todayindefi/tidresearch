@@ -1,0 +1,61 @@
+---
+// Soft deterrent overlay, inspired by DocSend's PDF watermark.
+// Reads tid_email cookie (set by the edge-function gate alongside tid_access).
+// Visibility only — the gate is what actually protects access.
+---
+
+<div id="tid-watermark" class="pointer-events-none fixed inset-0 z-30 hidden overflow-hidden" aria-hidden="true"></div>
+
+<style>
+  #tid-watermark .tid-wm-cell {
+    position: absolute;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.22);
+    transform: rotate(-25deg);
+    white-space: nowrap;
+    user-select: none;
+  }
+  @media (prefers-color-scheme: light) {
+    #tid-watermark .tid-wm-cell {
+      color: rgba(0, 0, 0, 0.14);
+    }
+  }
+  @media print {
+    #tid-watermark {
+      display: block !important;
+    }
+    #tid-watermark .tid-wm-cell {
+      color: rgba(0, 0, 0, 0.22);
+    }
+  }
+</style>
+
+<script>
+  function readCookie(name: string): string | null {
+    const match = document.cookie.match(
+      new RegExp("(?:^|; )" + name.replace(/[-.]/g, "\\$&") + "=([^;]*)"),
+    );
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  const email = readCookie("tid_email");
+  const root = document.getElementById("tid-watermark");
+  if (email && root) {
+    const ts = new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC";
+    const label = `${email} · TID Research · ${ts}`;
+    // 4 rows × 3 cols, tiled across the viewport.
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 3; c++) {
+        const el = document.createElement("div");
+        el.className = "tid-wm-cell";
+        el.style.top = `${15 + r * 25}vh`;
+        el.style.left = `${-5 + c * 40}vw`;
+        el.textContent = label;
+        root.appendChild(el);
+      }
+    }
+    root.classList.remove("hidden");
+  }
+</script>

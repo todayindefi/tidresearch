@@ -11,15 +11,16 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 
 // Slugs with a live dashboard. Most iframe backing-monitor by slug;
 // thBILL has its own standalone dashboard repo referenced via the
-// report's live_dashboard_url frontmatter field.
-const DASHBOARD_SLUGS = new Set(["crvusd", "usdd", "frax", "ousd", "thbill"]);
+// report's live_dashboard_url frontmatter field. Only the institutional
+// thBILL page shows the dashboard; the retail summary stays clean.
+const DASHBOARD_SLUGS = new Set(["crvusd", "usdd", "frax", "ousd", "thbill-full"]);
 const hasDashboard = DASHBOARD_SLUGS.has(entry.data.slug);
 ---
 
-<ReportLayout data={entry.data} hasDashboard={hasDashboard}>
+<ReportLayout data={entry.data} hasDashboard={hasDashboard} headings={headings}>
   <Content />
 </ReportLayout>

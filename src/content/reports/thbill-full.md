@@ -1,13 +1,14 @@
 ---
 asset: "thBILL"
-slug: "thbill"
+slug: "thbill-full"
 aliases: ["thBILL", "Theo thBILL", "Theo Short Duration US Treasury Fund"]
 chains: ["eth", "arb", "base", "avax", "hyperevm", "sol"]
 category: "tokenized-treasury"
 assessment_type: "full"
+audience: "institutional"
+companion_report: "thbill"
 date: "2026-04-21"
 last_verified: "2026-04-21"
-featured: true
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 pdf_coming_soon: true
 issuer: "Theo Protocol Corporation"

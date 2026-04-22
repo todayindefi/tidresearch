@@ -2,21 +2,31 @@
 import BaseLayout from "./BaseLayout.astro";
 import RiskSidebar from "@/components/report/RiskSidebar.astro";
 import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
+import ScoreHero from "@/components/report/ScoreHero.astro";
+import StickyToc from "@/components/report/StickyToc.astro";
+import CollapsibleSections from "@/components/report/CollapsibleSections.astro";
+import EmailWatermark from "@/components/report/EmailWatermark.astro";
 import { ArrowRight, Download } from "lucide-react";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Props {
   data: any;
   hasDashboard?: boolean;
+  headings?: Heading[];
 }
 
-const { data, hasDashboard = false } = Astro.props;
+const { data, hasDashboard = false, headings = [] } = Astro.props;
 const description = `${data.asset} risk assessment — ${data.category.replace("-", " ")} | TID Research`;
 
-// TODO: once /dashboards/thbill exists (Week 2), switch external live_dashboard_url
-// entries to internal /dashboards/<slug> routes.
 const liveDashboardUrl: string | undefined = data.live_dashboard_url;
 const pdfComingSoon: boolean = Boolean(data.pdf_coming_soon);
 const hasCta = Boolean(liveDashboardUrl) || pdfComingSoon;
+const isInstitutional = data.audience === "institutional";
 ---
 
 <BaseLayout title={`${data.asset} — Risk Assessment | TID Research`} description={description}>
@@ -30,12 +40,59 @@ const hasCta = Boolean(liveDashboardUrl) || pdfComingSoon;
       </a>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-      <div class="min-w-0">
-        <div class="prose-report">
-          <slot />
-          {
-            hasDashboard && (
+    {isInstitutional && <EmailWatermark />}
+    {isInstitutional ? (
+      <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12">
+        <StickyToc headings={headings} />
+        <div class="min-w-0">
+          <ScoreHero data={data} />
+          <div class="prose-report prose-institutional" data-collapsible-root>
+            <slot />
+          </div>
+          <CollapsibleSections />
+          {hasDashboard && (
+            <section class="mt-12">
+              <h2 class="text-2xl font-bold mb-4">Live Backing Dashboard</h2>
+              <DashboardEmbed
+                slug={data.slug}
+                url={liveDashboardUrl}
+                height={liveDashboardUrl ? "900px" : "700px"}
+              />
+            </section>
+          )}
+          {hasCta && (
+            <section class="mt-12 border-t border-border pt-8 flex flex-wrap gap-3">
+              {liveDashboardUrl && (
+                <a
+                  href={liveDashboardUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline"
+                >
+                  Open live dashboard
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              )}
+              {pdfComingSoon && (
+                <button
+                  type="button"
+                  disabled
+                  class="inline-flex items-center gap-2 border border-border bg-card text-muted-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider cursor-not-allowed"
+                >
+                  <Download className="h-4 w-4" />
+                  Download PDF (coming soon)
+                </button>
+              )}
+            </section>
+          )}
+        </div>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+        <div class="min-w-0">
+          <div class="prose-report">
+            <slot />
+            {hasDashboard && (
               <section class="mt-12">
                 <h2 class="text-2xl font-bold mb-4">Live Backing Dashboard</h2>
                 <DashboardEmbed
@@ -44,11 +101,9 @@ const hasCta = Boolean(liveDashboardUrl) || pdfComingSoon;
                   height={liveDashboardUrl ? "900px" : "700px"}
                 />
               </section>
-            )
-          }
-        </div>
-        {
-          hasCta && (
+            )}
+          </div>
+          {hasCta && (
             <section class="mt-12 border-t border-border pt-8 flex flex-wrap gap-3">
               {liveDashboardUrl && (
                 <a
@@ -72,12 +127,12 @@ const hasCta = Boolean(liveDashboardUrl) || pdfComingSoon;
                 </button>
               )}
             </section>
-          )
-        }
+          )}
+        </div>
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <RiskSidebar data={data} />
+        </div>
       </div>
-      <div class="lg:sticky lg:top-28 lg:self-start">
-        <RiskSidebar data={data} />
-      </div>
-    </div>
+    )}
   </article>
 </BaseLayout>

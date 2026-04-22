@@ -1,0 +1,132 @@
+---
+import RiskBadge from "./RiskBadge.astro";
+import { chainLabel } from "@/lib/chains";
+
+interface Props {
+  data: any;
+}
+
+const { data } = Astro.props;
+
+type Axis = { key: string; label: string; weight?: number };
+
+const AXES_BY_CATEGORY: Record<string, Axis[]> = {
+  stablecoin: [
+    { key: "peg_mechanism_score", label: "Peg" },
+    { key: "backing_score", label: "Backing" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "issuer_score", label: "Issuer" },
+  ],
+  "wrapped-token": [
+    { key: "volatility_score", label: "Volatility" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "structural_score", label: "Structural" },
+    { key: "redemption_score", label: "Redemption" },
+  ],
+  "vault-share": [
+    { key: "volatility_score", label: "Volatility" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "structural_score", label: "Structural" },
+    { key: "redemption_score", label: "Redemption" },
+  ],
+  "tokenized-treasury": [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "economic_score", label: "Economic" },
+    { key: "project_score", label: "Project" },
+    { key: "supply_integrity_score", label: "Supply Integrity" },
+  ],
+};
+
+const axes = AXES_BY_CATEGORY[data.category as string] ?? [];
+const isRwa = data.category === "tokenized-treasury";
+const weights: Record<string, number> | null = isRwa && data.score_weights
+  ? {
+      contract_score: data.score_weights.contract,
+      economic_score: data.score_weights.economic,
+      project_score: data.score_weights.project,
+    }
+  : null;
+
+const fmtUSD = (n?: number) =>
+  typeof n === "number"
+    ? n >= 1e9
+      ? `$${(n / 1e9).toFixed(2)}B`
+      : n >= 1e6
+        ? `$${(n / 1e6).toFixed(0)}M`
+        : `$${n.toLocaleString()}`
+    : null;
+
+const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
+---
+
+<header class="bg-card border border-border p-6 md:p-8 mb-10">
+  <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
+    <div class="min-w-0">
+      <p class="eyebrow mb-2">Risk Assessment · Institutional</p>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">{data.asset}</h1>
+      {data.issuer && (
+        <p class="text-muted-foreground text-sm">
+          Issued by <span class="text-foreground">{data.issuer}</span>
+          {data.legal_jurisdiction && <> · {data.legal_jurisdiction}</>}
+        </p>
+      )}
+    </div>
+    <div class="shrink-0">
+      <div class="eyebrow mb-2 text-right">Overall</div>
+      <RiskBadge score={data.overall_score} size="lg" />
+      <p class="text-xs text-muted-foreground mt-1 text-right font-mono">1–10 · higher = safer</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    {
+      axes.map((a) => {
+        const v = data[a.key];
+        if (typeof v !== "number") return null;
+        const w = weights?.[a.key];
+        return (
+          <div class="bg-background border border-border p-3">
+            <div class="eyebrow mb-2 text-[10px]">
+              {a.label}
+              {w && <span class="opacity-60 ml-1">{Math.round(w * 100)}%</span>}
+            </div>
+            <RiskBadge score={v} size="sm" />
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <div class="flex flex-wrap gap-x-8 gap-y-3 pt-5 border-t border-border text-xs font-mono">
+    <div>
+      <div class="eyebrow mb-1">Last Verified</div>
+      <div class="text-foreground text-sm">{fmtDate(data.last_verified)}</div>
+    </div>
+    {data.credit_rating_equiv && (
+      <div>
+        <div class="eyebrow mb-1">Credit Equiv</div>
+        <div class="text-foreground text-sm">{data.credit_rating_equiv}</div>
+      </div>
+    )}
+    {fmtUSD(data.market_cap_approx) && (
+      <div>
+        <div class="eyebrow mb-1">Market Cap</div>
+        <div class="text-foreground text-sm">{fmtUSD(data.market_cap_approx)}</div>
+      </div>
+    )}
+    {typeof data.settlement_lag_days === "number" && (
+      <div>
+        <div class="eyebrow mb-1">Redemption</div>
+        <div class="text-foreground text-sm">USDC · T+{data.settlement_lag_days}</div>
+      </div>
+    )}
+    <div class="min-w-0">
+      <div class="eyebrow mb-1">Chains</div>
+      <div class="text-foreground text-sm">
+        {data.chains.map((c: string, i: number) => (
+          <>{i > 0 && " · "}{chainLabel(c)}</>
+        ))}
+      </div>
+    </div>
+  </div>
+</header>

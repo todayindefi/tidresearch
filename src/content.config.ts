@@ -25,6 +25,10 @@ const common = {
   chains: z.array(z.string()),
   // Editorial depth — independent of which score axes are used.
   assessment_type: z.enum(["full", "light"]),
+  // Tiering for paired reports. "retail" is public; "institutional" is gated.
+  // Two reports in a pair cross-link via companion_report (slug of the other).
+  audience: z.enum(["retail", "institutional"]).optional(),
+  companion_report: z.string().optional(),
   date: z.coerce.date(),
   last_verified: z.coerce.date(),
   overall_score: score,

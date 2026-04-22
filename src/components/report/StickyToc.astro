@@ -1,0 +1,85 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// Only top-level article sections (H2). Drop meta-headings that tend to pollute.
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+{sections.length > 0 && (
+  <nav
+    aria-label="Table of contents"
+    class="hidden lg:block lg:sticky lg:top-28 lg:self-start text-sm"
+    data-sticky-toc
+  >
+    <div class="eyebrow mb-3">Contents</div>
+    <ul class="space-y-1.5 border-l border-border">
+      {sections.map((h) => (
+        <li>
+          <a
+            href={`#${h.slug}`}
+            data-toc-link={h.slug}
+            class="block -ml-px pl-4 py-0.5 border-l-2 border-transparent text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  // Scroll-spy: highlight the TOC link whose section is currently in view.
+  const nav = document.querySelector<HTMLElement>("[data-sticky-toc]");
+  if (nav) {
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"),
+    );
+    const byId = new Map<string, HTMLAnchorElement>(
+      links.map((a) => [a.dataset.tocLink ?? "", a]),
+    );
+    const activeCls = ["text-primary", "border-primary"];
+    const inactiveCls = ["border-transparent", "text-muted-foreground"];
+    let current: HTMLAnchorElement | null = null;
+    const setActive = (a: HTMLAnchorElement | null) => {
+      if (current === a) return;
+      if (current) {
+        current.classList.remove(...activeCls);
+        current.classList.add(...inactiveCls);
+      }
+      if (a) {
+        a.classList.add(...activeCls);
+        a.classList.remove(...inactiveCls);
+      }
+      current = a;
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        // Pick the section closest to the top that is intersecting.
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) {
+          const id = (visible[0].target as HTMLElement).id;
+          const a = byId.get(id);
+          if (a) setActive(a);
+        }
+      },
+      { rootMargin: "-100px 0px -60% 0px", threshold: 0 },
+    );
+    for (const slug of byId.keys()) {
+      const el = document.getElementById(slug);
+      if (el) io.observe(el);
+    }
+  }
+</script>

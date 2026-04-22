@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Request received — TID Research"
+  description="Your institutional report request has been received."
+>
+  <section class="container-page py-24 max-w-2xl text-center">
+    <p class="eyebrow mb-3">Request received</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">Thanks — check your inbox</h1>
+    <p class="text-muted-foreground mb-8">
+      We'll send a tokenized access link to the email you provided. Expect it within
+      one business day. If you don't see it, check spam or email
+      <a href="mailto:research@tidresearch.com" class="text-primary hover:underline">
+        research@tidresearch.com
+      </a>.
+    </p>
+    <a
+      href="/reports"
+      class="inline-flex items-center gap-2 border border-border bg-card px-5 py-3 text-sm font-mono uppercase tracking-wider hover:border-primary transition-colors"
+    >
+      ← Back to reports
+    </a>
+  </section>
+</BaseLayout>
