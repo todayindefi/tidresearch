@@ -17,6 +17,8 @@
  *   SITE_ORIGIN        Override base URL, default "https://tidresearch.com".
  *   TOKEN_TTL_DAYS     Default 60.
  */
+console.log("[BOOT] request-access module loaded at", new Date().toISOString());
+
 interface TokenPayload {
   email: string;
   slug: string;
