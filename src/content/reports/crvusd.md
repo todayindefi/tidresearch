@@ -7,7 +7,7 @@ category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
-last_verified: "2026-03-28"
+last_verified: "2026-04-25"
 peg_mechanism_score: 5.5
 backing_score: 5.0
 liquidity_score: 6.0
