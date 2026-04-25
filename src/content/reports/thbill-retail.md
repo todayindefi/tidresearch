@@ -2,7 +2,7 @@
 asset: "thBILL"
 slug: "thbill"
 aliases: ["thBILL", "Theo thBILL", "thbill-retail"]
-chains: ["eth", "arb", "base", "avax", "hyperevm", "sol"]
+chains: ["eth", "arb", "base", "hyperevm", "sol"]
 category: "tokenized-treasury"
 peg_mechanism: "nav-accruing"
 assessment_type: "light"
@@ -42,7 +42,7 @@ underlying_managers:
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | ~9 months | Ethereum, Arbitrum, Base, Avalanche, HyperEVM, Solana |
+| ~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | ~9 months | Ethereum, Arbitrum, Base, HyperEVM, Solana |
 
 ## Summary
 
@@ -58,11 +58,11 @@ One audit from **Zenith Audits** covering the vault and bridge contracts. No bug
 
 The vault itself uses the standard ERC-4626 pattern (the common DeFi savings-vault interface), which is well-understood. Theo layers a proprietary "iToken" standard on top to handle pending-assets accounting across the 4-day off-chain settlement window. This is the novel part — it's not battle-tested outside Theo's own deployment.
 
-**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, Avalanche, HyperEVM, and Solana. Bridges are where recent attacks have concentrated — the rsETH exploit on 2026-04-18 ($292M loss) was a LayerZero OFT failure, the same architectural class thBILL uses. Worth looking at closely.
+**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, HyperEVM, and Solana. Bridges are where recent attacks have concentrated — the rsETH exploit on 2026-04-18 ($292M loss) was a LayerZero OFT failure, the same architectural class thBILL uses. Worth looking at closely.
 
-**The good news:** an on-chain audit (2026-04-21) confirmed thBILL's active bridge pathways require **2–3 independent DVNs** per message — DVNs are the verifiers that sign off on cross-chain messages. rsETH's exploit hit a pathway that required only **1 DVN**, so compromising a single verifier was enough. thBILL's configuration means an attacker would need to compromise a quorum of independent providers, not just one. Structurally, thBILL is *not* vulnerable to the specific class of attack that broke rsETH — this is the configuration LayerZero recommended post-incident.
+**The good news (updated 2026-04-25):** an extended on-chain audit covering all four EVM deployments found that thBILL's active bridge pathways require **3 independent DVNs** per message (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) — an explicit upgrade above the 2-DVN default. Zero exposed-and-peered pathways across the readable L2s (Arbitrum, Base, HyperEVM). rsETH's exploit hit a pathway that required only **1 DVN**, so compromising a single verifier was enough. thBILL's configuration means an attacker would need to compromise a quorum of independent providers across multiple operators, not just one. Structurally, thBILL is *not* vulnerable to the specific class of attack that broke rsETH on the L2s. The same audit also closed two prior gaps: the multisig admin is now verifiable on the L2s (same Theo Safe `0x9487…1295`), and a `paused()` function exists on the Ethereum OFTAdapter (currently `false`).
 
-**The caveats:** (1) the destination-chain adapter contracts — the code that actually mints thBILL when a cross-chain message arrives — were likely deployed after the single Zenith audit was completed, so that code surface is probably unaudited. A correct DVN config doesn't protect against a buggy adapter. (2) There are some residual default 1-DVN paths on inbound routes from obscure chains (Sei, Shimmer, Bitlayer, Sonic), exploitable only if Theo has explicitly configured the OApp for those chains — publicly it hasn't, but this couldn't be independently verified. (3) No publicly confirmed kill-switch on the bridge if something goes wrong.
+**The caveats:** (1) thBILL's Ethereum bridge contract is a proxy that doesn't expose peer config or owner identity to standard reads — the 9 "exposed" defaults that show up on Ethereum (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, HyperEVM, Katana, Monad) can't be confirmed peered or unpeered without off-chain disclosure from Theo. Worst-case framing on Ethereum applies until disclosure. (2) Destination-chain adapter contracts were likely deployed after the single Zenith audit was completed, so that code surface is probably unaudited. A correct DVN config doesn't protect against a buggy adapter. (3) No publicly confirmed kill-switch for cross-chain emergencies; the Ethereum `paused()` exists but its pauser identity is unresolved. (4) The Theo admin Safe is **3-of-5 on Arbitrum but 3-of-4 on Base/HyperEVM** — small inconsistency worth confirming with Theo, but not necessarily a bug. (5) Multiple unpeered pathways have burn-address DVN defaults — not exploitable today, but if Theo ever activates one of those chains the burn DVN would block message delivery until receive config is replaced. (6) Earlier listings of Avalanche as a deployment chain were incorrect — Avalanche has zero bytecode at the candidate addresses; thBILL is *not* deployed there.
 
 **Admin powers.** A 2-of-4 multisig can pause the contract in emergencies. A 3-of-5 owner multisig controls upgrades and parameter changes. There is **no timelock** on admin actions — changes can take effect immediately. Signer identities are not publicly disclosed. Practically: if Theo decides to change how the protocol works tomorrow, there's no notice period and no way for a holder to exit first.
 
