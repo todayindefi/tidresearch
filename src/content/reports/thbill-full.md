@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-21"
-last_verified: "2026-04-21"
+last_verified: "2026-04-25"
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
@@ -261,6 +261,8 @@ Raw audit output: `~/riskAnalyst/reports/data/thbill-dvn-audit-2026-04-21.txt`
 
 **Structural model:** thBILL's vault contract tracks `totalAssets = on-chain holdings + pendingAssets`. The "pendingAssets" value represents optimistically-minted balance not yet settled with the upstream issuer. This is transparent on-chain but represents a short unsecured counterparty exposure to Theo's operations during the 4-day settlement window.
 
+**Pending-assets as a trusted oracle.** The `pendingAssets` value is **set by Theo off-chain with no on-chain proof of underlying deposit receipt** — it is functionally a centralized oracle with NAV-setting authority. A misreported `pendingAssets` (whether through operational error, accounting drift, or deliberate misstatement) would overstate NAV until manually reconciled. There is no independent verification mechanism (e.g., Chainlink proof-of-reserves feed, auditor-signed attestation, or on-chain bridge from the Libeara fund). For buyers during any given settlement window, the reported NAV is only as trustworthy as Theo's off-chain operations. This is a distinct trust surface from the custody chain itself and is separable from the bridge and audit concerns.
+
 **Collateral sufficiency:** 1:1 NAV representation. No over-collateralization, no junior tranche, no first-loss buffer.
 
 **Concentration:** Single underlying (tULTRA). Theo has stated a diversification roadmap (adding other regulated T-bill tokens) but it is not yet active as of 2026-04-21.
@@ -268,6 +270,14 @@ Raw audit output: `~/riskAnalyst/reports/data/thbill-dvn-audit-2026-04-21.txt`
 **Liquidity of underlying:** US T-bills are among the most liquid fixed-income instruments globally. Conversion from fund share to USDC depends on Theo's settlement rails (up to 4 business days).
 
 **Bankruptcy remoteness:** None. Token holders have a contractual redemption claim against Theo Protocol Corporation, not direct legal ownership of fund shares. In issuer insolvency, recovery would depend on Panamanian corporate proceedings.
+
+**Backing-ratio semantics — three tiers.** Because the redemption pipeline runs partly on-chain and partly as an off-chain receivable from Libeara (see §II.b), a single ratio cannot honestly answer every risk question. Three tiers are tracked:
+
+- **Economic backing** (`usd_backing_ratio`) — Treasury ULTRA + queue ULTRA + treasury USDC + any in-flight Libeara receivable, divided by thBILL liabilities. Answers *"does Theo have the money, on-chain or predictably incoming?"* Headline figure for general purposes; this is what the dashboard surfaces on the Live Metrics card.
+- **On-chain verified** (`usd_backing_ratio_on_chain`) — same numerator minus the in-flight receivable. Answers *"what can be proven directly from chain state right now?"* Strict honesty check; dips 10–15 percentage points during Stage B cycles for 1–7 days at a time, a predictable cyclical artifact rather than a solvency signal.
+- **Post-settlement floor** (`usd_backing_ratio_floor`) — Treasury ULTRA + treasury USDC only, excluding both the in-flight queue and the receivable. Answers *"if every off-chain counterparty vanished and all in-flight claims went to zero, what would remain?"* Tail-risk stress view.
+
+The three tiers converge to identical values during steady state; they diverge only during Stage B windows. Escalation during delayed or failed settlement is carried by the Flow B banner and Reconciliation Activity widgets on the dashboard, not by mechanically hair-cutting the headline ratio — the empirical T+1 to T+7 envelope is tight enough that face-value accounting is appropriate until a cycle actually runs past T+14.
 
 ### II.b Minting & Redemption
 
@@ -290,6 +300,47 @@ Raw audit output: `~/riskAnalyst/reports/data/thbill-dvn-audit-2026-04-21.txt`
 - Whitelisting may apply to transfers (limits secondary market fungibility in some deployments)
 - Emergency 2-of-4 multisig can pause
 - No disclosed timelock on parameter changes
+
+**Fee schedule — opaque at underlying layer:**
+- **thBILL wrapper:** zero management, performance, subscription, and redemption fees per Theo's public materials. Favorable but unproven sustainability given ~9-month operating history.
+- **ULTRA underlying (Delta Wellington Ultra Short Treasury On-Chain Fund):** fee schedule is not publicly disclosed with confidence. Two public data sources exist and they disagree:
+  - `app.rwa.xyz/assets/ULTRA` lists 0.32% management (range 0.09–0.32%), 0.45% redemption, 0% subscription, 0% performance — sourced via rwa.xyz's direct issuer-partnership data feed.
+  - `stomarket.com` lists a single 0.45% management fee with no redemption fee.
+  - Libeara's site, FundBridge's public pages, hydrax.io, Particula's AAA rating report (Feb 2025), and S&P Global's rating page all omit fee figures entirely.
+- **Authoritative source is gated:** the Trust Deed / Information Memorandum is distributed only to accredited investors under Singapore private-placement rules. FundBridge's DApp FAQ portal (fundbridge.sg) is password-protected. The Arbitrum STEP 2 application references a fee summary table embedded as an image, referring readers to the Trust Deed for specifics.
+- **Net read:** ULTRA charges non-zero fees at the underlying layer, likely totaling 30–100 bps annually with a possible redemption component, but the precise split is not verifiable from public sources. This opacity is itself a transparency knock versus peers like BUIDL, USYC, and USTB which disclose fee schedules openly.
+- **Implications:**
+  - Retail non-KYC holders never touch ULTRA fees directly (primary exit is unavailable to them) but any redemption-side fee sets an economic floor on the secondary-market NAV discount — KYC'd arbitrageurs must clear the fee + gas + T+4 settlement carry to close the spread.
+  - KYC'd institutional holders redeeming through the primary path bear the full underlying-layer fee schedule. Before institutional sizing, obtain the schedule directly from FundBridge (`DeltaMasterTrust@fundbridge.sg`) — this also doubles as an operational-responsiveness check on the redemption path.
+
+**Empirical redemption pattern (structural observations):**
+
+A full-lifetime on-chain scan of thBILL's burn / Withdraw / operator-inbound events confirms several structural properties of the redemption flow that are time-invariant and worth surfacing for institutional sizing decisions.
+
+**Two-stage redemption pipeline.** thBILL redemption is not a single on-chain event. It runs through two sequential stages, both gated behind the same Theo MPC operator but with very different cadences — and conflating them produces misleading risk signals:
+
+- *Stage A — user-to-operator (continuous).* The holder transfers thBILL to Theo's redemption operator address. Theo's MPC pays USDC to the holder within a few hours from a pre-funded USDC float (held partly as spot USDC in TREASURY, partly deposited to Aave V3 Ethereum for yield). The thBILL is *not burned in Stage A* — it accumulates on the operator's balance. User-side redemption throughput runs continuously; this is what actual holders experience as "redeeming."
+- *Stage B — batch burn and fund reconciliation (30–100 day cadence).* Periodically, Theo batches the accumulated thBILL and burns it in a single on-chain transaction, simultaneously moving the corresponding ULTRA from TREASURY into Libeara's `UltraManagerFiat` queue (`0x257062cb4ca916299fc49cb8fde1e34b43033c93`) to settle the underlying fund redemption. Mechanically: the ULTRA sits on the queue contract's own balance for 5–27 hours (per the three historical cycles observed), then is burned to the zero address — no interim custody transfer to any off-queue address. Libeara then processes the fiat side off-chain, and USDC returns to Theo's `TREASURY` wallet directly (never to an untracked intermediary) on a **T+1 to T+7 day timeline** empirically, from one of two known settlement sources: Libeara's operational Safe multisig (`0x7ee29373f0…`) or the `UltraManager` contract itself (`0x9056777ad…`, which has a dual role as NAV oracle *and* USDC settlement router). Between Stage B events, thBILL supply on-chain is flat even while Stage A is active.
+
+**Custody-gap window during Stage B.** Between the queue-ULTRA burn and the USDC arrival from Libeara (1–7 days empirically), the value backing thBILL is genuinely off-chain — it exists as a receivable from Libeara, not as any on-chain token at any Theo- or Libeara-visible address. Under the three-tier backing semantics (§II.a), the *on-chain verified* ratio (`usd_backing_ratio_on_chain`) and the *post-settlement floor* (`usd_backing_ratio_floor`) both dip 10–15 percentage points during the window; the *economic backing* ratio (`usd_backing_ratio`) remains close to steady state because it counts the receivable at face value. This is an expected artifact of the settlement cadence, not evidence of undercollateralization — but in on-chain-only terms it is indistinguishable from undercollateralization. Risk posture during a Stage B window is therefore: *trust Libeara's off-chain settlement to arrive within the historical T+1 to T+7 envelope*. If USDC has not arrived at `TREASURY` by the end of the T+7 window, that is a new anomaly worth escalating; past T+14 the economic ratio's use of the receivable at face value becomes questionable and discounting the claim is appropriate.
+
+**Measurement consequence.** The naive signal "days since last `Transfer → 0x0`" measures *burn* cadence (Stage B), not user redemption activity (Stage A), and systematically understates how active the redemption path is. During extended Stage B gaps the on-chain supply is static, but user redemptions can be running continuously against Theo's USDC float. Two distinct signals should be separated:
+- *User-side pulse* — days since last `thBILL → operator` transfer; reflects actual holder redemption activity. Exposed as `redemption_flow.days_since_last_user_redemption`.
+- *Reconciliation pulse* — days since last batch burn; reflects operator cycle timing. Exposed as `redemption_flow.days_since_last_redemption` (the pre-existing field, now correctly understood as batch-burn cadence rather than total redemption activity).
+
+A reader wanting to know "is anyone actually exiting thBILL?" should read the user-side pulse; a reader wanting to know "when does Theo next settle accumulated redemptions with Libeara?" should read the reconciliation pulse.
+
+**Single-operator redemption.** Both stages run through a single Theo-controlled operator address. The permissionless on-chain `redeem()` function, which returns tULTRA to the caller, has no empirical history of use by any non-Theo address, and its output (tULTRA) has no secondary market — so it is not a practical value-extraction route regardless of its permissionless interface.
+
+**Peg arbitrage is weak and discretionary — separate from redemption activity itself.** These two signals are frequently conflated. *Primary-only redemption* (institutional holders exiting positions at NAV through the Stage A path) runs continuously. *Closed-loop peg arbitrage* (DEX buy at discount + primary redeem at NAV, pocketing the spread) is intermittent and dormant for extended periods. The persistent ~30–50 bp DEX discount reflects the second, not the first — the discount floor is set by the cost an arb-eligible entity must clear to round-trip (underlying-layer fees + T+4 settlement carry + gas + principal tie-up), and empirically no one is consistently clearing that cost to close the spread. Redemption activity being high does not imply arb activity is high; they are different behaviors with different economic drivers.
+
+**Institutional implication — KYC primary-redemption access is load-bearing, not optional.** Any institutional holder intending to deploy meaningful capital into thBILL should establish KYC primary-redemption access with both Theo and Libeara/FundBridge **before sizing up**. The consequences of not doing so:
+
+- DEX secondary markets are the only alternative exit, and depth thins fast beyond ~$200K per trade on current pools. Exits above that size compound 2% slippage on top of the standing peg discount.
+- Non-KYC holders' sells cannot close the peg spread — there is no arbitrage incentive for them to sell at a discount only to be unable to redeem at NAV. The peg discount is therefore a permanent exit cost for non-KYC capital, not a transient mispricing.
+- The NAV-vs-market differential compounds against target returns at rates (empirically 30–100 bp) that are material for any allocation where sub-1% tracking error matters.
+
+In short: for institutional sizing, the primary path delivers NAV (minus any underlying-layer fee); the secondary path does not. KYC with Theo *and* with Libeara/FundBridge is the load-bearing operational prerequisite, and operational responsiveness of those onboarding flows is itself a risk factor that should be tested before capital is committed.
 
 ### II.c Secondary Market Liquidity & Peg
 
@@ -444,6 +495,40 @@ The three dimensions defining the risk:
 - **Issuer structure (weak):** No bankruptcy remoteness, fully centralized governance, no timelocks, undisclosed multisig signers, Panama jurisdiction without regulatory supervision of the issuer entity, single underlying (tULTRA), 4-day redemption lag.
 
 For a DeFi user holding PT-thBILL or using thBILL as collateral, the pragmatic read is: the on-chain layer (contract + bridge) is adequately diligenced and passed the rsETH stress test; the off-chain layer (issuer solvency, legal recourse) remains the binding constraint. Sizing should reflect unsecured-counterparty exposure to Theo, not direct exposure to US T-bills.
+
+---
+
+## VIII. Methodology & Disclosure Limits
+
+This assessment combines on-chain verification (chain reads, event scans, contract source review where public) with issuer-published documentation (Theo's docs at docs.theo.xyz, Libeara's product pages, FundBridge regulatory filings, S&P / Particula AAA-rating reports). Several classes of dependency are not directly verified — either because they are off-chain and undisclosed, or because the methodology cannot enumerate them by construction. Institutional readers should weight the analysis accordingly.
+
+**Trust-required dependencies (acknowledged, not independently verified):**
+
+- LayerZero infrastructure (Endpoint contracts, MessageLibrary, LayerZero governance multisig). Audited at a point in time (DVN config 2026-04-21); not continuously monitored.
+- MPC operator composition (threshold scheme, co-signer identities, key-generation ceremony, geographic distribution). Theo publicly discloses "MPC"; no further detail. See §I MPC-treasury trust unpacked.
+- Underlying T-bill custody chain (Standard Chartered Singapore, broker-dealers, repo counterparties).
+- Wellington Management's actual portfolio holdings.
+- Zenith Audits' report on thBILL/tULTRA contracts (referenced by Theo as "Complete" but not publicly linked at time of writing).
+- Singapore regulatory regime stability for FundBridge.
+- Circle's USDC reserve composition and admin keys.
+- Third-party DEX-pool aggregators (CoinGecko / DefiLlama) used to surface secondary-market liquidity figures.
+
+**Wallet-provenance ambiguities:**
+
+- The Libeara settlement Safe (`0x7ee29373f075ee1d83b1b93b4fe94ae242df5178`) — provenance ambiguous between Libeara-operational and Theo MPC; behavior pattern matches a settlement facilitator but is not definitively labeled on Etherscan or in any public attribution.
+- Whether `TREASURY` is the complete set of Theo-held ULTRA — confirmed across 3 historical Stage B cycles via inbound-USDC tracing (all settlements landed at TREASURY, never at an alternate Theo address), but cannot be guaranteed by structural inference alone.
+
+**Retrospective-class limitation (the rsETH lesson):**
+
+Novel attack classes are typically enumerated only after they manifest in production. The April 2026 rsETH OFT exploit ($292M) hinged on single-DVN bridge configurations — a risk class not surfaced by mainstream contract-audit methodology before the incident, including the methodology applied to thBILL pre-incident. DVN-config audits were added to thBILL's analysis post-rsETH (per §I.5), not prospectively. Future novel attack classes — at the cross-chain layer, the wrapper-contract layer, or in adjacent infrastructure (RPC, oracle, key management) — may produce comparable gaps. This report cannot guarantee enumeration of attack surfaces that have not yet been demonstrated in production.
+
+**Point-in-time vs continuous monitoring:**
+
+Contract source code, DVN configuration, and custody balances are verified at the dates indicated in this report. The companion live dashboard (link in frontmatter) continuously monitors the backing ratios (three-tier), redemption-pulse signals (user-side and batch-burn separately), Stage B reconciliation cycles, and on-chain token positions for the addresses enumerated in the tracker config. It does not continuously verify all upstream dependencies — LayerZero Endpoint contract code, third-party DVN identity sets, UltraManager admin keys, audit-report contents — those are point-in-time checks only. Where continuous monitoring is in place, the relevant fields are exposed in the dashboard's live data feed; where it is not, the date of last verification is the boundary of confidence.
+
+**Sizing implication:**
+
+Any institutional position should account for residual unknowns in proportion to the trust placed in the categories above. The on-chain backing ratio (in its three-tier form) and the KYC-gated primary redemption path are the strongest verifiable claims; everything upstream — custody, fund administration, audit, MPC operator composition, regulatory regime, novel attack classes — is verified at the level of transparency the issuer and counterparties choose to provide. The analysis is most useful when its limits are explicit; an unhedged "AAA"-style verdict would be epistemically overstated.
 
 ---
 

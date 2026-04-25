@@ -8,7 +8,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-22"
-last_verified: "2026-04-23"
+last_verified: "2026-04-25"
 featured: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
@@ -119,3 +119,5 @@ The practical read: the T-bills backing thBILL are extremely safe, but the wrapp
 **Who should avoid:** Anyone who needs instant redemption, wants direct legal ownership of the underlying Treasuries, is risk-averse to issuers under one year old, or is sizing positions larger than DEX depth can clear without material slippage.
 
 **For deeper detail** — full audit findings, bridge architecture, DVN configuration, peer comparison, governance, and primary-redemption mechanics — see the [full institutional report](/reports/thbill-full/request) (email-gated, ~13,500 words).
+
+**A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. Some attack classes — a recent example: the rsETH single-DVN bridge exploit in April 2026 — only become visible after they manifest in production; our methodology is retrospective on novel risks. We also cannot fully audit the underlying T-bill custody chain at Standard Chartered, Wellington Management's portfolio composition, the MPC operator's signer composition, or the Zenith audit report (acknowledged by Theo's docs but not publicly linked). Sized positions should leave room for residual unknowns this analysis cannot enumerate.
