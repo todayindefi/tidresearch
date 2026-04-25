@@ -13,11 +13,11 @@ live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
 tvl_gross: 134000000
-contract_score: 5.5
-economic_score: 6.0
+contract_score: 5.0
+economic_score: 5.5
 project_score: 4.5
-overall_score: 5.5
-supply_integrity_score: 5.5
+overall_score: 5.0
+supply_integrity_score: 5.0
 score_weights:
   contract: 0.4
   economic: 0.3
@@ -93,6 +93,13 @@ supply_integrity_flags:
   - "no-bankruptcy-remoteness"
   - "no-timelock-disclosed"
   - "default-dvn-on-unused-pathways"
+  - "oft-adapter-code-likely-unaudited"
+  - "no-verified-oapp-pause"
+  - "lz-endpoint-shared-dependency"
+  - "mpc-scheme-undocumented"
+  - "proxy-admin-role-unverified"
+  - "pending-assets-self-reported-oracle"
+  - "synthetic-tultra-wrapper"
 ---
 
 # thBILL — Risk Assessment Report
@@ -112,7 +119,7 @@ supply_integrity_flags:
 | **Market cap (2026-04-21)** | ~$134M |
 | **Price (2026-04-21)** | $1.02 |
 
-> *Overall score (5.5) is a weighted composite — see §IV for category weights.*
+> *Overall score (5.0) is a weighted composite — see §IV for category weights.*
 
 ---
 
@@ -126,7 +133,7 @@ Overall profile: strong asset quality (US T-bills via regulated institutions), c
 
 ---
 
-## I. Smart Contract Risk — 5.5/10
+## I. Smart Contract Risk — 5.0/10
 
 ### Audit Coverage
 
@@ -162,6 +169,10 @@ Overall profile: strong asset quality (US T-bills via regulated institutions), c
 - **No timelock** on upgrades or parameter changes.
 - **No independent / external signers** in any role.
 
+**MPC treasury — trust unpacked.** The "MPC treasury" row above is a significant trust surface that deserves decomposition. Publicly documented: *that* an MPC scheme is used to co-sign mint/redeem transactions. Not publicly documented: the threshold scheme (t-of-n), the identity of co-signing parties (internal Theo staff only vs a managed custodian like Fireblocks / Copper / Fordefi), the geographic distribution of co-signers (single-jurisdiction subpoena risk), or the key-generation ceremony attestation. "MPC" is often perceived as stronger than "multisig," but a managed-service MPC introduces a third-party infrastructure dependency (see the 2023 Fireblocks key-exposure disclosure for precedent). Without these details confirmed, the MPC should be treated as functionally equivalent to an opaque multisig of unknown composition.
+
+**Proxy admin role — verification pending.** The Owner / Admin multisig above is described as having upgrade authority. For upgradeable proxy patterns, there is often a *distinct* proxy-admin role (the address permitted to call `upgradeTo` on the proxy contract itself) separate from the `owner` role on the implementation. Under UUPS or standard Transparent proxy patterns these can be the same address, but this has not been explicitly verified for thBILL. Worst case: an undocumented proxy-admin key exists that can push implementation changes independently of the 3-of-5 owner multisig. Recommend verifying via `admin()` / `EIP1967` slot reads on the deployed proxies.
+
 ### Incident History
 
 Clean through 2026-04-21. No reported exploits, forced pauses, or redemption failures. The rsETH incident on 2026-04-18 did not affect thBILL directly — DVN audit (§I.5) shows thBILL's bridge configuration is materially different from Kelp's.
@@ -170,15 +181,15 @@ Clean through 2026-04-21. No reported exploits, forced pauses, or redemption fai
 
 ~9 months live as of this assessment (launch July 2025). Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
 
-**Contract Risk Score: 5.5/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy.
+**Contract Risk Score: 5.0/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy. Additional trust holes surfaced 2026-04-23: MPC scheme (threshold, co-signers, ceremony) is undocumented and should be treated as opaque multisig of unknown composition; distinct EIP-1967 proxy-admin role not yet verified via on-chain reads — worst case is an undocumented proxy-admin key independent of the 3-of-5 multisig.
 
 ---
 
-## I.5 Supply Integrity — 5.5/10
+## I.5 Supply Integrity — 5.0/10
 
 Two distinct risk shapes stack here:
-1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III).
-2. **Cross-chain bridge** — LayerZero OFT across 5+ destinations. **Verified on-chain 2026-04-21:** the major pathways all require 2-3 DVNs per message, meaningfully stronger than rsETH's single-DVN config. Residual concern is the default 1-DVN config inherited on obscure pathways (Sei / Shimmer / Bitlayer / Sonic), exploitable only if Theo has `setPeer` configured for those EIDs.
+1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III). At the wrapper layer specifically: on-chain verification (2026-04-23) shows the tULTRA wrapper is **synthetic** — `ULTRA.balanceOf(tULTRA wrapper) = 0` and the underlying ERC-4626 contract has been **dormant for 70 days** (zero `EscrowBegin`/`EscrowEnd`, zero `depositOptimistic`, zero `Transfer` events, zero mints/burns). The current 129.46M tULTRA supply was set under a prior implementation and carried through a UUPS upgrade ~37 days ago. `totalAssets()` is fully attested via `totalAssetsPending`, not derived from held tokens. The 4626 interface at the tULTRA layer is **effectively ceremonial** — all real mint/redemption flows happen off-contract via Theo's MPC and Libeara's `UltraManagerFiat`. ULTRA functions as a reference unit for NAV accounting, not a claimable on-chain asset. Coverage is verified by reconciling Theo's treasury custody against `tULTRA.totalSupply()` (cross-check), not by reading ULTRA from the wrapper (contract invariant).
+2. **Cross-chain bridge** — LayerZero OFT across 5+ destinations. Bridge security has three separable layers: (a) **DVN configuration** (who validates cross-chain messages), (b) **adapter contract code** (what executes on receipt), and (c) **LayerZero Endpoint contracts themselves** (shared infrastructure admin-controlled by LayerZero's own governance — an issue pushed at the Endpoint layer, e.g., adversarial MessageLibrary swap or endpoint upgrade, affects every OFT including thBILL). DVN config (a) was verified on-chain 2026-04-21 — major pathways require 2-3 DVNs, meaningfully stronger than rsETH's single-DVN config. Adapter contracts (b), however, were most likely deployed after the single Zenith audit closed (the cross-chain expansion post-dates the July 2025 audit per §I) and are therefore probably unaudited code. **A correct DVN config does not protect against a buggy adapter.** Endpoint-layer risk (c) is a shared-dependency trust assumption inherited by every LayerZero project, not thBILL-specific, but worth naming. Residual concerns: default 1-DVN config on obscure pathways (Sei / Shimmer / Bitlayer / Sonic) exploitable only if Theo has `setPeer` configured for those EIDs; no publicly-verified OApp-level pause capability.
 
 ### Mint paths
 
@@ -231,11 +242,18 @@ Two distinct risk shapes stack here:
 
 ### Red flags
 
-- **default-dvn-on-unused-pathways** — Ethereum, Arbitrum, and Base all accept single-DVN packets on 3-4 obscure inbound pathways (Sei / Shimmer / Bitlayer / Sonic). Exploitable only if peer is configured for those EIDs; peer config is the remaining unknown.
+- **synthetic-tultra-wrapper** — On-chain verification (2026-04-23): the tULTRA contract holds zero ULTRA despite declaring ULTRA as its `asset()`. The 4626 contract has been dormant for 70 days (zero mint/burn/escrow events); current 129.46M supply was set under a prior implementation and carried through a UUPS upgrade ~37 days ago. `totalAssets()` is fully attested via `totalAssetsPending`. The 4626 interface is effectively ceremonial — institutional readers should not interpret "ERC-4626 vault" with the implicit trust assumptions that label normally carries.
+- **oft-adapter-code-likely-unaudited** — the destination-chain OFT adapter contracts that execute `lzReceive` mints were probably deployed after the single July 2025 Zenith audit closed. Adapter bugs are a separate risk surface from DVN config; a correct DVN quorum does not defend against an adapter implementation bug. Highest residual bridge-layer concern.
+- **default-dvn-on-unused-pathways** — Ethereum, Arbitrum, and Base all accept single-DVN packets on 3-4 obscure inbound pathways (Sei / Shimmer / Bitlayer / Sonic). Exploitable only if peer is configured for those EIDs; peer config is the remaining unknown (the `peers(uint32)` call reverted on the thBILL proxy during audit, precluding direct verification).
+- **no-verified-oapp-pause** — LayerZero OApp-level pause capability was noted but not independently verified. In the event of an adapter bug surfacing, response time matters.
 - **off-chain-custody-dependency** — Backing lives in TradFi. Correct for an RWA and unavoidable.
 - **permissioned-mint** — Mint requires a permissioned operator role. Key management practices and signer identity not public.
 - **no-bankruptcy-remoteness** — Token holders hold a contractual claim against Theo Protocol Corporation, not a direct interest in underlying T-bills.
 - **no-timelock-disclosed** — Upgrades and parameter changes can execute immediately upon multisig approval.
+- **lz-endpoint-shared-dependency** — LayerZero Endpoint contracts are admin-controlled by LayerZero's own governance. An adverse upgrade or MessageLibrary swap at the Endpoint layer affects every OFT on the chain, thBILL included. Shared-infrastructure risk, not thBILL-specific.
+- **mpc-scheme-undocumented** — The MPC treasury's threshold (t-of-n), co-signer composition (internal vs managed custodian), geographic distribution, and ceremony attestation are not publicly documented. MPC is often *perceived* as stronger than multisig, but without these details should be treated as an opaque multisig of unknown composition.
+- **proxy-admin-role-unverified** — Owner multisig has upgrade authority per Theo docs, but a distinct proxy-admin role (per EIP-1967) has not been explicitly confirmed via on-chain reads. Worst case: an undocumented proxy-admin key can push implementation changes independently.
+- **pending-assets-self-reported-oracle** — `pendingAssets` in the vault's `totalAssets` formula is set by Theo off-chain without on-chain proof of underlying deposit receipt. Functionally a centralized oracle with NAV-setting authority — detailed in §II.a.
 
 ### DVN audit results (2026-04-21)
 
@@ -247,11 +265,11 @@ Two distinct risk shapes stack here:
 
 Raw audit output: `~/riskAnalyst/reports/data/thbill-dvn-audit-2026-04-21.txt`
 
-**Supply Integrity Score: 5.5/10** — Bridge verified multi-DVN (strong); off-chain custody + permissioned mint + no bankruptcy remoteness + unverified peer config on obscure EIDs keep the ceiling off higher scores.
+**Supply Integrity Score: 5.0/10** — Bridge verified multi-DVN (strong). Deductions for: off-chain custody + permissioned mint + no bankruptcy remoteness + unverified peer config on obscure EIDs + likely-unaudited OFT adapter code + unverified OApp pause + LZ Endpoint shared dependency + undocumented MPC scheme + unverified proxy-admin role + pending-assets self-reported oracle. The new 2026-04-23 finding — synthetic tULTRA wrapper holding zero ULTRA, 70-day dormant 4626, fully attested `totalAssets` — adds a structural concern that the "ERC-4626" label normally implies more contract-enforced behavior than is actually present at the underlying layer.
 
 ---
 
-## II. Economic / Market Risk — 6.0/10
+## II. Economic / Market Risk — 5.5/10
 
 ### II.a Collateral & Backing
 
@@ -368,7 +386,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 **Lock-ups:** None for secondary trading. Primary redemption carries soft 4-business-day notice period. Whitelisting requirements can narrow the arbitrage participant base on some deployments.
 
-**Economic Risk Score: 6.0/10** — High-quality sovereign underlying, tight peg discipline, functional primary redemption with settlement lag. Deductions for: non-atomic redemption (USDC-only, T+4), single-underlying concentration, no first-loss buffer, no bankruptcy remoteness, declining secondary liquidity post-rsETH.
+**Economic Risk Score: 5.5/10** — High-quality sovereign underlying, functional primary redemption with settlement lag. Deductions for: non-atomic redemption (USDC-only, T+4), single-underlying concentration, no first-loss buffer, no bankruptcy remoteness, declining secondary liquidity post-rsETH, non-transparent fee schedule at the ULTRA underlying layer. Additionally — `pendingAssets` operates as a centralized off-chain oracle with NAV-setting authority during every 4-day settlement window, with no Chainlink PoR / auditor attestation / on-chain bridge from Libeara to verify the reported value. The "tight peg discipline" headline obscures that the NAV claim is attestation-based, not contract-derived, at both the thBILL and tULTRA layers.
 
 ---
 
@@ -417,16 +435,16 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 ---
 
-## IV. Overall Risk Score — 5.5/10
+## IV. Overall Risk Score — 5.0/10
 
 | Category | Score (0-10) | Weight | Key Points |
 |---|---|---|---|
-| Smart Contract | 5.5 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; 9-month Lindy |
-| Economic / Market | 6.0 | 30% | High-quality UST underlying; tight peg; 4-day redemption lag; single-underlying concentration; no bankruptcy remoteness |
+| Smart Contract | 5.0 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; 9-month Lindy. Additional 2026-04-23 trust holes: undocumented MPC scheme, unverified EIP-1967 proxy-admin role |
+| Economic / Market | 5.5 | 30% | High-quality UST underlying; functional primary redemption (T+4); single-underlying concentration; no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule |
 | Project / Counterparty | 4.5 | 30% | Strong team and regulated institutional partners; fully centralized governance; Panama jurisdiction; no timelock |
-| **Overall** | **5.5** | | **Moderate risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance and limited legal remoteness. BB+ credit equivalent.** |
+| **Overall** | **5.0** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. BB+ credit equivalent at the lower end.** |
 
-**Blended credit equivalent:** Manual assessment assigned **BB+ equivalent** based on A-range sovereign asset quality combined with BB-range unsecured-issuer structure. This remains consistent with 2026-04-21 findings.
+**Blended credit equivalent:** Manual assessment assigned **BB+ equivalent** based on A-range sovereign asset quality combined with BB-range unsecured-issuer structure. The 2026-04-23 findings (synthetic tULTRA wrapper, MPC trust gaps, proxy-admin verification gap, pending-assets oracle) keep the rating in BB+ but at the lower end of that band; another rung of disclosure or structural fix would be needed to support a higher score.
 
 ---
 
@@ -434,7 +452,7 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 | Asset | Issuer | TVL (2026) | Redemption | KYC | Bankruptcy Remote | Cross-chain mechanism | Score est. |
 |---|---|---|---|---|---|---|---|
-| **thBILL** | Theo (Panama) | $134M | USDC, T+4 | Yes | No | LayerZero OFT (multi-DVN) | **5.5** |
+| **thBILL** | Theo (Panama) | $134M | USDC, T+4 | Yes | No | LayerZero OFT (multi-DVN) | **5.0** |
 | **USYC** | Circle / Hashnote | $2.2B | USDC, ~instant | Qualified only | Yes (Cayman fund structure) | Native multi-chain via Circle | ~7.0 |
 | **BUIDL** | BlackRock / Securitize | $2.0B | USDC via Circle, instant | Qualified only | Yes (3(c)(7) fund) | Securitize rails | ~8.0 |
 | **OUSG** | Ondo | ~$1.5B (with USDY) | USDC, instant or T+1 | Qualified only | Yes | Native + LayerZero | ~7.0 |
@@ -487,7 +505,7 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 ## Bottom Line
 
-thBILL is a moderate-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance. Overall score **5.5/10 (BB+ credit equivalent)**.
+thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance and a synthetic tULTRA wrapper layer. Overall score **5.0/10 (BB+ credit equivalent, lower end)**.
 
 The three dimensions defining the risk:
 - **Asset quality (strong):** US T-bills with institutional-grade fund management.

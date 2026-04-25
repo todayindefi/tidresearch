@@ -103,6 +103,8 @@ The rate is uniform across all minting markets (not per-market). Higher rates en
 
 Average peg of **$0.9997** — one of the tightest for a decentralized stablecoin. Peg volatility increased **66% in mean absolute deviation** after YieldBasis launched (Sep 2025), though the average peg stayed above $0.9997.
 
+**TID PegTracker** (2,985 hourly samples, multi-DEX): avg **−13 bps**, median **−9 bps** from $1.00. Tighter than thBILL (median −32 bps) by ~3×, slightly looser than OUSD (median −6 bps) — reflecting the trade-off between algorithmic complexity (LLAMMA + PegKeepers + YB-induced rate volatility) and OUSD's simpler USDC-redemption model.
+
 ---
 
 ## III. Supply Architecture

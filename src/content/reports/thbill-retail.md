@@ -14,11 +14,11 @@ featured: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
 tvl_gross: 134000000
-peg_mechanism_score: 5.5
+peg_mechanism_score: 4.0
 backing_score: 5.5
-liquidity_score: 4.5
+liquidity_score: 4.0
 issuer_score: 4.5
-overall_score: 5.0
+overall_score: 4.5
 audited: true
 audit_count: 1
 audit_firms: ["Zenith Audits"]
@@ -38,7 +38,7 @@ underlying_managers:
 
 # thBILL — Retail Risk Report
 
-**Medium risk · 5.0/10**
+**Elevated risk · 4.5/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -98,7 +98,7 @@ Three paths most retail users consider:
 
 **3. Lending collateral (Euler).** You can supply thBILL to an Euler market to borrow stablecoins, giving you leverage on the T-bill yield. This is **advanced, and the oracle model is everything**: if the market uses a DEX-priced oracle, a temporary DEX dislocation (thin liquidity + a forced seller) can liquidate you even when the fund is perfectly healthy. If it uses a NAV-priced oracle, you're materially safer. Read the oracle config for the specific Euler market before supplying, and size assuming the oracle can and will misbehave during stress. Not recommended unless you understand the liquidation engine at the market you're using.
 
-High-quality underlying with a tight peg and a working (if slow and gated) redemption path. The exit-path asymmetry — KYC-gated primary, DEX-only practical exit at the structural discount floor — is the headline risk for retail, and is scored separately under Liquidity below.
+High-quality underlying with a working (if slow and gated) redemption path *for KYC'd holders*. For retail the picture is structurally worse: no primary access, DEX-only exit, and a market price that sits 30–50 bp below NAV almost every day. By the numbers, thBILL's retail-facing peg is materially looser than crvUSD or OUSD — the average gap to fair value is 6–15× larger and, unlike those, it doesn't mean-revert. That structural gap is why **Peg Mechanism** scores 4.0 here and the exit dynamics drag **Liquidity** to 4.0 alongside it.
 
 ## III. Project / Issuer Risk
 
@@ -118,10 +118,10 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 | | |
 |---|---|
-| **Overall Risk** | **5.0/10 — Medium** |
-| Peg Mechanism | 5.5/10 |
+| **Overall Risk** | **4.5/10 — Elevated** |
+| Peg Mechanism | 4.0/10 |
 | Backing | 5.5/10 |
-| Liquidity | 4.5/10 |
+| Liquidity | 4.0/10 |
 | Issuer | 4.5/10 |
 
 **On the scoring rubric.** This retail report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor.

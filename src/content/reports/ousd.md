@@ -28,6 +28,8 @@ market_cap_approx: 7500000
 
 Origin Dollar (OUSD) is a yield-bearing rebasing stablecoin launched in 2020 by Origin Protocol. It is backed 100% by USDC, which the protocol deploys into Morpho lending markets and Curve liquidity pools to generate yield. OUSD rebases daily — holder balances increase automatically without staking or compounding. The protocol uses an AMO (Algorithmic Market Operations) strategy that mints OUSD into Curve pools to amplify capital efficiency. As of March 2026, total supply is ~$7.55M with a 100.14% collateral ratio and 5.1% APY.
 
+**Peg performance** (TID PegTracker, 740 hourly samples): avg **−7 bps** from $1.00, median −6 bps. Tight on average — primary redemption to USDC is open to any holder at NAV (10 min typical, 24h max under stress), which is what keeps secondary discounts arbed away. For comparison: crvUSD median −9 bps, thBILL median −32 bps.
+
 ## Backing & Strategy Breakdown
 
 | Strategy | Value | % of Backing | Notes |
