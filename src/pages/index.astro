@@ -39,9 +39,11 @@ const services = [
   },
 ];
 
-const reports = (await getCollection("reports")).sort(
-  (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
-);
+const reports = (await getCollection("reports"))
+  .filter((r) => r.data.published !== false && r.data.audience !== "institutional")
+  .sort(
+    (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
+  );
 
 // Lead = explicitly featured, else newest. Remaining reports fill the strip.
 const lead = reports.find((r) => r.data.featured) ?? reports[0];
@@ -56,7 +58,6 @@ const dashboards = [
   { slug: "thbill", name: "thBILL" },
   { slug: "crvusd", name: "crvUSD" },
   { slug: "usdd", name: "USDD" },
-  { slug: "frax", name: "L-FRAX" },
   { slug: "ousd", name: "OUSD" },
 ];
 ---

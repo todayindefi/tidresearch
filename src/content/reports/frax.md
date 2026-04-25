@@ -16,6 +16,7 @@ overall_score: 2.5
 issuer: "Frax Finance"
 audited_reserves: false
 market_cap_approx: 153000000
+published: false
 ---
 
 # Legacy Frax Dollar (FRAX) — Asset Risk Assessment (Full)
