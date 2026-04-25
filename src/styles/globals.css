@@ -178,6 +178,16 @@
     background: #ffffff !important;
     color: #000000 !important;
   }
+  /* The site uses a flex column on body + flex-1 main; in print that
+     collapses main to zero height. Force normal block flow. */
+  body {
+    display: block !important;
+  }
+  body > main {
+    display: block !important;
+    flex: initial !important;
+    min-height: 0 !important;
+  }
   /* Strip site chrome and anything explicitly opted out. */
   body > nav,
   body > footer,
