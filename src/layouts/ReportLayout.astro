@@ -6,7 +6,7 @@ import ScoreHero from "@/components/report/ScoreHero.astro";
 import StickyToc from "@/components/report/StickyToc.astro";
 import CollapsibleSections from "@/components/report/CollapsibleSections.astro";
 import EmailWatermark from "@/components/report/EmailWatermark.astro";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Printer } from "lucide-react";
 
 interface Heading {
   depth: number;
@@ -30,8 +30,8 @@ const isInstitutional = data.audience === "institutional";
 ---
 
 <BaseLayout title={`${data.asset} — Risk Assessment | TID Research`} description={description}>
-  <article class="container-page py-12">
-    <div class="mb-8">
+  <article class={`container-page py-12 ${isInstitutional ? "institutional-report" : ""}`}>
+    <div class="mb-8 print-hide">
       <a
         href="/reports"
         class="text-xs uppercase tracking-wider text-muted-foreground hover:text-primary font-mono"
@@ -42,7 +42,7 @@ const isInstitutional = data.audience === "institutional";
 
     {isInstitutional && <EmailWatermark />}
     {isInstitutional ? (
-      <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12">
+      <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12 institutional-grid">
         <StickyToc headings={headings} />
         <div class="min-w-0">
           <ScoreHero data={data} />
@@ -60,31 +60,27 @@ const isInstitutional = data.audience === "institutional";
               />
             </section>
           )}
-          {hasCta && (
-            <section class="mt-12 border-t border-border pt-8 flex flex-wrap gap-3">
-              {liveDashboardUrl && (
-                <a
-                  href={liveDashboardUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline"
-                >
-                  Open live dashboard
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              )}
-              {pdfComingSoon && (
-                <button
-                  type="button"
-                  disabled
-                  class="inline-flex items-center gap-2 border border-border bg-card text-muted-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider cursor-not-allowed"
-                >
-                  <Download className="h-4 w-4" />
-                  Download PDF (coming soon)
-                </button>
-              )}
-            </section>
-          )}
+          <section class="mt-12 border-t border-border pt-8 flex flex-wrap gap-3 print-hide">
+            <button
+              type="button"
+              data-print-button
+              class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors"
+            >
+              <Printer className="h-4 w-4" />
+              Save as PDF
+            </button>
+            {liveDashboardUrl && (
+              <a
+                href={liveDashboardUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-2 border border-border bg-card text-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:border-primary/60 transition-colors no-underline"
+              >
+                Open live dashboard
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            )}
+          </section>
         </div>
       </div>
     ) : (
@@ -136,3 +132,27 @@ const isInstitutional = data.audience === "institutional";
     )}
   </article>
 </BaseLayout>
+
+<script>
+  // Wire "Save as PDF" buttons to window.print(), and ensure all collapsible
+  // sections are open before printing so nothing is hidden in the saved PDF.
+  document.querySelectorAll<HTMLButtonElement>("[data-print-button]").forEach((btn) => {
+    btn.addEventListener("click", () => window.print());
+  });
+  window.addEventListener("beforeprint", () => {
+    document
+      .querySelectorAll<HTMLDetailsElement>("details.report-section")
+      .forEach((d) => {
+        d.dataset.prevOpen = d.open ? "1" : "0";
+        d.open = true;
+      });
+  });
+  window.addEventListener("afterprint", () => {
+    document
+      .querySelectorAll<HTMLDetailsElement>("details.report-section")
+      .forEach((d) => {
+        if (d.dataset.prevOpen === "0") d.open = false;
+        delete d.dataset.prevOpen;
+      });
+  });
+</script>

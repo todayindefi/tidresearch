@@ -1,33 +1,26 @@
 ---
-// Soft deterrent overlay, inspired by DocSend's PDF watermark.
+// Tiled SVG watermark, inspired by DocSend.
 // Reads tid_email cookie (set by the edge-function gate alongside tid_access).
-// Visibility only — the gate is what actually protects access.
+// Visibility-only deterrent — the gate is what actually protects access.
 ---
 
-<div id="tid-watermark" class="pointer-events-none fixed inset-0 z-30 hidden overflow-hidden" aria-hidden="true"></div>
+<div
+  id="tid-watermark"
+  class="pointer-events-none fixed inset-0 z-30 hidden"
+  aria-hidden="true"
+></div>
 
 <style>
-  #tid-watermark .tid-wm-cell {
-    position: absolute;
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 15px;
-    letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.22);
-    transform: rotate(-25deg);
-    white-space: nowrap;
-    user-select: none;
-  }
-  @media (prefers-color-scheme: light) {
-    #tid-watermark .tid-wm-cell {
-      color: rgba(0, 0, 0, 0.14);
-    }
+  #tid-watermark {
+    background-repeat: repeat;
+    background-position: 0 0;
   }
   @media print {
     #tid-watermark {
       display: block !important;
-    }
-    #tid-watermark .tid-wm-cell {
-      color: rgba(0, 0, 0, 0.22);
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 9999 !important;
     }
   }
 </style>
@@ -40,22 +33,38 @@
     return match ? decodeURIComponent(match[1]) : null;
   }
 
+  function buildSvg(label: string, opacity: number, color: string): string {
+    const w = 320;
+    const h = 220;
+    const safe = label
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'>
+      <text x='${w / 2}' y='${h / 2}' text-anchor='middle' transform='rotate(-25 ${w / 2} ${h / 2})'
+            font-family='ui-sans-serif,system-ui,sans-serif' font-size='14' letter-spacing='1'
+            fill='${color}' fill-opacity='${opacity}'>${safe}</text>
+    </svg>`;
+    return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  }
+
   const email = readCookie("tid_email");
   const root = document.getElementById("tid-watermark");
   if (email && root) {
-    const ts = new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC";
-    const label = `${email} · TID Research · ${ts}`;
-    // 4 rows × 3 cols, tiled across the viewport.
-    for (let r = 0; r < 4; r++) {
-      for (let c = 0; c < 3; c++) {
-        const el = document.createElement("div");
-        el.className = "tid-wm-cell";
-        el.style.top = `${15 + r * 25}vh`;
-        el.style.left = `${-5 + c * 40}vw`;
-        el.textContent = label;
-        root.appendChild(el);
-      }
-    }
+    const date = new Date().toISOString().slice(0, 10);
+    const label = `${email} · ${date}`;
+    const isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const screenColor = isLight ? "#000000" : "#ffffff";
+    const screenOpacity = isLight ? 0.1 : 0.08;
+    root.style.backgroundImage = buildSvg(label, screenOpacity, screenColor);
     root.classList.remove("hidden");
+
+    // For print: stamp darker so it's a readable evidentiary mark on paper/PDF.
+    window.addEventListener("beforeprint", () => {
+      root.style.backgroundImage = buildSvg(label, 0.18, "#000000");
+    });
+    window.addEventListener("afterprint", () => {
+      root.style.backgroundImage = buildSvg(label, screenOpacity, screenColor);
+    });
   }
 </script>

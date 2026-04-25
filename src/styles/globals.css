@@ -166,3 +166,62 @@
 .report-section:not([open]) > .report-section-summary {
   @apply mb-0;
 }
+
+/* Print stylesheet — tuned for "Save as PDF" from institutional reports. */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 14mm;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  /* Strip site chrome and anything explicitly opted out. */
+  body > nav,
+  body > footer,
+  [data-sticky-toc],
+  .print-hide {
+    display: none !important;
+  }
+  /* Collapse the institutional 2-col grid (TOC + body) to a single column. */
+  .institutional-report .institutional-grid {
+    display: block !important;
+  }
+  /* Force open all collapsible sections, hide the disclosure caret. */
+  details.report-section {
+    display: block !important;
+  }
+  details.report-section > .report-section-summary {
+    list-style: none;
+    cursor: default;
+  }
+  details.report-section > .report-section-summary::before {
+    display: none !important;
+  }
+  /* Avoid orphaned headings and split tables/blocks. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  table,
+  pre,
+  blockquote,
+  figure {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Make links self-evident on paper. */
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+  /* Iframes (live dashboards) don't print usefully. */
+  iframe {
+    display: none !important;
+  }
+}

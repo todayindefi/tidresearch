@@ -10,7 +10,6 @@ companion_report: "thbill"
 date: "2026-04-21"
 last_verified: "2026-04-21"
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
-pdf_coming_soon: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
 tvl_gross: 134000000
