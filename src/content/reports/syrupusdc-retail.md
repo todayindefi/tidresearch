@@ -7,7 +7,6 @@ category: "stablecoin"
 peg_mechanism: "nav-accruing"
 assessment_type: "light"
 audience: "retail"
-companion_report: null
 date: "2026-04-25"
 last_verified: "2026-04-25"
 featured: true
