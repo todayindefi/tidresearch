@@ -2,7 +2,7 @@
 asset: "crvUSD"
 slug: "crvusd"
 aliases: ["crvUSD", "CRVUSD"]
-chains: ["eth"]
+chains: ["eth", "arb", "op", "fraxtal", "bsc", "avax", "fantom"]
 category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
@@ -264,6 +264,58 @@ crvUSD has been audited by **10+ firms** across multiple engagements as part of 
 ### Notable Incident
 
 **July 2023 Vyper re-entrancy exploit** (~$70M lost across Curve ecosystem). While this did not directly exploit crvUSD contracts, it demonstrated cascade risk within the Curve ecosystem and temporarily destabilized CRV markets, which indirectly affected crvUSD confidence.
+
+---
+
+## VI. Cross-Chain Architecture
+
+crvUSD is canonically issued on Ethereum mainnet. Curve provides **two distinct bridges** for moving crvUSD between Ethereum and other chains, with materially different security models.
+
+### Slow Bridge — Native L2 messaging
+
+For L2 deployments (**Arbitrum, Optimism, Fraxtal**), Curve uses each chain's canonical native bridge:
+
+- L2 → Ethereum: standard L2 native withdrawal periods (~1 week for Arbitrum)
+- Ethereum → L2: fast deposit (minutes)
+- Trust assumption: Ethereum security + the L2's native bridge architecture
+- No third-party verifiers; same trust model as bridging USDC or any other ERC-20 via canonical L2 bridges
+
+### Fast Bridge — LayerZero OApp
+
+For both L2 fast paths and L1 chains (**BSC, Avalanche, Fantom, Etherlink**), Curve uses LayerZero's OApp standard with custom messenger contracts:
+
+- `VaultMessengerLZ` on Ethereum mainnet — receives LayerZero messages from origin chains, triggers crvUSD minting from the Curve vault
+- `L2MessengerLZ` on each origin chain — sends fast cross-chain messages back to Ethereum
+- Bridge contract on Ethereum: `0x0A92Fd5271dB1C41564BD01ef6b1a75fC1db4d4f`
+- Trust assumption: LayerZero infrastructure (Endpoint contracts, MessageLibrary), DVN providers per pathway, and Curve's messenger contracts themselves
+- Source: [Curve fast-bridge docs](https://docs.curve.finance/fast-bridge/overview/), [VaultMessengerLZ](https://docs.curve.finance/fast-bridge/VaultMessengerLZ/), [L2MessengerLZ](https://docs.curve.finance/fast-bridge/L2MessengerLZ/)
+
+### LayerZero exposure and the rsETH-class incident calibration
+
+crvUSD's fast bridge uses the same architectural class (LayerZero OApp) that the rsETH exploit (April 18, 2026, $292M) hit via single-DVN configurations. **The DVN configuration of crvUSD's specific pathways has not been independently audited as part of this report** (a Blockaid script for OFT/OApp DVN audit was published in response to rsETH and could be applied; not yet done for crvUSD).
+
+**Curve's response to rsETH (April 19, 2026):** Curve paused the LayerZero fast bridge — affecting CRV transfers from BSC, Sonic, and Avalanche, and crvUSD fast bridging across all LayerZero-supported chains. **The L2 slow bridge remained operational throughout.** This was a precautionary measure during root-cause investigation, not a confirmed exploit of Curve's bridge.
+
+**Operational signal:** Curve's response demonstrated active monitoring and a credible pause mechanism. Holders relying on the slow bridge were unaffected. This is a positive operational observation: an LP's-not-the-developer pause-precedent in the same architectural class within 24 hours of the rsETH disclosure.
+
+**Status as of report date:** Verify current pause status before initiating any LayerZero-routed bridge transaction. Pause/unpause status varies as Curve completes its investigation.
+
+### Practical guidance for cross-chain crvUSD users
+
+- **For amounts and time tolerance that allow it, prefer the slow bridge** — it inherits Ethereum's native security model rather than adding LayerZero-specific trust assumptions
+- **If using the fast bridge**, verify it's currently active (pause status varies post-rsETH) and check the destination chain's pool depth and audit coverage
+- **L1 versions (BSC, Avalanche, Fantom, Etherlink)** only have the LayerZero fast bridge available — slow-bridge alternatives don't exist for non-EVM-rollup L1s. Sizing on these chains carries unavoidable LayerZero dependency.
+- **DVN-config audit gap:** A formal audit of crvUSD's specific LayerZero pathway DVN configurations (analogous to the audit thBILL completed 2026-04-21) has not been performed. Worth requesting from Curve or running independently before institutional sizing on a fast-bridge route.
+
+### Cross-chain dependency summary for portfolio construction
+
+| Chain | crvUSD bridge model | Bridge-class trust assumption |
+|---|---|---|
+| Ethereum | Canonical (no bridge) | Curve smart contracts |
+| Arbitrum, Optimism, Fraxtal | Slow (native L2) + Fast (LayerZero) | L2 native bridge OR LayerZero (user choice) |
+| BSC, Avalanche, Fantom, Etherlink | Fast only (LayerZero) | LayerZero (no fallback) |
+
+Note that crvUSD on a non-canonical chain inherits its bridge's security model on top of crvUSD's own protocol risks. For users sizing on Ethereum, none of this section applies; for users sizing elsewhere, the bridge-layer exposure is real and adds to the score footprint analyzed in §V.
 
 ---
 
