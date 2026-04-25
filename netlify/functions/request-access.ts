@@ -7,9 +7,12 @@
  * cookies directly on the response, and redirects straight to the report. No
  * email round-trip — same model DocSend uses by default.
  *
- * Lead data is written to the function log with a [LEAD] prefix (Netlify →
- * Functions → Logs). Grep or pipe to a spreadsheet if you want more durable
- * storage later.
+ * Lead persistence:
+ *   1. Function log line ([LEAD] prefix) — short-term, grep-friendly.
+ *   2. Netlify Blobs store "leads" — durable, one blob per submission,
+ *      keyed by timestamp + email-prefix.
+ *   3. Telegram notification (best-effort) — sends to TELEGRAM_CHAT_ID via
+ *      TELEGRAM_BOT_TOKEN if both are set. Failures don't block the user.
  *
  * Required env vars (set in Netlify dashboard):
  *   GATE_HMAC_SECRET   Shared with gate.ts.
@@ -17,7 +20,11 @@
  * Optional env vars:
  *   SITE_ORIGIN        Override base URL, default "https://tidresearch.com".
  *   TOKEN_TTL_DAYS     Default 60.
+ *   TELEGRAM_BOT_TOKEN HTTP API token from @BotFather; enables ping on lead.
+ *   TELEGRAM_CHAT_ID   Group / user / channel id to receive the ping.
  */
+import { getStore } from "@netlify/blobs";
+
 interface TokenPayload {
   email: string;
   slug: string;
@@ -128,22 +135,66 @@ export default async (request: Request) => {
   const token = await mintToken({ email, slug, exp, kid }, secret);
   const maxAge = Math.max(1, exp - Math.floor(Date.now() / 1000));
 
-  // Lead record — appears in Netlify function logs with a grep-friendly prefix.
-  console.log(
-    "[LEAD] " +
-      JSON.stringify({
-        ts: new Date().toISOString(),
-        slug,
-        name,
-        email,
-        firm,
-        use_case: useCase,
-        kid,
-        exp_utc: new Date(exp * 1000).toISOString(),
-        ip: request.headers.get("X-Forwarded-For") ?? null,
-        ua: request.headers.get("User-Agent") ?? null,
-      }),
-  );
+  const lead = {
+    ts: new Date().toISOString(),
+    slug,
+    name,
+    email,
+    firm,
+    use_case: useCase,
+    kid,
+    exp_utc: new Date(exp * 1000).toISOString(),
+    ip: request.headers.get("X-Forwarded-For") ?? null,
+    ua: request.headers.get("User-Agent") ?? null,
+  };
+
+  // 1. Function log — kept for back-compat with the old grep workflow.
+  console.log("[LEAD] " + JSON.stringify(lead));
+
+  // 2. Netlify Blobs — durable storage, one blob per lead. Best-effort: a
+  //    failure here shouldn't block access (the log line is the safety net).
+  try {
+    const store = getStore("leads");
+    const sortableTs = lead.ts.replace(/[:.]/g, "-");
+    const emailPrefix = email.split("@")[0].slice(0, 32).replace(/[^a-z0-9-]/gi, "_");
+    await store.setJSON(`${sortableTs}__${emailPrefix}`, lead);
+  } catch (err) {
+    console.error("[LEAD-BLOB-FAIL]", err);
+  }
+
+  // 3. Telegram notification — best-effort, optional. Posts a markdown
+  //    summary to TELEGRAM_CHAT_ID via the bot identified by
+  //    TELEGRAM_BOT_TOKEN. Both must be set; otherwise the function silently
+  //    skips this step.
+  const tgToken = getEnv("TELEGRAM_BOT_TOKEN");
+  const tgChatId = getEnv("TELEGRAM_CHAT_ID");
+  if (tgToken && tgChatId) {
+    const safe = (s: string) =>
+      s.replace(/[_*`[\]()~>#+=|{}.!\\-]/g, (c) => `\\${c}`);
+    const text =
+      `🔔 *New institutional lead*\n` +
+      `Report: \`${safe(slug)}\`\n` +
+      `Name: ${safe(name)}\n` +
+      `Firm: ${safe(firm)}\n` +
+      `Email: \`${safe(email)}\``;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: tgChatId,
+          text,
+          parse_mode: "MarkdownV2",
+          disable_web_page_preview: true,
+        }),
+      });
+      if (!res.ok) {
+        console.error("[LEAD-TG-FAIL]", res.status, await res.text());
+      }
+    } catch (err) {
+      console.error("[LEAD-TG-FAIL]", err);
+    }
+  }
 
   const headers = new Headers();
   headers.set("Location", `${origin}/reports/${slug}`);
