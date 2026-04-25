@@ -88,7 +88,7 @@ Strong by DeFi-stablecoin standards:
 - v2 was a ground-up rewrite explicitly motivated by the v1 failures — the team published transparent post-mortems.
 
 Caveats:
-- Multi-chain expansion (Solana, Arbitrum, Base, Plasma) likely uses bridge adapter contracts deployed after the canonical audits. The April 2026 cross-chain incident class (rsETH OFT exploit, Drift admin compromise) is a relevant calibration — verify per-chain audit coverage before sizing on any non-Ethereum venue.
+- Multi-chain bridging uses **Chainlink CCIP** with the **CCT (Cross-Chain Token) standard** — burn-and-mint native deployments on each chain (Ethereum canonical + Solana, Arbitrum, Base, Plasma), not a wrapped/lockbox model. **This is structurally a different attack class from the April 2026 LayerZero OFT incidents (rsETH, Drift, Volo)** — those exploits hit single-DVN OFT configurations and admin-key compromises that don't map to CCIP's architecture. CCIP has a clean track record at scale through April 2026 (no public exploits since 2023 launch) with a Risk Management Network as an anti-fraud backstop. What you trade off vs LayerZero: concentrated trust in Chainlink as a single (mature) provider, rather than distributed quorum across DVNs. Per-chain DD still warranted: verify CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues.
 - The Pool Delegate roster is what you're trusting at the credit-judgment layer. Maple publishes current delegates; cross-check that they're active and reputable before sizing institutional positions.
 
 ## Score breakdown
@@ -115,7 +115,7 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 
 - **Peg discount on DEX pools.** A widening (>50 bps) discount on syrupUSDC vs NAV is the leading indicator that aggregator routing is deteriorating and queue exit is becoming binding.
 - **Season transitions.** When Seasons end or restructure, headline APY drops. Plan around base yield, not headline.
-- **Multi-chain bridge surface.** Don't deploy on a non-Ethereum venue without checking that chain's bridge adapter audit coverage. April 2026 had three multi-million cross-chain incidents.
+- **Multi-chain bridge surface.** syrupUSDC bridges via Chainlink CCIP (different attack class from the April 2026 LayerZero OFT incidents). Still verify per-chain CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues — depth thins fast outside Ethereum.
 - **Pool Delegate roster changes.** Delegate identity is the structural credit-judgment trust assumption.
 
 ---
