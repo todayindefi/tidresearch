@@ -1,7 +1,8 @@
 /**
  * Handles institutional-report access requests (capture-and-grant).
  *
- * Accepts a form-urlencoded or JSON POST with { name, email, firm, use_case, slug }.
+ * Accepts a form-urlencoded or JSON POST with { name, email, firm, slug }.
+ * use_case is accepted but no longer required (form field was removed).
  * Mints an HMAC-signed token (matching netlify/edge-functions/gate.ts), sets
  * cookies directly on the response, and redirects straight to the report. No
  * email round-trip — same model DocSend uses by default.
@@ -119,7 +120,7 @@ export default async (request: Request) => {
   const useCase = (body.use_case ?? "").trim().slice(0, 600);
   const slug = (body.slug ?? "").trim().slice(0, 80);
 
-  if (!name || !firm || !useCase || !slug) return badRequest("Missing required fields");
+  if (!name || !firm || !slug) return badRequest("Missing required fields");
   if (!EMAIL_RE.test(email)) return badRequest("Invalid email");
   if (!/^[a-z0-9-]+$/.test(slug)) return badRequest("Invalid slug");
 
