@@ -95,9 +95,10 @@ const mintPath = z.object({
 const tokenizedTreasury = z.object({
   ...common,
   category: z.literal("tokenized-treasury"),
-  contract_score: score,
-  economic_score: score,
-  project_score: score,
+  // Institutional axes — used by full reports.
+  contract_score: score.optional(),
+  economic_score: score.optional(),
+  project_score: score.optional(),
   supply_integrity_score: score.optional(),
   score_weights: z
     .object({
@@ -106,6 +107,12 @@ const tokenizedTreasury = z.object({
       project: z.number(),
     })
     .optional(),
+  // Retail axes — when an RWA report is framed for retail (no primary-redemption path),
+  // peg/backing/liquidity/issuer is the more useful rubric. Sidebar prefers these when present.
+  peg_mechanism_score: score.optional(),
+  backing_score: score.optional(),
+  issuer_score: score.optional(),
+  peg_mechanism: z.string().optional(),
   issuer: z.string().optional(),
   market_cap_approx: z.number().optional(),
   tvl_gross: z.number().optional(),

@@ -38,17 +38,27 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
 };
 
-const axes = AXES_BY_CATEGORY[data.category as string] ?? [];
 const isStable = data.category === "stablecoin";
 const isRwa = data.category === "tokenized-treasury";
 
-const weights: Record<string, number> | null = isRwa && data.score_weights
-  ? {
-      contract_score: data.score_weights.contract,
-      economic_score: data.score_weights.economic,
-      project_score: data.score_weights.project,
-    }
-  : null;
+// Retail RWA reports score on peg/backing/liquidity/issuer (the stablecoin rubric)
+// rather than the institutional contract/economic/project rubric, because retail users
+// without primary-redemption access need peg and liquidity surfaced as their own dials.
+const useStablecoinAxes =
+  isRwa && typeof data.peg_mechanism_score === "number";
+
+const axes = useStablecoinAxes
+  ? AXES_BY_CATEGORY.stablecoin
+  : (AXES_BY_CATEGORY[data.category as string] ?? []);
+
+const weights: Record<string, number> | null =
+  isRwa && !useStablecoinAxes && data.score_weights
+    ? {
+        contract_score: data.score_weights.contract,
+        economic_score: data.score_weights.economic,
+        project_score: data.score_weights.project,
+      }
+    : null;
 
 const fmtUSD = (n?: number) =>
   typeof n === "number"
@@ -110,7 +120,7 @@ const categoryLabel = (c: string) =>
     </div>
 
     {
-      isStable && data.peg_mechanism && (
+      (isStable || isRwa) && data.peg_mechanism && (
         <div>
           <div class="eyebrow mb-1">Peg Mechanism</div>
           <div class="capitalize">{data.peg_mechanism}</div>
