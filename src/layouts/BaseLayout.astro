@@ -16,6 +16,10 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Plausible analytics — only renders when PUBLIC_ANALYTICS_ENABLED is "1".
+// Set on the production Netlify site; staging stays unmeasured.
+const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === "1";
 ---
 
 <!doctype html>
@@ -46,6 +50,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+
+    {analyticsEnabled && (
+      <>
+        <!-- Privacy-friendly analytics by Plausible -->
+        <script async is:inline src="https://plausible.io/js/pa-qmFxYANh1LPPRjmoS3hlL.js"></script>
+        <script is:inline>
+          window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+          plausible.init()
+        </script>
+      </>
+    )}
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />
