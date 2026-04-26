@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
 import Badge from "@/components/ui/Badge.astro";
+import { isProductionStage } from "@/lib/stage";
 
 interface Dashboard {
   slug: string;
@@ -11,9 +12,12 @@ interface Dashboard {
   category?: string;
   url?: string;
   embed?: boolean;
+  // Same gate as the report frontmatter: defaults false (staging-only).
+  // Flip to true when approved for the production site.
+  production?: boolean;
 }
 
-const dashboards: Dashboard[] = [
+const allDashboards: Dashboard[] = [
   {
     slug: "thbill",
     name: "thBILL",
@@ -21,11 +25,16 @@ const dashboards: Dashboard[] = [
     description: "Tokenized US T-bill basket (RWA) — live backing, peg, and DeFi yield monitoring across chains.",
     category: "RWA",
     url: "https://todayindefi.github.io/thbill-risk-info/",
+    production: true,
   },
   { slug: "crvusd", name: "crvUSD", chain: "Ethereum", description: "CDP stablecoin with LLAMMA soft-liquidation, multi-market collateral." },
   { slug: "usdd", name: "USDD", chain: "Tron + Ethereum + BNB", description: "MakerDAO-fork stablecoin backed by TRX/USDT vaults and HTX Smart Allocator." },
   { slug: "ousd", name: "OUSD", chain: "Ethereum", description: "Rebasing stablecoin backed by USDC via Vault strategies." },
 ];
+
+const dashboards = isProductionStage
+  ? allDashboards.filter((d) => d.production === true)
+  : allDashboards;
 ---
 
 <BaseLayout

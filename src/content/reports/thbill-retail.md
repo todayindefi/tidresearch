@@ -11,6 +11,7 @@ companion_report: "thbill-full"
 date: "2026-04-22"
 last_verified: "2026-04-25"
 featured: true
+production: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 134000000
 tvl_gross: 134000000

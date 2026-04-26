@@ -42,6 +42,12 @@ const common = {
   // Set to false to hide a report from listings and direct routing while the
   // analysis is being revised. The markdown stays in the repo.
   published: z.boolean().default(true),
+  // Stage gate: defaults to false (staging-only). Flip to true when a report
+  // is approved for the public production site. Staging shows reports
+  // regardless of this flag; production filters to production: true only.
+  // The PUBLIC_STAGE=production env var on the prod Netlify site is what
+  // activates the filter at build time.
+  production: z.boolean().default(false),
 };
 
 const stablecoin = z.object({

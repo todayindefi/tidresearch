@@ -3,11 +3,12 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReportsFilter from "@/components/islands/ReportsFilter.tsx";
 import { getCollection } from "astro:content";
 import { chainLabel } from "@/lib/chains";
+import { visibleAtCurrentStage } from "@/lib/stage";
 
 const all = await getCollection("reports");
 
 const rows = all
-  .filter((r) => r.data.published !== false)
+  .filter((r) => visibleAtCurrentStage(r.data))
   .filter((r) => r.data.audience !== "institutional")
   .map((r) => ({
     slug: r.data.slug,

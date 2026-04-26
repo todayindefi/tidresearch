@@ -6,6 +6,7 @@ import Badge from "@/components/ui/Badge.astro";
 import RiskBadge from "@/components/report/RiskBadge.astro";
 import { getCollection } from "astro:content";
 import { chainLabel } from "@/lib/chains";
+import { visibleAtCurrentStage, isProductionStage } from "@/lib/stage";
 import { ShieldCheck, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
 
 const services = [
@@ -40,7 +41,7 @@ const services = [
 ];
 
 const reports = (await getCollection("reports"))
-  .filter((r) => r.data.published !== false && r.data.audience !== "institutional")
+  .filter((r) => visibleAtCurrentStage(r.data) && r.data.audience !== "institutional")
   .sort(
     (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
   );
@@ -58,12 +59,15 @@ const categoryLabel = (c: string) =>
 
 // Score direction: 10 = safest, 1 = riskiest.
 
-const dashboards = [
-  { slug: "thbill", name: "thBILL" },
+const allDashboards = [
+  { slug: "thbill", name: "thBILL", production: true },
   { slug: "crvusd", name: "crvUSD" },
   { slug: "usdd", name: "USDD" },
   { slug: "ousd", name: "OUSD" },
 ];
+const dashboards = isProductionStage
+  ? allDashboards.filter((d) => d.production === true)
+  : allDashboards;
 ---
 
 <BaseLayout>

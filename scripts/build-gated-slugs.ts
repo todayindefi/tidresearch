@@ -23,14 +23,18 @@ function pickFrontmatter(md: string): Record<string, string> {
 }
 
 async function main() {
+  // Match the [slug].astro filter: on production builds, only institutional
+  // reports flagged production: true are accessible; the gate must match.
+  const isProductionStage = process.env.PUBLIC_STAGE === "production";
   const files = (await readdir(REPORTS_DIR)).filter((f) => f.endsWith(".md"));
   const gated: string[] = [];
   for (const f of files) {
     const body = await readFile(join(REPORTS_DIR, f), "utf8");
     const fm = pickFrontmatter(body);
-    if (fm.audience === "institutional" && fm.slug) {
-      gated.push(fm.slug);
-    }
+    if (fm.audience !== "institutional" || !fm.slug) continue;
+    if (fm.published === "false") continue;
+    if (isProductionStage && fm.production !== "true") continue;
+    gated.push(fm.slug);
   }
   gated.sort();
   await mkdir(join(REPO_ROOT, "netlify", "edge-functions"), { recursive: true });

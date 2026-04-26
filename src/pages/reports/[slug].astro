@@ -1,11 +1,12 @@
 ---
 import { getCollection, render } from "astro:content";
 import ReportLayout from "@/layouts/ReportLayout.astro";
+import { visibleAtCurrentStage } from "@/lib/stage";
 
 export async function getStaticPaths() {
   const reports = await getCollection("reports");
   return reports
-    .filter((r) => r.data.published !== false)
+    .filter((r) => visibleAtCurrentStage(r.data))
     .map((r) => ({
       params: { slug: r.data.slug },
       props: { entry: r },

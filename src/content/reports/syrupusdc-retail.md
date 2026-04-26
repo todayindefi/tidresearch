@@ -10,6 +10,7 @@ audience: "retail"
 date: "2026-04-25"
 last_verified: "2026-04-25"
 featured: true
+production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1066000000
 tvl_gross: 1066000000
