@@ -603,7 +603,7 @@ Any institutional position should account for residual unknowns in proportion to
 
 **Corrections welcome:**
 
-This report is built from publicly available documentation (Theo docs, Libeara/FundBridge product pages, regulatory filings, rating-agency reports) and on-chain analysis. It does not draw on any private disclosures from Theo, Libeara, FundBridge, or Wellington. If anything here is wrong — including cases where Theo or Libeara have non-public information that contradicts a claim in this report — please reach out at **info@todayindefi.com** and we will correct the next revision and credit the source where appropriate.
+This report is built from publicly available documentation (Theo docs, Libeara/FundBridge product pages, regulatory filings, rating-agency reports) and on-chain analysis. It does not draw on any private disclosures from Theo, Libeara, FundBridge, or Wellington. If anything here is wrong — including cases where Theo or Libeara have non-public information that contradicts a claim in this report — please reach out at **info@tidresearch.com** and we will correct the next revision and credit the source where appropriate.
 
 ---
 

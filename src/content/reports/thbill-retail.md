@@ -135,4 +135,4 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 ## Corrections
 
-This report is based on publicly available documentation and on-chain analysis only — we don't have access to any private information Theo or Libeara may hold. If anything here is wrong, reach us at **info@todayindefi.com** and we'll correct the next revision.
+This report is based on publicly available documentation and on-chain analysis only — we don't have access to any private information Theo or Libeara may hold. If anything here is wrong, reach us at **info@tidresearch.com** and we'll correct the next revision.
