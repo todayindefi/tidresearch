@@ -50,7 +50,11 @@ const lead = reports.find((r) => r.data.featured) ?? reports[0];
 const rest = reports.filter((r) => r.data.slug !== lead?.data.slug).slice(0, 4);
 
 const categoryLabel = (c: string) =>
-  c === "tokenized-treasury" ? "RWA" : c.replace("-", " ");
+  c === "tokenized-treasury"
+    ? "RWA"
+    : c === "lending-vault"
+    ? "Lending Vault"
+    : c.replace("-", " ");
 
 // Score direction: 10 = safest, 1 = riskiest.
 

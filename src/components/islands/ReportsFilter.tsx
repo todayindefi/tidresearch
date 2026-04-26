@@ -17,6 +17,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   stablecoin: "Stablecoin",
   "wrapped-token": "Wrapped Token",
   "vault-share": "Vault Share",
+  "lending-vault": "Lending Vault",
   "tokenized-treasury": "RWA",
 };
 

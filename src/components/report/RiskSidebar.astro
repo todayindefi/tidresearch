@@ -36,10 +36,18 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
     { key: "project_score", label: "Project" },
     { key: "supply_integrity_score", label: "Supply Integrity" },
   ],
+  "lending-vault": [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "credit_score", label: "Credit" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "operational_score", label: "Operational" },
+    { key: "supply_integrity_score", label: "Supply Integrity" },
+  ],
 };
 
 const isStable = data.category === "stablecoin";
 const isRwa = data.category === "tokenized-treasury";
+const isLendingVault = data.category === "lending-vault";
 
 // Retail RWA reports score on peg/backing/liquidity/issuer (the stablecoin rubric)
 // rather than the institutional contract/economic/project rubric, because retail users
@@ -58,6 +66,13 @@ const weights: Record<string, number> | null =
         economic_score: data.score_weights.economic,
         project_score: data.score_weights.project,
       }
+    : isLendingVault && data.score_weights
+    ? {
+        contract_score: data.score_weights.contract,
+        credit_score: data.score_weights.credit,
+        liquidity_score: data.score_weights.liquidity,
+        operational_score: data.score_weights.operational,
+      }
     : null;
 
 const fmtUSD = (n?: number) =>
@@ -72,7 +87,11 @@ const fmtUSD = (n?: number) =>
 const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
 
 const categoryLabel = (c: string) =>
-  c === "tokenized-treasury" ? "Tokenized Treasury (RWA)" : c.replace("-", " ");
+  c === "tokenized-treasury"
+    ? "Tokenized Treasury (RWA)"
+    : c === "lending-vault"
+    ? "Lending Vault"
+    : c.replace("-", " ");
 ---
 
 <aside class="bg-card border border-border p-6 space-y-6 text-sm">
@@ -81,8 +100,8 @@ const categoryLabel = (c: string) =>
     <RiskBadge score={data.overall_score} size="lg" />
     <p class="text-xs text-muted-foreground mt-2">
       Scale 1–10. Higher is safer.
-      {isRwa && weights && (
-        <span class="block mt-1">Weighted composite — see §IV.</span>
+      {(isRwa || isLendingVault) && weights && (
+        <span class="block mt-1">Weighted composite — see report §IV/§V.</span>
       )}
     </p>
   </div>
@@ -129,7 +148,7 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      (isStable || isRwa) && data.issuer && (
+      (isStable || isRwa || isLendingVault) && data.issuer && (
         <div>
           <div class="eyebrow mb-1">Issuer</div>
           <div>{data.issuer}</div>
@@ -147,7 +166,7 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      isRwa && data.legal_jurisdiction && (
+      (isRwa || isLendingVault) && data.legal_jurisdiction && (
         <div>
           <div class="eyebrow mb-1">Jurisdiction</div>
           <div>{data.legal_jurisdiction}</div>
@@ -165,9 +184,9 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      isRwa && data.underlying_managers?.length > 0 && (
+      (isRwa || isLendingVault) && data.underlying_managers?.length > 0 && (
         <div>
-          <div class="eyebrow mb-1">Underlying Managers</div>
+          <div class="eyebrow mb-1">{isLendingVault ? "Operators / Delegates" : "Underlying Managers"}</div>
           <ul class="space-y-1">
             {data.underlying_managers.map((m: string) => (
               <li class="text-xs">{m}</li>
@@ -178,10 +197,10 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      (isStable || isRwa) && fmtUSD(data.market_cap_approx) && (
+      (isStable || isRwa || isLendingVault) && fmtUSD(data.market_cap_approx ?? data.tvl_gross) && (
         <div>
-          <div class="eyebrow mb-1">Market Cap</div>
-          <div class="font-mono">{fmtUSD(data.market_cap_approx)}</div>
+          <div class="eyebrow mb-1">{isLendingVault ? "Pool TVL" : "Market Cap"}</div>
+          <div class="font-mono">{fmtUSD(data.market_cap_approx ?? data.tvl_gross)}</div>
         </div>
       )
     }

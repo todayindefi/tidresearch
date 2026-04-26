@@ -35,15 +35,30 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
     { key: "project_score", label: "Project" },
     { key: "supply_integrity_score", label: "Supply Integrity" },
   ],
+  "lending-vault": [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "credit_score", label: "Credit" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "operational_score", label: "Operational" },
+    { key: "supply_integrity_score", label: "Supply Integrity" },
+  ],
 };
 
 const axes = AXES_BY_CATEGORY[data.category as string] ?? [];
 const isRwa = data.category === "tokenized-treasury";
+const isLendingVault = data.category === "lending-vault";
 const weights: Record<string, number> | null = isRwa && data.score_weights
   ? {
       contract_score: data.score_weights.contract,
       economic_score: data.score_weights.economic,
       project_score: data.score_weights.project,
+    }
+  : isLendingVault && data.score_weights
+  ? {
+      contract_score: data.score_weights.contract,
+      credit_score: data.score_weights.credit,
+      liquidity_score: data.score_weights.liquidity,
+      operational_score: data.score_weights.operational,
     }
   : null;
 
@@ -78,7 +93,7 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     </div>
   </div>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+  <div class={`grid grid-cols-2 ${axes.length === 5 ? "md:grid-cols-5" : "md:grid-cols-4"} gap-3 mb-6`}>
     {
       axes.map((a) => {
         const v = data[a.key];
