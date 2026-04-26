@@ -131,3 +131,7 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 **For deeper detail** — full audit findings, bridge architecture, DVN configuration, peer comparison, governance, and primary-redemption mechanics — see the [full institutional report](/reports/thbill-full/request) (email-gated, ~13,500 words).
 
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. Some attack classes — a recent example: the rsETH single-DVN bridge exploit in April 2026 — only become visible after they manifest in production; our methodology is retrospective on novel risks. We also cannot fully audit the underlying T-bill custody chain at Standard Chartered, Wellington Management's portfolio composition, the MPC operator's signer composition, or the Zenith audit report (acknowledged by Theo's docs but not publicly linked). Sized positions should leave room for residual unknowns this analysis cannot enumerate.
+
+## Corrections
+
+This report is based on publicly available documentation and on-chain analysis only — we don't have access to any private information Theo or Libeara may hold. If anything here is wrong, reach us at **info@todayindefi.com** and we'll correct the next revision.

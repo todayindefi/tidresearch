@@ -598,6 +598,10 @@ Contract source code, DVN configuration, and custody balances are verified at th
 
 Any institutional position should account for residual unknowns in proportion to the trust placed in the categories above. The on-chain backing ratio (in its three-tier form) and the KYC-gated primary redemption path are the strongest verifiable claims; everything upstream — custody, fund administration, audit, MPC operator composition, regulatory regime, novel attack classes — is verified at the level of transparency the issuer and counterparties choose to provide. The analysis is most useful when its limits are explicit; an unhedged "AAA"-style verdict would be epistemically overstated.
 
+**Corrections welcome:**
+
+This report is built from publicly available documentation (Theo docs, Libeara/FundBridge product pages, regulatory filings, rating-agency reports) and on-chain analysis. It does not draw on any private disclosures from Theo, Libeara, FundBridge, or Wellington. If anything here is wrong — including cases where Theo or Libeara have non-public information that contradicts a claim in this report — please reach out at **info@todayindefi.com** and we will correct the next revision and credit the source where appropriate.
+
 ---
 
 ## Sources
