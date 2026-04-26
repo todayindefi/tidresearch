@@ -552,6 +552,8 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 **FarmTracker exposure** (as of 2026-04-21): Pendle PT-thBILL on Arbitrum (+ Euler collateral use). Lives behind the Arbitrum receive path, which is verified multi-DVN.
 
+**PT-thBILL settlement mechanic (verified on-chain 2026-04-26).** The Pendle SY wrapper for thBILL on Arbitrum (`0xc32e96b4…6ed3D4`) reports its accounting asset (`assetInfo().asset`) as native USDC (`0xaf88…5831`), not thBILL. But `getTokensOut()` returns only thBILL, and `yieldToken()` is thBILL. So 1 PT-thBILL redeems at maturity (18-Jun-2026) to thBILL worth $1 USDC at Theo's attested NAV — not 1 whole thBILL, and not USDC. **Implication for sizing:** PT-thBILL fixes a *USDC-denominated* yield but settles in thBILL — holders never receive USDC at expiry and still bear thBILL's exit-path risk (KYC-gated primary redemption, thin secondary liquidity — see §II.4) to actually realize the USDC value. The path is two hops (PT → thBILL → USDC), not one. The Pendle UI's "1 USDC in thBILL" framing is mechanically correct.
+
 ---
 
 ## Bottom Line
