@@ -2,7 +2,7 @@
 asset: "thBILL"
 slug: "thbill"
 aliases: ["thBILL", "Theo thBILL", "thbill-retail"]
-chains: ["eth", "arb", "base", "hyperevm", "sol"]
+chains: ["eth", "arb", "base", "hyperevm"]
 category: "tokenized-treasury"
 peg_mechanism: "nav-accruing"
 assessment_type: "light"
@@ -43,7 +43,7 @@ underlying_managers:
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | ~9 months | Ethereum, Arbitrum, Base, HyperEVM, Solana |
+| ~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | ~9 months | Ethereum, Arbitrum, Base, HyperEVM |
 
 ## Summary
 
@@ -59,7 +59,7 @@ One audit from **Zenith Audits** covering the vault and bridge contracts. No bug
 
 The vault itself uses the standard ERC-4626 pattern (the common DeFi savings-vault interface), which is well-understood. Theo layers a proprietary "iToken" standard on top to handle pending-assets accounting across the 4-day off-chain settlement window. This is the novel part — it's not battle-tested outside Theo's own deployment.
 
-**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, HyperEVM, and Solana. Bridges are where recent attacks have concentrated — the rsETH exploit on 2026-04-18 ($292M loss) was a LayerZero OFT failure, the same architectural class thBILL uses. We ran an on-chain audit on all four EVM deployments to confirm whether thBILL is structurally exposed to the same attack class. **It is not, on the L2s.** Each peered pathway on Arbitrum, Base, and HyperEVM requires **3 independent DVNs** — LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs — an explicit upgrade above the 2-DVN default. rsETH's exploit hit a pathway that only required 1 DVN; thBILL's configuration would require compromising a quorum of independent providers across multiple operators, with no single-operator concentration. Zero exposed-and-peered pathways across the L2s where peer config is readable. The audit also closed two prior gaps: the multisig admin is now verifiable on the L2s (same Theo Safe `0x9487…1295`), and a `paused()` function exists on the Ethereum OFTAdapter (currently `false`). One scope correction landed alongside the audit: earlier listings of Avalanche as a deployment chain were wrong — Avalanche has zero bytecode at the candidate addresses, so thBILL is *not* deployed there.
+**Cross-chain model.** thBILL uses LayerZero's OFT (Omnichain Fungible Token) standard to move between Ethereum, Arbitrum, Base, and HyperEVM. Bridges are where recent attacks have concentrated — the rsETH exploit on 2026-04-18 ($292M loss) was a LayerZero OFT failure, the same architectural class thBILL uses. We ran an on-chain audit on all four EVM deployments to confirm whether thBILL is structurally exposed to the same attack class. **It is not, on the L2s.** Each peered pathway on Arbitrum, Base, and HyperEVM requires **3 independent DVNs** — LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs — an explicit upgrade above the 2-DVN default. rsETH's exploit hit a pathway that only required 1 DVN; thBILL's configuration would require compromising a quorum of independent providers across multiple operators, with no single-operator concentration. Zero exposed-and-peered pathways across the L2s where peer config is readable. The audit also closed two prior gaps: the multisig admin is now verifiable on the L2s (same Theo Safe `0x9487…1295`), and a `paused()` function exists on the Ethereum OFTAdapter (currently `false`). One scope correction landed alongside the audit: earlier listings of Avalanche as a deployment chain were wrong — Avalanche has zero bytecode at the candidate addresses, so thBILL is *not* deployed there.
 
 **The caveats:** (1) thBILL's Ethereum bridge contract is a proxy that doesn't expose peer config or owner identity to standard reads — the 9 "exposed" defaults that show up on Ethereum (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, HyperEVM, Katana, Monad) can't be confirmed peered or unpeered without off-chain disclosure from Theo. Worst-case framing on Ethereum applies until disclosure. (2) Destination-chain adapter contracts were likely deployed after the single Zenith audit was completed, so that code surface is probably unaudited. A correct DVN config doesn't protect against a buggy adapter. (3) No publicly confirmed kill-switch for cross-chain emergencies; the Ethereum `paused()` exists but its pauser identity is unresolved. (4) The Theo admin Safe is **3-of-5 on Arbitrum but 3-of-4 on Base/HyperEVM** — small inconsistency worth confirming with Theo, but not necessarily a bug. (5) Multiple unpeered pathways have burn-address DVN defaults — not exploitable today, but if Theo ever activates one of those chains the burn DVN would block message delivery until receive config is replaced.
 
@@ -77,13 +77,13 @@ thBILL's price goes up over time. At launch ($1.00), today (~$1.023), roughly +3
 
 ### Getting in and out
 
-**Getting in** is easy — buy on a DEX (Uniswap V3 on Ethereum, Arbitrum, or Base). The current market price runs about 30–50 bps *below* NAV on average, which means you're buying at a small discount. That's a good thing for the buyer.
+**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, ~$740K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, ~$555K). Uniswap V3 on Ethereum exists but is now thin (~$12K). Base is technically a deployment chain but has no live liquidity (~$300 across three abandoned pools). The current market price runs about 30–50 bps *below* NAV on average, which means you're buying at a small discount. That's a good thing for the buyer.
 
 **Getting out is the catch.** Primary redemption (the official swap-back-to-USDC path) requires KYC and accredited-investor status. For most retail DeFi users, this isn't available. Your practical exit = selling on a DEX.
 
 The secondary market prices thBILL at a persistent 30–50 bp discount to NAV. This discount is not a bug — it's structural. The only participants who can close the discount via arbitrage are KYC'd institutions, and they only arbitrage when the spread exceeds their own costs (redemption fees at the underlying fund, gas, 4-day settlement carry). So the discount has a floor, and **that floor is your real exit cost as a retail user.**
 
-Exit sizing matters. DEX pool depth is around $1.4M on the main Arbitrum pool against a $134M fund — a 2% slippage tolerance clears roughly $225K buy / $875K sell before you eat materially more discount. For positions under ~$100K you'll likely exit at the normal 30–50 bp discount. Above that, expect worse.
+Exit sizing matters, and the picture has gotten thinner over the last six months. Total tracked DEX liquidity across all chains is now ~$1.6M against a $134M fund (down from ~$6.5M in Nov 2025). On the two deepest pools — Uniswap V3 thBILL/USDC on Arbitrum and Project X thBILL/USDT0 on HyperEVM — a 2% slippage budget clears roughly **$58K on the buy side / $196K on the sell side** on Arbitrum, and **$64K buy / $679K sell** on HyperEVM. The asymmetry is because both pools currently hold more stablecoin than thBILL, so trading thBILL → stable has more depth than the reverse. For *sells* under ~$50K on either chain you'll likely exit at the normal 30–50 bp discount. For *buys* above ~$25K, or sells above ~$200K (Arbitrum) / ~$500K (HyperEVM), expect to eat noticeably more.
 
 **Fee note.** The underlying fund's fee schedule isn't publicly disclosed with confidence — public sources (rwa.xyz, stomarket.com) actually disagree on whether a 0.45% figure is a redemption fee or a management fee. Net: the underlying layer takes somewhere between 30 and 100 bps annually, and part of that probably comes out on redemption. This matters mostly for KYC'd holders; for retail it's baked into the DEX discount floor.
 

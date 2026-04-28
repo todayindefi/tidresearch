@@ -2,7 +2,7 @@
 asset: "thBILL"
 slug: "thbill-full"
 aliases: ["thBILL", "Theo thBILL", "Theo Short Duration US Treasury Fund"]
-chains: ["eth", "arb", "base", "hyperevm", "sol"]
+chains: ["eth", "arb", "base", "hyperevm"]
 category: "tokenized-treasury"
 assessment_type: "full"
 audience: "institutional"
@@ -114,8 +114,8 @@ supply_integrity_flags:
 | **Underlying exposure** | 100% tULTRA (Libeara × FundBridge × Wellington Management) |
 | **Type** | Tokenized US T-bill basket (RWA) |
 | **Primary access** | KYC-gated; USDC in, USDC out (T+4 business days) |
-| **Secondary access** | Uniswap v3 on Ethereum / Arbitrum / Base (no KYC) |
-| **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM, Solana |
+| **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
+| **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM |
 | **Cross-chain mechanism** | LayerZero OFT |
 | **Market cap (2026-04-21)** | ~$134M |
 | **Price (2026-04-21)** | $1.02 |
@@ -126,7 +126,7 @@ supply_integrity_flags:
 
 ## Protocol Summary
 
-thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain money-market product providing exposure to short-duration US T-bills through a regulated TradFi fund stack (Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, Wellington Management as sub-advisor). Launched July 2025 on Ethereum and expanded via LayerZero OFT to Arbitrum, Base, HyperEVM, and Solana, thBILL sits at the intersection of two risk categories: off-chain TradFi custody and on-chain cross-chain bridge security.
+thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain money-market product providing exposure to short-duration US T-bills through a regulated TradFi fund stack (Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, Wellington Management as sub-advisor). Launched July 2025 on Ethereum and expanded via LayerZero OFT to Arbitrum, Base, and HyperEVM, thBILL sits at the intersection of two risk categories: off-chain TradFi custody and on-chain cross-chain bridge security.
 
 The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. On-chain audits (initial 2026-04-21 DVN check + extended 2026-04-25 L2 sweep) confirm thBILL's OFT is configured with 2-3 required DVNs on all active pathways, **structurally different** from the single-DVN config that broke Kelp; the 2026-04-25 follow-up additionally closed two prior gaps (L2 admin Safe verified as the same Theo `0x94877640…01295`, Ethereum OFTAdapter `paused()` exists and is currently `false`).
 
@@ -279,7 +279,7 @@ Raw audit outputs: `~/PegTracker/data/thbill_{ethereum,arbitrum,base,hyperevm}-o
 
 PegTracker's extended `oft_audit.py` ran on all four EVM deployments — extends the 2026-04-21 Blockaid DVN-config check (Layer 1) to Layers 2–7. Headline: bridge clean across L2s, two prior gaps closed, two still open, one new finding worth flagging.
 
-**Deployment scope correction.** CoinGecko platform list confirms thBILL is on **Ethereum, Arbitrum, Base, HyperEVM** — *not* Avalanche. Avalanche has zero bytecode at both candidate addresses; the prior frontmatter listing was wrong. Solana is non-EVM and out of scope for this audit script.
+**Deployment scope correction.** CoinGecko platform list confirms thBILL is on **Ethereum, Arbitrum, Base, HyperEVM** — *not* Avalanche, *not* Solana. Avalanche has zero bytecode at both candidate addresses; Solana is not listed as a deployment by CoinGecko (`detail_platforms` returns only the four EVM chains above). Earlier frontmatter listings of Avalanche and Solana were both wrong and have been removed.
 
 **Bridge contract topology:**
 
@@ -415,7 +415,7 @@ A reader wanting to know "is anyone actually exiting thBILL?" should read the us
 
 **Institutional implication — KYC primary-redemption access is load-bearing, not optional.** Any institutional holder intending to deploy meaningful capital into thBILL should establish KYC primary-redemption access with both Theo and Libeara/FundBridge **before sizing up**. The consequences of not doing so:
 
-- DEX secondary markets are the only alternative exit, and depth thins fast beyond ~$200K per trade on current pools. Exits above that size compound 2% slippage on top of the standing peg discount.
+- DEX secondary markets are the only alternative exit, and current 2% depth is asymmetric and venue-dependent: roughly $58K buy / $196K sell on Arbitrum (Uniswap V3 thBILL/USDC), and $64K buy / $679K sell on HyperEVM (Project X thBILL/USDT0). Exits above those thresholds compound additional slippage on top of the standing peg discount; entries above the buy-side numbers eat slippage immediately.
 - Non-KYC holders' sells cannot close the peg spread — there is no arbitrage incentive for them to sell at a discount only to be unable to redeem at NAV. The peg discount is therefore a permanent exit cost for non-KYC capital, not a transient mispricing.
 - The NAV-vs-market differential compounds against target returns at rates (empirically 30–100 bp) that are material for any allocation where sub-1% tracking error matters.
 
@@ -427,15 +427,29 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 **Current price:** $1.02 USD. 7-day range $1.01-$1.02 (tight peg). 24h volume ~$681K (substantially lower than the ~$5M daily turnover reported in the Nov 2025 assessment — consistent with the mcap decline).
 
-**Secondary market venues (Nov 2025 snapshot, not re-verified live for this report):**
-| Network | Pool | Liquidity (Nov 2025) | 24h Vol (Nov 2025) | Age |
-|---|---|---|---|---|
-| Arbitrum | Uniswap v3 thBILL/USDC | $4.5M | $4.1M | 3 mo |
-| Ethereum | Uniswap v3 thBILL/USDC | $1.9M | $0.93M | 3 mo |
-| Base (Project-X) | thBILL/WHY-Pe | $53.7K | $34.8K | 2 mo |
-| Base (Project-X) | thBILL/WHY-Pe | $8.1K | $6.5K | 1 mo |
+**Secondary market venues (live from GeckoTerminal, 2026-04-28).** Total tracked DEX liquidity is **~$1.64M across 19 pools and 3 active chains**, down from ~$6.5M in the Nov 2025 manual assessment. The deepest single venue has shifted from Arbitrum to HyperEVM:
 
-**Note:** These pool figures are from the Nov 2025 manual assessment. Given the ~15% market-cap drawdown since that window and the ~7x decline in daily volume, on-chain pool depths are almost certainly lower now. Worth re-querying from DexScreener before any sizing decision.
+| Chain | DEX | Pair | Reserve | 24h Vol | 2% Depth (buy / sell) |
+|---|---|---|---|---|---|
+| HyperEVM | Project X | thBILL/USDT0 | $739K | $79K | $64K / $679K |
+| Arbitrum | Uniswap V3 | thBILL/USDC | $555K | $108K | $58K / $196K |
+| Arbitrum | Uniswap V4 | thBILL/USDC | $130K | $3K | n/a |
+| HyperEVM | HyperBrick | thBILL/USDT0 | $51K | $0 | n/a |
+| HyperEVM | Upheaval | thBILL/USDT0 | $49K | $4K | n/a |
+| HyperEVM | Project X | thBILL/USDH | $42K | $0 | $1K / $0.4K |
+| HyperEVM | UltraSolid V3 | thBILL/USDT0 | $18K | $0 | n/a |
+| Ethereum | Uniswap V3 | thBILL/USDC | $12K | $106 | $1K / $0.4K |
+| HyperEVM | (10+ smaller pools) | various | <$10K each | mostly $0 | — |
+
+**Key observations vs. the Nov 2025 snapshot:**
+- **Arbitrum Uniswap V3 thBILL/USDC**: $4.5M → $555K (8× contraction), but still the deepest stablecoin pair we have on-chain depth instrumentation for.
+- **Ethereum Uniswap V3 thBILL/USDC**: $1.9M → $12K (160× contraction). Effectively dead.
+- **Project X**: corrected — Project X is on **HyperEVM**, not Base (the prior Nov 2025 table mis-attributed it). The HyperEVM Project X thBILL/USDT0 pool has grown into the deepest single venue.
+- **Uniswap V4 (Arbitrum)**: a new $130K pool that did not exist in the Nov 2025 snapshot.
+- **Base**: thBILL is deployed on Base (`0xfdd22ce6…5a5a`) but the three Base pools (Uniswap V4 ×2, Aerodrome SlipStream ×1) hold a combined ~$303 of reserves and have done $0 of 24h volume. Base is a deployment chain, not a trading venue.
+- **HyperEVM long tail**: 14+ smaller pools across Project X, Upheaval, UltraSolid, HyperSwap, Hybra, HyperBrick. Most carry <$10K and zero recent flow — likely seeded LP positions awaiting a launch / routing.
+
+**2% depth is computed on-chain via Uniswap V3 / Project X QuoterV2** for pools where (a) the DEX exposes a Uniswap V3-compatible quoter we can call, and (b) the non-thBILL side is a recognized stablecoin. Pools without depth instrumentation (Uniswap V4, Aerodrome, HyperBrick, Upheaval, UltraSolid, Hybra) show "n/a" — the reserve figure still indicates whether the pool *has* liquidity, but exit slippage at size on those venues is not measured here.
 
 **Peg stability (Nov 2025 window, 2025-11-05 → 2025-11-06, 23 intraday points):**
 - Average premium/discount: −0.19% (slight discount)
@@ -531,12 +545,12 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 **Highest priority — unverified items:**
 
 1. **Verify `setPeer` status on Ethereum** for the 9 inbound EIDs at 1-DVN default per the 2026-04-25 audit: 30214 (Sei), 30230 (Shimmer), 30243 (Blast), 30255 (Fraxtal), 30292 (Etherlink), 30320 (Bitlayer), **30367 (HyperEVM)**, 30375 (Katana), 30390 (Monad). The HyperEVM entry (30367) is the priority — Theo deploys on HyperEVM, so peer is operationally required to be set, making this the live rsETH-class attack surface today. The other 8 are theoretical absent off-chain peer disclosure. Peer config check requires resolving the thBILL Ethereum proxy's actual OFT interface (`peers(uint32)` reverted on both proxy and implementation `0x325478a069b0DbBdfbEe909FA3741F84259Ba519` in both the 2026-04-21 and 2026-04-25 sessions — likely a non-standard iToken shape). On the L2s, peer config IS readable and verified zero exposed-AND-peered.
-2. **Confirm OFT adapter was in Zenith audit scope.** The July 2025 audit predates the cross-chain expansion to HyperEVM / Solana. If the adapter is unaudited, a fresh audit on the bridge surface is the single highest-value remediation.
+2. **Confirm OFT adapter was in Zenith audit scope.** The July 2025 audit predates the cross-chain expansion to HyperEVM. If the adapter is unaudited, a fresh audit on the bridge surface is the single highest-value remediation.
 3. **Disclose multisig signer composition** for Owner, Whitelist, and Emergency roles. Currently opaque; meaningful for risk modeling.
 
 **Medium priority — ongoing monitoring:**
 
-4. Re-query Uniswap v3 pool depths across Ethereum / Arbitrum / Base. Nov 2025 pool data is 5 months old and likely decayed given 7x volume decline.
+4. ~~Re-query Uniswap v3 pool depths across Ethereum / Arbitrum / Base.~~ **Done 2026-04-28 via GeckoTerminal — see §II.c.** Total tracked DEX liquidity has decayed from ~$6.5M to ~$1.64M; deepest single venue is now HyperEVM Project X (not Arbitrum). Continue to re-query before any sizing decision; the long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
 5. Monitor secondary-market peg weekly through the post-rsETH risk-off window. Any sustained >0.5% discount signals structural concerns.
 6. Watch for basket diversification beyond tULTRA. Single-issuer concentration is the largest un-mitigated economic risk.
 7. Track settlement latency. 4-day baseline is longest in peer set; any drift higher is a liquidity-management signal.
@@ -557,7 +571,6 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 | Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25) |
 | Base | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25) |
 | HyperEVM | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25; HyperEVM-specific LZ deployment) |
-| Solana | address TBD | LayerZero OFT (Solana-side DVN config not audited; non-EVM, separate stack) |
 
 **FarmTracker exposure** (as of 2026-04-21): Pendle PT-thBILL on Arbitrum (+ Euler collateral use). Lives behind the Arbitrum receive path, which is verified multi-DVN.
 
