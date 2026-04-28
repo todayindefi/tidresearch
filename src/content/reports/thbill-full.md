@@ -7,18 +7,18 @@ category: "tokenized-treasury"
 assessment_type: "full"
 audience: "institutional"
 companion_report: "thbill"
-date: "2026-04-21"
-last_verified: "2026-04-25"
+date: "2026-04-28"
+last_verified: "2026-04-28"
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 production: true
 issuer: "Theo Protocol Corporation"
-market_cap_approx: 134000000
-tvl_gross: 134000000
-contract_score: 5.0
+market_cap_approx: 133000000
+tvl_gross: 133000000
+contract_score: 5.5
 economic_score: 5.5
 project_score: 4.5
-overall_score: 5.0
-supply_integrity_score: 5.0
+overall_score: 5.2
+supply_integrity_score: 5.5
 score_weights:
   contract: 0.4
   economic: 0.3
@@ -59,7 +59,7 @@ mint_paths:
     trust_size: 2
     pausable: null
     timelock_seconds: null
-    notes: "LayerZero OFT between Ethereum <-> Arbitrum / Base / HyperEVM: 3 DVNs per peered pathway (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) per 2026-04-25 audit. Meaningfully stronger than the single-DVN config that broke rsETH. Active deployment chains (verified on-chain): Ethereum, Arbitrum, Base, HyperEVM."
+    notes: "LayerZero OFT between Ethereum <-> Arbitrum / Base / HyperEVM: 3 DVNs per peered pathway (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs). Meaningfully stronger than the single-DVN config that broke rsETH. Active deployment chains: Ethereum, Arbitrum, Base, HyperEVM."
   - id: "l2_oft_mint_obscure"
     mechanism: "bridge-oft"
     trust_set: "dvn-N"
@@ -93,12 +93,12 @@ supply_integrity_flags:
   - "permissioned-mint"
   - "no-bankruptcy-remoteness"
   - "no-timelock-disclosed"
-  - "default-dvn-on-unused-pathways"
+  - "default-dvn-on-unused-pathways-inert"
   - "oft-adapter-code-likely-unaudited"
-  - "partial-oapp-pause-pauser-unresolved"
+  - "no-oftadapter-pause-function"
   - "lz-endpoint-shared-dependency"
   - "mpc-scheme-undocumented"
-  - "proxy-admin-role-unverified"
+  - "uups-upgrade-authority-on-itoken"
   - "pending-assets-self-reported-oracle"
   - "synthetic-tultra-wrapper"
 ---
@@ -117,8 +117,8 @@ supply_integrity_flags:
 | **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
 | **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM |
 | **Cross-chain mechanism** | LayerZero OFT |
-| **Market cap (2026-04-21)** | ~$134M |
-| **Price (2026-04-21)** | $1.02 |
+| **Market cap** | ~$133M (supply ~129.95M × NAV $1.0245) |
+| **Price** | $1.020 (DEX VWAP, ~0.39% discount to NAV) |
 
 > *Overall score (5.0) is a weighted composite — see §IV for category weights.*
 
@@ -128,13 +128,13 @@ supply_integrity_flags:
 
 thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain money-market product providing exposure to short-duration US T-bills through a regulated TradFi fund stack (Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, Wellington Management as sub-advisor). Launched July 2025 on Ethereum and expanded via LayerZero OFT to Arbitrum, Base, and HyperEVM, thBILL sits at the intersection of two risk categories: off-chain TradFi custody and on-chain cross-chain bridge security.
 
-The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. On-chain audits (initial 2026-04-21 DVN check + extended 2026-04-25 L2 sweep) confirm thBILL's OFT is configured with 2-3 required DVNs on all active pathways, **structurally different** from the single-DVN config that broke Kelp; the 2026-04-25 follow-up additionally closed two prior gaps (L2 admin Safe verified as the same Theo `0x94877640…01295`, Ethereum OFTAdapter `paused()` exists and is currently `false`).
+The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. thBILL's OFTAdapter on Ethereum (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` — separate from the iToken vault at `0x5FA487…DA0b`) is configured with **3 required DVNs** on every peered pathway (Arbitrum, Base, HyperEVM, BSC, Mantle, Monad) — an explicit upgrade above the 2-DVN MIN-PASS default and a meaningfully stronger posture than the single-DVN config that broke Kelp. **Zero exposed-AND-peered pathways across all four EVM deployments** — the bridge layer is verified clean.
 
 Overall profile: strong asset quality (US T-bills via regulated institutions), competent technical implementation (single Zenith audit, multi-DVN bridge), offset by centralized governance (fully Theo-controlled multisigs, no DAO, no timelock), non-atomic redemption (4-day USDC settlement), limited operating history (~9 months), and no bankruptcy-remote claim on underlying T-bills.
 
 ---
 
-## I. Smart Contract Risk — 5.0/10
+## I. Smart Contract Risk — 5.5/10
 
 ### Audit Coverage
 
@@ -172,53 +172,45 @@ Overall profile: strong asset quality (US T-bills via regulated institutions), c
 
 **MPC treasury — trust unpacked.** The "MPC treasury" row above is a significant trust surface that deserves decomposition. Publicly documented: *that* an MPC scheme is used to co-sign mint/redeem transactions. Not publicly documented: the threshold scheme (t-of-n), the identity of co-signing parties (internal Theo staff only vs a managed custodian like Fireblocks / Copper / Fordefi), the geographic distribution of co-signers (single-jurisdiction subpoena risk), or the key-generation ceremony attestation. "MPC" is often perceived as stronger than "multisig," but a managed-service MPC introduces a third-party infrastructure dependency (see the 2023 Fireblocks key-exposure disclosure for precedent). Without these details confirmed, the MPC should be treated as functionally equivalent to an opaque multisig of unknown composition.
 
-**Proxy admin role — verification pending.** The Owner / Admin multisig above is described as having upgrade authority. For upgradeable proxy patterns, there is often a *distinct* proxy-admin role (the address permitted to call `upgradeTo` on the proxy contract itself) separate from the `owner` role on the implementation. Under UUPS or standard Transparent proxy patterns these can be the same address, but this has not been explicitly verified for thBILL. Worst case: an undocumented proxy-admin key exists that can push implementation changes independently of the 3-of-5 owner multisig. Recommend verifying via `admin()` / `EIP1967` slot reads on the deployed proxies.
+**Proxy admin role — UUPS pattern, no separate admin key.** EIP-1967 slot reads on the iToken vault (`0x5FA487…DA0b`) return: implementation = `0x325478a069b0DbBdfbEe909FA3741F84259Ba519`, admin slot **empty** — confirming UUPS upgradeable, where upgrade authority lives in the implementation's `_authorizeUpgrade` modifier (typically owner-gated) rather than a separate proxy-admin role. The Theo 3-of-5 owner multisig (`0x94877640…01295`) holds full upgrade authority via this path; there is no undocumented separate-admin-key risk surface. The OFTAdapter at `0xfDD22Ce6…F55A5a` is **not a proxy at all** — both EIP-1967 admin and implementation slots are empty, and the contract has 11 KB of direct bytecode, indicating an immutable deployment. Bridge logic cannot be upgraded; only `setPeer`, `setConfig`, and similar OApp parameter changes are owner-gated.
 
 ### Incident History
 
-Clean through 2026-04-21. No reported exploits, forced pauses, or redemption failures. The rsETH incident on 2026-04-18 did not affect thBILL directly — DVN audit (§I.5) shows thBILL's bridge configuration is materially different from Kelp's.
+Clean since launch. No reported exploits, forced pauses, or redemption failures. The rsETH incident on 2026-04-18 did not affect thBILL directly — DVN audit (§I.5) shows thBILL's bridge configuration is materially different from Kelp's.
 
 ### Lindy
 
 ~9 months live as of this assessment (launch July 2025). Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
 
-**Contract Risk Score: 5.0/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy. Additional trust holes surfaced 2026-04-23: MPC scheme (threshold, co-signers, ceremony) is undocumented and should be treated as opaque multisig of unknown composition; distinct EIP-1967 proxy-admin role not yet verified via on-chain reads — worst case is an undocumented proxy-admin key independent of the 3-of-5 multisig.
+**Contract Risk Score: 5.5/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles, and proper 3-DVN custom config across every peered cross-chain pathway. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy. Trust holes: the MPC scheme (threshold, co-signers, ceremony) is undocumented and should be treated as opaque multisig of unknown composition; the distinct EIP-1967 proxy-admin role is not verifiable via on-chain reads — worst case is an undocumented proxy-admin key independent of the 3-of-5 multisig.
 
 ---
 
-## I.5 Supply Integrity — 5.0/10
+## I.5 Supply Integrity — 5.5/10
 
 Two distinct risk shapes stack here:
-1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III). At the wrapper layer specifically: on-chain verification (2026-04-23) shows the tULTRA wrapper is **synthetic** — `ULTRA.balanceOf(tULTRA wrapper) = 0` and the underlying ERC-4626 contract has been **dormant for 70 days** (zero `EscrowBegin`/`EscrowEnd`, zero `depositOptimistic`, zero `Transfer` events, zero mints/burns). The current 129.46M tULTRA supply was set under a prior implementation and carried through a UUPS upgrade ~37 days ago. `totalAssets()` is fully attested via `totalAssetsPending`, not derived from held tokens. The 4626 interface at the tULTRA layer is **effectively ceremonial** — all real mint/redemption flows happen off-contract via Theo's MPC and Libeara's `UltraManagerFiat`. ULTRA functions as a reference unit for NAV accounting, not a claimable on-chain asset. Coverage is verified by reconciling Theo's treasury custody against `tULTRA.totalSupply()` (cross-check), not by reading ULTRA from the wrapper (contract invariant).
-2. **Cross-chain bridge** — LayerZero OFT across 5+ destinations. Bridge security has three separable layers: (a) **DVN configuration** (who validates cross-chain messages), (b) **adapter contract code** (what executes on receipt), and (c) **LayerZero Endpoint contracts themselves** (shared infrastructure admin-controlled by LayerZero's own governance — an issue pushed at the Endpoint layer, e.g., adversarial MessageLibrary swap or endpoint upgrade, affects every OFT including thBILL). DVN config (a) was verified on-chain across two passes — initial check 2026-04-21, extended L2 sweep 2026-04-25 — confirming peered pathways on Arbitrum/Base/HyperEVM require **3 DVNs** (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs), an explicit upgrade above the 2-DVN MIN-PASS default. Zero exposed-and-peered pathways on the L2s where peer config is readable. The 2026-04-25 follow-up also closed two prior gaps: the L2 admin Safe is now confirmed as the same Theo `0x94877640…01295` across Arb/Base/HyperEVM, and a `paused()` function exists on the Ethereum OFTAdapter (currently `false`). Adapter contracts (b), however, were most likely deployed after the single Zenith audit closed (the cross-chain expansion post-dates the July 2025 audit per §I) and are therefore probably unaudited code. **A correct DVN config does not protect against a buggy adapter.** Endpoint-layer risk (c) is a shared-dependency trust assumption inherited by every LayerZero project, not thBILL-specific, but worth naming. Residual concerns: 9 inbound pathways on Ethereum's receive lib remain at the 1-DVN MIN-PASS default (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, **HyperEVM**, Katana, Monad) — exploitable only if Theo has `setPeer` configured for those EIDs, but Ethereum's proxy hides `peers()` from on-chain reads so this cannot be confirmed; the HyperEVM entry is operationally most concerning because Theo *does* deploy on HyperEVM and peer is operationally required, making this the most likely live rsETH-class attack surface; 8 similar 1-DVN exposures on Arbitrum and 4 on Base, none confirmed as peered (zero exposed-AND-peered on the L2s); pauser identity on the Ethereum OFTAdapter still unresolved (owner read blocked by proxy); L2 OFTs don't expose `paused()` at all.
+1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III). At the wrapper layer specifically: the tULTRA wrapper is **synthetic** — `ULTRA.balanceOf(tULTRA wrapper) = 0` and the underlying ERC-4626 contract is **dormant** (zero `EscrowBegin`/`EscrowEnd`, zero `depositOptimistic`, zero `Transfer` events, zero mints/burns over a 70-day observation window). The current 129.46M tULTRA supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`, not derived from held tokens. The 4626 interface at the tULTRA layer is **effectively ceremonial** — all real mint/redemption flows happen off-contract via Theo's MPC and Libeara's `UltraManagerFiat`. ULTRA functions as a reference unit for NAV accounting, not a claimable on-chain asset. Coverage is verified by reconciling Theo's treasury custody against `tULTRA.totalSupply()` (cross-check), not by reading ULTRA from the wrapper (contract invariant).
+2. **Cross-chain bridge** — LayerZero OFT across 4 EVM chains. Bridge security has three separable layers: (a) **DVN configuration** (who validates cross-chain messages), (b) **adapter contract code** (what executes on receipt), and (c) **LayerZero Endpoint contracts themselves** (shared infrastructure admin-controlled by LayerZero's own governance — an issue pushed at the Endpoint layer, e.g., adversarial MessageLibrary swap or endpoint upgrade, affects every OFT including thBILL). For (a), every peered pathway on the Ethereum OFTAdapter (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a`) and the L2 OFTs requires **3 DVNs** (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) — an explicit upgrade above the 2-DVN MIN-PASS default. **Zero exposed-AND-peered pathways across all four EVM deployments** — peer config and DVN config are aligned on the Ethereum OFTAdapter just as on the L2s. The admin Safe is the same Theo `0x94877640…01295` on Ethereum (3-of-5), Arbitrum (3-of-5), Base, and HyperEVM (3-of-4 on the latter two — a small asymmetry worth noting). Adapter contracts (b) were most likely deployed after the single Zenith audit closed (the cross-chain expansion post-dates the July 2025 audit per §I) and are therefore probably unaudited code. **A correct DVN config does not protect against a buggy adapter.** Endpoint-layer risk (c) is a shared-dependency trust assumption inherited by every LayerZero project, not thBILL-specific, but worth naming. Residual concerns: 7 inbound EIDs on Ethereum's OFTAdapter receive lib are at the 1-DVN default (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana) and 1 EID at 2-DVN MIN-PASS default (Sonic), but **all have `peers()` UNSET** — they are inert and exploitable only if Theo were to call `setPeer` for those EIDs without first upgrading the corresponding receive-lib config; this is a forward-looking operational concern, not a current exposure. The OFTAdapter has no `paused()` function (it's not Pausable), so emergency pause control on the bridge layer relies on either (i) Endpoint-level controls or (ii) pausing the underlying iToken (which the adapter must transferFrom/transfer through, indirectly halting bridge flows).
 
 ### Mint paths
 
 #### kyc_mint — admin-mint (Ethereum, canonical)
 - **Trust assumption:** Theo issuance operator (KYC-gated permissioned role)
 - **Capture cost estimate:** Compromise of the issuance signer / operator keys
-- **Value secured:** Entire thBILL supply (~$134M as of 2026-04-21)
+- **Value secured:** Entire thBILL supply (~$133M)
 - **Asymmetry:** Depends on operator key management (EOA vs multisig not public for the issuance role specifically)
 - **Controls:** KYC bottleneck on counterparties; Emergency 2-of-4 can pause
 
 #### l2_oft_mint_major — bridge-oft (Ethereum ↔ Arbitrum, Base, HyperEVM)
-- **Trust assumption:** 2-3 LayerZero DVNs required per pathway (verified on-chain 2026-04-21)
+- **Trust assumption:** 3 LayerZero DVNs required per peered pathway (verified on-chain)
 - **Capture cost estimate:** Compromise ≥2 independent DVN providers simultaneously (meaningful economic barrier; the rsETH failure mode requires only 1)
 - **Value secured:** Bulk of thBILL supply (these are the chains Theo actively deploys on)
-- **Asymmetry:** Acceptable for a ~$134M-TVL asset at present size
+- **Asymmetry:** Acceptable for a ~$133M-TVL asset at present size
 - **Controls:** Multi-DVN quorum; LayerZero pauser (OApp-level pause capability not independently verified)
 
-#### l2_oft_mint_obscure — bridge-oft (inbound from chains at 1-DVN default)
-- **Trust assumption:** 1 DVN (default LayerZero config, not an explicitly configured hardening)
-- **Capture cost estimate:** Same as rsETH's failure mode — low six figures
-- **Value secured:** Any thBILL that can be minted via the pathway
-- **Asymmetry:** HIGH if exploitable, ZERO if peer not configured
-- **Per-chain exposure (2026-04-25 audit):**
-  - Ethereum: 9 exposed pathways — Sei (30214), Shimmer (30230), Blast (30243), Fraxtal (30255), Etherlink (30292), Bitlayer (30320), **HyperEVM (30367)**, Katana (30375), Monad (30390)
-  - Arbitrum: 8 exposed pathways — Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Sonic, Katana
-  - Base: 4 exposed pathways — Sei, Fraxtal, Etherlink, Katana
-- **Exploitability gate:** Requires Theo to have `setPeer(eid, address)` configured for the corresponding EID on the receive-side contract. On Arbitrum/Base/HyperEVM, peer config is readable on-chain — verified zero exposed-AND-peered pathways on the L2s. **On Ethereum, `peers()` reverts on the proxy and implementation** — peer config cannot be verified from on-chain reads. The HyperEVM exposure on Ethereum is the most operationally concerning because Theo deploys on HyperEVM and peer is operationally required for HyperEVM → Ethereum bridges to work; if peer is set (the most likely state), this is a live rsETH-class attack vector today.
-- **How we verified:** Ran `getUlnConfig(thBILL, srcEID)` on the ReceiveUln302 library of each chain via PegTracker `oft_audit.py` (2026-04-25). Raw output at `~/PegTracker/data/thbill_{ethereum,arbitrum,base,hyperevm}-oft-audit-2026-04-25.md`.
+#### l2_oft_mint_unpeered — forward-looking note, no active exposure
+- **Current state:** All four chains' OFTAdapters have `peers()` returning zero for every EID where the receive-lib config is at LayerZero defaults (1-DVN or 2-DVN). With no peer set, no inbound message from those sources can reach the OApp regardless of DVN config — the OApp peer-check rejects forged sender addresses one layer above the DVN layer. **No active exposure today.**
+- **Forward-looking concern:** If Theo expands to a new chain in future, operational ordering matters. The receive-lib DVN config for the new source EID should be upgraded to ≥2 DVNs (ideally 3, matching the current posture) *before* `setPeer` is called. A `setPeer` call without a prior `setConfig` would create a 1-DVN-exposure window for the duration of the gap.
 
 #### basket_composition — admin-mint (Ethereum)
 - **Trust assumption:** Theo admin role (3-of-5 owner multisig) can add/remove basket constituents
@@ -237,9 +229,9 @@ Two distinct risk shapes stack here:
 
 ### Failure mode analysis
 
-**l2_oft_mint_major — NOT rsETH-shaped.** On-chain audit (2026-04-21) confirmed 2-3 required DVNs on all pathways between Ethereum and the chains Theo actively deploys to. A forged `lzReceive` requires compromising a quorum of independent DVNs, not a single verifier. This is the configuration LayerZero recommended post-rsETH.
+**l2_oft_mint_major — NOT rsETH-shaped.** Every peered cross-chain pathway requires 3 DVNs (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) on the L2 OFTs and the Ethereum OFTAdapter alike. A forged `lzReceive` requires compromising 3 independent DVN providers simultaneously, not a single verifier. This is the configuration LayerZero recommended post-rsETH.
 
-**l2_oft_mint_obscure — latent default, with one operationally-live exposure.** Per the 2026-04-25 audit, the Ethereum receive lib accepts 1-DVN packets from 9 source chains (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, HyperEVM, Katana, Monad); Arbitrum from 8 (the eight listed above except HyperEVM but including Sonic); Base from 4 (Sei, Fraxtal, Etherlink, Katana). All are LayerZero default config inherited without explicit override. Exploitable ONLY if Theo's OApp has `setPeer` configured for those EIDs; on the L2s peer config was checked and confirmed zero exposed-AND-peered. **On Ethereum, peer config cannot be read** (`peers()` reverts on both proxy and implementation), so 8 of the 9 are theoretical exposures pending off-chain disclosure — but **HyperEVM (EID 30367) is operationally different**: Theo deploys on HyperEVM, so peer for 30367 must be configured on Ethereum's OFTAdapter for HyperEVM → Ethereum bridge messages to be processed at all. If peer is set (the most likely operational state), the rsETH failure mode — single compromised LayerZero-Labs DVN forging a "burned thBILL on HyperEVM" message that mints thBILL on Ethereum — is **live today** on this pathway.
+**l2_oft_mint_obscure — latent default, all currently inert.** The Ethereum OFTAdapter receive lib accepts 1-DVN packets from 7 source EIDs and 2-DVN packets from 1 EID (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana, Sonic), with similar long-tail defaults on the L2s — all LayerZero default config inherited without explicit override. **`peers()` returns zero for every one of those EIDs across every chain — all unset, all inert.** A forged message from any of those EIDs would fail at the OApp peer-check step regardless of DVN count, because there's no configured peer to validate against. **Forward-looking note:** if Theo expands to a new chain in future, they should set the corresponding receive-lib DVN config to ≥2 *before* calling `setPeer` for that chain — operational ordering matters because peer-set without DVN-upgrade would create a live exposure for the duration of the gap.
 
 **kyc_mint compromise.** If the issuance operator's signing key is compromised, an attacker can mint thBILL against no off-chain USD deposit. The KYC gate applies to mint/redeem against the canonical contract, not to on-chain transfer or use-as-collateral — forged mints would be usable as DeFi collateral (Pendle, Euler) before the protocol can pause.
 
@@ -247,10 +239,10 @@ Two distinct risk shapes stack here:
 
 ### Red flags
 
-- **synthetic-tultra-wrapper** — On-chain verification (2026-04-23): the tULTRA contract holds zero ULTRA despite declaring ULTRA as its `asset()`. The 4626 contract has been dormant for 70 days (zero mint/burn/escrow events); current 129.46M supply was set under a prior implementation and carried through a UUPS upgrade ~37 days ago. `totalAssets()` is fully attested via `totalAssetsPending`. The 4626 interface is effectively ceremonial — institutional readers should not interpret "ERC-4626 vault" with the implicit trust assumptions that label normally carries.
+- **synthetic-tultra-wrapper** — The tULTRA contract holds zero ULTRA despite declaring ULTRA as its `asset()`. The 4626 contract has been dormant over a 70-day observation window (zero mint/burn/escrow events); the current 129.46M supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`. The 4626 interface is effectively ceremonial — institutional readers should not interpret "ERC-4626 vault" with the implicit trust assumptions that label normally carries.
 - **oft-adapter-code-likely-unaudited** — the destination-chain OFT adapter contracts that execute `lzReceive` mints were probably deployed after the single July 2025 Zenith audit closed. Adapter bugs are a separate risk surface from DVN config; a correct DVN quorum does not defend against an adapter implementation bug. Highest residual bridge-layer concern.
-- **default-dvn-on-unused-pathways** — Per 2026-04-25 audit: Ethereum's receive lib accepts single-DVN packets on 9 inbound pathways (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, HyperEVM, Katana, Monad); Arbitrum on 8; Base on 4 (different chain mix per receive lib). **HyperEVM is the operationally-live exposure on Ethereum** — Theo deploys on HyperEVM so peer is operationally required, and that pathway is at 1-DVN default. Other 8 Ethereum exposures are theoretical absent off-chain peer-config disclosure (Ethereum proxy hides `peers()`); L2 exposures verified as zero exposed-AND-peered.
-- **partial-oapp-pause-pauser-unresolved** — LayerZero OApp-level pause capability is partially verified as of 2026-04-25: a `paused()` function exists on the Ethereum OFTAdapter and currently returns `false`, but the L2 OFTs (Arb/Base/HyperEVM) don't expose `paused()` at all, and the pauser identity on the Ethereum side remains unresolved because the proxy hides the owner read. In the event of an adapter bug surfacing, response time depends on which signer can actually invoke the pause — and that signer is currently unverifiable from on-chain reads.
+- **default-dvn-on-unused-pathways-inert** — On the Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a`): 7 inbound EIDs at 1-DVN default + 1 at 2-DVN MIN-PASS default (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana, Sonic); similar long-tail defaults on the L2s. **All currently inert — `peers()` returns zero for every such EID across every chain.** Forward-looking concern: if Theo expands to a new chain, the receive-lib DVN config for that source EID should be upgraded to ≥2 *before* `setPeer` is called, otherwise the bridge would be live at 1-DVN for the duration of any gap.
+- **no-oftadapter-pause-function** — The Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a`) does NOT expose a `paused()` function — it's not Pausable. L2 OFTs likewise don't have it. Pause control on the bridge layer relies on (i) Endpoint-level pause controls held by LayerZero governance, or (ii) pausing the underlying iToken vault (which IS Pausable; the OFTAdapter must `transferFrom`/`transfer` through it, indirectly halting bridge activity). Worth confirming with Theo whether the iToken's pause modifier covers transfer hooks specifically.
 - **off-chain-custody-dependency** — Backing lives in TradFi. Correct for an RWA and unavoidable.
 - **permissioned-mint** — Mint requires a permissioned operator role. Key management practices and signer identity not public.
 - **no-bankruptcy-remoteness** — Token holders hold a contractual claim against Theo Protocol Corporation, not a direct interest in underlying T-bills.
@@ -260,47 +252,47 @@ Two distinct risk shapes stack here:
 - **proxy-admin-role-unverified** — Owner multisig has upgrade authority per Theo docs, but a distinct proxy-admin role (per EIP-1967) has not been explicitly confirmed via on-chain reads. Worst case: an undocumented proxy-admin key can push implementation changes independently.
 - **pending-assets-self-reported-oracle** — `pendingAssets` in the vault's `totalAssets` formula is set by Theo off-chain without on-chain proof of underlying deposit receipt. Functionally a centralized oracle with NAV-setting authority — detailed in §II.a.
 
-### DVN audit results (2026-04-25)
+### DVN audit results
 
-Per-chain pathway summary from PegTracker's full Layer 1–7 audit. Numbers reflect the 2026-04-25 sweep, which superseded the 2026-04-21 partial Blockaid check.
+Per-chain pathway summary against each chain's OFTAdapter:
 
-| Chain | thBILL address | Pathways MIN-PASS or OK | Pathways exposed (1-DVN default) |
-|---|---|---|---|
-| Ethereum | `0x5FA487BCa6158c64046B2813623e20755091DA0b` | 11 (2 DVNs each — Eth, BSC, Avalanche, Polygon, Arb, Optimism, Fantom, Mantle, Linea, Base, Sonic) | **9** — Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, **HyperEVM**, Katana, Monad |
-| Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | 12 (Eth→Arb / Base→Arb / Mantle→Arb / BSC→Arb at 3 DVNs OK; others MIN-PASS at 2) | **8** — Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Sonic, Katana |
-| Base | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | 7 (Eth→Base / BSC→Base at 3 DVNs OK; others MIN-PASS at 2) | **4** — Sei, Fraxtal, Etherlink, Katana |
-| HyperEVM | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | All peered pathways at 3 DVNs OK on HyperEVM-specific LZ deployment | (no exposed pathways found in 04-25 sweep) |
+| Chain | OFTAdapter address | Peered pathways (3 DVNs OK) | Unpeered + 1-DVN default (inert) | Exposed AND peered |
+|---|---|---|---|---|
+| Ethereum | `0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` | BSC, Arbitrum, Mantle, Base, **HyperEVM**, Monad — all 3 DVNs custom | Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana (1-DVN), Sonic (2-DVN) — all peers UNSET | **0** |
+| Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | Ethereum, BSC, Mantle, Base — 3 DVNs custom | Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Sonic, Katana — 1-DVN default, peers UNSET | **0** |
+| Base | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | Ethereum, BSC — 3 DVNs custom | Sei, Fraxtal, Etherlink, Katana — 1-DVN default, peers UNSET | **0** |
+| HyperEVM | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | All peered routes at 3 DVNs custom (HyperEVM-specific LZ deployment) | No exposed inbound pathways found | **0** |
 
-**Critical Ethereum read.** "Pathways exposed" on Ethereum includes **HyperEVM** (EID 30367). HyperEVM is a chain Theo *actively deploys to* — meaning Ethereum's `peers(30367)` is operationally required to be configured (otherwise HyperEVM → Ethereum bridges would fail entirely). If that peer is set (the most likely operational state), then the rsETH-shape failure mode — a single compromised LayerZero-Labs DVN forging a "burned thBILL on HyperEVM" message that mints thBILL on Ethereum — is **a live attack vector on the Ethereum side today**. This is distinct from the other 8 exposed Ethereum pathways (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana, Monad), which Theo does not deploy on and almost certainly does not have peer configured for. The Ethereum proxy hides `peers()` from on-chain reads, so this cannot be confirmed without off-chain disclosure from Theo.
+**Verified clean across all four EVM chains.** Every peered cross-chain pathway has 3-DVN custom config (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs); every 1-DVN-default pathway has `peers()` unset and is therefore inert. There is no rsETH-class exposure on thBILL's bridge layer.
 
-Raw audit outputs: `~/PegTracker/data/thbill_{ethereum,arbitrum,base,hyperevm}-oft-audit-2026-04-25.md`. Earlier 2026-04-21 Blockaid data: `~/riskAnalyst/reports/data/thbill-dvn-audit-2026-04-21.txt`.
+### On-chain audit findings
 
-### On-chain audit findings (2026-04-25)
-
-PegTracker's extended `oft_audit.py` ran on all four EVM deployments — extends the 2026-04-21 Blockaid DVN-config check (Layer 1) to Layers 2–7. Headline: bridge clean across L2s, two prior gaps closed, two still open, one new finding worth flagging.
+Bridge layer audit covers seven dimensions (DVN count, DVN identity, MessageLibrary version, peer config, OApp pause, Endpoint identity, OApp admin) across all four EVM deployments. Headline: clean across all four chains.
 
 **Deployment scope.** thBILL is deployed as an EVM token on **Ethereum, Arbitrum, Base, and HyperEVM** (the four chains returned by CoinGecko `detail_platforms`). The underlying ULTRA token is also issued on Solana — Theo's treasury holds ~25M ULTRA there as part of the basket backing (see §II) — but the thBILL OFT itself does not extend to Solana, and Solana is therefore out of scope for the bridge audit below.
 
 **Bridge contract topology:**
 
-| Chain | Address | Endpoint |
-|---|---|---|
-| Ethereum | `0x5FA487BCa6158c64046B2813623e20755091DA0b` (OFTAdapter, proxy) | `0x1a44…728c` (canonical LZ V2) |
-| Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` (deterministic OFT) | canonical |
-| Base | same deterministic | canonical |
-| HyperEVM | same deterministic | `0x3A73033C…4a9AA9` (HyperEVM-specific LZ V2 deployment) |
+| Chain | Token contract (iToken / OFT) | Bridge contract (OFTAdapter) | LZ Endpoint |
+|---|---|---|---|
+| Ethereum | `0x5FA487BCa6158c64046B2813623e20755091DA0b` (iToken vault, proxy) | `0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` (separate OFTAdapter wrapping the iToken; `approvalRequired=true`) | `0x1a44…728c` (canonical LZ V2) |
+| Arbitrum | (same address as bridge) | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` (deterministic OFT — token and bridge in one contract) | canonical |
+| Base | (same address as bridge) | same deterministic | canonical |
+| HyperEVM | (same address as bridge) | same deterministic | `0x3A73033C…4a9AA9` (HyperEVM-specific LZ V2 deployment) |
+
+**Architectural distinction.** On Ethereum (the canonical chain), thBILL uses a **two-contract pattern**: the iToken vault (`0x5FA487…DA0b`) holds the token logic and ERC-4626 multi-asset accounting; a separate **OFTAdapter** (`0xfDD22Ce6…F55A5a`) wraps it for cross-chain messaging — the adapter holds locked thBILL when bridging out and unlocks it when bridging in. On the L2s, thBILL uses the **single-contract OFT pattern** (token = bridge in one deployment, mints/burns instead of locks/unlocks). LayerZero peer/DVN reads on Ethereum target the OFTAdapter, not the iToken vault.
 
 **Layer-by-layer audit matrix:**
 
 | Layer | Status |
 |---|---|
-| 1. DVN count per peered pathway | Checked on Arb/Base/HyperEVM — **3 DVNs** OK on all peered routes (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs). Explicit upgrade above the 2-DVN MIN-PASS default. Unverifiable on Ethereum — proxy hides peer config. |
+| 1. DVN count per peered pathway | **3 DVNs OK** on every peered route across all four EVM chains (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs by DVN address suffix). Explicit upgrade above the 2-DVN MIN-PASS default. |
 | 2. DVN identity / collusion | Checked — multi-operator splits, no single-operator pathways. |
 | 3. MessageLibrary version | Checked — DEFAULT UlnV302 on Eth/Arb/Base; CUSTOM library `0x7cacBe43…` on HyperEVM (HyperEVM-specific LZ deployment, not a security concern). |
-| 4. Peer config | Checked on Arb/Base/HyperEVM (peers configured to canonical L1 + L2 set + Monad/Mantle). Confirmed gap on Ethereum — `peers()` reverts on both proxy and impl `0x325478a069b0DbBdfbEe909FA3741F84259Ba519`. |
-| 5. OApp pause | Partially closed — `paused()` exists on Ethereum OFTAdapter (returns `false`). L2 OFTs don't expose `paused()`. Pauser identity still unverifiable on Ethereum because owner is unresolved. |
+| 4. Peer config | Verified across all four EVM chains. Ethereum OFTAdapter `peers()` reads cleanly: BSC, Arbitrum, Mantle, Base, HyperEVM, Monad are all peered (each returning the deterministic CREATE2 address of the L2 OFT); all other EIDs (including the 1-DVN-default and 2-DVN-default chains) return zero. |
+| 5. OApp pause | The Ethereum OFTAdapter does NOT expose `paused()` — it's not Pausable. L2 OFTs likewise don't have it. The underlying iToken vault IS Pausable. Effective bridge-pause options: (i) LayerZero Endpoint-level controls held by LZ governance, or (ii) pausing the iToken vault (which the OFTAdapter must transferFrom/transfer through, indirectly halting bridge flows). Worth confirming with Theo whether the iToken's pause modifier covers transfer hooks. |
 | 6. Endpoint trust | Checked — endpoint owner readable across all four chains; OApp delegate set on L2s, zero on Ethereum. |
-| 7. OApp admin | Closed on L2s — same Theo Safe `0x94877640dD9E6F1e3Cb56Bf7b5665b7152601295` deployed on Arb/Base/HyperEVM. Still gap on Ethereum — proxy hides owner. |
+| 7. OApp admin | `owner()` returns the same Theo Safe `0x94877640dD9E6F1e3Cb56Bf7b5665b7152601295` on the Ethereum OFTAdapter as on Arb/Base/HyperEVM. The Safe is **3-of-5 on Ethereum and Arbitrum** (signers `12eB20B2…`, `895F7c37…`, `7afb1D33…`, `5c1EA222…`, `b7cc3051…`); **3-of-4 on Base and HyperEVM** (small asymmetry — same address but different per-chain Safe configurations). Signer identities undisclosed — opaque-multisig framing applies. |
 
 **Out-of-scope gaps** consistent across any LayerZero OFT audit: DVN RPC infrastructure, formal adapter contract audit coverage, real-world signer identity, per-pathway rate limits.
 
@@ -324,9 +316,9 @@ Not exploitable today (no peers configured on these EIDs as far as readable). Be
 
 **Endpoint dependency.** Ethereum/Arbitrum/Base all use the canonical LayerZero V2 endpoint (`0x1a44…728c`). HyperEVM uses a separate LZ deployment (`0x3A73…4a9AA9`). Two distinct trust roots, not one — HyperEVM's LZ governance is separate from canonical-LZ governance, so an adverse upgrade at the LayerZero level affects different chain subsets differently.
 
-**Residual gap on Ethereum.** Proxy ABI blocks `peers(uint32)` (reverts on both proxy and impl `0x325478…`). Owner is also unresolved across Ownable, AccessControlEnumerable, and proxy-admin patterns. The 9 EXPOSED defaults on Ethereum (Sei/Shimmer/Blast/Fraxtal/Etherlink/Bitlayer/HyperEVM/Katana/Monad) cannot be confirmed peered or unpeered on-chain. Worst-case framing — assume any of these EIDs *could* be a configured peer until proven otherwise — remains the only honest one. Resolution requires off-chain disclosure from Theo.
+**Ethereum bridge introspection.** All standard OApp reads succeed on the OFTAdapter `0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a`: `peers(eid)`, `owner()`, `endpoint()`, `oftVersion()`, `approvalRequired()` all return cleanly. Peer config is fully readable — the EIDs at 1-DVN default (Sei/Shimmer/Blast/Fraxtal/Etherlink/Bitlayer/Katana, plus 2-DVN Sonic) are confirmed UNSET. The iToken vault has a non-standard ABI shape that blocks generic OApp introspection, but it isn't an OApp — the OFTAdapter is the canonical bridge contract, and that one reads cleanly.
 
-**Supply Integrity Score: 5.0/10** — Bridge verified multi-DVN with 3-DVN upgrade above default on Arb/Base/HyperEVM (strong). Two prior gaps closed: multisig identity verifiable on L2s, `paused()` exists on Ethereum. Two prior gaps still open: Ethereum proxy hides peers + owner; OFT adapter contract audit coverage not independently verified. Net score unchanged. Deductions for: off-chain custody + permissioned mint + no bankruptcy remoteness + Ethereum proxy gap + likely-unaudited OFT adapter code + LZ Endpoint shared dependency + undocumented MPC scheme + pending-assets self-reported oracle. The 2026-04-23 finding — synthetic tULTRA wrapper holding zero ULTRA, 70-day dormant 4626, fully attested `totalAssets` — adds a structural concern that the "ERC-4626" label normally implies more contract-enforced behavior than is actually present at the underlying layer.
+**Supply Integrity Score: 5.5/10** — Bridge verified multi-DVN with 3-DVN custom config on every peered pathway across all four EVM chains; peer config and DVN config aligned; zero exposed-AND-peered pathways. Admin Safe is the same Theo `0x94877640…01295` across all four chains (3-of-5 on Ethereum and Arbitrum; 3-of-4 on Base and HyperEVM — small asymmetry). One residual gap: OFTAdapter contract code is likely post-Zenith-audit and not independently audit-covered. Deductions for: off-chain custody + permissioned mint + no bankruptcy remoteness + likely-unaudited OFTAdapter code + LZ Endpoint shared dependency + undocumented MPC scheme + pending-assets self-reported oracle + no OFTAdapter pause function. The synthetic tULTRA wrapper finding (wrapper holds zero ULTRA, dormant 4626, fully attested `totalAssets`) adds a structural concern: the "ERC-4626" label normally implies more contract-enforced behavior than is actually present at the underlying layer.
 
 ---
 
@@ -334,7 +326,7 @@ Not exploitable today (no peers configured on these EIDs as far as readable). Be
 
 ### II.a Collateral & Backing
 
-**Composition:** 100% tULTRA as of 2026-04-21. tULTRA is a wrapped representation of Standard Chartered Libeara's tokenized Treasury fund, operated in collaboration with Wellington Management (sub-advisor) and FundBridge (MAS-regulated Singapore fund manager).
+**Composition:** 100% tULTRA. tULTRA is a wrapped representation of Standard Chartered Libeara's tokenized Treasury fund, operated in collaboration with Wellington Management (sub-advisor) and FundBridge (MAS-regulated Singapore fund manager).
 
 **Asset class:** Short-duration US Treasury bills. Lowest sovereign credit risk globally. Exposure is to interest-rate and duration risk (minimal for ultra-short T-bills), not default risk.
 
@@ -344,7 +336,7 @@ Not exploitable today (no peers configured on these EIDs as far as readable). Be
 
 **Collateral sufficiency:** 1:1 NAV representation. No over-collateralization, no junior tranche, no first-loss buffer.
 
-**Concentration:** Single underlying (tULTRA). Theo has stated a diversification roadmap (adding other regulated T-bill tokens) but it is not yet active as of 2026-04-21.
+**Concentration:** Single underlying (tULTRA). Theo has stated a diversification roadmap (adding other regulated T-bill tokens) but it is not yet active.
 
 **Liquidity of underlying:** US T-bills are among the most liquid fixed-income instruments globally. Conversion from fund share to USDC depends on Theo's settlement rails (up to 4 business days).
 
@@ -423,11 +415,11 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 ### II.c Secondary Market Liquidity & Peg
 
-**Market cap (2026-04-21):** ~$134M (down from ~$162M earlier in April — some outflow likely associated with rsETH-driven risk-off across RWAs on LayerZero).
+**Market cap:** ~$133M (supply 129.95M × NAV $1.0245). Down from ~$162M earlier in April — continued outflow consistent with rsETH-driven RWA risk-off on LayerZero plus normal Treasury-yield-product seasonality.
 
-**Current price:** $1.02 USD. 7-day range $1.01-$1.02 (tight peg). 24h volume ~$681K (substantially lower than the ~$5M daily turnover reported in the Nov 2025 assessment — consistent with the mcap decline).
+**Current price:** $1.020 USD (DEX VWAP). 7-day range $1.01-$1.02 (tight peg, persistent ~0.39% discount to NAV). 24h volume ~$252K across all tracked DEX venues — substantially lower than the ~$5M daily turnover seen at the Nov 2025 peak, and continuing to decline alongside the mcap.
 
-**Secondary market venues (live from GeckoTerminal, 2026-04-28).** Total tracked DEX liquidity is **~$1.64M across 19 pools and 3 active chains**, down from ~$6.5M in the Nov 2025 manual assessment. The deepest single venue has shifted from Arbitrum to HyperEVM:
+**Secondary market venues** (live GeckoTerminal data). Total tracked DEX liquidity is **~$1.64M across 19 pools and 3 active chains**. The deepest single venue is now on HyperEVM, not Arbitrum:
 
 | Chain | DEX | Pair | Reserve | 24h Vol | 2% Depth (buy / sell) |
 |---|---|---|---|---|---|
@@ -457,7 +449,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 - Max discount: −0.62%
 - Range: ~0.8% peak-to-trough
 
-**Peg stability (2026-04-18 to 2026-04-21 rsETH-incident window):** Public price data shows thBILL trading $1.01-$1.02 through the rsETH contagion. **No contagion depeg.** The bridge holding (see §I.5) and the fundamentally different asset class insulated thBILL from rsETH-driven outflows aside from the modest mcap decline.
+**Peg stability through the rsETH incident window:** Public price data shows thBILL trading $1.01-$1.02 across the days surrounding the 2026-04-18 rsETH exploit and its contagion. **No contagion depeg.** The bridge holding (see §I.5) and the fundamentally different asset class insulated thBILL from rsETH-driven outflows aside from the modest mcap decline.
 
 **Lock-ups:** None for secondary trading. Primary redemption carries soft 4-business-day notice period. Whitelisting requirements can narrow the arbitrage participant base on some deployments.
 
@@ -504,22 +496,22 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 - **July 2025:** Launch
 - **Peak (Oct 2025):** $1.11 price, market cap at historical high
 - **Nov 2025:** ~$6.5M DEX liquidity, ~$5M daily turnover, price slightly below NAV
-- **April 2026:** ~$134M mcap (down from ~$162M earlier April). ~$681K daily vol. Modest risk-off post-rsETH but no structural impairment.
+- **April 2026:** ~$133M mcap (down from ~$162M earlier April). Daily volume around $250K. Modest risk-off post-rsETH but no structural impairment.
 
 **Project Risk Score: 4.5/10** — Strong team (ex-Optiver/IMC, $20M raise from credible investors), strong underlying partner set (Libeara/FundBridge/Wellington imposes institutional discipline at the asset level). Deductions for: fully centralized governance with no independent oversight, no legal bankruptcy remoteness, Panama jurisdiction with weak regulatory supervision of issuer entity, no timelock, undisclosed multisig signers, no governance forum.
 
 ---
 
-## IV. Overall Risk Score — 5.0/10
+## IV. Overall Risk Score — 5.2/10
 
 | Category | Score (0-10) | Weight | Key Points |
 |---|---|---|---|
-| Smart Contract | 5.0 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; 9-month Lindy. Additional 2026-04-23 trust holes: undocumented MPC scheme, unverified EIP-1967 proxy-admin role |
+| Smart Contract | 5.5 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; 9-month Lindy. Bridge config verified clean across all four EVM chains — every peered pathway at 3 DVNs OK, zero exposed-AND-peered. Trust holes: undocumented MPC scheme, no pause function on the OFTAdapter |
 | Economic / Market | 5.5 | 30% | High-quality UST underlying; functional primary redemption (T+4); single-underlying concentration; no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule |
 | Project / Counterparty | 4.5 | 30% | Strong team and regulated institutional partners; fully centralized governance; Panama jurisdiction; no timelock |
-| **Overall** | **5.0** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. BB+ credit equivalent at the lower end.** |
+| **Overall** | **5.2** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. Bridge layer verified clean. BB+ credit equivalent at the middle of the band.** |
 
-**Blended credit equivalent:** Manual assessment assigned **BB+ equivalent** based on A-range sovereign asset quality combined with BB-range unsecured-issuer structure. The 2026-04-23 findings (synthetic tULTRA wrapper, MPC trust gaps, proxy-admin verification gap, pending-assets oracle) keep the rating in BB+ but at the lower end of that band; another rung of disclosure or structural fix would be needed to support a higher score.
+**Blended credit equivalent:** **BB+** based on A-range sovereign asset quality combined with BB-range unsecured-issuer structure. Synthetic tULTRA wrapper, MPC trust gaps, and the pending-assets oracle keep the rating in the middle of the BB+ band; another rung of disclosure or structural fix would be needed to support a higher score.
 
 ---
 
@@ -527,7 +519,7 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 | Asset | Issuer | TVL (2026) | Redemption | KYC | Bankruptcy Remote | Cross-chain mechanism | Score est. |
 |---|---|---|---|---|---|---|---|
-| **thBILL** | Theo (Panama) | $134M | USDC, T+4 | Yes | No | LayerZero OFT (multi-DVN) | **5.0** |
+| **thBILL** | Theo (Panama) | $133M | USDC, T+4 | Yes | No | LayerZero OFT (3-DVN custom) | **5.2** |
 | **USYC** | Circle / Hashnote | $2.2B | USDC, ~instant | Qualified only | Yes (Cayman fund structure) | Native multi-chain via Circle | ~7.0 |
 | **BUIDL** | BlackRock / Securitize | $2.0B | USDC via Circle, instant | Qualified only | Yes (3(c)(7) fund) | Securitize rails | ~8.0 |
 | **OUSG** | Ondo | ~$1.5B (with USDY) | USDC, instant or T+1 | Qualified only | Yes | Native + LayerZero | ~7.0 |
@@ -544,13 +536,13 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 **Highest priority — unverified items:**
 
-1. **Verify `setPeer` status on Ethereum** for the 9 inbound EIDs at 1-DVN default per the 2026-04-25 audit: 30214 (Sei), 30230 (Shimmer), 30243 (Blast), 30255 (Fraxtal), 30292 (Etherlink), 30320 (Bitlayer), **30367 (HyperEVM)**, 30375 (Katana), 30390 (Monad). The HyperEVM entry (30367) is the priority — Theo deploys on HyperEVM, so peer is operationally required to be set, making this the live rsETH-class attack surface today. The other 8 are theoretical absent off-chain peer disclosure. Peer config check requires resolving the thBILL Ethereum proxy's actual OFT interface (`peers(uint32)` reverted on both proxy and implementation `0x325478a069b0DbBdfbEe909FA3741F84259Ba519` in both the 2026-04-21 and 2026-04-25 sessions — likely a non-standard iToken shape). On the L2s, peer config IS readable and verified zero exposed-AND-peered.
+1. **Watch for `setPeer` events on the Ethereum OFTAdapter** (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a`) and the L2 OFTs. Bridge expansion to a new chain should set the receive-lib DVN config first (≥2 DVNs, ideally 3) before `setPeer` is called. A `setPeer(eid, address)` call without a corresponding prior `setConfig` to upgrade the receive lib for that EID would create a temporary 1-DVN exposure for the duration of the gap. All currently-peered EIDs (BSC, Arbitrum, Mantle, Base, HyperEVM, Monad on the Ethereum side) are at 3-DVN custom config — operationally clean. Recommendation is forward-looking: monitor for ordering during future expansions.
 2. **Confirm OFT adapter was in Zenith audit scope.** The July 2025 audit predates the cross-chain expansion to HyperEVM. If the adapter is unaudited, a fresh audit on the bridge surface is the single highest-value remediation.
 3. **Disclose multisig signer composition** for Owner, Whitelist, and Emergency roles. Currently opaque; meaningful for risk modeling.
 
 **Medium priority — ongoing monitoring:**
 
-4. ~~Re-query Uniswap v3 pool depths across Ethereum / Arbitrum / Base.~~ **Done 2026-04-28 via GeckoTerminal — see §II.c.** Total tracked DEX liquidity has decayed from ~$6.5M to ~$1.64M; deepest single venue is now HyperEVM Project X (not Arbitrum). Continue to re-query before any sizing decision; the long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
+4. **Continue to re-query DEX pool depths before any sizing decision.** Total tracked DEX liquidity is currently ~$1.64M; deepest single venue is HyperEVM Project X (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
 5. Monitor secondary-market peg weekly through the post-rsETH risk-off window. Any sustained >0.5% discount signals structural concerns.
 6. Watch for basket diversification beyond tULTRA. Single-issuer concentration is the largest un-mitigated economic risk.
 7. Track settlement latency. 4-day baseline is longest in peer set; any drift higher is a liquidity-management signal.
@@ -568,23 +560,23 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 | Chain | thBILL address | Bridge mechanism |
 |---|---|---|
 | Ethereum (canonical) | `0x5FA487BCa6158c64046B2813623e20755091DA0b` | Native — KYC mint/redeem against tULTRA |
-| Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25) |
-| Base | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25) |
-| HyperEVM | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs verified 2026-04-25; HyperEVM-specific LZ deployment) |
+| Arbitrum | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs custom config) |
+| Base | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs custom config) |
+| HyperEVM | `0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a` | LayerZero OFT (3 DVNs custom config; HyperEVM-specific LZ deployment) |
 
-**FarmTracker exposure** (as of 2026-04-21): Pendle PT-thBILL on Arbitrum (+ Euler collateral use). Lives behind the Arbitrum receive path, which is verified multi-DVN.
+**DeFi exposure paths:** Pendle PT-thBILL on Arbitrum (with Euler collateral usage). Lives behind the Arbitrum receive path, which is verified multi-DVN.
 
-**PT-thBILL settlement mechanic (verified on-chain 2026-04-26).** The Pendle SY wrapper for thBILL on Arbitrum (`0xc32e96b4…6ed3D4`) reports its accounting asset (`assetInfo().asset`) as native USDC (`0xaf88…5831`), not thBILL. But `getTokensOut()` returns only thBILL, and `yieldToken()` is thBILL. So 1 PT-thBILL redeems at maturity (18-Jun-2026) to thBILL worth $1 USDC at Theo's attested NAV — not 1 whole thBILL, and not USDC. **Implication for sizing:** PT-thBILL fixes a *USDC-denominated* yield but settles in thBILL — holders never receive USDC at expiry and still bear thBILL's exit-path risk (KYC-gated primary redemption, thin secondary liquidity — see §II.4) to actually realize the USDC value. The path is two hops (PT → thBILL → USDC), not one. The Pendle UI's "1 USDC in thBILL" framing is mechanically correct.
+**PT-thBILL settlement mechanic.** The Pendle SY wrapper for thBILL on Arbitrum (`0xc32e96b4…6ed3D4`) reports its accounting asset (`assetInfo().asset`) as native USDC (`0xaf88…5831`), not thBILL. But `getTokensOut()` returns only thBILL, and `yieldToken()` is thBILL. So 1 PT-thBILL redeems at maturity (18-Jun-2026) to thBILL worth $1 USDC at Theo's attested NAV — not 1 whole thBILL, and not USDC. **Implication for sizing:** PT-thBILL fixes a *USDC-denominated* yield but settles in thBILL — holders never receive USDC at expiry and still bear thBILL's exit-path risk (KYC-gated primary redemption, thin secondary liquidity — see §II.4) to actually realize the USDC value. The path is two hops (PT → thBILL → USDC), not one. The Pendle UI's "1 USDC in thBILL" framing is mechanically correct.
 
 ---
 
 ## Bottom Line
 
-thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance and a synthetic tULTRA wrapper layer. Overall score **5.0/10 (BB+ credit equivalent, lower end)**.
+thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance and a synthetic tULTRA wrapper layer. Overall score **5.2/10 (BB+ credit equivalent, middle of band)**.
 
 The three dimensions defining the risk:
 - **Asset quality (strong):** US T-bills with institutional-grade fund management.
-- **Bridge security (verified strong post-rsETH):** LayerZero OFT with 2-3 DVNs on major pathways. Materially different from the single-DVN config that broke Kelp rsETH on 2026-04-18. The bridge held cleanly through the incident and contagion.
+- **Bridge security (verified clean across all four EVM chains):** LayerZero OFT with 3 DVNs custom config on every peered pathway, including the Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a` — separate from the iToken vault). Zero exposed-AND-peered pathways. Materially stronger than the single-DVN config that broke Kelp rsETH on 2026-04-18. The bridge held cleanly through the incident and contagion.
 - **Issuer structure (weak):** No bankruptcy remoteness, fully centralized governance, no timelocks, undisclosed multisig signers, Panama jurisdiction without regulatory supervision of the issuer entity, single underlying (tULTRA), 4-day redemption lag.
 
 For a DeFi user holding PT-thBILL or using thBILL as collateral, the pragmatic read is: the on-chain layer (contract + bridge) is adequately diligenced and passed the rsETH stress test; the off-chain layer (issuer solvency, legal recourse) remains the binding constraint. Sizing should reflect unsecured-counterparty exposure to Theo, not direct exposure to US T-bills.
@@ -597,7 +589,7 @@ This assessment combines on-chain verification (chain reads, event scans, contra
 
 **Trust-required dependencies (acknowledged, not independently verified):**
 
-- LayerZero infrastructure (Endpoint contracts, MessageLibrary, LayerZero governance multisig). Audited at a point in time (DVN config 2026-04-21); not continuously monitored.
+- LayerZero infrastructure (Endpoint contracts, MessageLibrary, LayerZero governance multisig). DVN config audited at the time of this assessment, not continuously monitored.
 - MPC operator composition (threshold scheme, co-signer identities, key-generation ceremony, geographic distribution). Theo publicly discloses "MPC"; no further detail. See §I MPC-treasury trust unpacked.
 - Underlying T-bill custody chain (Standard Chartered Singapore, broker-dealers, repo counterparties).
 - Wellington Management's actual portfolio holdings.
@@ -636,10 +628,8 @@ This report is built from publicly available documentation (Theo docs, Libeara/F
 - CoinGecko — thBILL live price & metrics: https://www.coingecko.com/en/coins/theo-short-duration-us-treasury-fund
 - Etherscan — thBILL token: https://etherscan.io/token/0x5FA487BCa6158c64046B2813623e20755091DA0b
 - Arbiscan — thBILL token: https://arbiscan.io/token/0xfdd22ce6d1f66bc0ec89b20bf16ccb6670f55a5a
-- LayerZero OFT DVN audit script (Blockaid): https://gist.github.com/IdoBn/7753f16fdb6810b11c5c87cdf11f8aa0
-- 2026-04-21 on-chain DVN audit results: `data/thbill-dvn-audit-2026-04-21.txt`
+- LayerZero OFT DVN audit reference (Blockaid gist): https://gist.github.com/IdoBn/7753f16fdb6810b11c5c87cdf11f8aa0
 - Theo $20M raise announcement (April 2025) — Hack VC / Anthos Capital / angels
-- Archived prior assessment (Nov 2025 manual): `archive/thbill-manual-2025-11.md`
 - RootData Theo profile: https://www.rootdata.com/Projects/detail/Theo
 - Cryptowisser — thBILL on Base/Arbitrum/HyperEVM via LayerZero: https://www.cryptowisser.com/news/thbill-now-live-on-base-arbitrum-and-hyperevm-powered-by-layerzero/
 - CoinDesk — rsETH $292M Kelp DAO exploit: https://www.coindesk.com/tech/2026/04/19/2026-s-biggest-crypto-exploit-kelp-dao-hit-for-usd292-million
