@@ -117,8 +117,8 @@ supply_integrity_flags:
 | **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
 | **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM |
 | **Cross-chain mechanism** | LayerZero OFT |
-| **Market cap** | ~$133M (supply ~129.95M × NAV $1.0245) |
-| **Price** | $1.020 (DEX VWAP, ~0.39% discount to NAV) |
+| **Market cap** | \~$133M (supply \~129.95M × NAV $1.0245) |
+| **Price** | $1.019 (DEX VWAP, \~0.52% discount to NAV) |
 
 > *Overall score (5.0) is a weighted composite — see §IV for category weights.*
 
@@ -130,7 +130,7 @@ thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain mon
 
 The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. thBILL's OFTAdapter on Ethereum (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` — separate from the iToken vault at `0x5FA487…DA0b`) is configured with **3 required DVNs** on every peered pathway (Arbitrum, Base, HyperEVM, BSC, Mantle, Monad) — an explicit upgrade above the 2-DVN MIN-PASS default and a meaningfully stronger posture than the single-DVN config that broke Kelp. **Zero exposed-AND-peered pathways across all four EVM deployments** — the bridge layer is verified clean.
 
-Overall profile: strong asset quality (US T-bills via regulated institutions), competent technical implementation (single Zenith audit, multi-DVN bridge), offset by centralized governance (fully Theo-controlled multisigs, no DAO, no timelock), non-atomic redemption (4-day USDC settlement), limited operating history (~9 months), and no bankruptcy-remote claim on underlying T-bills.
+Overall profile: strong asset quality (US T-bills via regulated institutions), competent technical implementation (single Zenith audit, multi-DVN bridge), offset by centralized governance (fully Theo-controlled multisigs, no DAO, no timelock), non-atomic redemption (4-day USDC settlement), limited operating history (\~9 months), and no bankruptcy-remote claim on underlying T-bills.
 
 ---
 
@@ -180,7 +180,7 @@ Clean since launch. No reported exploits, forced pauses, or redemption failures.
 
 ### Lindy
 
-~9 months live as of this assessment (launch July 2025). Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
+\~9 months live as of this assessment (launch July 2025). Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
 
 **Contract Risk Score: 5.5/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles, and proper 3-DVN custom config across every peered cross-chain pathway. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy. Trust holes: the MPC scheme (threshold, co-signers, ceremony) is undocumented and should be treated as opaque multisig of unknown composition; the distinct EIP-1967 proxy-admin role is not verifiable via on-chain reads — worst case is an undocumented proxy-admin key independent of the 3-of-5 multisig.
 
@@ -197,7 +197,7 @@ Two distinct risk shapes stack here:
 #### kyc_mint — admin-mint (Ethereum, canonical)
 - **Trust assumption:** Theo issuance operator (KYC-gated permissioned role)
 - **Capture cost estimate:** Compromise of the issuance signer / operator keys
-- **Value secured:** Entire thBILL supply (~$133M)
+- **Value secured:** Entire thBILL supply (\~$133M)
 - **Asymmetry:** Depends on operator key management (EOA vs multisig not public for the issuance role specifically)
 - **Controls:** KYC bottleneck on counterparties; Emergency 2-of-4 can pause
 
@@ -205,7 +205,7 @@ Two distinct risk shapes stack here:
 - **Trust assumption:** 3 LayerZero DVNs required per peered pathway (verified on-chain)
 - **Capture cost estimate:** Compromise ≥2 independent DVN providers simultaneously (meaningful economic barrier; the rsETH failure mode requires only 1)
 - **Value secured:** Bulk of thBILL supply (these are the chains Theo actively deploys on)
-- **Asymmetry:** Acceptable for a ~$133M-TVL asset at present size
+- **Asymmetry:** Acceptable for a \~$133M-TVL asset at present size
 - **Controls:** Multi-DVN quorum; LayerZero pauser (OApp-level pause capability not independently verified)
 
 #### l2_oft_mint_unpeered — forward-looking note, no active exposure
@@ -269,7 +269,7 @@ Per-chain pathway summary against each chain's OFTAdapter:
 
 Bridge layer audit covers seven dimensions (DVN count, DVN identity, MessageLibrary version, peer config, OApp pause, Endpoint identity, OApp admin) across all four EVM deployments. Headline: clean across all four chains.
 
-**Deployment scope.** thBILL is deployed as an EVM token on **Ethereum, Arbitrum, Base, and HyperEVM** (the four chains returned by CoinGecko `detail_platforms`). The underlying ULTRA token is also issued on Solana — Theo's treasury holds ~25M ULTRA there as part of the basket backing (see §II) — but the thBILL OFT itself does not extend to Solana, and Solana is therefore out of scope for the bridge audit below.
+**Deployment scope.** thBILL is deployed as an EVM token on **Ethereum, Arbitrum, Base, and HyperEVM** (the four chains returned by CoinGecko `detail_platforms`). The underlying ULTRA token is also issued on Solana — Theo's treasury holds \~25M ULTRA there as part of the basket backing (see §II) — but the thBILL OFT itself does not extend to Solana, and Solana is therefore out of scope for the bridge audit below.
 
 **Bridge contract topology:**
 
@@ -373,7 +373,7 @@ The three tiers converge to identical values during steady state; they diverge o
 - No disclosed timelock on parameter changes
 
 **Fee schedule — opaque at underlying layer:**
-- **thBILL wrapper:** zero management, performance, subscription, and redemption fees per Theo's public materials. Favorable but unproven sustainability given ~9-month operating history.
+- **thBILL wrapper:** zero management, performance, subscription, and redemption fees per Theo's public materials. Favorable but unproven sustainability given \~9-month operating history.
 - **ULTRA underlying (Delta Wellington Ultra Short Treasury On-Chain Fund):** fee schedule is not publicly disclosed with confidence. Two public data sources exist and they disagree:
   - `app.rwa.xyz/assets/ULTRA` lists 0.32% management (range 0.09–0.32%), 0.45% redemption, 0% subscription, 0% performance — sourced via rwa.xyz's direct issuer-partnership data feed.
   - `stomarket.com` lists a single 0.45% management fee with no redemption fee.
@@ -403,7 +403,7 @@ A reader wanting to know "is anyone actually exiting thBILL?" should read the us
 
 **Single-operator redemption.** Both stages run through a single Theo-controlled operator address. The permissionless on-chain `redeem()` function, which returns tULTRA to the caller, has no empirical history of use by any non-Theo address, and its output (tULTRA) has no secondary market — so it is not a practical value-extraction route regardless of its permissionless interface.
 
-**Peg arbitrage is weak and discretionary — separate from redemption activity itself.** These two signals are frequently conflated. *Primary-only redemption* (institutional holders exiting positions at NAV through the Stage A path) runs continuously. *Closed-loop peg arbitrage* (DEX buy at discount + primary redeem at NAV, pocketing the spread) is intermittent and dormant for extended periods. The persistent ~30–50 bp DEX discount reflects the second, not the first — the discount floor is set by the cost an arb-eligible entity must clear to round-trip (underlying-layer fees + T+4 settlement carry + gas + principal tie-up), and empirically no one is consistently clearing that cost to close the spread. Redemption activity being high does not imply arb activity is high; they are different behaviors with different economic drivers.
+**Peg arbitrage is weak and discretionary — separate from redemption activity itself.** These two signals are frequently conflated. *Primary-only redemption* (institutional holders exiting positions at NAV through the Stage A path) runs continuously. *Closed-loop peg arbitrage* (DEX buy at discount + primary redeem at NAV, pocketing the spread) is intermittent and dormant for extended periods. The persistent \~30–50 bp DEX discount reflects the second, not the first — the discount floor is set by the cost an arb-eligible entity must clear to round-trip (underlying-layer fees + T+4 settlement carry + gas + principal tie-up), and empirically no one is consistently clearing that cost to close the spread. Redemption activity being high does not imply arb activity is high; they are different behaviors with different economic drivers.
 
 **Institutional implication — KYC primary-redemption access is load-bearing, not optional.** Any institutional holder intending to deploy meaningful capital into thBILL should establish KYC primary-redemption access with both Theo and Libeara/FundBridge **before sizing up**. The consequences of not doing so:
 
@@ -415,11 +415,11 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 ### II.c Secondary Market Liquidity & Peg
 
-**Market cap:** ~$133M (supply 129.95M × NAV $1.0245). Down from ~$162M earlier in April — continued outflow consistent with rsETH-driven RWA risk-off on LayerZero plus normal Treasury-yield-product seasonality.
+**Market cap:** \~$133M (supply 129.95M × NAV $1.0245). Down from \~$162M earlier in April — continued outflow consistent with rsETH-driven RWA risk-off on LayerZero plus normal Treasury-yield-product seasonality.
 
-**Current price:** $1.020 USD (DEX VWAP). 7-day range $1.01-$1.02 (tight peg, persistent ~0.39% discount to NAV). 24h volume ~$252K across all tracked DEX venues — substantially lower than the ~$5M daily turnover seen at the Nov 2025 peak, and continuing to decline alongside the mcap.
+**Current price:** $1.019 USD (DEX VWAP). 7-day range $1.01-$1.02 (tight peg, persistent \~0.52% discount to NAV). 24h volume \~$211K across all tracked DEX venues — substantially lower than the \~$5M daily turnover seen at the Nov 2025 peak, and continuing to decline alongside the mcap.
 
-**Secondary market venues** (live GeckoTerminal data). Total tracked DEX liquidity is **~$1.64M across 19 pools and 3 active chains**. The deepest single venue is now on HyperEVM, not Arbitrum:
+**Secondary market venues** (live GeckoTerminal data). Total tracked DEX liquidity is **\~$1.64M across 19 pools and 3 active chains**. The deepest single venue is now on HyperEVM, not Arbitrum:
 
 | Chain | DEX | Pair | Reserve | 24h Vol | 2% Depth (buy / sell) |
 |---|---|---|---|---|---|
@@ -438,7 +438,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 - **Ethereum Uniswap V3 thBILL/USDC**: $1.9M → $12K (160× contraction). Effectively dead.
 - **Project X**: now the deepest single thBILL venue, on HyperEVM (thBILL/USDT0).
 - **Uniswap V4 (Arbitrum)**: a new $130K pool that did not exist in the Nov 2025 snapshot.
-- **Base**: thBILL is deployed on Base (`0xfdd22ce6…5a5a`) but the three Base pools (Uniswap V4 ×2, Aerodrome SlipStream ×1) hold a combined ~$303 of reserves and have done $0 of 24h volume. Base is a deployment chain, not a trading venue.
+- **Base**: thBILL is deployed on Base (`0xfdd22ce6…5a5a`) but the three Base pools (Uniswap V4 ×2, Aerodrome SlipStream ×1) hold a combined \~$303 of reserves and have done $0 of 24h volume. Base is a deployment chain, not a trading venue.
 - **HyperEVM long tail**: 14+ smaller pools across Project X, Upheaval, UltraSolid, HyperSwap, Hybra, HyperBrick. Most carry <$10K and zero recent flow — likely seeded LP positions awaiting a launch / routing.
 
 **2% depth is computed on-chain via Uniswap V3 / Project X QuoterV2** for pools where (a) the DEX exposes a Uniswap V3-compatible quoter we can call, and (b) the non-thBILL side is a recognized stablecoin. Pools without depth instrumentation (Uniswap V4, Aerodrome, HyperBrick, Upheaval, UltraSolid, Hybra) show "n/a" — the reserve figure still indicates whether the pool *has* liquidity, but exit slippage at size on those venues is not measured here.
@@ -447,7 +447,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 - Average premium/discount: −0.19% (slight discount)
 - Max premium: +0.17%
 - Max discount: −0.62%
-- Range: ~0.8% peak-to-trough
+- Range: \~0.8% peak-to-trough
 
 **Peg stability through the rsETH incident window:** Public price data shows thBILL trading $1.01-$1.02 across the days surrounding the 2026-04-18 rsETH exploit and its contagion. **No contagion depeg.** The bridge holding (see §I.5) and the fundamentally different asset class insulated thBILL from rsETH-driven outflows aside from the modest mcap decline.
 
@@ -495,8 +495,8 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 - **July 2025:** Launch
 - **Peak (Oct 2025):** $1.11 price, market cap at historical high
-- **Nov 2025:** ~$6.5M DEX liquidity, ~$5M daily turnover, price slightly below NAV
-- **April 2026:** ~$133M mcap (down from ~$162M earlier April). Daily volume around $250K. Modest risk-off post-rsETH but no structural impairment.
+- **Nov 2025:** \~$6.5M DEX liquidity, \~$5M daily turnover, price slightly below NAV
+- **April 2026:** \~$133M mcap (down from \~$162M earlier April). Daily volume around $250K. Modest risk-off post-rsETH but no structural impairment.
 
 **Project Risk Score: 4.5/10** — Strong team (ex-Optiver/IMC, $20M raise from credible investors), strong underlying partner set (Libeara/FundBridge/Wellington imposes institutional discipline at the asset level). Deductions for: fully centralized governance with no independent oversight, no legal bankruptcy remoteness, Panama jurisdiction with weak regulatory supervision of issuer entity, no timelock, undisclosed multisig signers, no governance forum.
 
@@ -520,11 +520,11 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 | Asset | Issuer | TVL (2026) | Redemption | KYC | Bankruptcy Remote | Cross-chain mechanism | Score est. |
 |---|---|---|---|---|---|---|---|
 | **thBILL** | Theo (Panama) | $133M | USDC, T+4 | Yes | No | LayerZero OFT (3-DVN custom) | **5.2** |
-| **USYC** | Circle / Hashnote | $2.2B | USDC, ~instant | Qualified only | Yes (Cayman fund structure) | Native multi-chain via Circle | ~7.0 |
-| **BUIDL** | BlackRock / Securitize | $2.0B | USDC via Circle, instant | Qualified only | Yes (3(c)(7) fund) | Securitize rails | ~8.0 |
-| **OUSG** | Ondo | ~$1.5B (with USDY) | USDC, instant or T+1 | Qualified only | Yes | Native + LayerZero | ~7.0 |
-| **USTB** | Superstate | $523M | USDC, T+1 | Qualified only | Yes | Native multi-chain | ~7.0 |
-| **USDY** | Ondo | (incl. OUSG) | USDC, T+1 | Retail (ex-US) | Yes (Cayman structure) | Native + LayerZero | ~7.0 |
+| **USYC** | Circle / Hashnote | $2.2B | USDC, ~instant | Qualified only | Yes (Cayman fund structure) | Native multi-chain via Circle | \~7.0 |
+| **BUIDL** | BlackRock / Securitize | $2.0B | USDC via Circle, instant | Qualified only | Yes (3(c)(7) fund) | Securitize rails | \~8.0 |
+| **OUSG** | Ondo | \~$1.5B (with USDY) | USDC, instant or T+1 | Qualified only | Yes | Native + LayerZero | \~7.0 |
+| **USTB** | Superstate | $523M | USDC, T+1 | Qualified only | Yes | Native multi-chain | \~7.0 |
+| **USDY** | Ondo | (incl. OUSG) | USDC, T+1 | Retail (ex-US) | Yes (Cayman structure) | Native + LayerZero | \~7.0 |
 
 **Read:** thBILL is materially smaller than every peer and structurally weaker on the two dimensions that matter most for RWA credit quality: **bankruptcy remoteness** and **redemption atomicity**. Peers operate through 3(c)(7) or Cayman fund structures giving token holders direct legal claim on assets; thBILL's contractual-claim-against-Theo model is a BB-range structure wrapped around A-range collateral. Peers also use instant or T+1 redemption; thBILL's T+4 is the longest in the set. Theo's institutional partners (Libeara/Wellington) narrow the gap at the asset level but don't close it at the issuer level.
 
@@ -542,7 +542,7 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 **Medium priority — ongoing monitoring:**
 
-4. **Continue to re-query DEX pool depths before any sizing decision.** Total tracked DEX liquidity is currently ~$1.64M; deepest single venue is HyperEVM Project X (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
+4. **Continue to re-query DEX pool depths before any sizing decision.** Total tracked DEX liquidity is currently \~$1.64M; deepest single venue is HyperEVM Project X (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
 5. Monitor secondary-market peg weekly through the post-rsETH risk-off window. Any sustained >0.5% discount signals structural concerns.
 6. Watch for basket diversification beyond tULTRA. Single-issuer concentration is the largest un-mitigated economic risk.
 7. Track settlement latency. 4-day baseline is longest in peer set; any drift higher is a liquidity-management signal.

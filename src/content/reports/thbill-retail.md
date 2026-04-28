@@ -43,7 +43,7 @@ underlying_managers:
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | ~9 months | Ethereum, Arbitrum, Base, HyperEVM |
+| \~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | \~9 months | Ethereum, Arbitrum, Base, HyperEVM |
 
 ## Summary
 
@@ -51,7 +51,7 @@ thBILL is Theo Protocol's onchain wrapper around a regulated US Treasury bill fu
 
 The structure is three layers deep: thBILL (the token you hold) → tULTRA → a Singapore-regulated T-bill fund run by **Wellington Management** and **Standard Chartered's Libeara**. Wellington and Standard Chartered are the strong part — household-name institutional players. Theo, the Panama-registered entity that issues thBILL, is the weak part: young (July 2025 launch), unlicensed, and your legal claim in the worst case is against a Panama corporation, not against the underlying T-bills directly.
 
-Appropriate for: DeFi-comfortable users sizing up to roughly $100K who want T-bill yield onchain and can absorb a ~30–100 bp exit haircut. Not appropriate if you need instant liquidity, want direct legal claim on the underlying Treasuries, or are uncomfortable with a young single issuer standing between you and your assets.
+Appropriate for: DeFi-comfortable users sizing up to roughly $100K who want T-bill yield onchain and can absorb a \~30–100 bp exit haircut. Not appropriate if you need instant liquidity, want direct legal claim on the underlying Treasuries, or are uncomfortable with a young single issuer standing between you and your assets.
 
 ## I. Smart Contract Risk
 
@@ -73,17 +73,17 @@ Clean track record so far, but single audit + no bug bounty + no timelock + nove
 
 ### How yield works
 
-thBILL's price goes up over time. At launch ($1.00), today (~$1.023), roughly +3% annualized. You pay nothing and claim nothing — yield is the difference between buy price and sell price. The underlying T-bills pay interest to the fund; the fund's NAV ticks up; thBILL's NAV ticks up with it.
+thBILL's price goes up over time. At launch ($1.00), today (\~$1.023), roughly +3% annualized. You pay nothing and claim nothing — yield is the difference between buy price and sell price. The underlying T-bills pay interest to the fund; the fund's NAV ticks up; thBILL's NAV ticks up with it.
 
 ### Getting in and out
 
-**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, ~$740K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, ~$555K). Uniswap V3 on Ethereum exists but is now thin (~$12K). Base is technically a deployment chain but has no live liquidity (~$300 across three abandoned pools). The current market price runs about 30–50 bps *below* NAV on average, which means you're buying at a small discount. That's a good thing for the buyer.
+**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, \~$740K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, \~$555K). Uniswap V3 on Ethereum exists but is now thin (\~$12K). Base is technically a deployment chain but has no live liquidity (\~$300 across three abandoned pools). The current market price runs about 30–50 bps *below* NAV on average, which means you're buying at a small discount. That's a good thing for the buyer.
 
 **Getting out is the catch.** Primary redemption (the official swap-back-to-USDC path) requires KYC and accredited-investor status. For most retail DeFi users, this isn't available. Your practical exit = selling on a DEX.
 
 The secondary market prices thBILL at a persistent 30–50 bp discount to NAV. This discount is not a bug — it's structural. The only participants who can close the discount via arbitrage are KYC'd institutions, and they only arbitrage when the spread exceeds their own costs (redemption fees at the underlying fund, gas, 4-day settlement carry). So the discount has a floor, and **that floor is your real exit cost as a retail user.**
 
-Exit sizing matters, and the picture has gotten thinner over the last six months. Total tracked DEX liquidity across all chains is now ~$1.6M against a $133M fund (down from ~$6.5M in Nov 2025). On the two deepest pools — Uniswap V3 thBILL/USDC on Arbitrum and Project X thBILL/USDT0 on HyperEVM — a 2% slippage budget clears roughly **$58K on the buy side / $196K on the sell side** on Arbitrum, and **$64K buy / $679K sell** on HyperEVM. The asymmetry is because both pools currently hold more stablecoin than thBILL, so trading thBILL → stable has more depth than the reverse. For *sells* under ~$50K on either chain you'll likely exit at the normal 30–50 bp discount. For *buys* above ~$25K, or sells above ~$200K (Arbitrum) / ~$500K (HyperEVM), expect to eat noticeably more.
+Exit sizing matters, and the picture has gotten thinner over the last six months. Total tracked DEX liquidity across all chains is now \~$1.6M against a $133M fund (down from \~$6.5M in Nov 2025). On the two deepest pools — Uniswap V3 thBILL/USDC on Arbitrum and Project X thBILL/USDT0 on HyperEVM — a 2% slippage budget clears roughly **$58K on the buy side / $196K on the sell side** on Arbitrum, and **$64K buy / $679K sell** on HyperEVM. The asymmetry is because both pools currently hold more stablecoin than thBILL, so trading thBILL → stable has more depth than the reverse. For *sells* under \~$50K on either chain you'll likely exit at the normal 30–50 bp discount. For *buys* above \~$25K, or sells above \~$200K (Arbitrum) / \~$500K (HyperEVM), expect to eat noticeably more.
 
 **Fee note.** The underlying fund's fee schedule isn't publicly disclosed with confidence — public sources (rwa.xyz, stomarket.com) actually disagree on whether a 0.45% figure is a redemption fee or a management fee. Net: the underlying layer takes somewhere between 30 and 100 bps annually, and part of that probably comes out on redemption. This matters mostly for KYC'd holders; for retail it's baked into the DEX discount floor.
 
@@ -91,7 +91,7 @@ Exit sizing matters, and the picture has gotten thinner over the last six months
 
 Three paths most retail users consider:
 
-**1. Hold for yield.** Buy, sit, accrue NAV. The simplest path, with the least stacking risk. Net yield is ~3% after the DEX buy-side discount amortizes over your holding period. No gas after purchase, no rewards to claim, no maintenance.
+**1. Hold for yield.** Buy, sit, accrue NAV. The simplest path, with the least stacking risk. Net yield is \~3% after the DEX buy-side discount amortizes over your holding period. No gas after purchase, no rewards to claim, no maintenance.
 
 **2. Pendle PT-thBILL.** Pendle offers a fixed-yield version — you buy PT-thBILL (the Principal Token) and at maturity (18-Jun-2026) it redeems to thBILL worth $1 USDC at NAV — *not* 1 whole thBILL, and *not* USDC. Pendle's accounting unit on this market is USDC, but settlement is in thBILL: you receive an amount of thBILL whose NAV equals $1 (slightly less than 1 token, since thBILL's NAV accrues against USDC over the term). So PT fixes a USDC-denominated yield, but you exit holding thBILL and still face thBILL's retail exit path (DEX, with the structural discount) to actually convert that into USDC. The Pendle UI shows this as "1 USDC in thBILL" — that framing is correct. PT markets are on Arbitrum only. What stacks: Pendle's own smart-contract risk on top of thBILL's. Pendle is well-audited and battle-tested, but you're now trusting two protocols instead of one. The fixed-rate mechanic also means you don't benefit if the thBILL NAV-vs-DEX discount narrows during your holding period — that upside goes to the YT buyer.
 
@@ -103,7 +103,7 @@ High-quality underlying with a working (if slow and gated) redemption path *for 
 
 thBILL sits on top of two very different counterparties, and the risk is concentrated in one of them.
 
-**The strong part: Wellington Management + Libeara (Standard Chartered).** The fund underneath everything — the Delta Wellington Ultra Short Treasury On-Chain Fund — is sub-managed by Wellington Management, one of the largest asset managers in the world (~$1.2T AUM). It's tokenized by Libeara, Standard Chartered's incubated RWA platform, and operated through FundBridge Capital, a MAS-regulated (Singapore) fund manager. Custody and regulatory oversight on the actual T-bills is institutional-grade.
+**The strong part: Wellington Management + Libeara (Standard Chartered).** The fund underneath everything — the Delta Wellington Ultra Short Treasury On-Chain Fund — is sub-managed by Wellington Management, one of the largest asset managers in the world (\~$1.2T AUM). It's tokenized by Libeara, Standard Chartered's incubated RWA platform, and operated through FundBridge Capital, a MAS-regulated (Singapore) fund manager. Custody and regulatory oversight on the actual T-bills is institutional-grade.
 
 **The weak part: Theo Protocol Corporation.** Theo is the Panama-registered entity that issues thBILL and wraps tULTRA. Theo is **not a licensed financial institution anywhere.** The founders are public (ex-Optiver and IMC quant traders) and the protocol is backed by Hack VC with $20M raised in April 2025. Audits beyond the Zenith report are not publicly disclosed. The project is about nine months old.
 
@@ -125,11 +125,11 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 **On the scoring rubric.** This retail report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor.
 
-**Who it's for:** DeFi-comfortable users who want T-bill yield onchain, are sizing under ~$100K, and are OK absorbing 30–100 bps of exit friction. Good fit for "idle stablecoin parking" with a yield premium over holding USDC directly.
+**Who it's for:** DeFi-comfortable users who want T-bill yield onchain, are sizing under \~$100K, and are OK absorbing 30–100 bps of exit friction. Good fit for "idle stablecoin parking" with a yield premium over holding USDC directly.
 
 **Who should avoid:** Anyone who needs instant redemption, wants direct legal ownership of the underlying Treasuries, is risk-averse to issuers under one year old, or is sizing positions larger than DEX depth can clear without material slippage.
 
-**For deeper detail** — full audit findings, bridge architecture, DVN configuration, peer comparison, governance, and primary-redemption mechanics — see the [full institutional report](/reports/thbill-full/request) (email-gated, ~13,500 words).
+**For deeper detail** — full audit findings, bridge architecture, DVN configuration, peer comparison, governance, and primary-redemption mechanics — see the [full institutional report](/reports/thbill-full/request) (email-gated, \~13,500 words).
 
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. Some attack classes — a recent example: the rsETH single-DVN bridge exploit in April 2026 — only become visible after they manifest in production; our methodology is retrospective on novel risks. We also cannot fully audit the underlying T-bill custody chain at Standard Chartered, Wellington Management's portfolio composition, the MPC operator's signer composition, or the Zenith audit report (acknowledged by Theo's docs but not publicly linked). Sized positions should leave room for residual unknowns this analysis cannot enumerate.
 
