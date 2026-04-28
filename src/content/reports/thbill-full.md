@@ -59,7 +59,7 @@ mint_paths:
     trust_size: 2
     pausable: null
     timelock_seconds: null
-    notes: "LayerZero OFT between Ethereum <-> Arbitrum / Base / HyperEVM: 3 DVNs per peered pathway (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) per 2026-04-25 audit. Meaningfully stronger than the single-DVN config that broke rsETH. Prior listing including Avalanche/Polygon/BSC/Optimism/Mantle was incorrect — actual deployment is Eth/Arb/Base/HyperEVM only per zero-bytecode verification."
+    notes: "LayerZero OFT between Ethereum <-> Arbitrum / Base / HyperEVM: 3 DVNs per peered pathway (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) per 2026-04-25 audit. Meaningfully stronger than the single-DVN config that broke rsETH. Active deployment chains (verified on-chain): Ethereum, Arbitrum, Base, HyperEVM."
   - id: "l2_oft_mint_obscure"
     mechanism: "bridge-oft"
     trust_set: "dvn-N"
@@ -279,7 +279,7 @@ Raw audit outputs: `~/PegTracker/data/thbill_{ethereum,arbitrum,base,hyperevm}-o
 
 PegTracker's extended `oft_audit.py` ran on all four EVM deployments — extends the 2026-04-21 Blockaid DVN-config check (Layer 1) to Layers 2–7. Headline: bridge clean across L2s, two prior gaps closed, two still open, one new finding worth flagging.
 
-**Deployment scope correction.** CoinGecko platform list confirms thBILL is on **Ethereum, Arbitrum, Base, HyperEVM** — *not* Avalanche, *not* Solana. Avalanche has zero bytecode at both candidate addresses; Solana is not listed as a deployment by CoinGecko (`detail_platforms` returns only the four EVM chains above). Earlier frontmatter listings of Avalanche and Solana were both wrong and have been removed.
+**Deployment scope.** thBILL is deployed as an EVM token on **Ethereum, Arbitrum, Base, and HyperEVM** (the four chains returned by CoinGecko `detail_platforms`). The underlying ULTRA token is also issued on Solana — Theo's treasury holds ~25M ULTRA there as part of the basket backing (see §II) — but the thBILL OFT itself does not extend to Solana, and Solana is therefore out of scope for the bridge audit below.
 
 **Bridge contract topology:**
 
@@ -444,7 +444,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 **Key observations vs. the Nov 2025 snapshot:**
 - **Arbitrum Uniswap V3 thBILL/USDC**: $4.5M → $555K (8× contraction), but still the deepest stablecoin pair we have on-chain depth instrumentation for.
 - **Ethereum Uniswap V3 thBILL/USDC**: $1.9M → $12K (160× contraction). Effectively dead.
-- **Project X**: corrected — Project X is on **HyperEVM**, not Base (the prior Nov 2025 table mis-attributed it). The HyperEVM Project X thBILL/USDT0 pool has grown into the deepest single venue.
+- **Project X**: now the deepest single thBILL venue, on HyperEVM (thBILL/USDT0).
 - **Uniswap V4 (Arbitrum)**: a new $130K pool that did not exist in the Nov 2025 snapshot.
 - **Base**: thBILL is deployed on Base (`0xfdd22ce6…5a5a`) but the three Base pools (Uniswap V4 ×2, Aerodrome SlipStream ×1) hold a combined ~$303 of reserves and have done $0 of 24h volume. Base is a deployment chain, not a trading venue.
 - **HyperEVM long tail**: 14+ smaller pools across Project X, Upheaval, UltraSolid, HyperSwap, Hybra, HyperBrick. Most carry <$10K and zero recent flow — likely seeded LP positions awaiting a launch / routing.
