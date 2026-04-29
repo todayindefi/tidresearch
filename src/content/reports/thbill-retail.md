@@ -45,6 +45,8 @@ underlying_managers:
 |---|---|---|---|---|
 | \~3% APY | Sell on DEX at NAV discount | KYC-gated, 4-day settlement | \~9 months | Ethereum, Arbitrum, Base, HyperEVM |
 
+> Deeper analysis in the **[full institutional report →](/reports/thbill-full/request)** — free, email-gated.
+
 ## Summary
 
 thBILL is Theo Protocol's onchain wrapper around a regulated US Treasury bill fund. You buy the token, hold it, and the price slowly goes up — around 3% a year — because the underlying T-bills accrue interest. There are no rewards to claim, no rebases, no vesting. On paper, it's one of the cleanest "onchain savings account" products available in DeFi today.
