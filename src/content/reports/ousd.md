@@ -16,6 +16,7 @@ overall_score: 5.0
 issuer: "Origin Protocol"
 audited_reserves: false
 market_cap_approx: 7500000
+production: true
 ---
 
 # OUSD — Asset Risk Assessment (Light)
