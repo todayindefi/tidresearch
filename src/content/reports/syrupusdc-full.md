@@ -410,7 +410,7 @@ For Set B specifically, the depositor's effective overcollateralization buffer i
 
 **These loans are out of compliance with their funding-time terms but the delegate has discretion not to call.** Acceptable pattern in normal markets (delegate is making a credit-management judgment about each borrower's ability to top up); becomes a concern if the count rises or if the tightest position gets meaningfully tighter. The dashboard surfaces this as a live signal under "Loans below init level" in the Loan Book Health panel.
 
-### GraphQL data anomaly (verified 2026-05-01)
+### GraphQL data anomaly (verified 2026-05-01 → 2026-05-02)
 
 Maple's GraphQL exposes per-loan `currentAssetAmount` for verification. **The field is broken for 4 specific loans:**
 
@@ -420,7 +420,9 @@ Maple's GraphQL exposes per-loan `currentAssetAmount` for verification. **The fi
 
 The `openTermLoan(id:)` single-loan query returns `null` entirely for the broken loans; data only comes through the listing query and is wrong there. Maple-side index gap, not a parsing bug in PegTracker's analyzer.
 
-**Institutional implication:** $141M / 14.4% of active book has **attestation-only** verification of current collateral state. We can see the loans exist, their borrowers, and their required initial collateral level — but we cannot independently verify what's currently posted. The PYUSD position remains the only Set B exposure with full GraphQL verifiability.
+**Correlated quality issue in `aumTimeSeries` (verified 2026-05-02):** the same root cause appears to affect Maple's pool-level `poolV2.aumTimeSeries` aggregations. Pulling 30 daily points showed a 3-week window (April 2–19) where reported `loansUsd` and `collateralUsd` swung $300–500M day-over-day in patterns that don't match real loan funding/repayment cadence (e.g., +$530M loans overnight on April 6, then −$196M the next day on a $1B book). `unrealizedLosses` remained at 0 throughout this window — meaning the apparent dips to ~59% AUM coverage were *not* real undercollateralization events but rather Maple's aggregation including/excluding the at-par stablecoin/RWA positions inconsistently across days. The dashboard's AUM Coverage chart surfaces this raw — an explicit footnote on the chart notes the data-quality variance and points readers to `unrealizedLosses` (which stayed at 0) as the on-chain credit alarm.
+
+**Institutional implication:** $141M / 14.4% of active book has **attestation-only** verification of current collateral state via Maple's API. We can see the loans exist, their borrowers, and their required initial collateral level — but we cannot independently verify what's currently posted, and the pool-level historical coverage series carries enough day-to-day noise that institutional readers should treat AUM-CR fluctuations >10pp as data-quality variance rather than real composition shifts unless cross-validated against `unrealizedLosses` and per-loan status flags. The PYUSD position remains the only Set B exposure with full GraphQL verifiability.
 
 ### Loss waterfall
 
@@ -710,6 +712,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - **Pool Delegate firm identity** behind EOA `0xC1e1...49f` — not disclosed in Maple's user-facing public documentation as of 2026-05-01. Verify via Maple IR or the syrupUSDC pool page on `app.maple.finance`. **[Open verification item.]**
 - **Borrower firm identity** for individual loans — Maple's `borrowerMeta(ethereumAddress:)` GraphQL endpoint returns `contactName: "N/A"` for the largest borrower. Maintained as a static lookup in the dashboard analyzer.
 - **Current collateral state for $141M / 14.4% of active book** — Maple's GraphQL `currentAssetAmount` field is broken for the USTB position ($105M) and three USDC at-par loans (~$36M total). The single-loan `openTermLoan(id:)` query returns `null` entirely for these specific loans. PYUSD ($152.7M) returns correctly. This is a Maple-side data-pipeline gap, not a parsing issue; until Maple fixes it, current-state collateral for these loans is **attestation-only**. **[Open verification item, blocked on Maple-side fix.]**
+- **Pool-level AUM history accuracy** — the same Maple-side aggregation issue affects `poolV2.aumTimeSeries` (`loansUsd`, `collateralUsd`). 30-day pulls show day-over-day swings of $300–500M that don't match real funding/repayment cadence on a $1B+ book. The dashboard's AUM Coverage chart surfaces this raw with an explicit data-quality footnote. **For history beyond `unrealizedLosses` and per-loan status, treat day-over-day swings >10pp as data-quality variance unless cross-validated.** **[Open verification item, blocked on Maple-side fix.]**
 - **Off-chain delegate firm key-management practices** — the PoolDelegate EOA is single-key on-chain; the operational custody of that key (Fireblocks / Copper / similar institutional MPC vs cold storage vs hot wallet) is not publicly attested.
 - **Off-chain custodian arrangements** — borrower collateral is held off-chain. The custodian (which firm holds the BTC/PYUSD/etc.) is not disclosed in any public Maple channel. Counterparty risk on the custody arrangement is a separate failure mode from borrower default.
 - **Borrower whitelist enforcement** — whether PoolManager enforces a hard-coded list of acceptable borrower addresses. **[Open verification item — cast-readable on PoolManager.]**
