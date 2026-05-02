@@ -314,8 +314,8 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 | principalOut | ~$978M | Outstanding loan principal |
 | accountedInterest | ~$2.4M | Accrued but unpaid interest |
 | unrealizedLosses | 0 | Clean book — primary credit alarm signal |
-| Pool deployment ratio | ~82% | Lower than the 97% seen in late April; pool grew faster than delegate redeployed |
-| Free USDC | ~$215M | ~18% of pool sits unallocated as redemption buffer |
+| Pool deployment ratio | ~80–98% range | Varies materially across deployment cycles — observed swing from 18% free (April 30) to <2% free (May 2) as the delegate redeployed fresh deposits within ~24h |
+| Free USDC | ~$0–340M range | Fluctuates with deposit/deployment cadence; can compress to <2% of supply within a single day after a deployment cycle |
 | Pool Delegate fee | 3.33% | `delegateManagementFeeRate = 33,300 / 1e6` |
 | Pool-level collateralization | ~149.6% | GraphQL `poolV2.collateralRatio`; ~$1.47B collateral / ~$982M loans |
 | Active loans | 25–27 | varies snapshot-to-snapshot as loans fund/repay |
@@ -537,7 +537,7 @@ The on-chain anchor for stress-case sizing:
 | Steady state (current) | ~$31M | Sub-minute via aggregator + queue | ~3% of supply available immediately |
 | 3% correlated outflow | $31M consumed | Minutes-to-hours via queue | Approaches the buffer limit |
 | 10% correlated outflow ($107M) | Insufficient buffer | **Days**, function of loan repayment cadence | $76M shortfall must come from loan repayments / margin calls |
-| 25% correlated outflow ($268M) | Deeply insufficient | **Weeks**, function of loan termination + collateral liquidation throughput | Forced delegate-side termination of fixed-term loans |
+| 25% correlated outflow ($268M) | Deeply insufficient | **Weeks**, function of loan termination + collateral liquidation throughput | Forced delegate-side calls of open-term loans (24h notice + 48h grace before default per loan) |
 | 50%+ correlated outflow | Deeply insufficient | **Indeterminate** — collateral DEX depth becomes binding | Collateral liquidation paths thin during stress; queue extends until borrowers repay or collateral clears |
 
 **Monitoring leading indicators (PegTracker live):**
@@ -548,9 +548,9 @@ The on-chain anchor for stress-case sizing:
 
 **Normal markets:** Aggregator routing handles retail-to-low-institutional sizes (≤$100K) at ~12 bps slippage with sub-minute settlement. The "instant liquidity is broken because pool TVL is only 1%" concern doesn't bind in base-case markets — aggregators route across more venues than Maple's original Uniswap+Balancer launch pools.
 
-**Correlated-outflow stress:** Binding constraint reverts to underlying pool depth (free USDC + loan repayment cadence), not aggregator efficiency. Late exits face the queue; queue speed depends on free USDC vs outstanding loan principal — if loans are fully deployed (97% currently), queue extends until loan repayments or borrower margin-call liquidations free USDC. In a severe stress event (correlated borrower distress + DEX slippage widening + queue lengthening), exit timeline could extend from sub-minute (steady state) to weeks.
+**Correlated-outflow stress:** Binding constraint reverts to underlying pool depth (free USDC + loan repayment cadence), not aggregator efficiency. Late exits face the queue; queue speed depends on free USDC vs outstanding loan principal — when the pool is heavily deployed (deployment ratio has been observed at 80–98% across the past month), queue extends until loan repayments or delegate-initiated calls free USDC. In a severe stress event (correlated borrower distress + DEX slippage widening + queue lengthening), exit timeline could extend from sub-minute (steady state) to weeks.
 
-**Liquidity & Redemption Score: 6.5/10** — Empirically excellent base-case exit liquidity (~12 bps slippage to $100K via DEX aggregator routing), permissionless dual-path redemption (queue + secondary), queue currently empty with zero current redemption pressure. Deductions for: 97% deployment ratio leaves only ~3% free USDC buffer (~$31M), stress-case exit is loan-repayment-bound past a 3%-of-supply outflow, "instant liquidity" pool TVL is only ~1% of supply (binding during stress even though aggregator routing covers base case), DEX depth on non-Ethereum venues thinner.
+**Liquidity & Redemption Score: 6.5/10** — Empirically excellent base-case exit liquidity (~12 bps slippage to $100K via DEX aggregator routing), permissionless dual-path redemption (queue + secondary), queue currently empty with zero current redemption pressure. Deductions for: deployment ratio operates in the 80–98% range with free USDC buffer fluctuating from <2% to ~18% of supply across deposit/deployment cycles; stress-case exit is loan-repayment-bound whenever the buffer is compressed; "instant liquidity" pool TVL is only ~1% of supply (binding during stress even though aggregator routing covers base case); DEX depth on non-Ethereum venues thinner.
 
 ---
 
@@ -721,7 +721,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - **Per-Strategy audit attestation** — the four strategy contracts may post-date some of the audit work; per-contract verification recommended before treating individual strategies as audited.
 - **Comparison vs peers** — deferred from this v1 report due to limited current peer set in syrupUSDC's specific category (mixed crypto-overcollateralized + at-par stablecoin/RWA institutional credit lending vault). Worth adding when the peer set grows (Centrifuge, future Sky/Maker delegated-credit products, etc.).
 
-**Reading the open verification items:** None of the open items are blockers for the headline assessment. The verified on-chain findings (24h timelock, zero first-loss cover, 97% deployment ratio, multisig topology, primary LoanManager AUM and clean book) are the load-bearing facts for the 6.2/10 score. The open items refine specific section depth (cross-chain table, delegate roster, loan-book composition) but do not change the structural read.
+**Reading the open verification items:** None of the open items are blockers for the headline assessment. The verified on-chain findings (24h timelock, zero first-loss cover, high deployment ratio (recently 80–98% range), multisig topology, primary LoanManager AUM and clean book) are the load-bearing facts for the 6.2/10 score. The open items refine specific section depth (cross-chain table, delegate roster, loan-book composition) but do not change the structural read.
 
 ---
 
