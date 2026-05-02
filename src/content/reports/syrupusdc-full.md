@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "syrupusdc"
 date: "2026-04-26"
-last_verified: "2026-04-26"
+last_verified: "2026-05-01"
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1073570000
 tvl_gross: 1073570000
@@ -70,7 +70,7 @@ mint_paths:
     trust_size: 1
     pausable: false
     timelock_seconds: null
-    notes: "PoolDelegate EOA (0xC1e1...49f) funds loans within protocol-enforced overcollateralization rules. Smart contracts enforce overcollateralization + margin-call execution; borrower selection, terms, and credit underwriting are delegate-discretionary. Single-key operational role — credit judgment ultimately sits with the off-chain delegate firm."
+    notes: "PoolDelegate EOA (0xC1e1...49f) funds Open-Term loans on Strategy 0 LoanManager (0x6ACE...0fAc). The MapleLoan contract holds NO on-chain collateral — collateral() and collateralAsset() revert. Collateral is held off-chain by Pool Delegate's custody arrangement; smart contracts handle loan accounting, payment scheduling, and time-based default triggering (noticePeriod 24h + gracePeriod 48h). Borrower selection, collateral terms, initial collateralization level, and call decisions are delegate-discretionary. Single-key operational role."
   - id: "withdrawal_queue"
     mechanism: "queue-redemption"
     trust_set: "open"
@@ -109,7 +109,7 @@ supply_integrity_flags:
 | **Issuer** | Maple Labs (Cayman Islands) |
 | **Launch** | August 2024 |
 | **Jurisdiction** | Cayman Islands (Maple Labs entity); no bankruptcy remoteness for token holders |
-| **Underlying exposure** | Overcollateralized institutional loans, USDC-denominated |
+| **Underlying exposure** | Mixed institutional loans (~70% crypto-overcollateralized + ~30% at-par stablecoin/RWA), USDC-denominated |
 | **Type** | Yield-bearing ERC-4626 lending vault share |
 | **Primary access** | Permissionless deposit/redeem; no KYC at the vault layer |
 | **Secondary access** | DEX aggregator routing (Uniswap v3/v4, Balancer, others via KyberSwap/1inch) |
@@ -126,17 +126,26 @@ supply_integrity_flags:
 
 ## Protocol Summary
 
-syrupUSDC is Maple Finance's flagship retail-accessible institutional-credit product: an ERC-4626 vault that takes USDC deposits and deploys them into overcollateralized loans to vetted institutional borrowers (centralized lenders, market makers, trading desks). It launched in August 2024 and has reached ~$1.07B Ethereum-pool TVL by April 2026, with cross-chain expansion to Solana, Arbitrum, Base, and Plasma via Chainlink CCIP's CCT standard during 2025–2026.
+syrupUSDC is Maple Finance's flagship retail-accessible institutional-credit product: an ERC-4626 vault that takes USDC deposits and deploys them as loans to vetted institutional borrowers (centralized lenders, market makers, trading desks). It launched in August 2024 and has reached ~$1.07B–1.19B Ethereum-pool TVL through April–May 2026, with cross-chain expansion to Solana, Arbitrum, Base, and Plasma via Chainlink CCIP's CCT standard during 2025–2026.
 
-The product sits at the intersection of two risk categories that don't normally combine: **discretionary institutional credit** (Pool Delegate model — humans make the underwriting calls) and **permissionless DeFi rails** (no KYC at the vault layer, ERC-4626 standard, redemption queue + DEX-aggregator dual exit). The overcollateralization model and active margin-call infrastructure are the primary structural defenses against credit loss; the Pool Delegate's underwriting judgment is the binding human factor.
+The product sits at the intersection of two risk categories that don't normally combine: **discretionary institutional credit** (Pool Delegate model — humans make the underwriting calls) and **permissionless DeFi rails** (no KYC at the vault layer, ERC-4626 standard, redemption queue + DEX-aggregator dual exit). The Pool Delegate's underwriting judgment is the binding human factor; the active credit-monitoring infrastructure (call right with 24h notice + 48h grace) is the primary on-chain enforcement mechanism. **Collateral itself is held off-chain** by custodians under Pool Delegate policy — this is verified on-chain (the MapleLoan contract has no `collateral()` getter; the call reverts) and via Maple's GraphQL.
 
-The defining context for institutional readers is Maple v1's 2022 bad-debt event: ~$50M+ LP losses across Orthogonal Trading and M11 Credit / Babel Finance defaults, driven by undercollateralized lending in the prior product cycle. Maple's response was a structural reset — overcollateralized only, vetted Pool Delegates, active margin calls — implemented as the v2 architecture that the Syrup product line runs on. v2 has reported zero principal losses across ~21 months of operation through April 2026, with on-chain `unrealizedLosses = 0` confirmed at the PoolManager and primary LoanManager layers. The clean record is real, but covers a single (favorable) credit cycle.
+The defining context for institutional readers is Maple v1's 2022 bad-debt event: ~$50M+ LP losses across Orthogonal Trading and M11 Credit / Babel Finance defaults, driven by undercollateralized lending in the prior product cycle. Maple's response was a structural reset — vetted Pool Delegates, active credit monitoring, and overcollateralization standards on crypto-backed loans — implemented as the v2 architecture that the Syrup product line runs on. v2 has reported zero principal losses across ~21 months of operation through May 2026, with on-chain `unrealizedLosses = 0` confirmed at the PoolManager and primary LoanManager layers. The clean record is real, but covers a single (favorable) credit cycle.
 
-Three findings from the 2026-04-26 on-chain audit shape the institutional read:
+**Loan-book composition is meaningfully bifurcated** (verified via Maple GraphQL 2026-05-01):
+
+- **Set A — crypto-overcollateralized** (~70% of active principal, ~$688M): BTC at 125–250%, XRP at 150%, with smaller cbBTC and HYPE positions. This is the "overcollateralized institutional lending" the marketing describes.
+- **Set B — at-par stablecoin/RWA** (~30% of active principal, ~$294M): collateralized 1:1 (100% initial level) by stablecoins and tokenized T-bills. Largest single positions: $152.7M against PYUSD (Paxos), $105M against USTB (Superstate), $35.5M across three USDC-collateralized loans (Circle).
+
+**Set B is not "overcollateralized" in any traditional sense** — it's at par, with the depositor's risk surface being the *collateral asset's own peg/issuer event* rather than crypto-cycle volatility. This is a meaningful nuance the report's prior framing glossed over and that institutional sizers should weight independently.
+
+Five findings from the 2026-04-26 → 2026-05-01 verification cycle shape the institutional read:
 
 1. **24h timelock on protocol governance** (`MIN_DELAY = 86400`s on the governor Timelock) — materially stronger than peer products with no upgrade delay.
 2. **Zero Pool Delegate first-loss cover required** (`Globals.minCoverAmount[PM] = 0`; PoolDelegateCover balance = 0) — depositors are first-loss; the v1-era MPL-bond model has been dropped for Syrup. No on-chain skin-in-game absorbs losses before depositors.
-3. **97% pool deployment ratio** — only ~$31M of USDC sits free against ~$1.07B in supply, with $1.04B deployed into the primary fixed-term LoanManager. Stress-case redemption depth is loan-repayment-bound past a ~3%-of-supply outflow.
+3. **Pool deployment fluctuates** ~80–97% across the period — pool grew from $1.073B → $1.193B as new deposits arrived faster than the delegate redeployed; free USDC ranged $31M → $337M. Stress-case redemption depth is loan-repayment-bound past the free-USDC buffer.
+4. **5 active loans (~$82M, ~8% of book) running below their funding-time required collateral level** as of 2026-05-01 — including a $37.6M BTC-collateralized loan at 102.3% vs 125% required (only 2.3pp above par). The on-chain status flags read "healthy" because the contract doesn't auto-trigger; the delegate has discretion to call but has not. This is a live signal the dashboard surfaces and institutional readers should monitor.
+5. **Per-loan collateral data is partly verifiable, partly attestation-only.** Maple's GraphQL exposes per-loan asset and required level for all loans; current-state collateral amount is reliable for ~85% of the book but **broken for the USTB position ($105M) and three USDC at-par loans (~$36M)** — a Maple-side data anomaly leaves $141M / 14.4% of book unverifiable through any public Maple channel. PYUSD ($152.7M) returns correctly.
 
 Overall profile: strong audit posture (Spearbit + Trail of Bits + 6 others, $1M+ Immunefi bounty), clean v2 contract architecture with explicit timelock-gated upgrade path, real organic yield from overcollateralized institutional loans, and empirically excellent base-case exit liquidity via DEX aggregator routing — offset by Pool Delegate discretion as the binding credit-judgment layer (with the operator role as a single-key EOA), the absence of on-chain delegate first-loss capital, the gap between base-case aggregator-route exit (good) and stress-case pool-depth-bound exit (queue-bound), and Maple Labs' v1 bad-debt history under the same legal entity.
 
@@ -172,14 +181,30 @@ The verified topology on Ethereum:
 | PoolDelegate | `0xC1e18FFD8825FfB286D177DDEbeba345EC70B49f` | **EOA** (no contract code) |
 | PoolDelegateCover | `0x9e62FE15d0E99cE2b30CE0D256e9Ab7b6893AfF5` | First-loss capital slot (currently empty) |
 | MapleGlobals | `0x804a6F5F667170F545Bf14e5DDB48C70B788390C` | Maple proxy (impl `0x9BeA...4956`) |
-| Strategy 0 (primary LoanManager) | `0x6ACEb4cAbA81Fa6a8065059f3A944fb066A10fAc` | Fixed-term loan manager — **97% of pool TVL** |
-| Strategy 1 (idle) | `0x4A1c3F0D9aD0b3f9dA085bEBfc22dEA54263371b` | Likely OpenTermLoanManager — zero deployment |
-| Strategy 2 (Aave V3 wrapper) | `0x560B3A85Af1cEF113BB60105d0Cf21e1d05F91d4` | Wraps Aave V3 USDC pool (`0x8787...4E2`) — 10 wei AUM (effectively unused) |
-| Strategy 3 | `0x859C9980931fa0A63765fD8EF2e29918Af5b038C` | Strategy abstraction — type unidentified, AUM ~0 |
+| Strategy 0 (primary LoanManager) | `0x6ACEb4cAbA81Fa6a8065059f3A944fb066A10fAc` | **OpenTermLoanManager** — ~80–97% of pool TVL across the period (verified 2026-04-30 by probing the Loan impl `0xeeadb6...` ABI, which exposes open-term-only fields like `noticePeriod`, `gracePeriod`, `dateCalled`). Earlier audit (2026-04-26) labeled this FixedTerm; corrected. |
+| Strategy 1 (idle) | `0x4A1c3F0D9aD0b3f9dA085bEBfc22dEA54263371b` | Presumably FixedTermLoanManager (paired with the OpenTerm at Strategy 0) — zero deployment |
+| Strategy 2 (MapleAaveStrategy) | `0x560B3A85Af1cEF113BB60105d0Cf21e1d05F91d4` | Wraps Aave V3 USDC pool (`0x8787...4E2`); receives `aEthUSDC`. **Active but dormant** at 10-wei placeholder. Historically deployed at $26-42M scale; wound down March 19 + April 2, 2026 |
+| Strategy 3 (MapleSkyStrategy) | `0x859C9980931fa0A63765fD8EF2e29918Af5b038C` | Routes USDC → USDS via Sky `UsdsPsmWrapper`, deposits into sUSDS (`0xa3931d71...3fbD`) for DSR-equivalent yield. **Active but dormant** at 10-wei placeholder; no material funding history |
 
 The architecture is consistent with Maple v2's public design: the PoolManager orchestrates a list of Strategies (LoanManagers + yield-strategy wrappers); the Pool is the user-facing ERC-4626 share token; the WithdrawalManager processes queue-based redemptions; PoolDelegate is the operational role with discretionary authority to fund loans within the Globals-set constraints.
 
 **Cross-contract surface is non-trivial** — the redemption flow alone touches Pool → PoolManager → WithdrawalManager → multiple Strategies (to free USDC if needed) → asset transfer back. Each interface boundary is an attack-surface seam, which is why the audit profile matters.
+
+### DeFi allocation sleeves (Strategy 2 + Strategy 3) — currently dormant
+
+Two of the four registered strategies are **DeFi-yield wrappers** that the Pool Delegate could route idle USDC through for marginal yield on the redemption-buffer portion. Both currently sit at a 10-wei placeholder amount, which keeps strategy state = "active" without any real exposure.
+
+- **Strategy 2 — MapleAaveStrategy.** Wraps Aave V3 USDC pool (`0x87870Bca...`); receives `aEthUSDC` when funded. Strategy fee: 10% of yield. **Historically used at $26-42M scale, wound down in March-April 2026** (verified via on-chain USDC/aEthUSDC asset transfers): $26.5M aEthUSDC withdrawn 2026-03-19; $41.7M USDC supplied + $42.6M aEthUSDC withdrawn within 35 minutes on 2026-04-02 (a defensive sweep pattern, not a yield deployment). Both wind-down events precede the rsETH/Kelp DAO incident of mid-April 2026 — Maple's de-risking from Aave appears to have been a deliberate posture change driven by other factors (general DeFi-counterparty caution, governance signal, or an earlier incident) rather than a Kelp-specific reaction.
+
+- **Strategy 3 — MapleSkyStrategy** (newly identified 2026-05-02; previously labeled "type unidentified" in the 2026-04-26 audit). `STRATEGY_TYPE = "SKY"`. Routes USDC → USDS via Sky's `UsdsPsmWrapper` (`0xA188EEC8...98c`), then deposits into sUSDS (Savings USDS, `0xa3931d71...3fbD`) for DSR-equivalent yield. **No material USDC funding history** — the strategy contract was deployed but never appears to have been actively used.
+
+**Why this matters for institutional readers:**
+
+1. **The Pool Delegate has on-chain authority to redeploy capital into these wrappers without timelock or governance approval.** A delegate-discretionary decision to push $100M+ of free USDC into Aave or Sky/sUSDS at any time would expose depositors to *that protocol's* counterparty risk on the deployed portion (Aave V3 governance, Aave's bad-debt history, Sky's DSR/PSM mechanics, etc.). The dormant state today is a *posture choice*, not a structural limit.
+
+2. **The active wind-down behavior is a positive delegate-management signal.** That Maple actively de-risked from Aave during a window of broader DeFi-counterparty caution — rather than passively chasing marginal yield — demonstrates discretionary risk management on the secondary-strategy layer. Worth weighting positively in the operational-judgment read.
+
+3. **Monitoring axis to track:** if `assetsUnderManagement()` on Strategy 2 or Strategy 3 transitions from 10 wei to a material non-zero amount, the depositor risk surface has expanded into Aave or Sky. The dashboard's strategy AUM table picks this up automatically.
 
 ### Admin / Upgrade Risk
 
@@ -277,25 +302,30 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 
 ## II. Credit & Counterparty — 5.5/10
 
-**The binding risk axis for syrupUSDC.** Credit underwriting is delegate-discretionary; smart contracts enforce overcollateralization parameters but not credit quality. With zero on-chain first-loss cover required, depositors absorb credit losses directly. This section does the heaviest work for institutional readers.
+**The binding risk axis for syrupUSDC.** Credit underwriting is delegate-discretionary; smart contracts handle loan accounting and time-based default triggering, NOT credit quality. **Collateral is held off-chain** — the MapleLoan contract has no `collateral()` getter (verified 2026-04-30 — the call reverts on the live $152.7M reference loan). Per-loan collateral data comes from Maple's GraphQL (`api.maple.finance/v2/graphql`); on-chain enforcement is the lender's call right with 24h notice + 48h grace before default. With zero on-chain first-loss cover required, depositors absorb credit losses directly. This section does the heaviest work for institutional readers.
 
-### Loan-book composition (on-chain verified)
+### Loan-book composition (verified via on-chain reads + Maple GraphQL, 2026-05-01)
 
 | Field | Value | Notes |
 |---|---|---|
-| Primary LoanManager | `0x6ACE...0fAc` | Strategy 0; fixed-term loans |
-| AUM | $1,042,673,202 | 97% of pool TVL |
-| principalOut | $1,040,386,790 | Outstanding loan principal |
-| accountedInterest | $2,156,461 | Accrued but unpaid interest |
-| unrealizedLosses | 0 | Clean book |
-| Pool deployment ratio | 97% | $1.04B deployed / $1.07B TVL |
-| Free USDC | ~$31M | ~3% of supply |
+| Primary LoanManager | `0x6ACE...0fAc` | Strategy 0; **OpenTermLoanManager** (corrected from earlier "Fixed-term") |
+| Loan factory (enumeration source) | `0x6Fad515Fc046DD17166453A79725f50b917b7cF6` | OpenTermLoanFactory — `InstanceDeployed` events scanned via dRPC |
+| AUM (current snapshot) | ~$980M | ~82% of pool TVL (varies as deposits arrive) |
+| principalOut | ~$978M | Outstanding loan principal |
+| accountedInterest | ~$2.4M | Accrued but unpaid interest |
+| unrealizedLosses | 0 | Clean book — primary credit alarm signal |
+| Pool deployment ratio | ~82% | Lower than the 97% seen in late April; pool grew faster than delegate redeployed |
+| Free USDC | ~$215M | ~18% of pool sits unallocated as redemption buffer |
 | Pool Delegate fee | 3.33% | `delegateManagementFeeRate = 33,300 / 1e6` |
-| Borrower count | [VERIFY: LoanManager event scan or Maple transparency report] | |
-| Top-N concentration | [VERIFY] | |
-| Average loan duration | [VERIFY] | Fixed-term LoanManager |
-| Average LTV | [VERIFY] | |
-| Collateral mix | [VERIFY] — likely BTC/ETH/other liquid crypto per Maple docs | |
+| Pool-level collateralization | ~149.6% | GraphQL `poolV2.collateralRatio`; ~$1.47B collateral / ~$982M loans |
+| Active loans | 25–27 | varies snapshot-to-snapshot as loans fund/repay |
+| Borrowers | 15 | top-1 borrower concentration ~26%; top-3 likely majority of book |
+| Weighted-avg interest rate | ~5.5% | Across the active book |
+| Avg loan payment interval | ~67 days | Open-Term cadence; varies per loan (30–180d range) |
+| **Collateral mix — Set A (crypto-overcollateralized)** | ~70% of book / ~$688M | BTC ($272M, 125–250%), XRP ($172M, 150%), cbBTC ($27M, 143%), HYPE ($7.5M, 200%) |
+| **Collateral mix — Set B (at-par stablecoin/RWA)** | ~30% of book / ~$294M | PYUSD ($152.7M @ 100%, Paxos), USTB ($105M @ 100%, Superstate), USDC ($35.5M @ 100%, Circle, 3 loans) |
+| Loans below init level | 5 | ~$82M, all BTC-collateralized; tightest is $37.6M loan at 102.3% vs 125% required |
+| GraphQL data anomaly | $141M unverifiable | USTB ($105M) + 3 USDC at-par loans (~$36M) return broken `currentAssetAmount` from Maple's GraphQL — current-state collateral is attestation-only for these specific loans |
 
 ### Pool Delegate as the binding credit-judgment layer
 
@@ -326,24 +356,90 @@ Maple's published model: **vetted institutional crypto firms** — centralized l
 
 ### Collateral & margin call infrastructure
 
-- **Overcollateralized at all times** (key structural change from Maple v1)
-- **Active margin calls** triggered as collateral values approach pre-defined liquidation thresholds
-- **Smart contracts enforce** the overcollateralization parameter; the Pool Delegate executes margin calls and liquidations via the LoanManager interface
+**Critical correction vs the prior framing:** The smart contract does NOT enforce ongoing overcollateralization. The MapleLoan contract has no `collateral()` getter (verified 2026-04-30 — the call reverts on the live reference loan). Collateral is held off-chain by the Pool Delegate's custodial arrangement. What the contract enforces:
 
-The overcollateralization model means the binding risk is **not** "borrower defaults and depositors lose money" but rather "collateral cannot be liquidated fast enough during a market dislocation." This shifts the risk profile from pure credit risk to liquidity-during-stress risk — and stress events are exactly when collateral DEX depth thins.
+- **Loan accounting** — principal, accrued interest, payment schedule, status flags
+- **Time-based default trigger** — if the borrower misses a payment AND `gracePeriod` (typically 48h) elapses, OR if the lender calls the loan AND `noticePeriod` (typically 24h) elapses without repayment → `isInDefault()` becomes true
+- **Lender's call right** — the LoanManager (acting on the Pool Delegate's instructions) can recall any loan with `noticePeriod` notice; this is the on-chain enforcement mechanism for collateral degradation
 
-Accepted collateral types are configured by PoolManager; institutional readers should verify the current whitelist on-chain (`PoolManager.isCollateralAsset(address)` per asset of interest) before sizing. Typical collateral per Maple's published materials: BTC (WBTC), ETH (WETH), and other liquid digital assets.
+**What is NOT contract-enforced:**
+- Continuous collateralization ratio
+- Auto-liquidation when collateral falls below a threshold
+- Oracle-driven margin-call triggers
+
+The "overcollateralized at all times + active margin calls" framing is therefore a **Pool Delegate policy** plus the legal/custodial framework with off-chain custodians, not a smart-contract invariant. It's enforced by:
+1. Borrower's contractual obligation to maintain collateral (legal)
+2. Off-chain custodian holding the collateral under Maple's framework
+3. Pool Delegate monitoring borrower health and exercising the on-chain call right when collateral degrades
+
+**This distinction matters for institutional readers** because:
+- A delegate-side failure to monitor (operational risk) leaves a degraded loan running indefinitely with no automatic correction
+- A custodian-side failure (counterparty risk on the custody arrangement) is a separate failure mode from borrower default
+- The `isImpaired` flag is set at delegate discretion — meaning the on-chain "credit alarm" trails the actual credit state by however long it takes the delegate to act
+
+**Accepted collateral types** are policy-set per loan, not whitelist-set on-chain (the MapleLoan contract doesn't even have a collateral asset field). Verified collateral types in the active book: BTC, cbBTC, ETH, XRP, HYPE (Set A — crypto, overcollateralized at 125–250%) plus PYUSD, USTB, USDC (Set B — stablecoin/RWA, at par).
+
+### Set A vs Set B — the structurally distinct collateral classes
+
+The 2026-05-01 GraphQL probe revealed the loan book is meaningfully bifurcated. The two sets have different stress-binding scenarios:
+
+| Stress scenario | Set A (~70%, ~$688M) | Set B (~30%, ~$294M) |
+|---|---|---|
+| Crypto-cycle drawdown (BTC/ETH 30%+) | Buffer compresses; tightest loans go negative; delegate must act | Unaffected (collateral is stable-value) |
+| PYUSD depeg (Paxos issuer event) | Unaffected | $152.7M position underwater |
+| USTB regulatory / NAV-attestation event | Unaffected | $105M position illiquid or impaired |
+| USDC depeg | Unaffected directly | $35.5M position underwater AND the pool's denomination is also USDC (depositor pays twice) |
+| Borrower default (operational) | Liquidate crypto collateral via off-chain custodian | Liquidate stablecoin/RWA collateral — same custodial mechanism, different asset |
+| Custodian failure (counterparty) | Equally affects both — custodian holds both classes |
+
+**Set B introduces named-issuer risk** to the depositor's surface — Paxos for PYUSD, Superstate for USTB, Circle for USDC. These were not in the report's prior risk frame but now need to be priced explicitly. Set B's "overcollateralization" is functionally **trust in the collateral asset's peg/issuer holding**, not a buffer against asset price volatility.
+
+For Set B specifically, the depositor's effective overcollateralization buffer is *zero* — at-par means no cushion. The trust stack collapses to: Pool Delegate's policy + collateral-asset issuer's solvency + Maple's custodial framework + the lender's call right (which is a 72h-to-default mechanism, not an instant liquidation).
+
+### Loans currently below initial collateral level (verified 2026-05-01)
+
+5 BTC-collateralized loans (~$82M / ~8% of book) are running below their funding-time required collateral level. The on-chain status flags read "healthy" because the contract doesn't auto-trigger when current collateral drops below init — that's a delegate-discretionary call. Notable cases:
+
+| Loan size | Asset | Init level | Current level | Buffer | Notes |
+|---|---|---|---|---|---|
+| $37.6M | BTC | 125% | 102.3% | −22.7pp | **Tightest position** — only 2.3pp above par; a ~2.5% BTC drop from this level puts the loan underwater |
+| $30.0M | BTC | 125% | 120.0% | −5.0pp | Marginal underperformance |
+| $7.2M | BTC | 333% | 314.5% | −18.8pp | Buffer still very large despite drift |
+| $5.0M | BTC | 200% | 189.3% | −10.7pp | Marginal underperformance |
+| $2.0M | BTC | 200% | 191.5% | −8.5pp | Marginal underperformance |
+
+**These loans are out of compliance with their funding-time terms but the delegate has discretion not to call.** Acceptable pattern in normal markets (delegate is making a credit-management judgment about each borrower's ability to top up); becomes a concern if the count rises or if the tightest position gets meaningfully tighter. The dashboard surfaces this as a live signal under "Loans below init level" in the Loan Book Health panel.
+
+### GraphQL data anomaly (verified 2026-05-01)
+
+Maple's GraphQL exposes per-loan `currentAssetAmount` for verification. **The field is broken for 4 specific loans:**
+
+- **USTB ($105M, Superstate):** GraphQL returns `currentAssetAmount = 0` (would imply 100% loss; clearly wrong)
+- **USDC at-par × 3 ($20M / $15M / $1M):** GraphQL returns `sub-$50` raw values for all three
+- **PYUSD ($152.7M):** Returns correctly
+
+The `openTermLoan(id:)` single-loan query returns `null` entirely for the broken loans; data only comes through the listing query and is wrong there. Maple-side index gap, not a parsing bug in PegTracker's analyzer.
+
+**Institutional implication:** $141M / 14.4% of active book has **attestation-only** verification of current collateral state. We can see the loans exist, their borrowers, and their required initial collateral level — but we cannot independently verify what's currently posted. The PYUSD position remains the only Set B exposure with full GraphQL verifiability.
 
 ### Loss waterfall
 
 **Critical finding (verified on-chain 2026-04-26):** **No Pool Delegate first-loss capital is required.** `Globals.minCoverAmount[PoolManager] = 0`, and the PoolDelegateCover contract (`0x9e62...AfF5`) holds zero USDC.
 
-This is materially different from Maple v1, where Pool Delegates were required to post MPL tokens as a first-loss bond. Under the current Syrup configuration, the loss waterfall is:
+This is materially different from Maple v1, where Pool Delegates were required to post MPL tokens as a first-loss bond. Under the current Syrup configuration, the loss waterfall depends on which collateral set the defaulting loan is in:
 
-1. **Borrower default** triggers liquidation of overcollateralization
-2. **Collateral liquidation proceeds** are applied to outstanding principal + interest
-3. **If liquidation produces a shortfall** (collateral fell faster than liquidation cleared), the shortfall hits `unrealizedLosses` on the LoanManager
-4. **`unrealizedLosses` reduces NAV** for all syrupUSDC holders pro-rata
+**Set A (crypto-overcollateralized):**
+1. Borrower default triggers Pool Delegate's call (24h notice + 48h grace before contractual default)
+2. Off-chain custodian liquidates the BTC/XRP/etc. collateral per delegate instructions
+3. Liquidation proceeds applied to outstanding principal + interest
+4. If liquidation produces a shortfall (collateral fell faster than liquidation cleared), the shortfall hits `unrealizedLosses` on the LoanManager → reduces NAV pro-rata for all syrupUSDC holders
+
+**Set B (at-par stablecoin/RWA):**
+1. Borrower default OR collateral asset depeg/issuer event triggers Pool Delegate's call
+2. Off-chain custodian seizes the PYUSD/USTB/USDC collateral
+3. If collateral asset is liquid at par: full recovery, no NAV impact
+4. If collateral asset has depegged or is stuck (USTB redemption queue, Paxos freeze, etc.): partial recovery, shortfall hits `unrealizedLosses` → NAV reduction
+
 5. *(Historical Maple v1: pool delegate's MPL bond would absorb losses in a junior tranche before depositors)*
 6. *(Currently: no junior tranche)*
 
@@ -355,7 +451,12 @@ This is materially different from Maple v1, where Pool Delegates were required t
 
 #### Revenue source
 
-syrupUSDC yield is sourced from **interest on overcollateralized institutional loans**. Borrowers pay 5–9% interest on short-duration loans secured by overcollateralized BTC/ETH/other liquid digital asset collateral. The pool aggregates loan interest, takes Maple's protocol fee (`platformManagementFeeRate` per Globals; verify) plus the Pool Delegate's 3.33% management fee, and distributes the remainder to syrupUSDC holders as NAV accrual.
+syrupUSDC yield is sourced from **interest on institutional loans** — a mix of crypto-overcollateralized (Set A) and at-par stablecoin/RWA-collateralized (Set B) positions. Rates vary materially by collateral type and borrower:
+
+- **At-par stablecoin/RWA loans (Set B):** Rates are lower — the largest position, $152.7M PYUSD-collateralized, pays just 3.25%. USDC at-par loans run 5–6%. These are essentially institutional carry trades or stablecoin liquidity facilities.
+- **Crypto-overcollateralized loans (Set A):** Rates run higher (5–9%+), reflecting the credit and operational complexity of crypto-collateral management.
+
+Weighted-average rate across the active book is ~5.5%. The pool aggregates loan interest, takes Maple's protocol fee (`platformManagementFeeRate` per Globals; verify) plus the Pool Delegate's 3.33% management fee, and distributes the remainder to syrupUSDC holders as NAV accrual.
 
 This is **organic yield** — derived from real borrower interest payments, not from emissions, recursive leverage, or external incentive subsidies at the underlying-yield layer.
 
@@ -363,12 +464,12 @@ This is **organic yield** — derived from real borrower interest payments, not 
 
 | Component | APY | Notes |
 |---|---|---|
-| Base institutional yield | 5–9% | Set by borrower interest minus Maple protocol fee minus 3.33% delegate fee |
+| Base institutional yield | ~3–9% | Wide range across the book — at-par PYUSD pays 3.25% at the floor; crypto-collateralized rates run higher. Weighted-avg ~5.5% currently. Net of Maple protocol fee and 3.33% delegate fee |
 | Syrup Season programs (incentive overlay) | +5–10% | Programmatic point/incentive overlay; varies by season |
 | Blended (Seasons 1–7 average) | ~20.5% | Per Maple's published figures |
 | Season 7 (recent) | ~16.4% | Latest declared average |
 
-**Sustainability framing:** Holders should distinguish between **base yield** (sustainable from organic loan interest, durable as long as Syrup is operating) and **incentive yield** (programmatic, subject to season schedule changes). When Syrup Seasons end or restructure, headline APY can drop sharply without any change in underlying loan health. **Plan around base yield (5–9%), not headline yield (16–20%).**
+**Sustainability framing:** Holders should distinguish between **base yield** (sustainable from organic loan interest, durable as long as Syrup is operating) and **incentive yield** (programmatic, subject to season schedule changes). When Syrup Seasons end or restructure, headline APY can drop sharply without any change in underlying loan health. **Plan around base yield (~3–9%, weighted-avg ~5.5%), not headline yield (16–20%).**
 
 Yield volatility is lower than typical DeFi yield-bearing assets — the underlying is institutional lending at relatively stable rates, not algorithmic borrow markets. Rate movements track institutional credit demand and fed-rate proxies more than crypto market dynamics.
 
@@ -383,7 +484,17 @@ These were credit-risk failures, not smart-contract exploits — borrowers defau
 
 The Syrup product line is Maple's structural response: overcollateralized only, vetted Pool Delegates, active margin calls. The team published transparent post-mortems and rebuilt v2 with explicitly different risk parameters. **Institutional memory of v1 losses remains a legitimate concern about historical risk-management judgment under the same legal entity, even though the product model has fundamentally changed.** Operational/governance implications covered in §IV.
 
-**Credit Risk Score: 5.5/10** — Overcollateralized loan book with active margin-call infrastructure, $1.04B principal-out cleanly serviced, zero unrealized losses, real organic yield from institutional borrowers (5–9% base). Deductions for: Pool Delegate single-key EOA controlling loan funding, **zero on-chain first-loss cover** (depositors directly absorb losses, materially different from Maple v1's MPL-bond model), borrower identity non-public (cannot independently verify concentration; conservative read is top-5 borrowers >50% of book), credit-judgment is delegate-discretionary with no smart-contract enforcement of credit quality, headline APY blends incentive yield with base yield (not durable), v1 bad-debt history under the same Maple Labs legal entity is a legitimate institutional-memory mark, no protocol-level insurance attestation publicly verified.
+### Delegate behavioral signals (positive)
+
+While the Pool Delegate's discretionary authority is the binding risk surface, the on-chain record of recent operational decisions provides some reassurance about *how* that discretion is being exercised:
+
+- **Aave wind-down (March 19 + April 2, 2026):** Strategy 2 (MapleAaveStrategy) was historically deployed at $26-42M scale; the delegate actively unwound this exposure in March-April 2026 — verified via on-chain `aEthUSDC` and USDC asset transfers. Both wind-down events precede the rsETH/Kelp DAO incident of mid-April, suggesting deliberate de-risking from Aave V3 driven by general DeFi-counterparty caution rather than a reactive response to a specific incident. This is the kind of pre-emptive risk management institutional readers should expect from a credit-judgment delegate but cannot always observe.
+- **Strategy 3 (MapleSkyStrategy) never funded:** The Sky integration was set up as a future option but has not had material USDC routed through it. Dormant strategy slots maintained at 10-wei placeholder rather than active deployment.
+- **No yield-chasing behavior observed** at the secondary-strategy level over the verified period — capital remains in primary credit (Strategy 0 OpenTermLoanManager) or as free pool USDC for redemptions, not optimized for marginal DeFi yield.
+
+**Caveat:** these are observations of past delegate behavior, not constraints on future behavior. The on-chain authority to redeploy into Aave / Sky / future strategies remains; the dashboard's strategy AUM table is the live monitoring surface for any change.
+
+**Credit Risk Score: 5.5/10** — Mixed institutional loan book (~70% crypto-overcollateralized at 125–250%, ~30% at-par stablecoin/RWA at 100%), zero unrealized losses across $980M+ principal-out, ~$1.47B aggregate collateral against $982M loans (pool collateralization 149.6% — but that figure compresses when only Set A's buffer is the actual cushion), real organic yield from institutional borrowers (~3–9% base, weighted ~5.5%). Deductions for: Pool Delegate single-key EOA controlling loan funding, **zero on-chain first-loss cover** (depositors directly absorb losses, materially different from Maple v1's MPL-bond model), **no on-chain collateral data** (collateral held off-chain, contract-level overcollateralization is a policy claim not an invariant), **Set B introduces named-issuer risk** (Paxos for PYUSD, Superstate for USTB, Circle for USDC — risk axes the prior framing didn't price), **GraphQL data anomaly** affecting current-state collateral verification for $141M / 14.4% of book (USTB + USDC at-par loans), **5 active loans (~$82M) currently below their funding-time required collateral level** with delegate discretion not yet exercised, borrower identity non-public (cannot independently verify concentration beyond GraphQL borrower-address aggregation; top borrower currently ~26% of book), credit-judgment is delegate-discretionary, headline APY blends incentive yield with base yield (not durable), v1 bad-debt history under the same Maple Labs legal entity, no protocol-level insurance attestation publicly verified.
 
 ---
 
@@ -475,7 +586,8 @@ External dependencies that could affect syrupUSDC unilaterally:
 
 - **Chainlink CCIP / CCT governance** — Chainlink Labs + Foundation control DON node operator set, RMN configuration, CCT pool implementation upgrades. An adverse change at the CCIP layer affects every CCT-bridged asset.
 - **USDC issuer (Circle)** — syrupUSDC is denominated in USDC; Circle policy decisions on freezes, redemptions, or regulatory compliance flow through to syrupUSDC indirectly.
-- **Aave V3** — Strategy 2 routes idle USDC into Aave V3 (currently 10 wei AUM, effectively unused, but the integration exists). Adverse Aave V3 governance changes could affect this strategy if it scales.
+- **Aave V3** — Strategy 2 (MapleAaveStrategy) was historically deployed at $26-42M scale; wound down to 10-wei placeholder during March-April 2026. Currently dormant. Reactivation by the Pool Delegate (no timelock required) would re-introduce Aave V3 counterparty risk on the deployed portion.
+- **Sky Protocol (Maker)** — Strategy 3 (MapleSkyStrategy, newly identified) routes USDC → USDS → sUSDS for DSR-equivalent yield. Currently 10-wei placeholder; no material funding history. Reactivation would introduce Sky governance, USDS peg, and PSM-mechanics dependencies.
 
 ### TVL Trajectory
 
@@ -531,6 +643,12 @@ Weighted composite over four primary axes (Supply Integrity reported as separate
 
 9. **Compare wrapper-layer track record with Maple Labs entity track record.** v1 bad debt happened under the same legal/operational entity. Decide explicitly whether your framework treats the entity or the product as the relevant unit.
 
+10. **Price the Set B (at-par stablecoin/RWA) fraction as a separate risk axis.** ~30% of the active book is collateralized at par by stablecoins or tokenized T-bills, NOT crypto-overcollateralized. The risk surface for Set B is the *collateral asset's own peg/issuer event* — Paxos for PYUSD, Superstate for USTB, Circle for USDC. A PYUSD depeg, a USTB regulatory action, or a USDC freeze would impair collateral on Set B without any change to Set A's exposure. The dashboard surfaces `at_par_principal_pct` as a live indicator; size accordingly.
+
+11. **Monitor "loans below init level" as a delegate-discretion signal.** As of 2026-05-01, 5 active loans (~$82M, ~8% of book) are running below their funding-time required collateral level — the largest is a $37.6M BTC loan at 102.3% vs 125% required. The on-chain status flags read healthy because the contract doesn't auto-trigger; the delegate has the right to call but has not. Rising count or tightening of the worst position is the early-warning signal that delegate-side credit management is being passively rather than actively exercised.
+
+12. **Treat $141M of Set B as attestation-only.** Maple's GraphQL has a data-pipeline gap that returns broken `currentAssetAmount` for the USTB position and three USDC at-par loans. We can verify these loans exist, their borrowers, their required initial collateral, and their funding terms — but we cannot independently verify what's currently posted as collateral. PYUSD ($152.7M) returns correctly. Until Maple fixes this, Set B verification is asymmetric within the at-par fraction.
+
 ---
 
 ## VII. Chain Deployments
@@ -549,17 +667,21 @@ Weighted composite over four primary axes (Supply Integrity reported as separate
 
 ## Bottom Line
 
-syrupUSDC is one of the better-designed institutional yield-bearing stablecoins available to retail: real organic yield from overcollateralized institutional loans, strong audit profile (Spearbit + Trail of Bits + 6 others), $1M+ Immunefi bounty, and a 24h-timelock-gated upgrade path with multisig role separation between operational and security admin functions. The Syrup product line's clean credit record over ~21 months and $1B+ scale per pool is meaningful evidence of a working risk-management framework.
+syrupUSDC is one of the better-designed institutional yield-bearing stablecoins available to retail: real organic yield from a mixed institutional loan book, strong audit profile (Spearbit + Trail of Bits + 6 others), $1M+ Immunefi bounty, and a 24h-timelock-gated upgrade path with multisig role separation between operational and security admin functions. The Syrup product line's clean credit record over ~21 months and $1B+ scale per pool is meaningful evidence of a working risk-management framework.
 
-The 6.2/10 score reflects four persistent concerns: (a) the **Pool Delegate model adds discretionary credit risk** beyond what a purely algorithmic protocol carries, with the operator role implemented as a single-key EOA — and credit underwriting is the binding axis for this product (35% of the composite weight); (b) **no on-chain first-loss cover absorbs losses before depositors** — Maple v1's MPL-bond model has been dropped for Syrup, putting depositors directly in the first-loss tranche; (c) the **97% deployment ratio creates a structural stress-case redemption gap** — base-case aggregator-route exit is empirically ~12 bps to $100K, but stress-case exit is queue-bound with loan-repayment-cadence-dependent clearing time; (d) **Maple Labs' v1 bad-debt history is a legitimate institutional-memory dock** even though the v2 product is structurally different.
+**The crucial nuance, surfaced by the 2026-05-01 GraphQL probe:** the loan book is bifurcated. ~70% is crypto-overcollateralized in the marketing sense (BTC/XRP at 125–250%); ~30% is at-par stablecoin/RWA collateralized (1:1 by PYUSD/USTB/USDC) — *not* overcollateralized in any traditional sense. The largest single position in the entire pool ($152.7M, 20.7% of book) is collateralized 1:1 by PYUSD. Set A's binding stress is crypto-cycle volatility; Set B's binding stress is the collateral asset's own peg/issuer event. Different stress scenarios bind the two sets differently, and the depositor needs both axes priced.
 
-For sizing: comfortable for retail and low-institutional positions exiting via aggregator routing in normal markets, with explicit understanding that base yield (5–9%) is the durable return, not the Season-headline (16–20%). Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency into entry decisions, verify Pool Delegate firm identity before sizing, and verify per-chain CCT bridge surface for any non-Ethereum allocation.
+The 6.2/10 score reflects six persistent concerns: (a) the **Pool Delegate model adds discretionary credit risk** beyond what a purely algorithmic protocol carries, with the operator role implemented as a single-key EOA — and credit underwriting is the binding axis for this product (35% of the composite weight); (b) **no on-chain first-loss cover absorbs losses before depositors** — Maple v1's MPL-bond model has been dropped for Syrup; (c) the **deployment ratio creates a structural stress-case redemption gap** — base-case aggregator-route exit is empirically ~12 bps to $100K, but stress-case exit is queue-bound with loan-repayment-cadence-dependent clearing time; (d) **Set B introduces named-issuer risk** (Paxos/Superstate/Circle) that the marketing's "overcollateralized at all times" framing obscures; (e) **5 active loans (~$82M) currently below their funding-time required collateral level** with delegate discretion not yet exercised — and $141M of Set B is unverifiable through any public Maple channel due to a GraphQL data-pipeline gap; (f) **Maple Labs' v1 bad-debt history is a legitimate institutional-memory dock** even though the v2 product is structurally different.
+
+For sizing: comfortable for retail and low-institutional positions exiting via aggregator routing in normal markets, with explicit understanding that base yield (~3–9%, weighted ~5.5%) is the durable return, not the Season-headline (16–20%). Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency into entry decisions, verify Pool Delegate firm identity before sizing, verify per-chain CCT bridge surface for any non-Ethereum allocation, AND verify the current at-par-principal fraction (the dashboard surfaces this as a live metric) — a Set B exposure shift toward higher at-par % materially changes the risk decomposition without changing the headline collateralization claim.
+
+**Live dashboard:** [todayindefi.github.io/backing-monitor/?asset=syrupusdc](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads + Maple GraphQL. Surfaces all six concerns above as live signals (Set A/B mix, buffer-health, named-issuer roster, deployment ratio, exit slippage, governance topology).
 
 ---
 
 ## VIII. Methodology & Disclosure Limits
 
-This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alchemy) on 2026-04-26, plus published Maple Finance documentation, audit reports, and third-party reporting on the cross-chain CCIP/CCT integration.
+This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alchemy + dRPC) on 2026-04-26 → 2026-05-01, plus per-loan enrichment via Maple's public GraphQL endpoint (`api.maple.finance/v2/graphql`), plus published Maple Finance documentation, audit reports, and third-party reporting on the cross-chain CCIP/CCT integration.
 
 **What this report can directly verify:**
 - All Ethereum core contract addresses, storage state, and verified topology (§I)
@@ -568,17 +690,23 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - Pool state (totalAssets, totalSupply, NAV, deployment ratio, free USDC, queue state)
 - Strategy contract identification and AUM per strategy
 - Loss waterfall configuration (zero pool delegate first-loss cover required and posted)
+- **Per-loan basics for all active loans** (borrower address, principal, rate, payment schedule, status flags, dates) — readable from MapleLoan contracts on-chain
+- **Per-loan collateral asset and required initial level** (via Maple GraphQL `poolV2.openTermLoans[].collateral`)
+- **Per-loan current collateral state for ~85% of the active book** (via the same GraphQL field — broken for the USTB position and three USDC at-par loans, see below)
+- **Loan-book aggregates** — Set A vs Set B split, weighted-avg buffer to init level, loans-below-init count, named-issuer rollup
 
 **What this report explicitly cannot directly verify:**
 - **Per-chain CCT pool addresses and rate limits** for Solana / Arbitrum / Base / Plasma — Chainlink CCIP directory is SPA-rendered and not extractable via automated fetch. Cross-chain architecture (CCIP + CCT, burn-and-mint) is independently confirmed via published sources but per-chain specifics require direct browse to `docs.chain.link/ccip/directory/mainnet/token/syrupUSDC`. **[Open verification item.]**
-- **Pool Delegate firm identity** behind EOA `0xC1e1...49f` — not disclosed in Maple's user-facing public documentation as of 2026-04-26. Verify via Maple IR or the syrupUSDC pool page on `app.maple.finance`. **[Open verification item.]**
-- **Loan-book composition** — borrower count, top-N borrower concentration, average duration, average LTV, collateral mix. The LoanManager stores per-loan parameters but borrower identity is opaque on-chain; institutional readers should consult Maple's transparency reports or delegate disclosures. **[Open verification item.]**
+- **Pool Delegate firm identity** behind EOA `0xC1e1...49f` — not disclosed in Maple's user-facing public documentation as of 2026-05-01. Verify via Maple IR or the syrupUSDC pool page on `app.maple.finance`. **[Open verification item.]**
+- **Borrower firm identity** for individual loans — Maple's `borrowerMeta(ethereumAddress:)` GraphQL endpoint returns `contactName: "N/A"` for the largest borrower. Maintained as a static lookup in the dashboard analyzer.
+- **Current collateral state for $141M / 14.4% of active book** — Maple's GraphQL `currentAssetAmount` field is broken for the USTB position ($105M) and three USDC at-par loans (~$36M total). The single-loan `openTermLoan(id:)` query returns `null` entirely for these specific loans. PYUSD ($152.7M) returns correctly. This is a Maple-side data-pipeline gap, not a parsing issue; until Maple fixes it, current-state collateral for these loans is **attestation-only**. **[Open verification item, blocked on Maple-side fix.]**
 - **Off-chain delegate firm key-management practices** — the PoolDelegate EOA is single-key on-chain; the operational custody of that key (Fireblocks / Copper / similar institutional MPC vs cold storage vs hot wallet) is not publicly attested.
-- **Borrower whitelist enforcement** — whether PoolManager enforces a hard-coded list of acceptable borrower addresses, and the scope of the collateral asset whitelist. **[Open verification item — cast-readable on PoolManager.]**
+- **Off-chain custodian arrangements** — borrower collateral is held off-chain. The custodian (which firm holds the BTC/PYUSD/etc.) is not disclosed in any public Maple channel. Counterparty risk on the custody arrangement is a separate failure mode from borrower default.
+- **Borrower whitelist enforcement** — whether PoolManager enforces a hard-coded list of acceptable borrower addresses. **[Open verification item — cast-readable on PoolManager.]**
 - **Maple Labs protocol-level cover** — whether the protocol holds shared insurance / reserve capital at the Globals layer (off-chain disclosure required).
 - **Governor Timelock proposer set** — `hasRole()` calls revert against the custom Timelock variant. Resolve via Etherscan AccessControl event logs.
 - **Per-Strategy audit attestation** — the four strategy contracts may post-date some of the audit work; per-contract verification recommended before treating individual strategies as audited.
-- **Comparison vs peers** — deferred from this v1 report due to limited current peer set in syrupUSDC's specific category (overcollateralized institutional credit lending vault). Worth adding when the peer set grows (Centrifuge, future Sky/Maker delegated-credit products, etc.).
+- **Comparison vs peers** — deferred from this v1 report due to limited current peer set in syrupUSDC's specific category (mixed crypto-overcollateralized + at-par stablecoin/RWA institutional credit lending vault). Worth adding when the peer set grows (Centrifuge, future Sky/Maker delegated-credit products, etc.).
 
 **Reading the open verification items:** None of the open items are blockers for the headline assessment. The verified on-chain findings (24h timelock, zero first-loss cover, 97% deployment ratio, multisig topology, primary LoanManager AUM and clean book) are the load-bearing facts for the 6.2/10 score. The open items refine specific section depth (cross-chain table, delegate roster, loan-book composition) but do not change the structural read.
 
@@ -587,10 +715,18 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 ## IX. Sources
 
 **Direct on-chain verification (Ethereum mainnet):**
-- Pool, PoolManager, WithdrawalManager, PoolDelegate, MapleGlobals, all 4 Strategies — verified via `cast call` against Alchemy RPC on 2026-04-26
+- Pool, PoolManager, WithdrawalManager, PoolDelegate, MapleGlobals, all 4 Strategies — verified via `cast call` against Alchemy RPC on 2026-04-26 → 2026-05-01
 - Governance Safes (Operational Admin, Security Admin) — verified via `getThreshold()` and `getOwners()` calls
 - Timelock — verified via `MIN_DELAY()` and standard role-ID constants
-- Raw audit data: `~/riskAnalyst/reports/data/syrupusdc-onchain-audit-2026-04-26.md`
+- Strategy 0 OpenTermLoanManager classification — verified by probing the Loan implementation contract `0xeeadb6...` via Sourcify ABI + live cast reads against the reference $152.7M loan (`0x820eF0...`); the impl exposes `noticePeriod` / `gracePeriod` / `dateCalled` (open-term-only fields) and lacks `principalRequested` / `paymentsRemaining` (fixed-term fields)
+- Per-loan enumeration via `InstanceDeployed` events on OpenTermLoanFactory `0x6Fad515F...` — scanned via dRPC in 10k-block chunks
+- Raw audit data: `~/riskAnalyst/reports/data/syrupusdc-onchain-audit-2026-04-26.md` (corrected 2026-04-30 for Strategy 0 OpenTerm classification)
+
+**Maple GraphQL verification:**
+- Endpoint: `https://api.maple.finance/v2/graphql` (no auth, introspection disabled)
+- Per-loan collateral data via `poolV2.openTermLoans[].collateral` query — verified working for ~85% of the book; broken for USTB + USDC at-par loans (Maple-side data-pipeline gap; details in §VIII)
+- Per-loan APY rate validation cross-checked against on-chain `interestRate()` reads
+- Borrower metadata via `borrowerMeta(ethereumAddress:)` — `contactName` field returns "N/A" for largest borrower; Maple does not publish identities through this endpoint
 
 **Maple Finance published materials:**
 - [Instant Liquidity for SyrupUSDC — Maple Finance Insights](https://maple.finance/insights/instant-liquidity-for-syrupusdc) — Balancer/Uniswap pool architecture
@@ -604,5 +740,6 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - [syrupUSDC CCIP Directory Entry — Chainlink Documentation](https://docs.chain.link/ccip/directory/mainnet/token/syrupUSDC) (SPA, addresses not auto-extractable)
 
 **Companion materials:**
-- [syrupUSDC — Retail Risk Report](/reports/syrupusdc-retail) — companion retail-audience version
-- PegTracker live monitoring data: `data/peg_tracker_latest_usd.json` under `syrupUSDC` key
+- [syrupUSDC — Retail Risk Report](/reports/syrupusdc) — companion retail-audience version
+- [Live syrupUSDC Risk Dashboard](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads + Maple GraphQL; surfaces Set A/B mix, buffer-health, named-issuer roster, deployment ratio, exit-liquidity tiers, governance topology
+- PegTracker live monitoring data: `data/syrupusdc_backing.json` and `data/syrupusdc_backing_history.json`
