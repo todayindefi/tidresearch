@@ -462,14 +462,24 @@ This is **organic yield** — derived from real borrower interest payments, not 
 
 #### APY profile
 
-| Component | APY | Notes |
+| Component | APY (live, May 2026) | Notes |
 |---|---|---|
-| Base institutional yield | ~3–9% | Wide range across the book — at-par PYUSD pays 3.25% at the floor; crypto-collateralized rates run higher. Weighted-avg ~5.5% currently. Net of Maple protocol fee and 3.33% delegate fee |
-| Syrup Season programs (incentive overlay) | +5–10% | Programmatic point/incentive overlay; varies by season |
-| Blended (Seasons 1–7 average) | ~20.5% | Per Maple's published figures |
-| Season 7 (recent) | ~16.4% | Latest declared average |
+| **`coreApy` (organic loan interest)** | **~4.7%** | Verified from Maple GraphQL `syrupGlobals.apyTimeSeries` (range:WEEK), 7-day avg through 2026-04-30. Per-loan rates 3-9% across the book; weighted-avg lands ~4.7-5% net of Maple protocol fee and 3.33% delegate fee |
+| **`boostApy` (Drips / Season incentive)** | **0.00%** | **Drips program ended February 18, 2026** (final claim window for Season 12, the last season, was Jan 18 → Feb 18, 2026). Replacement: partner-distributed rewards via Merkl — those belong to the partner integration, not syrupUSDC itself |
+| `apy` (blended) | ~4.7% | = `coreApy + boostApy`; with `boostApy=0`, equals coreApy |
+| `usdBenchmarkApy` (3-mo T-bill proxy) | ~5.2–6.5% | Maple-reported benchmark; **syrupUSDC has been trading below this benchmark most days this week** |
+| Historical (2024–early 2026) | ~16–20% headline | Drips Seasons were active during this period; figures from Season 7 (~16.4%) and Seasons 1–7 average (~20.5%) referenced in earlier Maple materials are HISTORICAL and no longer applicable |
 
-**Sustainability framing:** Holders should distinguish between **base yield** (sustainable from organic loan interest, durable as long as Syrup is operating) and **incentive yield** (programmatic, subject to season schedule changes). When Syrup Seasons end or restructure, headline APY can drop sharply without any change in underlying loan health. **Plan around base yield (~3–9%, weighted-avg ~5.5%), not headline yield (16–20%).**
+**Sustainability framing — materially updated 2026-05-02:**
+
+The Drips/Seasons incentive program is ENDED. As of February 18, 2026, no further Drips accrue to syrupUSDC holders, and the final claim window has closed. **Today, holders earn only `coreApy` — currently ~4.7% — with NO programmatic incentive overlay.** Merkl-distributed partner rewards exist for specific deployments but are not part of holding syrupUSDC itself.
+
+For institutional readers this is a meaningful repricing event:
+- The "16-20% headline APY" framing that was common in 2024–early 2026 retail materials is no longer applicable.
+- The product's competitive position vs USD-benchmark yield instruments has shifted — `coreApy` 4.67% on 2026-04-30 was *below* the same day's `usdBenchmarkApy` of 5.18% reported by Maple itself. This week's average shows a similar pattern.
+- Sizing decisions made under the old framing (yield-driven retail flow chasing 16-20% headlines) need to be revisited against the credit-quality-vs-benchmark thesis that's actually applicable today.
+
+The on-chain data feed for live yield is `syrupGlobals.apyTimeSeries(range:WEEK)` from Maple's GraphQL (`api.maple.finance/v2/graphql`). Both `coreApy` and `boostApy` are 30-decimal-scaled fields; the dashboard analyzer should pull both and surface them separately, with the boost-being-zero state explicitly labeled rather than reverting to a hardcoded historical Season constant.
 
 Yield volatility is lower than typical DeFi yield-bearing assets — the underlying is institutional lending at relatively stable rates, not algorithmic borrow markets. Rate movements track institutional credit demand and fed-rate proxies more than crypto market dynamics.
 
@@ -629,7 +639,7 @@ Weighted composite over four primary axes (Supply Integrity reported as separate
    - `liquidity.quotes.<notional>.slippage_bps` materially rising across standard tiers ($1K/$10K/$50K/$100K) → aggregator routing depth deteriorating
    - WithdrawalManager queue length growing (currently empty as of 2026-04-26)
 
-3. **Distinguish base yield from Season-incentive yield.** Headline 16–20% APY blends ~5–9% organic loan interest with SYRUP-token incentives. Base yield is what remains after seasons end or restructure; size around that.
+3. **Yield reality check — Drips/Seasons ENDED Feb 18, 2026.** Plain syrupUSDC holding now pays only `coreApy` (currently ~4.7%, below the ~5.2-6.5% USD benchmark this week). The "16-20% headline APY" framing that was common in 2024–early 2026 materials is no longer applicable. Sizing decisions made on yield-driven thesis need to be revisited against credit-quality-vs-benchmark instead. Boosts above core require deploying syrupUSDC into specific Merkl-eligible partner integrations (`app.merkl.xyz/?search=syrup`), and those rewards belong to the partner integration's risk surface, not to syrupUSDC.
 
 4. **Verify Pool Delegate firm identity before institutional sizing.** The on-chain PoolDelegate EOA is `0xC1e1...49f`; the operational firm behind it is not publicly attested in Maple's user-facing documentation as of 2026-04-26. Confirm via Maple IR or `app.maple.finance/v2/lend/pools/eth-syrupusdc` directly.
 
@@ -673,7 +683,7 @@ syrupUSDC is one of the better-designed institutional yield-bearing stablecoins 
 
 The 6.2/10 score reflects six persistent concerns: (a) the **Pool Delegate model adds discretionary credit risk** beyond what a purely algorithmic protocol carries, with the operator role implemented as a single-key EOA — and credit underwriting is the binding axis for this product (35% of the composite weight); (b) **no on-chain first-loss cover absorbs losses before depositors** — Maple v1's MPL-bond model has been dropped for Syrup; (c) the **deployment ratio creates a structural stress-case redemption gap** — base-case aggregator-route exit is empirically ~12 bps to $100K, but stress-case exit is queue-bound with loan-repayment-cadence-dependent clearing time; (d) **Set B introduces named-issuer risk** (Paxos/Superstate/Circle) that the marketing's "overcollateralized at all times" framing obscures; (e) **5 active loans (~$82M) currently below their funding-time required collateral level** with delegate discretion not yet exercised — and $141M of Set B is unverifiable through any public Maple channel due to a GraphQL data-pipeline gap; (f) **Maple Labs' v1 bad-debt history is a legitimate institutional-memory dock** even though the v2 product is structurally different.
 
-For sizing: comfortable for retail and low-institutional positions exiting via aggregator routing in normal markets, with explicit understanding that base yield (~3–9%, weighted ~5.5%) is the durable return, not the Season-headline (16–20%). Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency into entry decisions, verify Pool Delegate firm identity before sizing, verify per-chain CCT bridge surface for any non-Ethereum allocation, AND verify the current at-par-principal fraction (the dashboard surfaces this as a live metric) — a Set B exposure shift toward higher at-par % materially changes the risk decomposition without changing the headline collateralization claim.
+For sizing: **the value proposition has materially shifted as of February 18, 2026 with the end of the Drips/Seasons program.** Plain syrupUSDC holding now pays ~4.7% organic (`coreApy`) — *below* the 3-month USD benchmark on most days. The product is no longer a yield-chase; it's an institutional credit yield product priced near or below T-bills with the structural complexities described above (Pool Delegate single-key + $0 first-loss cover, mixed Set A/Set B collateral, off-chain custody, GraphQL data anomalies, dormant DeFi sleeves, v1 incident history). Allocators should revisit sizing decisions made under the historical "16-20% headline APY" framing — that framing no longer applies. Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency into entry decisions, verify Pool Delegate firm identity before sizing, verify per-chain CCT bridge surface for any non-Ethereum allocation, AND verify the current at-par-principal fraction (the dashboard surfaces this as a live metric) — a Set B exposure shift toward higher at-par % materially changes the risk decomposition without changing the headline collateralization claim.
 
 **Live dashboard:** [todayindefi.github.io/backing-monitor/?asset=syrupusdc](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads + Maple GraphQL. Surfaces all six concerns above as live signals (Set A/B mix, buffer-health, named-issuer roster, deployment ratio, exit slippage, governance topology).
 

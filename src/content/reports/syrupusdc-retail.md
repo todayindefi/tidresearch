@@ -40,7 +40,7 @@ underlying_managers:
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~5–9% base, ~16% with Season incentives | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~2 years | Ethereum, Solana, Arbitrum, Base, Plasma |
+| ~4.7% live (organic loan-interest only; Drips/Seasons program ended Feb 2026) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~2 years | Ethereum, Solana, Arbitrum, Base, Plasma |
 
 ## Summary
 
@@ -52,12 +52,18 @@ The catch: Maple's earlier v1 product (2021–2022) lost LPs more than $50M when
 
 ## What you actually earn
 
-Two separate yield components:
+**Today: organic loan interest only — ~4.7% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries` over the past week). This is the durable yield from institutional borrowers paying interest on their loans, net of Maple's protocol take and 3.33% delegate fee. It varies by loan-book composition and rate environment; ~3–9% range across individual loans, weighted-avg currently ~4.7–5%.
 
-- **Base yield (~3–9%):** Real interest from institutional borrowers — rates vary by collateral type and borrower (the largest at-par position pays 3.25%; crypto-collateralized loans run higher), minus Maple's protocol take. This is the durable component — it's there as long as Syrup is operating.
-- **Syrup Seasons (additional ~5–10%):** Point-and-incentive programs that have historically pushed headline APY into the 16–20% range. Seasons end and change structure; when they do, headline APY drops sharply without anything actually changing about the underlying loans.
+**Important framing correction (as of May 2026):**
 
-Plan around base yield (5–9%), not headline yield (16–20%). The Season component is bonus, not baseline.
+Earlier descriptions of syrupUSDC frequently referenced "~16–20% headline APY with Syrup Seasons" or "Drips" rewards. **The Drips program ended on February 18, 2026** (final claim window for Season 12, the last season, was Jan 18 → Feb 18, 2026). Maple has phased it out in favor of partner-distributed rewards via Merkl — meaning if a depositor wants any boost above the ~4.7% organic yield, they need to deploy their syrupUSDC into a specific Merkl-eligible partner protocol (a particular lending market, DEX position, etc.) where that partner is sponsoring a campaign. Those rewards belong to the partner integration, not to syrupUSDC itself.
+
+**For a depositor holding plain syrupUSDC at par, expect ~4.7%** — and notably, that's been *below* the 3-month USD benchmark (~5.2-6.5%) on most days this week. The compelling-yield story that defined syrupUSDC's retail framing in 2024–2025 has materially changed.
+
+**What this changes:**
+- The Maple value proposition for plain holding is now "real institutional credit yield, ~4.7%, with the risk profile of overcollateralized + at-par lending" — no longer a yield-chase product.
+- Allocators sizing into syrupUSDC for the headline APY should **revisit the thesis** — the headline APY thesis no longer applies; the credit-quality-vs-T-bill thesis is what's left.
+- Holders can still get a boost via Merkl partner programs, but those require specific deployments and carry the partner protocol's risk on top of syrupUSDC's.
 
 ## How exit works
 
@@ -117,7 +123,8 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 ## What to watch
 
 - **Peg discount on DEX pools.** A widening (>50 bps) discount on syrupUSDC vs NAV is the leading indicator that aggregator routing is deteriorating and queue exit is becoming binding.
-- **Season transitions.** When Seasons end or restructure, headline APY drops. Plan around base yield, not headline.
+- **Yield reality check.** As of May 2026, Drips/Seasons are ended and there is NO yield boost on plain syrupUSDC holding — only ~4.7% organic. If you see "16-20% APY" claims for syrupUSDC anywhere, those are stale; current `coreApy` is what you actually get. The Maple GraphQL `syrupGlobals.apyTimeSeries` is the canonical live source.
+- **Merkl partner programs.** Boosts above the ~4.7% organic require deploying syrupUSDC into specific partner integrations (visible at `app.merkl.xyz/?search=syrup`). Those rewards carry the partner protocol's additional risk and are not part of holding syrupUSDC itself.
 - **Set B (at-par) fraction.** ~30% of the book is collateralized at par by stablecoins / tokenized T-bills. These positions don't have a crypto-cycle buffer — their stress is the collateral asset's own peg/issuer event (Paxos for PYUSD, Superstate for USTB, Circle for USDC). Different stress scenarios bind differently across the book.
 - **Loans below their initial collateral level.** As of May 2026, 5 BTC-collateralized loans (~$82M, 8% of book) are running below their funding-time required collateral level — the delegate has the right to call them but has not. Monitor whether the count grows.
 - **Multi-chain bridge surface.** syrupUSDC bridges via Chainlink CCIP (different attack class from the April 2026 LayerZero OFT incidents). Still verify per-chain CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues — depth thins fast outside Ethereum.
