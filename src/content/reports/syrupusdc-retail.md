@@ -129,6 +129,7 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 - **Loans below their initial collateral level.** As of May 2026, 5 BTC-collateralized loans (~$82M, 8% of book) are running below their funding-time required collateral level — the delegate has the right to call them but has not. Monitor whether the count grows.
 - **Multi-chain bridge surface.** syrupUSDC bridges via Chainlink CCIP (different attack class from the April 2026 LayerZero OFT incidents). Still verify per-chain CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues — depth thins fast outside Ethereum.
 - **Pool Delegate roster changes.** Delegate identity is the structural credit-judgment trust assumption.
+- **Cross-pool concentration if you also hold syrupUSDT.** Maple's sibling pool (~$441M) shares the same Pool Delegate firm and several of its largest borrowers. Verified 2026-05-02: top three cross-pool borrowers carry ~42% of the combined family book ($1.61B), with the single largest at 18.4% of family exposure. Holding both syrupUSDC and syrupUSDT does **not** diversify credit risk for those borrowers — it concentrates it. If you allocate across both, compute combined exposure to each borrower rather than treating the pools as independent.
 
 ## Live dashboard
 
