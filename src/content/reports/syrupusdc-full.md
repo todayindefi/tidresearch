@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "syrupusdc"
 date: "2026-04-26"
-last_verified: "2026-05-01"
+last_verified: "2026-05-03"
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1073570000
 tvl_gross: 1073570000
@@ -115,10 +115,11 @@ supply_integrity_flags:
 | **Secondary access** | DEX aggregator routing (Uniswap v3/v4, Balancer, others via KyberSwap/1inch) |
 | **Deployed chains** | Ethereum (canonical), Solana, Arbitrum, Base, Plasma |
 | **Cross-chain mechanism** | Chainlink CCIP with CCT (burn-and-mint) |
-| **Total assets (2026-04-26, on-chain)** | $1,073,570,496 USDC |
-| **Total supply (2026-04-26, on-chain)** | 924,449,983 syrupUSDC shares |
-| **NAV** | 1.1613 USDC per syrupUSDC |
-| **Deposit cap headroom** | ~$1.43B (liquidityCap = $2.5B) |
+| **Total assets (2026-05-03, on-chain)** | ~$1,217M USDC (grew from $1,074M on 2026-04-26) |
+| **Active loans (2026-05-03)** | 28 (loan principal $1,192M) |
+| **NAV** | ~$1.16 USDC per syrupUSDC (slow upward NAV grind from interest accrual) |
+| **Deposit cap headroom** | ~$1.28B (liquidityCap = $2.5B) |
+| **Sibling pool** | syrupUSDT — ~$436M assets / 12 active loans / shared Pool Delegate firm |
 
 > *Overall score (6.2) is a weighted composite over five axes (Contract / Credit / Liquidity / Operational + Supply Integrity callout) — see §V for category weights.*
 
@@ -143,7 +144,7 @@ Five findings from the 2026-04-26 → 2026-05-01 verification cycle shape the in
 
 1. **24h timelock on protocol governance** (`MIN_DELAY = 86400`s on the governor Timelock) — materially stronger than peer products with no upgrade delay.
 2. **Zero Pool Delegate first-loss cover required** (`Globals.minCoverAmount[PM] = 0`; PoolDelegateCover balance = 0) — depositors are first-loss; the v1-era MPL-bond model has been dropped for Syrup. No on-chain skin-in-game absorbs losses before depositors.
-3. **Pool deployment fluctuates** ~80–97% across the period — pool grew from $1.073B → $1.193B as new deposits arrived faster than the delegate redeployed; free USDC ranged $31M → $337M. Stress-case redemption depth is loan-repayment-bound past the free-USDC buffer.
+3. **Pool deployment fluctuates** ~80–98% across the period — pool grew from $1.073B → $1.217B (2026-04-26 → 2026-05-03) as new deposits arrived faster than the delegate redeployed; free USDC ranged $31M → $337M and back to <$25M. Stress-case redemption depth is loan-repayment-bound past the free-USDC buffer.
 4. **5 active loans (~$82M, ~8% of book) running below their funding-time required collateral level** as of 2026-05-01 — including a $37.6M BTC-collateralized loan at 102.3% vs 125% required (only 2.3pp above par). The on-chain status flags read "healthy" because the contract doesn't auto-trigger; the delegate has discretion to call but has not. This is a live signal the dashboard surfaces and institutional readers should monitor.
 5. **Per-loan collateral data is partly verifiable, partly attestation-only.** Maple's GraphQL exposes per-loan asset and required level for all loans; current-state collateral amount is reliable for ~85% of the book but **broken for the USTB position ($105M) and three USDC at-par loans (~$36M)** — a Maple-side data anomaly leaves $141M / 14.4% of book unverifiable through any public Maple channel. PYUSD ($152.7M) returns correctly.
 

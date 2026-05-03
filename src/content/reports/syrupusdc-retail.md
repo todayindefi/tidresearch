@@ -8,7 +8,7 @@ peg_mechanism: "nav-accruing"
 assessment_type: "light"
 audience: "retail"
 date: "2026-04-25"
-last_verified: "2026-05-01"
+last_verified: "2026-05-03"
 featured: true
 production: true
 issuer: "Maple Labs (Cayman Islands)"
