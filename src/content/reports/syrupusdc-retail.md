@@ -8,7 +8,7 @@ peg_mechanism: "nav-accruing"
 assessment_type: "light"
 audience: "retail"
 date: "2026-04-25"
-last_verified: "2026-05-03"
+last_verified: "2026-05-04"
 featured: true
 production: true
 issuer: "Maple Labs (Cayman Islands)"
@@ -44,11 +44,14 @@ underlying_managers:
 
 ## Summary
 
-syrupUSDC is Maple Finance's onchain yield-bearing stablecoin. You deposit USDC, you receive syrupUSDC, and the price slowly accrues yield as Maple lends the deposits out to vetted institutional borrowers — crypto trading firms, market makers, centralized lenders. The loan book is **mixed**: about 70% of active principal is collateralized by crypto assets (BTC/XRP at 125–250% — overcollateralized in the traditional sense) and about 30% is collateralized **at par** (1:1) by stablecoins or tokenized T-bills (PYUSD, USTB, USDC). As of May 2026, the Ethereum pool holds roughly $1.07B with the sibling syrupUSDT pool around $441M. Maple's "Syrup" product line has reported zero principal losses in roughly two years of operation. Yield is real (interest paid by real borrowers), not emissions.
+syrupUSDC is Maple Finance's onchain yield-bearing stablecoin. You deposit USDC, you receive syrupUSDC, and the price slowly accrues yield. As of May 2026, the Ethereum pool holds roughly $1.22B; the sibling syrupUSDT pool holds about $436M. Maple's "Syrup" product line has reported zero principal losses across ~3 years. Yield is real (interest paid by real institutional borrowers), not emissions.
 
-The catch: Maple's earlier v1 product (2021–2022) lost LPs more than $50M when undercollateralized borrowers defaulted during the 2022 credit cycle (Orthogonal Trading, M11 Credit). Syrup is a structural reset — vetted Pool Delegates, active credit monitoring, and overcollateralization on the crypto-collateralized portion of the book — and runs on the same legal entity (Maple Labs, Cayman Islands) with the same team. The v2 product has performed cleanly so far but hasn't been stress-tested through a full crypto bear market.
+**Important framing — verified 2026-05-04 against Maple's own AUM Details page**: the pool actually has two structurally different components, which Maple itself splits as **Loans (79% of family AUM, $1.27B) + Liquidity (21%, $347M)**:
 
-**One clarification worth making upfront:** the "overcollateralized at all times" framing in Maple's marketing is true for the ~70% crypto-collateralized portion. The ~30% collateralized at par by stablecoins / tokenized T-bills (largest single position: a $152.7M loan against PYUSD, the next: $105M against Superstate's tokenized T-bill USTB) is *not* overcollateralized — it's collateralized 1:1, and its risk surface is the collateral asset's own peg/issuer (Paxos for PYUSD, Superstate for USTB, Circle for USDC) rather than crypto-cycle volatility.
+- **Loans** = third-party institutional credit (BTC/XRP/cbBTC/HYPE collateral at 125–333% — overcollateralized in the traditional sense). This is the "Maple lending pool" that the marketing describes.
+- **Liquidity** = pool-owned positions in stablecoin and tokenized T-bill yield strategies (PYUSD, USTB, USDC/USDT in DEX pools). At-par with the underlying asset, NOT third-party credit. Risk axis: issuer/RWA/AMM, not borrower default.
+
+The "overcollateralized at all times" framing in Maple's marketing applies to the Loans bucket. The Liquidity bucket is intentionally at par — it's not collateralized credit, it's pool-owned strategies parking capital in yield-generating positions while remaining nominally redeemable. Largest Liquidity positions: $152.7M PYUSD strategy, $105M USTB position (Superstate's tokenized T-bill).
 
 ## What you actually earn
 
@@ -91,10 +94,9 @@ The Pool Delegate model is the structural difference from purely algorithmic pro
 
 Strong by DeFi-stablecoin standards:
 
-- **8+ audits** across the v1 and v2 lifecycle. v2/Syrup specifically reviewed by **Spearbit** and **Trail of Bits** (both top-tier), plus Three Sigma and Peckshield.
+- **8+ audits** total. The current v2/Syrup contracts specifically reviewed by **Spearbit** and **Trail of Bits** (both top-tier), plus Three Sigma and Peckshield.
 - **$1M+ Immunefi bug bounty** active.
 - ERC-4626 standard architecture; well-understood pattern.
-- v2 was a ground-up rewrite explicitly motivated by the v1 failures — the team published transparent post-mortems.
 
 Caveats:
 - Multi-chain bridging uses **Chainlink CCIP** with the **CCT (Cross-Chain Token) standard** — burn-and-mint native deployments on each chain (Ethereum canonical + Solana, Arbitrum, Base, Plasma), not a wrapped/lockbox model. **This is structurally a different attack class from the April 2026 LayerZero OFT incidents (rsETH, Drift, Volo)** — those exploits hit single-DVN OFT configurations and admin-key compromises that don't map to CCIP's architecture. CCIP has a clean track record at scale through April 2026 (no public exploits since 2023 launch) with a Risk Management Network as an anti-fraud backstop. What you trade off vs LayerZero: concentrated trust in Chainlink as a single (mature) provider, rather than distributed quorum across DVNs. Per-chain DD still warranted: verify CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues.
@@ -105,14 +107,14 @@ Caveats:
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg mechanism | 7.0 | NAV-accruing, organic yield from loan interest, no rebase, no losses to date in Syrup |
-| Backing | 6.5 | Mixed collateral — ~70% crypto-overcollateralized (BTC/XRP at 125–250%) + ~30% at-par stablecoin/RWA (PYUSD/USTB/USDC at 100%). Pool Delegate discretion + off-chain custody + $0 first-loss cover are the binding risk surfaces |
-| Liquidity | 6.5 | $1B+ pool TVL; aggregator route empirically ~12 bps slippage to $100K; stress-case binds at pool depth |
-| Issuer | 5.5 | Maple Labs Cayman, doxxed team, 8+ audits, $1M bounty — but v1's 2022 $50M+ bad-debt history under same entity is a real institutional-memory mark |
+| Backing | 6.5 | Two-bucket: 79% Loans (BTC/XRP overcollateralized third-party credit) + 21% Liquidity (pool-owned PYUSD/USTB/AMM strategies, at par with underlying). Pool Delegate discretion + off-chain custody + $0 first-loss cover are the binding risk surfaces. |
+| Liquidity | 6.5 | $1.2B pool TVL; aggregator route empirically ~12 bps slippage to $100K; stress-case binds at pool depth |
+| Issuer | 5.5 | Maple Labs Cayman, doxxed team, 8+ audits, $1M bounty. ~3-year clean record on the Syrup product line. |
 | **Overall** | **6.25** | Moderate risk |
 
 ## Who it's for
 
-DeFi-comfortable users who want yield well above stablecoin-savings rates and are comfortable with the trade-offs: real institutional credit risk (overcollateralized, but discretionary at the underwriting layer), no bankruptcy remoteness, and a v1 incident history that's relevant context even though Syrup is a structurally different product. Good fit for sizing where ~12 bps exit slippage is acceptable and a queue-tolerant fallback is OK during stress windows.
+DeFi-comfortable users who want yield well above stablecoin-savings rates and are comfortable with the trade-offs: real institutional credit risk on the loan book (overcollateralized but discretionary at the underwriting layer), Maple-controlled custody on the Liquidity layer, and no bankruptcy remoteness. Good fit for sizing where ~12 bps exit slippage is acceptable and a queue-tolerant fallback is OK during stress windows.
 
 ## Who should avoid
 
@@ -125,16 +127,20 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 - **Peg discount on DEX pools.** A widening (>50 bps) discount on syrupUSDC vs NAV is the leading indicator that aggregator routing is deteriorating and queue exit is becoming binding.
 - **Yield reality check.** As of May 2026, Drips/Seasons are ended and there is NO yield boost on plain syrupUSDC holding — only ~4.7% organic. If you see "16-20% APY" claims for syrupUSDC anywhere, those are stale; current `coreApy` is what you actually get. The Maple GraphQL `syrupGlobals.apyTimeSeries` is the canonical live source.
 - **Merkl partner programs.** Boosts above the ~4.7% organic require deploying syrupUSDC into specific partner integrations (visible at `app.merkl.xyz/?search=syrup`). Those rewards carry the partner protocol's additional risk and are not part of holding syrupUSDC itself.
-- **Set B (at-par) fraction.** ~30% of the book is collateralized at par by stablecoins / tokenized T-bills. These positions don't have a crypto-cycle buffer — their stress is the collateral asset's own peg/issuer event (Paxos for PYUSD, Superstate for USTB, Circle for USDC). Different stress scenarios bind differently across the book.
-- **Loans below their initial collateral level.** As of May 2026, 5 BTC-collateralized loans (~$82M, 8% of book) are running below their funding-time required collateral level — the delegate has the right to call them but has not. Monitor whether the count grows.
+- **Liquidity layer issuer events.** ~21% of family AUM is in pool-owned PYUSD/USTB/AMM positions. These don't have a crypto-cycle buffer — their stress is the collateral asset's own peg/issuer event (Paxos for PYUSD, Superstate for USTB, Circle for USDC). Different stress scenarios bind differently across the book.
+- **Loans below their initial collateral level.** As of May 2026, 5 BTC-collateralized loans (~$82M, ~9% of loan book) are running below their funding-time required collateral level — the delegate has the right to call them but has not. Monitor whether the count grows.
 - **Multi-chain bridge surface.** syrupUSDC bridges via Chainlink CCIP (different attack class from the April 2026 LayerZero OFT incidents). Still verify per-chain CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues — depth thins fast outside Ethereum.
 - **Pool Delegate roster changes.** Delegate identity is the structural credit-judgment trust assumption.
-- **Cross-pool concentration if you also hold syrupUSDT.** Maple's sibling pool (~$441M) shares the same Pool Delegate firm and several of its largest borrowers. Verified 2026-05-02: top three cross-pool borrowers carry ~42% of the combined family book ($1.61B), with the single largest at 18.4% of family exposure. Holding both syrupUSDC and syrupUSDT does **not** diversify credit risk for those borrowers — it concentrates it. If you allocate across both, compute combined exposure to each borrower rather than treating the pools as independent.
+- **Cross-pool concentration if you also hold syrupUSDT.** Maple's sibling pool (~$436M) shares the same Pool Delegate firm and several of its largest loan-book borrowers. Verified 2026-05-04 on Loans-only basis: top three cross-pool borrowers carry ~48.8% of the family loan book ($1.27B); the single largest at ~19.3%. Holding both syrupUSDC and syrupUSDT does **not** diversify credit risk for those borrowers — it concentrates it. If you allocate across both, compute combined exposure to each borrower rather than treating the pools as independent.
 
 ## Live dashboard
 
-A live monitoring view is available at [todayindefi.github.io/backing-monitor/?asset=syrupusdc](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, loan-book health (status flags + buffer to initial collateral level), Set A vs Set B collateral breakdown, peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
+A live monitoring view is available at [todayindefi.github.io/backing-monitor/?asset=syrupusdc](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + buffer to initial collateral level + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
+
+## A note on Maple's history
+
+Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ during the 2022 credit cycle (Orthogonal Trading default, M11 Credit / Babel Finance defaults). The Syrup product line is Maple's structural response — overcollateralized loans on the third-party credit book, vetted Pool Delegates, active margin calls. Same legal entity (Maple Labs, Cayman Islands), same broader team. The v2 Syrup product has run cleanly for ~3 years through May 2026. Some institutional risk frameworks dock entity-track-record regardless of product changes; this report treats it as background context rather than a leading risk factor.
 
 ---
 
-For internal-grade risk analysis — Pool Delegate identities, specific contract addresses, on-chain monitoring patterns, and the methodology limits this report can't enumerate — the institutional version is in development.
+For institutional-grade risk analysis — Pool Delegate identities, specific contract addresses, custody EOA inventory, on-chain monitoring patterns — the [institutional version](/reports/syrupusdc-full/) is available.
