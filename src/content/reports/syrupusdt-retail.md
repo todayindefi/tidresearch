@@ -41,7 +41,7 @@ underlying_managers:
 
 | Yield | Exit method | Primary redemption | Pool size | Chains |
 |---|---|---|---|---|
-| ~4.5–5% live (organic loan-interest only; Drips/Seasons program ended Feb 2026) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~$436M (smaller than syrupUSDC's ~$1.22B) | Ethereum primary |
+| ~4.5–5% live (organic loan interest) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~$436M (smaller than syrupUSDC's ~$1.22B) | Ethereum primary |
 
 ## Summary
 
@@ -53,11 +53,9 @@ The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level
 
 ## What you actually earn
 
-**Today: organic loan interest only — ~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries`). Same yield mechanics as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee.
+**~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries`). Same yield mechanics as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee.
 
-**Important framing correction (as of May 2026):** The Drips program ended on February 18, 2026 — final claim window for Season 12 was Jan 18 → Feb 18, 2026. Plain syrupUSDT holders today earn `coreApy` only with no programmatic boost. Replacement is partner-distributed Merkl rewards (`app.merkl.xyz/?search=syrup`), which require deploying syrupUSDT into specific partner protocols and carry the partner's risk surface, not syrupUSDT's. The historical "16-20% headline APY" framing is no longer applicable.
-
-For a depositor holding plain syrupUSDT at par, expect ~4.5-5% — and notably, that's been *below* the 3-month USD benchmark (~5.2-6.5%) on most days. The compelling-yield story that defined syrupUSDT's retail framing in 2024–2025 has materially changed, just like syrupUSDC's.
+For a depositor holding plain syrupUSDT at par, that's been *below* the 3-month USD benchmark (~5.2-6.5%) on most days. The Maple value proposition is "real institutional credit yield, with the risk profile of overcollateralized loans + at-par Liquidity strategies" — not a yield-chase product.
 
 ## Cross-pool concentration with syrupUSDC
 
@@ -105,18 +103,16 @@ Same audit profile as syrupUSDC: 8+ audits, Spearbit + Trail of Bits on the v2/S
 
 ## Who it's for
 
-Allocators who already hold or are sizing into syrupUSDC and want USDT-denominated exposure to the same Maple credit framework. Comfortable for retail and low-institutional positions willing to accept higher per-pool concentration than syrupUSDC. Generally NOT a yield-chase product post-Drips — competing with USD-benchmark T-bills on yield while accepting credit + custody + governance risks.
+Allocators who already hold or are sizing into syrupUSDC and want USDT-denominated exposure to the same Maple credit framework. Comfortable for retail and low-institutional positions willing to accept higher per-pool concentration than syrupUSDC. Not a yield-chase product — competing with USD-benchmark T-bills on yield while accepting credit + custody + governance risks.
 
 ## Who should avoid
 
 - Anyone holding syrupUSDC and looking for a "diversification" sister product — the cross-pool borrower overlap means it concentrates rather than diversifies for the family's biggest borrowers
-- Anyone treating "16–20% APY" as the durable return — the Season-incentive component ended Feb 2026
 - Position sizes above the low-MM range without explicit queue tolerance — the smaller pool is queue-bound earlier than syrupUSDC at proportional sizes
 - Anyone needing the largest single-borrower exposure to stay below 20% of pool — syrupUSDT's largest loan is 41% of pool
 
 ## What to watch
 
-- **Yield reality check.** As of May 2026, Drips/Seasons are ended and there is NO yield boost on plain syrupUSDT holding — only ~4.5-5% organic. If you see "16-20% APY" claims for syrupUSDT anywhere, those are stale.
 - **Per-pool concentration.** Largest single loan is 41% of pool. Watch the live dashboard for changes.
 - **Cross-pool concentration if you also hold syrupUSDC.** Top-3 cross-pool borrowers carry ~48.8% of the family loan book; single-largest carries ~19.3%. Liquidity layer custody is also shared between pools. Compute combined per-borrower exposure rather than treating the pools as independent.
 - **Pool Delegate roster changes.** Same Pool Delegate firm runs both pools but with different operational EOAs.

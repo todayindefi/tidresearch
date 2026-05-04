@@ -193,7 +193,7 @@ Same as syrupUSDC: depositors are first-loss; Maple's `Globals.minCoverAmount[Po
 
 ### Yield mechanics
 
-Same architecture as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee. Live `coreApy` from Maple's `syrupGlobals.apyTimeSeries` runs ~4.5-5%; `boostApy = 0` since Drips ended Feb 18, 2026. The Drips/Seasons program ENDED for both pools on the same date.
+Same architecture as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee. Live `coreApy` from Maple's `syrupGlobals.apyTimeSeries` runs ~4.5-5%; `boostApy = 0`. The historical Drips/Seasons incentive layer (active 2024 → Feb 18, 2026) ended for both pools on the same date — see syrupUSDC institutional report §II APY profile for the full historical context.
 
 **Credit Risk Score: 5.0/10** — Lower than syrupUSDC's 5.5 primarily due to (a) materially higher per-pool concentration (largest single loan ~41% of pool vs 16%), (b) smaller loan-book borrower set (4 unique borrowers vs 13), (c) cross-pool concentration with syrupUSDC for the family's biggest loan-book borrowers — top-3 cross-pool borrowers carry ~48.8% of family loan book on Loans-only basis. Mitigants are the same as syrupUSDC: ~3-year clean credit record across the Syrup product line, active margin-call infrastructure, vetted Pool Delegate firm. Same structural deductions: Pool Delegate (MPC + policy under Maple operational control per 2026-05-04 attestation), no on-chain first-loss cover, off-chain custody, ~10% Liquidity-layer fraction with shared Maple-controlled custody (cross-pool risk axis — same custody addresses as syrupUSDC).
 
@@ -261,7 +261,7 @@ For governance dependencies and v1 incident history details, see [syrupUSDC inst
 
 2. **For combined Syrup-family sizing, compute per-borrower exposure across both pools on a Loans-only basis.** Top-3 cross-pool borrowers carry ~48.8% of family loan book; single-largest carries ~19.3% (recomputed 2026-05-04 — earlier "42% / 18.4%" included Liquidity custody addresses as if they were borrowers and understated true loan-book concentration). Frameworks with single-counterparty limits should explicitly aggregate across pools on Loans-only basis.
 
-3. **Yield reality check (same as syrupUSDC).** Plain syrupUSDT pays ~4.5-5% (`coreApy` from `syrupGlobals.apyTimeSeries`). Below the 3-month USD benchmark on most days. Drips/Seasons ENDED Feb 18, 2026.
+3. **Evaluate sizing on credit-quality-vs-benchmark, not historical headline APY.** Plain syrupUSDT pays ~4.5-5% (`coreApy` from `syrupGlobals.apyTimeSeries`). Below the 3-month USD benchmark on most days. The historical Drips/Seasons incentive layer (active 2024 → Feb 18, 2026) ended for both pools.
 
 4. **Smaller pool, scaled-down stress assumptions.** Free liquidity buffer is typically <$25M. Plan for queue latency of weeks rather than days for institutional positions above ~$50M during correlated outflow stress.
 
