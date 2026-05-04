@@ -22,11 +22,11 @@ underlying_managers:
   - "Pool Delegate (operator EOA 0x93aA...501A — same firm as syrupUSDC, different operational key)"
 
 contract_score: 7.0
-credit_score: 5.0
-liquidity_score: 5.0
-operational_score: 6.0
+credit_score: 5.5
+liquidity_score: 6.0
+operational_score: 6.5
 supply_integrity_score: 6.5
-overall_score: 5.75
+overall_score: 6.0
 score_weights:
   contract: 0.25
   credit: 0.35
@@ -81,7 +81,7 @@ supply_integrity_flags:
 | **NAV** | ~$1.13 USDT per syrupUSDT |
 | **Sibling pool** | syrupUSDC — ~$1.22B assets / 28 active loans / shared Pool Delegate firm |
 
-> *Overall score (5.75) is composite over Contract / Credit / Liquidity / Operational. Weighted ~10pp lower than syrupUSDC's 6.2 — the gap is primarily per-pool concentration (largest single loan = 41% of pool) and shallower exit liquidity at proportional sizing.*
+> *Overall score (6.0) is composite over Contract / Credit / Liquidity / Operational. Weighted ~10pp lower than syrupUSDC's 6.75 — the gap is primarily per-pool concentration (largest single loan = 41% of pool) and shallower exit liquidity at proportional sizing.*
 
 ---
 
@@ -120,7 +120,7 @@ Shared with syrupUSDC (Maple-protocol-level): MapleGlobals, Governor (24h timelo
 
 ---
 
-## II. Credit & Counterparty — 5.0/10 (lower than syrupUSDC's 5.5)
+## II. Credit & Counterparty — 5.5/10 (lower than syrupUSDC's 6.0)
 
 ### Pool composition (verified 2026-05-04 against Maple's AUM Details)
 
@@ -195,11 +195,11 @@ Same as syrupUSDC: depositors are first-loss; Maple's `Globals.minCoverAmount[Po
 
 Same architecture as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee. Live `coreApy` from Maple's `syrupGlobals.apyTimeSeries` runs ~4.5-5%; `boostApy = 0`. The historical Drips/Seasons incentive layer (active 2024 → Feb 18, 2026) ended for both pools on the same date — see syrupUSDC institutional report §II APY profile for the full historical context.
 
-**Credit Risk Score: 5.0/10** — Lower than syrupUSDC's 5.5 primarily due to (a) materially higher per-pool concentration (largest single loan ~41% of pool vs 16%), (b) smaller loan-book borrower set (4 unique borrowers vs 13), (c) cross-pool concentration with syrupUSDC for the family's biggest loan-book borrowers — top-3 cross-pool borrowers carry ~48.8% of family loan book on Loans-only basis. Mitigants are the same as syrupUSDC: ~3-year clean credit record across the Syrup product line, active margin-call infrastructure, vetted Pool Delegate firm. Same structural deductions: Pool Delegate (MPC + policy under Maple operational control per 2026-05-04 attestation), no on-chain first-loss cover, off-chain custody, ~10% Liquidity-layer fraction with shared Maple-controlled custody (cross-pool risk axis — same custody addresses as syrupUSDC).
+**Credit Risk Score: 5.5/10** — Lower than syrupUSDC's 6.0 primarily due to (a) materially higher per-pool concentration (largest single loan ~41% of pool vs 16%), (b) smaller loan-book borrower set (4 unique borrowers vs 13), (c) cross-pool concentration with syrupUSDC for the family's biggest loan-book borrowers — top-3 cross-pool borrowers carry ~48.8% of family loan book on Loans-only basis. Mitigants same as syrupUSDC: ~3-year clean credit record across the Syrup product line, active margin-call infrastructure, vetted Pool Delegate firm (Maven 11). Bumped from prior 5.0 to 5.5 reflecting cleaner separation of Pool Delegate concerns into Operational (institutional MPC + policy custody) — Credit now reflects loan-book quality + Liquidity-layer issuer mix without Pool Delegate single-key leakage. Same shared Maple-controlled custody as syrupUSDC (cross-pool risk axis — see §IV.6).
 
 ---
 
-## III. Liquidity & Redemption — 5.0/10 (lower than syrupUSDC's 6.5)
+## III. Liquidity & Redemption — 6.0/10 (lower than syrupUSDC's 7.5)
 
 Same architecture as syrupUSDC (DEX aggregator + queue redemption), but materially smaller pool depth.
 
@@ -222,11 +222,11 @@ Stress redemption depth:       ~$25M instant via aggregator + queue
 
 For institutional sizing above ~$50M, expect queue latency of weeks rather than days under correlated outflow stress. **Queue cadence at proportional sizing is materially worse than syrupUSDC** because the principal base is 36% the size with similar payment-cadence distribution.
 
-**Liquidity & Redemption Score: 5.0/10** — Smaller pool depth than syrupUSDC at proportional sizing. Same architecture, same exit paths, but stress cadence is materially worse.
+**Liquidity & Redemption Score: 6.0/10** — Smaller pool depth than syrupUSDC at proportional sizing. Same architecture, same exit paths, but stress cadence is materially worse. **Permissionless mint/redeem at the vault layer is the same as syrupUSDC** — no KYC gating, anyone (retail or institutional) can deposit USDT at NAV and submit redemption requests at NAV. This access-pattern advantage over KYC-gated peers (thBILL T+4) is real even at smaller pool depth. Bumped from prior 5.0 to fold in the permissionless mint/redeem advantage; smaller pool caps the score below syrupUSDC's 7.5.
 
 ---
 
-## IV. Operational & Governance — 6.0/10 (same as syrupUSDC)
+## IV. Operational & Governance — 6.5/10 (slightly lower than syrupUSDC's 7.0)
 
 Same governance topology as syrupUSDC: 24h Timelock governor, 3-of-5 Operational Admin Safe, 3-of-6 Security Admin Safe — all shared at the MapleGlobals layer. The only governance difference is the **Pool Delegate EOA: `0x93aA06F8a7bB4da3Eb0DD5A5a38C01A7EB35501A` (single-key)** — a different operational key than syrupUSDC's `0xC1e1...49f`, but the same Pool Delegate firm operates both.
 
@@ -236,22 +236,22 @@ Same governance topology as syrupUSDC: 24h Timelock governor, 3-of-5 Operational
 
 For governance dependencies and v1 incident history details, see [syrupUSDC institutional report §IV](/reports/syrupusdc-full/) — applies equally.
 
-**Operational & Governance Score: 6.0/10** — Same as syrupUSDC. Inherited from the shared MapleGlobals + audit + delegate-firm framework.
+**Operational & Governance Score: 6.5/10** — Same governance topology as syrupUSDC. Same MapleGlobals + audit + delegate-firm framework. Bumped from prior 6.0 (matching syrupUSDC's bump from MPC + policy custody attestation), but ~0.5 below syrupUSDC because of the **shared Liquidity-layer custody** (a Maple-firm-level operational event affects both pools simultaneously, not just one in isolation — cross-pool risk axis specific to syrupUSDT alongside syrupUSDC).
 
 ---
 
-## V. Overall Risk Score — 5.75/10
+## V. Overall Risk Score — 6.0/10
 
 | Axis | Score | Weight | Contribution |
 |---|---|---|---|
 | Smart Contract | 7.0 | 0.25 | 1.75 |
-| Credit & Counterparty | 5.0 | 0.35 | 1.75 |
-| Liquidity & Redemption | 5.0 | 0.20 | 1.00 |
-| Operational & Governance | 6.0 | 0.20 | 1.20 |
-| **Composite** | **5.75** | 1.0 | **5.70** |
+| Credit & Counterparty | 5.5 | 0.35 | 1.93 |
+| Liquidity & Redemption | 6.0 | 0.20 | 1.20 |
+| Operational & Governance | 6.5 | 0.20 | 1.30 |
+| **Composite** | **6.0** | 1.0 | **6.18** |
 | *Supply Integrity (callout)* | *6.5* | — | *(not in composite)* |
 
-**Why 5.75 vs syrupUSDC's 6.2:** the 0.5pt gap is the per-pool concentration (-0.5 on Credit) + shallower exit liquidity at proportional sizing (-1.5 on Liquidity vs syrupUSDC). All other axes inherit from the shared Maple framework and score the same.
+**Why 6.0 vs syrupUSDC's 6.75:** the gap is the per-pool concentration (-0.5 on Credit) + shallower exit liquidity at proportional sizing (-1.5 on Liquidity vs syrupUSDC) + cross-pool shared custody concentration (-0.5 on Operational). Smart Contract and Supply Integrity axes inherit identically from the shared Maple framework. **What changed in this scoring update (2026-05-04):** prior framework was 5.75/10. Bumped to 6.0/10 mirroring syrupUSDC's reweighting — Pool Delegate concerns properly contained in Operational, permissionless mint/redeem advantage explicitly priced in Liquidity, MPC + policy custody attestation reducing the single-key custody discount.
 
 ---
 
@@ -296,7 +296,7 @@ syrupUSDT is the smaller sibling of syrupUSDC — same architecture, same Pool D
 
 **Architectural framing verified 2026-05-04 against Maple's own AUM Details page**: syrupUSDT's $436M TVL splits as **$379M Loans (87%, third-party institutional credit, 84% BTC + 16% XRP)** + **$43M Liquidity (10%, pool-owned PYUSD/USDC-AMM/USDT-AMM positions)**. The Liquidity layer routes through Strategy 0's LoanManager as accounting wrapper but is functionally pool-owned strategy custody, NOT third-party credit. Earlier "Set A overcollateralized + Set B at-par" framing collapsed both into a single mixed loan book — incorrect.
 
-The 5.75/10 score reflects the inherited Maple-family risks (Pool Delegate discretion, $0 first-loss cover, consolidated Maple operational control of all custody — ≥5 EOA-shaped addresses controlling $2.18B family-wide per Maple's MPC + policy attestation), plus the syrupUSDT-specific axes: (i) elevated per-pool concentration; (ii) shallower exit liquidity; (iii) cross-pool concentration with syrupUSDC for both credit-book borrowers AND Liquidity-layer custody. Maple v1's bad-debt history is documented context (see syrupUSDC report §IV) but carries small score weight given the v2 clean ~3-year record.
+The 6.0/10 score reflects the inherited Maple-family risks (Pool Delegate discretion, $0 first-loss cover, consolidated Maple operational control of all custody — ≥5 EOA-shaped addresses controlling $2.18B family-wide per Maple's MPC + policy attestation), plus the syrupUSDT-specific axes: (i) elevated per-pool concentration; (ii) shallower exit liquidity; (iii) cross-pool concentration with syrupUSDC for both credit-book borrowers AND Liquidity-layer custody. Maple v1's bad-debt history is documented context (see syrupUSDC report §IV) but carries small score weight given the v2 clean ~3-year record.
 
 **For sizing:** plain syrupUSDT today is institutional credit yield priced near or below T-bills, not a yield-chase product. Comfortable for retail and low-institutional positions willing to accept higher concentration than syrupUSDC. Larger institutional sizers should treat the $175M single-position concentration as the dominant risk axis, plan for materially longer queue cadence than syrupUSDC, and compute combined family exposure on a Loans-only basis if also holding syrupUSDC.
 

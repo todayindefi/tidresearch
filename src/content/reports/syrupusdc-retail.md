@@ -15,10 +15,10 @@ issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1066000000
 tvl_gross: 1066000000
 peg_mechanism_score: 7.0
-backing_score: 6.5
-liquidity_score: 6.5
+backing_score: 7.0
+liquidity_score: 7.5
 issuer_score: 5.5
-overall_score: 6.25
+overall_score: 6.75
 audited: true
 audit_count: 8
 audit_firms: ["Spearbit", "Trail of Bits", "Three Sigma", "Peckshield"]
@@ -36,7 +36,7 @@ underlying_managers:
 
 # syrupUSDC — Retail Risk Report
 
-**Moderate risk · 6.25/10**
+**Moderate-to-low risk · 6.75/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -98,10 +98,10 @@ Caveats:
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg mechanism | 7.0 | NAV-accruing, organic yield from loan interest, no rebase, no losses to date in Syrup |
-| Backing | 6.5 | Two-bucket: 79% Loans (BTC/XRP overcollateralized third-party credit) + 21% Liquidity (pool-owned PYUSD/USTB/AMM strategies, at par with underlying). Pool Delegate discretion + off-chain custody + $0 first-loss cover are the binding risk surfaces. |
-| Liquidity | 6.5 | $1.2B pool TVL; aggregator route empirically ~12 bps slippage to $100K; stress-case binds at pool depth |
+| Backing | 7.0 | Two-bucket: 79% Loans (BTC/XRP overcollateralized at 125–333%) + 21% Liquidity (pool-owned PYUSD/USTB/AMM strategies, at par with underlying). $1.81B aggregate collateral against $1.19B loans (Loans-only Pool CR 165.5%). Pool Delegate discretion is real but lives in Structural/Issuer score, not in backing quality itself. |
+| Liquidity | 7.5 | $1.2B pool TVL; aggregator route empirically ~12 bps slippage to $100K; **permissionless mint/redeem at the vault layer** (no KYC gating) is a meaningful advantage over RWA peers like KYC-gated thBILL — anyone retail or institutional can enter/exit at NAV without slippage on the primary path. Stress-case binds at pool depth (queue-bound), but the base case is excellent. |
 | Issuer | 5.5 | Maple Labs Cayman, doxxed team, 8+ audits, $1M bounty. ~3-year clean record on the Syrup product line. |
-| **Overall** | **6.25** | Moderate risk |
+| **Overall** | **6.75** | Moderate-to-low risk |
 
 ## Who it's for
 

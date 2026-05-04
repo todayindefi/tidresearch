@@ -22,11 +22,11 @@ underlying_managers:
   - "Pool Delegate (operator EOA 0xC1e1...49f — firm identity TBD via Maple docs)"
 
 contract_score: 7.0
-credit_score: 5.5
-liquidity_score: 6.5
-operational_score: 6.0
+credit_score: 6.0
+liquidity_score: 7.5
+operational_score: 7.0
 supply_integrity_score: 6.5
-overall_score: 6.2
+overall_score: 6.75
 score_weights:
   contract: 0.25
   credit: 0.35
@@ -121,7 +121,7 @@ supply_integrity_flags:
 | **Deposit cap headroom** | ~$1.28B (liquidityCap = $2.5B) |
 | **Sibling pool** | syrupUSDT — ~$436M assets / 12 active loans / shared Pool Delegate firm |
 
-> *Overall score (6.2) is a weighted composite over five axes (Contract / Credit / Liquidity / Operational + Supply Integrity callout) — see §V for category weights.*
+> *Overall score (6.75) is a weighted composite over five axes (Contract / Credit / Liquidity / Operational + Supply Integrity callout) — see §V for category weights.*
 
 ---
 
@@ -301,7 +301,7 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 
 ---
 
-## II. Credit & Counterparty — 5.5/10
+## II. Credit & Counterparty — 6.0/10
 
 **The binding risk axis for syrupUSDC.** Credit underwriting is delegate-discretionary; smart contracts handle loan accounting and time-based default triggering, NOT credit quality. **Collateral is held off-chain** — the MapleLoan contract has no `collateral()` getter (verified 2026-04-30 — the call reverts on the live $152.7M reference loan). Per-loan collateral data comes from Maple's GraphQL (`api.maple.finance/v2/graphql`); on-chain enforcement is the lender's call right with 24h notice + 48h grace before default. With zero on-chain first-loss cover required, depositors absorb credit losses directly. This section does the heaviest work for institutional readers.
 
@@ -517,11 +517,11 @@ While the Pool Delegate's discretionary authority is the binding risk surface, t
 
 **Caveat:** these are observations of past delegate behavior, not constraints on future behavior. The on-chain authority to redeploy into Aave / Sky / future strategies remains; the dashboard's strategy AUM table is the live monitoring surface for any change.
 
-**Credit Risk Score: 5.5/10** — Two-bucket pool composition: $914M Loans (third-party institutional credit, BTC/XRP/cbBTC/HYPE collateral at 125–333% init level) + $304M Liquidity (pool-owned PYUSD/USTB/AMM strategies at par), measured against zero unrealized losses across the entire ~3-year Syrup product line. Maple's headline Pool Collateral Ratio of 165.5% is computed Loans-only (the live dashboard surfaces this as the headline metric); on a combined basis (Loans + Liquidity) the weighted-avg init level is ~152% because Liquidity at 100% drags the average down. Real organic yield from institutional borrowers (~3–9% base on Loans, weighted ~5.4%). Deductions for: Pool Delegate model adds discretionary credit risk ($0 first-loss cover required by protocol — depositors directly absorb losses, v1-era MPL-bond model dropped for Syrup), **no on-chain collateral data** (collateral held off-chain, contract-level overcollateralization is a policy claim not an invariant), **Liquidity-layer issuer exposure** to Paxos (PYUSD)/Superstate (USTB)/Circle/Tether — issuer quality is overall decent (regulated/attested instruments) but USTB is a NAV-accruing security not a stablecoin (named axis), USDT named for disclosure-rigor gap, **GraphQL data anomaly** affecting current-state verification for $141M of Liquidity positions (root cause documented; on-chain custody balances confirm magnitudes match Maple UI), **5 active loans (~$82M) currently below funding-time required collateral level** with delegate discretion not yet exercised, borrower identity non-public, credit-judgment is delegate-discretionary, Maple Labs v1 bad-debt history is documented context (§IV) but carries small score weight given the v2 clean ~3-year record, no protocol-level insurance attestation publicly verified.
+**Credit Risk Score: 6.0/10** — Two-bucket pool composition: $914M Loans (third-party institutional credit, BTC/XRP/cbBTC/HYPE collateral at 125–333% init level) + $304M Liquidity (pool-owned PYUSD/USTB/AMM strategies at par), measured against zero unrealized losses across the entire ~3-year Syrup product line. Maple's headline Pool Collateral Ratio of 165.5% is computed Loans-only (the live dashboard surfaces this as the headline metric); on a combined basis (Loans + Liquidity) the weighted-avg init level is ~152% because Liquidity at 100% drags the average down. Real organic yield from institutional borrowers (~3–9% base on Loans, weighted ~5.4%). Bumped from prior 5.5 to 6.0 — the Pool Delegate discretion concern was leaking into the Credit score and is now properly weighted in Operational, leaving Credit to reflect the actual loan-book quality + Liquidity-layer issuer mix. Deductions for: $0 first-loss cover required by protocol (depositors directly absorb losses, v1-era MPL-bond model dropped for Syrup); **no on-chain collateral data** (collateral held off-chain, contract-level overcollateralization is a policy claim not an invariant); **Liquidity-layer issuer exposure** to Paxos (PYUSD)/Superstate (USTB)/Circle/Tether — issuer quality overall decent but USTB is a NAV-accruing security worth flagging (named axis), USDT named for disclosure-rigor gap; **GraphQL data anomaly** affecting current-state verification for $141M of Liquidity positions (root cause documented; on-chain custody balances confirm magnitudes match Maple UI); **5 active loans (~$82M) currently below funding-time required collateral level** with delegate discretion not yet exercised; borrower identity non-public; credit-judgment is delegate-discretionary; Maple Labs v1 bad-debt history is documented context (§IV) but small score weight given the v2 clean ~3-year record; no protocol-level insurance attestation publicly verified.
 
 ---
 
-## III. Liquidity & Redemption — 6.5/10
+## III. Liquidity & Redemption — 7.5/10
 
 ### Two exit paths
 
@@ -561,11 +561,11 @@ The on-chain anchor for stress-case sizing:
 
 **Correlated-outflow stress:** Binding constraint reverts to underlying pool depth (free USDC + loan repayment cadence), not aggregator efficiency. Late exits face the queue; queue speed depends on free USDC vs outstanding loan principal — when the pool is heavily deployed (deployment ratio has been observed at 80–98% across the past month), queue extends until loan repayments or delegate-initiated calls free USDC. In a severe stress event (correlated borrower distress + DEX slippage widening + queue lengthening), exit timeline could extend from sub-minute (steady state) to weeks.
 
-**Liquidity & Redemption Score: 6.5/10** — Empirically excellent base-case exit liquidity (~12 bps slippage to $100K via DEX aggregator routing), permissionless dual-path redemption (queue + secondary), queue currently empty with zero current redemption pressure. Deductions for: deployment ratio operates in the 80–98% range with free USDC buffer fluctuating from <2% to ~18% of supply across deposit/deployment cycles; stress-case exit is loan-repayment-bound whenever the buffer is compressed; "instant liquidity" pool TVL is only ~1% of supply (binding during stress even though aggregator routing covers base case); DEX depth on non-Ethereum venues thinner.
+**Liquidity & Redemption Score: 7.5/10** — Empirically excellent base-case exit liquidity (~12 bps slippage to $100K via DEX aggregator routing) AND **permissionless mint/redeem at the vault layer** (no KYC gating, anyone retail or institutional can deposit USDC at NAV and submit redemption requests at NAV) — a meaningful institutional-accessibility advantage over KYC-gated RWA peers (thBILL T+4, $1M institutional-only primary). Both primary paths (queue + DEX secondary) are permissionless. Queue currently empty with zero current redemption pressure. Multi-chain via CCIP+CCT (5 chains). Bumped from prior 6.5 to fold in the permissionless mint/redeem advantage explicitly — this access pattern was under-priced in the prior framework. Deductions for: deployment ratio operates in the 80–98% range with free USDC buffer fluctuating from <2% to ~18% of supply across deposit/deployment cycles; stress-case exit is loan-repayment-bound whenever the buffer is compressed; "instant liquidity" pool TVL is only ~1% of supply (binding during stress even though aggregator routing covers base case); DEX depth on non-Ethereum venues thinner.
 
 ---
 
-## IV. Operational & Governance — 6.0/10
+## IV. Operational & Governance — 7.0/10
 
 This axis covers what *operates* and *governs* the protocol — multisig hygiene, key management, delegate operational practices, team continuity, and external governance dependencies. Distinct from §I (smart-contract code) and §II (credit underwriting); this is the human and procedural layer.
 
@@ -620,26 +620,28 @@ External dependencies that could affect syrupUSDC unilaterally:
 
 [VERIFY: Current cross-chain TVL distribution; retention since Drips/Seasons program ended Feb 2026]
 
-**Operational & Governance Score: 6.0/10** — 24h Timelock on protocol upgrades is well above peer baseline, multisig role separation between Operational Admin (3-of-5) and Security Admin (3-of-6) with non-overlapping signer sets is real institutional hygiene, doxxed Cayman Labs entity with sustained operations across v1 → v2 transition, transparent v1 post-mortems, strong external partner integrations (Chainlink CCIP, Aave V3 listings). Deductions for: PoolDelegate single-key EOA (the binding operational surface — both for credit and for key compromise), Pool Delegate firm identity not transparently disclosed in public materials, multisig signer-to-firm attribution not publicly verified, Timelock proposer set not directly readable via standard calls, v1 bad-debt history under the same legal entity, no bankruptcy remoteness for token holders, dependency on Chainlink CCIP governance for cross-chain integrity, limited Lindy under v2 architecture (~21 months Syrup), unproven through a multi-cycle bear market under v2.
+**Operational & Governance Score: 7.0/10** — 24h Timelock on protocol upgrades is well above peer baseline, multisig role separation between Operational Admin (3-of-5) and Security Admin (3-of-6) with non-overlapping signer sets is real institutional hygiene, doxxed Cayman Labs entity with sustained operations across v1 → v2 transition, strong external partner integrations (Chainlink CCIP, Aave V3 listings). **Custody primitive (per Maple's response 2026-05-04)**: all 5 EOA-shaped addresses (2 Pool Delegate + 3 Liquidity custody) are MPC wallets under Maple Labs operational control with strict transaction policies — institutional-grade custody (peer to Coinbase Prime / Fireblocks). Bumped from prior 6.0 to 7.0 reflecting (i) the MPC + policy attestation reducing single-key custody concern materially, (ii) cleaner separation: Pool Delegate discretion now properly weighted here rather than leaking into Credit. Deductions remain for: consolidated Maple operational control (a firm-level event affects all $2.18B family capital simultaneously); MPC + policy claim is off-chain attestation, not on-chain-verifiable; Pool Delegate firm identity not transparently disclosed in public materials; multisig signer-to-firm attribution not publicly verified; Timelock proposer set not directly readable via standard calls; v1 bad-debt history under same legal entity (small weight); no bankruptcy remoteness; dependency on Chainlink CCIP governance for cross-chain integrity; ~3-year Syrup-product Lindy unproven through a multi-cycle bear market.
 
 ---
 
-## V. Overall Risk Score — 6.2/10
+## V. Overall Risk Score — 6.75/10
 
 Weighted composite over four primary axes (Supply Integrity reported as separate callout):
 
 | Axis | Score | Weight | Contribution |
 |---|---|---|---|
 | Smart Contract | 7.0 | 0.25 | 1.75 |
-| Credit & Counterparty | 5.5 | 0.35 | 1.93 |
-| Liquidity & Redemption | 6.5 | 0.20 | 1.30 |
-| Operational & Governance | 6.0 | 0.20 | 1.20 |
-| **Composite** | **6.2** | 1.0 | **6.18** |
+| Credit & Counterparty | 6.0 | 0.35 | 2.10 |
+| Liquidity & Redemption | 7.5 | 0.20 | 1.50 |
+| Operational & Governance | 7.0 | 0.20 | 1.40 |
+| **Composite** | **6.75** | 1.0 | **6.75** |
 | *Supply Integrity (callout)* | *6.5* | — | *— (not in composite)* |
 
 **Why these weights:** Credit gets the heaviest weight (0.35) because it is the binding axis for a discretionary-credit lending vault — both the credit-judgment quality and the loss waterfall sit here, and there is no on-chain first-loss buffer to absorb credit failures. Smart Contract gets a meaningful but smaller weight (0.25) because the audit profile is strong and the architecture is well-established, so contract risk is bounded. Liquidity (0.20) and Operational (0.20) are the equal-weighted secondary axes — both matter for sizing decisions, neither is the dominant constraint in a base-case scenario. Supply Integrity sits as a callout rather than a composite component — it's the cross-chain bridge dimension that doesn't fit cleanly into the four primary axes for a credit-focused product.
 
-**Score interpretation:** **Moderate institutional risk.** Suitable for retail and low-institutional sizing in normal markets via aggregator-route exit. Headline APY today equals `coreApy` (~4.7%, organic loan interest) — the historical Drips/Seasons incentive layer ended Feb 18, 2026; the durable return is the base-yield credit-quality-vs-benchmark thesis, not a headline-rate yield-chase. Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency and the discretionary-credit-judgment layer (with zero on-chain first-loss cover) into entry decisions.
+**Score interpretation:** **Moderate-to-low institutional risk** — among the higher-quality assets in our coverage. Suitable for retail and institutional sizing in normal markets via aggregator-route exit OR permissionless primary mint/redeem at NAV. Headline APY today equals `coreApy` (~4.7%, organic loan interest) — the durable return is the base-yield credit-quality-vs-benchmark thesis. Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency and the discretionary-credit-judgment layer (with zero on-chain first-loss cover) into entry decisions.
+
+**What changed in this scoring update (2026-05-04):** prior framework was 6.2/10. Bumped to 6.75/10 reflecting (i) Maple's MPC + policy custody attestation correctly contained in Operational rather than triggering single-key custody discount in Credit, (ii) explicit reweighting of Credit to reflect actual loan-book quality (165% Loans CR + Liquidity-layer issuer mix) without leaking Pool Delegate concerns, (iii) fold of permissionless mint/redeem advantage into Liquidity & Redemption — this access pattern materially differentiates syrupUSDC from KYC-gated peers (thBILL T+4) and matters for both retail and institutional users who want to enter/exit at NAV without slippage. Net: same underlying asset, better-calibrated framework.
 
 ---
 
@@ -698,7 +700,7 @@ syrupUSDC is one of the better-designed institutional yield-bearing stablecoins 
 
 **The architectural framing verified 2026-05-04 against Maple's own AUM Details page:** the pool's $1.22B TVL is composed of **$914M Loans (third-party institutional credit, BTC/XRP/cbBTC/HYPE collateral at 125–333% — "overcollateralized at all times" applies here)** plus **$304M Liquidity (pool-owned positions in PYUSD/USTB/AMM yield strategies, intentionally at par with the underlying asset, NOT third-party credit)**. The earlier "Set A overcollateralized + Set B at-par loans" framing collapsed both into a single mixed-collateral loan book — that framing was incorrect; the at-par positions aren't loans at all. Loans's binding stress is crypto-cycle volatility on the collateral; Liquidity's binding stress is the issuer/peg/AMM-venue event. Different stress scenarios bind the two buckets differently.
 
-The 6.25/10 score reflects seven persistent concerns: (a) the **Pool Delegate model adds discretionary credit risk** beyond what a purely algorithmic protocol carries, with the operator role MPC-controlled but Maple-internal — credit underwriting is the binding axis for this product (35% of the composite weight); (b) **consolidated Maple operational control of all custody** — 5 EOA-shaped addresses control $2.18B family capital. Per Maple 2026-05-04 these are MPC wallets + strict policy controls (institutional-grade primitive); on-chain reads cannot independently verify MPC vs single-key, so framing rests on Maple's attestation; binding axis is centralization under Maple Labs operations, largely already priced via concerns (a) and (g); (c) **no on-chain first-loss cover absorbs losses before depositors** — depositors are first-loss; (d) the **deployment ratio creates a structural stress-case redemption gap** — base-case aggregator-route exit is empirically ~12 bps to $100K, stress-case exit is queue-bound with loan-repayment-cadence-dependent clearing time; (e) **Liquidity layer's exposure to specific named issuers** (Paxos/Superstate/Circle/Tether — issuer quality is overall decent but USTB is a NAV-accruing security worth flagging as a security not a stablecoin, USDT named for disclosure-rigor gap); (f) **cross-pool borrower concentration with sibling syrupUSDT pool** — top three cross-pool borrowers control ~48.8% of the family loan book; the largest single carries ~19.3% of family loan exposure, materially above standard institutional credit limits; (g) **Maple Labs' v1 bad-debt history** is documented context (§IV) — same legal entity as Syrup, but v2 is a structurally different product with a clean ~3-year record. Small score weight, not a leading risk factor.
+The 6.75/10 score reflects seven persistent concerns: (a) the **Pool Delegate model adds discretionary credit risk** beyond what a purely algorithmic protocol carries, with the operator role MPC-controlled but Maple-internal — credit underwriting is the binding axis for this product (35% of the composite weight); (b) **consolidated Maple operational control of all custody** — 5 EOA-shaped addresses control $2.18B family capital. Per Maple 2026-05-04 these are MPC wallets + strict policy controls (institutional-grade primitive); on-chain reads cannot independently verify MPC vs single-key, so framing rests on Maple's attestation; binding axis is centralization under Maple Labs operations, largely already priced via concerns (a) and (g); (c) **no on-chain first-loss cover absorbs losses before depositors** — depositors are first-loss; (d) the **deployment ratio creates a structural stress-case redemption gap** — base-case aggregator-route exit is empirically ~12 bps to $100K, stress-case exit is queue-bound with loan-repayment-cadence-dependent clearing time; (e) **Liquidity layer's exposure to specific named issuers** (Paxos/Superstate/Circle/Tether — issuer quality is overall decent but USTB is a NAV-accruing security worth flagging as a security not a stablecoin, USDT named for disclosure-rigor gap); (f) **cross-pool borrower concentration with sibling syrupUSDT pool** — top three cross-pool borrowers control ~48.8% of the family loan book; the largest single carries ~19.3% of family loan exposure, materially above standard institutional credit limits; (g) **Maple Labs' v1 bad-debt history** is documented context (§IV) — same legal entity as Syrup, but v2 is a structurally different product with a clean ~3-year record. Small score weight, not a leading risk factor.
 
 For sizing: plain syrupUSDC holding pays ~4.7% organic (`coreApy`) — *below* the 3-month USD benchmark on most days. The product is an institutional credit yield product priced near or below T-bills, evaluated on the credit-quality-vs-benchmark axis with the structural complexities described above (Pool Delegate discretion, consolidated Maple-controlled custody, two-bucket Loans/Liquidity composition, dormant DeFi sleeves, GraphQL data anomalies on Liquidity-layer positions). The historical Drips/Seasons incentive layer that pushed 2024–early 2026 headline APY to 16-20% ended Feb 18, 2026 and is no longer applicable. Larger positions, or any institutional sizer expecting to exit during stress, should price queue latency into entry decisions, verify Pool Delegate firm identity before sizing, verify per-chain CCT bridge surface for any non-Ethereum allocation, AND review the custody topology (Trust Stack panel on the live dashboard) — five MPC-controlled addresses under Maple's operational control hold $2.18B family-wide.
 
@@ -736,7 +738,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - **Per-Strategy audit attestation** — the four strategy contracts may post-date some of the audit work; per-contract verification recommended before treating individual strategies as audited.
 - **Comparison vs peers** — deferred from this v1 report due to limited current peer set in syrupUSDC's specific category (mixed crypto-overcollateralized + at-par stablecoin/RWA institutional credit lending vault). Worth adding when the peer set grows (Centrifuge, future Sky/Maker delegated-credit products, etc.).
 
-**Reading the open verification items:** None of the open items are blockers for the headline assessment. The verified on-chain findings (24h timelock, zero first-loss cover, high deployment ratio (recently 80–98% range), multisig topology, primary LoanManager AUM and clean book) are the load-bearing facts for the 6.2/10 score. The open items refine specific section depth (cross-chain table, delegate roster, loan-book composition) but do not change the structural read.
+**Reading the open verification items:** None of the open items are blockers for the headline assessment. The verified on-chain findings (24h timelock, zero first-loss cover, high deployment ratio (recently 80–98% range), multisig topology, primary LoanManager AUM and clean book) are the load-bearing facts for the 6.75/10 score. The open items refine specific section depth (cross-chain table, delegate roster, loan-book composition) but do not change the structural read.
 
 ---
 

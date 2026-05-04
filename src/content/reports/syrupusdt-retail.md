@@ -16,10 +16,10 @@ issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
 tvl_gross: 436000000
 peg_mechanism_score: 7.0
-backing_score: 6.0
-liquidity_score: 5.0
+backing_score: 6.5
+liquidity_score: 6.0
 issuer_score: 5.5
-overall_score: 5.75
+overall_score: 6.0
 audited: true
 audit_count: 8
 audit_firms: ["Spearbit", "Trail of Bits", "Three Sigma", "Peckshield"]
@@ -37,7 +37,7 @@ underlying_managers:
 
 # syrupUSDT — Retail Risk Report
 
-**Moderate risk · 5.75/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
+**Moderate risk · 6.0/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
 
 | Yield | Exit method | Primary redemption | Pool size | Chains |
 |---|---|---|---|---|
@@ -96,10 +96,10 @@ Same audit profile as syrupUSDC: 8+ audits, Spearbit + Trail of Bits on the v2/S
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg mechanism | 7.0 | NAV-accruing, organic yield, no losses to date |
-| Backing | 6.0 | Two-bucket: 87% Loans (BTC/XRP overcollateralized third-party credit) + 10% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM). Per-pool concentration significantly higher than syrupUSDC (largest single loan ~41% of pool vs 16%). |
-| Liquidity | 5.0 | $436M Ethereum pool. Smaller depth than syrupUSDC; expect higher aggregator slippage and longer queue cadence at institutional sizing. |
+| Backing | 6.5 | Two-bucket: 87% Loans (BTC/XRP overcollateralized at 125–150%) + 10% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM). Per-pool concentration significantly higher than syrupUSDC (largest single loan ~41% of pool vs 16%). |
+| Liquidity | 6.0 | $436M Ethereum pool. Smaller depth than syrupUSDC; expect higher aggregator slippage and longer queue cadence at institutional sizing. **Permissionless mint/redeem at the vault layer is the same as syrupUSDC** — no KYC gating. The smaller pool caps the score below syrupUSDC's 7.5 but the access pattern is still a meaningful advantage over KYC-gated peers. |
 | Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. |
-| **Overall** | **5.75** | Slightly worse than syrupUSDC's 6.25 — primarily due to higher per-pool concentration and shallower exit liquidity |
+| **Overall** | **6.0** | Slightly worse than syrupUSDC's 6.75 — primarily due to higher per-pool concentration and shallower exit liquidity |
 
 ## Who it's for
 
