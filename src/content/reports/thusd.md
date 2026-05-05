@@ -8,7 +8,7 @@ peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-04"
-last_verified: "2026-05-04"
+last_verified: "2026-05-05"
 production: false
 issuer: "Theo Network (Panama)"
 market_cap_approx: 96280000
@@ -95,6 +95,12 @@ The single biggest watch-item is whether OFT Adapter ownership gets transferred 
 **Aggregate-redemption stress has been partially tested, single-tx cannot be.** $24M of redemption volume has cleared. One actor took $12.55M out in seven days at the per-tx ceiling without anything breaking. The unanswered test is what happens if redemption demand exceeds the Minter's USDC float — whether the cap re-arms, throttles harder, or simply blocks.
 
 **Genesis unwind has plateaued.** Seven-day net flow flipped from −$20M (the early Genesis-allocator exit) to +$5M after a fresh $20M institutional mint on 2026-05-01. That mint went to a Safe-shaped contract whose identity has not been confirmed against Theo's own treasury — it could be a genuinely external new allocator, or it could be a Theo-internal address that we'd want to net out before reading the +$5M as organic demand. Worth flagging until the recipient is identified.
+
+**Reserve composition — verified on-chain (2026-05-05).** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`. Direct on-chain reads confirm the dashboard exactly: **88,849,591 thBILL** (~$91.07M at NAV — 96.46% of reserves), $219,406 USDC, and $3,126,265 USDT. **Reserves are 96% thBILL** — thUSD's "100% backed" attestation is principally a claim about thBILL holdings at NAV, not about diversified collateral.
+
+**The thBILL-anchored reserve creates a recursive trust chain.** thBILL itself has its own backing structure (off-chain T-Bills via Libeara, with synthetic intermediate wrappers — see `tidresearch.com/reports/thbill`), and its on-chain backing ratio fluctuates within a Libeara settlement window (T+1 to T+7) — verified periodic dips into the 92–93% range during Stage A windows when Theo has minted new thBILL but the corresponding ULTRA hasn't yet arrived from Libeara. **During those windows, thUSD's thBILL reserves are technically backed by Theo's promise to Libeara, not by ULTRA-equivalent collateral.** The dashboard's "100% backed" remains formally correct (thUSD-supply ÷ thBILL-at-NAV-plus-stables ≥ 100%) but the next layer down is where the periodic gap lives. Practically — the gap closes within the historical T+1 to T+7 envelope and the chain works as designed; the structural point is just that "100% backed" rests on attestations at multiple layers.
+
+**thUSD growth drives thBILL primary minting, not secondary buying.** Verified via supply-trace: thBILL's Ethereum total supply jumped +14.52M between 2026-04-29 and 2026-05-01, coinciding with thUSD's $20M institutional mint the same week. The thBILL contract emitted **zero on-chain events** during the supply mutation — same silent-mint pattern documented for the underlying tULTRA layer. Each new dollar of thUSD demand produces a corresponding silent thBILL mint at the reserve, with backing reconciled later via Libeara settlement. Standard ERC-20 indexers (Etherscan, Dune, The Graph) cannot track these mints; only direct `totalSupply()` polling captures them.
 
 **Not all chains are equal.** About 67% of total thUSD supply (and 97% of *bridged* supply) lives on Stable, a chain that's itself only a few months old. Any Stable-side incident — a chain halt, a sequencer fault, a bridge anomaly — affects nearly all bridged thUSD. Concentrated chain-level liveness risk for cross-chain holders.
 
