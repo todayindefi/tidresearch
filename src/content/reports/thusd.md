@@ -9,7 +9,7 @@ assessment_type: "light"
 audience: "retail"
 date: "2026-05-04"
 last_verified: "2026-05-05"
-production: false
+production: true
 issuer: "Theo Network (Panama)"
 market_cap_approx: 96280000
 tvl_gross: 96280000
