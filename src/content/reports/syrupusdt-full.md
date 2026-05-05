@@ -79,6 +79,7 @@ supply_integrity_flags:
 | **Total assets (2026-05-03)** | ~$436M USDT |
 | **Active loans (2026-05-03)** | 12 (loan principal $421.9M) |
 | **NAV** | ~$1.13 USDT per syrupUSDT |
+| **Deposit cap headroom** | ~$1.56B (liquidityCap = $2.0B; 21.8% utilized — see syrupUSDC institutional report §I.5 for liquidity cap mechanics) |
 | **Sibling pool** | syrupUSDC — ~$1.22B assets / 28 active loans / shared Pool Delegate firm |
 
 > *Overall score (6.0) is composite over Contract / Credit / Liquidity / Operational. Weighted ~10pp lower than syrupUSDC's 6.75 — the gap is primarily per-pool concentration (largest single loan = 41% of pool) and shallower exit liquidity at proportional sizing.*

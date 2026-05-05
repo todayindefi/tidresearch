@@ -118,7 +118,7 @@ supply_integrity_flags:
 | **Total assets (2026-05-03, on-chain)** | ~$1,217M USDC (grew from $1,074M on 2026-04-26) |
 | **Active loans (2026-05-03)** | 28 (loan principal $1,192M) |
 | **NAV** | ~$1.16 USDC per syrupUSDC (slow upward NAV grind from interest accrual) |
-| **Deposit cap headroom** | ~$1.28B (liquidityCap = $2.5B) |
+| **Deposit cap headroom** | ~$1.28B (liquidityCap = $2.5B; 48.8% utilized — see §I.5 liquidity cap mechanics) |
 | **Sibling pool** | syrupUSDT — ~$436M assets / 12 active loans / shared Pool Delegate firm |
 
 > *Overall score (6.75) is a weighted composite over five axes (Contract / Credit / Liquidity / Operational + Supply Integrity callout) — see §V for category weights.*
@@ -255,8 +255,18 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 - **Trust assumption:** Open / permissionless. Anyone can deposit USDC; standard ERC-4626 share-mint at NAV.
 - **Capture cost estimate:** N/A (not subvertible — minting consumes USDC at NAV)
 - **Value secured:** Pool's accounting integrity (NAV cannot be manipulated by deposit alone)
-- **Controls:** liquidityCap = $2.5B (current TVL ~$1.07B); Security Admin pause capability
+- **Controls:** `liquidityCap` = $2.5B (current TVL ~$1.22B → 48.8% utilized; see "Liquidity cap mechanics" below); Security Admin pause capability
 - **Asymmetry:** Symmetric — depositor receives shares worth their USDC at NAV
+
+#### Liquidity cap mechanics
+
+`liquidityCap` is a `PoolManager` parameter (governance-controlled, 24h timelock to change) that caps total pool deposits at a dollar maximum. Once TVL hits the cap, new deposits are rejected at the contract layer. Three operational reasons Maple uses one:
+
+1. **Discretionary credit capacity management.** The Pool Delegate (Maven 11) can only originate so much credit to vetted institutional borrowers per unit time. If deposits flood in faster than borrower onboarding, the pool's free-USDC ratio rises and dilutes yield. The cap is a brake on inflows that would outpace credit demand.
+2. **Risk-based scaling.** Keeping pool size within what the delegate can responsibly underwrite + monitor. A delegate operating at $1.2B has different bandwidth than at $5B.
+3. **Protocol-level circuit breaker.** Provides a non-contract-upgrade lever to slow or stop new inflows under stress (counterparty incident, regulatory action, etc.), separate from the Security Admin pause path.
+
+**For institutional sizing**: at 48.8% utilization the cap isn't currently a constraint — large deposits route through cleanly. Worth tracking as a leading indicator: utilization climbing past ~80% suggests either an upcoming cap raise (capacity expansion signal) or rejection of new deposits (which would push secondary-market price above NAV as primary entry becomes constrained). Cap reductions, while rare, would signal active de-risking and warrant scrutiny. Confirm `setLiquidityCap` authority lies with governor (24h timelock) before institutional sizing.
 
 #### cct_bridge_mint — bridge-cct (Ethereum ↔ Solana / Arbitrum / Base / Plasma)
 - **Trust assumption:** Chainlink DON quorum + RMN backstop per CCIP message commit/execute
