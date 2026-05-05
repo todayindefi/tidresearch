@@ -111,7 +111,7 @@ This isn't just a coincidence — Theo's product surfaces have been quietly repo
 
 For retail sizing, this is an important reframe: **the relevant float is the external 49M tokens, not the 138M headline supply.** The retail-accessible market is materially smaller than the TVL number implies. It also means thBILL liabilities can grow without any retail thBILL demand — they grow automatically as thUSD's user base grows. Each new dollar deposited into thUSD triggers a primary thBILL mint allocated to the thUSD reserve.
 
-**Looking forward:** retail thBILL holders are increasingly in a "leftover" cohort relative to Theo's go-forward product focus. Secondary DEX liquidity is unlikely to recover meaningfully if Theo's new mint demand is increasingly thUSD-routed and primary access remains KYC-gated. New retail allocators looking for tokenized T-Bill exposure on Theo's stack will likely be funneled toward thUSD; existing retail thBILL holders are exiting through the same thinning DEX rails we've been watching.
+**Looking forward:** Theo's product focus has migrated toward thUSD as the consumer-facing surface. New retail allocators seeking tokenized T-Bill exposure on Theo's stack will likely be routed toward thUSD rather than direct thBILL primary mint, and existing retail thBILL holders are exiting through the same thinning DEX rails — without an offsetting source of new retail thBILL demand to refresh secondary depth. Primary access remains KYC-gated either way.
 
 Practical implications:
 
