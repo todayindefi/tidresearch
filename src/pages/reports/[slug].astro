@@ -20,7 +20,14 @@ const { Content, headings } = await render(entry);
 // thBILL has its own standalone dashboard repo referenced via the
 // report's live_dashboard_url frontmatter field. Only the institutional
 // thBILL page shows the dashboard; the retail summary stays clean.
-const DASHBOARD_SLUGS = new Set(["crvusd", "usdd", "ousd", "thbill-full"]);
+const DASHBOARD_SLUGS = new Set([
+  "crvusd",
+  "usdd",
+  "ousd",
+  "thbill-full",
+  "syrupusdc",
+  "syrupusdt",
+]);
 const hasDashboard = DASHBOARD_SLUGS.has(entry.data.slug);
 ---
 
