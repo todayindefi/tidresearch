@@ -55,7 +55,7 @@ The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level
 
 **~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries`). Same yield mechanics as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee.
 
-For a depositor holding plain syrupUSDT at par, that's been *below* the 3-month USD benchmark (~5.2-6.5%) on most days. The Maple value proposition is "real institutional credit yield, with the risk profile of overcollateralized loans + at-par Liquidity strategies" — not a yield-chase product.
+At ~4.5–5%, syrupUSDT sits **above the comparable USD-yield set**: 3-month T-bills are around 3.7–4.0% (US Treasury fiscal data, March 2026 average 3.70%), tokenized T-bill products (BUIDL, USTB, USYC, Ondo USDY) net ~3.5–4.0% after management fees, and onchain stablecoin lending on Aave V3 / Morpho is in the 3.5–4.5% range (currently elevated from the mid-April rsETH/Kelp DAO incident, and still under 5%). That's a ~50–100 bp spread above T-bills — appropriate compensation for institutional credit risk rather than a yield-chase number. Note: Maple's own GraphQL `usdBenchmarkApy` field has historically reported ~5.2–6.5%, but that figure is stale (consistent with the 2023–2024 high-rate environment) and not consistent with current Treasury or onchain stablecoin-lending data; we use the live reference rates instead.
 
 ## Cross-pool concentration with syrupUSDC
 
