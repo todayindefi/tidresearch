@@ -9,6 +9,7 @@ audience: "institutional"
 companion_report: "syrupusdt"
 date: "2026-05-03"
 last_verified: "2026-05-04"
+production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
 tvl_gross: 436000000
