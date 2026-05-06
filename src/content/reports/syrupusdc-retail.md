@@ -57,7 +57,9 @@ The "overcollateralized at all times" framing in Maple's marketing applies to th
 
 **~4.7% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries` over the past week). This is the durable yield from institutional borrowers paying interest on their loans, net of Maple's protocol take and 3.33% delegate fee. It varies by loan-book composition and rate environment; ~3–9% range across individual loans, weighted-avg currently ~4.7–5%.
 
-For a depositor holding plain syrupUSDC at par, that's been *below* the 3-month USD benchmark (~5.2-6.5%) on most days this week. The Maple value proposition is "real institutional credit yield, ~4.7%, with the risk profile of overcollateralized loans + at-par Liquidity strategies" — not a yield-chase product. Allocators sizing into syrupUSDC should evaluate the credit-quality-vs-T-bill thesis rather than chasing a headline rate.
+At ~4.7%, syrupUSDC is currently **competitive with or above the comparable yield set**: 3-month T-bills are around 3.7–4.0% (US Treasury fiscal data, March 2026 average 3.70%), tokenized T-bill products (BUIDL, USTB, USYC) net ~3.5–4.0% after management fees, and onchain USDC lending on Aave V3 / Morpho is in the 3.5–4.5% range. The Maple value proposition is "real institutional credit yield, ~4.7%, with the risk profile of overcollateralized loans + at-par Liquidity strategies." That's a ~70–100 bp spread above T-bills, which is appropriate compensation for institutional credit risk rather than a yield-chase number.
+
+syrupUSDC also has a structural advantage that pure tokenized-T-bill products don't: it's accepted as collateral on Morpho, Euler, and other DeFi lending markets, so a holder can borrow against it and lever the yield if the borrow rate is favorable. That makes it more capital-efficient than locked T-bill exposure, and is a meaningful part of the value proposition for allocators with a use for the borrowed capital.
 
 ## How exit works
 
