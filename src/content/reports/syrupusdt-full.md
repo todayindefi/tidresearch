@@ -168,21 +168,25 @@ The Liquidity positions route through Strategy 0's OpenTermLoanManager as accoun
 
 (Total $421.9M principal across 12 loans / 7 distinct addresses; the larger 4 borrowers carry the majority. Some borrowers have multiple at-par loans grouped under one borrower.)
 
-### Cross-pool concentration with syrupUSDC — the structural feature specific to combined family allocations
+### Cross-pool concentration: one product, two denominations
 
-**This is the most consequential risk axis for an allocator considering both pools.** All four syrupUSDT loan-book borrowers also have positions in syrupUSDC's loan book. Recomputed Loans-only basis 2026-05-04:
+Maple presents the Syrup product line as a single institutional credit product offered in two stable denominations (USDC and USDT). A Syrup loan is offered to one institutional borrower across the family rather than partitioned per pool. The two pools share Pool Delegate firm, MapleGlobals governance, audit corpus, and v2 contract codebase; what differs is the underlying asset, the operational delegate EOA, and (consequently) the active loan book composition. **The borrower overlap between syrupUSDC and syrupUSDT is a structural product feature, not an unmarked side effect** — but it IS the most consequential sizing axis for an allocator holding both pools, because the right unit of analysis shifts from per-pool to family.
 
-| Cross-pool borrower | syrupUSDT Loans | syrupUSDC Loans | Combined | % of family loan book |
+The Syrup family runs a small borrower set (4 unique in syrupUSDT, 13 in syrupUSDC, mostly overlapping), so expect single-counterparty concentration above the ~10%-per-counterparty limit common in institutional credit frameworks. The family-borrower-set size and approximate top-3 share have been structurally stable across the snapshots reviewed; loan-book turnover changes the names and dollar amounts, not the small-set + overlap pattern.
+
+**Snapshot illustration (recomputed Loans-only basis, 2026-05-04 — live numbers shift as loans mature and originate):**
+
+| Family borrower | syrupUSDT Loans | syrupUSDC Loans | Combined | % of family loan book ($1.27B) |
 |---|---|---|---|---|
 | `0x8669f3...f1e9` (XRP + BTC) | $62.1M | $181.9M | **$244.0M** | **19.3%** |
 | `0x09b8...6B8a` (BTC) | — | $200M | $200M | 15.8% |
 | `0xb62446...d505` (BTC) | $62.0M | $67.6M | **$129.6M** | **10.2%** |
 
-**Family loan book: $1,267M. Top-3 cross-pool borrowers carry ~48.8% of the family loan book; single-largest carries ~19.3%.** A credit event at any of these entities damages BOTH pools simultaneously. **Holding syrupUSDT alongside syrupUSDC does NOT diversify** at the loan-borrower level for these positions — it concentrates them. Both top-1 and top-3 numbers are materially above standard institutional credit framework limits (10% per single counterparty).
+Top-3 family borrowers ~49% of the family loan book; single-largest ~19%. **Both above the 10%-per-counterparty limit common in institutional credit frameworks.** A credit event at any of these entities damages both pools simultaneously. Live numbers via the dashboard linked at the end of this report.
 
-Earlier reports cited "top-3 = 42% / top-1 = 18.4%" using a *combined* Loans+Liquidity denominator that included Liquidity custody addresses (e.g., `0x1fcc47ee...` and `0x2570fa...`) as if they were borrowers. Recomputed on a true Loans-only basis, the family loan book is materially MORE concentrated, not less — removing the Liquidity custodies from the denominator concentrates the remaining loan-book borrowers.
+**For combined-allocation sizing:** compute per-borrower exposure across both pools on a Loans-only basis and apply per-counterparty limits at the family level, not per-pool. Independent per-pool sizing systematically under-weights the real per-borrower concentration. The Liquidity layer custody is also shared between pools (same Maple-controlled custody addresses hold both pools' PYUSD and AMM positions), so the family is effectively a single risk surface for both credit and custody axes.
 
-For combined-allocation sizing, **compute per-borrower exposure across both pools on a Loans-only basis rather than treating them as independent products.** Note: the Liquidity layer custody is also shared between pools (same Maple-controlled custody addresses hold both pools' PYUSD and AMM positions), so the family is effectively a single risk surface for both axes — credit concentration AND custody concentration.
+*Recomputation methodology note:* earlier reports cited "top-3 = 42% / top-1 = 18.4%" using a combined Loans+Liquidity denominator that included Liquidity custody addresses (`0x1fcc47ee...`, `0x2570fa...`) as if they were borrowers. The current numbers (top-3 ~49% / top-1 ~19%) are recomputed on a true Loans-only basis. Removing Liquidity custodies from the denominator concentrates the remaining loan-book borrowers — a real understatement in the prior framing, not a definitional one.
 
 ### Liquidity layer is shared with syrupUSDC
 

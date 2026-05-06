@@ -57,19 +57,23 @@ The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level
 
 At ~4.5–5%, syrupUSDT sits **above the comparable USD-yield set**: 3-month T-bills are around 3.7–4.0% (US Treasury fiscal data, March 2026 average 3.70%), tokenized T-bill products (BUIDL, USTB, USYC, Ondo USDY) net ~3.5–4.0% after management fees, and onchain stablecoin lending on Aave V3 / Morpho is in the 3.5–4.5% range (currently elevated from the mid-April rsETH/Kelp DAO incident, and still under 5%). That's a ~50–100 bp spread above T-bills — appropriate compensation for institutional credit risk rather than a yield-chase number.
 
-## Cross-pool concentration with syrupUSDC
+## Cross-pool concentration: one product, two denominations
 
-This is what makes syrupUSDT structurally different from a typical "diversification" candidate alongside syrupUSDC. **All four syrupUSDT loan-book borrowers also have positions in syrupUSDC's loan book.** Recomputed Loans-only 2026-05-04:
+Maple presents syrupUSDC and syrupUSDT as a single Syrup credit line offered in two stable denominations — not two independent credit baskets. A Syrup loan is offered to one institutional borrower across the family rather than partitioned per pool, so the borrower set is **shared by design**. Choosing syrupUSDT vs syrupUSDC is a choice of denomination, not an independent credit pick.
 
-| Cross-pool borrower | syrupUSDT Loans | syrupUSDC Loans | Combined | % of family loan book |
+That makes the right sizing unit the **family loan book**, not the per-pool number. Syrup runs a small borrower set (4 in syrupUSDT, 13 in syrupUSDC, mostly overlapping), so expect single-counterparty concentration above the ~10%-per-counterparty limit common in institutional credit frameworks. That's the structural product feature, not a temporary state — borrower turnover happens but the small-set + overlap pattern persists.
+
+**Illustration (snapshot 2026-05-04, recomputed Loans-only basis; live numbers shift as the loan book turns over):**
+
+| Family borrower | syrupUSDT | syrupUSDC | Combined | % of family loan book ($1.27B) |
 |---|---|---|---|---|
-| `0x8669f3...f1e9` (XRP + BTC) | $62.1M | $181.9M | $244.0M | **19.3%** |
+| `0x8669f3...f1e9` (XRP + BTC) | $62.1M | $181.9M | $244.0M | 19.3% |
 | `0x09b8...6B8a` (BTC) | — | $200M | $200M | 15.8% |
 | `0xb62446...d505` (BTC) | $62.0M | $67.6M | $129.6M | 10.2% |
 
-Top-3 cross-pool borrowers carry **~48.8% of the family loan book** ($1.27B). The single-largest carries ~19.3% — materially above standard institutional credit framework limits (10%).
+Top-3 family borrowers ~49% of the family loan book; single-largest ~19% — both above the 10%-per-counterparty institutional credit framework limit. The Liquidity layer (PYUSD/AMM custody) is also shared across the family — a Maple-firm-level custody event affects both pools.
 
-**Sizing implication:** if you allocate to BOTH syrupUSDC and syrupUSDT, compute combined per-borrower exposure rather than treating them as independent products. The pools concentrate rather than diversify your credit risk for the cross-pool borrowers. Note: the Liquidity layer is also shared (same custody addresses hold both pools' PYUSD and AMM positions), so the family is effectively a single risk surface for both axes — credit concentration AND custody concentration.
+**Sizing implication:** treat a combined syrupUSDC + syrupUSDT position as one Syrup-family allocation against one shared borrower set, and apply per-counterparty exposure limits at the family level rather than per-pool. Independent per-pool sizing systematically under-weights the real per-borrower concentration. Live family concentration: see the per-pool dashboards linked below for current borrower breakdown.
 
 ## How exit works
 
