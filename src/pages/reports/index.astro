@@ -7,26 +7,60 @@ import { visibleAtCurrentStage } from "@/lib/stage";
 
 const all = await getCollection("reports");
 
-const rows = all
+// Slugs whose institutional companion should also appear in the listing
+// (rendered as a "Request access" card by ReportsFilter). Other institutional
+// reports stay hidden behind their retail summary's sidebar CTA.
+const PROMOTE_INSTITUTIONAL = new Set(["syrupusdc-full", "syrupusdt-full"]);
+
+const visible = all
   .filter((r) => visibleAtCurrentStage(r.data))
-  .filter((r) => r.data.audience !== "institutional")
-  .map((r) => ({
-    slug: r.data.slug,
-    asset: r.data.asset,
-    category: r.data.category,
-    assessment_type: r.data.assessment_type,
-    audience: r.data.audience,
-    chains: r.data.chains,
-    chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
-    overall_score: r.data.overall_score,
-    last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
-    featured: Boolean(r.data.featured),
-  }))
-  .sort((a, b) => {
-    // Featured first, then most-recently verified.
-    if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    return b.last_verified.localeCompare(a.last_verified);
-  });
+  .filter(
+    (r) => r.data.audience !== "institutional" || PROMOTE_INSTITUTIONAL.has(r.data.slug),
+  );
+
+const toRow = (r: (typeof visible)[number]) => ({
+  slug: r.data.slug,
+  asset: r.data.asset,
+  category: r.data.category,
+  assessment_type: r.data.assessment_type,
+  audience: r.data.audience,
+  chains: r.data.chains,
+  chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
+  overall_score: r.data.overall_score,
+  last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
+  featured: Boolean(r.data.featured),
+  companion_report: r.data.companion_report,
+});
+
+// Featured first, then most-recently verified.
+const baseSorted = visible.map(toRow).sort((a, b) => {
+  if (a.featured !== b.featured) return a.featured ? -1 : 1;
+  return b.last_verified.localeCompare(a.last_verified);
+});
+
+// Insert each promoted institutional card immediately after its retail
+// companion so the retail → "request institutional" path reads as one unit.
+// companion_report is set on the institutional side and points back to the
+// retail slug, so we invert it here (retailSlug → institutional row).
+const institutionalForRetail = new Map<string, (typeof baseSorted)[number]>();
+for (const row of baseSorted) {
+  if (row.audience === "institutional" && row.companion_report) {
+    institutionalForRetail.set(row.companion_report, row);
+  }
+}
+const consumed = new Set<string>();
+const rows: typeof baseSorted = [];
+for (const row of baseSorted) {
+  if (row.audience === "institutional" && consumed.has(row.slug)) continue;
+  rows.push(row);
+  if (row.audience !== "institutional") {
+    const companion = institutionalForRetail.get(row.slug);
+    if (companion && !consumed.has(companion.slug)) {
+      rows.push(companion);
+      consumed.add(companion.slug);
+    }
+  }
+}
 ---
 
 <BaseLayout
