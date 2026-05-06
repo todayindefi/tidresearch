@@ -7,6 +7,7 @@ category: "stablecoin"
 peg_mechanism: "nav-accruing"
 assessment_type: "light"
 audience: "retail"
+companion_report: "syrupusdc-full"
 date: "2026-04-25"
 last_verified: "2026-05-04"
 featured: true
