@@ -10,6 +10,7 @@ audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-28"
 last_verified: "2026-05-07"
+live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 production: true
 issuer: "Theo Protocol Corporation"
 market_cap_approx: 133000000
@@ -84,15 +85,15 @@ thBILL's price goes up over time. At launch ($1.00), today (\~$1.023), roughly +
 
 ### Getting in and out
 
-**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, \~$713K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, \~$530K). Uniswap V3 on Ethereum exists but is now thin (\~$13K). Base is technically a deployment chain but has no live liquidity. The current market price runs about **80–110 bps below NAV** (7-day avg −0.80%, 7-day range −0.50% to −1.10%; 48-hour average −0.87%). The discount floor stepped down another \~15 bps in early May and has stopped mean-reverting toward the prior regime. Driver: the April 27 $65M / 33%-of-supply redemption (largest on record) consumed primary-side capacity and reset secondary expectations; halved buy-side depth weakened the closure mechanism for KYC arbs, and a further 5M-token supply contraction in early May (see "Supply note" below) pulled secondary expectations another step wider.
+**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, \~$713K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, \~$530K). Uniswap V3 on Ethereum exists but is now thin (\~$13K). Base is technically a deployment chain but has no live liquidity. The current market price runs about **80–110 bps below NAV** (7-day avg −0.80%, 7-day range −0.50% to −1.10%; 48-hour average −0.87%). The discount floor stepped down another \~15 bps in early May and has stopped mean-reverting toward the prior regime. Driver: the April 27 $65M / 33%-of-supply redemption (largest on record) consumed primary-side capacity and reset secondary expectations; halved buy-side depth weakened the closure mechanism for KYC arbs, and a further 5M-token supply contraction in early May (see "Supply note" below) pulled secondary expectations another step wider. The 7-day discount history is available on [the live dashboard](#live-dashboard)'s per-chain peg panel.
 
-**Supply note (2026-05-07).** Total thBILL supply dropped from 138.3M to 133.3M between 2026-05-05 and 2026-05-07 — a clean 5.0M-token reduction with no on-chain Transfer events (the silent-burn pattern documented in the institutional report). Could be a thUSD reserve unwind, a primary KYC redemption, or both. Visible only via direct `totalSupply()` polling.
+**Supply note (2026-05-07).** Total thBILL supply dropped from 138.3M to 133.3M between 2026-05-05 and 2026-05-07 — a clean 5.0M-token reduction with no on-chain Transfer events (the silent-burn pattern documented in the institutional report). Could be a thUSD reserve unwind, a primary KYC redemption, or both. Visible only via direct `totalSupply()` polling — [the live dashboard](#live-dashboard)'s redemption-pulse panel surfaces these silent supply mutations directly, where standard ERC-20 indexers don't.
 
 **Getting out is the catch.** Primary redemption (the official swap-back-to-USDC path) requires KYC and accredited-investor status. For most retail DeFi users, this isn't available. Your practical exit = selling on a DEX.
 
-The secondary market prices thBILL at a persistent **70–95 bp** discount to NAV. This discount is not a bug — it's structural. The only participants who can close the discount via arbitrage are KYC'd institutions, and they only arbitrage when the spread exceeds their own costs (redemption fees at the underlying fund, gas, 4-day settlement carry). So the discount has a floor, and **that floor is your real exit cost as a retail user.** The recent widening means the floor is materially higher than it was a month ago.
+The secondary market prices thBILL at a persistent **80–110 bp** discount to NAV. This discount is not a bug — it's structural. The only participants who can close the discount via arbitrage are KYC'd institutions, and they only arbitrage when the spread exceeds their own costs (redemption fees at the underlying fund, gas, 4-day settlement carry). So the discount has a floor, and **that floor is your real exit cost as a retail user.** The recent widening means the floor is materially higher than it was a month ago.
 
-Exit sizing matters, and buy-side depth has gotten worse. Total tracked DEX liquidity across all chains is \~$1.53M against a $138M fund. On the two deepest pools — Project X thBILL/USDT0 on HyperEVM and Uniswap V3 thBILL/USDC on Arbitrum — a 2% slippage budget clears roughly **$35K buy / $598K sell** on HyperEVM, and **$69K buy / $167K sell** on Arbitrum. **Aggregate buy-side depth has roughly halved** since the prior assessment ($225K → $107K) — the asymmetry is now sharper because both pools hold more stablecoin than thBILL, so trading thBILL → stable has much more depth than the reverse. For *sells* under \~$100K on either chain you'll likely exit at the standing discount. For *buys* above \~$25K, or sells above \~$150K (Arbitrum) / \~$500K (HyperEVM), expect to eat noticeably more on top of the 70–95 bp baseline.
+Exit sizing matters, and buy-side depth has gotten worse. Total tracked DEX liquidity across all chains is \~$1.53M against a $133M fund. On the two deepest pools — Project X thBILL/USDT0 on HyperEVM and Uniswap V3 thBILL/USDC on Arbitrum — a 2% slippage budget clears roughly **$35K buy / $598K sell** on HyperEVM, and **$69K buy / $167K sell** on Arbitrum. **Aggregate buy-side depth has roughly halved** since the prior assessment ($225K → $107K) — the asymmetry is now sharper because both pools hold more stablecoin than thBILL, so trading thBILL → stable has much more depth than the reverse. For *sells* under \~$100K on either chain you'll likely exit at the standing discount. For *buys* above \~$25K, or sells above \~$150K (Arbitrum) / \~$500K (HyperEVM), expect to eat noticeably more on top of the 80–110 bp baseline.
 
 **Stress-event data point (positive).** On 2026-04-27, the fund processed a single $65.3M redemption (~33% of supply at the time, the largest on record) cleanly via Theo's primary path — no contract failure, no bridge incident, no backing-ratio break. The structural plumbing held under the largest stress test thBILL has seen. The cost paid was on the secondary peg, not on the redemption rails. So the discount-widening you're paying for as a retail seller is the post-stress repricing, not a sign that the underlying mechanics are breaking — but both are real and both matter to your exit math.
 
@@ -114,8 +115,20 @@ High-quality underlying with a working (if slow and gated) redemption path *for 
 
 The repositioning covered at the top of this report (\~67% of thBILL held intra-protocol by the thUSD reserve as of 2026-05-07; consumer-facing front-end migrated to thUSD; relevant external float \~44M tokens, not the 133M headline) has two retail-facing implications worth surfacing in the risk discussion specifically:
 
-- The headline backing-ratio dashboard at `todayindefi.github.io/thbill-risk-info/` will periodically dip below 100% on the on-chain-only tier as Theo mints new thBILL ahead of the corresponding ULTRA arrival from Libeara (cyclic Stage A pattern, T+1 to T+7 settlement window). The economic tier (which credits the in-flight Libeara receivable) stays near 100%. This is structural, not a stress signal — but if the on-chain-only ratio sits below 92% for more than a week without recovering, that's the threshold to start asking questions.
+- The headline backing ratio surfaced on [the live dashboard](#live-dashboard) will periodically dip below 100% on the on-chain-only tier as Theo mints new thBILL ahead of the corresponding ULTRA arrival from Libeara (cyclic Stage A pattern, T+1 to T+7 settlement window). The economic tier (which credits the in-flight Libeara receivable) stays near 100%. This is structural, not a stress signal — but if the on-chain-only ratio sits below 92% for more than a week without recovering, that's the threshold to start asking questions.
 - A stress event in thUSD (e.g., a sized thUSD redemption rush) would propagate into thBILL via the reserve. thUSD's "100% backed" claim relies on thBILL coverage at NAV, which itself relies on Libeara's settlement infrastructure. Each layer attests honestly to the layer above, but the chain is only as resilient as its weakest link. For most use cases this works; in stress it's a coupled system.
+
+## Live dashboard
+
+A live monitoring view is available at [todayindefi.github.io/thbill-risk-info](https://todayindefi.github.io/thbill-risk-info/) — refreshed hourly from on-chain RPC reads, Libeara NAV attestation, and DEX depth probes. It surfaces the signals discussed above as standalone panels:
+
+- **Backing ratio** (three tiers: physical / on-chain-only / economic — only the economic tier credits in-flight Libeara settlement, so the on-chain-only tier is the one that periodically dips during Stage A windows).
+- **Holder attribution** (External float vs thUSD reserve vs OFT-adapter-locked) — answers *"how much thBILL is actually accessible to retail vs intra-protocol?"*
+- **Per-chain peg** (VWAP vs NAV with 7-day premium/discount history, by chain).
+- **Pool depth and 2% buy/sell depth** (the numbers you'd actually exit against).
+- **Redemption pulse** (24h supply delta + days since last on-chain burn — catches the silent supply mutations that standard ERC-20 indexers miss).
+
+For sizing decisions, the holder-attribution and per-chain peg panels are the two that bind first.
 
 ## III. Project / Issuer Risk
 
