@@ -8,7 +8,7 @@ peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-04"
-last_verified: "2026-05-05"
+last_verified: "2026-05-07"
 production: true
 issuer: "Theo Network (Panama)"
 market_cap_approx: 96280000
@@ -16,8 +16,8 @@ tvl_gross: 96280000
 peg_mechanism_score: 4.0
 backing_score: 4.0
 liquidity_score: 3.5
-issuer_score: 6.5
-overall_score: 4.5
+issuer_score: 5.0
+overall_score: 4.0
 audited: true
 audit_count: 1
 audit_firms: ["Zenith"]
@@ -96,7 +96,7 @@ The single biggest watch-item is whether OFT Adapter ownership gets transferred 
 
 **Genesis unwind has plateaued.** Seven-day net flow flipped from −$20M (the early Genesis-allocator exit) to +$5M after a fresh $20M institutional mint on 2026-05-01. That mint went to a Safe-shaped contract whose identity has not been confirmed against Theo's own treasury — it could be a genuinely external new allocator, or it could be a Theo-internal address that we'd want to net out before reading the +$5M as organic demand. Worth flagging until the recipient is identified.
 
-**Reserve composition — verified on-chain (2026-05-05).** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`. Direct on-chain reads confirm the dashboard exactly: **88,849,591 thBILL** (~$91.07M at NAV — 96.46% of reserves), $219,406 USDC, and $3,126,265 USDT. **Reserves are 96% thBILL** — thUSD's "100% backed" attestation is principally a claim about thBILL holdings at NAV, not about diversified collateral.
+**Reserve composition — verified on-chain (2026-05-05).** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`. Direct on-chain reads confirm the dashboard exactly: **88,849,591 [thBILL](/reports/thbill)** (~$91.07M at NAV — 96.46% of reserves), $219,406 USDC, and $3,126,265 USDT. **Reserves are 96% thBILL** — thUSD's "100% backed" attestation is principally a claim about thBILL holdings at NAV, not about diversified collateral. The largest reserve component has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington.
 
 **The thBILL-anchored reserve creates a recursive trust chain.** thBILL itself has its own backing structure (off-chain T-Bills via Libeara, with synthetic intermediate wrappers — see `tidresearch.com/reports/thbill`), and its on-chain backing ratio fluctuates within a Libeara settlement window (T+1 to T+7) — verified periodic dips into the 92–93% range during Stage A windows when Theo has minted new thBILL but the corresponding ULTRA hasn't yet arrived from Libeara. **During those windows, thUSD's thBILL reserves are technically backed by Theo's promise to Libeara, not by ULTRA-equivalent collateral.** The dashboard's "100% backed" remains formally correct (thUSD-supply ÷ thBILL-at-NAV-plus-stables ≥ 100%) but the next layer down is where the periodic gap lives. Practically — the gap closes within the historical T+1 to T+7 envelope and the chain works as designed; the structural point is just that "100% backed" rests on attestations at multiple layers.
 
@@ -120,7 +120,7 @@ The single biggest watch-item is whether OFT Adapter ownership gets transferred 
 
 **The team is semi-doxxed and credentialed.** Founders are ex-Optiver and IMC quant traders — derivatives execution experience that's directly relevant to running a CME gold-futures basis trade. Hack VC led a $20M raise in April 2025.
 
-**The issuer is the weak part.** Theo Network is Panama-domiciled and not licensed as a financial institution anywhere. When you hold thUSD, you do not own gold, T-bills, or futures positions — you own a token that represents a contractual claim against Theo for a USDC-equivalent amount. There is no bankruptcy remoteness. If Theo becomes insolvent, recovery runs through Panamanian corporate proceedings against an unlicensed entity. This is the same legal-claim gap as thBILL, applied to a more complex strategy.
+**The issuer is the weak part — and it's the same issuer as [thBILL](/reports/thbill).** Theo Network is Panama-domiciled and not licensed as a financial institution anywhere. When you hold thUSD, you do not own gold, T-bills, or futures positions — you own a token that represents a contractual claim against Theo for a USDC-equivalent amount. There is no bankruptcy remoteness. If Theo becomes insolvent, recovery runs through Panamanian corporate proceedings against an unlicensed entity. This is the same legal-claim gap as thBILL, applied to a more complex strategy. The team's directly-relevant operating experience (ex-Optiver/IMC derivatives execution) does meaningfully matter for an active gold-basis strategy — more than it would for a passive T-Bill wrapper — and that's reflected in scoring this **Issuer** axis a half-point above the thBILL retail report. But the legal claim is the same Panama claim, and the score reflects that as the binding floor.
 
 **Disclosure quality on the things that *are* disclosed is competent.** Contract addresses are public. The Zenith audit is public. The strategy and partner stack are documented at `docs.theo.xyz`. The gaps are: NAV oracle architecture, fee schedule, FCM identity, gold custody location, MPC signer composition, and the per-tx redemption cap mechanism — none of which are publicly disclosed.
 
@@ -132,11 +132,11 @@ Strong partner stack and a credentialed team, undermined by a young, unlicensed,
 
 | | |
 |---|---|
-| **Overall Risk** | **4.5/10 — Elevated** |
+| **Overall Risk** | **4.0/10 — Elevated** |
 | Peg Mechanism | 4.0/10 |
 | Backing | 4.0/10 |
 | Liquidity | 3.5/10 |
-| Issuer | 6.5/10 |
+| Issuer | 5.0/10 |
 
 **On the scoring rubric.** This report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* Liquidity gets its own dial here precisely because retail can't redeem at par and must exit on-DEX, and current DEX depth is very thin.
 

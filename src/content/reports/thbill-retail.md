@@ -9,17 +9,16 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-28"
-last_verified: "2026-05-05"
-featured: true
+last_verified: "2026-05-07"
 production: true
 issuer: "Theo Protocol Corporation"
-market_cap_approx: 138000000
-tvl_gross: 138000000
-peg_mechanism_score: 3.5
-backing_score: 5.5
+market_cap_approx: 133000000
+tvl_gross: 133000000
+peg_mechanism_score: 3.0
+backing_score: 5.0
 liquidity_score: 3.5
 issuer_score: 4.5
-overall_score: 4.3
+overall_score: 4.0
 audited: true
 audit_count: 1
 audit_firms: ["Zenith Audits"]
@@ -39,7 +38,7 @@ underlying_managers:
 
 # thBILL — Retail Risk Report
 
-**Elevated risk · 4.3/10**
+**Elevated risk · 4.0/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -47,13 +46,19 @@ underlying_managers:
 
 > Deeper analysis in the **[full institutional report →](/reports/thbill-full/request)** — free, email-gated.
 
+## What this asset is now (read first)
+
+thBILL has been quietly repositioned as a **backing asset for Theo's stablecoin product [thUSD](/reports/thusd)** rather than a consumer-facing T-Bill wrapper. As of 2026-05-07: **\~67% of thBILL is held intra-protocol by the thUSD reserve** (88.85M of 133.3M total supply); external float is \~44M tokens. The dedicated `theo.xyz/thbill` page redirects to docs only — there's no consumer landing page anymore — and `app.theo.xyz` has migrated its primary mint and transparency UI to thUSD-first.
+
+**If you're a new retail allocator looking for Theo yield, see the [thUSD report](/reports/thusd) instead.** thBILL is now best read as either (a) a backing asset for thUSD, useful to understand if you hold thUSD; or (b) institutional T-Bill exposure for KYC'd allocators with primary-redemption access.
+
 ## Summary
 
 thBILL is Theo Protocol's onchain wrapper around a regulated US Treasury bill fund. You buy the token, hold it, and the price slowly goes up — around 3% a year — because the underlying T-bills accrue interest. There are no rewards to claim, no rebases, no vesting. On paper, it's one of the cleanest "onchain savings account" products available in DeFi today.
 
 The structure is three layers deep: thBILL (the token you hold) → tULTRA → a Singapore-regulated T-bill fund run by **Wellington Management** and **Standard Chartered's Libeara**. Wellington and Standard Chartered are the strong part — household-name institutional players. Theo, the Panama-registered entity that issues thBILL, is the weak part: young (July 2025 launch), unlicensed, and your legal claim in the worst case is against a Panama corporation, not against the underlying T-bills directly.
 
-Appropriate for: DeFi-comfortable users sizing up to roughly $100K who want T-bill yield onchain and can absorb a \~30–100 bp exit haircut. Not appropriate if you need instant liquidity, want direct legal claim on the underlying Treasuries, or are uncomfortable with a young single issuer standing between you and your assets.
+**Most retail allocators looking for Theo yield should look at [thUSD](/reports/thusd) instead.** thBILL is now primarily a backing asset for thUSD; new retail mint flows have effectively migrated. This report remains useful for existing thBILL holders and KYC'd allocators evaluating institutional-grade T-Bill exposure.
 
 ## I. Smart Contract Risk
 
@@ -79,7 +84,9 @@ thBILL's price goes up over time. At launch ($1.00), today (\~$1.023), roughly +
 
 ### Getting in and out
 
-**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, \~$713K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, \~$530K). Uniswap V3 on Ethereum exists but is now thin (\~$13K). Base is technically a deployment chain but has no live liquidity. The current market price runs about **70–95 bps below NAV** (7-day avg −0.72%, 7-day range −0.39% to −0.95%), which means you're buying at a small discount. That's a good thing for the buyer — but the discount has roughly **tripled** vs the prior assessment regime (avg −0.28%, max −0.62%), and the floor has stepped up by ~40 bps. Driver: the April 27 $65M / 33%-of-supply redemption (largest on record) consumed primary-side capacity and reset secondary expectations; halved buy-side depth weakened the closure mechanism for KYC arbs.
+**Getting in** is easy — buy on a DEX. The deepest venues today are Project X on HyperEVM (thBILL/USDT0, \~$713K reserves) and Uniswap V3 on Arbitrum (thBILL/USDC, \~$530K). Uniswap V3 on Ethereum exists but is now thin (\~$13K). Base is technically a deployment chain but has no live liquidity. The current market price runs about **80–110 bps below NAV** (7-day avg −0.80%, 7-day range −0.50% to −1.10%; 48-hour average −0.87%). The discount floor stepped down another \~15 bps in early May and has stopped mean-reverting toward the prior regime. Driver: the April 27 $65M / 33%-of-supply redemption (largest on record) consumed primary-side capacity and reset secondary expectations; halved buy-side depth weakened the closure mechanism for KYC arbs, and a further 5M-token supply contraction in early May (see "Supply note" below) pulled secondary expectations another step wider.
+
+**Supply note (2026-05-07).** Total thBILL supply dropped from 138.3M to 133.3M between 2026-05-05 and 2026-05-07 — a clean 5.0M-token reduction with no on-chain Transfer events (the silent-burn pattern documented in the institutional report). Could be a thUSD reserve unwind, a primary KYC redemption, or both. Visible only via direct `totalSupply()` polling.
 
 **Getting out is the catch.** Primary redemption (the official swap-back-to-USDC path) requires KYC and accredited-investor status. For most retail DeFi users, this isn't available. Your practical exit = selling on a DEX.
 
@@ -101,19 +108,11 @@ Three paths most retail users consider:
 
 **3. Lending collateral (Euler).** You can supply thBILL to an Euler market to borrow stablecoins, giving you leverage on the T-bill yield. This is **advanced, and the oracle model is everything**: if the market uses a DEX-priced oracle, a temporary DEX dislocation (thin liquidity + a forced seller) can liquidate you even when the fund is perfectly healthy. If it uses a NAV-priced oracle, you're materially safer. Read the oracle config for the specific Euler market before supplying, and size assuming the oracle can and will misbehave during stress. Not recommended unless you understand the liquidation engine at the market you're using.
 
-High-quality underlying with a working (if slow and gated) redemption path *for KYC'd holders*. For retail the picture is structurally worse: no primary access, DEX-only exit, and a market price that sits 70–95 bp below NAV almost every day. By the numbers, thBILL's retail-facing peg is materially looser than crvUSD or OUSD — the average gap to fair value is now 15–25× larger and, unlike those, it doesn't mean-revert. That structural gap is why **Peg Mechanism** scores 3.5 here (down from 4.0) and the exit dynamics drag **Liquidity** to 3.5 alongside it (down from 4.0).
+High-quality underlying with a working (if slow and gated) redemption path *for KYC'd holders*. For retail the picture is structurally worse: no primary access, DEX-only exit, and a market price that sits 80–110 bp below NAV almost every day. By the numbers, thBILL's retail-facing peg is materially looser than crvUSD or OUSD — the average gap to fair value is roughly 20–30× larger and, unlike those, it doesn't mean-revert. That structural gap is why **Peg Mechanism** scores 3.0 here (down from 3.5 in early May, originally 4.0) and the exit dynamics drag **Liquidity** to 3.5 alongside it.
 
-### thBILL is being repositioned as Theo's stablecoin reserve
+### thBILL as backing for thUSD — practical implications
 
-Important context that wasn't relevant a month ago: **66% of all thBILL outstanding is held intra-protocol by thUSD** (Theo's new stablecoin product, launched 2026-04-27). Verified directly on-chain and on Theo's own transparency dashboard at `app.theo.xyz/transparency`: 88.85M of the 138M-token total supply sits at the thUSD reserve, leaving an external float of just \~49M tokens actually accessible to retail and secondary markets.
-
-This isn't just a coincidence — Theo's product surfaces have been quietly repositioning thBILL toward a backing/reserve role. The dedicated thBILL marketing page at `theo.xyz/thbill` now redirects to docs only (no consumer landing page anymore). The Theo app at `app.theo.xyz` has a Transparency tab for thUSD but no equivalent thBILL primary mint or transparency interface; the only place thBILL appears in the app is as a reserve component on the thUSD page. The docs language frames thBILL as backing while thUSD is the consumer-facing yield-bearing stablecoin. The marketing homepage at `theo.xyz` still gives all three products equal billing, but the operational front-end has clearly migrated to thUSD-first.
-
-For retail sizing, this is an important reframe: **the relevant float is the external 49M tokens, not the 138M headline supply.** The retail-accessible market is materially smaller than the TVL number implies. It also means thBILL liabilities can grow without any retail thBILL demand — they grow automatically as thUSD's user base grows. Each new dollar deposited into thUSD triggers a primary thBILL mint allocated to the thUSD reserve.
-
-**Looking forward:** Theo's product focus has migrated toward thUSD as the consumer-facing surface. New retail allocators seeking tokenized T-Bill exposure on Theo's stack will likely be routed toward thUSD rather than direct thBILL primary mint, and existing retail thBILL holders are exiting through the same thinning DEX rails — without an offsetting source of new retail thBILL demand to refresh secondary depth. Primary access remains KYC-gated either way.
-
-Practical implications:
+The repositioning covered at the top of this report (\~67% of thBILL held intra-protocol by the thUSD reserve as of 2026-05-07; consumer-facing front-end migrated to thUSD; relevant external float \~44M tokens, not the 133M headline) has two retail-facing implications worth surfacing in the risk discussion specifically:
 
 - The headline backing-ratio dashboard at `todayindefi.github.io/thbill-risk-info/` will periodically dip below 100% on the on-chain-only tier as Theo mints new thBILL ahead of the corresponding ULTRA arrival from Libeara (cyclic Stage A pattern, T+1 to T+7 settlement window). The economic tier (which credits the in-flight Libeara receivable) stays near 100%. This is structural, not a stress signal — but if the on-chain-only ratio sits below 92% for more than a week without recovering, that's the threshold to start asking questions.
 - A stress event in thUSD (e.g., a sized thUSD redemption rush) would propagate into thBILL via the reserve. thUSD's "100% backed" claim relies on thBILL coverage at NAV, which itself relies on Libeara's settlement infrastructure. Each layer attests honestly to the layer above, but the chain is only as resilient as its weakest link. For most use cases this works; in stress it's a coupled system.
@@ -136,15 +135,15 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 | | |
 |---|---|
-| **Overall Risk** | **4.3/10 — Elevated** |
-| Peg Mechanism | 3.5/10 |
-| Backing | 5.5/10 |
+| **Overall Risk** | **4.0/10 — Elevated** |
+| Peg Mechanism | 3.0/10 |
+| Backing | 5.0/10 |
 | Liquidity | 3.5/10 |
 | Issuer | 4.5/10 |
 
 **On the scoring rubric.** This retail report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor.
 
-**Who it's for:** DeFi-comfortable users who want T-bill yield onchain, are sizing under \~$100K, and are OK absorbing 30–100 bps of exit friction. Good fit for "idle stablecoin parking" with a yield premium over holding USDC directly.
+**Who it's for:** Existing thBILL holders who want to understand current backing and exit dynamics. KYC'd allocators evaluating institutional-grade T-Bill exposure with primary-redemption access. Holders of thUSD who want to inspect the largest reserve component of that product. **New retail allocators seeking Theo yield should look at [thUSD](/reports/thusd) instead — the consumer-facing front-end has migrated.**
 
 **Who should avoid:** Anyone who needs instant redemption, wants direct legal ownership of the underlying Treasuries, is risk-averse to issuers under one year old, or is sizing positions larger than DEX depth can clear without material slippage.
 
