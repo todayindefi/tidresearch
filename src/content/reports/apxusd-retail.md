@@ -7,6 +7,7 @@ category: "stablecoin"
 peg_mechanism: "rwa-synthetic"
 assessment_type: "light"
 audience: "retail"
+companion_report: "apyusd-retail"
 date: "2026-05-07"
 last_verified: "2026-05-07"
 featured: false
