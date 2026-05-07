@@ -53,15 +53,18 @@ The intended retail framing is "use apxUSD if you want $1 stability, use apyUSD 
 
 apyUSD's NAV has grown from 1.0 at launch to **~1.363 apxUSD/share** in roughly 3 months — straight-line that's ~145% annualized, against a cited STRC indicated rate of ~11.25%. Either the variable rate has reset materially higher, MSTR equity appreciation is flowing through, or there's a non-yield NAV-boost mechanic that hasn't been documented. We're not publishing a separate apyUSD retail report yet because that gap should be resolved with Apyx before the yield product gets retail framing.
 
-## How exit works
+## How retail enters and exits
 
-Two options, both materially worse than the better-developed stablecoin peers.
+**Bottom line up front: retail can't mint apxUSD and can't redeem apxUSD. Both directions go through the secondary market — specifically the Curve apxUSD/USDC pool.**
 
-**1. Curve apxUSD/USDC pool.** The deepest secondary venue. As of 2026-05-07, the pool holds about **~$14.50M apxUSD and ~$14.57M USDC** (~$29M total, ~$14.5M of USDC depth — up roughly 38% from $10.5M ten days earlier). This is the realistic exit path for retail. **The pool is ~5% of the $307M apxUSD supply** — fine for normal-sized retail tickets, but it would not absorb a run, and even meaningful single sales (high-five-figure or larger) will start eating slippage above the standing peg deviation.
+This is structurally different from a permissionless stablecoin (DAI, crvUSD, OUSD) where any wallet can mint at the contract. It's also different from a KYC-gated tokenized T-bill (thBILL, BUIDL) where retail can at least *sell* on a DEX while institutions handle primary flows. With apxUSD, the primary rails are Apyx-only on both sides:
 
-**2. "USDC settlement" via Apyx.** The docs describe apxUSD as redeemable in USDC rather than atomically against the underlying STRC collateral. The settlement mechanism, timeframe, gating, and minimum size are not publicly documented. Practically: you can't count on it as a retail exit path until Apyx publishes the spec. Treat it as opaque.
+- **Primary mint** runs through Apyx's manual multi-signature EIP-712 signed-order workflow, with per-tx, daily, and total-supply caps. That's an onboarded-counterparty flow, not a public mint a retail wallet can call. Apyx's product also explicitly excludes **US, EU, and EEA users** — the geographic restrictions are stricter than DFDV's regulated-parent footprint, which is one of the signals that Apyx is a separate offshore entity.
+- **Primary redemption** is documented only as "settled in USDC" — *not* atomic on-chain redemption against the STRC collateral. The mechanism, timeline, gating, and minimum size are not publicly specified. There's also an `AddressList` admin power (constructor name "DenyList", governed by Apyx's AccessManager) that lets Apyx selectively block redemptions for specific addresses. Until Apyx publishes the spec, treat it as opaque and not part of the retail toolkit.
 
-The honest read: in normal market conditions, retail exits run through Curve, settle in seconds, and pay whatever the standing peg discount is. In any stress scenario — a peg event, a sized redemption, a Strategy/MSTR-correlated drawdown that pulls STRC's market value below par — that ~5% of supply on Curve is the binding constraint, and the USDC-settlement path is whatever Apyx decides it is at the moment, with no documented spec to anchor expectations.
+Which leaves the **Curve apxUSD/USDC pool** on Ethereum as the realistic retail entry and exit. As of 2026-05-07 the pool holds about **~$14.50M apxUSD and ~$14.57M USDC** (~$29M total, ~$14.5M of USDC depth — up ~38% from $10.5M ten days earlier). It's growing, but **it's still ~5% of the $307M apxUSD supply**. That's fine for normal-sized retail tickets and clears in seconds at whatever the standing peg deviation is. It would not absorb a run, and meaningful single sales (high-five-figure or larger) will eat slippage above the standing deviation.
+
+The honest read: in normal markets, retail enters and exits via Curve at the standing peg with sub-minute settlement. In any stress scenario — a peg event, a sized redemption queue at the Apyx layer, a Strategy/MSTR-correlated drawdown that pulls STRC below par — that ~5% of supply on Curve becomes the binding constraint, and there is no retail-accessible primary path to fall back to. Aggregator routing (1inch, KyberSwap) can extend the depth a bit by routing across other venues, but Curve is by far the largest pool and the floor on aggregator routing in stress.
 
 ## What the contracts are doing
 
