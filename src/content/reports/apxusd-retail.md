@@ -15,10 +15,10 @@ production: false
 issuer: "Apyx (DFDV-affiliated)"
 market_cap_approx: 306860000
 peg_mechanism_score: 4.5
-backing_score: 4.0
+backing_score: 4.5
 liquidity_score: 4.5
-issuer_score: 5.5
-overall_score: 4.4
+issuer_score: 6.0
+overall_score: 4.7
 audited: true
 audit_count: 3
 audit_firms: ["Quantstamp", "Zellic", "Certora"]
@@ -32,7 +32,7 @@ live_since: "2026-02"
 
 # apxUSD — Retail Risk Report
 
-**Elevated risk · 4.4/10**
+**Elevated risk · 4.7/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -42,9 +42,9 @@ live_since: "2026-02"
 
 apxUSD is the non-yield-bearing stablecoin from **Apyx**, a roughly 3-month-old protocol affiliated with DeFi Development Corp (DFDV, Nasdaq-listed). It tries to do something genuinely new: back a $1 stablecoin with **STRC**, Strategy's (formerly MicroStrategy / MSTR) variable-rate perpetual preferred stock. Dividends from STRC flow to a sibling token, **apyUSD**; apxUSD holders carry the same collateral risk but receive no yield in exchange.
 
-Supply has scaled fast — verified on-chain 2026-05-07 at **~$306.86M**, up from ~$50M in early April (~6× in a month, ~50% in the trailing 10 days alone). The protocol has a credible audit stack (Quantstamp, Zellic, Certora with formal verification) and a properly-built admin (4-of-6 Safe, 72-hour timelock, distributed guardian role with cancel rights — verified on-chain 2026-04-30). Where this report still lands at **4.4/10 — elevated risk** is the **economic structure**: the backing is concentrated in a single off-chain RWA, no PCAOB-firm attestation has been published, the redemption mechanism is documented as "USDC settlement" without a clear specification, and secondary-market depth is thin relative to supply.
+Supply has scaled fast — verified on-chain 2026-05-07 at **~$306.86M**, up from ~$50M in early April (~6× in a month, ~50% in the trailing 10 days alone). The protocol has a credible audit stack (Quantstamp, Zellic, Certora with formal verification) and a properly-built admin (4-of-6 Safe, 72-hour timelock, distributed guardian role with cancel rights — verified on-chain 2026-04-30). Where this report still lands at **4.7/10 — elevated risk** is the **economic structure**: the backing is more diversified than originally framed (about 56% cash & equivalents, 42% STRC, 2.4% SATA per Apyx's [Accountable proof-of-solvency feed](https://accountable.apyx.fi/) on 2026-05-07), but the absolute over-collateralization buffer is thin (~78 bps, $2.4M against $307M supply), the redemption mechanism is documented as "USDC settlement" without a clear specification, secondary-market depth is thin relative to supply, and there is no PCAOB-firm financial-statement audit yet — only a TEE-attested cryptographic feed that we describe in detail below.
 
-This is a stablecoin label wrapped around what is structurally a levered MSTR-preferred wrapper. It can work — but at ~3 months in production with no published attestation, it is speculative-only sizing. Not a core stable.
+This is a stablecoin label wrapped around what is structurally an MSTR-preferred-plus-cash wrapper. It can work — but at ~3 months in production with no PCAOB-firm sign-off, it is speculative-only sizing. Not a core stable.
 
 ## What you actually earn
 
@@ -52,7 +52,7 @@ This is a stablecoin label wrapped around what is structurally a levered MSTR-pr
 
 The intended retail framing is "use apxUSD if you want $1 stability, use apyUSD if you want the dividend." The catch — and it's significant — is that apxUSD holders carry **the same collateral risk as apyUSD holders** without ever being compensated for it. If apyUSD holders exit first during stress (via cooldown or any future secondary market), apxUSD holders are left absorbing residual collateral risk uncompensated. This is an asymmetric structure that's worth understanding before sizing.
 
-apyUSD's NAV has grown from 1.0 at launch to **~1.363 apxUSD/share** in roughly 3 months — straight-line that's ~145% annualized, against a cited STRC indicated rate of ~11.25%. Either the variable rate has reset materially higher, MSTR equity appreciation is flowing through, or there's a non-yield NAV-boost mechanic that hasn't been documented. We're not publishing a separate apyUSD retail report yet because that gap should be resolved with Apyx before the yield product gets retail framing.
+apyUSD's NAV has grown from 1.0 at launch to ~1.363 apxUSD/share in roughly 2.5 months. The headline figure is partly a one-time launch-week NAV jump (about 33% in week 1, from donation-pattern apxUSD inflows into the vault) and partly the ongoing ~13% annualized accrual from STRC dividends — within STRC's indicated-rate range. The full breakdown is in the [apyUSD retail report](/reports/apyusd-retail/).
 
 ## How retail enters and exits
 
@@ -108,14 +108,35 @@ apxUSD bridges between Ethereum and Base via **Chainlink CCIP v1.6.1** (LockRele
 - **One observable post-launch implementation upgrade** on apyUSD on 2026-03-30, ~30 days after launch. The 72-hour delay was not yet observable at that point. Treat the upgrade path as a live risk surface, not a closed one.
 - **~3 months in production.** Short clean record. No hacks, no depeg events, no forced pauses to date — but this is a very short observation window for a novel collateral structure.
 
+## Backing & attestation
+
+Apyx publishes a real-time **proof-of-solvency feed** at [accountable.apyx.fi](https://accountable.apyx.fi/), powered by Accountable — a third-party attestation infrastructure provider. The feed shows reserves vs liabilities updated continuously, signed by code running inside an AWS Nitro Enclave (a tamper-resistant computing environment). The enclave's signing key is registered on-chain at a known address, so anyone can verify the feed's signature chain.
+
+As of the 2026-05-07 snapshot, the feed shows:
+
+- **Total reserves:** $309.26M
+- **Total supply:** $306.86M
+- **Net excess:** $2.40M
+- **Collateralization:** 100.78%
+
+Composition: ~56% cash & equivalents, ~42% STRC, ~2.4% SATA (Strategy Class A), and a sliver of other holdings.
+
+**What this attestation does:** continuously and cryptographically signs the data Apyx feeds it, so the reported reserves and composition are signed by a known infrastructure provider rather than self-reported.
+
+**What it doesn't do:** audit the custodian itself. The custodian (unnamed) tells the enclave what it's holding; the enclave attests to what it's told. There's no PCAOB-firm review of internal controls, no opinion on whether the cash balances and STRC shares actually exist outside the custodian's reports, and no protection against substitution of the enclave code by a compromised Accountable deployment pipeline (though the on-chain key registration mitigates that).
+
+For retail sizing, the feed is a real upgrade vs "no attestation at all" but it's not a substitute for a financial-statement audit. The "Cash & Equivalents" line is also unitemized — we can't tell from the public feed whether the cash is in a single bank deposit, in T-bills, or in USDC. Worth flagging: a single-bank-deposit composition would be a hidden second concentration axis.
+
+Apyx has separately committed to monthly third-party PCAOB-firm attestation reports; none have surfaced through 2026-05-07.
+
 ## What's actually risky
 
 This is the part the audit stack and admin posture **don't** cover.
 
-- **Single-issuer collateral concentration.** Backing is overwhelmingly STRC, a Strategy (MSTR) preferred share. Anything that disrupts Strategy's dividend capacity, equity, or ultimately its Bitcoin treasury flows directly through to apxUSD backing. apxUSD is structurally a levered bet on MSTR's capital structure with a $1 wrapper.
+- **STRC is the largest single-issuer concentration but not the totality.** Per Apyx's Accountable feed (2026-05-07), STRC is ~42% of reserves; cash & equivalents are ~56%. STRC stress is contained, not catastrophic — a hypothetical 50% STRC writedown would cut backing from $309M to about $244M against $307M liabilities (still ~80% covered) rather than being a system-wide event. STRC is still a Strategy (MSTR) preferred share, so MSTR/BTC stress flows through, but the apxUSD wrapper has a meaningful cash buffer that the original framing missed.
 - **STRC is novel.** Variable-rate perpetual preferred with monthly-reset dividends, ~1 year old as an instrument. Untested through a prolonged BTC drawdown, an MSTR equity-raise pause, or a dividend suspension.
 - **STRC sits behind Strategy's convertible debt.** In the capital structure, MSTR convertible holders ($10B+) are senior to STRC preferred holders. In a severe BTC crash, conversion-debt obligations get paid before preferred dividends.
-- **No PCAOB-firm attestation has been published.** Apyx committed to monthly accounting attestations from a third-party auditor. The protocol is ~3 months old and the first attestation has not surfaced as of 2026-05-07. Until it does, the relationship between apxUSD supply (~$307M) and STRC shares held (Apyx has publicly stated it has scaled with supply, but the current OC ratio is independently unverified) is unverified at scale.
+- **No PCAOB-firm financial-statement audit yet, but a TEE-attested PoR feed exists.** Apyx publishes a continuous proof-of-solvency feed at accountable.apyx.fi (see the "Backing & attestation" section above) — a real third-party cryptographic attestation, but not a PCAOB-firm sign-off. Apyx has separately committed to monthly third-party PCAOB-firm attestation reports; none have surfaced through 2026-05-07. The relationship between supply ($306.86M) and reserves ($309.26M) is now visible via the Accountable feed (100.78% CR, $2.4M net excess) but the underlying custodian is not audited — Accountable attests to the data Apyx feeds it.
 - **Off-chain custody is unidentified.** "Third-party prime brokerage accounts with MPC keys" — no broker named, no MPC provider named. You're trusting Apyx's representation that the arrangement is sound.
 - **Opaque corporate structure.** DFDV (Nasdaq) provides reputational backing and team. But geographic restrictions on Apyx's product (no US/EU/EEA users) suggest Apyx is a separate offshore legal entity from DFDV. In a solvency event, retail holders' legal claim is likely against an unnamed offshore Apyx entity, not against DFDV directly. Worth understanding before sizing.
 - **No oracle disclosed for STRC pricing.** STRC is an off-chain equity. How the protocol prices it for OC calculations — centralized feed, manual NAV entry — has not been documented.
@@ -126,10 +147,10 @@ This is the part the audit stack and admin posture **don't** cover.
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg mechanism | 4.5 | RWA-collateralized synthetic with no atomic redemption against collateral; settlement-in-USDC is opaque; secondary peg relies on a thin-but-deepening Curve pool. |
-| Backing | 4.0 | Single-issuer STRC concentration in a novel preferred-equity instrument, off-chain custody at an unnamed broker, no published attestations through 2026-05-07. ~$307M supply scaled ~6× in one month — rapid growth without independently verified OC tracking is itself a signal. |
+| Backing | 4.5 | Mixed Cash & Equivalents 56% + STRC 42% + SATA 2.4% per the Accountable TEE-attested PoR feed (2026-05-07: $309.26M reserves vs $306.86M supply, 100.78% CR, $2.4M net excess). Bumped from prior 4.0 reflecting (a) corrected reserve composition — not "overwhelmingly STRC" — and (b) a real third-party cryptographic attestation. Held back by: thin absolute buffer (~78 bps); cash composition unitemized; no PCAOB-firm sign-off; STRC remains the largest single-issuer component. |
 | Liquidity | 4.5 | ~$14.5M USDC depth on Curve apxUSD/USDC (~5% of supply). Up ~38% in 10 days but still would not absorb a run. No CEX listings of note. USDC-settlement path exists but is not publicly specified. |
-| Issuer | 5.5 | Three audits incl. formal verification; 4-of-6 Safe admin + 72h timelock + distributed guardian (verified 2026-04-30); DFDV/Nasdaq reputational backing; ParaFi/Pantera/Kraken Ventures investor lineup. Offset by: no bug bounty, opaque DFDV-vs-Apyx legal structure, unnamed custody partner, no published attestation, ~3 months in production. |
-| **Overall** | **4.4** | Elevated risk — well-audited and properly governed at the contract layer, but the binding risk is collateral concentration + opaque redemption + young attestation-light operating history. |
+| Issuer | 6.0 | Three audits incl. formal verification; 4-of-6 Safe admin + 72h timelock + distributed guardian (verified 2026-04-30); DFDV/Nasdaq reputational backing; ParaFi/Pantera/Kraken Ventures investor lineup; Accountable TEE-attested PoR feed lifts disclosure quality above peers like Theo. Bumped from prior 5.5. Held back by: no bug bounty, opaque DFDV-vs-Apyx legal structure, unnamed custody partner, no PCAOB-firm sign-off, ~2.5 months in production. |
+| **Overall** | **4.7** | Elevated risk — well-audited and properly governed at the contract layer; backing is more diversified and more transparent than the original report indicated; binding constraint remains thin absolute buffer + opaque redemption + young attestation-light operating history (no PCAOB-firm sign-off yet). |
 
 ## Who it's for
 

@@ -33,7 +33,7 @@ apyUSD is the yield-bearing ERC-4626 vault wrapper for [apxUSD](/reports/apxusd-
 
 As of 2026-05-07: vault holds ~$103.5M apxUSD (~34% of total apxUSD supply), 75.94M apyUSD shares outstanding, NAV 1.363 apxUSD per share. The protocol launched in February 2026 at NAV 1.0 — about 2.5 months ago.
 
-The 4.5/10 score reflects: real ~13% ongoing yield + meaningful secondary-market depth for retail-scale exits (the cooldown isn't the only path), offset by inheriting the full apxUSD risk stack — single-issuer STRC concentration, off-chain RWA custody, no published independent attestation through 2026-05-07 — plus the asymmetric structure where apyUSD captures all yield while apxUSD bears residual collateral risk uncompensated.
+The 4.5/10 score reflects: real ~13% ongoing yield + meaningful secondary-market depth for retail-scale exits (the cooldown isn't the only path), offset by inheriting the full apxUSD risk stack — STRC is the largest single-issuer component (~42% of reserves, with ~56% cash & equivalents per Apyx's Accountable proof-of-solvency feed), off-chain RWA custody at an unnamed broker, no PCAOB-firm sign-off (a TEE-attested feed exists — see [the apxUSD retail report](/reports/apxusd-retail/) for details) — plus the asymmetric structure where apyUSD captures all yield while apxUSD bears residual collateral risk uncompensated.
 
 ## What you actually earn
 
@@ -45,7 +45,7 @@ This needs unpacking because the headline number is misleading:
 - The actual structure: **week 1 of operations saw a one-time ~33% NAV jump** (Feb 20-27, 2026) caused by donation-pattern inflows of apxUSD into the vault — most plausibly Apyx loading pre-launch STRC dividends or strategic seed capital. From week 2 onwards, NAV has grown smoothly at **~13% annualized**, which IS within STRC's indicated-rate range
 - **For new buyers today: you earn the ~13% ongoing rate going forward.** You do not capture the week-1 launch jump — that benefited only addresses present during the first week of operations
 
-So apyUSD's recurring yield is roughly twice T-bill yields and competitive with curated DeFi credit products like syrupUSDC. The trade-off is a 30-day exit lock, materially worse exit liquidity than syrupUSDC's permissionless DEX-route (~12 bps slippage to $100K), and dependence on a young (~2.5 months) RWA protocol with no published attestation.
+So apyUSD's recurring yield is roughly twice T-bill yields and competitive with curated DeFi credit products like syrupUSDC. The trade-off is a 30-day exit lock, materially worse exit liquidity than syrupUSDC's permissionless DEX-route (~12 bps slippage to $100K), and dependence on a young (~2.5 months) RWA protocol with no PCAOB-firm sign-off (a TEE-attested PoR feed exists — see the apxUSD retail report's "Backing & attestation" section for details).
 
 ## How exit works
 
@@ -73,7 +73,7 @@ So effective time-to-cash for institutional sizing is **30 days minimum + apxUSD
 apyUSD is a standard ERC-4626 vault on Ethereum (with a Base deployment), upgradeable proxy. The Ethereum implementation was upgraded once on 2026-03-30 (~30 days post-launch). Three audits cover the contract layer (more on those below).
 
 What sits behind the scenes:
-- The vault holds apxUSD; apxUSD itself is backed by Apyx's STRC (Strategy Perpetual Preferred Stock) holdings
+- The vault holds apxUSD; apxUSD itself is backed by a mix of cash & equivalents (~56%), STRC (Strategy Perpetual Preferred Stock, ~42%), and a small SATA position — verified via Apyx's [Accountable proof-of-solvency feed](https://accountable.apyx.fi/) on 2026-05-07. STRC is the largest single-issuer concentration, but not the totality.
 - STRC pays a variable-rate monthly dividend (around 11.25% indicated rate, monthly reset)
 - Apyx accrues STRC dividends into apxUSD that flows back to the apyUSD vault, which is what produces NAV growth for apyUSD holders
 - The smart contract handles ERC-4626 standard mechanics; the dividend collection, custody, and STRC management are off-chain at Apyx
@@ -113,7 +113,7 @@ Same audit + admin layer as apxUSD (the protocol is shared):
 
 ## Who it's for
 
-Retail or institutional users who want the dividend pass-through from Apyx's STRC backing. At retail scale (sub-$100K), exit speed is comparable to apxUSD's via the secondary DEX route. Comfortable with the same off-chain RWA risks that drive apxUSD's score — single-issuer STRC concentration, opaque redemption, no published attestation — plus dependence on the secondary-pool MM/arb activity for fast exit, with the 30-day cooldown as fallback.
+Retail or institutional users who want the dividend pass-through from Apyx's STRC backing. At retail scale (sub-$100K), exit speed is comparable to apxUSD's via the secondary DEX route. Comfortable with the same off-chain RWA risks that drive apxUSD's score — STRC as the largest single-issuer component (~42% of reserves), opaque redemption, no PCAOB-firm sign-off (a TEE-attested PoR feed exists) — plus dependence on the secondary-pool MM/arb activity for fast exit, with the 30-day cooldown as fallback.
 
 ## Who should avoid
 
@@ -124,7 +124,7 @@ Retail or institutional users who want the dividend pass-through from Apyx's STR
 
 ## What to watch
 
-- **First independent attestation.** Apyx has committed to monthly third-party attestations. None has surfaced through 2026-05-07. If/when one appears (PCAOB-firm preferred), that closes the largest information gap for both apxUSD and apyUSD holders
+- **First PCAOB-firm attestation.** Apyx publishes a continuous TEE-attested proof-of-solvency feed via Accountable, but has separately committed to monthly third-party PCAOB-firm attestation reports. None of those has surfaced through 2026-05-07. If/when a PCAOB-firm attestation appears, that closes the largest remaining information gap for both apxUSD and apyUSD holders (the Accountable feed is a real attestation but does not audit the custodian itself).
 - **STRC ex-dividend dates** (~mid-month). The next ones land around May 15 and June 15. STRC's reset mechanism interacts with how apyUSD's NAV behaves around those dates; smooth growth vs visible step-changes is the test of whether Apyx is passing through dividends consistently
 - **Cooldown duration verification.** Apyx docs cite 20 days; contract source review concluded 30. The duration getter isn't externally exposed, so this can't be independently verified by a public on-chain read. Apyx publishing clarification (or the team exposing the getter) would close this
 - **Curve apyUSD/apxUSD pool depth and activity.** The ~$14.9M pool is the dominant secondary exit. A drop in depth or persistent imbalance (one side draining without rebalance) signals MM withdrawal; secondary exit becomes harder and the cooldown becomes more binding. Current pool: `0xe41be7b340f7c2eda4da1e99b42ee1b228b526b7`
