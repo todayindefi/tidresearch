@@ -80,6 +80,17 @@ What sits behind the token:
 
 The structural difference from purely algorithmic stablecoins (DAI, crvUSD): apxUSD is collateralized by **off-chain securities held in a tradfi custody arrangement**. The on-chain contracts are properly built, but the substance of the backing — and your ability to recover value in stress — depends on Apyx's ability to liquidate STRC into USDC and on the legal posture of the custody arrangement, neither of which is something the contracts can attest to on their own.
 
+## Cross-chain bridge (Ethereum ↔ Base)
+
+apxUSD bridges between Ethereum and Base via **Chainlink CCIP v1.6.1** (LockRelease pool on Ethereum, BurnMint on Base). Verified on-chain 2026-05-07:
+
+- **Mass conservation holds.** apxUSD locked on Ethereum (14,336,153.13) = Base totalSupply (14,336,153.13) — exact match. The bridge is not silently issuing more Base supply than is locked
+- **Architecture is bilateral and clean.** Strictly Ethereum ↔ Base; no third-chain peers configured, no inert pathways. Different attack class from the multi-chain LayerZero OFT exploits of April 2026 — those hit single-DVN configurations and admin compromises that don't map to CCIP's architecture. The Risk Management Network (RMN) is Chainlink's circuit-breaker layer; standard single-vendor dependency
+- **Rate limits are real.** apxUSD: 5M tokens/day cap per direction (~1.6% of $307M supply). Both directions enabled; the cap refills over 24 hours
+- **LockRelease rebalancer is unset.** Locked inventory on the Ethereum side cannot be moved off-pool by the owner — flows are strictly through CCIP message paths
+
+**The caveat worth knowing:** the bridge admin posture is one tier weaker than the token admin. The token contracts (apxUSD, apyUSD, UnlockToken, AddressList) sit behind a 4-of-6 admin Safe with a 72-hour timelock and a distributed guardian role that can cancel scheduled operations. The CCIP pools are owned by a separate **3-of-6 Safe with no timelock**, owned via standard `Ownable`. Same six signers as the token-admin Safe but a lower threshold and instant execution. A 3-signer quorum on this Safe can re-configure the entire bridge in one transaction with no exit window — raise rate limits, add new chain peers, swap router or RMN proxy, set the rebalancer to drain locked inventory. For retail-scale Base exposure, this is worth knowing but not disqualifying; the rate limits and conservation checks are real protections at the operational layer, but the governance layer is materially weaker than the token layer.
+
 ## Audits & security
 
 **Strong by RWA-stablecoin standards** — and the admin posture is materially better than first appearance suggests:
@@ -139,18 +150,19 @@ DeFi-comfortable users with a thesis on Strategy / MSTR / BTC who specifically w
 - **MSTR equity behavior under BTC drawdowns.** A 50%+ BTC crash would compress MSTR equity, potentially threatening STRC dividends and par pricing. Stress-test your position assuming this scenario.
 - **apxUSD supply trajectory.** ~6× growth in one month without independently verified OC tracking is itself a risk signal. Keep an eye on whether supply continues to scale ahead of attestation publication.
 - **apyUSD/apxUSD ratio.** Currently ~34% (apyUSD vault holds ~$103.5M of $307M apxUSD supply). A sharp drop in the ratio signals flight from the yield product (bad sign for residual apxUSD risk-bearers). A sharp rise signals yield-chasing — potentially overheating the STRC capacity.
-- **The 1.363 NAV anomaly on apyUSD.** Doesn't directly affect apxUSD holders, but is a credibility check on the report's economic framing. We'd want this resolved with Apyx before recommending the apyUSD product to retail.
 - **Diversification away from STRC.** Apyx has signaled plans to add other "Digital Asset Treasury" preferred shares (e.g., SATA). Material diversification would meaningfully lower concentration risk; until it lands, treat the backing as a single-name MSTR-preferred wrapper.
+- **CCIP bridge configuration changes.** Bridge admin (3-of-6 MAINTAINER Safe) can change rate limits, add chain peers, swap RMN/router, or set the rebalancer instantly with no timelock. Watch for transactions on the apxUSD CCIP pool contracts (`0x0e9cA42B...5BB5` Ethereum LockRelease, `0x49b577E7...24B2` Base BurnMint) if you hold material Base-side exposure. The mass-conservation check (locked-on-ETH = totalSupply-on-Base) is the integrity backstop and was satisfied as of 2026-05-07.
 
 ## A note on the apyUSD sibling
 
-apyUSD is the yield-bearing ERC-4626 vault that captures the STRC dividend stream. It trades a **30-day UnlockToken cooldown** on exits for the dividend pass-through. We are intentionally not publishing a retail-framed apyUSD report yet:
+The yield-bearing sibling now has its own [apyUSD retail report](/reports/apyusd-retail/). Short version of the relationship:
 
-- The vault NAV has grown from 1.0 to ~1.363 apxUSD/share over ~3 months — materially above the cited 11.25% indicated rate. We'd want Apyx's clarification before framing this for retail.
-- The 30-day cooldown alone disqualifies apyUSD from any allocation that might need to exit during stress, even before the apxUSD risk stack stacks underneath.
-- Apyx's docs state the cooldown is 20 days; on-chain source review concluded 30 days is the contract-enforced value. The cooldown getter isn't externally exposed, so external readers can't independently verify. Documentation/code mismatch on a binding parameter is a credibility issue worth resolving.
+- apxUSD = $1-pegged stablecoin form, no yield, exit via Curve apxUSD/USDC in minutes
+- apyUSD = ERC-4626 vault that captures STRC dividends (~13% APY ongoing); retail-scale exits run in minutes via the Curve apyUSD/apxUSD pool, with a 30-day UnlockToken cooldown as the institutional fallback path
+- The two share the same audit stack, same token admin (4-of-6 Safe + 72h), and the same CCIP bridge layer (3-of-6 MAINTAINER Safe, no timelock — see "Cross-chain bridge" section above for details)
+- Holding both does **not** diversify — both are claims against the same Apyx + STRC backing. apxUSD bears residual collateral risk uncompensated; apyUSD captures the dividend stream
 
-For retail, **apxUSD is the better-framed sibling** — at minimum the exit path is in seconds-to-minutes via Curve, not weeks via a cooldown stack.
+The week-1 NAV-trajectory anomaly previously flagged here as "investigate before sizing" was resolved by an on-chain investigation 2026-05-07: a one-time ~33% jump from donation-pattern inflows in the first week of operations, then a smooth ~13% APY ongoing — within STRC's indicated-rate range. Detail in the apyUSD retail report.
 
 ## Live dashboard
 
