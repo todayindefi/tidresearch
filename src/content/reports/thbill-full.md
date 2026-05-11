@@ -8,12 +8,10 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-28"
-last_verified: "2026-05-05"
+last_verified: "2026-05-11"
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 production: true
 issuer: "Theo Protocol Corporation"
-market_cap_approx: 138000000
-tvl_gross: 138000000
 contract_score: 5.5
 economic_score: 5.3
 project_score: 4.5
@@ -117,8 +115,8 @@ supply_integrity_flags:
 | **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
 | **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM |
 | **Cross-chain mechanism** | LayerZero OFT |
-| **Market cap** | \~$138M (supply \~138.26M × NAV $1.0251); \~$117M after netting out thUSD's intra-protocol holding (66% of supply held at thUSD reserve, see §II.c) |
-| **Price** | $1.019 (DEX VWAP, \~0.52% discount to NAV) |
+| **Market cap** | On the order of $130M+; majority held intra-protocol at the thUSD reserve (typically 55-70% range — see §II.c). Live supply and external-float split on the dashboard. |
+| **Price** | DEX VWAP trades persistently below NAV by tens to low hundreds of bps — live per-chain peg on the dashboard. |
 
 > *Overall score (5.0) is a weighted composite — see §IV for category weights.*
 
@@ -130,7 +128,7 @@ thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain mon
 
 The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. thBILL's OFTAdapter on Ethereum (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` — separate from the iToken vault at `0x5FA487…DA0b`) is configured with **3 required DVNs** on every peered pathway (Arbitrum, Base, HyperEVM, BSC, Mantle, Monad) — an explicit upgrade above the 2-DVN MIN-PASS default and a meaningfully stronger posture than the single-DVN config that broke Kelp. **Zero exposed-AND-peered pathways across all four EVM deployments** — the bridge layer is verified clean.
 
-Overall profile: strong asset quality (US T-bills via regulated institutions), competent technical implementation (single Zenith audit, multi-DVN bridge), offset by centralized governance (fully Theo-controlled multisigs, no DAO, no timelock), non-atomic redemption (4-day USDC settlement), limited operating history (\~9 months), and no bankruptcy-remote claim on underlying T-bills.
+Overall profile: strong asset quality (US T-bills via regulated institutions), competent technical implementation (single Zenith audit, multi-DVN bridge), offset by centralized governance (fully Theo-controlled multisigs, no DAO, no timelock), non-atomic redemption (4-day USDC settlement), limited operating history (under a year since July 2025 launch), and no bankruptcy-remote claim on underlying T-bills.
 
 ---
 
@@ -180,7 +178,7 @@ Clean since launch. No reported exploits, forced pauses, or redemption failures.
 
 ### Lindy
 
-\~9 months live as of this assessment (launch July 2025). Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
+Under a year since July 2025 launch. Modest by DeFi standards; short by traditional financial-product standards. No incidents but also limited stress-test history. The rsETH event was the first major adversarial test of the LayerZero OFT category thBILL depends on — thBILL's bridge held through the aftermath (no depeg, no contagion mint).
 
 **Contract Risk Score: 5.5/10** — Single audit with clean findings (no Crit/High), competent architecture, 3-of-5 multisig structure with transparent roles, and proper 3-DVN custom config across every peered cross-chain pathway. Deductions for: single audit firm, no bug bounty, OFT adapter likely post-audit, no timelock, upgradeable core, short Lindy. Trust holes: the MPC scheme (threshold, co-signers, ceremony) is undocumented and should be treated as opaque multisig of unknown composition; the distinct EIP-1967 proxy-admin role is not verifiable via on-chain reads — worst case is an undocumented proxy-admin key independent of the 3-of-5 multisig.
 
@@ -197,7 +195,7 @@ Two distinct risk shapes stack here:
 #### kyc_mint — admin-mint (Ethereum, canonical)
 - **Trust assumption:** Theo issuance operator (KYC-gated permissioned role)
 - **Capture cost estimate:** Compromise of the issuance signer / operator keys
-- **Value secured:** Entire thBILL supply (\~$133M)
+- **Value secured:** Entire thBILL supply (~$130M+ scale)
 - **Asymmetry:** Depends on operator key management (EOA vs multisig not public for the issuance role specifically)
 - **Controls:** KYC bottleneck on counterparties; Emergency 2-of-4 can pause
 
@@ -205,7 +203,7 @@ Two distinct risk shapes stack here:
 - **Trust assumption:** 3 LayerZero DVNs required per peered pathway (verified on-chain)
 - **Capture cost estimate:** Compromise ≥2 independent DVN providers simultaneously (meaningful economic barrier; the rsETH failure mode requires only 1)
 - **Value secured:** Bulk of thBILL supply (these are the chains Theo actively deploys on)
-- **Asymmetry:** Acceptable for a \~$133M-TVL asset at present size
+- **Asymmetry:** Acceptable at present scale (low-hundred-$M TVL)
 - **Controls:** Multi-DVN quorum; LayerZero pauser (OApp-level pause capability not independently verified)
 
 #### l2_oft_mint_unpeered — forward-looking note, no active exposure
@@ -373,7 +371,7 @@ The three tiers converge to identical values during steady state; they diverge o
 - No disclosed timelock on parameter changes
 
 **Fee schedule — opaque at underlying layer:**
-- **thBILL wrapper:** zero management, performance, subscription, and redemption fees per Theo's public materials. Favorable but unproven sustainability given \~9-month operating history.
+- **thBILL wrapper:** zero management, performance, subscription, and redemption fees per Theo's public materials. Favorable but unproven sustainability given the limited operating history since July 2025 launch.
 - **ULTRA underlying (Delta Wellington Ultra Short Treasury On-Chain Fund):** fee schedule is not publicly disclosed with confidence. Two public data sources exist and they disagree:
   - `app.rwa.xyz/assets/ULTRA` lists 0.32% management (range 0.09–0.32%), 0.45% redemption, 0% subscription, 0% performance — sourced via rwa.xyz's direct issuer-partnership data feed.
   - `stomarket.com` lists a single 0.45% management fee with no redemption fee.
@@ -403,76 +401,49 @@ A reader wanting to know "is anyone actually exiting thBILL?" should read the us
 
 **Single-operator redemption.** Both stages run through a single Theo-controlled operator address. The permissionless on-chain `redeem()` function, which returns tULTRA to the caller, has no empirical history of use by any non-Theo address, and its output (tULTRA) has no secondary market — so it is not a practical value-extraction route regardless of its permissionless interface.
 
-**Peg arbitrage is weak and discretionary — separate from redemption activity itself.** These two signals are frequently conflated. *Primary-only redemption* (institutional holders exiting positions at NAV through the Stage A path) runs continuously. *Closed-loop peg arbitrage* (DEX buy at discount + primary redeem at NAV, pocketing the spread) is intermittent and dormant for extended periods. The persistent \~30–50 bp DEX discount reflects the second, not the first — the discount floor is set by the cost an arb-eligible entity must clear to round-trip (underlying-layer fees + T+4 settlement carry + gas + principal tie-up), and empirically no one is consistently clearing that cost to close the spread. Redemption activity being high does not imply arb activity is high; they are different behaviors with different economic drivers.
+**Peg arbitrage is weak and discretionary — separate from redemption activity itself.** These two signals are frequently conflated. *Primary-only redemption* (institutional holders exiting positions at NAV through the Stage A path) runs continuously. *Closed-loop peg arbitrage* (DEX buy at discount + primary redeem at NAV, pocketing the spread) is intermittent and dormant for extended periods. The persistent DEX discount (tens to low hundreds of bps; live tier on the dashboard) reflects the second, not the first — the discount floor is set by the cost an arb-eligible entity must clear to round-trip (underlying-layer fees + T+4 settlement carry + gas + principal tie-up), and empirically no one is consistently clearing that cost to close the spread. Redemption activity being high does not imply arb activity is high; they are different behaviors with different economic drivers.
 
 **Institutional implication — KYC primary-redemption access is load-bearing, not optional.** Any institutional holder intending to deploy meaningful capital into thBILL should establish KYC primary-redemption access with both Theo and Libeara/FundBridge **before sizing up**. The consequences of not doing so:
 
-- DEX secondary markets are the only alternative exit, and current 2% depth is asymmetric and venue-dependent: roughly $58K buy / $196K sell on Arbitrum (Uniswap V3 thBILL/USDC), and $64K buy / $679K sell on HyperEVM (Project X thBILL/USDT0). Exits above those thresholds compound additional slippage on top of the standing peg discount; entries above the buy-side numbers eat slippage immediately.
+- DEX secondary markets are the only alternative exit, and 2% depth is asymmetric (sell-side typically deeper than buy-side) and venue-dependent (concentration shifts between Arbitrum Uniswap V3 thBILL/USDC and HyperEVM Project X thBILL/USDT0 over time). Live per-venue 2% buy/sell tiers on the dashboard. Exits above the depth tier compound additional slippage on top of the standing peg discount; entries above the buy-side tier eat slippage immediately.
 - Non-KYC holders' sells cannot close the peg spread — there is no arbitrage incentive for them to sell at a discount only to be unable to redeem at NAV. The peg discount is therefore a permanent exit cost for non-KYC capital, not a transient mispricing.
-- The NAV-vs-market differential compounds against target returns at rates (empirically 30–100 bp) that are material for any allocation where sub-1% tracking error matters.
+- The NAV-vs-market differential compounds against target returns at rates material for any allocation where sub-1% tracking error matters (the persistent regime runs in the tens to low hundreds of bps; live discount on the dashboard).
 
 In short: for institutional sizing, the primary path delivers NAV (minus any underlying-layer fee); the secondary path does not. KYC with Theo *and* with Libeara/FundBridge is the load-bearing operational prerequisite, and operational responsiveness of those onboarding flows is itself a risk factor that should be tested before capital is committed.
 
 ### II.c Secondary Market Liquidity & Peg
 
-**Market cap (2026-05-05):** \~$138M (supply 138.26M × NAV $1.0251). Supply has churned meaningfully since the prior assessment: 130M (Apr 28) → 125M (Apr 30) → 144M (May 1, mint cycle) → 138M (May 5, post-redemption). Net 24h flow at this snapshot: −$6.2M (−4.3%).
+**Market cap:** On the order of $130M+ at supply scale × NAV. Supply churns meaningfully week-to-week as thUSD-driven primary mints and thUSD/thBILL redemptions move through Theo's MPC operator. Live supply on the dashboard.
 
-**Important framing — most thBILL is intra-protocol, not externally held.** As of 2026-05-05, **66% of all thBILL outstanding (88.85M of 138.26M tokens) is held at the thUSD reserve `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`** — Theo's own stablecoin product uses thBILL as its primary reserve asset (96% of thUSD reserves, per `app.theo.xyz/transparency`, verified on-chain). The **external float** — the portion accessible to retail and secondary markets — is only \~49.4M tokens (\~$51M at NAV). Sizing decisions and DEX liquidity ratios should be made against the external float, not the headline supply. See "thBILL ↔ thUSD recursive backing" subsection below for the full picture.
+**Important framing — most thBILL is intra-protocol, not externally held.** **The majority of thBILL outstanding is held at the thUSD reserve `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`** — Theo's own stablecoin product uses thBILL as its primary reserve asset (typically the great majority of thUSD reserves; live composition on `app.theo.xyz/transparency`). The thUSD reserve typically holds in the 55-70% range of total thBILL supply. The **external float** — the portion accessible to retail and secondary markets — is materially smaller than the headline supply implies. Sizing decisions and DEX liquidity ratios should be made against the external float, not the headline supply. See "thBILL ↔ thUSD recursive backing" subsection below for the full picture.
 
-**Current price (2026-05-05):** $1.0172 USD (DEX VWAP). NAV $1.0251. **7-day average premium/discount: −0.72%, range −0.39% to −0.95%.** This is materially wider than the prior regime (Apr 18–21: avg −0.19%, max −0.62%; Nov 2025: avg −0.19%, max −0.62%) — the discount floor has roughly **tripled**. Driver mix: April 27 $65.3M redemption (single largest on record, ~33% of supply at the time) consumed primary-side capacity and reset secondary expectations; halved buy-side depth weakened the arb closure mechanism; elevated turnover ($1.02M 24h vs prior \~$170–681K) reads as forced exits at the haircut, not healthy two-sided trading.
+**Peg discount — persistent and structurally floor-bound.** Market price trades persistently below NAV by tens to low hundreds of bps. The discount has been *trending wider* over recent months from a pre-Apr-2026 baseline of about −20 bps to a current regime running in the tens-to-low-hundreds-of-bps range and continuing to drift wider. **The mechanism is durable, not transient**: only KYC'd participants can close the spread by buying on DEX + redeeming at NAV, and they must clear ULTRA-layer redemption fees + gas + 4-day settlement carry, which sets the discount *floor*. Empirically, redemptions to date have originated from a single Theo operator address — there is no competitive arbitrage market enforcing the peg, so the discount is not mechanically pulled back. Direction-of-drift to monitor: thinning DEX buy-side depth + each large primary redemption ratchets the floor wider with no corresponding mean-reversion force. Live discount + 7d/48h aggregates on the dashboard.
 
-**Secondary market venues (live PegTracker data, 2026-05-05).** Total tracked DEX liquidity is **\~$1.53M across all chains**. The deepest single venue is on HyperEVM:
+**Secondary market venue structure.** Aggregate DEX TVL has been running in the low-single-digit-million range against a fund TVL on the order of $130M+ — a low-single-digit-% ratio. Concentration shifts over time between Arbitrum (Uniswap V3 thBILL/USDC) and HyperEVM (Project X thBILL/USDT0) as the deepest single venues; Ethereum's Uniswap V3 pool exists but is thin; Base is a deployment chain with no live liquidity. **The structural feature**: arbitrage gating means non-KYC capital cannot close the discount, so secondary depth stays small relative to fund TVL by design. Live tiers + per-venue 2% buy/sell depth on the dashboard.
 
-| Chain | DEX | Pair | Reserve | 24h Vol | 2% Depth (buy / sell) |
-|---|---|---|---|---|---|
-| HyperEVM | Project X | thBILL/USDT0 | $713K | $555K | $35K / $598K |
-| Arbitrum | Uniswap V3 | thBILL/USDC | $530K | $455K | $69K / $167K |
-| Arbitrum | Uniswap V4 | thBILL/USDC | $128K | $5K | n/a |
-| HyperEVM | HyperBrick | thBILL/USDT0 | $51K | $0 | n/a |
-| HyperEVM | Upheaval | thBILL/USDT0 | $49K | $1K | n/a |
-| Ethereum | Uniswap V3 | thBILL/USDC | $13K | $0 | $1K / $0.4K |
-| (long tail, all <$10K) | | | \~$48K | \~$13K | — |
-| **Total** | | | **\~$1,532K** | **\~$1,023K** | **$107K / $768K** |
+**Buy-side / sell-side asymmetry.** Both pools typically hold more stablecoin than thBILL, so 2% sell-side depth is typically deeper than buy-side. The asymmetry sharpens the structural problem — KYC arbs need to *buy* at the discount to close it, and the buy-side is the binding constraint. Live tiers on the dashboard.
 
-**Key observations vs. prior snapshots:**
-- **Pool concentration shifted** from Arbitrum-centric (Uniswap V3 thBILL/USDC was the dominant venue) to HyperEVM-centric (Project X overtook it on both TVL and volume).
-- **Aggregate buy-side 2% depth roughly halved** ($225K → $107K). Sell-side held near $768K. This asymmetry sharpens the structural problem — KYC arbs need to *buy* at the discount to close it, and the buy-side has thinned just as the discount widened.
-- **Volume up but composition is concerning.** 24h volume \~$1.02M (up from prior $170–681K) — but this is happening into a *widening* discount, which is the signature of forced exits at the haircut, not healthy two-sided trading.
-- **Ethereum pool** continues to be effectively dead (\~$13K, $0 volume).
-- **Base** remains a deployment chain only; no live liquidity.
+**2% depth methodology.** 2% depth is computed on-chain via Uniswap V3 / Project X QuoterV2 for pools where (a) the DEX exposes a Uniswap V3-compatible quoter we can call, and (b) the non-thBILL side is a recognized stablecoin. Pools without depth instrumentation (Uniswap V4, Aerodrome, HyperBrick, Upheaval, UltraSolid, Hybra) show "n/a" — the reserve figure still indicates whether the pool *has* liquidity, but exit slippage at size on those venues is not measured here.
 
-**2% depth is computed on-chain via Uniswap V3 / Project X QuoterV2** for pools where (a) the DEX exposes a Uniswap V3-compatible quoter we can call, and (b) the non-thBILL side is a recognized stablecoin. Pools without depth instrumentation (Uniswap V4, Aerodrome, HyperBrick, Upheaval, UltraSolid, Hybra) show "n/a" — the reserve figure still indicates whether the pool *has* liquidity, but exit slippage at size on those venues is not measured here.
+**Stress event — April 27, 2026 ($65.3M / ~33% of supply).** Largest single redemption on record: $65,269,542 plus a co-cycle $4,994,011 from the same address, totaling ~$70M burned through the standard primary path. **Mechanically clean** — no contract failure, no bridge incident, no backing-ratio break. The post-event picture is mixed: contract-side resilience confirmed; secondary-market discount widened materially in the days following and has not recovered. This was the first stress test of the primary redemption path at this magnitude and it passed; the cost paid was on the secondary peg, not on plumbing.
 
-**Peg stability (PegTracker 7-day rolling window, 2026-04-28 → 2026-05-05, 168 samples at 1h cadence):**
-- Average premium/discount: **−0.72%** (sustained discount)
-- Max discount: **−0.95%**
-- Max premium / least-deep discount: **−0.39%** (no premiums observed)
-- Per-chain VWAP: HyperEVM $1.0174, Arbitrum $1.0169 (against NAV $1.0251)
-
-**Stress event — 2026-04-27 $65.3M redemption.** Largest single redemption observed: $65,269,542 plus a co-cycle $4,994,011 from the same address, totaling \~$70M / 33% of supply burned through the standard primary path. **Mechanically clean** — no contract failure, no bridge incident, no backing-ratio break. The post-event picture is mixed: contract-side resilience confirmed; secondary-market discount widened \~40 bps and has stayed wide for the seven days following. This is the first stress test of the primary redemption path at this magnitude and it passed; the cost paid was on the secondary peg, not on plumbing.
-
-**Peg stability through the rsETH incident window (historical, 2026-04-18 to 2026-04-21):** Public price data showed thBILL trading $1.01–$1.02 across the days surrounding the rsETH exploit and its contagion. No contagion depeg. The bridge holding (see §I.5) and the fundamentally different asset class insulated thBILL from rsETH-driven outflows aside from the modest mcap decline.
+**Peg stability through the rsETH incident window (historical, 2026-04-18 to 2026-04-21):** Public price data showed thBILL trading near its standing discount range across the days surrounding the rsETH exploit and its contagion. No contagion depeg. The bridge holding (see §I.5) and the fundamentally different asset class insulated thBILL from rsETH-driven outflows aside from a modest mcap decline.
 
 **Lock-ups:** None for secondary trading. Primary redemption carries soft 4-business-day notice period. Whitelisting requirements can narrow the arbitrage participant base on some deployments.
 
-**Economic Risk Score: 5.3/10** — High-quality sovereign underlying, functional primary redemption with settlement lag, and a clean structural pass of the largest redemption on record (April 27 $65M, ~33% of supply). Deductions for: non-atomic redemption (USDC-only, T+4), single-underlying concentration, no first-loss buffer, no bankruptcy remoteness, **secondary discount floor stepped up ~40 bps post-Apr-27 and has persisted** (7d avg −0.72%, vs prior regime ~−0.19%; buy-side 2% depth halved), non-transparent fee schedule at the ULTRA underlying layer. Additionally — `pendingAssets` operates as a centralized off-chain oracle with NAV-setting authority during every 4-day settlement window, with no Chainlink PoR / auditor attestation / on-chain bridge from Libeara to verify the reported value. The "tight peg discipline" headline obscures that the NAV claim is attestation-based, not contract-derived, at both the thBILL and tULTRA layers. Two-tenths drop from 5.5 reflects the post-event discount widening, partially offset by the positive structural data point that the system mechanically passed the largest stress event on record.
+**Economic Risk Score: 5.3/10** — High-quality sovereign underlying, functional primary redemption with settlement lag, and a clean structural pass of the largest redemption on record (April 27, 2026, $65M, ~33% of supply). Deductions for: non-atomic redemption (USDC-only, T+4), single-underlying concentration, no first-loss buffer, no bankruptcy remoteness, persistent secondary discount with a widening trend and no mean-reversion mechanism (arbitrage gated to KYC'd participants who pay ULTRA-layer fees + 4-day settlement carry), non-transparent fee schedule at the ULTRA underlying layer. Additionally — `pendingAssets` operates as a centralized off-chain oracle with NAV-setting authority during every 4-day settlement window, with no Chainlink PoR / auditor attestation / on-chain bridge from Libeara to verify the reported value. The "tight peg discipline" headline obscures that the NAV claim is attestation-based, not contract-derived, at both the thBILL and tULTRA layers.
 
-### II.d thBILL ↔ thUSD recursive backing (new finding 2026-05-05)
+### II.d thBILL ↔ thUSD recursive backing
 
-A structural development since the prior assessment: **thBILL is now Theo's stablecoin reserve asset**. Theo's stablecoin product thUSD launched 2026-04-27 and uses thBILL as its primary backing. Per Theo's transparency dashboard at `app.theo.xyz/transparency` (cross-verified on-chain 2026-05-05), the thUSD reserve at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f` holds:
-
-- **88,849,591 thBILL** (\~$91.07M at NAV) — 96.46% of thUSD's "Actively Deployed" reserves
-- $3,126,265 USDT — 3.31%
-- $219,406 USDC — 0.23%
-- Total reserves: \~$94.4M backing \~$96M of thUSD liabilities
+A structural development that has reshaped thBILL since its standalone-product days: **thBILL is now Theo's stablecoin reserve asset**. Theo's stablecoin product thUSD launched 2026-04-27 and uses thBILL as its primary backing. Per Theo's transparency dashboard at `app.theo.xyz/transparency` (cross-verified on-chain), the thUSD reserve at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f` typically holds **the great majority of its reserves as thBILL valued at NAV**, with smaller stablecoin liquidity reserves (USDC + USDT). Live composition and balances on the dashboard.
 
 Three implications:
 
-1. **thBILL liabilities now grow with thUSD demand, not retail thBILL demand.** Each new dollar deposited into thUSD triggers a primary thBILL mint allocated to the thUSD reserve — verified via supply trace (thBILL Ethereum total supply jumped +14.52M between 2026-04-29 and 2026-05-01, coinciding with thUSD's documented +$20M institutional mint). The thBILL contract emitted **zero on-chain events** during the supply mutation — same silent-mint pattern documented for the underlying tULTRA layer (see §II.a). Standard ERC-20 indexers cannot track this; only direct `totalSupply()` polling captures it.
-2. **The on-chain backing-ratio dashboard will dip cyclically.** When Theo silently mints new thBILL into the thUSD reserve, the corresponding ULTRA hasn't yet arrived from Libeara. During the Stage A settlement window (T+1 to T+7), the on-chain-only backing ratio will read 92–95% rather than 100%, with the gap explicitly tracked as `mint_cycle_receivable_usd_estimate` in the dashboard's data feed. This is **structural and expected**, not undercollateralization. Verified: a $11.25M Stage A receivable was visible on 2026-05-05 — closed within historical envelope. The economic-tier ratio (which credits the in-flight Libeara receivable) stays near 100% throughout. Escalation threshold: a single Stage A receivable persisting past T+14 without close.
+1. **thBILL liabilities now grow with thUSD demand, not retail thBILL demand.** Each new dollar deposited into thUSD triggers a primary thBILL mint allocated to the thUSD reserve. The thBILL contract emits **zero on-chain events** during the supply mutation — same silent-mint pattern documented for the underlying tULTRA layer (see §II.a). Standard ERC-20 indexers cannot track this; only direct `totalSupply()` polling captures it.
+2. **The on-chain backing-ratio dashboard dips cyclically by design.** When Theo silently mints new thBILL into the thUSD reserve, the corresponding ULTRA hasn't yet arrived from Libeara. During the Stage A settlement window (T+1 to T+7 empirically), the on-chain-only backing ratio dips by the in-flight thUSD-driven mint amount; the gap is explicitly tracked as `mint_cycle_receivable_usd_estimate` in the dashboard's data feed. This is **structural and expected**, not undercollateralization. The economic-tier ratio (which credits the in-flight Libeara receivable) stays near 100% throughout. Escalation threshold: a single Stage A receivable persisting past T+14 without close (`stage_a_escalate` on the validator).
 3. **thUSD's "100% backed" claim rests on thBILL's variable on-chain backing.** A failure or delay at any layer (Libeara delivers ULTRA late, thBILL can't reconcile, etc.) propagates upward but is masked by the attestation-only nature of inter-layer accounting. Each layer attests honestly to the layer above; the chain is only as resilient as its weakest link. For most use cases this works as designed; in stress it's a coupled system.
 
-**Sizing implication for institutional readers.** "thBILL TVL" in headline form ($138M) over-counts — \~$91M of that is intra-protocol. Effective external float for retail/institutional sizing decisions is \~$51M at NAV. The ratio that matters for retail exit is `DEX TVL / external float` (\~$1.53M / \~$51M = \~3.0%) rather than `DEX TVL / total supply` (~1.1%). The retail-accessible market is structurally smaller than the headline ratio implies, and a stress event in thUSD (e.g., a sized thUSD redemption) would propagate as redemption pressure on thBILL via the reserve.
+**Sizing implication for institutional readers.** "thBILL TVL" in headline form materially over-counts the retail-accessible market — the majority of supply is intra-protocol at the thUSD reserve. Effective external float is materially smaller than headline supply (live split on the dashboard). The ratio that matters for retail exit is `DEX TVL / external float`, not `DEX TVL / total supply` — the retail-accessible market is structurally smaller than the headline ratio implies, and a stress event in thUSD (e.g., a sized thUSD redemption) would propagate as redemption pressure on thBILL via the reserve.
 
 The dashboard at `todayindefi.github.io/thbill-risk-info/` surfaces the holder attribution split (External float vs thUSD reserve vs OFT-adapter-locked), the in-flight Stage A receivable, and the recursive backing chain explicitly — recommended live-reading for institutional sizing during periods of thUSD growth.
 
@@ -514,13 +485,12 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 ### TVL Trajectory
 
-- **July 2025:** Launch
-- **Peak (Oct 2025):** $1.11 price, market cap at historical high
-- **Nov 2025:** \~$6.5M DEX liquidity, \~$5M daily turnover, price slightly below NAV
-- **April 2026 (early):** \~$162M mcap, then declined toward \~$134M by mid-month — modest risk-off post-rsETH, no structural impairment.
-- **April 2026 (late) — May 2026:** Largest single redemption on record on Apr 27 ($65M / ~33% of supply, mechanically clean through Theo operator). Supply rebuilt to 144M by May 1 then trimmed to 138M by May 5. Secondary discount widened from \~28 bps avg to \~72 bps avg over the same window and has persisted; secondary TVL roughly flat at \~$1.5M but pool composition shifted from Arbitrum-centric to HyperEVM-centric (Project X is now the leading venue). **Late April also brought thUSD's launch (2026-04-27)** — Theo's stablecoin product with thBILL as primary reserve (96% of thUSD reserves; see §II.d). Subsequent thBILL supply growth has been driven primarily by thUSD growth rather than retail thBILL demand: 66% of all thBILL outstanding is now held intra-protocol at the thUSD reserve.
+- **July 2025:** Launch.
+- **Peak (Oct 2025):** Market cap at historical high.
+- **April 2026:** Modest risk-off mid-month post-rsETH (no structural impairment, bridge held); on Apr 27 the largest single redemption on record cleared mechanically ($65M / ~33% of supply, processed cleanly through the Theo operator path). thUSD launched 2026-04-27 with thBILL as primary reserve; the secondary discount widened materially post-event and has not recovered.
+- **Steady state since:** Supply growth driven primarily by thUSD growth rather than retail thBILL demand — the majority of thBILL outstanding is held intra-protocol at the thUSD reserve. Live supply, external-float split, and per-chain peg history on the dashboard.
 
-**Positioning shift signal.** Theo's product surfaces have repositioned thBILL toward a backing/reserve role. Indicators (2026-05-05): (1) `theo.xyz/thbill` 308-redirects to `docs.theo.xyz/thbill` — no dedicated marketing page on the main site; (2) the consumer app at `app.theo.xyz` surfaces only thUSD (Earn, Transparency, Referrals, Swap), with no thBILL primary mint/redeem interface — the only place thBILL appears is as a reserve component on the thUSD transparency page; (3) Theo's docs language for thBILL emphasizes its role as backing for thUSD, while thUSD is positioned as the consumer-facing yield-bearing stablecoin. The marketing homepage still gives all three products equal billing, but the operational front-end has migrated to thUSD-first. **Implication for institutional sizing:** future thBILL supply growth will plausibly be primarily thUSD-driven; retail thBILL secondary liquidity is unlikely to recover meaningfully given the product surface is moving away from direct retail mint of thBILL. Retail thBILL holders are increasingly in a "leftover" cohort relative to Theo's go-forward product focus.
+**Positioning shift signal.** Theo's product surfaces have repositioned thBILL toward a backing/reserve role. Indicators: (1) `theo.xyz/thbill` redirects to `docs.theo.xyz/thbill` — no dedicated marketing page on the main site; (2) the consumer app at `app.theo.xyz` surfaces only thUSD (Earn, Transparency, Referrals, Swap), with no thBILL primary mint/redeem interface — the only place thBILL appears is as a reserve component on the thUSD transparency page; (3) Theo's docs language for thBILL emphasizes its role as backing for thUSD, while thUSD is positioned as the consumer-facing yield-bearing stablecoin. The marketing homepage still gives all three products equal billing, but the operational front-end has migrated to thUSD-first. **Implication for institutional sizing:** future thBILL supply growth will plausibly be primarily thUSD-driven; retail thBILL secondary liquidity is unlikely to recover meaningfully given the product surface is moving away from direct retail mint of thBILL. Retail thBILL holders are increasingly in a "leftover" cohort relative to Theo's go-forward product focus.
 
 **Project Risk Score: 4.5/10** — Strong team (ex-Optiver/IMC, $20M raise from credible investors), strong underlying partner set (Libeara/FundBridge/Wellington imposes institutional discipline at the asset level). Deductions for: fully centralized governance with no independent oversight, no legal bankruptcy remoteness, Panama jurisdiction with weak regulatory supervision of issuer entity, no timelock, undisclosed multisig signers, no governance forum.
 
@@ -530,10 +500,10 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 | Category | Score (0-10) | Weight | Key Points |
 |---|---|---|---|
-| Smart Contract | 5.5 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; 9-month Lindy. Bridge config verified clean across all four EVM chains — every peered pathway at 3 DVNs OK, zero exposed-AND-peered. Trust holes: undocumented MPC scheme, no pause function on the OFTAdapter |
-| Economic / Market | 5.3 | 30% | High-quality UST underlying; functional primary redemption (T+4) and **mechanically clean handling of the Apr 27 $65M / ~33%-of-supply stress redemption**; single-underlying concentration; no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule. **Two-tenths drop from prior 5.5 reflects post-event secondary-discount widening** (7d avg −0.72% vs prior regime ~−0.19%; buy-side 2% depth halved to ~$107K), partially offset by the positive structural data point. |
+| Smart Contract | 5.5 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; under a year since July 2025 launch. Bridge config verified clean across all four EVM chains — every peered pathway at 3 DVNs OK, zero exposed-AND-peered. Trust holes: undocumented MPC scheme, no pause function on the OFTAdapter |
+| Economic / Market | 5.3 | 30% | High-quality UST underlying; functional primary redemption (T+4) and **mechanically clean handling of the Apr 27, 2026 $65M / ~33%-of-supply stress redemption** (largest on record); single-underlying concentration; no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule. Persistent secondary discount with a widening trend over recent months and no mean-reversion mechanism (arbitrage gated to KYC'd participants who must clear ULTRA-layer fees + 4-day settlement carry). |
 | Project / Counterparty | 4.5 | 30% | Strong team and regulated institutional partners; fully centralized governance; Panama jurisdiction; no timelock |
-| **Overall** | **5.1** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. Bridge layer verified clean. BB+ credit equivalent at the middle of the band. 2026-05-05 revision drops 0.1 on overall reflecting the economic-score adjustment for post-Apr-27 secondary discount widening.** |
+| **Overall** | **5.1** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. Bridge layer verified clean. BB+ credit equivalent at the middle of the band.** |
 
 **Blended credit equivalent:** **BB+** based on A-range sovereign asset quality combined with BB-range unsecured-issuer structure. Synthetic tULTRA wrapper, MPC trust gaps, and the pending-assets oracle keep the rating in the middle of the BB+ band; another rung of disclosure or structural fix would be needed to support a higher score.
 
@@ -543,7 +513,7 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 
 | Asset | Issuer | TVL (2026) | Redemption | KYC | Bankruptcy Remote | Cross-chain mechanism | Score est. |
 |---|---|---|---|---|---|---|---|
-| **thBILL** | Theo (Panama) | $138M | USDC, T+4 | Yes | No | LayerZero OFT (3-DVN custom) | **5.1** |
+| **thBILL** | Theo (Panama) | ~$130M+ | USDC, T+4 | Yes | No | LayerZero OFT (3-DVN custom) | **5.1** |
 | **USYC** | Circle / Hashnote | $2.2B | USDC, ~instant | Qualified only | Yes (Cayman fund structure) | Native multi-chain via Circle | \~7.0 |
 | **BUIDL** | BlackRock / Securitize | $2.0B | USDC via Circle, instant | Qualified only | Yes (3(c)(7) fund) | Securitize rails | \~8.0 |
 | **OUSG** | Ondo | \~$1.5B (with USDY) | USDC, instant or T+1 | Qualified only | Yes | Native + LayerZero | \~7.0 |
@@ -566,7 +536,7 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 **Medium priority — ongoing monitoring:**
 
-4. **Continue to re-query DEX pool depths before any sizing decision.** Total tracked DEX liquidity is currently \~$1.64M; deepest single venue is HyperEVM Project X (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch.
+4. **Continue to re-query DEX pool depths before any sizing decision.** Aggregate DEX TVL runs in the low-single-digit-million range against fund TVL of $130M+; deepest single venue is typically Arbitrum (Uniswap V3 thBILL/USDC) or HyperEVM (Project X thBILL/USDT0) — concentration shifts between them over time (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch. Live per-venue tiers on the dashboard.
 5. Monitor secondary-market peg weekly through the post-rsETH risk-off window. Any sustained >0.5% discount signals structural concerns.
 6. Watch for basket diversification beyond tULTRA. Single-issuer concentration is the largest un-mitigated economic risk.
 7. Track settlement latency. 4-day baseline is longest in peer set; any drift higher is a liquidity-management signal.
@@ -596,7 +566,7 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 ## Bottom Line
 
-thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance and a synthetic tULTRA wrapper layer. Overall score **5.1/10 (BB+ credit equivalent, middle of band)** — 2026-05-05 revision reflects two structural developments since the prior assessment: (1) the secondary-market discount widened from \~28 bps avg to \~72 bps avg post-Apr-27, with buy-side 2% depth halving alongside; (2) thBILL has been repositioned by Theo as the reserve asset for thUSD (96% of thUSD reserves; 66% of all thBILL outstanding now intra-protocol), with the operational front-end (app.theo.xyz, /thbill redirect, docs framing) shifting from thBILL-direct to thUSD-mediated retail access. The system mechanically passed its largest stress test on record (Apr 27 $65M / 33%-of-supply redemption, processed cleanly) but the secondary peg has not recovered.
+thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality sovereign underlying assets (delivered via Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, and Wellington Management as sub-advisor) wrapped in an early-stage issuer with centralized governance and a synthetic tULTRA wrapper layer. Overall score **5.1/10 (BB+ credit equivalent, middle of band)**. Two structural developments dominate the current read: (1) the secondary-market discount has widened over recent months and shows no mean-reversion — the floor is set by KYC-arb costs (underlying-layer fees + 4-day settlement carry) rather than market discipline; (2) thBILL has been repositioned by Theo as the reserve asset for thUSD (the great majority of thUSD reserves; the majority of thBILL outstanding now intra-protocol), with the operational front-end (`app.theo.xyz`, `/thbill` redirect, docs framing) shifting from thBILL-direct to thUSD-mediated retail access. The system mechanically passed its largest stress test on record (April 27, 2026 — $65M / 33%-of-supply redemption, processed cleanly) but the secondary peg has not recovered.
 
 The three dimensions defining the risk:
 - **Asset quality (strong):** US T-bills with institutional-grade fund management.
