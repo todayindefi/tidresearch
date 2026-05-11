@@ -7,7 +7,7 @@ category: "stablecoin"
 peg_mechanism: "rwa-synthetic"
 assessment_type: "light"
 audience: "retail"
-companion_report: "apyusd-retail"
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=apxusd"
 date: "2026-05-07"
 last_verified: "2026-05-07"
 featured: false
@@ -52,7 +52,7 @@ This is a stablecoin label wrapped around what is structurally an MSTR-preferred
 
 The intended retail framing is "use apxUSD if you want $1 stability, use apyUSD if you want the dividend." The catch — and it's significant — is that apxUSD holders carry **the same collateral risk as apyUSD holders** without ever being compensated for it. If apyUSD holders exit first during stress (via cooldown or any future secondary market), apxUSD holders are left absorbing residual collateral risk uncompensated. This is an asymmetric structure that's worth understanding before sizing.
 
-apyUSD's NAV has grown from 1.0 at launch to ~1.363 apxUSD/share in roughly 2.5 months. The headline figure is partly a one-time launch-week NAV jump (about 33% in week 1, from donation-pattern apxUSD inflows into the vault) and partly the ongoing ~13% annualized accrual from STRC dividends — within STRC's indicated-rate range. The full breakdown is in the [apyUSD retail report](/reports/apyusd-retail/).
+apyUSD's NAV has grown from 1.0 at launch to ~1.363 apxUSD/share in roughly 2.5 months. The headline figure is partly a one-time launch-week NAV jump (about 33% in week 1, from donation-pattern apxUSD inflows into the vault) and partly the ongoing ~13% annualized accrual from STRC dividends — within STRC's indicated-rate range. The full breakdown is in the [apyUSD retail report](/reports/apyusd/).
 
 ## How retail enters and exits
 
@@ -176,7 +176,7 @@ DeFi-comfortable users with a thesis on Strategy / MSTR / BTC who specifically w
 
 ## A note on the apyUSD sibling
 
-The yield-bearing sibling now has its own [apyUSD retail report](/reports/apyusd-retail/). Short version of the relationship:
+The yield-bearing sibling now has its own [apyUSD retail report](/reports/apyusd/). Short version of the relationship:
 
 - apxUSD = $1-pegged stablecoin form, no yield, exit via Curve apxUSD/USDC in minutes
 - apyUSD = ERC-4626 vault that captures STRC dividends (~13% APY ongoing); retail-scale exits run in minutes via the Curve apyUSD/apxUSD pool, with a 30-day UnlockToken cooldown as the institutional fallback path

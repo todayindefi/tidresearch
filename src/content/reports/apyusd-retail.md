@@ -8,7 +8,7 @@ underlying_assets: ["apxUSD"]
 yield_bearing: true
 assessment_type: "light"
 audience: "retail"
-companion_report: "apxusd-retail"
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=apyusd"
 date: "2026-05-07"
 last_verified: "2026-05-07"
 featured: false
@@ -29,11 +29,11 @@ overall_score: 4.5
 
 ## Summary
 
-apyUSD is the yield-bearing ERC-4626 vault wrapper for [apxUSD](/reports/apxusd-retail/). Deposit apxUSD, receive apyUSD shares; the vault holds the apxUSD and accrues the underlying STRC dividend stream into share value (NAV grows). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **30-day UnlockToken cooldown** on exits in exchange for the dividend pass-through.
+apyUSD is the yield-bearing ERC-4626 vault wrapper for [apxUSD](/reports/apxusd/). Deposit apxUSD, receive apyUSD shares; the vault holds the apxUSD and accrues the underlying STRC dividend stream into share value (NAV grows). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **30-day UnlockToken cooldown** on exits in exchange for the dividend pass-through.
 
 As of 2026-05-07: vault holds ~$103.5M apxUSD (~34% of total apxUSD supply), 75.94M apyUSD shares outstanding, NAV 1.363 apxUSD per share. The protocol launched in February 2026 at NAV 1.0 — about 2.5 months ago.
 
-The 4.5/10 score reflects: real ~13% ongoing yield + meaningful secondary-market depth for retail-scale exits (the cooldown isn't the only path), offset by inheriting the full apxUSD risk stack — STRC is the largest single-issuer component (~42% of reserves, with ~56% cash & equivalents per Apyx's Accountable proof-of-solvency feed), off-chain RWA custody at an unnamed broker, no PCAOB-firm sign-off (a TEE-attested feed exists — see [the apxUSD retail report](/reports/apxusd-retail/) for details) — plus the asymmetric structure where apyUSD captures all yield while apxUSD bears residual collateral risk uncompensated.
+The 4.5/10 score reflects: real ~13% ongoing yield + meaningful secondary-market depth for retail-scale exits (the cooldown isn't the only path), offset by inheriting the full apxUSD risk stack — STRC is the largest single-issuer component (~42% of reserves, with ~56% cash & equivalents per Apyx's Accountable proof-of-solvency feed), off-chain RWA custody at an unnamed broker, no PCAOB-firm sign-off (a TEE-attested feed exists — see [the apxUSD retail report](/reports/apxusd/) for details) — plus the asymmetric structure where apyUSD captures all yield while apxUSD bears residual collateral risk uncompensated.
 
 ## What you actually earn
 
@@ -135,7 +135,7 @@ Retail or institutional users who want the dividend pass-through from Apyx's STR
 
 ## A note on the apxUSD companion
 
-The [apxUSD retail report](/reports/apxusd-retail/) covers the non-yield-bearing sibling. apxUSD has same-day exit options (Curve DEX or USDC settlement) but earns no yield. apyUSD has comparable retail-exit speed via the two-hop DEX route but adds the dividend pass-through; the cooldown becomes binding only at institutional sizing. The two products are structurally linked: apxUSD bears residual collateral risk; apyUSD captures the dividend stream. Holding both does not diversify, since both are claims against the same Apyx + STRC backing.
+The [apxUSD retail report](/reports/apxusd/) covers the non-yield-bearing sibling. apxUSD has same-day exit options (Curve DEX or USDC settlement) but earns no yield. apyUSD has comparable retail-exit speed via the two-hop DEX route but adds the dividend pass-through; the cooldown becomes binding only at institutional sizing. The two products are structurally linked: apxUSD bears residual collateral risk; apyUSD captures the dividend stream. Holding both does not diversify, since both are claims against the same Apyx + STRC backing.
 
 ## A note on Apyx's structure
 
