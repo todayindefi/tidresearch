@@ -68,6 +68,7 @@ const wrappedAxes = {
   structural_score: score,
   redemption_score: score,
   liquidity_score: score,
+  issuer_score: score.optional(),
   yield_bearing: z.boolean().optional(),
   underlying_assets: z.array(z.string()).default([]),
 };

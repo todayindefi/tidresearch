@@ -16,6 +16,7 @@ volatility_score: 7.0
 structural_score: 5.5
 redemption_score: 4.5
 liquidity_score: 5.5
+issuer_score: 6.0
 overall_score: 4.5
 ---
 

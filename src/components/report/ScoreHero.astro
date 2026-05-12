@@ -18,16 +18,18 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
     { key: "issuer_score", label: "Issuer" },
   ],
   "wrapped-token": [
-    { key: "volatility_score", label: "Volatility" },
+    { key: "volatility_score", label: "Stability" },
     { key: "liquidity_score", label: "Liquidity" },
-    { key: "structural_score", label: "Structural" },
+    { key: "structural_score", label: "Contract & Admin" },
     { key: "redemption_score", label: "Redemption" },
+    { key: "issuer_score", label: "Issuer" },
   ],
   "vault-share": [
-    { key: "volatility_score", label: "Volatility" },
+    { key: "volatility_score", label: "Stability" },
     { key: "liquidity_score", label: "Liquidity" },
-    { key: "structural_score", label: "Structural" },
+    { key: "structural_score", label: "Contract & Admin" },
     { key: "redemption_score", label: "Redemption" },
+    { key: "issuer_score", label: "Issuer" },
   ],
   "tokenized-treasury": [
     { key: "contract_score", label: "Smart Contract" },
@@ -44,7 +46,9 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
 };
 
-const axes = AXES_BY_CATEGORY[data.category as string] ?? [];
+const axes = (AXES_BY_CATEGORY[data.category as string] ?? []).filter(
+  (a) => typeof data[a.key] === "number"
+);
 const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
 const weights: Record<string, number> | null = isRwa && data.score_weights
