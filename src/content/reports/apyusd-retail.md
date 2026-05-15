@@ -9,6 +9,7 @@ yield_bearing: true
 assessment_type: "light"
 audience: "retail"
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=apyusd"
+trust_disclaimer: true
 date: "2026-05-07"
 last_verified: "2026-05-11"
 featured: false

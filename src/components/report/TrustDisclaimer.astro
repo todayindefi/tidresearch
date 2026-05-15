@@ -1,0 +1,37 @@
+---
+import { AlertTriangle } from "lucide-react";
+
+interface Props {
+  dashboardUrl?: string;
+}
+
+const { dashboardUrl } = Astro.props;
+---
+
+<aside
+  class="mb-8 rounded-md border border-amber-300 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900 dark:border-amber-700 dark:bg-amber-950/50 dark:text-amber-100"
+  role="note"
+>
+  <div class="flex items-start gap-3">
+    <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0" aria-hidden="true" />
+    <div>
+      <strong class="font-semibold">Trust assumptions.</strong>
+      Reserves data flows from Apyx's TEE-attested proof-of-solvency feed
+      (<a
+        href="https://accountable.apyx.fi"
+        target="_blank"
+        rel="noreferrer"
+        class="underline hover:no-underline"
+      >accountable.apyx.fi</a>) — a third-party cryptographic attestation,
+      not a PCAOB-firm audit. The custodian holding STRC + cash is unnamed.
+      No second independent attestation source exists. The protocol is
+      ~3 months old at scale. See {dashboardUrl ? (
+        <a href={dashboardUrl} target="_blank" rel="noreferrer" class="underline hover:no-underline">
+          the live dashboard's Backing Attestation panel
+        </a>
+      ) : (
+        <span>the Backing Attestation panel on the live dashboard</span>
+      )} and the body of this report for what the feed does and doesn't prove.
+    </div>
+  </div>
+</aside>

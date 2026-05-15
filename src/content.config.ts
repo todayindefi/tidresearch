@@ -39,6 +39,7 @@ const common = {
   featured: z.boolean().optional(),
   live_dashboard_url: z.string().url().optional(),
   pdf_coming_soon: z.boolean().optional(),
+  trust_disclaimer: z.boolean().optional(),
   // Set to false to hide a report from listings and direct routing while the
   // analysis is being revised. The markdown stays in the repo.
   published: z.boolean().default(true),

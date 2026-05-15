@@ -6,6 +6,7 @@ import ScoreHero from "@/components/report/ScoreHero.astro";
 import StickyToc from "@/components/report/StickyToc.astro";
 import CollapsibleSections from "@/components/report/CollapsibleSections.astro";
 import EmailWatermark from "@/components/report/EmailWatermark.astro";
+import TrustDisclaimer from "@/components/report/TrustDisclaimer.astro";
 import { ArrowRight, Download, Printer } from "lucide-react";
 
 interface Heading {
@@ -27,6 +28,7 @@ const liveDashboardUrl: string | undefined = data.live_dashboard_url;
 const pdfComingSoon: boolean = Boolean(data.pdf_coming_soon);
 const hasCta = Boolean(liveDashboardUrl) || pdfComingSoon;
 const isInstitutional = data.audience === "institutional";
+const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
 ---
 
 <BaseLayout title={`${data.asset} — Risk Assessment | TID Research`} description={description}>
@@ -68,6 +70,9 @@ const isInstitutional = data.audience === "institutional";
       <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12 institutional-grid">
         <StickyToc headings={headings} />
         <div class="min-w-0">
+          {showTrustDisclaimer && (
+            <TrustDisclaimer dashboardUrl={liveDashboardUrl} />
+          )}
           <ScoreHero data={data} />
           <div class="prose-report prose-institutional" data-collapsible-root>
             <slot />
@@ -101,6 +106,9 @@ const isInstitutional = data.audience === "institutional";
     ) : (
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
         <div class="min-w-0">
+          {showTrustDisclaimer && (
+            <TrustDisclaimer dashboardUrl={liveDashboardUrl} />
+          )}
           <div class="prose-report">
             <slot />
             {hasDashboard && (
