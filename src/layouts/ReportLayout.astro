@@ -38,16 +38,29 @@ const isInstitutional = data.audience === "institutional";
       >
         ← All Reports
       </a>
-      {isInstitutional && (
-        <button
-          type="button"
-          data-print-button
-          class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors"
-        >
-          <Printer className="h-3.5 w-3.5" />
-          Save as PDF
-        </button>
-      )}
+      <div class="flex items-center gap-2">
+        {liveDashboardUrl && (
+          <a
+            href={liveDashboardUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline"
+          >
+            Open Live Dashboard
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
+        )}
+        {isInstitutional && (
+          <button
+            type="button"
+            data-print-button
+            class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors"
+          >
+            <Printer className="h-3.5 w-3.5" />
+            Save as PDF
+          </button>
+        )}
+      </div>
     </div>
 
     {isInstitutional && <EmailWatermark />}

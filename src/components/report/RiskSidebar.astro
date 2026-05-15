@@ -2,12 +2,14 @@
 import RiskBadge from "./RiskBadge.astro";
 import Badge from "../ui/Badge.astro";
 import { chainLabel } from "@/lib/chains";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   data: any;
 }
 
 const { data } = Astro.props;
+const liveDashboardUrl: string | undefined = data.live_dashboard_url;
 
 type Axis = { key: string; label: string };
 
@@ -107,6 +109,24 @@ const categoryLabel = (c: string) =>
       )}
     </p>
   </div>
+
+  {liveDashboardUrl && (
+    <div>
+      <div class="eyebrow mb-2">Live Data</div>
+      <a
+        href={liveDashboardUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline w-full justify-center"
+      >
+        Open dashboard
+        <ArrowRight className="h-3.5 w-3.5" />
+      </a>
+      <p class="text-xs text-muted-foreground mt-2">
+        Live reserves, collateralization, peg, and bridge state — updated hourly.
+      </p>
+    </div>
+  )}
 
   <div>
     <div class="eyebrow mb-3">Score Breakdown</div>
