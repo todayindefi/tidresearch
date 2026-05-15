@@ -12,7 +12,7 @@ trust_disclaimer: true
 date: "2026-04-10"
 last_verified: "2026-05-11"
 featured: false
-production: false
+production: true
 issuer: "Apyx (DFDV-affiliated)"
 peg_mechanism_score: 4.5
 backing_score: 4.5

@@ -32,8 +32,8 @@ const allDashboards: Dashboard[] = [
   { slug: "ousd", name: "OUSD", chain: "Ethereum", description: "Rebasing stablecoin backed by USDC via Vault strategies." },
   { slug: "syrupusdc", name: "syrupUSDC", chain: "Ethereum", description: "ERC-4626 share over Maple's institutional open-term lending pool. Cross-pool family panel surfaces shared-borrower concentration with syrupUSDT.", category: "Lending", production: true },
   { slug: "syrupusdt", name: "syrupUSDT", chain: "Ethereum", description: "USDT-denominated sibling pool to syrupUSDC. Same Maple architecture, smaller pool, materially higher per-pool concentration.", category: "Lending", production: true },
-  { slug: "apxusd", name: "apxUSD", chain: "Ethereum", description: "Apyx's $1-pegged synthetic stablecoin backed by STRC (an MSTR preferred-stock dividend instrument) plus cash & equivalents. RWA-collateralized, Accountable proof-of-solvency feed.", category: "RWA" },
-  { slug: "apyusd", name: "apyUSD", chain: "Ethereum + Base (CCIP bridge)", description: "Yield-bearing ERC-4626 vault wrapper over apxUSD. Captures the STRC dividend stream as NAV growth (~13% APY); 30-day UnlockToken cooldown on canonical exits, retail-scale DEX exits in minutes.", category: "Yield" },
+  { slug: "apxusd", name: "apxUSD", chain: "Ethereum", description: "Apyx's $1-pegged synthetic stablecoin backed by STRC (an MSTR preferred-stock dividend instrument) plus cash & equivalents. RWA-collateralized, Accountable proof-of-solvency feed.", category: "RWA", production: true },
+  { slug: "apyusd", name: "apyUSD", chain: "Ethereum + Base (CCIP bridge)", description: "Yield-bearing ERC-4626 vault wrapper over apxUSD. Captures the STRC dividend stream as NAV growth (~13% APY); 30-day UnlockToken cooldown on canonical exits, retail-scale DEX exits in minutes.", category: "Yield", production: true },
 ];
 
 const dashboards = isProductionStage

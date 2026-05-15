@@ -13,6 +13,7 @@ trust_disclaimer: true
 date: "2026-05-07"
 last_verified: "2026-05-11"
 featured: false
+production: true
 volatility_score: 7.0
 structural_score: 5.5
 redemption_score: 4.5
