@@ -6,3 +6,30 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# /dashboards/* deep links — proxy to GitHub Pages. Order matters: Netlify
+# processes top-to-bottom and stops at first match, so the thBILL override
+# must stay above the generic backing-monitor splat. Splat (not :slug) is
+# required so dashboard sub-resources (js/, css/, data/*.json) resolve.
+
+# thBILL: normalize to trailing slash so relative sub-resources resolve under /dashboards/thbill/.
+[[redirects]]
+  from = "/dashboards/thbill"
+  to = "/dashboards/thbill/"
+  status = 301
+  force = true
+
+# thBILL: route everything under /dashboards/thbill/ to its own GH Pages repo.
+[[redirects]]
+  from = "/dashboards/thbill/*"
+  to = "https://todayindefi.github.io/thbill-risk-info/:splat"
+  status = 200
+  force = true
+
+# Generic: everything else under /dashboards/ to backing-monitor. Deep links
+# are query-style: /dashboards/?asset=<slug>.
+[[redirects]]
+  from = "/dashboards/*"
+  to = "https://todayindefi.github.io/backing-monitor/:splat"
+  status = 200
+  force = true
