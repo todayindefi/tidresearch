@@ -8,3 +8,6 @@ dist
 *.log
 .netlify
 deno.lock
+
+# Working translations of handoff specs — canonical copies live in ~/riskAnalyst/specs/handoffs/
+specs/
