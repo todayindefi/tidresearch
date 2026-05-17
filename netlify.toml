@@ -7,29 +7,44 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# /dashboards/* deep links — proxy to GitHub Pages. Order matters: Netlify
-# processes top-to-bottom and stops at first match, so the thBILL override
-# must stay above the generic backing-monitor splat. Splat (not :slug) is
-# required so dashboard sub-resources (js/, css/, data/*.json) resolve.
+# /dashboards/* deep links — proxy to GitHub Pages.
+#
+# Constraints learned the hard way:
+# - Netlify normalizes trailing slashes before matching [[redirects]], so a
+#   /foo → /foo/ 301 fires for both forms and loops. Can't enforce trailing
+#   slash via redirect. All thBILL links must be written WITH the slash.
+# - The Astro hub page at /dashboards must keep working, so the backing-monitor
+#   proxy is scoped to requests carrying ?asset=<slug>. The bare /dashboards
+#   falls through to the static Astro page.
 
-# thBILL: normalize to trailing slash so relative sub-resources resolve under /dashboards/thbill/.
+# thBILL: bare URL → thbill-risk-info root. (Canonical link: /dashboards/thbill/)
 [[redirects]]
   from = "/dashboards/thbill"
-  to = "/dashboards/thbill/"
-  status = 301
+  to = "https://todayindefi.github.io/thbill-risk-info/"
+  status = 200
   force = true
 
-# thBILL: route everything under /dashboards/thbill/ to its own GH Pages repo.
+# thBILL: sub-resources (js/, css/, data/*.json).
 [[redirects]]
   from = "/dashboards/thbill/*"
   to = "https://todayindefi.github.io/thbill-risk-info/:splat"
   status = 200
   force = true
 
-# Generic: everything else under /dashboards/ to backing-monitor. Deep links
-# are query-style: /dashboards/?asset=<slug>.
+# backing-monitor: fires only when ?asset= is present, so the bare /dashboards
+# URL still serves the Astro hub static page.
+[[redirects]]
+  from = "/dashboards/"
+  to = "https://todayindefi.github.io/backing-monitor/?asset=:asset"
+  status = 200
+  force = true
+  [redirects.query]
+    asset = ":asset"
+
+# backing-monitor sub-resources. No force, so Astro's static dashboards/index.html
+# wins for the bare path; sub-paths under /dashboards/ that aren't static files
+# (js/, css/, data/) fall through to here.
 [[redirects]]
   from = "/dashboards/*"
   to = "https://todayindefi.github.io/backing-monitor/:splat"
   status = 200
-  force = true
