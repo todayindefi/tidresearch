@@ -161,7 +161,7 @@ Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT 
 | Category | Score | Notes |
 |---|---|---|
 | Peg Mechanism | 7.0 | Reserve-backed fiat-stable basket is sound; oracle-priced FPMM holds peg at oracle rate; but no atomic user redemption, single-source Chainlink dependence. |
-| Backing | 5.5 (Monad: 5.0, Celo: 7.0) | Tier-1 dominant on Monad (90.5% Circle USDC) but with 18.5% Wormhole NTT cross-chain claim and 9% Agora issuer credit. Celo aggregate at 1.26× overcoll, USDm-specific 1.92×. |
+| Backing | 5.5 (Monad: 5.0, Celo: 7.0) | Aggregate Celo Reserve is overcollateralized (1.92× for USDm) and entirely fiat-stable. On Monad specifically, 81.5% on-chain coverage ($1.28M USDC + $127K AUSD + $6.8K USDT0 vs $1.73M supply). **Wormhole NTT cross-chain backing is not yet operational on Monad** — only the local `ReserveLiquidityStrategy` mints USDm. The 18.5% gap is most likely USDm locked in GBPm/JPYm/CHFm Liquity-V2-style CDPs (GBPm supply 229,687 ≈ $292K at 110% CCR ⇒ ~$321K USDm locked, matching the gap); CDP contracts aren't yet in Mento's published Monad addresses, so this isn't directly verifiable. AUSD adds 9% Agora issuer credit (not Circle-tier); USDT0 adds 0.4% LayerZero bridge dependency. |
 | Liquidity | 5.0 (Monad: 4.5, Celo: 5.5) | FPMM-only exit, no CEX, no external DEX. Monad pools thinnest. |
 | Issuer | 6.5 | Doxxed Mento Labs + cLabs lineage + 6-year clean V1/V2 track record. Strong audit roster (ChainSecurity, Macro, Sherlock, Hats). Docked for Monad bare 4-of-7 Safe admin model. |
 | **Overall** | **6.0** (Monad: 5.5, Celo: 6.5) | Above-average risk for a fiat-backed stable; usable for small positions but not a USDC substitute. |
