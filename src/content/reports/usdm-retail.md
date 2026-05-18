@@ -27,7 +27,6 @@ chain_overrides:
     backing_score: 7.0
     liquidity_score: 5.5
     overall_score: 6.5
-trust_disclaimer: true
 ---
 
 # USDm — Retail Risk Report
@@ -73,9 +72,9 @@ The per-chain Reserve composition on **Monad** (verified on-chain 2026-05-18):
 
 Monad Reserve total: **$1,409,818 against $1,730,180 USDm in circulation = 81.5% on-chain coverage**.
 
-The remaining 18.5% (~$320,000) sits as a **Wormhole NTT cross-chain claim** against the canonical Celo Reserve, which itself is overcollateralized at 1.92× for USDm specifically. The aggregate Mento Reserve is 1.26× overcollateralized across all stablecoins.
+The remaining 18.5% (~$320,000) is **most likely USDm collateral locked in GBPm CDPs**: Mento V3's FX synthetics (GBPm, JPYm, CHFm) are minted as Liquity V2-style CDPs against USDm collateral, and the locked USDm counts toward `totalSupply` but doesn't require independent Reserve backing. GBPm supply on Monad is currently 229,687 (~$292K); at a Liquity-typical 110% collateralization ratio, that implies ~$321K of USDm locked in CDPs — almost exactly the on-chain gap. The CDP contracts aren't yet in Mento's published Monad deployment list, so this isn't directly verifiable.
 
-This cross-chain backing model is unusual: **Wormhole NTT is not just transport for USDm — it is part of the solvency chain.** A Wormhole NTT compromise, rate-limit halt, or cross-chain message failure would prevent the Monad-side coverage gap from being honored locally.
+**Wormhole NTT for cross-chain backing reconciliation is announced but not yet operational on Monad.** Mento docs describe it as a future "will enable" capability. Today, USDm on Monad is backed purely by the local Reserve — there is no enforceable claim against Celo's larger overcollateralization. Until NTT activates, Monad-side USDm holders depend on Mento Labs operationally topping up the Monad Reserve from Celo or treasury (honor-system, not smart-contract-enforced).
 
 ## How the peg works
 
@@ -151,7 +150,7 @@ This recursive structure is **inherent to the V3 design** and not unique to any 
 Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT in risk-adjusted terms:
 
 1. **No atomic user-direct redemption.** Exit depends on FPMM pool liquidity and keeper-driven rebalancing — there is no PSM, no instant-swap, no institutional fiat redemption.
-2. **81.5% on-chain coverage on Monad** with the 18.5% gap filled by Wormhole NTT cross-chain claims — adds Wormhole to USDm's solvency chain as a binding dependency.
+2. **81.5% on-chain Reserve coverage on Monad**, with the 18.5% gap most likely explained by USDm locked in GBPm CDPs (Mento V3 uses Liquity V2-style CDPs). Not directly verifiable today since the CDP contracts aren't in Mento's published Monad addresses list. Wormhole NTT for cross-chain backing claims is announced but not yet active on Monad.
 3. **Recursive collateral role** for the entire V3 FX synthetic stack means any USDm stress cascades through GBPm/JPYm/CHFm.
 4. **Single-oracle dependence** (Chainlink only) for peg defense — no dual-oracle or fallback feed.
 5. **No CEX listings, no external DEX depth** — USDm is a Mento-native stablecoin with no off-Mento liquidity.
@@ -175,9 +174,11 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 
 - Acceptable for small positions, particularly LP exposure on the Mento USDC/USDm pool when Merkl yields justify the structural risk.
 - Not a USDC substitute. Don't model USDm as fungible with USDC in portfolio composition.
-- Avoid as collateral for leveraged positions on third-party protocols until the Wormhole NTT integration is independently verified and the Monad admin migrates to a timelock.
-- Monitor: Wormhole NTT pause status on Monad, Reserve composition drift, MGP-15+ governance migration, any depeg-band events on the FPMM, Merkl renewal cadence.
+- Avoid as collateral for leveraged positions on third-party protocols until (a) the GBPm CDP contracts on Monad are publicly surfaced and the on-chain Reserve gap is fully explained, (b) Wormhole NTT activates for cross-chain backing reconciliation, and (c) the Monad admin migrates to a timelock.
+- Monitor: GBPm CDP collateralization drift, Reserve composition changes, Wormhole NTT activation date on Monad, MGP-15+ governance migration, any depeg-band events on the FPMM, Merkl renewal cadence.
 
 ---
+
+*Updated 2026-05-18: corrected Wormhole NTT cross-chain claim framing per on-chain authority audit.*
 
 *This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
