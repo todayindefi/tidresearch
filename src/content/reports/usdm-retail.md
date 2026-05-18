@@ -44,11 +44,11 @@ chain_overrides:
 
 USDm is the USD-pegged stablecoin issued by [Mento Protocol](https://www.mento.org), the FX-on-chain platform that originated on Celo in 2020 (as the stability layer behind cUSD/cEUR) and rewrote its core into the V3 architecture through 2024-2026. In V3, USDm is **Reserve-backed 1:1 by a basket of other fiat stablecoins** — USDC, USDT, and USDS per the canonical design, with the actual realization on each chain depending on what's available locally.
 
-USDm is one of only two Reserve-backed stables in Mento V3 (alongside EURm); every other Mento FX synthetic (GBPm, JPYm, CHFm) is a Liquity-V2-style CDP that uses **USDm itself as collateral**. So USDm sits at the base of the V3 synthetic stack — a USDm depeg cascades through the entire V3 FX system.
+USDm is one of only two Reserve-backed stables in Mento V3 (alongside EURm); every other Mento FX synthetic (GBPm, JPYm, CHFm) is documented as a Liquity-V2-style CDP using **USDm as collateral**. **The CDP infrastructure is currently live on Celo only; on Monad the FX synthetics are pre-minted bootstrap pool liquidity with no operational CDP system yet.** So USDm sits at the base of the V3 synthetic stack as designed — a USDm depeg would cascade through the operational FX system on Celo. On Monad, that cascade is currently architectural rather than operational (per the on-chain audit referenced in the dashboard).
 
 Total USDm circulation is small (~$1.7M on Monad, ~$0.8M on Celo) and the asset has no CEX listings and no external DEX depth — it lives almost entirely inside Mento's own oracle-priced FPMM pools.
 
-**The 6.0/10 score reflects a sound design with several structural weaknesses:** the underlying Reserve is overcollateralized 1.92× on Celo and 81.5% on-chain on Monad (with the gap filled by a cross-chain Wormhole bridge claim), but users cannot directly redeem USDm to the Reserve, peg defense depends entirely on Chainlink oracles plus keeper-driven rebalancing, and the Monad deployment is governed by a 4-of-7 multisig with **no timelock** while the Celo deployment has a full 2-day Timelock plus Watchdog Veto.
+**The 5.5/10 score reflects a sound design with several structural weaknesses:** the underlying Reserve is overcollateralized 1.92× on Celo and ~85% on-chain on Monad (operational seed-stage under-collateralization actively closing — see live dashboard), users cannot directly redeem USDm to the Reserve, peg defense depends entirely on Chainlink oracles plus keeper-driven rebalancing, and the Monad deployment is governed by a 4-of-7 multisig with **no timelock** while the Celo deployment has a full 2-day Timelock plus Watchdog Veto.
 
 ## What you actually earn
 
