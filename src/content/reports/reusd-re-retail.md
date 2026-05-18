@@ -42,7 +42,12 @@ The 5.0/10 score reflects a credibly-engineered RWA exposure offset by two struc
 
 ## What you actually earn
 
-Senior-tranche reinsurance yield: **risk-free rate + 2.5% spread**, currently pricing around 6.1% APY (live on dashboard). NAV accrues daily; no rebasing. The on-chain sleeve earns sUSDe basis-trade yield while waiting for reinsurance deployment, which can push effective APY higher when the basis is wide.
+Senior-tranche reinsurance yield, calculated daily as a **deployment-weighted blend**:
+
+- **Deployed capital** earns the risk-free rate + 2.5% spread
+- **Undeployed capital** earns the trailing 7-day sUSDe basis trade + 2.5% spread
+
+Each day at 00:00 UTC the protocol computes the current deployment mix and converts the blended rate into daily price appreciation (no rebasing). As of 2026-05-18 the dashboard shows ~6.1% APY. Effective rate moves with both the basis level and the deployment mix.
 
 Compared to its sibling reUSDe (~12% APY, mezzanine tranche): reUSD earns roughly half the yield in exchange for the protection of having reUSDe absorb losses first.
 
@@ -50,7 +55,7 @@ Compared to its sibling reUSDe (~12% APY, mezzanine tranche): reUSD earns roughl
 
 Two paths, very different profiles depending on whether you can KYC as a non-U.S. person:
 
-**1. Primary redemption (non-U.S. KYC only):** Tiered — an actuarially determined instant buffer (typically 50%+ of deposits) settles immediately at NAV. Requests beyond the buffer queue and settle as trust assets mature. 0.18% subscription / 0.18% redemption fees; minimum 100 USDS.
+**1. Primary redemption (non-U.S. KYC only):** Tiered — an actuarially determined instant buffer (typically 50%+ of deposits) settles immediately at NAV. Requests beyond the buffer queue and settle as trust assets mature. 0.18% subscription / 0.18% redemption fees; minimum deposit **250 USDC** per the current dashboard.
 
 **2. Secondary market (the only path for U.S. persons):** reUSD trades on Curve pools across all four supported chains and is listed on Coinbase. Aggregate monthly volume is around $511M (per RWA.xyz). Decent liquidity overall, but **secondary price can detach from NAV during stress.** The recorded all-time low is $0.8734 — ~13% below NAV at the time — which is the canonical risk for any tokenized RWA: gated cohorts can only exit via the secondary market, and pressure can push price well below the NAV that primary redeemers receive.
 
@@ -99,11 +104,15 @@ The thing to internalize: **the smart contract doesn't hold the reinsurance.** R
 - **NAV vs market price spread.** Target <50bps in calm conditions; >200bps is a stress signal worth attention.
 - **Ethena sUSDe basis trade health.** reUSD's on-chain sleeve depends on this; an Ethena depeg or basis collapse hits the asset side directly.
 - **Audit publication for the current implementation.** The Hacken audit is ~21 months stale. Re-audit publication closes a meaningful gap.
-- **reUSDe (sibling) capacity.** reUSDe is the junior layer that protects reUSD from underwriting losses. If reUSDe TVL contracts significantly relative to total underwriting, reUSD's loss buffer thins.
+- **reUSDe (sibling) capacity.** reUSDe is the mezzanine layer that protects reUSD from underwriting losses. If reUSDe TVL contracts significantly relative to total underwriting, reUSD's loss buffer thins.
 
 ## A note on the tranche structure
 
-reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equity absorbs losses first, then the [reUSDe mezzanine tranche](/reports/reusde-re/), and only then reUSD. The relative sizing of these layers vs. the size of the underlying reinsurance book is what matters for solvency — and that ratio is not publicly disclosed in granular form. The structure says reUSD is well-protected; the structure has not been stress-tested by a real underwriting loss yet (Re Protocol launched June 2025).
+reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equity (Re calls this "junior tranche capital") absorbs losses first, then the [reUSDe mezzanine tranche](/reports/reusde-re/), and only then reUSD. The relative sizing of these layers vs. the size of the underlying reinsurance book is what matters for solvency — and that ratio is not publicly disclosed in granular form. The structure says reUSD is well-protected; the structure has not been stress-tested by a real underwriting loss yet (Re Protocol launched June 2025).
+
+## A note on Re Points
+
+Re Protocol runs a loyalty points program prominently surfaced on the asset dashboard. Current multipliers for reUSD strategies: Pendle YT 30x, Pendle LP 30x, Fluid 5x–20x. Points have no current token, no published conversion mechanism, and no expiry disclosure. **Treat as marketing optionality, not yield** — points may convert to value (airdrop precedent in DeFi) or may not. Net APY estimates should not include points absent a published valuation.
 
 ---
 

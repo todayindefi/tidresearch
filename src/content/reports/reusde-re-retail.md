@@ -48,7 +48,12 @@ This is not a yield-bump variant of reUSD. It is a different risk-class instrume
 
 ## What you actually earn
 
-Mezzanine-tranche reinsurance yield: **risk-free rate + 8.5% spread** (vs reUSD's 2.5%), currently around 12% APY (live on dashboard). Re Protocol publishes historical realized returns of 16–25% — yield can run materially higher than current spot when reinsurance deployment is well-priced. Yield accrues via NAV growth; no rebasing.
+Mezzanine-tranche reinsurance yield, calculated daily as a **deployment-weighted blend**:
+
+- **Deployed capital** earns reinsurance program premiums + an 8.5% fixed spread
+- **Undeployed capital** earns the sUSDe rate + the same 8.5% spread
+
+Per Re's published yield model: "reUSDe accrues daily from blended deployed and undeployed capital returns, plus a fixed spread." Current dashboard APY is ~12%; Re publishes a historical realized band of 16–25% — yield can run materially higher than current spot when reinsurance deployment is well-priced. Yield accrues via NAV growth; no rebasing.
 
 **Important:** the 12% is contractual / target yield. Realized yield CAN go negative if a reinsurance loss event exhausts Re Protocol's equity buffer and hits the mezzanine. That has not happened yet — but the design says it can, and 11 months in market is not long enough to draw conclusions either way about underwriting outcomes.
 
@@ -120,7 +125,7 @@ A retail-size exit of $50–100K is roughly one day's volume. **Pricing has alre
 
 ## A note on the tranche structure
 
-reUSDe sits between Re Protocol's own equity (first loss) and reUSD (senior, last loss). The structure means:
+reUSDe sits between Re Protocol's own equity (which Re labels "junior tranche capital", first loss) and reUSD (senior, last loss). The structure means:
 - "Normal" underwriting losses are absorbed by Re Protocol equity — reUSDe is untouched
 - "Moderate" losses hit reUSDe — NAV drops, reUSD is still protected
 - "Catastrophic" losses exhausting reUSDe then hit reUSD
@@ -128,6 +133,10 @@ reUSDe sits between Re Protocol's own equity (first loss) and reUSD (senior, las
 The relative sizing of equity, reUSDe, and reUSD vs the underlying reinsurance book is the key solvency question, and it is **not publicly disclosed in granular form**. The mezzanine premium exists because reUSDe holders accept this layered exposure with imperfect visibility into the layer thicknesses.
 
 If you want senior protection at lower yield: see [reUSD](/reports/reusd-re/).
+
+## A note on Re Points
+
+Re Protocol runs a loyalty points program surfaced on the reUSDe asset dashboard. Current multipliers for reUSDe strategies: Pendle YT 30x, Pendle LP 30x, **Curve LP (reUSDe/sUSDe) 20x**. Points have no current token, no published conversion mechanism, and no expiry disclosure. **Treat as marketing optionality, not yield.** For reUSDe specifically, the Curve LP multiplier creates incentive for liquidity provision, which marginally improves secondary depth — worth tracking, since thin Curve liquidity is reUSDe's largest exit-side risk.
 
 ---
 
