@@ -14,15 +14,15 @@ issuer: "Mento Labs (Germany)"
 audited_reserves: true
 market_cap_approx: 1730000
 peg_mechanism_score: 7.0
-backing_score: 5.5
+backing_score: 5.0
 liquidity_score: 5.0
 issuer_score: 6.5
-overall_score: 6.0
+overall_score: 5.5
 chain_overrides:
   monad:
-    backing_score: 5.0
+    backing_score: 4.0
     liquidity_score: 4.5
-    overall_score: 5.5
+    overall_score: 5.0
   celo:
     backing_score: 7.0
     liquidity_score: 5.5
@@ -31,7 +31,7 @@ chain_overrides:
 
 # USDm — Retail Risk Report
 
-**Moderate risk · 6.0/10** (5.5/10 on Monad, 6.5/10 on Celo)
+**Moderate-elevated risk · 5.5/10** (5.0/10 on Monad, 6.5/10 on Celo)
 
 | Yield | Exit method | Primary redemption | Age (V3) | Chains |
 |---|---|---|---|---|
@@ -72,9 +72,15 @@ The per-chain Reserve composition on **Monad** (verified on-chain 2026-05-18):
 
 Monad Reserve total: **$1,409,818 against $1,730,180 USDm in circulation = 81.5% on-chain coverage**.
 
-The remaining 18.5% (~$320,000) is **most likely USDm collateral locked in GBPm CDPs**: Mento V3's FX synthetics (GBPm, JPYm, CHFm) are minted as Liquity V2-style CDPs against USDm collateral, and the locked USDm counts toward `totalSupply` but doesn't require independent Reserve backing. GBPm supply on Monad is currently 229,687 (~$292K); at a Liquity-typical 110% collateralization ratio, that implies ~$321K of USDm locked in CDPs — almost exactly the on-chain gap. The CDP contracts aren't yet in Mento's published Monad deployment list, so this isn't directly verifiable.
+The remaining 18.5% (~$320,000) is **genuine operational under-collateralization at the seed stage of the V3 deployment**. On-chain audit confirms three structural facts on Monad as of 2026-05-18:
 
-**Wormhole NTT for cross-chain backing reconciliation is announced but not yet operational on Monad.** Mento docs describe it as a future "will enable" capability. Today, USDm on Monad is backed purely by the local Reserve — there is no enforceable claim against Celo's larger overcollateralization. Until NTT activates, Monad-side USDm holders depend on Mento Labs operationally topping up the Monad Reserve from Celo or treasury (honor-system, not smart-contract-enforced).
+- **The V3 CDP system is not yet deployed.** The Liquity V2 / Bold CDP contracts (CollateralRegistry, StabilityPool, BorrowerOperations) referenced in Mento's source code are not on Monad. The `OpenLiquidityStrategy` that manages the FX-synthetic pools is a plain rebalancer, not a CDP strategy.
+- **The FX synthetics (GBPm, EURm, JPYm, CHFm) are pre-minted seed liquidity, not CDP-collateralized.** 98–99.97% of each FX synthetic's supply sits inside its own FPMM pool, paired with seeded USDm. There is effectively zero retail circulation of these tokens on Monad, and no live minter authority on them.
+- **EURm on Monad is not Reserve-backed despite the canonical Mento V3 model.** The Monad ReserveV2 holds zero EUROC.
+
+What this means for USDm holders: in a worst-case mass-exit scenario, the Reserve-backed pools' USDC inventory ($317K direct + $1.28M from the Reserve via keeper rebalancing) absorbs up to ~$1.4M of USDm-to-USDC flow. **~$330K of USDm would be unable to exit cleanly through the Reserve** — that's the 18.5% on-chain shortfall made concrete.
+
+**Wormhole NTT cross-chain backing reconciliation also remains announced-not-operational**, so the Monad Reserve cannot fall back on Celo's overcollateralization in any on-chain-enforceable way. The most charitable framing of the gap is "Mento is in deployment ramp; Reserve top-ups will follow as user demand develops." The less charitable framing is "USDm-Monad has been minted faster than Reserve assets have been deposited." Either way, the operational under-collateralization is real.
 
 ## How the peg works
 
@@ -150,7 +156,7 @@ This recursive structure is **inherent to the V3 design** and not unique to any 
 Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT in risk-adjusted terms:
 
 1. **No atomic user-direct redemption.** Exit depends on FPMM pool liquidity and keeper-driven rebalancing — there is no PSM, no instant-swap, no institutional fiat redemption.
-2. **81.5% on-chain Reserve coverage on Monad**, with the 18.5% gap most likely explained by USDm locked in GBPm CDPs (Mento V3 uses Liquity V2-style CDPs). Not directly verifiable today since the CDP contracts aren't in Mento's published Monad addresses list. Wormhole NTT for cross-chain backing claims is announced but not yet active on Monad.
+2. **81.5% on-chain Reserve coverage on Monad — genuine operational under-collateralization at seed stage.** The V3 CDP system is not yet deployed on Monad (FX synthetics are pre-minted pool seed liquidity, not CDP-collateralized), so the 18.5% gap is real, not offset. Wormhole NTT cross-chain backing reconciliation is also announced-not-operational. Worst-case mass-exit leaves ~$330K of USDm unable to exit cleanly.
 3. **Recursive collateral role** for the entire V3 FX synthetic stack means any USDm stress cascades through GBPm/JPYm/CHFm.
 4. **Single-oracle dependence** (Chainlink only) for peg defense — no dual-oracle or fallback feed.
 5. **No CEX listings, no external DEX depth** — USDm is a Mento-native stablecoin with no off-Mento liquidity.
@@ -161,10 +167,10 @@ Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT 
 | Category | Score | Notes |
 |---|---|---|
 | Peg Mechanism | 7.0 | Reserve-backed fiat-stable basket is sound; oracle-priced FPMM holds peg at oracle rate; but no atomic user redemption, single-source Chainlink dependence. |
-| Backing | 5.5 (Monad: 5.0, Celo: 7.0) | Aggregate Celo Reserve is overcollateralized (1.92× for USDm) and entirely fiat-stable. On Monad specifically, 81.5% on-chain coverage ($1.28M USDC + $127K AUSD + $6.8K USDT0 vs $1.73M supply). **Wormhole NTT cross-chain backing is not yet operational on Monad** — only the local `ReserveLiquidityStrategy` mints USDm. The 18.5% gap is most likely USDm locked in GBPm/JPYm/CHFm Liquity-V2-style CDPs (GBPm supply 229,687 ≈ $292K at 110% CCR ⇒ ~$321K USDm locked, matching the gap); CDP contracts aren't yet in Mento's published Monad addresses, so this isn't directly verifiable. AUSD adds 9% Agora issuer credit (not Circle-tier); USDT0 adds 0.4% LayerZero bridge dependency. |
+| Backing | 5.0 (Monad: 4.0, Celo: 7.0) | Aggregate Celo Reserve is overcollateralized (1.92× for USDm) and entirely fiat-stable. On Monad specifically, 81.5% on-chain coverage ($1.28M USDC + $127K AUSD + $6.8K USDT0 vs $1.73M supply). On-chain audit confirms the V3 CDP infrastructure is **not yet deployed on Monad** — FX synthetics (GBPm/EURm/JPYm/CHFm) are pre-minted as inert pool seed liquidity, not CDP-collateralized; and Wormhole NTT is also not yet operational. The 18.5% gap is therefore **genuine operational under-collateralization at seed stage** — ~$330K of USDm cannot exit cleanly through the Reserve in worst-case. AUSD adds 9% Agora issuer credit (not Circle-tier); USDT0 adds 0.4% LayerZero bridge dependency. |
 | Liquidity | 5.0 (Monad: 4.5, Celo: 5.5) | FPMM-only exit, no CEX, no external DEX. Monad pools thinnest. |
 | Issuer | 6.5 | Doxxed Mento Labs + cLabs lineage + 6-year clean V1/V2 track record. Strong audit roster (ChainSecurity, Macro, Sherlock, Hats). Docked for Monad bare 4-of-7 Safe admin model. |
-| **Overall** | **6.0** (Monad: 5.5, Celo: 6.5) | Above-average risk for a fiat-backed stable; usable for small positions but not a USDC substitute. |
+| **Overall** | **5.5** (Monad: 5.0, Celo: 6.5) | **Above-average risk for a fiat-backed stablecoin** — meaningfully below USDC (9.0), AUSD (7.5), USDT (7.5). The fundamental design is sound (Reserve-backed by Tier-1 fiat-stables, conservative V1/V2 track record, strong audit roster) but practical exposure on Monad carries: the V3 system is in seed/bootstrap stage with the CDP infrastructure and Wormhole NTT both announced-not-operational; an 18.5% on-chain Reserve gap that is genuine operational under-collateralization (not offsetting CDP collateral); no user-direct redemption; oracle-driven peg with single-source dependence; and a bare 4-of-7 Safe admin without timelock. Usable for small positions during the bootstrap phase but not a USDC-substitute. |
 
 ## Bottom line
 
@@ -174,11 +180,11 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 
 - Acceptable for small positions, particularly LP exposure on the Mento USDC/USDm pool when Merkl yields justify the structural risk.
 - Not a USDC substitute. Don't model USDm as fungible with USDC in portfolio composition.
-- Avoid as collateral for leveraged positions on third-party protocols until (a) the GBPm CDP contracts on Monad are publicly surfaced and the on-chain Reserve gap is fully explained, (b) Wormhole NTT activates for cross-chain backing reconciliation, and (c) the Monad admin migrates to a timelock.
-- Monitor: GBPm CDP collateralization drift, Reserve composition changes, Wormhole NTT activation date on Monad, MGP-15+ governance migration, any depeg-band events on the FPMM, Merkl renewal cadence.
+- Avoid as collateral for leveraged positions on third-party protocols until (a) the V3 CDP infrastructure (CollateralRegistry/StabilityPool/BorrowerOperations) is deployed on Monad and the FX synthetics start trading on user-deposited collateral instead of pre-minted seed liquidity, (b) Wormhole NTT activates for cross-chain backing reconciliation, and (c) the Monad admin migrates to a timelock.
+- Monitor: Reserve composition top-ups (will the 18.5% gap close as Mento adds Reserve assets?), CDP infrastructure deployment, retail circulation of GBPm/EURm/JPYm/CHFm (currently ~0), Wormhole NTT activation, MGP-15+ governance migration, any depeg-band events on the FPMM, Merkl renewal cadence.
 
 ---
 
-*Updated 2026-05-18: corrected Wormhole NTT cross-chain claim framing per on-chain authority audit.*
+*Updated 2026-05-18: corrections applied per a full on-chain authority and supply audit. The V3 CDP system and Wormhole NTT cross-chain backing are both announced-not-operational on Monad as of report date; the 18.5% Reserve coverage gap is genuine operational under-collateralization at the seed/bootstrap stage of the V3 deployment, not offsetting CDP collateral or a cross-chain claim. Scores adjusted accordingly (overall 6.0 → 5.5; Monad 5.5 → 5.0).*
 
 *This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
