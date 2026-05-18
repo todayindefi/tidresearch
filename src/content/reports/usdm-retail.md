@@ -144,15 +144,15 @@ Aggregate USDm circulation (~$2.5M across Monad and Celo) is small enough that i
 
 This is the most important structural feature of USDm that does not appear in any other major stablecoin:
 
-> **Every Mento V3 FX synthetic (GBPm, JPYm, CHFm) is a CDP collateralized by USDm.**
+> **In the Mento V3 design, every FX synthetic (GBPm, JPYm, CHFm) is a CDP collateralized by USDm. The CDP infrastructure is currently live on Celo; on Monad these synthetics are pre-minted bootstrap pool liquidity, with the CDP system not yet deployed.**
 
 This creates bidirectional risk coupling:
 
-- **Demand sink:** each new GBPm/JPYm/CHFm CDP needs USDm collateral, which adds structural demand for USDm
-- **Cascade risk:** if USDm depegs even temporarily, every V3 FX-synthetic CDP becomes simultaneously under-collateralized; liquidations force-sell USDm back into the FPMM, deepening the depeg
-- **Single point of failure:** USDm is the entire collateral foundation for V3 FX-on-chain. A USDC depeg propagates Reserve → USDm → all FX synthetics in a single chain
+- **Demand sink (Celo-operational):** each new GBPm/JPYm/CHFm CDP on Celo needs USDm collateral, which adds structural demand for USDm. On Monad, this dynamic is currently inactive (no operational CDPs).
+- **Cascade risk (Celo-operational):** if USDm depegs even temporarily, every operational V3 FX-synthetic CDP on Celo becomes simultaneously under-collateralized; liquidations would force-sell USDm back into the FPMM, deepening the depeg. The cascade is structural on chains where CDPs are live.
+- **Single point of failure (by design):** USDm is the entire collateral foundation for V3 FX-on-chain as designed. A USDC depeg propagates Reserve → USDm → all FX synthetics on any chain where the CDP system is operational (currently Celo only).
 
-This recursive structure is **inherent to the V3 design** and not unique to any specific chain.
+This recursive structure is **inherent to the V3 design**. Today it is operationally instantiated on Celo (where the CDP system is live); on Monad it remains architectural — the FX synthetics exist as tokens but the CDP-based minting/collateralization mechanism that creates the recursion isn't deployed yet.
 
 ## What's our concern, plainly?
 
@@ -177,7 +177,7 @@ Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT 
 
 ## Bottom line
 
-USDm is a reasonably-engineered stablecoin from a credible team with a strong audit history and conservative fiat-stable-only backing on its Reserve. But it carries a stack of structural weaknesses that put it well below USDC, AUSD, and USDT: no user-direct redemption, oracle-only peg defense with no fallback, recursive role as V3 collateral, no external liquidity, and on Monad specifically a bare multisig admin without a timelock plus an 18.5% backing gap that depends on a Wormhole bridge claim.
+USDm is a reasonably-engineered stablecoin from a credible team with a strong audit history and conservative fiat-stable-only backing on its Reserve. But it carries a stack of structural weaknesses that put it well below USDC, AUSD, and USDT: no user-direct redemption, oracle-only peg defense with no fallback, recursive role as V3 collateral (operationally on Celo, architecturally on Monad), no external liquidity, and on Monad specifically a bare multisig admin without a timelock plus an 18.5% on-chain Reserve gap — genuine operational under-collateralization at the seed/bootstrap stage of the V3 deployment, not offset by any cross-chain claim (Wormhole NTT is announced but not yet operational).
 
 **Practical usage guidance**
 
