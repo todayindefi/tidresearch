@@ -3,6 +3,7 @@ asset: "USDm"
 slug: "usdm"
 aliases: ["USDm", "Mento USD"]
 chains: ["celo", "monad", "eth"]
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdm"
 category: "stablecoin"
 peg_mechanism: "Reserve-backed (fiat-stable basket)"
 assessment_type: "light"
@@ -32,6 +33,8 @@ chain_overrides:
 # USDm — Retail Risk Report
 
 **Moderate-elevated risk · 5.5/10** (5.0/10 on Monad, 6.5/10 on Celo)
+
+**Live data:** [USDm Backing Dashboard](https://todayindefi.github.io/backing-monitor/?asset=usdm) — hourly Monad on-chain reserve composition, ReserveV2 coverage ratio, API↔RPC drift, and Celo vs Monad side-by-side. Independent integrity check on top of Mento's own analytics API.
 
 | Yield | Exit method | Primary redemption | Age (V3) | Chains |
 |---|---|---|---|---|
@@ -187,4 +190,4 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 
 *Updated 2026-05-18: corrections applied per a full on-chain authority and supply audit. The V3 CDP system and Wormhole NTT cross-chain backing are both announced-not-operational on Monad as of report date; the 18.5% Reserve coverage gap is genuine operational under-collateralization at the seed/bootstrap stage of the V3 deployment, not offsetting CDP collateral or a cross-chain claim. Scores adjusted accordingly (overall 6.0 → 5.5; Monad 5.5 → 5.0).*
 
-*This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Live values for Monad Reserve composition, ReserveV2 coverage, API↔RPC drift, and Celo vs Monad side-by-side are on the [live dashboard](https://todayindefi.github.io/backing-monitor/?asset=usdm). Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
