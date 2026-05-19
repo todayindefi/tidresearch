@@ -13,9 +13,10 @@ production: true
 issuer: "Theo Network (Panama)"
 peg_mechanism_score: 4.0
 backing_score: 4.0
+underlying_score: 3.5
 liquidity_score: 3.5
 issuer_score: 5.5
-overall_score: 4.0
+overall_score: 4.1
 audited: true
 audit_count: 1
 audit_firms: ["Zenith"]
@@ -130,13 +131,14 @@ Strong partner stack and a credentialed team, undermined by a young, unlicensed,
 
 | | |
 |---|---|
-| **Overall Risk** | **4.0/10 — Elevated** |
+| **Overall Risk** | **4.1/10 — Elevated** |
 | Peg Mechanism | 4.0/10 |
 | Backing | 4.0/10 |
+| Underlying | 3.5/10 |
 | Liquidity | 3.5/10 |
 | Issuer | 5.5/10 |
 
-**On the scoring rubric.** This report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* Liquidity gets its own dial here precisely because retail can't redeem at par and must exit on-DEX, and current DEX depth is very thin.
+**On the scoring rubric.** This report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* Liquidity gets its own dial here precisely because retail can't redeem at par and must exit on-DEX, and current DEX depth is very thin. **Underlying** scores the collateral quality independently of wrapper-layer risk: thUSD's reserve splits ~92% thBILL chain (institutional T-Bills via Libeara/Wellington/FundBridge — bluechip standalone, scored 5.0 in the [thBILL retail report](/reports/thbill)) and ~8% off-chain gold-carry positions (long physical gold + short CME futures) with no proof-of-reserves attestation. The thBILL portion is bluechip; the gold-carry sleeve is structurally weaker because it cannot be independently verified on-chain, and any thBILL-layer stress propagates upward. Net read: weaker than a pure-T-Bill underlying, stronger than a pure-algorithmic-stable underlying.
 
 **Who it's for:** DeFi-comfortable users who already understand Ethena-style synthetic dollar mechanics, want exposure to the gold-basis trade, and are sizing well below current DEX depth. Genuinely opt-in early access — best read alongside an awareness that institutional allocators get a redemption rail you don't.
 

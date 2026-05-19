@@ -13,11 +13,12 @@ last_verified: "2026-05-19"
 live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
 production: true
 issuer: "Theo Protocol Corporation"
-peg_mechanism_score: 3.0
+peg_mechanism_score: 3.5
 backing_score: 5.0
+underlying_score: 5.0
 liquidity_score: 3.5
 issuer_score: 4.5
-overall_score: 4.0
+overall_score: 4.5
 audited: true
 audit_count: 1
 audit_firms: ["Zenith Audits"]
@@ -37,7 +38,7 @@ underlying_managers:
 
 # thBILL — Retail Risk Report
 
-**Elevated risk · 4.0/10**
+**Elevated risk · 4.5/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -83,7 +84,7 @@ thBILL's price goes up over time. At launch ($1.00), today (\~$1.023), roughly +
 
 ### Getting in and out
 
-**Getting in** is easy — buy on a DEX. The deepest venues are typically Project X on HyperEVM (thBILL/USDT0) and Uniswap V3 on Arbitrum (thBILL/USDC); concentration between them shifts over time. The Ethereum Uniswap V3 pool exists but is thin; Base is a deployment chain with no live liquidity. The market price trades **persistently below NAV by single bps to low hundreds of bps**. The pre-Apr-2026 baseline ran around −20 bps; through April the discount widened to the −80 to −150 bps band following the April 27 stress event, then tightened back to a −20 to −60 bps daily-average regime by mid-May 2026 with intra-day prints crossing back to flat. The range and direction are not stable: a stress event can re-widen it materially, and recovery typically takes weeks rather than days because there is no competitive arbitrage market enforcing the peg. Live discount + per-chain peg history on [the live dashboard](#live-dashboard).
+**Getting in** is easy — buy on a DEX. The deepest venues are typically Project X on HyperEVM (thBILL/USDT0) and Uniswap V3 on Arbitrum (thBILL/USDC); concentration between them shifts over time. The Ethereum Uniswap V3 pool exists but is thin; Base is a deployment chain with no live liquidity. The market price trades **persistently below NAV by single bps to low hundreds of bps**. The pre-Apr-2026 baseline ran around −20 bps; through April the discount widened to the −80 to −150 bps band following the April 27 stress event, then tightened back to a −20 to −60 bps daily-average regime by mid-May 2026 with intra-day prints crossing back to flat. The range and direction are not stable: a stress event can re-widen it materially, and recovery typically takes weeks rather than days because there is no competitive arbitrage market enforcing the peg. Live snapshot at last verification: −0.42% TVL-weighted discount, comfortably inside the −20 to −60 bps band. Live discount + per-chain peg history on [the live dashboard](#live-dashboard).
 
 **Silent-supply mutation.** thBILL's contract emits **zero on-chain events** during mints and burns — direct polling of `totalSupply()` is the only way to see supply changes (same architectural pattern documented for tULTRA at the underlying layer). Practical implication: standard ERC-20 indexers (Etherscan, Dune, The Graph) cannot track thBILL flows. [The live dashboard](#live-dashboard)'s redemption-pulse panel surfaces these silent supply mutations directly.
 
@@ -107,7 +108,7 @@ Three paths most retail users consider:
 
 **3. Lending collateral (Euler).** You can supply thBILL to an Euler market to borrow stablecoins, giving you leverage on the T-bill yield. This is **advanced, and the oracle model is everything**: if the market uses a DEX-priced oracle, a temporary DEX dislocation (thin liquidity + a forced seller) can liquidate you even when the fund is perfectly healthy. If it uses a NAV-priced oracle, you're materially safer. Read the oracle config for the specific Euler market before supplying, and size assuming the oracle can and will misbehave during stress. Not recommended unless you understand the liquidation engine at the market you're using.
 
-High-quality underlying with a working (if slow and gated) redemption path *for KYC'd holders*. For retail the picture is structurally worse: no primary access, DEX-only exit, and a market price that sits persistently below NAV. By the numbers, thBILL's retail-facing peg is materially looser than crvUSD or OUSD — the average gap to fair value is roughly an order of magnitude larger and, unlike those, it doesn't mean-revert. That structural gap is why **Peg Mechanism** scores 3.0 here and the exit dynamics drag **Liquidity** to 3.5 alongside it.
+High-quality underlying with a working (if slow and gated) redemption path *for KYC'd holders*. For retail the picture is structurally worse: no primary access, DEX-only exit, and a market price that sits persistently below NAV. By the numbers, thBILL's retail-facing peg is materially looser than crvUSD or OUSD — the average gap to fair value is roughly an order of magnitude larger and, unlike those, it doesn't mean-revert. That structural gap is why **Peg Mechanism** scores 3.5 here and the exit dynamics drag **Liquidity** to 3.5 alongside it.
 
 ### thBILL as backing for thUSD — practical implications
 
@@ -146,13 +147,14 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 | | |
 |---|---|
-| **Overall Risk** | **4.0/10 — Elevated** |
-| Peg Mechanism | 3.0/10 |
+| **Overall Risk** | **4.5/10 — Elevated** |
+| Peg Mechanism | 3.5/10 |
 | Backing | 5.0/10 |
+| Underlying | 5.0/10 |
 | Liquidity | 3.5/10 |
 | Issuer | 4.5/10 |
 
-**On the scoring rubric.** This retail report scores on peg / backing / liquidity / issuer — the same axes used for stablecoins like crvUSD and OUSD — because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor.
+**On the scoring rubric.** This retail report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor. **Underlying** scores the collateral quality independently of wrapper-layer or issuer risk: thBILL's underlying is institutional-grade US Treasury bills custodied via Standard Chartered's Libeara, with Wellington Management as fund manager and FundBridge as administrator — among the safest financial assets in existence, which a Backing-only axis (measuring how much collateral exists, not how strong it is) doesn't surface.
 
 **Who it's for:** Existing thBILL holders who want to understand current backing and exit dynamics. KYC'd allocators evaluating institutional-grade T-Bill exposure with primary-redemption access. Holders of thUSD who want to inspect the largest reserve component of that product. **New retail allocators seeking Theo yield should look at [thUSD](/reports/thusd) instead — the consumer-facing front-end has migrated.**
 

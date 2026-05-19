@@ -58,6 +58,8 @@ const stablecoin = z.object({
   backing_score: score,
   issuer_score: score,
   liquidity_score: score,
+  // Optional 5th axis: collateral quality (e.g. T-Bills) independent of wrapper-layer risk.
+  underlying_score: score.optional(),
   peg_mechanism: z.string().optional(),
   issuer: z.string().optional(),
   audited_reserves: z.boolean().optional(),
@@ -124,6 +126,8 @@ const tokenizedTreasury = z.object({
   peg_mechanism_score: score.optional(),
   backing_score: score.optional(),
   issuer_score: score.optional(),
+  // Optional 5th retail axis: collateral quality (used by RWA-framed-retail reports).
+  underlying_score: score.optional(),
   peg_mechanism: z.string().optional(),
   issuer: z.string().optional(),
   market_cap_approx: z.number().optional(),
