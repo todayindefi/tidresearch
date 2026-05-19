@@ -33,7 +33,7 @@ underlying_managers:
 
 # thUSD — Retail Risk Report
 
-**Elevated risk · 4.5/10**
+**Elevated risk · 4.1/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
