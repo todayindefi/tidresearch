@@ -7,7 +7,7 @@ category: "stablecoin"
 peg_mechanism: "rwa-synthetic"
 assessment_type: "light"
 audience: "retail"
-live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=apxusd"
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"
 last_verified: "2026-05-11"
@@ -106,4 +106,4 @@ If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD retail r
 
 ---
 
-*This report describes Apyx as of mid-2026. Live values for supply, reserves, collateralization, Curve depth, and bridge conservation are on the [live dashboard](https://todayindefi.github.io/backing-monitor/?asset=apxusd). Some information depends on issuer disclosures (custody arrangements, attestations, redemption mechanics) that are not yet independently verified. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report describes Apyx as of mid-2026. Live values for supply, reserves, collateralization, Curve depth, and bridge conservation are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apxusd). Some information depends on issuer disclosures (custody arrangements, attestations, redemption mechanics) that are not yet independently verified. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*

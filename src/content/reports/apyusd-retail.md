@@ -8,7 +8,7 @@ underlying_assets: ["apxUSD"]
 yield_bearing: true
 assessment_type: "light"
 audience: "retail"
-live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=apyusd"
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apyusd"
 trust_disclaimer: true
 date: "2026-05-07"
 last_verified: "2026-05-11"
@@ -34,7 +34,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 
 ## Backing & solvency
 
-apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/apxusd/): mixed Cash + STRC + small SATA backing, off-chain RWA custody at an unnamed broker, a real third-party TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi) (cryptographic attestation, not a PCAOB-firm audit), and STRC as the largest single-issuer concentration without being the totality. Live reserves, collateralization, and reserves composition are on the [live dashboard](https://todayindefi.github.io/backing-monitor/?asset=apyusd).
+apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/apxusd/): mixed Cash + STRC + small SATA backing, off-chain RWA custody at an unnamed broker, a real third-party TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi) (cryptographic attestation, not a PCAOB-firm audit), and STRC as the largest single-issuer concentration without being the totality. Live reserves, collateralization, and reserves composition are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
 
 **apyUSD-specific reliability concern:** the vault contract has had one observable implementation upgrade since launch (about a month after going live). Future upgrades have a 3-day visibility window for the guardian role to cancel, but the upgrade path itself is a live risk surface.
 
@@ -101,4 +101,4 @@ The [apxUSD retail report](/reports/apxusd/) covers the non-yield-bearing siblin
 
 ---
 
-*This report describes Apyx as of mid-2026. Live values for NAV, supply, collateralization, secondary pool depths, and bridge conservation are on the [live dashboard](https://todayindefi.github.io/backing-monitor/?asset=apyusd). Some information depends on issuer disclosures (custody arrangements, attestations, redemption mechanics) that are not yet independently verified. The week-1 launch NAV trajectory was reconstructed from on-chain Transfer events. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report describes Apyx as of mid-2026. Live values for NAV, supply, collateralization, secondary pool depths, and bridge conservation are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd). Some information depends on issuer disclosures (custody arrangements, attestations, redemption mechanics) that are not yet independently verified. The week-1 launch NAV trajectory was reconstructed from on-chain Transfer events. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*

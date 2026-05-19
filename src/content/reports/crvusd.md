@@ -23,7 +23,7 @@ production: false
 
 **Category:** Stablecoin | **Peg Mechanism:** Algorithmic (LLAMMA + PegKeepers) | **Issuer:** Curve Finance
 
-**Live data:** [crvUSD Backing Dashboard](https://todayindefi.github.io/backing-monitor/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
+**Live data:** [crvUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
 
 ## Summary
 
@@ -200,7 +200,7 @@ No single contract or API gives an accurate crvUSD supply:
 | YB factory `balanceOf` | Pre-minted allocation | Doesn't distinguish deployed vs idle buffer |
 | **Mint + PK + YB AMMs + LlamaLend** | **Authoritative total supply (~$250M, matches DefiLlama)** | Requires querying multiple contracts — see dashboard |
 
-**⚠️ This opacity is itself a risk factor.** Unlike USDC (clear attestations) or DAI (Dai Stats dashboard), there is no authoritative crvUSD supply dashboard from Curve itself. Our [backing dashboard](https://todayindefi.github.io/backing-monitor/?asset=crvusd) attempts to fill this gap by querying on-chain primitives directly.
+**⚠️ This opacity is itself a risk factor.** Unlike USDC (clear attestations) or DAI (Dai Stats dashboard), there is no authoritative crvUSD supply dashboard from Curve itself. Our [backing dashboard](https://tidresearch.com/dashboards/?asset=crvusd) attempts to fill this gap by querying on-chain primitives directly.
 
 ### Historical Evolution
 
@@ -393,7 +393,7 @@ Note that crvUSD on a non-canonical chain inherits its bridge's security model o
 
 ## Data Sources
 
-- **Live dashboard:** [todayindefi.github.io/backing-monitor/?asset=crvusd](https://todayindefi.github.io/backing-monitor/?asset=crvusd) — hourly on-chain supply, per-market CR, PK debt, YB utilization
+- **Live dashboard:** [tidresearch.com/dashboards/?asset=crvusd](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, per-market CR, PK debt, YB utilization
 - **On-chain contracts:** ControllerFactory, Controllers, LLAMMA AMMs, PegKeepers, AggMonetaryPolicy, OneWayLendingFactory, YB Factory (`0x370a...`)
 - **LlamaRisk API:** `https://api.llamarisk.com/protocols/curve/graphql/` — market health scores, unhealthy user positions, soft-liquidation data
 - **LlamaRisk Portal:** [portal.llamarisk.com/curve/markets](https://portal.llamarisk.com/curve/markets) — 7-factor market health scores

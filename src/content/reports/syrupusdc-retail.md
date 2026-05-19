@@ -126,7 +126,7 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 
 ## Live dashboard
 
-A live monitoring view is available at [todayindefi.github.io/backing-monitor/?asset=syrupusdc](https://todayindefi.github.io/backing-monitor/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + buffer to initial collateral level + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
+A live monitoring view is available at [tidresearch.com/dashboards/?asset=syrupusdc](https://tidresearch.com/dashboards/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + buffer to initial collateral level + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
 
 ## A note on Maple's history
 

@@ -23,7 +23,7 @@ production: false
 
 **Category:** Stablecoin | **Peg Mechanism:** Hybrid (USDC-backed, yield-deployed) | **Issuer:** Origin Protocol
 
-**Live data:** [OUSD Backing Dashboard](https://todayindefi.github.io/backing-monitor/?asset=ousd) — hourly on-chain supply, collateral ratio, and strategy breakdown.
+**Live data:** [OUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=ousd) — hourly on-chain supply, collateral ratio, and strategy breakdown.
 
 ## Summary
 
@@ -124,4 +124,4 @@ $7.5M market cap is very small for a stablecoin. Limited secondary market liquid
 
 - [Origin Docs — OUSD](https://docs.originprotocol.com/yield-bearing-tokens/origin-dollar-ousd)
 - [Origin Analytics — OUSD Collateral](https://analytics.originprotocol.com/ousd/collateral)
-- [TID Backing Monitor — OUSD](https://todayindefi.github.io/backing-monitor/?asset=ousd)
+- [TID Backing Monitor — OUSD](https://tidresearch.com/dashboards/?asset=ousd)

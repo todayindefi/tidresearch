@@ -14,7 +14,7 @@ const {
   url,
   embed = true,
 } = Astro.props;
-const src = url ?? `https://todayindefi.github.io/backing-monitor/?asset=${encodeURIComponent(slug)}`;
+const src = url ?? `/dashboards/?asset=${encodeURIComponent(slug)}`;
 ---
 
 <div class="border border-border bg-card">

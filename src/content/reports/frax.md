@@ -37,11 +37,11 @@ FRAX is the original stablecoin from Frax Finance, launched December 2020 as the
 
 **Contract (Ethereum):** `0x853d955acef822db058eb8505911ed77f175b99e`
 
-**Live data:** [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=frax) | [Frax Facts L-FRAX Balance Sheet](https://facts.frax.finance/frxusd/lfrax-balance-sheet)
+**Live data:** [Backing Monitor](https://tidresearch.com/dashboards/?asset=frax) | [Frax Facts L-FRAX Balance Sheet](https://facts.frax.finance/frxusd/lfrax-balance-sheet)
 
 ## Balance Sheet (as of March 29, 2026)
 
-Data cross-referenced from [Frax Facts L-FRAX](https://facts.frax.finance/frxusd/lfrax-balance-sheet) and [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=frax).
+Data cross-referenced from [Frax Facts L-FRAX](https://facts.frax.finance/frxusd/lfrax-balance-sheet) and [Backing Monitor](https://tidresearch.com/dashboards/?asset=frax).
 
 ### Assets ($165.7M total)
 
@@ -327,7 +327,7 @@ Investigation of on-chain data (March 29, 2026) reveals that **no entity is acti
 | **AMO Minter dormant** | Last transaction: **February 9, 2023** — over 3 years ago. No new FRAX has been minted through the AMO system since then. Last operations were `syncDollarBalances` calls; last `mintFraxForAMO` dates to mid-2022. | [Etherscan](https://etherscan.io/address/0xcf37B62109b537fa0Cb9A90Af4CA72f6fb85E241) |
 | **Comptroller active but opaque** | Multisig (`0xB174...`) last tx March 27, 2026. Regular `execTransaction` calls through Jan–Mar 2026. However, this multisig controls **both** legacy FRAX and frxUSD positions — activity does not prove legacy peg defense. | [Etherscan](https://etherscan.io/address/0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) |
 | **Zero governance proposals for peg defense** | Every AMO-related proposal since mid-2025 is exclusively frxUSD/sfrxUSD (FIP-434, 437, 439, 443). Legacy FRAX governance is limited to exit/unlock proposals for trapped users (FIP-442). No proposal proposes injecting collateral, rebalancing positions, or defending the peg. | [Frax Governance Forum](https://gov.frax.finance/) |
-| **CR slowly drifting** | 91.06% → 90.86% → 91.34% with fluctuation over recent weeks. Consistent with passive positions drifting, not active management. | [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=frax) |
+| **CR slowly drifting** | 91.06% → 90.86% → 91.34% with fluctuation over recent weeks. Consistent with passive positions drifting, not active management. | [Backing Monitor](https://tidresearch.com/dashboards/?asset=frax) |
 | **Persistent discount, not defended par** | FRAX trades at $0.991 avg (below $0.995 for 95.8% of readings over 8 weeks). An actively managed peg would target closer to $1.00. | PegTracker data |
 
 ### How the Passive Peg Works
@@ -396,7 +396,7 @@ The on-chain collateral ratio oracle **stopped refreshing on approximately Febru
 
 ## Data Sources
 
-- **Live dashboards:** [Backing Monitor (L-FRAX)](https://todayindefi.github.io/backing-monitor/?asset=frax) | [Frax Facts L-FRAX Balance Sheet](https://facts.frax.finance/frxusd/lfrax-balance-sheet)
+- **Live dashboards:** [Backing Monitor (L-FRAX)](https://tidresearch.com/dashboards/?asset=frax) | [Frax Facts L-FRAX Balance Sheet](https://facts.frax.finance/frxusd/lfrax-balance-sheet)
 - **Frax Facts API:** `https://api.frax.finance/v2/lfrax/balance-sheet/latest` — returns all 202 asset positions + 50 liabilities with current values, updated hourly
 - **On-chain contracts:** FRAX token (`0x853d...`), AMO Minter (`0xcf37...`), Comptroller multisig (`0xB174...`), Curve frxUSD/FRAX pool (`0xBBaf...`)
 - [CoinMarketCap — Legacy Frax Dollar](https://coinmarketcap.com/currencies/frax/)

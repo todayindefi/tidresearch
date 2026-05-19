@@ -9,7 +9,7 @@ audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-28"
 last_verified: "2026-05-19"
-live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
+live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
 contract_score: 5.5
@@ -445,7 +445,7 @@ Three implications:
 
 **Sizing implication for institutional readers.** "thBILL TVL" in headline form materially over-counts the retail-accessible market — the majority of supply is intra-protocol at the thUSD reserve. Effective external float is materially smaller than headline supply (live split on the dashboard). The ratio that matters for retail exit is `DEX TVL / external float`, not `DEX TVL / total supply` — the retail-accessible market is structurally smaller than the headline ratio implies, and a stress event in thUSD (e.g., a sized thUSD redemption) would propagate as redemption pressure on thBILL via the reserve.
 
-The dashboard at `todayindefi.github.io/thbill-risk-info/` surfaces the holder attribution split (External float vs thUSD reserve vs OFT-adapter-locked), the in-flight Stage A receivable, and the recursive backing chain explicitly — recommended live-reading for institutional sizing during periods of thUSD growth.
+The dashboard at `tidresearch.com/dashboards/thbill/` surfaces the holder attribution split (External float vs thUSD reserve vs OFT-adapter-locked), the in-flight Stage A receivable, and the recursive backing chain explicitly — recommended live-reading for institutional sizing during periods of thUSD growth.
 
 ---
 

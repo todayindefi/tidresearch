@@ -37,7 +37,7 @@ USDD 2.0 is an overcollateralized stablecoin on TRON, forking MakerDAO's smart c
 
 Total circulating supply is **$1.344B** across all chains (Tron: $1.091B, Ethereum: $124M, BNB: $111M), with total backing of **$1.544B** (114.8% headline CR). On-chain analysis shows **69.8% of collateral originates from HTX** (Justin Sun's exchange) via the Smart Allocator ($913M) and PSM ($164M). Independent user vaults contribute $466M (34.7% independent CR). On-chain overlap verification confirmed no double-counting — the SA uses Spark on Ethereum (not Aave), and JustLend positions are separate from HTX's. However, the admin multisig can access all user funds instantly (zero timelock) per the protocol's own ChainSecurity audit — contradicting marketing claims of "no admin keys." PSM reserves have declined significantly: from $236M to $164M (-$72M, -30%) in 24 hours as of April 1, 2026.
 
-**Live data:** [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=usdd) (hourly on-chain updates)
+**Live data:** [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd) (hourly on-chain updates)
 
 **Contracts:** Tron: `TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn` | Ethereum: `0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6` | BNB Chain: `0xd17479997f34dd9156deef8f95a52d81d265be9c`
 
@@ -114,7 +114,7 @@ The PSM is the strongest mechanical feature of USDD 2.0, but it does not meaning
 | USDT Vaults (User) | **$559K** | 0.0% | Open market | **Yes** |
 | **Total Backing** | **$1.544B** | | | |
 
-Data source: On-chain VAT queries across Tron (`TH5dhX...`), Ethereum (`0xff77...`), and BNB Chain (`0x41f1...`). Live dashboard: [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=usdd).
+Data source: On-chain VAT queries across Tron (`TH5dhX...`), Ethereum (`0xff77...`), and BNB Chain (`0x41f1...`). Live dashboard: [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd).
 
 The collateral resides in MakerDAO-fork smart contracts (Vat), not in HTX wallets directly. The Smart Allocator deploys to **Spark** on Ethereum and **JustLend** on Tron (verified on-chain — not Aave as previously reported). This provides structural protection against third-party attacks. **However**, the admin multisig can access these funds at any time (see [Admin Control](#admin-control-vs-no-admin-keys-claim-audit-contradiction)).
 
@@ -149,7 +149,7 @@ This section distinguishes between what is confirmed by on-chain evidence and wh
 
 **Data sources:**
 - HTX PoR wallet addresses: [github.com/huobiapi/Tool-Node.js-VerifyAddress](https://github.com/huobiapi/Tool-Node.js-VerifyAddress/tree/main/snapshot) (27 addresses across ETH, TRX, BTC)
-- Live on-chain verification: [Backing Monitor HTX Overlap panel](https://todayindefi.github.io/backing-monitor/?asset=usdd) queries all 27 HTX PoR addresses hourly
+- Live on-chain verification: [Backing Monitor HTX Overlap panel](https://tidresearch.com/dashboards/?asset=usdd) queries all 27 HTX PoR addresses hourly
 
 ### Double-Counting: Resolved — No Overlap Detected
 
@@ -174,7 +174,7 @@ All three previously flagged addresses remain in HTX's PoR (verified live agains
 
 3. **`TZ1SsapyhKNWaVLca6P2qgVzkHTdk6nkXa`** (Tron) — 118M TRX (~$37M). The original USDD 1.0 double-counted address. Live balance has decreased from 1.064B TRX (March PoR CSV) to 118M TRX — approximately 946M TRX moved out, likely redistributed across other HTX wallets.
 
-**Additional finding:** HTX addresses collectively hold **3.38B TRX (~$1.065B)** across 11 Tron addresses, plus **$413.8M in stablecoins** and **$276.5M in Aave lending positions** across 10 Ethereum addresses. All monitored live via the [Backing Monitor](https://todayindefi.github.io/backing-monitor/?asset=usdd).
+**Additional finding:** HTX addresses collectively hold **3.38B TRX (~$1.065B)** across 11 Tron addresses, plus **$413.8M in stablecoins** and **$276.5M in Aave lending positions** across 10 Ethereum addresses. All monitored live via the [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd).
 
 ### Structural Risk Remains
 

@@ -3,7 +3,7 @@ asset: "USDm"
 slug: "usdm"
 aliases: ["USDm", "Mento USD"]
 chains: ["celo", "monad", "eth"]
-live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdm"
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdm"
 category: "stablecoin"
 peg_mechanism: "Reserve-backed (fiat-stable basket)"
 assessment_type: "light"
@@ -34,7 +34,7 @@ chain_overrides:
 
 **Moderate-elevated risk · 5.5/10** (5.0/10 on Monad, 6.5/10 on Celo)
 
-**Live data:** [USDm Backing Dashboard](https://todayindefi.github.io/backing-monitor/?asset=usdm) — hourly Monad on-chain reserve composition, ReserveV2 coverage ratio, API↔RPC drift, and Celo vs Monad side-by-side. Independent integrity check on top of Mento's own analytics API.
+**Live data:** [USDm Backing Dashboard](https://tidresearch.com/dashboards/?asset=usdm) — hourly Monad on-chain reserve composition, ReserveV2 coverage ratio, API↔RPC drift, and Celo vs Monad side-by-side. Independent integrity check on top of Mento's own analytics API.
 
 | Yield | Exit method | Primary redemption | Age (V3) | Chains |
 |---|---|---|---|---|
@@ -196,4 +196,4 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 
 *Updated 2026-05-19: POL-aware coverage. The 18.5% Monad gross "gap" is Protocol-Owned Liquidity in Mento-controlled FPMM pools, not operational under-collateralization. Ex-POL coverage is ~272% on Monad / ~1.35× aggregate. Scores unchanged — the 5.0 backing score is binding on structural factors (no atomic redemption, single-oracle, seed-stage, third-party credit pass-through), not on coverage shortfall.*
 
-*This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Live values for Monad Reserve composition, ReserveV2 coverage, API↔RPC drift, and Celo vs Monad side-by-side are on the [live dashboard](https://todayindefi.github.io/backing-monitor/?asset=usdm). Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report is based on public Mento documentation, on-chain reads via Monad mainnet RPC and MonadScan, and `reserve.mento.org` as of 2026-05-18. Live values for Monad Reserve composition, ReserveV2 coverage, API↔RPC drift, and Celo vs Monad side-by-side are on the [live dashboard](https://tidresearch.com/dashboards/?asset=usdm). Mento Labs operates governance and certain off-chain operational components; corrections and clarifications are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*

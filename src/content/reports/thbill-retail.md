@@ -10,7 +10,7 @@ audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-28"
 last_verified: "2026-05-19"
-live_dashboard_url: "https://todayindefi.github.io/thbill-risk-info/"
+live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
 peg_mechanism_score: 3.5
@@ -119,7 +119,7 @@ The repositioning covered at the top of this report (majority of thBILL held int
 
 ## Live dashboard
 
-A live monitoring view is available at [todayindefi.github.io/thbill-risk-info](https://todayindefi.github.io/thbill-risk-info/) — refreshed hourly from on-chain RPC reads, Libeara NAV attestation, and DEX depth probes. It surfaces the signals discussed above as standalone panels:
+A live monitoring view is available at [tidresearch.com/dashboards/thbill](https://tidresearch.com/dashboards/thbill/) — refreshed hourly from on-chain RPC reads, Libeara NAV attestation, and DEX depth probes. It surfaces the signals discussed above as standalone panels:
 
 - **Backing ratio** (three tiers: physical / on-chain-only / economic — only the economic tier credits in-flight Libeara settlement, so the on-chain-only tier is the one that periodically dips during Stage A windows).
 - **Holder attribution** (External float vs thUSD reserve vs OFT-adapter-locked) — answers *"how much thBILL is actually accessible to retail vs intra-protocol?"*
