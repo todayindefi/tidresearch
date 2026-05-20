@@ -11,20 +11,21 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apyusd"
 trust_disclaimer: true
 date: "2026-05-07"
-last_verified: "2026-05-11"
+last_verified: "2026-05-20"
 featured: false
 production: true
 volatility_score: 7.0
 structural_score: 5.5
 redemption_score: 4.5
 liquidity_score: 5.5
-issuer_score: 6.0
-overall_score: 4.5
+issuer_score: 5.5
+overall_score: 4.4
+audited_reserves: true
 ---
 
 # apyUSD — Retail Risk Report
 
-**Moderate-elevated risk · 4.5/10**
+**Moderate-elevated risk · 4.4/10**
 
 apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows over time as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **~13% APY** (within STRC's 11-15% indicated-rate range). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **30-day cooldown** on the canonical exit path (or use a DEX two-hop for retail-scale exits in minutes).
 
@@ -34,7 +35,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 
 ## Backing & solvency
 
-apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/apxusd/): mixed Cash + STRC + small SATA backing, off-chain RWA custody at an unnamed broker, a real third-party TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi) (cryptographic attestation, not a PCAOB-firm audit), and STRC as the largest single-issuer concentration without being the totality. Live reserves, collateralization, and reserves composition are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
+apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/apxusd/): mixed Cash + STRC family (brokerage-held STRC at Alpaca + new on-chain STRCx) + small SATA backing; a continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi); monthly Wolf & Company AICPA-standards examinations published at [`docs.apyx.fi`](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) (March 2026 full scope + April 2026 securities-only — cash dropped from April scope, may return in May report); STRC family as the largest single-issuer concentration without being the totality. Live reserves, collateralization, and reserves composition are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
 
 **apyUSD-specific reliability concern:** the vault contract has had one observable implementation upgrade since launch (about a month after going live). Future upgrades have a 3-day visibility window for the guardian role to cancel, but the upgrade path itself is a live risk surface.
 
@@ -73,8 +74,9 @@ Same answer as for apxUSD — same protocol, same audits, same admin:
 - DFDV (Nasdaq-listed) backing + tier-1 investors (ParaFi, Pantera, etc.)
 - Three audits (Quantstamp, Zellic, Certora w/ formal verification)
 - 4-of-6 Safe admin + 72-hour timelock + distributed guardian role
-- Apyx as legal entity appears separate from DFDV — standard offshore-RWA structure
-- Custodian unnamed, no PCAOB-firm audit yet, no bug bounty
+- Apyx as legal entity appears separate from DFDV — standard offshore-RWA structure; the issuer named on the Wolf attestation is **Preference Foundation** (Director Carolyn Kelly signs).
+- **Wolf & Company AICPA attestations now published monthly** (March + April 2026); **Alpaca** named as the brokerage. Wolf is mid-tier (not Big-4) and the April scope narrowed to securities only — see the [apxUSD retail report](/reports/apxusd/) "Backing & solvency" section for the full disclosure-stack write-up.
+- No bug bounty.
 - Cross-chain bridge (audited Chainlink CCIP, Ethereum ↔ Base) is governed by a smaller 3-of-6 multisig with no time-delay — weaker than token governance. Worth noting but not disqualifying for retail-scale exposure.
 
 See the [apxUSD retail report](/reports/apxusd/) for the full team-trust write-up.
@@ -90,7 +92,7 @@ See the [apxUSD retail report](/reports/apxusd/) for the full team-trust write-u
 
 ## What to watch
 
-- **First PCAOB-firm attestation** (still missing, same as apxUSD)
+- **Wolf May 2026 attestation — cash scope re-inclusion** (same as apxUSD; the April engagement narrowed to securities only)
 - **STRC ex-dividend dates** (~mid-month) — NAV trajectory should be smooth; visible step-changes or pauses would be a yield-mechanic anomaly worth investigating
 - **Curve apyUSD/apxUSD pool depth** (live on dashboard) — the dominant secondary exit. Depth shrinking or persistent imbalance would push more flow into the 30-day cooldown
 - **MSTR / BTC drawdowns** — STRC dividends compress in stress
@@ -101,4 +103,4 @@ The [apxUSD retail report](/reports/apxusd/) covers the non-yield-bearing siblin
 
 ---
 
-*This report describes Apyx as of mid-2026. Live values for NAV, supply, collateralization, secondary pool depths, and bridge conservation are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd). Some information depends on issuer disclosures (custody arrangements, attestations, redemption mechanics) that are not yet independently verified. The week-1 launch NAV trajectory was reconstructed from on-chain Transfer events. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report describes Apyx as of mid-2026. Live values for NAV, supply, collateralization, secondary pool depths, and bridge conservation are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd). Some information (cash composition, redemption mechanics, on-chain wallet keys) remains issuer-attested only. Securities balances and brokerage are CPA-attested by Wolf & Company under AICPA standards (March + April 2026, April scope securities-only). The week-1 launch NAV trajectory was reconstructed from on-chain Transfer events. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
