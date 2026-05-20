@@ -35,7 +35,7 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdat"
 
 USDat is Saturn Labs' permissioned, non-yield stablecoin. Reserves are held directly in the USDat smart contract itself — roughly 99% as **$M** (M0's federated tokenized US Treasuries) plus a thin USDC float for the redemption gateway. Onboarded users mint and redeem 1:1 against either USDC or $M through Saturn's app; non-onboarded holders are restricted to secondary-market exit (primarily Curve USDAT/USDC, which clears several million dollars of daily volume).
 
-The 5.5/10 score reflects the single strongest backing story in our coverage — **every dollar of USDat supply is matched by tokens you can verify with three on-chain calls, no oracle required** — paired with material drags: a permissioned holder universe that prevents general DeFi composability, a young protocol (~3 months mainnet), a single-EOA admin key with no timelock, and a roadmap that discloses a future rotation toward digital-credit (STRC) exposure that would change the risk profile if/when it happens.
+The 5.5/10 score reflects the single strongest backing story in our coverage — **every dollar of USDat supply is matched by tokens you can verify with three on-chain calls, no oracle required** — paired with material drags: a permissioned holder universe that prevents general DeFi composability, a young protocol (~3 months mainnet), a Fireblocks 2-of-3 MPC admin key with no on-chain timelock, and a roadmap that discloses a future rotation toward digital-credit (STRC) exposure that would change the risk profile if/when it happens.
 
 ## Backing & solvency
 
@@ -69,9 +69,13 @@ This makes USDat structurally analogous to USDC or USDT on the holder side — a
 
 **Audits:** three reports published — Three Sigma (Audit #1) and Certora (Audits #2 and #3). Certora is a top-tier formal-verification shop; two Certora reports plus one Three Sigma is a real audit package for a sub-one-year-old protocol. Individual finding severities are not surfaced in this review.
 
-**Admin posture is the binding contract-side risk.** USDat is a TransparentUpgradeableProxy whose upgrade path routes through an OZ ProxyAdmin contract — but that ProxyAdmin is owned by a **single Externally-Owned Account (EOA)**, not a multisig and not a timelock. The same EOA also holds the DEFAULT_ADMIN_ROLE on the USDat token contract, meaning the same key can both upgrade the implementation and grant/revoke roles. The EOA has signed only a small number of transactions ever (low admin activity is a positive signal — but the single-key risk is structural). A single key compromise can rewrite USDat token logic or pause the contract.
+**Admin posture is the binding contract-side risk.** USDat is a TransparentUpgradeableProxy whose upgrade path routes through an OZ ProxyAdmin contract owned by an address that **Saturn represents as a Fireblocks 2-of-3 MPC wallet**. That address also holds the DEFAULT_ADMIN_ROLE on the USDat token contract directly. On-chain reads cannot distinguish an MPC wallet from a single-key EOA — the address shows the same shape either way (no contract code, low outbound transaction count). Taking Saturn's representation at face value, this materially upgrades the custody posture versus a raw single key — no individual signer device compromise can rewrite USDat token logic or pause the contract; a 2-of-3 quorum is required. But three caveats remain binding:
 
-This is the same risk class as Apyx's admin posture. Saturn shares this admin EOA with sUSDat — see the [sibling report](/reports/susdat/) for the cross-asset implication.
+- All three MPC signers are internal to Saturn's custody process — not multi-party / multi-org. Different from a Safe with external co-signers.
+- There is no on-chain timelock. Admin actions land immediately once the MPC quorum signs; users have no observation window before changes take effect.
+- Fireblocks does not publish per-customer attestations we can independently verify. The representation is taken in good faith pending an independent infrastructure proof.
+
+Same residual risk class as Apyx's admin posture. Saturn shares this admin address with sUSDat — see the [sibling report](/reports/susdat/) for the cross-asset implication: a single MPC quorum gates both assets simultaneously.
 
 **Team and backers:** named team with prior experience at Artemis and M31 Capital. $800K raised January 2026 from YZi Labs and Sora Ventures. Named institutional depositors disclosed (Flowdesk, Galaxy — ~$10M aggregate). Operational partners include Galaxy, Securitize, and Clear Street.
 
@@ -83,14 +87,14 @@ This is the same risk class as Apyx's admin posture. Saturn shares this admin EO
 ## Who this is NOT for
 
 - Anyone needing general-purpose DeFi composability (lending collateral, LP-paired assets across many venues) — the permissioned holder universe is the wrong shape.
-- Anyone who needs the strongest possible admin-key posture — single-EOA admin without a timelock is the binding risk; better-administered stables exist.
+- Anyone who needs the strongest possible admin-key posture — Saturn-represented Fireblocks 2-of-3 MPC (signers internal to Saturn, no on-chain timelock, no Fireblocks-published verification) is the binding residual risk; better-administered stables exist.
 - Yield-seekers — USDat is non-yield by design; [sUSDat](/reports/susdat/) is the yield-bearing sibling (with materially different risk profile).
 
 ## What to watch
 
 - **Non-{$M, USDC} token in the treasury.** The disclosed-but-not-yet rotation toward STRC or other digital-credit exposure. The drift-probe panel on the live dashboard fires the moment any new token appears.
 - **Backing ratio drift below 100%.** Currently sits at ~100.01% with a small positive buffer; sustained drift below 99.5% would be a tier-1 signal.
-- **Admin EOA outbound activity.** The shared admin EOA has low historical activity; any new outbound transaction is signal worth investigating (could be routine role-grant, could be a Safe-migration prelude, could be unauthorized).
+- **Admin MPC outbound activity.** The shared admin EOA has low historical activity; any new outbound transaction is signal worth investigating (could be routine role-grant, could be a Safe-migration prelude, could be unauthorized).
 - **Implementation upgrade.** A change to the USDat or sUSDat implementation slot is tier-1 — both contracts have been stable for several weeks since the last upgrade.
 
 ## Live dashboard

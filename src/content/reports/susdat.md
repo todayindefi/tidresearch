@@ -35,7 +35,7 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 
 sUSDat is the yield-bearing ERC-4626 staking wrapper for Saturn's [USDat](/reports/usdat/) stablecoin. Users stake USDat 1:1 and receive sUSDat shares whose NAV grows from the dividend stream on **STRC** (Strategy's variable-rate perpetual preferred — Bitcoin-collateralized). The vault runs a **dynamic reserve** that rotates between on-chain USDat and off-chain STRC based on a published LTV rule tied to Strategy's Bitcoin net asset value.
 
-The 4.5/10 score reflects a real audit set (Certora ×2 + Three Sigma), a credible ERC-4626 design with anti-sniping 30-day yield vesting, a designed proof-of-reserves pipeline (Accountable + Chainlink NAV oracle — though the feed is not yet live for Saturn), and the same shared issuer infrastructure as USDat — offset by single-cashflow-source exposure to MSTR/STRC, ~81% of vault NAV held off-chain at the custodian (with only the on-chain USDat buffer directly verifiable), gated primary redemption that asymmetrically favors onboarded holders, and the shared single-EOA admin key.
+The 4.5/10 score reflects a real audit set (Certora ×2 + Three Sigma), a credible ERC-4626 design with anti-sniping 30-day yield vesting, a designed proof-of-reserves pipeline (Accountable + Chainlink NAV oracle — though the feed is not yet live for Saturn), and the same shared issuer infrastructure as USDat — offset by single-cashflow-source exposure to MSTR/STRC, ~81% of vault NAV held off-chain at the custodian (with only the on-chain USDat buffer directly verifiable), gated primary redemption that asymmetrically favors onboarded holders, and the shared Saturn-represented Fireblocks 2-of-3 MPC admin key (no on-chain timelock, unverifiable infrastructure).
 
 ## Backing & solvency
 
@@ -84,7 +84,7 @@ The yield delivery mechanism is **STRC dividends accruing into share NAV**. You 
 
 **Audits:** shared with USDat — Three Sigma (Audit #1) and Certora (Audits #2 and #3). The ERC-4626 implementation includes Pausable + ReentrancyGuard plus the 30-day linear yield vesting design. Pause is itself an admin power held by the same key controlling the rest of the system.
 
-**Admin posture is shared with USDat** — same single Externally-Owned Account holds DEFAULT_ADMIN_ROLE on both contracts and owns the USDat ProxyAdmin. No multisig, no timelock. A single key compromise affects both assets simultaneously: it could drain the on-chain USDat buffer of sUSDat, upgrade share-accounting logic, or pause both contracts.
+**Admin posture is shared with USDat.** The same address holds DEFAULT_ADMIN_ROLE on both contracts and owns the USDat ProxyAdmin. **Saturn represents this address as a Fireblocks 2-of-3 MPC wallet** — on-chain reads cannot distinguish MPC from single-key EOA (the address shows no contract code, low outbound nonce). Taking the representation at face value, the raw single-key-compromise vector is eliminated: a 2-of-3 quorum is required for any admin action. But the same three caveats from the USDat sibling apply — signers are internal to Saturn's custody process, there is no on-chain timelock so admin actions land immediately once signed, and Fireblocks doesn't publish customer-verifiable infrastructure proofs. A coordinated MPC-quorum action still affects both assets simultaneously: it could drain the on-chain USDat buffer of sUSDat, upgrade share-accounting logic, or pause both contracts. Same residual risk class as Apyx's admin posture.
 
 **Proof-of-reserves pipeline** is designed but not live. Documentation describes off-chain STRC attestation via Accountable plus a Chainlink NAV oracle consuming the feed; as of report date no feed is responding at the obvious endpoints. Until the feed activates, the 81% of NAV held off-chain depends on the contract's own `totalAssets()` reporting — a trust-the-oracle leg that is the binding monitoring gap on this asset.
 
@@ -98,7 +98,7 @@ The yield delivery mechanism is **STRC dividends accruing into share NAV**. You 
 ## Who this is NOT for
 
 - **Anyone needing the strongest verifiable backing.** Only ~19% of NAV is directly on-chain-verifiable; the rest is oracle-attested. The pipeline is designed but not live.
-- **Core stable allocations.** This is a speculative yield sleeve at best, not a substitute for sDAI, scrvUSD, or sUSDe in a defensive position. Single-cashflow-source (STRC) plus single-EOA admin plus young protocol (~3 months).
+- **Core stable allocations.** This is a speculative yield sleeve at best, not a substitute for sDAI, scrvUSD, or sUSDe in a defensive position. Single-cashflow-source (STRC) plus Saturn-represented Fireblocks 2-of-3 MPC admin (signers internal, no on-chain timelock) plus young protocol (~3 months).
 - **Anyone wanting Bitcoin exposure indirectly** — STRC is Strategy's preferred-equity layer, not their common stock; this is fixed-income-shaped exposure to the Strategy capital stack, not a Bitcoin proxy.
 
 ## What to watch
