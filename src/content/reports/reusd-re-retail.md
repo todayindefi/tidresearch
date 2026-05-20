@@ -6,29 +6,29 @@ chains: ["eth", "arb", "base", "avax"]
 category: "vault-share"
 assessment_type: "full"
 audience: "retail"
-date: "2026-05-18"
-last_verified: "2026-05-18"
+date: "2026-05-19"
+last_verified: "2026-05-19"
 featured: false
 issuer: "Resilience BVI Ltd."
 audited_reserves: true
 market_cap_approx: 175280000
-volatility_score: 5.5
+volatility_score: 7.0
 liquidity_score: 5.0
 structural_score: 5.5
 redemption_score: 4.5
-overall_score: 5.0
+overall_score: 5.5
 live_dashboard_url: "https://app.re.xyz/reusd"
 ---
 
 # reUSD (Re Protocol) — Retail Risk Report
 
-**Moderate risk · 5.0/10**
+**Moderate risk · 5.5/10**
 
 > **Issuer-published dashboard:** [app.re.xyz/reusd](https://app.re.xyz/reusd) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, yield/price/TVL history charts, capital tranching diagram, and links to Chainlink Proof of Reserves. It is the canonical source for live metrics on this asset. tidresearch does not currently run an independent dashboard for reUSD.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~6.1% APY | Curve + Coinbase + on-chain bridge | Tiered (50%+ instant buffer, queue beyond) | ~11 months | Ethereum, Arbitrum, Base, Avalanche |
+| ~6.1% APY | DEX-only (Curve, Fluid) | Tiered (50%+ instant buffer, queue beyond) | ~11 months | Ethereum, Arbitrum, Base, Avalanche |
 
 ## Summary
 
@@ -36,9 +36,11 @@ reUSD is the **senior tranche** of Re Protocol's reinsurance capital structure. 
 
 The senior tranche earns the risk-free rate plus a **2.5% (250 bps) spread** — currently around 6.1% APY. Below reUSD sits its junior sibling [reUSDe](/reports/reusde-re/) (Mezzanine) and below that Re Protocol's own equity capital. Losses are absorbed bottom-up, so reUSD only takes a hit if a catastrophic underwriting event exhausts both junior layers.
 
-As of 2026-05-18, reUSD has **$175.28M TVL** across 162.55M tokens, listed on Coinbase, with multi-chain deployments on Ethereum, Arbitrum, Base, and Avalanche. NAV currently $1.08, up ~8% from June 2025 inception.
+As of 2026-05-19, reUSD has **$175.28M TVL** across 162.55M tokens, with multi-chain deployments on Ethereum, Arbitrum, Base, and Avalanche. NAV currently $1.08, up ~8% from June 2025 inception.
 
-The 5.0/10 score reflects a credibly-engineered RWA exposure offset by two structural realities: (1) **U.S. persons cannot use primary redemption** under the BVI securities exemption, leaving secondary-market-only exit for U.S. holders, and (2) the secondary market has demonstrated a 13% NAV detachment (ATL $0.8734) under stress.
+The 5.5/10 score reflects a credibly-engineered RWA exposure offset by two structural realities: (1) **U.S. persons cannot use primary redemption** under the BVI securities exemption, leaving DEX-only exit for U.S. holders, and (2) **Mainnet primary redemption pays out in sUSDe, not USDC** — so even non-U.S. Mainnet holders inherit Ethena impairment at exit. Across 11 months of trading, secondary price has tracked the smooth NAV curve closely — early-launch dips (Jul–Aug 2025) imply ~1–3% discount-to-NAV at the worst, with near-zero deviation from late 2025 onward. The structural exit-asymmetry that has produced -5% to -15% detachments on other tokenized RWAs has **not** materialized for reUSD to date, but the setup that produces it (gated cohort + DEX-only exit + ~$28M/month DEX depth against $176M cap) is unchanged.
+
+**Frame check:** reUSD is a vault share — its target price grows with NAV, not a $1 peg. The right metric for stress is *discount-to-NAV* `(NAV − market price) / NAV`, not absolute price vs $1.00. NAV today is $1.08; the absolute-price ATL on the rendered chart (~$0.99, early launch) implies a ~1–3% discount-to-NAV given accrued NAV at that time.
 
 ## What you actually earn
 
@@ -53,13 +55,17 @@ Compared to its sibling reUSDe (~12% APY, mezzanine tranche): reUSD earns roughl
 
 ## How exit works
 
+reUSD has a deeper Ethena dependency than the yield headline suggests. Re Protocol's docs confirm that on Ethereum, when you redeem reUSD, the protocol pays you back in **sUSDe — not USD**. To get clean dollars you need a second step: wait out Ethena's 7-day cooldown (sUSDe → USDe → USDC) or swap on a DEX, where stress conditions can mean meaningful slippage. On Avalanche, redemptions pay USDC directly and are exempt from this. The practical consequence: a Mainnet holder of reUSD inherits Ethena impairment risk on the *exit asset itself*, not just on the on-chain reserve buffer. A sUSDe depeg would propagate to reUSD via three channels at once — the yield formula (which references sUSDe basis), the on-chain reserve buffer (which holds sUSDe basis-trade positions), and the redemption payout itself — so even non-U.S. holders going through primary redemption are not insulated from Ethena on Mainnet.
+
 Two paths, very different profiles depending on whether you can KYC as a non-U.S. person:
 
-**1. Primary redemption (non-U.S. KYC only):** Tiered — an actuarially determined instant buffer (typically 50%+ of deposits) settles immediately at NAV. Requests beyond the buffer queue and settle as trust assets mature. 0.18% subscription / 0.18% redemption fees; minimum deposit **250 USDC** per the current dashboard.
+**1. Primary redemption (non-U.S. KYC only):** Tiered — an actuarially determined instant buffer (typically 50%+ of deposits) settles immediately at NAV. Requests beyond the buffer queue and settle as trust assets mature. 0.18% subscription / 0.18% redemption fees; minimum deposit **250 USDC** per the current dashboard. **Payout asset depends on chain:** on Mainnet (Ethereum), the instant redemption tier pays out in **sUSDe**, the staked-USDe yield-bearing token issued by Ethena. On Avalanche, redemptions pay out in USDC. A Mainnet redeemer wanting a clean dollar at exit must follow up with a sUSDe → USDC unwrap (Ethena 7-day cooldown queue or DEX swap), and any sUSDe price weakness propagates directly to the dollar value of that exit.
 
-**2. Secondary market (the only path for U.S. persons):** reUSD trades on Curve pools across all four supported chains and is listed on Coinbase. Aggregate monthly volume is around $511M (per RWA.xyz). Decent liquidity overall, but **secondary price can detach from NAV during stress.** The recorded all-time low is $0.8734 — ~13% below NAV at the time — which is the canonical risk for any tokenized RWA: gated cohorts can only exit via the secondary market, and pressure can push price well below the NAV that primary redeemers receive.
+**2. DEX secondary market (the only path for U.S. persons):** reUSD trades on Curve and Fluid pools across the four supported chains. There is **no CEX listing**: per CoinGecko Markets (May 2026), the four trading venues are Fluid REUSD/USDT (~63% of 24h DEX volume), Curve REUSD/sUSDe (~37%), Curve REUSD/USDC (<1%), and a stale Blackhole V2 pool. Aggregate DEX exit liquidity is ~**$28M/month** (~$946K/24h across the four pools). The often-cited "$511M monthly volume" from RWA.xyz is *transfer* volume — it conflates mints, redemptions, wallet-to-wallet transfers, and DEX trades. Only the DEX share is realizable exit for a holder. Against a $176M market cap, $28M/month of real DEX exit liquidity is functional for retail-size exits but thin for institutional-size.
 
 **For U.S. holders specifically:** the primary path is unavailable. Treat reUSD as a hold-the-NAV-trajectory position rather than a redeem-at-par stablecoin.
+
+**On the $0.8734 all-time-low aggregator print:** an aggregator text field shows an ATL of $0.8734, not visible on the rendered CoinGecko chart — historically treated as junk metadata from a delisted seed-stage pool. Now that we know Mainnet primary redemption pays out in sUSDe, this print becomes structurally plausible: a window in which sUSDe traded materially below $1 would mechanically produce a ~$0.85 reUSD print for any redeemer dumping their sUSDe payout to USDC. **Pending cross-check** against sUSDe historical price; if confirmed as a real sUSDe-correlated detachment, the volatility score would require downward revision.
 
 ## What the contracts are doing
 
@@ -81,21 +87,21 @@ The thing to internalize: **the smart contract doesn't hold the reinsurance.** R
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Volatility | 5.5 | NAV path smooth ($1.00 → $1.08 over 11 months). Secondary market has detached to $0.8734 (13% below NAV) under stress. |
-| Liquidity | 5.0 | Multi-chain (Eth/Arb/Base/Avax), Coinbase-listed, ~$511M monthly volume. Solid aggregate; multi-chain split fragments depth. |
+| Volatility | 7.0 | NAV path smooth ($1.00 → $1.08 over 11 months, consistent with the target rate). Vault-share peg (read as discount-to-NAV, not absolute price vs $1): early-launch dips imply ~1–3% discount-to-NAV at the worst, near-zero deviation from late 2025 onward. Capped below "very tight" because (a) the 11-month history is short, (b) insurance loss patterns are back-loaded, and (c) the structural setup that could produce a deeper detachment remains in place. |
+| Liquidity | 5.0 | DEX-only (no CEX listing), Ethereum-concentrated — Fluid + Curve carry effectively all meaningful depth across the four supported chains. Real DEX exit liquidity is ~$28M/month against a $176M market cap — functional for retail-size, thin for institutional-size. Primary redemption at NAV works for non-U.S. holders (moots the question for that cohort). |
 | Structural | 5.5 | ERC-1967 upgradeable proxy with Fireblocks MPC admin; 21-month-stale Hacken audit on current implementation; substantial off-chain dependency stack (trust bank, insurance carriers, Network Firm, Chainlink, Fireblocks, Grant Thornton). |
-| Redemption | 4.5 | **Binding constraint for U.S. holders.** Non-U.S. persons get tiered NAV redemption (50%+ instant buffer); U.S. persons get secondary-market only. The §II.4 asymmetry has materialized once (13% detachment). |
-| **Overall** | **5.0** | Moderate risk — credibly built for the asset class, with two structural caveats that cap the score. |
+| Redemption | 4.5 | **Binding constraint for U.S. holders.** Non-U.S. persons get tiered NAV redemption (50%+ instant buffer), but on Mainnet the payout asset is **sUSDe, not USD** — a clean-dollar exit requires a second-leg sUSDe → USDC swap. U.S. persons get DEX exit only. Only Avalanche primary-redemption holders get a clean USDC payout. The §II.4 asymmetry remains structural and unmitigated; has not produced an observable detachment in 11 months of trading. |
+| **Overall** | **5.5** | Moderate risk — credibly built for the asset class, with three structural caveats that cap the score: U.S.-cohort exit asymmetry, Mainnet sUSDe-payout exit-asset risk, and a stale audit relative to the live implementation. |
 
 ## Who it's for
 
 - **Non-U.S. yield-seekers** comfortable with regulated RWA exposure who want tokenized senior reinsurance with on-chain composability. Treat as a 5-10% portfolio sleeve, not a stablecoin substitute.
-- DeFi users who specifically want **multi-chain availability** and CEX exit optionality alongside on-chain DEX liquidity.
+- DeFi users who specifically want **multi-chain availability** for an RWA position and are comfortable with DEX-only secondary exit (no CEX listing).
 
 ## Who should avoid
 
-- **U.S. persons looking for a redeem-at-par stablecoin substitute.** Primary redemption is unavailable; exit is secondary-market only, and the 13% historical detachment under stress is the receipt for that asymmetry.
-- **Anyone leveraging on a venue using a market-priced oracle.** A secondary-market detachment to $0.87 would trigger liquidations even if Re Protocol's NAV is unimpaired. NAV-priced oracle is the only defensible configuration.
+- **U.S. persons looking for a redeem-at-par stablecoin substitute.** Primary redemption is unavailable; exit is DEX-only. The structural exit-asymmetry that has produced -5% to -15% detachments on other tokenized RWAs has not yet materialized for reUSD, but the setup is unchanged and 11 months without a real stress event is not the same as resilience to one.
+- **Anyone leveraging on a venue using a market-priced oracle.** A secondary-market detachment would trigger liquidations even if Re Protocol's NAV is unimpaired. NAV-priced oracle is the only defensible configuration.
 - Anyone who needs a fully on-chain trustless instrument. reUSD has substantial off-chain dependencies (U.S. trust bank, reinsurance carriers, Chainlink feed liveness, Fireblocks operational continuity).
 
 ## What to watch
@@ -116,4 +122,4 @@ Re Protocol runs a loyalty points program prominently surfaced on the asset dash
 
 ---
 
-*This report is based on Re Protocol's public documentation, on-chain reads, and the live transparency dashboard at [app.re.xyz](https://app.re.xyz) through 2026-05-18. Some information depends on issuer disclosures (specific trust bank counterparty, individual reinsurance carriers, reUSDe vs reUSD layer sizing) that are not yet independently verified. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Re Protocol's public documentation, on-chain reads, and the live transparency dashboard at [app.re.xyz](https://app.re.xyz) through 2026-05-19. Some information depends on issuer disclosures (specific trust bank counterparty, individual reinsurance carriers, reUSDe vs reUSD layer sizing) that are not yet independently verified. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
