@@ -18,6 +18,7 @@ peg_mechanism_score: 4.5
 backing_score: 4.5
 liquidity_score: 4.5
 issuer_score: 5.5
+underlying_score: 5.5
 overall_score: 4.6
 audited: true
 audit_count: 3
@@ -43,7 +44,7 @@ apxUSD is a $1-pegged stablecoin from Apyx, a young protocol (live since Feb 202
 
 **Backing is verifiable through two layers.** (a) A continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi) signs each snapshot from a secure enclave with a key registered on-chain. (b) Monthly third-party CPA-firm attestations by **Wolf & Company, P.C.** (Boston; AICPA examination standards) published at [`docs.apyx.fi`](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) — March 2026 and April 2026 reports both signed. The live dashboard shows reserves, supply, and collateralization (currently just above 100% — small but positive buffer).
 
-Composition is roughly **half-to-two-thirds Cash & Equivalents + one-third-to-half STRC family + a small SATA sleeve**. The STRC family now has two forms: brokerage-held STRC at **Alpaca** plus a newly disclosed on-chain tokenized form **STRCx** ($51.5M as of 2026-04-30 per the April Wolf attestation, up from zero on 2026-04-09). STRC family is the largest single-issuer concentration but not the totality — a 50% STRC writedown would still leave most of the backing intact.
+Composition is roughly **half-to-two-thirds Cash & Equivalents + one-third-to-half STRC family + a small SATA sleeve** (~56% cash + ~42% STRC + ~2% SATA per the most recent disclosed snapshot). The STRC family now has two forms: brokerage-held STRC at **Alpaca** plus a newly disclosed on-chain tokenized form **STRCx** ($51.5M as of 2026-04-30 per the April Wolf attestation, up from zero on 2026-04-09). STRC family is the largest single-issuer concentration but not the totality — a 50% STRC writedown would still leave most of the backing intact. That cash-majority composition is reflected in the **Underlying axis at 5.5** — meaningfully diversified versus the apyUSD wrapper (4.5, which carries the same backing minus a wrapper-recursion discount) and well above pure-STRC products like [sUSDat](/reports/susdat/) (4.0).
 
 **The qualifiers worth knowing:**
 - The "Cash & Equivalents" line is not itemized in the Accountable feed — could be bank deposits, T-bills, USDC, or some mix. Not disclosed publicly.
