@@ -10,7 +10,7 @@ audience: "retail"
 companion_report: "syrupusdc-full"
 date: "2026-04-25"
 last_verified: "2026-05-04"
-featured: true
+featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1066000000
