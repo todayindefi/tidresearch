@@ -9,6 +9,7 @@ audience: "retail"
 date: "2026-05-19"
 last_verified: "2026-05-19"
 featured: false
+production: true
 issuer: "Resilience BVI Ltd."
 audited_reserves: true
 market_cap_approx: 175280000
