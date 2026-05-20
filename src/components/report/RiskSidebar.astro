@@ -1,4 +1,5 @@
 ---
+import { getEntry } from "astro:content";
 import RiskBadge from "./RiskBadge.astro";
 import Badge from "../ui/Badge.astro";
 import { chainLabel } from "@/lib/chains";
@@ -10,6 +11,16 @@ interface Props {
 
 const { data } = Astro.props;
 const liveDashboardUrl: string | undefined = data.live_dashboard_url;
+
+// Companion report cross-link. The historical pattern (syrupUSDC, thBILL, etc.)
+// is retail → institutional, where the CTA routes to /<companion>/request for
+// gated access. Saturn (USDat/sUSDat) introduces a retail-retail sibling pattern
+// where the companion is also a public report and the CTA should link directly.
+const companionEntry =
+  data.audience === "retail" && data.companion_report
+    ? await getEntry("reports", data.companion_report)
+    : null;
+const companionIsRetailSibling = companionEntry?.data?.audience === "retail";
 
 type Axis = { key: string; label: string };
 
@@ -23,16 +34,18 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
   "wrapped-token": [
     { key: "volatility_score", label: "Stability" },
-    { key: "liquidity_score", label: "Liquidity" },
     { key: "structural_score", label: "Contract & Admin" },
     { key: "redemption_score", label: "Redemption" },
+    { key: "underlying_score", label: "Underlying" },
+    { key: "liquidity_score", label: "Liquidity" },
     { key: "issuer_score", label: "Issuer" },
   ],
   "vault-share": [
     { key: "volatility_score", label: "Stability" },
-    { key: "liquidity_score", label: "Liquidity" },
     { key: "structural_score", label: "Contract & Admin" },
     { key: "redemption_score", label: "Redemption" },
+    { key: "underlying_score", label: "Underlying" },
+    { key: "liquidity_score", label: "Liquidity" },
     { key: "issuer_score", label: "Issuer" },
   ],
   "tokenized-treasury": [
@@ -255,7 +268,7 @@ const categoryLabel = (c: string) =>
   </div>
 
   {
-    data.audience === "retail" && data.companion_report && (
+    data.audience === "retail" && data.companion_report && !companionIsRetailSibling && (
       <a
         href={`/reports/${data.companion_report}/request`}
         class="block border-t border-border pt-4 -mx-6 -mb-6 px-6 pb-6 hover:bg-primary/5 transition-colors group"
@@ -267,6 +280,23 @@ const categoryLabel = (c: string) =>
         </p>
         <span class="text-xs font-mono uppercase tracking-wider text-primary group-hover:underline">
           Request access →
+        </span>
+      </a>
+    )
+  }
+  {
+    companionIsRetailSibling && companionEntry && (
+      <a
+        href={`/reports/${companionEntry.data.slug}/`}
+        class="block border-t border-border pt-4 -mx-6 -mb-6 px-6 pb-6 hover:bg-primary/5 transition-colors group"
+      >
+        <div class="eyebrow mb-2 text-primary/80">Paired Report</div>
+        <p class="text-sm text-foreground mb-2">
+          {companionEntry.data.asset} — paired sibling on the same issuer
+          infrastructure. Different risk profile, complementary read.
+        </p>
+        <span class="text-xs font-mono uppercase tracking-wider text-primary group-hover:underline">
+          Read {companionEntry.data.asset} →
         </span>
       </a>
     )

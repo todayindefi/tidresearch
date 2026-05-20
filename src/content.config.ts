@@ -72,6 +72,9 @@ const wrappedAxes = {
   redemption_score: score,
   liquidity_score: score,
   issuer_score: score.optional(),
+  // Optional 5th axis: collateral quality of the underlying asset(s), independent
+  // of wrapper-layer risk. Matches the stablecoin/tokenized-treasury 5-axis schema.
+  underlying_score: score.optional(),
   yield_bearing: z.boolean().optional(),
   underlying_assets: z.array(z.string()).default([]),
 };
