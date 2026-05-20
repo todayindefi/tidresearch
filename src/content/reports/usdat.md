@@ -17,8 +17,8 @@ market_cap_approx: 105000000
 peg_mechanism_score: 6.5
 backing_score: 7.0
 underlying_score: 5.5
-liquidity_score: 5.0
-issuer_score: 5.0
+liquidity_score: 7.5
+issuer_score: 4.5
 overall_score: 5.5
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdat"
 ---
@@ -35,7 +35,7 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdat"
 
 USDat is Saturn Labs' permissioned, non-yield stablecoin. Reserves are held directly in the USDat smart contract itself — roughly 99% as **$M** (M0's federated tokenized US Treasuries) plus a thin USDC float for the redemption gateway. Onboarded users mint and redeem 1:1 against either USDC or $M through Saturn's app; non-onboarded holders are restricted to secondary-market exit (primarily Curve USDAT/USDC, which clears several million dollars of daily volume).
 
-The 5.5/10 score reflects the single strongest backing story in our coverage — **every dollar of USDat supply is matched by tokens you can verify with three on-chain calls, no oracle required** — paired with material drags: a permissioned holder universe that prevents general DeFi composability, a young protocol (~3 months mainnet), a Fireblocks 2-of-3 MPC admin key with no on-chain timelock, and a roadmap that discloses a future rotation toward digital-credit (STRC) exposure that would change the risk profile if/when it happens.
+The 5.5/10 score reflects the single strongest backing story in our coverage — **every dollar of USDat supply is matched by tokens you can verify with three on-chain calls, no oracle required** — paired with material drags: an **issuer-design choice to restrict the holder universe to onboarded users** (the permissioning constraint that limits general DeFi composability), a young protocol (~3 months mainnet), a Saturn-represented Fireblocks 2-of-3 MPC admin key with no on-chain timelock, and a roadmap that discloses a future rotation toward digital-credit (STRC) exposure that would change the risk profile if/when it happens.
 
 ## Backing & solvency
 
@@ -53,9 +53,9 @@ Two paths, very different audiences:
 
 **For onboarded users:** mint and redeem 1:1 against USDC through Saturn's web app. This is the canonical strong exit — same-day, no slippage, no AMM tax. But it requires completing Saturn's KYC/onboarding, which makes USDat effectively an institutional/whitelisted instrument from the issuer side.
 
-**For non-onboarded users:** secondary market only, dominated by the Curve USDAT/USDC pool. This pool carries the bulk of USDat's price-discovery and exit liquidity for non-onboarded holders, and runs healthy daily volume relative to TVL. Slippage at retail sizes is minimal at current depth; the live dashboard surfaces slippage tiers at $1K / $10K / $100K / $500K exit sizes against the current pool state.
+**For non-onboarded users:** secondary market only, dominated by the Curve USDAT/USDC pool. This pool carries the bulk of USDat's price-discovery and exit liquidity for non-onboarded holders, and runs healthy daily volume relative to TVL. **Observed depth is institutional-grade — a $500K exit through KyberSwap routing clears under 2 bps on Curve**; the live dashboard surfaces slippage tiers at $1K / $10K / $100K / $500K against the current pool state, and the peg band has stayed inside single-digit bps over the verification window.
 
-The permissioning is the binding asymmetry: USDat is unusable for most DeFi smart contracts (most can't hold it without being onboarded), which truncates the universe of secondary venues that can host it and means meaningful DEX depth is concentrated in one pool. For onboarded holders, this asymmetry is neutral-to-positive (direct USDC redemption is the strongest path); for everyone else, USDat behaves more like an institutional cryptodollar than a general-purpose DeFi stable.
+What gets rated lower is the *addressable holder universe*, not the depth: USDat is unusable for most DeFi smart contracts (most can't hold it without being onboarded), which truncates the universe of secondary venues that can host it and concentrates meaningful DEX depth in one pool. That's an issuer-design constraint and is captured in the Issuer axis (4.5). The Liquidity axis (7.5) reflects what observed depth actually looks like once you're already in the addressable universe — strong by stablecoin-cohort standards, with a single-venue penalty applied.
 
 ## Peg & yield dynamics
 

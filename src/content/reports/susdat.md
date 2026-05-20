@@ -16,7 +16,7 @@ issuer: "Saturn Labs"
 volatility_score: 6.0
 structural_score: 4.5
 redemption_score: 4.0
-liquidity_score: 3.5
+liquidity_score: 5.0
 issuer_score: 5.0
 underlying_score: 4.0
 overall_score: 4.5
@@ -64,7 +64,7 @@ A live MSTR/Strategy NAV input is not yet wired into the dashboard — the LTV-b
 
 Three paths, each with material trade-offs:
 
-**Curve SUSDAT/USDC (retail).** The dominant secondary venue. Sub-$100K exits clear with modest slippage; the live dashboard surfaces tier slippage at $1K / $10K / $100K / $500K. Headline metric on the panel is **discount-to-NAV**, not absolute price vs $1 — important because sUSDat's NAV is north of $1 by design and absolute price comparisons mask the true discount.
+**Curve SUSDAT/USDC (retail).** The dominant secondary venue. Per-trade exit cost is competitive — a $500K exit clears at roughly 14.5 bps once capped to a 5%-of-TVL tier (about $176K of effective single-trade depth against ~$3.5M pool TVL), and discount-to-NAV has stayed inside a tight band. The live dashboard surfaces tier slippage at $1K / $10K / $100K / $500K. The binding capacity constraint is **pool-to-supply ratio** (about 3.4% of sUSDat supply sits in the Curve pool), not per-trade slippage — that's what the 5.0 Liquidity score is anchored to. Headline metric on the panel is **discount-to-NAV**, not absolute price vs $1 — important because sUSDat's NAV is north of $1 by design and absolute price comparisons mask the true discount.
 
 **Withdrawal queue (ERC-4626 unstake).** Standard 4626 queue-based unstake into USDat. Useful as a backstop if secondary depth thins or for sizes the AMM can't absorb; 10 USDat minimum, queue cadence governed by vault state.
 
