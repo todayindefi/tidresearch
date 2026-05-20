@@ -19,6 +19,7 @@ structural_score: 5.5
 redemption_score: 4.5
 liquidity_score: 5.5
 issuer_score: 5.5
+underlying_score: 4.5
 overall_score: 4.4
 audited_reserves: true
 ---
@@ -36,6 +37,8 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 ## Backing & solvency
 
 apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/apxusd/): mixed Cash + STRC family (brokerage-held STRC at Alpaca + new on-chain STRCx) + small SATA backing; a continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi); monthly Wolf & Company AICPA-standards examinations published at [`docs.apyx.fi`](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) (March 2026 full scope + April 2026 securities-only — cash dropped from April scope, may return in May report); STRC family as the largest single-issuer concentration without being the totality. Live reserves, collateralization, and reserves composition are on the [live dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
+
+The effective bottom-of-stack collateral is ~56% cash + ~42% STRC + ~2% SATA — meaningfully diversified versus a pure-STRC product like [sUSDat](/reports/susdat/) (which holds ~81% STRC directly). That diversification is reflected in the **Underlying axis at 4.5**, sitting above sUSDat's 4.0 but well below a pure-cash-equivalent wrapper. The 42% STRC slice remains the binding-risk weight on the editorial overall — single-issuer Strategy preferred dividend exposure with MSTR-cycle correlation.
 
 **apyUSD-specific reliability concern:** the vault contract has had one observable implementation upgrade since launch (about a month after going live). Future upgrades have a 3-day visibility window for the guardian role to cancel, but the upgrade path itself is a live risk surface.
 
