@@ -12,6 +12,7 @@ companion_report: "usdat"
 date: "2026-05-20"
 last_verified: "2026-05-20"
 featured: false
+production: true
 issuer: "Saturn Labs"
 volatility_score: 6.0
 structural_score: 4.5

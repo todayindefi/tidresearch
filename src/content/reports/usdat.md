@@ -11,6 +11,7 @@ companion_report: "susdat"
 date: "2026-05-20"
 last_verified: "2026-05-20"
 featured: false
+production: true
 issuer: "Saturn Labs"
 audited_reserves: true
 market_cap_approx: 105000000
