@@ -10,16 +10,16 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"
-last_verified: "2026-05-20"
+last_verified: "2026-05-21"
 featured: false
 production: true
 issuer: "Apyx (DFDV-affiliated)"
 peg_mechanism_score: 4.5
 backing_score: 4.5
-liquidity_score: 4.5
+liquidity_score: 8.0
 issuer_score: 5.5
 underlying_score: 5.5
-overall_score: 4.6
+overall_score: 5.3
 audited: true
 audit_count: 3
 audit_firms: ["Quantstamp", "Zellic", "Certora"]
@@ -32,7 +32,7 @@ is_fork: false
 
 # apxUSD — Retail Risk Report
 
-**Moderate-elevated risk · 4.6/10**
+**Moderate-elevated risk · 5.3/10**
 
 apxUSD is a $1-pegged stablecoin from Apyx, a young protocol (live since Feb 2026) backed primarily by **cash & equivalents + Strategy's STRC perpetual preferred shares**. The yield from the backing flows to Apyx's sibling token apyUSD; apxUSD holders forgo yield in exchange for stablecoin functionality. Supply has grown rapidly into the hundreds of millions since launch.
 
@@ -58,10 +58,10 @@ Composition is roughly **half-to-two-thirds Cash & Equivalents + one-third-to-ha
 **Entry:** Mint at Apyx (manual, EIP-712 signed order workflow) or buy on the Curve apxUSD/USDC pool on Ethereum. The Curve pool is the realistic retail entry and exit venue.
 
 **Exit:**
-- **Retail size (sub-$100K):** Sell on Curve apxUSD/USDC. Depth runs in the tens of millions of USDC (live on the dashboard's Secondary Liquidity panel). Slippage is small at retail size in normal markets.
+- **Retail size (sub-$100K):** Sell on Curve apxUSD/USDC. The primary pool runs at ~$39.5M TVL with three deep venues active across Ethereum and Base (Curve + PancakeSwap V3 on both chains; live on the dashboard's Secondary Liquidity panel). $100K clears under 25 bps on KyberSwap routing; baseline slippage is ~0.9 bps. Observed per-trade exit cost is institutional-grade.
 - **Larger size:** Apyx offers redemption in USDC, but the mechanism isn't publicly documented — no published timeline, no PSM, no on-chain guarantee. Effectively trusts Apyx to liquidate STRC into USDC and pay out when requested.
 
-In a stress event (STRC selloff, Apyx solvency event, MSTR equity crash), the secondary market is the binding exit — and it remains a small fraction of total supply at any given moment. Would not absorb a coordinated run.
+The binding-exit constraint for apxUSD is **not per-trade slippage** — observed depth handles retail-scale flows comfortably. The binding constraints are **coordinated-run capacity** (secondary depth remains a small fraction of total supply, so a simultaneous rush couldn't clear at par — that's a backing/buffer concern, scored on Backing at 4.5) and **redemption-mechanism opacity** (the off-chain settlement path is undocumented — that's a peg-mechanism concern, scored on Peg at 4.5). Those concerns sit on their own axes; the Liquidity axis itself measures observed exit cost, which is genuinely strong.
 
 ## Peg & yield dynamics
 
@@ -93,7 +93,7 @@ In a stress event (STRC selloff, Apyx solvency event, MSTR equity crash), the se
 
 **Avoid if:**
 - Treating this as a "core" stablecoin allocation. apxUSD is a thin wrapper around a single off-chain security; concentration risk doesn't go away because the on-chain ticker reads $1.
-- Needing instant guaranteed exit at $1 — the documented redemption mechanism is opaque and Curve depth is a small fraction of supply.
+- Needing instant guaranteed exit at $1 — the documented redemption mechanism is opaque, and while per-trade Curve depth is strong, the pool remains a small fraction of total supply (a coordinated run would exceed it).
 - Needing a Big-4 audited financial statement — what's published is a monthly Wolf & Company AICPA examination (real CPA-firm opinion, but mid-tier and currently scoped to securities only after the April scope narrowing), not a full financial-statement audit.
 
 ## What to watch
