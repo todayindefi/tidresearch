@@ -36,6 +36,8 @@ const allDashboards: Dashboard[] = [
   { slug: "apyusd", name: "apyUSD", chain: "Ethereum + Base (CCIP bridge)", description: "Yield-bearing ERC-4626 vault wrapper over apxUSD. Captures the STRC dividend stream as NAV growth (~13% APY); 30-day UnlockToken cooldown on canonical exits, retail-scale DEX exits in minutes.", category: "Yield", production: true },
   { slug: "usdat", name: "USDat", chain: "Ethereum", description: "Saturn Labs' permissioned, non-yield stablecoin. ~99% backed by $M (M0 tokenized T-bills) plus ~1% USDC float, all held directly in the token contract — 100% on-chain verifiable.", category: "RWA" },
   { slug: "susdat", name: "sUSDat", chain: "Ethereum", description: "Saturn's yield-bearing ERC-4626 wrapper for USDat. Captures STRC-dividend pass-through (~11% APY target) into NAV; dynamic LTV-rotation rule between on-chain USDat buffer and off-chain STRC at custodian.", category: "Yield" },
+  { slug: "usde", name: "USDe", chain: "Ethereum", description: "Independent on-chain tracker of Ethena's Coinbase reserve wallets — per-wallet Aave/Morpho deposits, position drift, and daily reserve-composition trend. Complements Ethena's transparency page and the Risk Committee feeds." },
+  { slug: "susde", name: "sUSDe", chain: "Ethereum", description: "Yield-bearing staked USDe. Shares USDe's reserve backing and adds the vault balance / NAV view on top of the reserve-wallet tracker.", category: "Yield" },
 ];
 
 const dashboards = isProductionStage

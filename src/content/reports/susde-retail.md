@@ -17,14 +17,14 @@ liquidity_score: 7.0
 structural_score: 7.0
 redemption_score: 5.5
 overall_score: 6.5
-live_dashboard_url: "https://app.ethena.fi/dashboards/transparency"
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susde"
 ---
 
 # sUSDe — Retail Risk Report
 
 **Moderate risk · 6.5/10**
 
-> **Issuer-published dashboard:** [app.ethena.fi/dashboards/transparency](https://app.ethena.fi/dashboards/transparency) — Ethena's own real-time transparency page covers both USDe and sUSDe (vault balance, supply, yield). Verified by **Chaos Labs Edge Proof of Reserves**, **LlamaRisk**, **Chainlink Proof of Reserves**, and **HT Digital** (monthly attestation). For independent risk monitoring including sUSDe-specific metrics (cooldown queue, coverage ratios), see [LlamaRisk's Ethena portal](https://portal.llamarisk.com/ethena/overview). tidresearch does not run its own dashboard for sUSDe — the Risk Committee infrastructure is already mature.
+> **Issuer-published dashboard:** [app.ethena.fi/dashboards/transparency](https://app.ethena.fi/dashboards/transparency) — Ethena's own real-time transparency page covers both USDe and sUSDe (vault balance, supply, yield). Verified by **Chaos Labs Edge Proof of Reserves**, **LlamaRisk**, **Chainlink Proof of Reserves**, and **HT Digital** (monthly attestation). For independent risk monitoring including sUSDe-specific metrics (cooldown queue, coverage ratios), see [LlamaRisk's Ethena portal](https://portal.llamarisk.com/ethena/overview). **tidresearch also runs an independent on-chain tracker of Ethena's reserve wallets** ([live dashboard](https://tidresearch.com/dashboards/?asset=susde)) — the issuer transparency page and Risk Committee feeds above remain the backing source of record.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
