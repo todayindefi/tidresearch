@@ -9,7 +9,7 @@ audience: "retail"
 date: "2026-05-27"
 last_verified: "2026-05-27"
 featured: false
-production: false
+production: true
 issuer: "Backed Finance (Backed Assets JE Ltd.)"
 yield_bearing: true
 underlying_assets: ["STRC"]
