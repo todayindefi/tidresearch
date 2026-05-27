@@ -4,6 +4,17 @@ import { glob } from "astro/loaders";
 // Scores are 1–10 where 10 = safest, 1 = riskiest (credit-rating direction).
 const score = z.number().min(0).max(10);
 
+// Optional `underlying_score` — collateral-quality axis, independent of wrapper/peg
+// risk. Permitted on every category below; apply it on this rule, not ad hoc:
+//   INCLUDE when a DISTINCT collateral pool sits beneath the token as its own asset
+//   class (tokenized T-bills / RWA, or a yield-bearing / credit collateral), so
+//   collateral quality is separable from the wrapper or peg mechanism.
+//     e.g. thBILL / usdat / thusd / apxUSD (RWA); sUSDS (USDS's T-bill + crypto + USDC pool).
+//   OMIT when the collateral IS the backing analysis and a separate score would
+//   double-count backing_score:
+//     - fiat-stable-basket stablecoins (usdm: USDC/AUSD/USDT0 — already graded in backing)
+//     - crypto-collateralized stablecoins (crvUSD / frax — collateral == backing)
+
 const chainOverride = z
   .object({
     peg_mechanism_score: score.optional(),

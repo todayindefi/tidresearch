@@ -16,6 +16,7 @@ volatility_score: 9.0
 liquidity_score: 8.5
 structural_score: 7.0
 redemption_score: 8.5
+underlying_score: 7.5
 overall_score: 8.0
 ---
 
@@ -60,7 +61,7 @@ This is sUSDS's strongest dimension, and the whole reason it's the retail-usable
 
 **1. USDS is not the unfreezable DAI.** When MakerDAO rebranded to Sky, it introduced USDS as an *upgradeable* stablecoin. At launch USDS shipped without a freeze function, but with the upgrade machinery that would let Sky governance add an address-level **freeze / blacklist** later by vote. DAI, by contrast, remains immutable and unfreezable, and Sky has discussed an immutable "PureDai" fork. The practical takeaway for an sUSDS holder: you're exposed to USDS's upgradeable admin surface and the standing possibility that a future governance decision could freeze specific addresses — a censorship and centralization risk that simply doesn't exist for DAI or for trust-minimized stablecoins. It is governance-gated (it would take a public vote and a timelock delay, not a unilateral flip), and as of this writing no freeze function is enabled. But if you specifically need a censorship-resistant position, hold DAI instead.
 
-**2. About a quarter of USDS backing is USDC → real USDC correlation.** Sky keeps roughly 25% of USDS backing in cash-equivalent reserves, predominantly USDC routed through the PSM at a fixed 1:1 swap. That's great for redemption liquidity, but it means USDS — and therefore sUSDS — is **correlated to USDC**, not diversified away from it. The precedent is March 2023: when USDC briefly depegged during the Silicon Valley Bank failure, DAI followed it down because of heavy USDC backing through the same kind of module. So treat sUSDS as roughly "75% diversified collateral + ~25% USDC," not as something safer than USDC. If you already hold a lot of USDC elsewhere, sUSDS adds to that exposure rather than diversifying it.
+**2. About a quarter of USDS backing is USDC → real USDC correlation.** Sky keeps roughly 25% of USDS backing in cash-equivalent reserves, predominantly USDC routed through the PSM at a fixed 1:1 swap. That's great for redemption liquidity, but it means USDS — and therefore sUSDS — is **correlated to USDC**, not diversified away from it. The precedent is March 2023: when USDC briefly depegged during the Silicon Valley Bank failure, DAI followed it down because of heavy USDC backing through the same kind of module. So treat sUSDS as roughly "75% diversified collateral + ~25% USDC," not as something safer than USDC. If you already hold a lot of USDC elsewhere, sUSDS adds to that exposure rather than diversifying it. This collateral mix — diversified and high-grade, but with a meaningful USDC concentration — is what the **Underlying axis (7.5)** captures: better than the STRC-backed yield wrappers, short of a Treasury-pure product.
 
 ## What the contracts are doing
 
@@ -80,7 +81,8 @@ The relevant residual risks are not contract bugs but design choices: the upgrad
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Volatility | 9.0 | NAV-accruing share over USDS, a deep and mature stablecoin. No meaningful price volatility; the redemption value only climbs. The only real volatility vector is a USDS depeg, which is USDC-correlated (see caveats). |
+| Volatility | 9.0 | NAV-accruing share over USDS, a deep and mature stablecoin. No meaningful price volatility; the redemption value only climbs. The one path to a drawdown is a USDS depeg — driven by collateral quality, which is scored separately under Underlying. |
+| Underlying | 7.5 | USDS's collateral is diversified and high-grade: short-term US Treasuries, heavily overcollateralized crypto-collateralized loans, and cash held largely in USDC. Well above STRC-backed peers. Held below a Treasury-pure score by the ~25% USDC concentration (a correlation/centralization exposure) and the crypto-loan sleeve's liquidation tail. This is the collateral-quality view; the *wrapper* mechanics are scored under Volatility/Structural. |
 | Liquidity | 8.5 | Deepest in its category — around $6B in size, deep permissionless DEX liquidity, plus 1:1 PSM convertibility to USDC and 1:1 USDS↔DAI. No KYC or geographic gate on either the primary or secondary path. Small reservation for cross-chain reliance on the Spark PSM off Ethereum and for PSM liquidity under extreme USDC stress. |
 | Structural | 7.0 | Battle-tested MakerDAO-derived ERC-4626 / PSM / vault code — the lowest contract risk in the category — offset by USDS being upgradeable with a governance-addable freeze function, broad Sky-governance powers over rate/collateral/upgrades (timelock-gated), Endgame structural complexity, and a cross-chain bridge surface. The upgrade/freeze capability is the binding structural concern. |
 | Redemption | 8.5 | Atomic, permissionless, instant: sUSDS → USDS in the vault and USDS → USDC 1:1 via the PSM, with no KYC, no minimum, no lockup, and no fees. Best-in-class exit. Held just below the top only for the theoretical PSM-liquidity limit under a severe USDC-specific crisis. |
