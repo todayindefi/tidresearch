@@ -38,6 +38,8 @@ const allDashboards: Dashboard[] = [
   { slug: "susdat", name: "sUSDat", chain: "Ethereum", description: "Saturn's yield-bearing ERC-4626 wrapper for USDat. Captures STRC-dividend pass-through (~11% APY target) into NAV; dynamic LTV-rotation rule between on-chain USDat buffer and off-chain STRC at custodian.", category: "Yield" },
   { slug: "usde", name: "USDe", chain: "Ethereum", description: "Independent on-chain tracker of Ethena's Coinbase reserve wallets — per-wallet Aave/Morpho deposits, position drift, and daily reserve-composition trend. Complements Ethena's transparency page and the Risk Committee feeds." },
   { slug: "susde", name: "sUSDe", chain: "Ethereum", description: "Yield-bearing staked USDe. Shares USDe's reserve backing and adds the vault balance / NAV view on top of the reserve-wallet tracker.", category: "Yield" },
+  { slug: "usdai", name: "USDai", chain: "Arbitrum", description: "Synthetic dollar backed 1:1 by PYUSD reserves held on-chain (≈102% verifiable coverage). Two-RPC-read proof-of-reserves, 48-hour timelock + 3-of-3 Safe upgrade gate.", category: "RWA" },
+  { slug: "susdai", name: "sUSDai", chain: "Arbitrum", description: "Yield-bearing ERC-7540 async vault for USDai — staked into GPU/equipment-finance loans via MetaStreet. 30-day FIFO redemption queue; totalAssets reconciles on-chain across idle / DepositTimelock escrow / drawn loans.", category: "Yield" },
 ];
 
 const dashboards = isProductionStage
