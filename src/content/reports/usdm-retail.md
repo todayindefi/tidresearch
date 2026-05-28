@@ -8,8 +8,8 @@ category: "stablecoin"
 peg_mechanism: "Reserve-backed (fiat-stable basket)"
 assessment_type: "light"
 audience: "retail"
-date: "2026-05-18"
-last_verified: "2026-05-18"
+date: "2026-05-29"
+last_verified: "2026-05-29"
 featured: false
 issuer: "Mento Labs (Germany)"
 audited_reserves: true
