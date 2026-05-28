@@ -25,7 +25,7 @@ production: false
 
 **Live data:** [crvUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
 
-**Operating regime (Q2 2026):** total supply in the low $200Ms (down from a ~$248M mid-May local high), conservative collateral ratio running 110–120%, inclusive CR (with PK reserve pool stables counted) typically 120–140%, YieldBasis 65–70% of supply, PegKeeper debt concentrated in the USDT pool at low-tens of millions. Numbers move daily — the dashboard is the source of truth; figures in this report are durable ranges, not point-in-time anchors.
+**Operating regime (Q2 2026):** total supply (all minting sources, including PK debt) in the mid $200Ms, conservative collateral ratio (symmetric, drops PK from both sides) running 105–115%, inclusive CR (PK debt in supply, PK stables in collateral) typically 110–120%, YieldBasis 60–65% of supply, PegKeeper debt concentrated in the USDT pool at low-tens of millions. Numbers move daily — the dashboard is the source of truth; figures in this report are durable ranges, not point-in-time anchors.
 
 ## Summary
 
@@ -135,7 +135,7 @@ DefiLlama counts **all** LlamaLend debt as supply. This is a **deployment-based*
 - YB AMM = crvUSD paired with BTC in YieldBasis Curve pools
 - LlamaLend = crvUSD borrowed from lending vaults
 
-This methodology produces a number in the low $200Ms in Q2 2026 and cross-checks against DefiLlama.
+This methodology produces a number in the mid $200Ms in Q2 2026 (including PK debt as supply) and cross-checks against DefiLlama.
 
 **Total supply = mint market debt + PK debt + YB AMM crvUSD + LlamaLend debt**
 
@@ -165,17 +165,19 @@ This methodology produces a number in the low $200Ms in Q2 2026 and cross-checks
 
 **Total crvUSD supply** = mint market debt + PK debt + YB AMM crvUSD + LlamaLend debt. This matches DefiLlama's methodology and cross-checks accurately. Do not use `totalSupply()` (includes ceiling buffers), StablecoinLens (misses YB and operators), or CoinGecko (unknown methodology).
 
-**Conservative CR (primary metric):**
-```
-CR = collateral (mint markets + YB pool BTC + LlamaLend collateral) / total supply (mint + PK + YB + LlamaLend)
-```
-This treats PK-minted crvUSD as unbacked debt. PegKeeper crvUSD is protocol-minted into stable pools without external collateral — the strictest view excludes the pool counterparts from the collateral side.
+Two coherent CR readings, both symmetric:
 
-**Inclusive CR (reference metric, typically 120–140% through Q2 2026):**
+**Conservative CR (primary metric, typically 105–115% through Q2 2026):**
 ```
-CR = collateral (mint markets + YB pool BTC + LlamaLend collateral + PK reserve pool stables) / total supply
+CR = (mint market collateral + YB pool BTC) / (mint debt + YB AMM crvUSD + operator-minted)
 ```
-This counts the USDC/USDT/frxUSD/PYUSD/GHO sitting opposite PK crvUSD in the stable pools as backing. The logic: if crvUSD depegs below $1, PegKeepers withdraw and burn their crvUSD, and arbitrageurs buy crvUSD cheaply using those reserve stables. The stables function as a peg defense reserve — not locked collateral, but market-accessible backing.
+This drops PegKeeper-minted crvUSD from supply AND PegKeeper pool stables from collateral. The rationale: PK supply and the stables sitting opposite it in the pools are a paired position — in any depeg the PK withdraws crvUSD and consumes the paired stables together, so the conservative reading removes the pair from both sides rather than asymmetrically penalizing one. Treating PK supply as real debt while ignoring its paired stables (or vice versa) produces a metric that doesn't correspond to any realistic state.
+
+**Inclusive CR (reference metric, typically 110–120% through Q2 2026):**
+```
+CR = (mint market collateral + YB pool BTC + PK reserve pool stables) / (mint debt + PK debt + YB AMM crvUSD + operator-minted)
+```
+This is also symmetric, but in the opposite direction: PK debt enters supply and PK reserve pool stables (USDC/USDT/frxUSD/PYUSD/GHO sitting opposite PK crvUSD across the active keeper pools) enter collateral. Because PK debt and PK stables are similar in magnitude in steady state, conservative and inclusive CR sit within a few percentage points of each other — that proximity is the correctness signal that the two framings agree.
 
 **What backs each supply source:**
 
@@ -184,7 +186,7 @@ This counts the USDC/USDT/frxUSD/PYUSD/GHO sitting opposite PK crvUSD in the sta
 | Mint markets (CDP) | BTC, ETH, LSTs at ~190% CR | Traditional overcollateralized CDP |
 | YieldBasis | BTC side of 50/50 BTC/crvUSD pools (~100% CR) | Credit-line-backed, BTC-denominated |
 | LlamaLend | Borrower collateral in lending vaults | Mix of user-deposited crvUSD (recirculated) and operator-minted (fresh). Collateral varies by market. |
-| PegKeepers | None directly (USDC/USDT/frxUSD/PYUSD/GHO sit opposite in pools) | Protocol-minted, reserve-pool-backed. Excluded from conservative CR. |
+| PegKeepers | None directly; USDC/USDT/frxUSD/PYUSD/GHO sit opposite in pools as paired counterparts | Protocol-minted, reserve-pool-backed. Conservative CR drops both PK debt and PK stables; inclusive CR counts both. |
 
 **Key monitoring metrics (check dashboard for live values):**
 1. **Conservative CR** — the primary health indicator
@@ -360,7 +362,7 @@ Note that crvUSD on a non-canonical chain inherits its bridge's security model o
 | Category | Score | Notes |
 |----------|-------|-------|
 | Peg Mechanism | 5.5 | LLAMMA + PegKeepers + monetary policy is a sophisticated system with a $0.9997 average peg. But YieldBasis flows have increased peg volatility 66% and cause rate swings between 0% and 12%+. PK downside defense capacity fluctuates with deployment — a depleted PK debt means no active burn buffer, while a concentrated deployment (as currently sits in the USDT keeper) exposes the protocol to that pool's liquidity if a depeg arrives. |
-| Backing | 5.0 | Blended system: CDP markets at ~190% CR (small), YB pools at ~100% CR (BTC-backed, dominant), PK supply backed indirectly by reserve pool stables. Conservative CR (excluding PK reserves) is the primary metric, running 110–120% through Q2 2026. Inclusive CR (with reserve pool stables) typically 120–140%. Supply measurement requires querying multiple contracts — no single authoritative source exists. |
+| Backing | 5.0 | Blended system: CDP markets at ~190% CR (small), YB pools at ~100% CR (BTC-backed, dominant), PK supply paired against reserve pool stables. Conservative CR (symmetric, drops PK from both sides) runs 105–115% through Q2 2026; inclusive CR (PK debt in supply, PK stables in collateral) typically 110–120%. The two readings stay within a few points of each other because PK debt and PK stables are similar in magnitude. Supply measurement requires querying multiple contracts — no single authoritative source exists. |
 | Liquidity | 6.0 | Deep Curve pool liquidity, strong DEX integration. YB pools add significant depth but also directional flow risk proportional to BTC volatility. PK pools (USDC, USDT, frxUSD as the heavyweights, plus PYUSD and GHO) provide additional stablecoin liquidity; the USDT pool is the largest by reserves and PK debt. |
 | Issuer | 6.0 | Curve is one of DeFi's most established protocols (10+ audit firms, $2B+ TVL history). CRV tokenomics add governance complexity. Egorov's dual Curve/YB role creates concentrated influence over crvUSD's supply architecture. |
 | **Overall** | **5.0** | **Elevated risk — well-engineered stablecoin with strong peg mechanics and deep liquidity, but structurally dependent on YieldBasis for supply and volume. The supply architecture is opaque (no authoritative circulating supply metric, unknown YB deployed-vs-idle split, outdated StablecoinLens). CDP minting is structurally small. BTC correlation via YB rebalancing and rate instability are ongoing concerns.** |
@@ -381,7 +383,7 @@ Note that crvUSD on a non-canonical chain inherits its bridge's security model o
 ## Recommendations
 
 ### Supply & Collateral Monitoring
-1. **Track conservative CR** — collateral (mint markets + YB pool BTC + LlamaLend collateral) / total supply (mint + PK + YB + LlamaLend). Primary health indicator.
+1. **Track conservative CR** — symmetric: (mint markets + YB pool BTC) / (mint debt + YB + operator), dropping PK debt and PK stables from both sides. Primary health indicator. Cross-check against inclusive CR (PK in both); the two should sit within a few points of each other.
 2. **Track PK debt over time** — PK debt is the peg defense indicator. Store historical readings. Zero debt = zero downside burn capacity. High debt = healthy buffer.
 3. **Enumerate all `set_debt_ceiling` recipients** — pull all events from ControllerFactory to discover any new supply sources added by governance.
 
