@@ -11,7 +11,7 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apyusd"
 trust_disclaimer: true
 date: "2026-05-07"
-last_verified: "2026-05-20"
+last_verified: "2026-05-28"
 featured: false
 production: true
 volatility_score: 7.0
@@ -28,11 +28,11 @@ audited_reserves: true
 
 **Moderate-elevated risk · 4.4/10**
 
-apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows over time as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **~13% APY** (within STRC's 11-15% indicated-rate range). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **30-day cooldown** on the canonical exit path (or use a DEX two-hop for retail-scale exits in minutes).
+apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows over time as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **~13% APY** (within STRC's 11-15% indicated-rate range). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **20-day cooldown** on the canonical exit path (or use a DEX two-hop for retail-scale exits in minutes).
 
 | Yield | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
-| ~13% APY ongoing | DEX two-hop (retail) or 30-day UnlockToken cooldown (institutional) | Minutes (sub-$1M via DEX) or 30+ days (canonical) | ~3 months | Ethereum, Base |
+| ~13% APY ongoing | DEX two-hop (retail) or 20-day UnlockToken cooldown (institutional) | Minutes (sub-$1M via DEX) or 20+ days (canonical) | ~3 months | Ethereum, Base |
 
 ## Backing & solvency
 
@@ -53,13 +53,13 @@ apyUSD has **two exit paths**, and which one binds depends on size:
 
 Trading on the apyUSD/apxUSD pool is sporadic (market-maker driven rather than continuous retail flow), so slippage at any given moment depends on the pool's balance state. Backup venues exist on PancakeSwap V3 (Ethereum + Base) and several smaller Uniswap V4 pools.
 
-**Institutional-scale (above ~$1M): 30-day UnlockToken cooldown.**
+**Institutional-scale (above ~$1M): 20-day UnlockToken cooldown.**
 1. Burn apyUSD → enter the UnlockToken cooldown vault
-2. Wait 30 days (per contract source; Apyx docs cite 20 days — the code is authoritative)
+2. Wait 20 days
 3. Receive apxUSD
 4. Then exit apxUSD via the same paths as above
 
-Effective time-to-cash for institutional sizing is **30 days minimum + apxUSD's own settlement window**. The UnlockToken queue has been small relative to total supply but isn't stress-tested at scale.
+Effective time-to-cash for institutional sizing is **20 days minimum + apxUSD's own settlement window**. The cooldown was shortened from 30 → 20 days by the Apyx admin on 2026-04-15 (verified on-chain); it remains admin-mutable subject to a 72-hour visibility window, so any future change is observable about three days in advance. The UnlockToken queue has been small relative to total supply but isn't stress-tested at scale.
 
 ## Peg & yield dynamics
 
@@ -86,10 +86,10 @@ See the [apxUSD retail report](/reports/apxusd/) for the full team-trust write-u
 
 ## Who it's for · Who should avoid
 
-**For:** Retail or institutional users who want the dividend pass-through from Apyx's STRC backing AND are comfortable holding for ~30 days at the institutional scale. Retail-scale users can effectively use the DEX two-hop and exit in minutes, but the cooldown is the canonical path. Same risk appetite as apxUSD plus willingness to accept the vault-wrapper layer.
+**For:** Retail or institutional users who want the dividend pass-through from Apyx's STRC backing AND are comfortable holding for ~20 days at the institutional scale. Retail-scale users can effectively use the DEX two-hop and exit in minutes, but the cooldown is the canonical path. Same risk appetite as apxUSD plus willingness to accept the vault-wrapper layer.
 
 **Avoid if:**
-- Sizing above what secondary DEX depth can absorb without invoking the cooldown. Above ~$1M, slippage on the two-hop route may force the 30-day cooldown path; build that into your exit plan.
+- Sizing above what secondary DEX depth can absorb without invoking the cooldown. Above ~$1M, slippage on the two-hop route may force the 20-day cooldown path; build that into your exit plan.
 - Treating this as a "stablecoin substitute" — apyUSD is a yield-bearing vault share, not a stablecoin.
 - Uncomfortable with the launch-NAV-jump structure. Early holders captured a one-time ~33% NAV bump that new buyers do not. This is disclosed but is unusual relative to standard ERC-4626 launches.
 
@@ -97,7 +97,7 @@ See the [apxUSD retail report](/reports/apxusd/) for the full team-trust write-u
 
 - **Wolf May 2026 attestation — cash scope re-inclusion** (same as apxUSD; the April engagement narrowed to securities only)
 - **STRC ex-dividend dates** (~mid-month) — NAV trajectory should be smooth; visible step-changes or pauses would be a yield-mechanic anomaly worth investigating
-- **Curve apyUSD/apxUSD pool depth** (live on dashboard) — the dominant secondary exit. Depth shrinking or persistent imbalance would push more flow into the 30-day cooldown
+- **Curve apyUSD/apxUSD pool depth** (live on dashboard) — the dominant secondary exit. Depth shrinking or persistent imbalance would push more flow into the 20-day cooldown
 - **MSTR / BTC drawdowns** — STRC dividends compress in stress
 
 ## A note on the apxUSD companion

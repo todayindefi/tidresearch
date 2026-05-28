@@ -105,7 +105,7 @@ The binding-exit constraint for apxUSD is **not per-trade slippage** — observe
 
 ## A note on the apyUSD sibling
 
-If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD retail report](/reports/apyusd/). apyUSD captures the dividend stream (~13% APY ongoing) in exchange for a 30-day exit cooldown for institutional sizing — retail can exit faster via a two-hop DEX route.
+If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD retail report](/reports/apyusd/). apyUSD captures the dividend stream (~13% APY ongoing) in exchange for a 20-day exit cooldown for institutional sizing — retail can exit faster via a two-hop DEX route.
 
 ---
 
