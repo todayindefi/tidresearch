@@ -7,8 +7,8 @@ category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
-last_verified: "2026-05-28"
-peg_mechanism_score: 5.5
+last_verified: "2026-05-29"
+peg_mechanism_score: 6.0
 backing_score: 5.0
 liquidity_score: 6.0
 issuer_score: 6.0
@@ -361,7 +361,7 @@ Note that crvUSD on a non-canonical chain inherits its bridge's security model o
 
 | Category | Score | Notes |
 |----------|-------|-------|
-| Peg Mechanism | 5.5 | LLAMMA + PegKeepers + monetary policy is a sophisticated system with a $0.9997 average peg. But YieldBasis flows have increased peg volatility 66% and cause rate swings between 0% and 12%+. PK downside defense capacity fluctuates with deployment — a depleted PK debt means no active burn buffer, while a concentrated deployment (as currently sits in the USDT keeper) exposes the protocol to that pool's liquidity if a depeg arrives. |
+| Peg Mechanism | 6.0 | LLAMMA + PegKeepers + monetary policy is a sophisticated system with a $0.9997 average peg, and TID PegTracker (2,985 hourly samples) confirms a median −9 bps deviation from $1.00 — at the top end of decentralized stables, tighter than thBILL by ~3× and only marginally looser than OUSD. YieldBasis flows did increase peg volatility 66% in mean absolute deviation post-Sep-2025 launch, and rate swings between 0% and 12%+ remain a structural feature, but elevated volatility hasn't broken the peg through Q2 2026. PK downside defense capacity fluctuates with deployment — depleted PK debt means no active burn buffer, while concentrated deployment (as currently sits in the USDT keeper) exposes the protocol to that pool's liquidity if a depeg arrives — but the realized tightness through the YB era carries the score. |
 | Backing | 5.0 | Blended system: CDP markets at ~190% CR (small), YB pools at ~100% CR (BTC-backed, dominant), PK supply paired against reserve pool stables. Conservative CR (symmetric, drops PK from both sides) runs 105–115% through Q2 2026; inclusive CR (PK debt in supply, PK stables in collateral) typically 110–120%. The two readings stay within a few points of each other because PK debt and PK stables are similar in magnitude. Supply measurement requires querying multiple contracts — no single authoritative source exists. |
 | Liquidity | 6.0 | Deep Curve pool liquidity, strong DEX integration. YB pools add significant depth but also directional flow risk proportional to BTC volatility. PK pools (USDC, USDT, frxUSD as the heavyweights, plus PYUSD and GHO) provide additional stablecoin liquidity; the USDT pool is the largest by reserves and PK debt. |
 | Issuer | 6.0 | Curve is one of DeFi's most established protocols (10+ audit firms, $2B+ TVL history). CRV tokenomics add governance complexity. Egorov's dual Curve/YB role creates concentrated influence over crvUSD's supply architecture. |
