@@ -16,7 +16,7 @@ overall_score: 5.0
 issuer: "Curve Finance"
 audited_reserves: false
 market_cap_approx: 225000000
-production: false
+production: true
 ---
 
 # crvUSD — Asset Risk Assessment (Full)
