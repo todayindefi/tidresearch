@@ -7,7 +7,8 @@ category: "wrapped-token"
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-27"
-last_verified: "2026-05-27"
+last_verified: "2026-05-29"
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
 issuer: "Backed Finance (Backed Assets JE Ltd.)"
@@ -31,6 +32,8 @@ STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly Mi
 | Tracks | Yield | Exit | Age | Chains |
 |---|---|---|---|---|
 | STRC (≈$100-par preferred) | ≈11.5% via rebasing (net of US withholding) | Non-US AP redemption, or Solana DEX | ≈4 months (live early 2026) | Ethereum + 4 (Solana, Arbitrum, BNB, Mantle) |
+
+**Live monitoring** of mNAV regime, STRC instrument state, STRCx wrapper supply/multiplier, cash-service runway, and SEC 8-K event log is on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc) — values in this report are static; the dashboard reflects current readings.
 
 ## What you actually hold
 
@@ -93,6 +96,8 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 
 ## What to watch
 
+Each of these signals has a live panel on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc):
+
 - **STRC's price vs par and the monthly rate reset.** Sustained drift below par or a rate cut signals stress in the anchor mechanism; a rate cut directly lowers your yield.
 - **Strategy / Bitcoin drawdowns.** A severe BTC crash compressing Strategy's equity-raise capacity is the real test of STRC's dividend durability — the scenario the instrument has never faced.
 - **Solana pool depth for STRCx.** This is the only realistic retail exit; drainage or persistent imbalance is the leading signal that exit is deteriorating.
@@ -104,4 +109,4 @@ STRCx is the on-chain STRC sleeve behind Apyx's stablecoins. If you're looking a
 
 ---
 
-*This report is based on Backed Finance's public documentation, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-05-27. STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC, exact Solana pool depth) are not independently verified here. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Backed Finance's public documentation, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-05-27. Live values for mNAV regime, MSTR/BTC inputs, STRC instrument state (price, dividend rate, par drift), STRCx wrapper supply across five chains, rebasing multiplier, cash-service waterfall, rate-ceiling headroom, and SEC EDGAR 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc). STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC, exact Solana pool depth) are not independently verified here. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
