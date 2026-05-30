@@ -109,6 +109,8 @@ const categoryLabel = (c: string) =>
     ? "Tokenized Treasury (RWA)"
     : c === "lending-vault"
     ? "Lending Vault"
+    : c === "tradfi-equity"
+    ? "TradFi Equity"
     : c.replace("-", " ");
 ---
 

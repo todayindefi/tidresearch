@@ -210,6 +210,18 @@ const lendingVault = z.object({
   is_fork: z.boolean().optional(),
 });
 
+// Issuer-entity / treasury-company analyses (e.g. MSTR/Strategy Inc.). Body markdown
+// carries per-axis issuer scores (balance_sheet / funding_model / refinancing /
+// governance); frontmatter only carries overall_score. Used for dependency-analysis
+// reports — the upstream issuer behind a preferred or wrapper, not an equity buy-sell.
+const tradfiEquity = z.object({
+  ...common,
+  category: z.literal("tradfi-equity"),
+  issuer: z.string().optional(),
+  yield_bearing: z.boolean().optional(),
+  underlying_assets: z.array(z.string()).default([]),
+});
+
 export const collections = {
   reports: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/reports" }),
@@ -219,6 +231,7 @@ export const collections = {
       vaultShare,
       tokenizedTreasury,
       lendingVault,
+      tradfiEquity,
     ]),
   }),
 };
