@@ -6,8 +6,8 @@ chains: []
 category: "tradfi-equity"
 assessment_type: "light"
 audience: "retail"
-date: "2026-05-30"
-last_verified: "2026-05-30"
+date: "2026-06-02"
+last_verified: "2026-06-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
 featured: false
 production: false
@@ -77,8 +77,8 @@ This is a regime change. The previous covenant — "we never sell" — has been 
 - **Multi-year:** The growth thesis around MSTR has weakened. If BTC compounds at < ~6%/yr long-term (the rough breakeven for per-share BTC NAV growth under the new model), MSTR equity has no fundamental upside lever.
 
 **For preferred holders (STRC, STRF, etc.), this is a mixed signal:**
-- **Positive:** Strategy explicitly funded the preferred-dividend stream from the BTC stack. ~36-39 years of runway at flat BTC and flat preferred outstanding.
-- **Negative:** The funding source flipped from incoming capital (renewable) to the BTC stack (finite, depleted by sales). The model assumes BTC compounds faster than the dividend-burn rate; if BTC stagnates or drops, runway compresses fast.
+- **Positive:** Strategy explicitly funded the preferred-dividend stream from cash first, then the BTC stack. Phase 1 is the $871M cash buffer: ~6-7 months at current obligation and zero issuance refill. Phase 2 is ~36-39 years of BTC-stack runway at flat BTC and flat preferred outstanding.
+- **Negative:** The funding source flipped from incoming capital (renewable) to a finite cash buffer followed by the BTC stack (finite, depleted by sales). The model assumes BTC compounds faster than the dividend-burn rate; if BTC stagnates or drops, runway compresses fast.
 
 ## The 2026-05-26 transaction — the new playbook in action
 
@@ -160,7 +160,8 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 - **Per-share BTC NAV trajectory.** The headline equity metric. Compresses with dilution (ATM issuance) even when BTC count grows.
 - **STRC outstanding tranche cadence.** Currently ~$12-13B; sustained > $2B/month issuance = Ponzi-structure risk operational.
 - **Aggregate-preferred runway.** Currently ~37 years; meaningful compression below 30 years.
-- **Cash balance.** Currently $871M; drops below $500M = stress signal.
+- **BTC-sale window date.** Currently ~2027-03-02 at zero issuance refill; drift inward to within ~3 months = acute short-term stress. Extension through successful STRC or ATM cash refill = de-risking.
+- **Cash balance.** Currently $871M; drops below $500M = stress signal (~3-4 months of cash runway at current obligation).
 - **2030 convertible wall as it approaches.** ~12-18 months ahead (mid-2029), market will start pricing cash-vs-conversion outcome. Refinancing capacity will be visible.
 - **Saylor governance events.** Voting structure changes, succession plans, health events — material risk vectors.
 
@@ -173,4 +174,4 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 
 ---
 
-*This report is based on Strategy Inc. SEC filings (most recent: 2026-05-26 8-K, Q1 2026 10-Q), third-party data (bitcoin-treasuries.net, Coindesk, Blockworks), and Strategy's own investor communications through 2026-05-30. Live values for MSTR price, mNAV, BTC NAV, balance sheet snapshot, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=mstr). This report is dependency-analysis scope: it explains Strategy's structural mechanics for downstream-asset-analysis purposes (STRC family wrappers, sUSDat, apxUSD/apyUSD). It is not an equity-investment recommendation on MSTR — that would require different scope including peer comparison, dividend-discount-model alternatives, and forward-looking price targets. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Strategy Inc. SEC filings (most recent: 2026-05-26 8-K, Q1 2026 10-Q), third-party data (bitcoin-treasuries.net, Coindesk, Blockworks), and Strategy's own investor communications through 2026-06-02. Live values for MSTR price, mNAV, BTC NAV, balance sheet snapshot, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=mstr). This report is dependency-analysis scope: it explains Strategy's structural mechanics for downstream-asset-analysis purposes (STRC family wrappers, sUSDat, apxUSD/apyUSD). It is not an equity-investment recommendation on MSTR — that would require different scope including peer comparison, dividend-discount-model alternatives, and forward-looking price targets. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
