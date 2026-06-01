@@ -6,8 +6,8 @@ chains: ["eth", "solana", "arbitrum", "bnb", "mantle"]
 category: "wrapped-token"
 assessment_type: "light"
 audience: "retail"
-date: "2026-05-27"
-last_verified: "2026-05-30"
+date: "2026-06-02"
+last_verified: "2026-06-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
@@ -29,7 +29,7 @@ overall_score: 4.0
 
 STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly MicroStrategy) Variable-Rate Series A Perpetual "Stretch" Preferred Stock (Nasdaq: STRC). It is one of Backed's "xStocks," issued 1:1 against a real STRC share held with Backed's qualified custodian. You are not buying a stablecoin and you are not buying common stock — you are buying an on-chain claim on a novel, high-yield preferred share whose price is engineered to sit near its $100 par value, with the dividend accruing into your token balance automatically.
 
-**Important context:** As of late May 2026, Strategy's stock (MSTR) trades at a ~15-25% discount to its per-share Bitcoin holdings (mNAV ~0.86), and Strategy has publicly committed (2026-05-05) to using BTC sales — not equity issuance — as the funding source for preferred-dividend obligations like STRC. This is a regime change relative to STRC's launch underwriting and the load-bearing context for the analysis below. See [MSTR retail report](/reports/mstr/) for the upstream Strategy issuer analysis.
+**Important context:** As of late May 2026, Strategy's stock (MSTR) trades at a ~15-25% discount to its per-share Bitcoin holdings (mNAV ~0.86), and Strategy has publicly committed (2026-05-05) to using BTC sales — not equity issuance — as the structural funding source for preferred-dividend obligations like STRC once cash on hand is consumed. This is a regime change relative to STRC's launch underwriting and the load-bearing context for the analysis below. See [MSTR retail report](/reports/mstr/) for the upstream Strategy issuer analysis.
 
 | Tracks | Yield | Exit | Age | Chains |
 |---|---|---|---|---|
@@ -43,7 +43,7 @@ The underlying STRC is a **variable-rate perpetual preferred stock**. Three feat
 
 - **It targets $100 par via a monthly dividend reset.** Strategy adjusts STRC's dividend rate each month to nudge the secondary price back toward $100. As of May 2026 the rate is **11.5%**, held flat for the third consecutive month, and STRC has traded slightly **below par (≈$99.75) since mid-April**. The anchor mostly holds, but it is not a hard peg — Strategy chose to let STRC drift just under par rather than ratchet the rate up to defend it.
 - **It is perpetual.** STRC has no fixed redemption date, and Strategy is under no obligation to ever return your principal. Strategy can redeem partially only while at least $250M of STRC remains outstanding, or in full on certain corporate/tax events.
-- **Its dividend is now Bitcoin-stack-dependent, not equity-issuance-dependent.** Until May 2026, STRC's payments were funded by Strategy's at-the-market equity issuance (which depended on MSTR trading at a premium to its Bitcoin NAV — "mNAV > 1"). With mNAV now in discount territory (~0.86), Strategy has formally pivoted (Saylor, 2026-05-05 earnings call) to using **BTC sales** as the preferred-dividend funding source. The shift means STRC dividend sustainability now depends on the BTC stack size + price, not on capital-markets access. Strategy holds 843,738 BTC (~$62B at spot); see "How much runway?" below for the math. STRC remains barely a year old and the BTC-sale funding regime is similarly new — neither has been tested through a sustained BTC bear. That novelty is the core of the **Underlying score (4.5)**.
+- **Its dividend is now Bitcoin-stack-dependent, not equity-issuance-dependent.** Until May 2026, STRC's payments were funded by Strategy's at-the-market equity issuance (which depended on MSTR trading at a premium to its Bitcoin NAV — "mNAV > 1"). With mNAV now in discount territory (~0.86), Strategy has formally pivoted (Saylor, 2026-05-05 earnings call) to using cash on hand first and **BTC sales** once that buffer is consumed. The shift means STRC dividend sustainability now depends on the BTC stack size + price after the cash buffer, not on capital-markets access. Strategy holds 843,738 BTC (~$62B at spot); see "How much runway?" below for the math. STRC remains barely a year old and the BTC-sale funding regime is similarly new — neither has been tested through a sustained BTC bear. That novelty is the core of the **Underlying score (4.5)**.
 
 STRCx the wrapper does nothing to soften any of this. Whatever happens to STRC happens 1:1 to STRCx.
 
@@ -55,7 +55,7 @@ STRC's risk profile depends materially on HOW Strategy funds the dividend. The f
 
 **Phase 2 (mid-2025 to early 2026): Preferred issuance + ATM.** STRC introduced as a higher-coupon perpetual preferred designed to keep issuance windows open even when equity markets weakened. STRC's monthly rate-reset mechanism ratcheted from 9.0% (Aug 2025) → 11.5% (Mar 2026) as STRC traded below $100 par, defending the issuance window. ATM equity continued in parallel.
 
-**Phase 3 (May 2026 onwards): BTC-sale funding + ATM redirected to liability management.** mNAV crossed into discount territory. On 2026-05-05 Saylor publicly committed to using BTC sales to fund preferred dividends (~18,500-19,000 BTC/yr at current rates, ~2.2% of the 843K BTC stack). Two weeks later (2026-05-11 to 2026-05-25), Strategy executed a paradigm-case transaction: bought back $1.5B of 2029 convertible notes at an 8% discount, funded by MSTR ATM + STRC ATM + cash reserves (zero BTC sales for that transaction). Net effect: convertible debt down $1.5B, preferred notional UP by ~$5.7B (mostly new STRC), aggregate annual dividend obligation rose from ~$1.16B to ~$1.55-1.70B.
+**Phase 3 (May 2026 onwards): BTC-sale funding + ATM redirected to liability management.** mNAV crossed into discount territory. On 2026-05-05 Saylor publicly committed to using BTC sales to fund preferred dividends (~18,500-19,000 BTC/yr at current rates, ~2.2% of the 843K BTC stack), operationally after cash on hand is consumed. Two weeks later (2026-05-11 to 2026-05-25), Strategy executed a paradigm-case transaction: bought back $1.5B of 2029 convertible notes at an 8% discount, funded by MSTR ATM + STRC ATM + cash reserves (zero BTC sales for that transaction). Net effect: convertible debt down $1.5B, preferred notional UP by ~$5.7B (mostly new STRC), aggregate annual dividend obligation rose from ~$1.16B to ~$1.55-1.70B.
 
 For STRC holders, the Phase 3 regime means three things:
 
@@ -65,7 +65,9 @@ For STRC holders, the Phase 3 regime means three things:
 
 ## How much runway?
 
-Strategy's aggregate annual cash service across all senior debt + preferred is currently **~$1.55-1.70B**. STRC alone is ~$1.40-1.55B (~85% of the total). Funding source: the 843K BTC stack via sales.
+Strategy's aggregate annual cash service across all senior debt + preferred is currently **~$1.55-1.70B**. STRC alone is ~$1.40-1.55B (~85% of the total). Funding sequence: cash on hand first, then the 843K BTC stack via sales.
+
+Strategy held **$871M cash** as of the 2026-05-25 8-K. Against the current ~$130-140M/month obligation, that is roughly **6-7 months until BTC sales operationally begin** if Strategy does not refill cash through STRC or ATM issuance. That zero-refill assumption makes the cash-exhaustion date a worst-case watermark; once the buffer runs out, the BTC stack picks up.
 
 At flat BTC ($73K), flat preferred outstanding, current rates:
 
@@ -74,13 +76,13 @@ At flat BTC ($73K), flat preferred outstanding, current rates:
 | STRC alone: ~19,100-21,200 BTC/yr (~2.3-2.5% of stack) | ~40-44 years |
 | All preferred + senior interest: ~21,600-23,700 BTC/yr (~2.6-2.8% of stack) | ~36-39 years |
 
-**~37 years aggregate runway is the headline.** It's a long buffer at face value, but the framework anchors it to three fragile assumptions:
+**~37 years aggregate runway is the long-horizon solvency anchor.** It's a long buffer at face value, but the framework anchors it to three fragile assumptions:
 
 - **Flat BTC price.** A 50% BTC drop doubles the % of stack consumed per year. Runway compresses dramatically.
 - **Flat preferred outstanding.** Each new STRC tranche shortens runway. A single transaction cycle (5/26) compressed runway from ~51yr to ~37yr — that's ~30% erosion from one event.
 - **Flat STRC rate.** Each 25bp rate hike adds ~$30-32M/yr to the obligation on current outstanding.
 
-The runway number on the live dashboard updates as these inputs move. If the runway crosses below ~25 years (yellow threshold), it's a meaningful coverage-deterioration signal. Below 15 years (red threshold), acute stress.
+The cash-exhaustion date is the binding near-term signal; the ~37-year stack runway is the long-horizon solvency anchor. The live dashboard updates both as inputs move. If the aggregate runway crosses below ~25 years (yellow threshold), it's a meaningful coverage-deterioration signal. Below 15 years (red threshold), acute stress.
 
 ## The rate ceiling — STRC's hidden constraint
 
@@ -143,7 +145,7 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 - **Anyone holding only on Ethereum.** The Ethereum float is concentrated and has no DEX depth; exit is near one-way.
 - **Anyone treating this as a stablecoin.** It tracks a $100 preferred, not $1, and the par-anchor is a soft mechanism, not a guarantee.
 - **Anyone using STRCx as leveraged collateral.** Thin secondary depth makes market-priced oracles unsafe for this asset.
-- **Anyone sizing without a runway view.** Strategy's BTC-stack runway is currently ~37 years (aggregate preferred service), comfortable at first glance — but it compresses fast under BTC drawdowns or continued preferred issuance growth. Size as if your STRC exposure can recur indefinitely, but also as if the BTC stack is the binding constraint that could halve in BTC bear markets.
+- **Anyone sizing without a runway view.** Strategy's BTC-stack runway is currently ~37 years (aggregate preferred service), comfortable at first glance — but the near-term cash-exhaustion date is only ~6-7 months out at zero issuance refill, and the long-term anchor compresses fast under BTC drawdowns or continued preferred issuance growth. Size as if your STRC exposure can recur indefinitely, but also as if the BTC stack is the binding constraint that could halve in BTC bear markets.
 - **Anyone assuming the 11.5% rate is the long-run yield.** STRC rate is monotonically upward — sticky under stress, rarely cuts. Realistic long-run cost-to-Strategy (and yield-to-you) is probably higher than 11.5% over a multi-year horizon. Don't model 11.5% as a permanent floor.
 
 ## What to watch
@@ -153,6 +155,7 @@ Each of these signals has a live panel on the [STRC dashboard](https://tidresear
 - **mNAV (currently ~0.86, discount regime).** Sustained < 0.85 = distress regime — Strategy's BTC-sale funding source faces compounding pressure. Recovery above 1.0 = ATM equity issuance becomes accretive again, reverses the regime.
 - **STRC's price vs par + monthly rate trajectory.** Sustained drift below $95 triggers +50bp+ rate hike (consumes ceiling headroom). Rate cut at sub-$101 price = anchor mechanism deviating from expected behavior (rare; watch).
 - **Aggregate-preferred runway (currently ~37 years).** Drops below 30 years = coverage materially compressing. Drops below 15 years = acute stress. Compression vectors: BTC drawdown, new STRC issuance, rate hikes.
+- **BTC-sale window (currently ~6-7 months at zero issuance refill).** Drift toward ~3 months = acute short-term stress. Extension through successful STRC or ATM cash refill = de-risking.
 - **Rate-ceiling headroom (currently ~250bp to 14% mid-ceiling).** Drops below 150bp = ~1.5 stress cycles to practical ceiling. Below 50bp = next stress cycle may force suspension decision.
 - **STRC outstanding tranche cadence.** Currently ~$12-13B; per-month issuance > $2B sustained = Ponzi-structure risk operational (STRC issuance funding STRC dividends).
 - **MSTR + BTC price drawdowns.** A severe drawdown compresses Strategy's BTC stack value (the funding source) AND eliminates the equity-ATM optionality. Both legs of the funding model squeeze.
@@ -167,4 +170,4 @@ STRCx is the on-chain STRC sleeve behind Apyx's stablecoins. If you're looking a
 
 ---
 
-*This report is based on Backed Finance's public documentation, Strategy Inc. SEC filings, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-05-30. Live values for mNAV regime, MSTR/BTC inputs, STRC instrument state (price, dividend rate, par drift), STRCx wrapper supply across five chains, rebasing multiplier, cash-service waterfall, rate-ceiling headroom, and SEC EDGAR 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc). STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC, exact Solana pool depth) are not independently verified here. Strategy issuer analysis is in the companion [MSTR report](/reports/mstr/). Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Backed Finance's public documentation, Strategy Inc. SEC filings, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-06-02. Live values for mNAV regime, MSTR/BTC inputs, STRC instrument state (price, dividend rate, par drift), STRCx wrapper supply across five chains, rebasing multiplier, cash-service waterfall, rate-ceiling headroom, and SEC EDGAR 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc). STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC, exact Solana pool depth) are not independently verified here. Strategy issuer analysis is in the companion [MSTR report](/reports/mstr/). Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
