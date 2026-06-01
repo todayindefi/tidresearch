@@ -67,7 +67,7 @@ Practical guidance: **exit in small tranches**. The pool is already below the $5
 
 ## Peg dynamics
 
-L-FRAX has traded at a **persistent ~$0.99 discount** for months. From the Feb–Mar 2026 PegTracker window, FRAX averaged $0.9914 with the price below $0.995 for **95.8% of all hourly readings**. The price has not recovered since.
+L-FRAX has traded at a **persistent discount to par** for months and has been **widening in late May**. Over the last 30 days (May 2 – Jun 1, 2026, 710 hourly PegTracker readings), the average price was $0.9928 (-0.72% deviation), with 92% of readings below $0.995 and 5.2% below $0.990. The week of May 25 alone had 17% of readings below $0.990 — the worst concentration since the Feb-Mar baseline window — and the latest reading on Jun 1 was $0.9908 (-0.92%). The discount is widening as the balance sheet's external-CR slide (15.16% → 13.5% in two months) gets repriced; the peg is the market's running estimate of real backing.
 
 **The peg is held by passive inertia, not active defense.** The AMO Minter contract — the system designed to mint and deploy new FRAX into peg-stabilizing positions — has been **dormant since February 2023** (3+ years). Today's price is the equilibrium between existing legacy LP positions (about $55M in a Convex FRAX/USDe pool, $37M in a Compound borrow position, and a handful of smaller LPs) absorbing marginal trading flow. Nobody is actively rebalancing or defending the peg.
 
