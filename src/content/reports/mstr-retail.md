@@ -19,7 +19,12 @@ overall_score: 5.0
 
 # MSTR (Strategy Inc.) — Retail Risk Report
 
-**Moderate-high risk · 5.0/10** | Listed: NASDAQ: MSTR | Issuer-level analysis (NOT an equity buy/sell recommendation)
+> **Scope: dependency analysis.** This report analyzes Strategy as an upstream issuer for STRC, STRCx, and downstream-asset holders (apxUSD, apyUSD, sUSDat, etc.).
+> It is **NOT an equity investment analysis** of MSTR common stock. No buy or sell guidance on MSTR is intended or implied.
+> MSTR-vs-spot-ETF comparisons, convert-strike arithmetic, dividend-discount comparisons, and peer DAT analysis are out of scope.
+> The score axes describe Strategy's upstream solvency posture for downstream holders, not its attractiveness as an equity allocation.
+
+**Moderate-high risk · 5.0/10** | Listed: NASDAQ: MSTR | Issuer-level dependency analysis
 
 MSTR is the common stock of **Strategy Inc.** (formerly MicroStrategy), the publicly listed treasury company holding **843,738 Bitcoin** (~$62B at spot) on its balance sheet. Strategy's legacy enterprise-software business is operationally immaterial; the entire investment thesis and risk profile is the BTC stack + the capital-structure machinery that funds the dividends on a growing preferred-stock obligation.
 
@@ -137,19 +142,18 @@ These are scores for Strategy as an **issuer entity** affecting downstream-asset
 | Governance | 4.5 | Saylor majority voting via dual-class. Strength (consistent BTC thesis) AND single-point-of-decision risk (the 5/05 pivot was a unilateral call reshaping the company's risk profile). |
 | **Overall** | **5.0** | **Functional but stressed.** A leveraged BTC bet with capital-structure complexity. Survivable at current BTC price + current preferred outstanding; runway compresses under any of BTC weakness, continued STRC growth, or rate-ceiling stress. Acceptable as upstream dependency for assets sized appropriately; not investment-grade-equivalent backing for any holding that needs that. |
 
-## Who it's for
+## How to use this analysis
 
-- **Sophisticated retail interested in BTC-leveraged equity exposure** who understand they're buying a treasury company, not a software business
 - **Preferred-stock holders** (STRC, STRCx, downstream) who want to understand the upstream issuer's solvency mechanics
 - **DeFi investors with STRC-dependent positions** (apxUSD, apyUSD, sUSDat, STRCx) who want the upstream view rather than only the wrapper-side analysis
 - **Researchers tracking the Digital Asset Treasury company category** — Strategy is the canonical example, and the framework here transfers to peer DAT issuers (MetaPlanet, etc.)
 
-## Who should avoid
+## What this analysis does NOT cover
 
-- **Anyone wanting simple BTC exposure.** Spot Bitcoin ETFs (IBIT, FBTC) deliver BTC price exposure with much less capital-structure risk. MSTR is leveraged-BTC + capital-structure complexity; don't conflate it with spot.
-- **Anyone uncomfortable with single-CEO decision-making.** Saylor's voting concentration means strategic shifts happen unilaterally and quickly. If that's an issue, MSTR is not the right vehicle.
-- **Anyone treating MSTR as a software company.** The software business doesn't matter to the valuation or risk profile. Don't model it with software-company multiples.
-- **Anyone assuming the Bitcoin treasury thesis = Bitcoin exposure.** The thesis depends on Strategy's continued ability to compound per-share BTC NAV via cheap capital. In the post-2026-05 regime that mechanism is compressed; the per-share BTC NAV trajectory can compress even when BTC price rises.
+- **Equity-investment analysis of MSTR common.** Peer comparison versus spot BTC ETFs (IBIT, FBTC), convert-strike arithmetic at maturity, and dividend-discount-model alternatives are out of scope; those require an equity-research framework.
+- **Personal-portfolio sizing for MSTR common.** This dependency analysis does not produce buy or sell signals.
+- **Bitcoin-exposure substitution analysis.** Spot ETFs are the relevant simple-BTC products, but comparing them with MSTR is not covered by this report.
+- **Saylor governance as a personal-risk gate.** His voting concentration is relevant here as a structural issuer fact, not as individualized investment guidance.
 
 ## What to watch
 
@@ -174,4 +178,4 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 
 ---
 
-*This report is based on Strategy Inc. SEC filings (most recent: 2026-05-26 8-K, Q1 2026 10-Q), third-party data (bitcoin-treasuries.net, Coindesk, Blockworks), and Strategy's own investor communications through 2026-06-02. Live values for MSTR price, mNAV, BTC NAV, balance sheet snapshot, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=mstr). This report is dependency-analysis scope: it explains Strategy's structural mechanics for downstream-asset-analysis purposes (STRC family wrappers, sUSDat, apxUSD/apyUSD). It is not an equity-investment recommendation on MSTR — that would require different scope including peer comparison, dividend-discount-model alternatives, and forward-looking price targets. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Strategy Inc. SEC filings (most recent: 2026-05-26 8-K, Q1 2026 10-Q), third-party data (bitcoin-treasuries.net, Coindesk, Blockworks), and Strategy's own investor communications through 2026-06-02. Live values for MSTR price, mNAV, BTC NAV, balance sheet snapshot, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=mstr). This report is dependency-analysis scope: it explains Strategy's structural mechanics for downstream-asset-analysis purposes (STRC family wrappers, sUSDat, apxUSD/apyUSD). It is intended for upstream-dependency analysis by STRC, STRCx, and derivative-asset holders; it is not equity investment guidance on MSTR common, and no buy or sell recommendation is implied or should be inferred. Equity-investment questions require different scope including peer comparison, dividend-discount-model alternatives, and forward-looking price targets. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
