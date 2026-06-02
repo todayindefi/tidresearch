@@ -10,7 +10,7 @@ date: "2026-06-02"
 last_verified: "2026-06-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
 featured: false
-production: false
+production: true
 issuer: "Strategy Inc."
 yield_bearing: false
 underlying_assets: ["btc"]
