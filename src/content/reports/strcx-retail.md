@@ -15,7 +15,7 @@ issuer: "Backed Finance (Backed Assets JE Ltd.)"
 yield_bearing: true
 underlying_assets: ["STRC"]
 volatility_score: 6.0
-liquidity_score: 3.0
+liquidity_score: 2.5
 structural_score: 6.0
 redemption_score: 3.0
 underlying_score: 4.5
@@ -28,6 +28,11 @@ overall_score: 4.0
 **Elevated risk · 4.0/10**
 
 STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly MicroStrategy) Variable-Rate Series A Perpetual "Stretch" Preferred Stock (Nasdaq: STRC). It is one of Backed's "xStocks," issued 1:1 against a real STRC share held with Backed's qualified custodian. You are not buying a stablecoin and you are not buying common stock — you are buying an on-chain claim on a novel, high-yield preferred share whose price is engineered to sit near its $100 par value, with the dividend accruing into your token balance automatically.
+
+**Who this report is for.** Two audiences:
+
+1. **Direct STRCx holders or candidates** — a narrow set. Non-US holders willing to bridge to Solana and accept thin pool depth can use STRCx as an illiquid, single-name credit allocation. US persons and Ethereum-only holders have no working exit at retail size.
+2. **Holders of stablecoins or vaults with upstream STRC family exposure** — the larger audience by dollar size. Holders of [apxUSD](/reports/apxusd/), [apyUSD](/reports/apyusd/), [sUSDat](/reports/susdat/), and [usdat](/reports/usdat/) all carry STRC or STRCx exposure through their backing baskets; this report is the canonical analysis of that underlying.
 
 **Important context:** As of late May 2026, Strategy's stock (MSTR) trades at a ~15-25% discount to its per-share Bitcoin holdings (mNAV ~0.86), and Strategy has publicly committed (2026-05-05) to using BTC sales — not equity issuance — as the structural funding source for preferred-dividend obligations like STRC once cash on hand is consumed. This is a regime change relative to STRC's launch underwriting and the load-bearing context for the analysis below. See [MSTR retail report](/reports/mstr/) for the upstream Strategy issuer analysis.
 
@@ -109,7 +114,7 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 
 **Primary redemption (mint/burn at Backed):** restricted to whitelisted **Authorized Participants** — accredited, KYC'd institutions, **non-US persons only**. Retail buyers and US persons have no primary path. This is the single biggest constraint and drives the **Redemption score (3.0)**.
 
-**Secondary market:** Like Backed's other xStocks (TSLAx, COINx, NVDAx), STRCx's tradeable depth lives on **Solana** (Raydium/Orca), where xStocks trade 24/7. STRCx is a **niche preferred**, far thinner than the flagship equity xStocks, and its specific Solana pool depth is not something we independently verified — assume it is real but shallow. On **Ethereum** there is effectively no DEX depth, and the on-chain float is highly concentrated (two addresses hold ≈68% of the Ethereum supply).
+**Secondary market:** Like Backed's other xStocks (TSLAx, COINx, NVDAx), STRCx's tradeable depth lives on **Solana** (Raydium), where xStocks trade 24/7. Verified 2026-06-02 via GeckoTerminal on the Solana mint: aggregate Solana TVL is about $807K across four pools, with the primary Raydium CLMM pool (27 days old) holding $621K TVL on $458K of 24h volume. That headline TVL overstates practical depth. The primary pool is heavily asymmetric — roughly 87% STRCx / 13% USDC, or about $539K STRCx against only $84K USDC inventory — so a single $50K USDC-out trade meaningfully drains the dollar side, and clean exits much above $30–50K per trade route through secondary pools at materially higher slippage. The pool is also currently net-servicing exits: 24h transaction count is 971 sells against 180 buys, a 5.4:1 ratio that is the mechanism eroding the dollar side. On **Ethereum** there is effectively no DEX depth, and the on-chain float is highly concentrated (two addresses hold about 68% of the Ethereum supply).
 
 **Bottom line on exit:**
 - A **non-US holder trading on Solana** has a working, if thin, secondary market.
@@ -127,12 +132,12 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 | Dimension | Score | Notes |
 |---|---|---|
 | Volatility | 6.0 | STRC engineered near $100 par via monthly resets; more stable than a normal equity wrapper but not pegged. Currently ≈$99.75 (mildly below par) with a flat 11.5% rate — minor, in-design. Sensitive to Strategy credit / BTC stress, rate-cap or suspension events. |
-| Liquidity | 3.0 | Multi-chain with ≈1,072 holders; tradeable depth on Solana, thin for this niche preferred and unverified pool-by-pool. Ethereum DEX depth ≈zero with ≈68% of the ETH float in two addresses. Below average. |
+| Liquidity | 2.5 | Tradeable depth lives on Solana — about $807K aggregate TVL across four pools, verified 2026-06-02 via GeckoTerminal. The primary Raydium CLMM pool is heavily asymmetric (about 87% STRCx / 13% USDC; only about $84K USDC inventory against about $539K STRCx), capping practical clean exits around $30–50K per trade. A 5.4:1 sell-to-buy transaction ratio is currently eroding the dollar side. Ethereum DEX depth is effectively zero, with about 68% of the ETH float in two addresses. Below average. |
 | Structural | 6.0 | Mature Backed wrapper (Swiss DLT-regulated since 2021). Rebasing ERC-20, whitelist-gated mint/burn. Held back by issuer mint/burn + multiplier authority, off-chain custodian dependency, and no continuous per-token on-chain PoR. |
 | Redemption | 3.0 | **Binding constraint.** Primary redemption is non-US, accredited-AP-only. A non-US holder has a working Solana secondary exit; a US person or Ethereum-only holder faces worst-case exit asymmetry. Underlying STRC is perpetual with no obligation to return principal. |
 | Underlying | 4.5 | STRC: a real Nasdaq/SEC-registered preferred with a functioning ≈11.5% dividend and par-anchor. Now operationally tested through the 2026-05 funding-regime transition (ATM-into-BTC → BTC-sales-into-dividends) — STRC issuance kept working, but the structural cost shifted to the BTC stack itself. Untested through a sustained BTC bear in the new regime. Rate-ceiling headroom (currently ~2 stress cycles to 14%) is a finite budget Strategy can draw on a few more times before dividend-suspension becomes a credible option. |
 | Issuer | 6.0 | Backed Finance — established Swiss DLT issuer, multiple live xStocks, established custody + attestation cadence. Single-issuer dependency, off-chain custodian, and issuer-level (not per-token) PoR keep it from scoring higher. |
-| **Overall** | **4.0** | **Elevated risk.** For a non-US holder able to trade on Solana, STRCx is a reasonable yield-capturing on-chain proxy for STRC, carrying Backed counterparty + custodian risk on top of STRC's own novelty. For a US person or Ethereum-only holder, it is a thin, effectively one-way trade. |
+| **Overall** | **4.0** | **Elevated risk.** For a non-US holder willing to size around the verified Solana depth (clean-exit ceiling around $30–50K per trade, eroding pool composition), STRCx is a thin but functioning yield-capturing on-chain proxy for STRC, carrying Backed counterparty + custodian risk on top of STRC's own novelty. For a US person or Ethereum-only holder, it remains a near one-way trade. The 2026-06-02 depth verification tightens — but does not break — the working-secondary framing for the eligible audience. |
 
 ## Who it's for
 
@@ -159,15 +164,23 @@ Each of these signals has a live panel on the [STRC dashboard](https://tidresear
 - **Rate-ceiling headroom (currently ~250bp to 14% mid-ceiling).** Drops below 150bp = ~1.5 stress cycles to practical ceiling. Below 50bp = next stress cycle may force suspension decision.
 - **STRC outstanding tranche cadence.** Currently ~$12-13B; per-month issuance > $2B sustained = Ponzi-structure risk operational (STRC issuance funding STRC dividends).
 - **MSTR + BTC price drawdowns.** A severe drawdown compresses Strategy's BTC stack value (the funding source) AND eliminates the equity-ATM optionality. Both legs of the funding model squeeze.
-- **Solana pool depth for STRCx.** The only realistic non-AP exit; drainage = wrapper-layer exit deteriorating regardless of underlying.
+- **Solana pool depth for STRCx.** The only realistic non-AP exit; drainage = wrapper-layer exit deteriorating regardless of underlying. Baseline (verified 2026-06-02): about $807K aggregate across four pools; primary Raydium CLMM is about 87% STRCx / 13% USDC, capping practical clean exits around $30–50K per trade.
+  - **Sell-to-buy transaction ratio in the primary pool** (currently 5.4:1 over 24h). A sustained sell-pressure regime against the asymmetric composition is how this secondary degrades from "working with slippage" to "no functional exit."
 - **The rebasing multiplier's cadence.** Issuer-updated; track whether it keeps pace with the ~11.5% net dividend.
 
 ## Related reports
 
 The upstream Strategy issuer is analyzed in the [MSTR retail report](/reports/mstr/) — that's the entity behind STRC, and the place to understand the mNAV regime, capital structure, and BTC stack dependency in depth. **Read MSTR for the upstream funding-model context.**
 
-STRCx is the on-chain STRC sleeve behind Apyx's stablecoins. If you're looking at those, see the [apxUSD report](/reports/apxusd/) (the $1 wrapper, yield routed away) and the [apyUSD report](/reports/apyusd/) (the yield-bearing sibling). Both carry STRC exposure indirectly; STRCx is the direct, undiluted version.
+STRCx sits upstream of multiple downstream wrappers across the STRC family. Holders of any of these should read STRCx for the underlying analysis:
+
+- [apxUSD](/reports/apxusd/) — Apyx's $1-pegged stablecoin wrapper; STRC-backed reserves, yield routed away.
+- [apyUSD](/reports/apyusd/) — Apyx's yield-bearing sibling; captures the STRC dividend as NAV growth.
+- [sUSDat](/reports/susdat/) — Saturn's yield-bearing wrapper; STRC dividend pass-through into NAV.
+- [usdat](/reports/usdat/) — Saturn's permissioned non-yield stablecoin (sUSDat's underlying).
+
+All four carry STRC family exposure indirectly through their backing baskets; STRCx is the direct, undiluted version.
 
 ---
 
-*This report is based on Backed Finance's public documentation, Strategy Inc. SEC filings, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-06-02. Live values for mNAV regime, MSTR/BTC inputs, STRC instrument state (price, dividend rate, par drift), STRCx wrapper supply across five chains, rebasing multiplier, cash-service waterfall, rate-ceiling headroom, and SEC EDGAR 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc). STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC, exact Solana pool depth) are not independently verified here. Strategy issuer analysis is in the companion [MSTR report](/reports/mstr/). Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Backed Finance's public documentation, Strategy Inc. SEC filings, on-chain reads, and third-party data (rwa.xyz, CoinDesk) through 2026-06-02. Live values for mNAV regime, MSTR/BTC inputs, STRC instrument state (price, dividend rate, par drift), STRCx wrapper supply across five chains, rebasing multiplier, cash-service waterfall, rate-ceiling headroom, and SEC EDGAR 8-K event log are on the [live dashboard](https://tidresearch.com/dashboards/?asset=strc). STRCx is an off-chain-backed real-world asset: backing is verified via Backed's issuer-level reports and qualified-custodian arrangement, not a continuous on-chain feed, and some details (named custodian for STRC) are not independently verified here. Strategy issuer analysis is in the companion [MSTR report](/reports/mstr/). Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
