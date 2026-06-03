@@ -7,14 +7,14 @@ category: "tradfi-equity"
 assessment_type: "light"
 audience: "retail"
 date: "2026-06-02"
-last_verified: "2026-06-02"
+last_verified: "2026-06-04"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
 featured: false
 production: true
 issuer: "Strategy Inc."
 yield_bearing: false
 underlying_assets: ["btc"]
-overall_score: 5.0
+overall_score: 5.5
 ---
 
 # MSTR (Strategy Inc.) — Retail Risk Report
@@ -24,7 +24,7 @@ overall_score: 5.0
 > MSTR-vs-spot-ETF comparisons, convert-strike arithmetic, dividend-discount comparisons, and peer DAT analysis are out of scope.
 > The score axes describe Strategy's upstream solvency posture for downstream holders, not its attractiveness as an equity allocation.
 
-**Moderate-high risk · 5.0/10** | Listed: NASDAQ: MSTR | Issuer-level dependency analysis
+**Moderate-high risk · 5.5/10** | Listed: NASDAQ: MSTR | Issuer-level dependency analysis
 
 MSTR is the common stock of **Strategy Inc.** (formerly MicroStrategy), the publicly listed treasury company holding **843,738 Bitcoin** (~$62B at spot) on its balance sheet. Strategy's legacy enterprise-software business is operationally immaterial; the entire investment thesis and risk profile is the BTC stack + the capital-structure machinery that funds the dividends on a growing preferred-stock obligation.
 
@@ -50,47 +50,40 @@ The legacy software business (BI tools, on-premise + cloud analytics) generates 
 
 ## The mNAV mechanism — the binding signal
 
-The single most important number for understanding Strategy is **mNAV**:
+The single most important number for understanding Strategy is **mNAV** — Strategy's own published metric, visible on the strategy.com landing page:
 
 ```
-mNAV = MSTR market cap ÷ BTC NAV
-
-where BTC NAV = (BTC count) × (BTC spot price)
+mNAV = Enterprise Value ÷ BTC Reserve
+EV   = MSTR market cap + senior convertible debt + perpetual preferred − cash
 ```
 
-Currently (late May 2026): MSTR market cap ~$46.5B / BTC NAV ~$62B ≈ **0.86 — a discount, not a premium**.
+Currently (2026-06-03, strategy.com): EV ≈ $67.2B, BTC Reserve ≈ $55.3B, **mNAV ≈ 1.21 — premium**.
 
-| mNAV range | Regime | What it means |
+*Correction note: an earlier version of this report computed mNAV as MktCap / BTC ≈ 0.86 and read this as "discount." That ratio is a useful **leverage indicator** for the common claim, but it is not Strategy's published mNAV and it is not the ATM-accretion test. With $22B of senior claims (debt + preferred) sitting ahead of common, MktCap/BTC being mechanically less than 1 is normal capital-structure arithmetic — it would only equal mNAV in a debt-free pure-BTC structure (a spot ETF).*
+
+| mNAV range (EV/BTC) | Regime | What it means |
 |---|---|---|
-| > 1.05 | Premium | ATM equity issuance accretive — every $1 raised buys >$1 of per-share BTC. BTC-bid flywheel intact. |
+| > 1.05 | **Premium (current)** | ATM equity issuance accretive — every $1 raised buys $1 of BTC that accrues to common above the senior wedge. Per-share BTC NAV grows on each issuance. BTC-bid flywheel intact. |
 | 0.95 - 1.05 | Parity | Marginal — ATM neither accretive nor dilutive in per-share BTC terms. |
-| 0.85 - 0.95 | **Discount (current)** | ATM dilutive to per-share BTC. Strategy CAN still issue equity but only for liability management (e.g., paying off convertible debt at a discount) — not for accretive BTC accumulation. |
-| < 0.85 | Distress | Funding model under acute stress. Capital markets pricing meaningful execution doubt. |
+| 0.85 - 0.95 | Discount | ATM dilutive to per-share BTC. BTC-accumulation funding leg compressed. |
+| < 0.85 | Distress | Funding model under acute stress. |
 
-**Why mNAV inversion matters:** The Strategy investment thesis is centrally a per-share BTC NAV compounding story. When mNAV stays < 1, the compounding mechanism inverts — new equity issuance dilutes per-share BTC NAV rather than growing it. The discount becomes self-reinforcing because the growth thesis weakens, which compresses MSTR equity further, which deepens the discount.
+**Why mNAV would matter if it inverted:** the Strategy investment thesis is centrally a per-share BTC NAV compounding story. If mNAV ever sustains < 1, the compounding mechanism inverts — new equity issuance dilutes per-share BTC NAV rather than growing it. That self-reinforcing loop (weaker thesis → weaker equity → lower mNAV) is the **forward stress case** to monitor; it is not the operating regime as of 2026-06-03.
 
-The 2026-05-05 pivot (next section) was Strategy's explicit acknowledgment that the historical mNAV>1 flywheel is no longer operative.
+## The 2026-05-05 disclosure — funding-mix optimization
 
-## The 2026-05-05 funding-regime change
+On Strategy's Q1 2026 earnings call (2026-05-05), Saylor publicly committed for the first time to using **BTC sales** as one funding leg for preferred-dividend obligations. He stated current annual preferred payments require selling ~18,500-19,000 BTC per year (~2.2% of the 843K BTC stack) if funded entirely from the stack.
 
-On Strategy's Q1 2026 earnings call (2026-05-05), Saylor publicly committed for the first time to using **BTC sales** to fund preferred-dividend obligations. He stated current annual preferred payments require selling ~18,500-19,000 BTC per year (~2.2% of the 843K BTC stack).
+**The disclosure was a funding-mix decision, not a forced response to a broken ATM.** Annual preferred dividend obligation is ~$1.7B. Funding that via incremental ATM at MSTR ≈ $130 requires issuing ~13M new shares per year (~4% basic-float dilution annually); funding via BTC sales requires liquidating ~26K BTC/yr (~3% of stack annually). Both are economically feasible at mNAV ≈ 1.21. Saylor's preference is a **mix** — ATM for liability management plus opportunistic BTC sales for dividend service — rather than open-ended ATM dilution. The "pivot" is a portfolio choice between two viable funding legs, not an admission that the equity-issuance leg is closed.
 
-This is a regime change. The previous covenant — "we never sell" — has been replaced with "we sell ≤ 2.2%/yr if needed."
-
-**For MSTR equity holders, this is structurally bearish on two timeframes:**
-- **Near term:** Strategy is now a marginal net BTC seller, not a net buyer. The historical "BTC bid" via Strategy's ATM cadence is significantly diminished.
-- **Multi-year:** The growth thesis around MSTR has weakened. If BTC compounds at < ~6%/yr long-term (the rough breakeven for per-share BTC NAV growth under the new model), MSTR equity has no fundamental upside lever.
-
-**For preferred holders (STRC, STRF, etc.), this is a mixed signal:**
-- **Positive:** Strategy explicitly funded the preferred-dividend stream from cash first, then the BTC stack. Phase 1 is the $871M cash buffer: ~6-7 months at current obligation and zero issuance refill. Phase 2 is ~36-39 years of BTC-stack runway at flat BTC and flat preferred outstanding.
-- **Negative:** The funding source flipped from incoming capital (renewable) to a finite cash buffer followed by the BTC stack (finite, depleted by sales). The model assumes BTC compounds faster than the dividend-burn rate; if BTC stagnates or drops, runway compresses fast.
+**For preferred holders (STRC, STRF, etc.):** Strategy now operates a three-leg funding stack — ATM equity issuance, ongoing preferred issuance, and opportunistic BTC sales. Phase 1 is the $871M cash buffer (~6-7 months at current obligation, zero issuance refill). Phase 2 is the BTC stack itself — ~36-39 years of runway at flat BTC and flat preferred outstanding. The three-leg structure is more robust than a single-leg model would be; residual stress vectors are STRC issuance demand absorption, rate-ceiling headroom, and a future mNAV inversion under sustained BTC weakness.
 
 ## The 2026-05-26 transaction — the new playbook in action
 
 Two weeks after the Saylor pivot, Strategy executed a paradigm transaction (2026-05-11 to 2026-05-25):
 
 - **Repurchased** $1.50B face of 0% 2029 convertible notes for ~$1.38B cash (8% discount to par)
-- **Funded by** cash reserves + MSTR ATM (yes, even at mNAV ~0.86) + STRC ATM
+- **Funded by** cash reserves + MSTR ATM + STRC ATM
 - **Zero BTC sales** for this transaction
 - **Result:** convert debt $8.2B → $6.7B; total preferred notional grew by $5.7B (mostly new STRC); BTC holdings unchanged
 
@@ -137,10 +130,10 @@ These are scores for Strategy as an **issuer entity** affecting downstream-asset
 | Dimension | Score | Notes |
 |---|---|---|
 | Balance sheet quality | 5.5 | Large BTC stack ($62B) is real but cost-basis underwater ($75,699/BTC avg vs ~$73K spot). Cash buffer thin ($871M = ~6 months coverage). Debt + preferred meaningful ($22B+ combined). Quality is BTC-correlated. |
-| Funding model durability | 4.5 | mNAV at 0.86 (discount) compresses the BTC-accumulation model. ATM redirected to liability management. New funding source = BTC sales + continued preferred issuance demand. Both fragile under stress. |
+| Funding model durability | 5.5 | Canonical mNAV (EV/BTC) ≈ 1.21 — premium regime. ATM equity remains accretive; Strategy operates a three-leg funding stack (ATM + preferred issuance + opportunistic BTC sales) rather than a single-leg BTC-sale model. Residual fragilities: STRC issuance demand absorption, rate-ceiling headroom, and a future mNAV inversion under sustained BTC weakness. |
 | Refinancing capacity | 6.0 | Demonstrated capacity to retire $1.5B converts at discount (5/26 transaction). The rolling-refinancing playbook works at current scale. 2030 wall ($2.7B) is the unproven test. |
 | Governance | 4.5 | Saylor majority voting via dual-class. Strength (consistent BTC thesis) AND single-point-of-decision risk (the 5/05 pivot was a unilateral call reshaping the company's risk profile). |
-| **Overall** | **5.0** | **Functional but stressed.** A leveraged BTC bet with capital-structure complexity. Survivable at current BTC price + current preferred outstanding; runway compresses under any of BTC weakness, continued STRC growth, or rate-ceiling stress. Acceptable as upstream dependency for assets sized appropriately; not investment-grade-equivalent backing for any holding that needs that. |
+| **Overall** | **5.5** | **Functional but stressed.** A leveraged BTC bet with capital-structure complexity. Survivable at current BTC price + current preferred outstanding; runway compresses under any of BTC weakness, continued STRC growth, or rate-ceiling stress. Acceptable as upstream dependency for assets sized appropriately; not investment-grade-equivalent backing for any holding that needs that. |
 
 ## How to use this analysis
 
@@ -159,7 +152,7 @@ These are scores for Strategy as an **issuer entity** affecting downstream-asset
 
 Each of these signals has a live panel on the [MSTR dashboard](https://tidresearch.com/dashboards/?asset=mstr) (and most also on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc) for the preferred-side view):
 
-- **mNAV (currently ~0.86).** Sustained < 0.85 = distress; ATM offline for any productive use. Recovery > 1.0 = ATM accretive again, regime reverses.
+- **mNAV (EV/BTC, currently ~1.21).** Threshold to watch: sustained < 1.0 inverts the BTC-bid flywheel; sustained < 0.85 = distress. Use strategy.com's landing-page mNAV as the authoritative reading.
 - **BTC price and Strategy's BTC count.** Quarterly purchase/sale cadence; ANY BTC sale execution (not just intent) is regime confirmation.
 - **Per-share BTC NAV trajectory.** The headline equity metric. Compresses with dilution (ATM issuance) even when BTC count grows.
 - **STRC outstanding tranche cadence.** Currently ~$12-13B; sustained > $2B/month issuance = Ponzi-structure risk operational.
