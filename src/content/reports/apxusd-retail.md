@@ -10,16 +10,16 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"
-last_verified: "2026-05-21"
+last_verified: "2026-06-04"
 featured: false
 production: true
 issuer: "Apyx (DFDV-affiliated)"
 peg_mechanism_score: 4.5
-backing_score: 4.5
+backing_score: 4.2
 liquidity_score: 8.0
 issuer_score: 5.5
 underlying_score: 5.5
-overall_score: 5.3
+overall_score: 5.2
 audited: true
 audit_count: 3
 audit_firms: ["Quantstamp", "Zellic", "Certora"]
@@ -32,7 +32,7 @@ is_fork: false
 
 # apxUSD — Retail Risk Report
 
-**Moderate-elevated risk · 5.3/10**
+**Moderate-elevated risk · 5.2/10**
 
 apxUSD is a $1-pegged stablecoin from Apyx, a young protocol (live since Feb 2026) backed primarily by **cash & equivalents + Strategy's STRC perpetual preferred shares**. The yield from the backing flows to Apyx's sibling token apyUSD; apxUSD holders forgo yield in exchange for stablecoin functionality. Supply has grown rapidly into the hundreds of millions since launch.
 
@@ -50,6 +50,8 @@ Composition is roughly **half-to-two-thirds Cash & Equivalents + one-third-to-ha
 - The "Cash & Equivalents" line is not itemized in the Accountable feed — could be bank deposits, T-bills, USDC, or some mix. Not disclosed publicly.
 - **Wolf is mid-tier, not Big-4.** Solid AICPA examination engagement (named auditor, professional liability) but a tier below Deloitte / PwC / EY / KPMG.
 - **The April Wolf engagement narrowed scope to securities only** — cash, stablecoin, and dividends-in-motion (covered in March) all dropped out. The largest reserve component (cash) has no CPA-firm attestation for any date after 2026-03-31. Whether this is a transitional re-scope or a permanent restriction will be visible in the May 2026 report (expected mid-to-late June 2026).
+- **apxUSD is issuer-push, not user-pull.** Mints do not atomically pull USDC from a depositor — Apyx mints apxUSD to itself and sells it on Curve / CoW Protocol for USDC. The proceeds are then swept from Apyx's operational multisig to a **Kraken** deposit address (Kraken is a US-licensed exchange — the team uses it as a USDC→USD off-ramp), then routed off-chain via Kraken's wire-withdrawal pipeline to Apyx's brokerage at Alpaca for STRC / SATA purchases. The pipeline is institutionally normal; the disclosure gap is that Apyx hasn't published the off-ramp arrangement and Wolf's April scope narrowing excluded the cash/stablecoin layer where this reconciliation lives.
+- **CR oscillates around par with STRC mark-to-market drift.** STRC is roughly 62% of reserves and Apyx marks it to its NASDAQ close in real time. A 1% STRC move = about $3M reserves swing ≈ 0.6 percentage points of CR. Cached or stale snapshots taken at moments of STRC weakness can briefly read sub-100% before recovering — that's mark-to-market noise, not a backing alarm. Watch persistent rather than transient sub-100% readings.
 - STRC + SATA are held at Alpaca brokerage in the name of Preference Foundation (or a subsidiary). STRCx is in [`0x37b0779a…323a555`](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555), a 3-of-6 Gnosis Safe with the same six owners as Apyx's other admin Safes (identified on-chain; the 4/30 balance matches the Wolf attestation within 1%). The Safe has no time-delay on transactions — same admin gap as the cross-chain bridge layer.
 - The Accountable TEE feed proves what Apyx feeds the enclave; it does not audit the custodian or the wallet keys themselves. Wolf's monthly examinations close part of that gap by providing an independent CPA opinion on the securities balances, but no examination opines on the on-chain wallet's key-management posture.
 
@@ -102,6 +104,7 @@ The binding-exit constraint for apxUSD is **not per-trade slippage** — observe
 - **Curve apxUSD/USDC pool depth** (live on dashboard's Secondary Liquidity panel). Depth growing = healthier exit; depth shrinking = stress signal.
 - **STRC ex-dividend dates** (~mid-month). Watch apyUSD NAV behavior around those dates; if STRC's monthly reset materially drops, yield to apyUSD compresses.
 - **MSTR / BTC drawdowns.** A severe BTC crash compresses MSTR equity → threatens STRC dividends → degrades apxUSD backing.
+- **MAINTAINER USDC float as reconciliation indicator.** Apyx's operational multisig periodically accumulates USDC from secondary apxUSD sales (about $8M currently) and sweeps it to a Kraken deposit address roughly every 2-4 weeks. Healthy pattern: float oscillates between zero (post-sweep) and roughly $30M (pre-sweep). Warning sign: float climbs above historical highs without a sweep, indicating the off-chain pipeline is jammed.
 
 ## A note on the apyUSD sibling
 

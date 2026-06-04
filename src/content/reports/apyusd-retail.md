@@ -11,22 +11,22 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apyusd"
 trust_disclaimer: true
 date: "2026-05-07"
-last_verified: "2026-05-28"
+last_verified: "2026-06-04"
 featured: false
 production: true
 volatility_score: 7.0
-structural_score: 5.5
+structural_score: 5.7
 redemption_score: 4.5
 liquidity_score: 5.5
 issuer_score: 5.5
 underlying_score: 4.5
-overall_score: 4.4
+overall_score: 4.2
 audited_reserves: true
 ---
 
 # apyUSD — Retail Risk Report
 
-**Moderate-elevated risk · 4.4/10**
+**Moderate-elevated risk · 4.2/10**
 
 apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows over time as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **~13% APY** (within STRC's 11-15% indicated-rate range). Where apxUSD holders forgo yield in exchange for stablecoin functionality, apyUSD holders accept a **20-day cooldown** on the canonical exit path (or use a DEX two-hop for retail-scale exits in minutes).
 
@@ -41,6 +41,8 @@ apyUSD inherits everything that drives the [apxUSD reliability axis](/reports/ap
 The effective bottom-of-stack collateral is ~56% cash + ~42% STRC + ~2% SATA — meaningfully diversified versus a pure-STRC product like [sUSDat](/reports/susdat/) (which holds ~81% STRC directly). That diversification is reflected in the **Underlying axis at 4.5**, sitting above sUSDat's 4.0 but well below a pure-cash-equivalent wrapper. The 42% STRC slice remains the binding-risk weight on the editorial overall — single-issuer Strategy preferred dividend exposure with MSTR-cycle correlation.
 
 **apyUSD-specific reliability concern:** the vault contract has had one observable implementation upgrade since launch (about a month after going live). Future upgrades have a 3-day visibility window for the guardian role to cancel, but the upgrade path itself is a live risk surface.
+
+**Inherited issuer-push framing (new 2026-06-04).** apxUSD is issuer-push — Apyx mints apxUSD to itself and sells secondary-market for USDC, then routes proceeds through Kraken → bank → Alpaca → STRC purchases. apyUSD shares themselves are cleanly issued: a 2026-06-04 source review of the apyUSD vault implementation (Sourcify full match) confirmed there is NO privileged share-mint backdoor — share issuance follows the standard ERC-4626 deposit path with apxUSD transferred in before shares mint. But every apxUSD that a depositor brings to the vault inherits the apxUSD primary-issuance pattern, which is a different shape than user-pull stablecoins like USDC or DAI. See the [apxUSD retail report](/reports/apxusd/) "Backing & solvency" for the full pipeline.
 
 ## Exit liquidity
 
@@ -99,6 +101,7 @@ See the [apxUSD retail report](/reports/apxusd/) for the full team-trust write-u
 - **STRC ex-dividend dates** (~mid-month) — NAV trajectory should be smooth; visible step-changes or pauses would be a yield-mechanic anomaly worth investigating
 - **Curve apyUSD/apxUSD pool depth** (live on dashboard) — the dominant secondary exit. Depth shrinking or persistent imbalance would push more flow into the 20-day cooldown
 - **MSTR / BTC drawdowns** — STRC dividends compress in stress
+- **MAINTAINER USDC float vs Accountable CR.** Same flag as apxUSD — Apyx's operational multisig accumulates USDC pending sweep to Kraken (about $8M typical, oscillates with multi-week sweep cadence). Persistent climb above historical highs without a sweep would indicate off-chain pipeline stress; transient sub-100% CR readings are STRC mark-to-market noise, not a backing alarm.
 
 ## A note on the apxUSD companion
 
