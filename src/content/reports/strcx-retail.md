@@ -7,25 +7,27 @@ category: "wrapped-token"
 assessment_type: "light"
 audience: "retail"
 date: "2026-06-02"
-last_verified: "2026-06-02"
+last_verified: "2026-06-07"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
 issuer: "Backed Finance (Backed Assets JE Ltd.)"
 yield_bearing: true
 underlying_assets: ["STRC"]
-volatility_score: 6.0
+volatility_score: 5.0
 liquidity_score: 2.5
 structural_score: 6.0
 redemption_score: 3.0
-underlying_score: 4.5
+underlying_score: 3.5
 issuer_score: 6.0
-overall_score: 4.0
+overall_score: 3.0
 ---
 
 # STRC + STRCx — Retail Risk Report
 
-**Elevated risk · 4.0/10**
+**Significant risk · 3.0/10**
+
+> **June 2026 drawdown update (2026-06-07) — downgrade, not collapse.** A ~16% BTC drawdown since late May (about $73.6K → $61.7K) propagated down the Strategy stack — MSTR about −21%, and the underlying STRC de-anchored about −5.2% to ~$93.40, breaking its $95 dividend-bump trigger around 6/2. STRCx tracks STRC ~1:1, so the price-anchor (**Volatility 6.0 → 5.0**) and the **Underlying axis (4.5 → 3.5)** both drop and overall follows (**4.0 → 3.0**). The wrapper-specific layers are unchanged — thin Solana DEX depth, Backed issuer counterparty, and AP-gated redemption are no better or worse than before. The cut is the underlying STRC credit deteriorating, not the wrapper breaking. Strategy's mNAV (EV/BTC) is still ~1.20 premium, so this is a move toward the stress case, not a regime collapse — but the STRC credit / mNAV / BTC-bid risk flows through 1:1, and a sustained mNAV inversion would drop this further.
 
 STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly MicroStrategy) Variable-Rate Series A Perpetual "Stretch" Preferred Stock (Nasdaq: STRC). It is one of Backed's "xStocks," issued 1:1 against a real STRC share held with Backed's qualified custodian. You are not buying a stablecoin and you are not buying common stock — you are buying an on-chain claim on a novel, high-yield preferred share whose price is engineered to sit near its $100 par value, with the dividend accruing into your token balance automatically.
 
@@ -34,7 +36,7 @@ STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly Mi
 1. **Direct STRCx holders or candidates** — a narrow set. Non-US holders willing to bridge to Solana and accept thin pool depth can use STRCx as an illiquid, single-name credit allocation. US persons and Ethereum-only holders have no working exit at retail size.
 2. **Holders of stablecoins or vaults with upstream STRC family exposure** — the larger audience by dollar size. Holders of [apxUSD](/reports/apxusd/), [apyUSD](/reports/apyusd/), [sUSDat](/reports/susdat/), and [usdat](/reports/usdat/) all carry STRC or STRCx exposure through their backing baskets; this report is the canonical analysis of that underlying.
 
-**Important context:** As of late May 2026, Strategy's stock (MSTR) trades at a ~15-25% discount to its per-share Bitcoin holdings (mNAV ~0.86), and Strategy has publicly committed (2026-05-05) to using BTC sales — not equity issuance — as the structural funding source for preferred-dividend obligations like STRC once cash on hand is consumed. This is a regime change relative to STRC's launch underwriting and the load-bearing context for the analysis below. See [MSTR retail report](/reports/mstr/) for the upstream Strategy issuer analysis.
+**Important context:** As of June 2026, Strategy's canonical mNAV (EV/BTC, the metric Strategy publishes) is **about 1.20 — a premium**, so its equity ATM leg remains accretive. (The "0.86 discount" figure that circulated earlier is the *common-equity coverage* ratio, MktCap/BTC — a leverage lens, not mNAV; with about $22B of debt + preferred sitting ahead of common, that ratio is mechanically below 1 and is not the funding-model signal.) On 2026-05-05 Saylor committed to a **funding mix** — cash on hand first, then opportunistic BTC sales alongside ongoing ATM — for preferred-dividend obligations like STRC; this is a funding-mix shift, not a forced replacement of a broken equity leg. The load-bearing watch item is a *future* sustained mNAV inversion (EV/BTC < 1), which would close the accretive ATM leg. The June drawdown (BTC −16%, premium compressing) is a move toward that case, not a crossing of it. See [MSTR retail report](/reports/mstr/) for the upstream Strategy issuer analysis.
 
 | Tracks | Yield | Exit | Age | Chains |
 |---|---|---|---|---|
@@ -48,7 +50,7 @@ The underlying STRC is a **variable-rate perpetual preferred stock**. Three feat
 
 - **It targets $100 par via a monthly dividend reset.** Strategy adjusts STRC's dividend rate each month to nudge the secondary price back toward $100. As of May 2026 the rate is **11.5%**, held flat for the third consecutive month, and STRC has traded slightly **below par (≈$99.75) since mid-April**. The anchor mostly holds, but it is not a hard peg — Strategy chose to let STRC drift just under par rather than ratchet the rate up to defend it.
 - **It is perpetual.** STRC has no fixed redemption date, and Strategy is under no obligation to ever return your principal. Strategy can redeem partially only while at least $250M of STRC remains outstanding, or in full on certain corporate/tax events.
-- **Its dividend is now Bitcoin-stack-dependent, not equity-issuance-dependent.** Until May 2026, STRC's payments were funded by Strategy's at-the-market equity issuance (which depended on MSTR trading at a premium to its Bitcoin NAV — "mNAV > 1"). With mNAV now in discount territory (~0.86), Strategy has formally pivoted (Saylor, 2026-05-05 earnings call) to using cash on hand first and **BTC sales** once that buffer is consumed. The shift means STRC dividend sustainability now depends on the BTC stack size + price after the cash buffer, not on capital-markets access. Strategy holds 843,738 BTC (~$62B at spot); see "How much runway?" below for the math. STRC remains barely a year old and the BTC-sale funding regime is similarly new — neither has been tested through a sustained BTC bear. That novelty is the core of the **Underlying score (4.5)**.
+- **Its dividend funding now leans on a cash → BTC-stack sequence, not only equity issuance.** Strategy's ATM equity leg still works — canonical mNAV (EV/BTC) is ≈1.20, a premium, so issuance remains accretive — but on 2026-05-05 Saylor committed to a funding mix that draws cash on hand first and then **opportunistic BTC sales** for preferred-dividend service. The practical effect for STRC holders: dividend sustainability increasingly depends on the BTC stack size + price after the cash buffer, on top of capital-markets access. Strategy holds 843,738 BTC (about $53B after the June drawdown, down from $62B); see "How much runway?" below for the math. STRC remains barely a year old and the BTC-sale funding leg is similarly new — neither has been tested through a sustained BTC bear, and the June 2026 drawdown is the first real stress on the new regime (STRC de-anchored to ~$93.40). That novelty plus the live de-anchoring is the core of the **Underlying score (3.5)**.
 
 STRCx the wrapper does nothing to soften any of this. Whatever happens to STRC happens 1:1 to STRCx.
 
@@ -60,7 +62,7 @@ STRC's risk profile depends materially on HOW Strategy funds the dividend. The f
 
 **Phase 2 (mid-2025 to early 2026): Preferred issuance + ATM.** STRC introduced as a higher-coupon perpetual preferred designed to keep issuance windows open even when equity markets weakened. STRC's monthly rate-reset mechanism ratcheted from 9.0% (Aug 2025) → 11.5% (Mar 2026) as STRC traded below $100 par, defending the issuance window. ATM equity continued in parallel.
 
-**Phase 3 (May 2026 onwards): BTC-sale funding + ATM redirected to liability management.** mNAV crossed into discount territory. On 2026-05-05 Saylor publicly committed to using BTC sales to fund preferred dividends (~18,500-19,000 BTC/yr at current rates, ~2.2% of the 843K BTC stack), operationally after cash on hand is consumed. Two weeks later (2026-05-11 to 2026-05-25), Strategy executed a paradigm-case transaction: bought back $1.5B of 2029 convertible notes at an 8% discount, funded by MSTR ATM + STRC ATM + cash reserves (zero BTC sales for that transaction). Net effect: convertible debt down $1.5B, preferred notional UP by ~$5.7B (mostly new STRC), aggregate annual dividend obligation rose from ~$1.16B to ~$1.55-1.70B.
+**Phase 3 (May 2026 onwards): BTC-sale funding added alongside ATM.** With mNAV (EV/BTC) still a premium (~1.20) but the BTC-bid thesis under pressure, Strategy broadened the funding mix rather than abandoning the equity leg. On 2026-05-05 Saylor publicly committed to using BTC sales to fund preferred dividends (~18,500-19,000 BTC/yr at current rates, ~2.2% of the 843K BTC stack), operationally after cash on hand is consumed. Two weeks later (2026-05-11 to 2026-05-25), Strategy executed a paradigm-case transaction: bought back $1.5B of 2029 convertible notes at an 8% discount, funded by MSTR ATM + STRC ATM + cash reserves (zero BTC sales for that transaction). Net effect: convertible debt down $1.5B, preferred notional UP by ~$5.7B (mostly new STRC), aggregate annual dividend obligation rose from ~$1.16B to ~$1.55-1.70B.
 
 For STRC holders, the Phase 3 regime means three things:
 
@@ -131,13 +133,13 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Volatility | 6.0 | STRC engineered near $100 par via monthly resets; more stable than a normal equity wrapper but not pegged. Currently ≈$99.75 (mildly below par) with a flat 11.5% rate — minor, in-design. Sensitive to Strategy credit / BTC stress, rate-cap or suspension events. |
+| Volatility | 5.0 | **Cut from 6.0 (June 2026 drawdown).** STRC is engineered near $100 par via monthly resets — more stable than a normal equity wrapper but not pegged. The ~16% BTC drawdown pushed STRC off its anchor to ~$93.40, breaking the $95 dividend-bump trigger around 6/2 — direct evidence the par-anchor bends under Strategy credit / BTC stress rather than holding. Still paying 11.5%; sensitive to rate-cap or suspension events from here. |
 | Liquidity | 2.5 | Tradeable depth lives on Solana — about $807K aggregate TVL across four pools, verified 2026-06-02 via GeckoTerminal. The primary Raydium CLMM pool is heavily asymmetric (about 87% STRCx / 13% USDC; only about $84K USDC inventory against about $539K STRCx), capping practical clean exits around $30–50K per trade. A 5.4:1 sell-to-buy transaction ratio is currently eroding the dollar side. Ethereum DEX depth is effectively zero, with about 68% of the ETH float in two addresses. Below average. |
 | Structural | 6.0 | Mature Backed wrapper (Swiss DLT-regulated since 2021). Rebasing ERC-20, whitelist-gated mint/burn. Held back by issuer mint/burn + multiplier authority, off-chain custodian dependency, and no continuous per-token on-chain PoR. |
 | Redemption | 3.0 | **Binding constraint.** Primary redemption is non-US, accredited-AP-only. A non-US holder has a working Solana secondary exit; a US person or Ethereum-only holder faces worst-case exit asymmetry. Underlying STRC is perpetual with no obligation to return principal. |
-| Underlying | 4.5 | STRC: a real Nasdaq/SEC-registered preferred with a functioning ≈11.5% dividend and par-anchor. Now operationally tested through the 2026-05 funding-regime transition (ATM-into-BTC → BTC-sales-into-dividends) — STRC issuance kept working, but the structural cost shifted to the BTC stack itself. Untested through a sustained BTC bear in the new regime. Rate-ceiling headroom (currently ~2 stress cycles to 14%) is a finite budget Strategy can draw on a few more times before dividend-suspension becomes a credible option. |
+| Underlying | 3.5 | **Cut from 4.5 (June 2026 drawdown; raw STRC 6.0 → 5.0, root-traced to MSTR 5.0 / a ~16% BTC move).** STRC is a real Nasdaq/SEC-registered preferred with a functioning ≈11.5% dividend and par-anchor — but the June drawdown is the first live test of the new funding mix, and STRC de-anchored to ~$93.40 under a routine BTC move, breaking its $95 bump trigger. Strategy's mNAV (EV/BTC) is still ~1.20 premium, capping the cut, but the STRC credit / mNAV / BTC-bid risk flows through 1:1. Rate-ceiling headroom (~2 stress cycles to 14%) is a finite budget Strategy can draw a few more times before dividend-suspension becomes a credible option; a sustained mNAV inversion would drop this further. |
 | Issuer | 6.0 | Backed Finance — established Swiss DLT issuer, multiple live xStocks, established custody + attestation cadence. Single-issuer dependency, off-chain custodian, and issuer-level (not per-token) PoR keep it from scoring higher. |
-| **Overall** | **4.0** | **Elevated risk.** For a non-US holder willing to size around the verified Solana depth (clean-exit ceiling around $30–50K per trade, eroding pool composition), STRCx is a thin but functioning yield-capturing on-chain proxy for STRC, carrying Backed counterparty + custodian risk on top of STRC's own novelty. For a US person or Ethereum-only holder, it remains a near one-way trade. The 2026-06-02 depth verification tightens — but does not break — the working-secondary framing for the eligible audience. |
+| **Overall** | **3.0** | **Significant risk.** **Cut from 4.0 (June 2026 drawdown)** as the underlying STRC dropped (Volatility + Underlying), root-traced to MSTR 5.0 and a ~16% BTC move — the wrapper-specific layers are unchanged. For a non-US holder willing to size around the verified Solana depth (clean-exit ceiling around $30–50K per trade, eroding pool composition), STRCx is a thin but functioning yield-capturing on-chain proxy for STRC, now carrying a visibly de-anchoring underlying on top of Backed counterparty + custodian risk. For a US person or Ethereum-only holder, it remains a near one-way trade. This is a downgrade on underlying credit, not a wrapper failure; a sustained mNAV inversion or accelerated BTC-sale regime would drop it further. |
 
 ## Who it's for
 
@@ -157,7 +159,7 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 
 Each of these signals has a live panel on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc):
 
-- **mNAV (currently ~0.86, discount regime).** Sustained < 0.85 = distress regime — Strategy's BTC-sale funding source faces compounding pressure. Recovery above 1.0 = ATM equity issuance becomes accretive again, reverses the regime.
+- **mNAV (EV/BTC, currently ~1.20, premium — compressing).** This is Strategy's published mNAV; ATM equity issuance is accretive while it stays above 1.0. The binding threshold is a **sustained crossing below 1.0**, which inverts the BTC-bid flywheel and closes the accretive equity leg; sustained < 0.85 = distress. The June drawdown is compressing the premium toward that 1.0 line, not across it. (Note: the MktCap/BTC "coverage" ratio of ~0.86 that circulated earlier is a leverage lens, not mNAV — don't read it as discount.)
 - **STRC's price vs par + monthly rate trajectory.** Sustained drift below $95 triggers +50bp+ rate hike (consumes ceiling headroom). Rate cut at sub-$101 price = anchor mechanism deviating from expected behavior (rare; watch).
 - **Aggregate-preferred runway (currently ~37 years).** Drops below 30 years = coverage materially compressing. Drops below 15 years = acute stress. Compression vectors: BTC drawdown, new STRC issuance, rate hikes.
 - **BTC-sale window (currently ~6-7 months at zero issuance refill).** Drift toward ~3 months = acute short-term stress. Extension through successful STRC or ATM cash refill = de-risking.
