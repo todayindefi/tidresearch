@@ -7,7 +7,7 @@ category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
-last_verified: "2026-05-29"
+last_verified: "2026-06-09"
 peg_mechanism_score: 6.0
 backing_score: 5.0
 liquidity_score: 6.0
@@ -25,7 +25,7 @@ production: true
 
 **Live data:** [crvUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
 
-**Operating regime (Q2 2026):** total supply (all minting sources, including PK debt) in the mid $200Ms, conservative collateral ratio (symmetric, drops PK from both sides) running 105–115%, inclusive CR (PK debt in supply, PK stables in collateral) typically 110–120%, YieldBasis 60–65% of supply, PegKeeper debt concentrated in the USDT pool at low-tens of millions. Numbers move daily — the dashboard is the source of truth; figures in this report are durable ranges, not point-in-time anchors.
+**Operating regime (Q2 2026):** total supply (all minting sources, including PK debt) in the mid $200Ms, conservative collateral ratio (symmetric, drops PK from both sides) running 105–115%, inclusive CR (PK debt in supply, PK stables in collateral) typically 110–120%, YieldBasis the dominant supply source (running in the 60–80% band and trending toward the 80% concentration danger line), PegKeeper debt concentrated in the USDT pool at low-tens of millions. Numbers move daily — the dashboard is the source of truth; figures in this report are durable ranges, not point-in-time anchors.
 
 ## Summary
 
@@ -142,7 +142,7 @@ This methodology produces a number in the mid $200Ms in Q2 2026 (including PK de
 **The universal minting gate:** `set_debt_ceiling` on ControllerFactory is the only way to authorize new crvUSD creation. Any address that receives a ceiling can mint. The DAO controls who gets ceilings via governance votes. To monitor for new supply sources, enumerate all `set_debt_ceiling` events on ControllerFactory — this is the complete list of entities that can create crvUSD.
 
 **What does NOT count as supply:**
-- **scrvUSD vault:** Users deposit existing crvUSD to earn yield. Holds crvUSD, doesn't create it.
+- **scrvUSD vault:** Users deposit existing crvUSD to earn yield. Holds crvUSD, doesn't create it. **However** (V3, see §IV), YieldBasis HybridVaults now route about 55% of their TVL *into* scrvUSD as a stablecoin sleeve — this still doesn't create new crvUSD, but it makes scrvUSD a structural *destination* of crvUSD supply: a peg-defense buffer when calm, a crvUSD-outflow lever on mass V3 redemption. Tracked as a first-class line item on the dashboard.
 - **DEX trading / wallet transfers:** Moves crvUSD, doesn't create it.
 - **YB factory idle buffer:** Pre-minted but not deployed — excluded from supply (only YB AMM pool balances count).
 
@@ -223,15 +223,21 @@ No single contract or API gives an accurate crvUSD supply:
 
 ### What is YieldBasis?
 
-YieldBasis (YB) is a protocol by Michael Egorov designed to eliminate impermanent loss for BTC AMM liquidity providers. Launched September 2025 on Curve infrastructure.
+YieldBasis (YB) is a protocol by Michael Egorov designed to eliminate impermanent loss for AMM liquidity providers. Launched September 2025 on Curve infrastructure. Originally BTC-only; ETH/WETH markets have since been added.
 
-### Mechanism
+### Mechanism (V1/V2)
 
-1. User deposits BTC (WBTC, cbBTC, or tBTC)
-2. YB draws from its pre-minted crvUSD allocation (matching the BTC value)
-3. Both BTC + crvUSD enter a Curve pool as a 50/50 position
-4. Continuous rebalancing maintains 2x leverage — user's share tracks BTC price 1:1 while earning trading fees
-5. When users withdraw BTC, the paired crvUSD returns to the YB factory as idle buffer
+1. User deposits collateral (WBTC, cbBTC, tBTC, or WETH)
+2. YB draws from its pre-minted crvUSD allocation (matching the collateral value)
+3. Both collateral + crvUSD enter a Curve pool as a 50/50 position
+4. Continuous rebalancing maintains 2x leverage — user's share tracks the asset price 1:1 while earning trading fees
+5. When users withdraw, the paired crvUSD returns to the YB factory as idle buffer
+
+### V3 restructuring (live May 21, 2026)
+
+YB V3 restructured the user product into per-user **HybridVaults**. Instead of a bare leveraged-LP position, each hybrid vault holds two sleeves: the **leveraged BTC/ETH LP sleeve** (the V1/V2 market above) *plus* a **crvUSD-vault sleeve — default about 55%** of vault value — deployed into **scrvUSD** so the stable half of the position earns the crvUSD savings rate rather than sitting idle. The YB UI lists each asset twice (a standard market and a "Hybrid" variant over the *same* underlying market); the Hybrid row is that same collateral pool wrapped with the added stable sleeve, not a separate pool.
+
+Why this matters for crvUSD: every dollar of net-new V3 TVL routes ≈$0.55 into scrvUSD — i.e. into crvUSD held in the savings vault. This is a new, growing structural source of crvUSD demand living *inside* V3 — a peg-defense buffer when calm, but a crvUSD-outflow lever if V3 unwinds fast (mass redemption → scrvUSD redemption → crvUSD leaves the savings vault). The `stablecoin_fraction` (default 55%) is an ADMIN-settable lever. Aggregate scrvUSD parked through HybridVaults is tracked on the dashboard via the HybridVaultFactory's `crvusd_vault_total_required` reading.
 
 ### Credit Line (Structural — governance decisions)
 
