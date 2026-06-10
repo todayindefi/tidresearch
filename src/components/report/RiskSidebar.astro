@@ -7,10 +7,14 @@ import { ArrowRight } from "lucide-react";
 
 interface Props {
   data: any;
+  dashboardUrl?: string;
 }
 
-const { data } = Astro.props;
-const liveDashboardUrl: string | undefined = data.live_dashboard_url;
+const { data, dashboardUrl } = Astro.props;
+// Prefer the derived single-source URL threaded from the layout (covers DASHBOARD_SLUGS
+// assets without live_dashboard_url, e.g. syrup); fall back to frontmatter for robustness.
+const liveDashboardUrl: string | undefined =
+  dashboardUrl ?? data.live_dashboard_url;
 
 // Companion report cross-link. The historical pattern (syrupUSDC, thBILL, etc.)
 // is retail → institutional, where the CTA routes to /<companion>/request for

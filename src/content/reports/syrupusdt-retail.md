@@ -39,6 +39,8 @@ underlying_managers:
 
 **Moderate risk · 6.0/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
 
+*Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).*
+
 | Yield | Exit method | Primary redemption | Pool size | Chains |
 |---|---|---|---|---|
 | ~4.5–5% live (organic loan interest) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~$436M (smaller than syrupUSDC's ~$1.22B) | Ethereum primary |

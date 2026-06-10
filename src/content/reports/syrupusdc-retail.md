@@ -39,6 +39,8 @@ underlying_managers:
 
 **Moderate-to-low risk · 6.75/10**
 
+*Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc).*
+
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
 | ~4.7% live (organic loan interest) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~2 years | Ethereum, Solana, Arbitrum, Base, Plasma |

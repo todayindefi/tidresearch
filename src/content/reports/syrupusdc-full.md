@@ -104,6 +104,8 @@ supply_integrity_flags:
 
 # syrupUSDC — Risk Assessment Report
 
+*Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc).*
+
 | | |
 |---|---|
 | **Asset** | syrupUSDC (Maple Finance Syrup product line) |

@@ -40,8 +40,17 @@ const DASHBOARD_SLUGS = new Set([
   "susdai",
 ]);
 const hasDashboard = DASHBOARD_SLUGS.has(entry.data.slug);
+
+// Single source of truth for the dashboard *link* surfaces (sidebar button, bottom CTA,
+// trust disclaimer): an explicit live_dashboard_url wins (e.g. thBILL's standalone
+// dashboard); otherwise any slug in DASHBOARD_SLUGS falls back to its internal
+// backing-monitor view. This keeps the link present on every dashboard-enabled report —
+// including syrup, which is in DASHBOARD_SLUGS but has no live_dashboard_url frontmatter.
+const dashboardUrl =
+  entry.data.live_dashboard_url ??
+  (hasDashboard ? `/dashboards/?asset=${entry.data.slug}` : undefined);
 ---
 
-<ReportLayout data={entry.data} hasDashboard={hasDashboard} headings={headings}>
+<ReportLayout data={entry.data} hasDashboard={hasDashboard} headings={headings} dashboardUrl={dashboardUrl}>
   <Content />
 </ReportLayout>
