@@ -18,6 +18,7 @@ issuer: "Frax Finance"
 audited_reserves: false
 market_cap_approx: 124000000
 featured: false
+production: true
 ---
 
 # Frax USD (frxUSD) — Retail Risk Report
