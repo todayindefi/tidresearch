@@ -7,7 +7,7 @@ category: "tradfi-equity"
 assessment_type: "light"
 audience: "retail"
 date: "2026-06-02"
-last_verified: "2026-06-07"
+last_verified: "2026-06-15"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
 featured: false
 production: true
@@ -26,15 +26,15 @@ overall_score: 5.0
 
 **Moderate-high risk · 5.0/10** | Listed: NASDAQ: MSTR | Issuer-level dependency analysis
 
-> **June 2026 drawdown update (2026-06-07) — downgrade, not alarm.** Since late May a ~16% BTC drawdown (about $73.6K → $61.7K) propagated down the Strategy capital stack: MSTR fell about −21% ($151.64 → $120.44, the equity leverage) and STRC de-anchored about −5.2% to ~$93.40 (breaking its $95 dividend-bump trigger around 6/2). This report's overall score moves **5.5 → 5.0**. The move is a *step toward* the stress case, not a regime collapse: canonical mNAV (EV/BTC) is still ~1.20 — premium — so the equity ATM leg remains accretive, which caps the downgrade to one notch. What changed is that two fragilities the prior 5.5 explicitly named are now materializing in real time: BTC weakness, and **preferred-issuance absorption** (STRC de-anchoring while paying an 11.5% dividend near its practical rate ceiling). An mNAV inversion would be the real escalation — see "What to watch."
+> **June 2026 drawdown update (2026-06-07) — downgrade, not alarm.** Since late May a ~16% BTC drawdown (about $73.6K → $61.7K) propagated down the Strategy capital stack: MSTR fell about −21% ($151.64 → $120.44, the equity leverage) and STRC de-anchored about −5.2% to ~$93.40 (breaking its $95 dividend-bump trigger around 6/2). This report's overall score moves **5.5 → 5.0**. The move is a *step toward* the stress case, not a regime collapse: canonical mNAV (EV/BTC) is still ~1.20 — premium — so the equity ATM leg remains accretive, which caps the downgrade to one notch. What changed is that two fragilities the prior 5.5 explicitly named are now materializing in real time: BTC weakness, and **preferred-issuance absorption** (STRC de-anchoring while paying an 11.5% dividend near its practical rate ceiling). An mNAV inversion would be the real escalation — see "What to watch." *(Update 2026-06-15: STRC has since recovered to ≈$97.3 (06-08), June MTD VWAP ≈$95.6; the data below is refreshed to the 06-14/15 weekly 8-K. Scores held.)*
 
-MSTR is the common stock of **Strategy Inc.** (formerly MicroStrategy), the publicly listed treasury company holding **843,738 Bitcoin** (~$53B after the June drawdown, down from ~$62B) on its balance sheet. Strategy's legacy enterprise-software business is operationally immaterial; the entire investment thesis and risk profile is the BTC stack + the capital-structure machinery that funds the dividends on a growing preferred-stock obligation.
+MSTR is the common stock of **Strategy Inc.** (formerly MicroStrategy), the publicly listed treasury company holding **846,842 Bitcoin** (≈$55.9B at ≈$66K, 06-15) on its balance sheet. Strategy's legacy enterprise-software business is operationally immaterial; the entire investment thesis and risk profile is the BTC stack + the capital-structure machinery that funds the dividends on a growing preferred-stock obligation.
 
 This report is the **issuer-level analysis** that Strategy's preferred-stock holders (STRC, STRF, STRD, STRK) and any DeFi assets dependent on those preferreds (STRCx wrapper, apxUSD / apyUSD reserves, sUSDat backing) need to understand. It is NOT an equity-investment recommendation on MSTR common — that would require a different analytical lens (peer comparison vs IBIT spot ETF, conversion math, dividend-discount-model alternatives). The scope here is dependency analysis: how solvent is Strategy as an issuer, what drives the funding model, what's the runway, what could break.
 
 | Holdings | Funding model | Cash buffer | Preferred outstanding | Convert debt |
 |---|---|---|---|---|
-| 843,738 BTC (~$53B post-drawdown) | BTC sales (since 2026-05) | $871M | $15.5B | $6.7B |
+| 846,842 BTC (≈$55.9B at ≈$66K) | BTC sales (since 2026-05) | $1.1B | $15.5B | $6.7B |
 
 **Live monitoring** of mNAV regime, balance sheet, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log is on the [live MSTR dashboard](https://tidresearch.com/dashboards/?asset=mstr) — values in this report are point-in-time anchors; the dashboard reflects current readings.
 
@@ -78,7 +78,9 @@ On Strategy's Q1 2026 earnings call (2026-05-05), Saylor publicly committed for 
 
 **The disclosure was a funding-mix decision, not a forced response to a broken ATM.** Annual preferred dividend obligation is ~$1.7B. Funding that via incremental ATM at MSTR ≈ $130 requires issuing ~13M new shares per year (~4% basic-float dilution annually); funding via BTC sales requires liquidating ~26K BTC/yr (~3% of stack annually). Both are economically feasible at mNAV ≈ 1.21. Saylor's preference is a **mix** — ATM for liability management plus opportunistic BTC sales for dividend service — rather than open-ended ATM dilution. The "pivot" is a portfolio choice between two viable funding legs, not an admission that the equity-issuance leg is closed.
 
-**For preferred holders (STRC, STRF, etc.):** Strategy now operates a three-leg funding stack — ATM equity issuance, ongoing preferred issuance, and opportunistic BTC sales. Phase 1 is the $871M cash buffer (~6-7 months at current obligation, zero issuance refill). Phase 2 is the BTC stack itself — ~36-39 years of runway at flat BTC and flat preferred outstanding. The three-leg structure is more robust than a single-leg model would be; residual stress vectors are STRC issuance demand absorption, rate-ceiling headroom, and a future mNAV inversion under sustained BTC weakness.
+**For preferred holders (STRC, STRF, etc.):** Strategy now operates a three-leg funding stack — ATM equity issuance, ongoing preferred issuance, and opportunistic BTC sales. Phase 1 is the cash buffer, which has *built* from $871M (5/25) to ≈$1.1B (06-14) across three weeks of common-ATM-funded BTC buys with zero preferred issuance and no forced BTC sales — easing Phase-1 coverage to ≈7.7 months at current obligation with zero issuance refill. The buffer is building and the stress thesis stands; this is not a regime change. Phase 2 is the BTC stack itself — ~36-39 years of runway at flat BTC and flat preferred outstanding. The three-leg structure is more robust than a single-leg model would be; residual stress vectors are STRC issuance demand absorption, rate-ceiling headroom, and a future mNAV inversion under sustained BTC weakness.
+
+> **From 2026-06-30, STRC pays its dividend twice a month instead of once.** The annual rate (11.5%) and total payout are unchanged — Strategy just splits the monthly dividend into two payments. (Approved at the June 8 annual meeting; first semi-monthly payment July 15, 2026.) Note this is a *payment-cadence* change only; the rate itself is still reset monthly off prior-month VWAP.
 
 ## The 2026-05-26 transaction — the new playbook in action
 
@@ -131,7 +133,7 @@ These are scores for Strategy as an **issuer entity** affecting downstream-asset
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Balance sheet quality | 5.0 | **Cut from 5.5 (June 2026 drawdown).** BTC stack fell ~$61.8B → ~$53B as BTC dropped ~$73.6K → ~$61.7K; cost-basis ($75,699/BTC avg) deeper underwater. Cash buffer thin ($871M ≈ 6 months coverage) against the ~$1.5B+/yr preferred dividend service — cash alone covers well under a year. Debt + preferred meaningful ($22B+ combined). Quality is BTC-correlated; the drawdown moved it toward, not through, the stress case. |
+| Balance sheet quality | 5.0 | **Cut from 5.5 (June 2026 drawdown).** BTC stack fell ~$61.8B → ~$53B as BTC dropped ~$73.6K → ~$61.7K; cost-basis ($75,656/BTC avg) deeper underwater. Cash buffer has built to ≈$1.1B (≈7.7 months coverage) against the ~$1.5B+/yr preferred dividend service — buffer building, stress thesis intact, but cash alone still covers under a year. Debt + preferred meaningful ($22B+ combined). Quality is BTC-correlated; the drawdown moved it toward, not through, the stress case. |
 | Funding model durability | 5.0 | **Cut from 5.5 (June 2026 drawdown).** The 2026-06-04 upgrade to 5.5 was explicitly contingent on "mNAV ≈ 1.21 premium, ATM accretive." That premise is intact but weakening — mNAV (EV/BTC) is still ~1.20 premium, so the equity ATM leg remains accretive (no regime collapse, which caps the downgrade). But two fragilities the 5.5 named are now materializing: BTC weakness (−16%), and **preferred-issuance absorption** — STRC de-anchoring to ~$93.40 while paying 11.5% (near its ~14% practical ceiling) is direct evidence the preferred leg loses absorptive capacity under stress, and that leg is what the refinancing thesis leans on. Premium is compressing toward the inversion cliff. |
 | Refinancing capacity | 5.5 | **Cut from 6.0 (June 2026 drawdown).** Demonstrated capacity to retire $1.5B converts at discount (5/26 transaction) — the rolling-refinancing playbook works at current scale. But the load-bearing assumption ("STRC issuance demand stays absorptive") is weakening: STRC de-anchored under a routine ~16% BTC move, so refinancing the 2030 wall via fresh STRC issuance is a less safe assumption than at the 6.0. Above-average current capacity, with the 2029-2030 watch items flashing earlier. |
 | Governance | 4.5 | Saylor majority voting via dual-class. Strength (consistent BTC thesis) AND single-point-of-decision risk (the 5/05 pivot was a unilateral call reshaping the company's risk profile). Held — no new governance event in the June drawdown. |
@@ -159,8 +161,8 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 - **Per-share BTC NAV trajectory.** The headline equity metric. Compresses with dilution (ATM issuance) even when BTC count grows.
 - **STRC outstanding tranche cadence.** Currently ~$12-13B; sustained > $2B/month issuance = Ponzi-structure risk operational.
 - **Aggregate-preferred runway.** Currently ~37 years; meaningful compression below 30 years.
-- **BTC-sale window date.** Currently ~2027-03-02 at zero issuance refill; drift inward to within ~3 months = acute short-term stress. Extension through successful STRC or ATM cash refill = de-risking.
-- **Cash balance.** Currently $871M; drops below $500M = stress signal (~3-4 months of cash runway at current obligation).
+- **BTC-sale window date.** Currently ≈2027-02 at zero issuance refill; drift inward to within ~3 months = acute short-term stress. Extension through successful STRC or ATM cash refill = de-risking.
+- **Cash balance.** Currently ≈$1.1B (built from $871M over three weeks); drops below $500M = stress signal (~3-4 months of cash runway at current obligation).
 - **2030 convertible wall as it approaches.** ~12-18 months ahead (mid-2029), market will start pricing cash-vs-conversion outcome. Refinancing capacity will be visible.
 - **Saylor governance events.** Voting structure changes, succession plans, health events — material risk vectors.
 
