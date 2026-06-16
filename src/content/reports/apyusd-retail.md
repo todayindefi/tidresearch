@@ -75,6 +75,8 @@ Trading on the apyUSD/apxUSD pool is sporadic (market-maker driven rather than c
 
 This window is both an **exit cost** and the protocol's **anti-bank-run feature** — Apyx's June post-mortem credits it with preventing a run during the depeg by disincentivizing the simultaneous exits that would have forced more STRC selling. The max window was shortened from 30 → 20 days by the Apyx admin on 2026-04-15 (verified on-chain); it remains admin-mutable subject to a 72-hour visibility window. For institutional sizing the window is binding, and it now also exposes the holder to days of further collateral drift before the (below-par) terminal asset is received — which is why the **Liquidity and Redemption axes both sit at 3.5**.
 
+Because the canonical path terminates in apxUSD, apyUSD inherits the underlying's redemption model: Apyx's June-15 "Apyx 2.0" announcement to move apxUSD mint/redeem to a single **Redemption Value** floor (via an approved-counterparty RFQ), closing the prior first-mover "free put option," would improve the *terminal* apxUSD you receive — but it is blog-only as of this revision (not yet in docs or on-chain) and it does **not** change apyUSD's own 3-to-20-day unlock window or any of its scores. See the [apxUSD retail report](/reports/apxusd/) for the full Apyx 2.0 detail.
+
 ## Peg & yield dynamics
 
 apyUSD doesn't have a $1 peg — it's a **NAV-accruing vault share**. The NAV is the apxUSD-per-share ratio, and it grows as Apyx's STRC backing pays dividends. The catch in June 2026 is that NAV is denominated in apxUSD, and apxUSD itself is below par — so a healthy-looking NAV sits on top of an impaired underlying.
