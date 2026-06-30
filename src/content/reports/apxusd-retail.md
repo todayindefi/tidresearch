@@ -10,16 +10,16 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"
-last_verified: "2026-06-09"
+last_verified: "2026-06-30"
 featured: false
 production: true
 issuer: "Apyx (DFDV-affiliated)"
-peg_mechanism_score: 3.5
-backing_score: 2.5
-liquidity_score: 3.5
+peg_mechanism_score: 2.5
+backing_score: 2.0
+liquidity_score: 3.0
 issuer_score: 5.0
 underlying_score: 5.0
-overall_score: 3.6
+overall_score: 3.0
 audited: true
 audit_count: 3
 audit_firms: ["Quantstamp", "Zellic", "Certora"]
@@ -32,11 +32,13 @@ is_fork: false
 
 # apxUSD — Retail Risk Report
 
-**Significant risk · 3.6/10**
+**Significant risk · 3.0/10**
 
 apxUSD is a $1-target stablecoin from Apyx, a young protocol (live since Feb 2026) backed primarily by **Strategy's STRC perpetual preferred shares**, plus a cash sleeve and protocol-owned liquidity. The yield from the backing flows to Apyx's sibling token apyUSD; apxUSD holders forgo yield in exchange for stablecoin functionality. Supply grew rapidly into the hundreds of millions after launch.
 
 **apxUSD broke its peg in June 2026 and is currently below par collateralization.** That event reshapes most of this report — see *The June 2026 depeg* directly below. Live peg, reserves, and collateralization are on the [dashboard](https://tidresearch.com/dashboards/?asset=apxusd).
+
+> **Update (2026-06-29/30) — scores cut to current: Peg 3.5 → 2.5, Backing 2.5 → 2.0, Liquidity 3.5 → 3.0, Overall 3.6 → 3.0 (Issuer held 5.0). Plus: the STRC collateral now carries a discretionary soft floor.** Two things this catch-up reflects. **(1) The depeg deepened through late June.** What earlier sections describe as a "low-90s on the dollar / mid-90s% collateral ratio" was the *first-week trough*, not the current state — apxUSD has since traded as low as **~$0.82 (≈−18%)** and Apyx's attestation feed fell to a collateral ratio of **~84%** (a ~16% buffer deficit vs par), sustained for weeks. That drives the score cuts to the levels above (live values on the [dashboard](https://tidresearch.com/dashboards/?asset=apxusd)). **(2) Strategy's 06-29 8-K put a soft floor under STRC.** The "Digital Credit Capital Framework" changed how Strategy defends STRC — from a reflexive "hike the dividend if STRC trades sub-$95" ratchet to a **discretionary soft floor** (Strategy may buy STRC back via a $1.0B STRC-priority program, or draw a near-doubled $2.55B reserve, but makes no commitment to return STRC to par). For apxUSD's ~74%-net STRC basket this is **modestly stabilizing, not score-improving**: a discretionary issuer bid now cushions STRC's mark, but it does **not** restock Apyx's reserve or lift the ~84% collateral ratio. Mark the STRC sleeve to its live secondary price *with that floor beneath it*, not to a par-defense recovery. The old "watch for STRC back above ~$95" recovery trigger is superseded — recovery now tracks STRC re-rating on the soft-floor bid plus Apyx restoring collateral ≥100%.
 
 | Peg | Yield | Exit | Age | Chains |
 |---|---|---|---|---|
@@ -46,10 +48,10 @@ apxUSD is a $1-target stablecoin from Apyx, a young protocol (live since Feb 202
 
 apxUSD broke peg in the first week of June 2026. Two things happened at once:
 
-- **The collateral de-anchored.** Strategy's STRC preferred — the dominant reserve asset — fell below its $100 par and under the level where Strategy is contractually pushed to raise the dividend. That is a direct mark-to-market hit to a reserve that is **mostly STRC**.
+- **The collateral de-anchored.** Strategy's STRC preferred — the dominant reserve asset — fell well below its $100 par (to an all-time low ~$74.57 before recovering to ~$82). That is a direct mark-to-market hit to a reserve that is **mostly STRC**. (Note: STRC's old "drift below ~$95 forces a dividend hike to defend par" reflex was itself removed by Strategy's 06-29 framework — par defense is now a discretionary soft floor; see the update box at the top.)
 - **Holders headed for the exit.** A meaningful share of supply was redeemed/sold over the same window, so reserves shrank faster than supply.
 
-The result: apxUSD traded at a material discount — into the **low-90s on the dollar** at the worst of the week — and Apyx's own attestation feed now shows a **persistent, issuer-attested sub-100% collateral ratio** (into the **mid-90s%** at the trough, recovering since but not fully back to par). This is no longer the transient mark-to-market wobble earlier versions of this report told you to ignore; it is a sustained shortfall that has lasted several days. Because apxUSD has **no atomic on-chain redemption** — no contract you can call to swap one apxUSD for a dollar of collateral — there is no built-in arbitrage to force the price back to $1. Recovery depends on STRC recovering and on Apyx restocking reserves through its off-chain pipeline.
+The result: apxUSD traded at a material discount and Apyx's own attestation feed shows a **persistent, issuer-attested sub-100% collateral ratio**. The first-week trough was into the **low-90s on the dollar / mid-90s% collateral ratio**; through late June the dislocation *deepened* to **~$0.82 (≈−18%) and a ~84% collateral ratio** (see the update box at the top for the current cut). This is no longer the transient mark-to-market wobble earlier versions of this report told you to ignore; it is a sustained shortfall that has lasted weeks. Because apxUSD has **no atomic on-chain redemption** — no contract you can call to swap one apxUSD for a dollar of collateral — there is no built-in arbitrage to force the price back to $1. Recovery depends on STRC re-rating (now on the soft-floor bid) and on Apyx restocking reserves through its off-chain pipeline.
 
 Treat the specific discount and collateral ratio as a **moving event, not a fixed number** — check the [live dashboard](https://tidresearch.com/dashboards/?asset=apxusd) for the current values. (One caveat: Apyx pulls its own secondary-market depth off-hours by design, so weekend snapshots overstate the steady-state dislocation.)
 
@@ -63,7 +65,7 @@ Treat the specific discount and collateral ratio as a **moving event, not a fixe
 - **Net of that Inventory line, the reserve is roughly three-quarters STRC family (≈74%)**, plus about ≈13% cash and ≈13% POL — *more* STRC-concentrated than the ≈66% gross figure suggested.
 - **POL is reflexive.** It's protocol-owned DEX liquidity plus USDC lent into Apyx-collateralized Morpho markets, capped at **15% of reserves**. It's liquid, but it is deployed against Apyx's own assets, so it is lower-quality backing than plain cash.
 
-That correction — more STRC concentration than previously scored, and a thinner true-cash cushion — is the core reason the **Backing axis sits at 2.5**. A 50% STRC writedown would still leave the cash and POL portion, but that cushion is thinner than the gross numbers implied.
+That correction — more STRC concentration than previously scored, and a thinner true-cash cushion — combined with the deepened depeg (attested collateral ratio down to ~84%, a ~16% buffer deficit vs par) is why the **Backing axis sits at 2.0**. A 50% STRC writedown would still leave the cash and POL portion, but that cushion is thinner than the gross numbers implied. Strategy's 06-29 soft floor stabilizes the STRC *mark* (a discretionary issuer bid now sits under STRC) but does not restock Apyx's reserve or close the ~16% hole, so it steadies the trajectory without lifting this axis.
 
 **The qualifiers worth knowing:**
 - The "Cash & Equivalents" line is not itemized in the Accountable feed — could be bank deposits, T-bills, USDC, or some mix. Not disclosed publicly.
@@ -83,17 +85,17 @@ That correction — more STRC concentration than previously scored, and a thinne
 - **Retail size:** Sell on Curve apxUSD/USDC (live depth on the dashboard's Secondary Liquidity panel). During the June depeg, observed exit cost rose sharply and the pool traded at a discount to par — the "institutional-grade, $100K clears under 25 bps" depth described in earlier revisions did **not** survive the stress event. Apyx pulls its own secondary depth off-hours by design, so depth and slippage swing with the time of day and the stress state; check the live panel before sizing.
 - **Larger size:** Apyx offers redemption in USDC, but the mechanism isn't publicly documented — no published timeline, no PSM, no on-chain guarantee. Effectively trusts Apyx to liquidate STRC into USDC and pay out when requested.
 
-The durable finding on this axis is that secondary depth is **variable and issuer-discretionary**, not the dependable book earlier scores implied — which, together with the depeg, is why the **Liquidity axis sits at 3.5**. Two related constraints live on other axes: **coordinated-run capacity** (secondary depth is a small fraction of supply, a backing/buffer concern) and **redemption-mechanism opacity** (the undocumented off-chain settlement path, a peg-mechanism concern).
+The durable finding on this axis is that secondary depth is **variable and issuer-discretionary**, not the dependable book earlier scores implied — which, together with the deepened depeg (apxUSD ~$0.82, with KyberSwap aggregator depth — not weekend pool depth — the canonical exit mark), is why the **Liquidity axis sits at 3.0**. Two related constraints live on other axes: **coordinated-run capacity** (secondary depth is a small fraction of supply, a backing/buffer concern) and **redemption-mechanism opacity** (the undocumented off-chain settlement path, a peg-mechanism concern).
 
 ## Peg & yield dynamics
 
 **apxUSD is designed to trade at $1 — and in June 2026 it didn't.** Peg integrity rests on three things, all of which the depeg tested:
 
-1. **STRC + cash backing holds its value.** STRC fell below par and below its dividend-bump trigger, directly cutting reserve value. STRC is a ≈1-year-old instrument, not yet tested through a prolonged BTC drawdown or an MSTR equity-raise pause.
+1. **STRC + cash backing holds its value.** STRC fell well below par, directly cutting reserve value. As of 06-29, Strategy defends STRC value with a discretionary soft floor (buyback / reserve) rather than a reflexive sub-$95 dividend hike — a bid under the price, not a peg. STRC is a ≈1-year-old instrument, not yet tested through a prolonged BTC drawdown or an MSTR equity-raise pause.
 2. **The Alpaca brokerage and the STRCx Safe hold what's reported.** Wolf's monthly CPA examinations independently verify the securities sleeve at two snapshot dates per month, and the STRCx Safe at [`0x37b0779a…`](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555) is verifiable on-chain in real time. Wolf does not opine on the cash sleeve after the April scope narrowing.
 3. **Secondary depth absorbs flows.** It did not absorb the June redemption wave at par — that's the realized version of the stress this report previously said "would test this."
 
-**What broke the peg, and what restores it:** STRC de-anchoring on a concentrated reserve plus a redemption wave pushed collateralization below par, and with no atomic redemption there's no automatic arbitrage to close the gap. The path back to $1 requires STRC to recover (back above its dividend-bump level) and Apyx to restore the collateral ratio to ≥100% on the attested feed for a sustained window.
+**What broke the peg, and what restores it:** STRC de-anchoring on a concentrated reserve plus a redemption wave pushed collateralization below par, and with no atomic redemption there's no automatic arbitrage to close the gap. The path back to $1 requires STRC to re-rate up — now on Strategy's discretionary soft-floor bid (the $1.0B STRC-priority buyback + the $2.55B reserve), not the old forced sub-$95 dividend hike — and Apyx to restore the collateral ratio to ≥100% on the attested feed for a sustained window.
 
 **"Apyx 2.0" — an announced redemption redesign (June 15, 2026).** In a follow-up to the post-mortem, Apyx outlined a reworked mint/redeem model intended to fix a flaw the June event exposed. Everyone — in calm and in stress — would mint and redeem at a single **Redemption Value**, a floor price carrying a small spread, with the dashboard's headline NAV relabeled **Total Collateral Value** so the gap between the two reads directly as the overcollateralization buffer (their worked example: $1.02 of collateral behind a $1.00 redemption floor). Approved counterparties would quote against the reserve through a structured **RFQ**. Apyx frames the redesign as closing the prior "free put option" — under the old NAV-redemption logic, the first redeemers in a drawdown could arbitrage the buffer at the expense of everyone who stayed, exactly the dynamic that played out in June; under Redemption Value the buffer instead accrues to long-term holders. The intent is a genuine improvement in the redemption logic. **The important caveat: this is blog-only as of this revision.** Apyx's own docs at [`docs.apyx.fi`](https://docs.apyx.fi) still describe the old mechanism (apxUSD "settled in USDC / not directly redeemable"), no contract, PSM, or cooldown change has been disclosed, and redemption stays off-chain and is now explicitly gated to "approved counterparties." Redemption Value is an announced pricing *policy*, not an enforceable on-chain mechanism — so it doesn't change the no-atomic-redemption reality behind the Peg and Backing scores, and the scores are unchanged. Read it as a credible fix that is **pending adoption into the docs and on-chain confirmation**, not as a live guarantee that Apyx now redeems at a floor.
 
@@ -127,7 +129,7 @@ The durable finding on this axis is that secondary depth is **variable and issue
 ## What to watch
 
 - **Collateral ratio back to ≥100%, sustained.** The single most important recovery signal — live on the dashboard's Backing panel. A sustained return to par (not a one-snapshot blip) is what would justify re-rating.
-- **STRC price vs its dividend-bump level.** apxUSD's backing recovers if STRC recovers above the level where Strategy is pushed to raise the dividend.
+- **STRC price + the soft-floor bid.** apxUSD's backing recovers if STRC re-rates up — now via Strategy's discretionary buyback/reserve soft floor (the $1.0B STRC-priority program + $2.55B reserve), rather than the old forced sub-$95 dividend hike. Watch buyback execution and reserve coverage as the live signals.
 - **Wolf May 2026 attestation — cash scope re-inclusion.** Expected mid-to-late June 2026. If cash returns to scope, the disclosure stack is back at the March high-water mark; if not, the largest reserve component stays without CPA coverage.
 - **Curve apxUSD/USDC pool depth and discount** (live on dashboard). Recovering depth and a narrowing discount = healing; widening = renewed stress.
 - **MSTR / BTC drawdowns.** A severe BTC crash compresses MSTR equity → threatens STRC dividends → degrades apxUSD backing further.
@@ -138,6 +140,8 @@ If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD retail r
 
 ## Revision history
 
+- **2026-06-29 — STRC soft-floor reframe (Strategy 8-K):** scores held. Strategy's "Digital Credit Capital Framework" converts STRC's par defense from a reflexive sub-$95 dividend ratchet into a discretionary soft floor (a $1.0B STRC-priority buyback + a near-doubled $2.55B reserve). Stabilizes the STRC *mark* in apxUSD's basket but does not restock Apyx's reserve or lift the ~84% collateral ratio — modestly stabilizing, not score-improving.
+- **2026-06-25 — depeg deepened:** peg mechanism 3.5 → 2.5, backing 2.5 → 2.0, liquidity 3.5 → 3.0, overall 3.6 → 3.0 (issuer held 5.0). The first-week trough (low-90s price / mid-90s% CR) hardened into a sustained ~$0.82 (≈−18%) dislocation with the attested collateral ratio down to ~84% — a ~16% buffer deficit vs par, on the same ~74%-STRC concentrated reserve with no atomic redemption to close it.
 - **2026-06 — STRC drawdown / apxUSD depeg:** overall 5.2 → 3.6, liquidity 8.0 → 3.5, peg mechanism 4.5 → 3.5, issuer 5.5 → 5.0. apxUSD broke peg as STRC de-anchored on a concentrated reserve and a redemption wave drove collateralization below par; the previously scored "institutional-grade" secondary depth did not survive the stress.
 - **2026-06 — reserve-composition correction (net-of-inventory):** backing 4.2 → 2.5. Apyx's post-mortem confirmed the public dashboard had lumped Protocol Owned Liquidity and the net-zero Inventory line into "Cash"; net of Inventory the reserve is ≈74% STRC (vs ≈66% gross), with reflexive POL — more concentrated and lower-quality than previously scored.
 
