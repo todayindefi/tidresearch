@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-28"
-last_verified: "2026-05-19"
+last_verified: "2026-07-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
@@ -118,7 +118,7 @@ supply_integrity_flags:
 | **Market cap** | On the order of $130M+; majority held intra-protocol at the thUSD reserve (typically 55-70% range — see §II.c). Live supply and external-float split on the dashboard. |
 | **Price** | DEX VWAP trades persistently below NAV by tens to low hundreds of bps — live per-chain peg on the dashboard. |
 
-> *Overall score (5.0) is a weighted composite — see §IV for category weights.*
+> *Overall score (5.1) is a weighted composite — see §IV for category weights.*
 
 ---
 

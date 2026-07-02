@@ -8,7 +8,7 @@ peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-04"
-last_verified: "2026-05-19"
+last_verified: "2026-07-02"
 production: true
 issuer: "Theo Network (Panama)"
 peg_mechanism_score: 4.0
@@ -95,7 +95,7 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 
 **Mint-rail capacity is real.** The mint path has absorbed multi-tens-of-millions single-tx institutional inflows without incident — the EIP712 mint rail is validated up to large-allocator scale. Recipient-side attribution (Theo-internal vs external new allocator) is sometimes unclear without off-chain confirmation.
 
-**Reserve composition — thBILL-anchored, with a growing off-chain leg.** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's *on-chain* reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`. As of 2026-05-19: **thBILL ~$83.3M at NAV (~97.5% of on-chain reserves), USDT ~$1.72M, USDC ~$0.36M** — total on-chain reserves ~$85.4M against $92.9M thUSD supply. The on-chain coverage is **91.93%**; the gap (~$7.5M) is the off-chain gold-carry / first-loss leg. The largest reserve component (thBILL) has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington.
+**Reserve composition — thBILL-anchored, with a growing off-chain leg.** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's *on-chain* reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f` — dominated by thBILL (~95%+ of on-chain reserves at NAV) plus small USDT/USDC liquidity buffers. On-chain coverage has stepped down through 2026 — from the low-90s% in mid-May toward the mid-70s% by mid-year — as Theo scales the off-chain gold-carry leg, with the implied off-chain backing growing correspondingly into the tens of millions. **On-chain coverage below 100% is expected operating state here, not a solvency signal**, as long as the off-chain gold/futures backing is intact. Live coverage on the dashboard and `app.theo.xyz/transparency`. The largest reserve component (thBILL) has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington.
 
 **The thBILL-anchored reserve creates a recursive trust chain.** thBILL itself has its own backing structure (off-chain T-Bills via Libeara, with synthetic intermediate wrappers — see `tidresearch.com/reports/thbill`), and its on-chain backing ratio fluctuates within a Libeara settlement window (T+1 to T+7) — periodic dips during Stage A windows when Theo has minted new thBILL but the corresponding ULTRA hasn't yet arrived from Libeara. **During those windows, thUSD's thBILL reserves are technically backed by Theo's promise to Libeara, not by ULTRA-equivalent collateral.** Theo's "100% backed" attestation remains formally correct (thUSD-supply ÷ thBILL-at-NAV-plus-stables ≥ 100%) but the next layer down is where the periodic gap lives. Practically — the gap closes within the historical T+1 to T+7 envelope and the chain works as designed; the structural point is just that "100% backed" rests on attestations at multiple layers.
 
