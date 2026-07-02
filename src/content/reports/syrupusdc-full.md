@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "syrupusdc"
 date: "2026-04-26"
-last_verified: "2026-05-03"
+last_verified: "2026-07-02"
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1073570000
@@ -455,6 +455,8 @@ Maple's GraphQL exposes per-loan `currentAssetAmount` for verification. **The fi
 The `openTermLoan(id:)` single-loan query returns `null` entirely for the broken loans; data only comes through the listing query and is wrong there. Maple-side index gap, not a parsing bug in PegTracker's analyzer.
 
 **Correlated quality issue in `aumTimeSeries` (verified 2026-05-02):** the same root cause appears to affect Maple's pool-level `poolV2.aumTimeSeries` aggregations. Pulling 30 daily points showed a 3-week window (April 2–19) where reported `loansUsd` and `collateralUsd` swung $300–500M day-over-day in patterns that don't match real loan funding/repayment cadence (e.g., +$530M loans overnight on April 6, then −$196M the next day on a $1B book). `unrealizedLosses` remained at 0 throughout this window — meaning the apparent dips to ~59% AUM coverage were *not* real undercollateralization events but rather Maple's aggregation including/excluding the at-par stablecoin/RWA positions inconsistently across days. The dashboard's AUM Coverage chart surfaces this raw — an explicit footnote on the chart notes the data-quality variance and points readers to `unrealizedLosses` (which stayed at 0) as the on-chain credit alarm.
+
+**Extension to per-loan current-collateralization (observed 2026-07-02):** the same collateral-amount data issue also surfaces in the per-loan *current collateralization* view. Under a single uniform BTC price feed, individual BTC loans have reported current levels spanning a healthy ≈125% down to phantom sub-50%, with implied collateral amounts that would require physically implausible uncalled withdrawals (e.g. an ≈80% collateral drop on a loan Maple still flags "healthy," uncalled, not in default). This can drive the dashboard's loan-level view to show a double-digit percentage of the book "below 100%" while the on-chain solvency state is clean. As of 2026-07-02, `unrealizedLosses` = 0 and Pool Coverage Ratio = 100% across 490 consecutive hourly snapshots back to 2026-06-02. **The rule is the same: a sub-100% loan-level count that isn't corroborated by non-zero `unrealizedLosses` (and by the specific loans' impaired/called/default flags) is a Maple-side data artifact, not a recognized credit event.** PCR remains the authoritative loss-recognition alarm.
 
 **Institutional implication:** $141M / 14.4% of active book has **attestation-only** verification of current collateral state via Maple's API. We can see the loans exist, their borrowers, and their required initial collateral level — but we cannot independently verify what's currently posted, and the pool-level historical coverage series carries enough day-to-day noise that institutional readers should treat AUM-CR fluctuations >10pp as data-quality variance rather than real composition shifts unless cross-validated against `unrealizedLosses` and per-loan status flags. The PYUSD position remains the only Set B exposure with full GraphQL verifiability.
 
