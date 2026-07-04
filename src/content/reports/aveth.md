@@ -10,7 +10,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "saveth"
 date: "2026-06-14"
-last_verified: "2026-06-14"
+last_verified: "2026-07-04"
 featured: false
 production: false
 issuer: "Avant Protocol"
@@ -30,23 +30,35 @@ live_dashboard_url: "https://app.avantprotocol.com/transparency"
 
 | Backing | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
-| ETH-denominated active strategy book reported by Avant, not idle ETH custody | Avant app redemption request; no meaningful secondary market | Often a few hours, up to 7 days depending on strategy liquidity | Young protocol | Ethereum |
+| Marketed as 1:1 ETH, but on Avant's own transparency page it is roughly 78% USD stablecoins and only about 14% spot ETH | Avant app redemption request; no meaningful secondary market | Often a few hours, up to 7 days depending on strategy liquidity | Young protocol | Ethereum |
 
 ## Summary
 
 avETH is Avant Protocol's base ETH receipt. Users deposit ETH or WETH, receive avETH, and can either hold it as the non-yield leg or stake it into [savETH](/reports/saveth/) for yield. It is marketed as 1:1 ETH-backed, but the real risk is not the same as a simple wrapped ETH token: Avant's docs describe the backing as an ETH-denominated active, market-neutral strategy book held through its Reserve Fund.
 
-That means avETH keeps full ETH price exposure while adding protocol, strategy, redemption, and admin risk. If ETH falls, avETH holders still have ETH exposure. If Avant's strategy book underperforms or becomes hard to unwind, avETH can also de-anchor from ETH even if ETH itself is functioning normally.
+A closer look at that book on 2026-07-04 (Avant's transparency page plus on-chain reads) shows something more specific and more important: **avETH is not actually backed mostly by ETH.** On Avant's own numbers the avETH suite is roughly 78% USD stablecoins (savUSD, avUSD and RLUSD) and only about 14% spot ETH (WETH plus wstETH). That means the "ETH-ness" of avETH is largely **reconstructed synthetically** — the protocol holds mostly dollars and must manufacture the ETH price exposure through an off-chain hedge. It is the mirror image of a synthetic dollar like Ethena's USDe, only pointed at ETH instead of USD.
 
-The 4.5/10 score reflects a credible but early issuer with named audit and monitoring vendors, paired with thin liquidity, limited public reserve detail, request-based redemption, and a token owner that reads on-chain as a single EOA with no timelock, even though Avant documents institutional MPC custody.
+The 4.5/10 score reflects a credible but early issuer with named audit and monitoring vendors, paired with thin liquidity, a backing mix that contradicts the "1:1 ETH" marketing, request-based redemption, and a token owner that reads on-chain as a single EOA with no timelock, even though Avant documents institutional MPC custody.
 
 ## Backing & solvency
 
-avETH is not best understood as idle ETH sitting in a vault. The backing claim depends on Avant's ETH-denominated Reserve Fund and the strategies inside it. Avant reports the portfolio composition and historical performance on its transparency page, but those figures are issuer-run and not yet reproduced by a TID Research live dashboard.
+avETH is not best understood as idle ETH sitting in a vault, and it is also not the mostly-ETH book the marketing implies. On Avant's transparency page the avETH suite breaks down roughly as:
 
-The senior/junior tranche design matters. avETH is the base receipt for the ETH suite, while savETH is the senior staked tranche and avETHx is the junior tranche designed to absorb losses after the Reserve Fund. That structure can protect savETH relative to the junior tranche, but it does not make avETH equivalent to native ETH custody.
+- **savUSD ~35% and avUSD ~22%** — about 57% is Avant's *own* USD stablecoin tokens, i.e. recursive exposure to its sibling product.
+- **RLUSD ~21%** — another USD stablecoin.
+- **WETH ~7% and wstETH ~7%** — only about 14% is actually ETH.
 
-The underlying score is held at 4.0 because the collateral is an opaque active-strategy ETH book, not a directly verifiable ETH balance. This is stronger than a purely unaudited promise, but weaker than a simple on-chain reserve or a mature liquid staking token with broad market validation.
+So an "ETH-denominated" token is roughly 78% backed by dollars. Three things follow that a retail holder should sit with:
+
+1. **The composition contradicts the docs.** Avant markets avETH as "fully backed 1:1 by ETH," which does not match its own ~78%-USD disclosure. The ETH price delta has to be produced by an off-chain hedge (most likely a long-ETH overlay against the USD collateral). No public doc discloses that hedge, its venue, or its size.
+2. **The hedge is unverifiable.** The avETH strategy wallet shows only lending and LP positions on-chain — no perpetual-futures venue. Any ETH hedge lives off-chain (a CEX or OTC desk) and cannot be seen or monitored. The synthetic-hedge reading is the most likely explanation, but a partially unhedged mismatch cannot be fully ruled out from public data.
+3. **It is circular.** The dollar side of avETH's backing (savUSD / avUSD) is itself roughly 77% Ethena USDe underneath. So avETH stacks: ETH claim → off-chain ETH hedge → Avant's own USD stablecoin → Ethena's USDe basis trade. A problem in USDe or savUSD is also an avETH problem.
+
+Third-party NAV is computed weekly by Pennyworks and sits near par, which is reassuring but is **a private number, not verification** — Avant publishes the headline NAV figure only, with no public position-level report and no disclosure of the hedge venues.
+
+The senior/junior tranche design still matters: avETH is the base receipt, savETH is the senior staked tranche, and avETHx is the junior tranche designed to absorb losses after the Reserve Fund. That structure can protect savETH relative to the junior tranche, but it does not make avETH equivalent to native ETH custody.
+
+The underlying score is held at 4.0 because the collateral is an opaque, mostly-USD active-strategy book with a synthetic ETH overlay, not a directly verifiable ETH balance.
 
 ## Exit liquidity
 
@@ -60,7 +72,7 @@ For an avETH holder, that means the real exit is primary and strategy-liquidity-
 
 avETH itself is non-yield-bearing. The yield product is [savETH](/reports/saveth/), where avETH is deposited into an ERC-4626 vault and share value accrues from Avant's ETH strategy returns.
 
-Holding avETH instead of savETH reduces exit friction by avoiding the savETH unstake cooldown, but it gives up the staking yield and still carries the same issuer, Reserve Fund, and ETH exposure.
+Holding avETH instead of savETH reduces exit friction by avoiding the savETH unstake cooldown, but it gives up the staking yield and still carries the same issuer, backing-composition, hedge, and ETH exposure.
 
 ## Audits, admin & issuer
 
@@ -68,35 +80,36 @@ Avant lists Omniscia and Dedaub for smart-contract audits, Trail of Bits for ong
 
 The binding admin caveat is that the avETH `owner()` address reads on-chain as an EOA, not a Safe or timelocked contract. Avant's public security materials describe Fireblocks MPC-CMP custody, RBAC, policy controls, and multi-signature authorization for external asset transfers. Those controls are materially better than a raw hot key if applied to the relevant owner and reserve wallets, but the mapping is not independently confirmable from the token contract itself. MPC custody also does not create an on-chain reaction window for users.
 
-The issuer score is therefore 4.0: real vendors and a documented security program, offset by youth, limited transparency, unverifiable custody mapping, and no visible timelock.
+The issuer score is 4.0, held consistent across all four Avant reports (avUSD, savUSD, avETH, savETH): real vendors and a documented security program, offset by youth, limited transparency, unverifiable custody mapping, and no visible timelock.
 
 ## Who this is for
 
-- ETH holders who want exposure to Avant's ETH-denominated strategy ecosystem and can tolerate issuer and strategy risk on top of ETH volatility.
+- ETH holders who want exposure to Avant's ETH-denominated strategy ecosystem and understand that the ETH exposure is manufactured through an off-chain hedge, not held as spot ETH.
 - Users who may later stake into savETH but want the shorter one-leg exit of the base receipt.
 
 ## Who this is NOT for
 
-- Anyone looking for a pure ETH wrapper like WETH or a mature LST. avETH adds strategy and issuer risk.
+- Anyone looking for a pure ETH wrapper like WETH or a mature LST. avETH is roughly 78% dollars with a synthetic ETH overlay, plus strategy and issuer risk.
 - Anyone needing liquid market exit. The practical route is Avant's redemption process, not DEX depth.
 - Anyone who cannot tolerate a multi-day redemption window during stress.
 
 ## What to watch
 
-- Avant transparency page changes in Reserve Fund composition and strategy allocation.
-- Any evidence of avETH trading away from ETH if an independent market develops.
+- Avant transparency page changes in the USD-vs-ETH backing mix and strategy allocation.
+- Any disclosure of the off-chain ETH hedge (venue, size, counterparty) — currently invisible.
+- Health of Ethena USDe and Avant's own savUSD, which sit underneath the dollar backing.
 - Redemption delays approaching the 7-day upper bound.
-- Admin-owner migration to a publicly verifiable Safe or timelocked control path.
-- Chainlink Proof-of-Reserve or equivalent independent reserve attestation going live.
+- Admin-owner migration to a publicly verifiable Safe or timelocked control path, and Chainlink Proof-of-Reserve going live.
 
 ## Live dashboard
 
-Avant's issuer-run transparency page is the current live data source for portfolio composition, strategy allocation, and historical performance: [app.avantprotocol.com/transparency](https://app.avantprotocol.com/transparency). TID Research does not yet operate an independent avETH dashboard, so backing figures should be treated as Avant-reported until independent monitoring is added.
+Avant's issuer-run transparency page is the current live data source for portfolio composition, strategy allocation, and historical performance: [app.avantprotocol.com/transparency](https://app.avantprotocol.com/transparency). TID Research now runs an independent exit-watch monitor over the Avant suite (NAV redemption rate, junior buffer, backing coverage, custody), but backing figures should still be treated as Avant-reported until fuller independent verification of the off-chain hedge is possible.
 
 ## Sibling
 
 - [savETH](/reports/saveth/) — Avant's yield-bearing senior staked tranche for avETH, with an extra 24-hour unstake leg before avETH redemption.
+- [avUSD](/reports/avusd/) — the USD-side base receipt from the same issuer.
 
 ## Corrections
 
-This report is based on Avant Protocol public documentation and on-chain reads only. It does not incorporate non-public disclosures. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).
+This report is based on Avant Protocol public documentation, its transparency dashboard, and on-chain reads only. These are issuer-run, off-chain-strategy assets: figures are Avant-reported until independent monitoring fully verifies them. It does not incorporate non-public disclosures. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).
