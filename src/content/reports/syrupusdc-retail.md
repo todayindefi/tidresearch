@@ -9,7 +9,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "syrupusdc-full"
 date: "2026-04-25"
-last_verified: "2026-05-04"
+last_verified: "2026-07-02"
 featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
@@ -121,14 +121,14 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 
 - **Peg discount on DEX pools.** A widening (>50 bps) discount on syrupUSDC vs NAV is the leading indicator that aggregator routing is deteriorating and queue exit is becoming binding.
 - **Liquidity layer issuer events.** ~21% of family AUM is in pool-owned PYUSD/USTB/AMM positions. These don't have a crypto-cycle buffer — their stress is the collateral asset's own peg/issuer event (Paxos for PYUSD, Superstate for USTB, Circle for USDC). Different stress scenarios bind differently across the book.
-- **Loans below their initial collateral level.** As of May 2026, 5 BTC-collateralized loans (~$82M, ~9% of loan book) are running below their funding-time required collateral level — the delegate has the right to call them but has not. Monitor whether the count grows.
+- **Loan collateral approaching par.** The health signal to watch is how close a loan's *current* collateral sits to **par (100%)** — the point where it stops covering the loan — not how far it has drifted below its funding-time level (a loan can be "below init" and still hugely overcollateralized, so that on its own tells you little). Watch for the tightest loan nearing par, and for many crypto-collateralized loans compressing toward par together (a correlated-drawdown warning). The delegate has the right but not the obligation to call these loans; current counts are shown live on the dashboard.
 - **Multi-chain bridge surface.** syrupUSDC bridges via Chainlink CCIP (different attack class from the April 2026 LayerZero OFT incidents). Still verify per-chain CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues — depth thins fast outside Ethereum.
 - **Pool Delegate roster changes.** Delegate identity is the structural credit-judgment trust assumption.
 - **Cross-pool concentration if you also hold syrupUSDT.** Maple's sibling pool (~$436M) shares the same Pool Delegate firm and several of its largest loan-book borrowers. Verified 2026-05-04 on Loans-only basis: top three cross-pool borrowers carry ~48.8% of the family loan book ($1.27B); the single largest at ~19.3%. Holding both syrupUSDC and syrupUSDT does **not** diversify credit risk for those borrowers — it concentrates it. If you allocate across both, compute combined exposure to each borrower rather than treating the pools as independent.
 
 ## Live dashboard
 
-A live monitoring view is available at [tidresearch.com/dashboards/?asset=syrupusdc](https://tidresearch.com/dashboards/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + buffer to initial collateral level + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
+A live monitoring view is available at [tidresearch.com/dashboards/?asset=syrupusdc](https://tidresearch.com/dashboards/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + distance to par / current collateralization + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
 
 ## A note on Maple's history
 

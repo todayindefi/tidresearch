@@ -8,7 +8,7 @@ assessment_type: "full"
 audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-28"
-last_verified: "2026-05-19"
+last_verified: "2026-07-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
@@ -42,6 +42,8 @@ underlying_managers:
   - "Libeara (Standard Chartered)"
   - "FundBridge (MAS-regulated Singapore)"
   - "Wellington Management (sub-advisor)"
+  - "Fidelity International (FILQ manager/issuer)"
+  - "Sygnum (FILQ tokenization / Desygnate)"
 asset_symbols: ["thBILL"]
 mint_paths:
   - id: "kyc_mint"
@@ -71,7 +73,7 @@ mint_paths:
     trust_size: null
     pausable: true
     timelock_seconds: null
-    notes: "iToken standard enforces composition, but composition itself is admin-set. Currently 100% tULTRA. Diversification roadmap exists but not yet implemented."
+    notes: "iToken standard enforces composition, but composition itself is admin-set (no timelock). Two-asset basket as of 2026-06-25: tULTRA (~83% majority) + Fidelity International's FILQ (~17%, added by rotating ~$20M out of ULTRA). The previously-stated diversification roadmap is now implemented in its first instance; the iToken is genuinely multi-component, not a one-asset wrapper. Composition can still be changed at admin speed."
   - id: "tultra_upstream"
     mechanism: "custody-upstream"
     trust_set: "tradfi-custodian"
@@ -109,7 +111,7 @@ supply_integrity_flags:
 | **Issuer** | Theo Protocol Corporation (Panama) |
 | **Launch** | Q3 2025 (July 2025) |
 | **Jurisdiction** | Panama (registered entity); underlying fund MAS-regulated (Singapore) |
-| **Underlying exposure** | 100% tULTRA (Libeara × FundBridge × Wellington Management) |
+| **Underlying exposure** | Two-asset basket (since 2026-06-25): tULTRA ~83% (Libeara × FundBridge × Wellington Management) + FILQ ~17% (Fidelity International × Sygnum) |
 | **Type** | Tokenized US T-bill basket (RWA) |
 | **Primary access** | KYC-gated; USDC in, USDC out (T+4 business days) |
 | **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
@@ -118,13 +120,13 @@ supply_integrity_flags:
 | **Market cap** | On the order of $130M+; majority held intra-protocol at the thUSD reserve (typically 55-70% range — see §II.c). Live supply and external-float split on the dashboard. |
 | **Price** | DEX VWAP trades persistently below NAV by tens to low hundreds of bps — live per-chain peg on the dashboard. |
 
-> *Overall score (5.0) is a weighted composite — see §IV for category weights.*
+> *Overall score (5.1) is a weighted composite — see §IV for category weights.*
 
 ---
 
 ## Protocol Summary
 
-thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain money-market product providing exposure to short-duration US T-bills through a regulated TradFi fund stack (Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, Wellington Management as sub-advisor). Launched July 2025 on Ethereum and expanded via LayerZero OFT to Arbitrum, Base, and HyperEVM, thBILL sits at the intersection of two risk categories: off-chain TradFi custody and on-chain cross-chain bridge security.
+thBILL is Theo Protocol's flagship tokenized Treasury basket — an on-chain money-market product providing exposure to short-duration US T-bills and prime money-market instruments through regulated TradFi fund stacks. Through mid-2026 the basket was a single fund — tULTRA (Standard Chartered's Libeara issuer, FundBridge as MAS-regulated fund manager, Wellington Management as sub-advisor), which remains the ~83% majority leg. On **2026-06-25** Theo added a second underlying fund, **Fidelity International's FILQ** (the Fidelity USD Digital Liquidity Fund — a Moody's AAA-mf LVNAV money-market fund, tokenized by Sygnum with on-chain NAV via Chainlink), rotating ~$20M out of ULTRA into FILQ (~17% of the book). The move was compositional (ULTRA redeemed, FILQ minted), not additive, so total backing size was roughly unchanged; Theo is the first crypto-native investor in Fidelity International's tokenized fund. Launched July 2025 on Ethereum and expanded via LayerZero OFT to Arbitrum, Base, and HyperEVM, thBILL sits at the intersection of two risk categories: off-chain TradFi custody and on-chain cross-chain bridge security.
 
 The post-incident context matters: the rsETH ($292M) LayerZero-OFT exploit of 2026-04-18 is directly relevant to thBILL because thBILL uses the same architectural class. thBILL's OFTAdapter on Ethereum (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a` — separate from the iToken vault at `0x5FA487…DA0b`) is configured with **3 required DVNs** on every peered pathway (Arbitrum, Base, HyperEVM, BSC, Mantle, Monad) — an explicit upgrade above the 2-DVN MIN-PASS default and a meaningfully stronger posture than the single-DVN config that broke Kelp. **Zero exposed-AND-peered pathways across all four EVM deployments** — the bridge layer is verified clean.
 
@@ -150,7 +152,7 @@ Overall profile: strong asset quality (US T-bills via regulated institutions), c
 
 ### Code Complexity
 
-- **tToken / iToken standards.** Theo's proprietary token architecture: `tToken` is an ERC-4626 vault representing a single product (tULTRA), `iToken` is an index-of-tTokens basket. Both upgradeable via proxy.
+- **tToken / iToken standards.** Theo's proprietary token architecture: `tToken` is an ERC-4626 vault representing an underlying product (e.g. tULTRA), `iToken` is an index-of-holdings basket. As of the 2026-06-25 FILQ addition the iToken is now an actual multi-component index (tULTRA ~83% + FILQ ~17%), not a one-asset wrapper — the basket architecture is exercised as designed for the first time. Both upgradeable via proxy.
 - **Optimistic minting via MPC.** Theo's multi-party computation wallet fulfills pending mints/redemptions; on-chain `pendingAssets` accounting bridges the 4-day off-chain settlement lag.
 - **LayerZero OFT adapters** on every destination chain — this is where cross-chain risk lives (covered in §I.5).
 - **On-chain enforcement** of basket composition and whitelist (verified in Zenith audit).
@@ -187,7 +189,7 @@ Under a year since July 2025 launch. Modest by DeFi standards; short by traditio
 ## I.5 Supply Integrity — 5.5/10
 
 Two distinct risk shapes stack here:
-1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III). At the wrapper layer specifically: the tULTRA wrapper is **synthetic** — `ULTRA.balanceOf(tULTRA wrapper) = 0` and the underlying ERC-4626 contract is **dormant** (zero `EscrowBegin`/`EscrowEnd`, zero `depositOptimistic`, zero `Transfer` events, zero mints/burns over a 70-day observation window). The current 129.46M tULTRA supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`, not derived from held tokens. The 4626 interface at the tULTRA layer is **effectively ceremonial** — all real mint/redemption flows happen off-contract via Theo's MPC and Libeara's `UltraManagerFiat`. ULTRA functions as a reference unit for NAV accounting, not a claimable on-chain asset. Coverage is verified by reconciling Theo's treasury custody against `tULTRA.totalSupply()` (cross-check), not by reading ULTRA from the wrapper (contract invariant).
+1. **Off-chain trust** — backing lives in a TradFi custody/fund structure (permissioned mint + custodian risk — see §III). At the wrapper layer specifically: the tULTRA wrapper (the ~83% majority leg) is **synthetic** — `ULTRA.balanceOf(tULTRA wrapper) = 0` and the underlying ERC-4626 contract is **dormant** (zero `EscrowBegin`/`EscrowEnd`, zero `depositOptimistic`, zero `Transfer` events, zero mints/burns over a 70-day observation window). The current 129.46M tULTRA supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`, not derived from held tokens. The 4626 interface at the tULTRA layer is **effectively ceremonial** — all real mint/redemption flows happen off-contract via Theo's MPC and Libeara's `UltraManagerFiat`. ULTRA functions as a reference unit for NAV accounting, not a claimable on-chain asset. Coverage of the tULTRA leg is verified by reconciling Theo's treasury custody against `tULTRA.totalSupply()` (cross-check), not by reading ULTRA from the wrapper (contract invariant). **The FILQ leg (~17%, added 2026-06-25) carries a materially different verifiability profile** — FILQ is held **directly** as a real permissioned ERC-20 (`0x54a4fc78…`, NAV ≈ $100.51) at a Theo custody EOA (`0x8397ac82…`), so its balance is an actual on-chain-readable amount, not an attested accounting value. The FILQ share therefore does **not** carry tULTRA's synthetic/attested caveat; it is the more verifiable leg. (Custody nuance: on-chain one cannot distinguish a Theo-MPC key from Sygnum-custody-for-Theo at that EOA — but the FILQ balance itself is genuine and directly readable.)
 2. **Cross-chain bridge** — LayerZero OFT across 4 EVM chains. Bridge security has three separable layers: (a) **DVN configuration** (who validates cross-chain messages), (b) **adapter contract code** (what executes on receipt), and (c) **LayerZero Endpoint contracts themselves** (shared infrastructure admin-controlled by LayerZero's own governance — an issue pushed at the Endpoint layer, e.g., adversarial MessageLibrary swap or endpoint upgrade, affects every OFT including thBILL). For (a), every peered pathway on the Ethereum OFTAdapter (`0xfDD22Ce6D1F66bc0Ec89b20BF16CcB6670F55A5a`) and the L2 OFTs requires **3 DVNs** (LayerZero Labs + Polyhedra/Google Cloud + Horizen Labs) — an explicit upgrade above the 2-DVN MIN-PASS default. **Zero exposed-AND-peered pathways across all four EVM deployments** — peer config and DVN config are aligned on the Ethereum OFTAdapter just as on the L2s. The admin Safe is the same Theo `0x94877640…01295` on Ethereum (3-of-5), Arbitrum (3-of-5), Base, and HyperEVM (3-of-4 on the latter two — a small asymmetry worth noting). Adapter contracts (b) were most likely deployed after the single Zenith audit closed (the cross-chain expansion post-dates the July 2025 audit per §I) and are therefore probably unaudited code. **A correct DVN config does not protect against a buggy adapter.** Endpoint-layer risk (c) is a shared-dependency trust assumption inherited by every LayerZero project, not thBILL-specific, but worth naming. Residual concerns: 7 inbound EIDs on Ethereum's OFTAdapter receive lib are at the 1-DVN default (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana) and 1 EID at 2-DVN MIN-PASS default (Sonic), but **all have `peers()` UNSET** — they are inert and exploitable only if Theo were to call `setPeer` for those EIDs without first upgrading the corresponding receive-lib config; this is a forward-looking operational concern, not a current exposure. The OFTAdapter has no `paused()` function (it's not Pausable), so emergency pause control on the bridge layer relies on either (i) Endpoint-level controls or (ii) pausing the underlying iToken (which the adapter must transferFrom/transfer through, indirectly halting bridge flows).
 
 ### Mint paths
@@ -212,7 +214,7 @@ Two distinct risk shapes stack here:
 
 #### basket_composition — admin-mint (Ethereum)
 - **Trust assumption:** Theo admin role (3-of-5 owner multisig) can add/remove basket constituents
-- **Risk shape:** A malicious composition change could substitute high-quality tULTRA with a lower-quality instrument without changing supply, effectively diluting backing.
+- **Risk shape:** A malicious composition change could substitute high-quality tULTRA with a lower-quality instrument without changing supply, effectively diluting backing. The risk shape (admin-set composition, no timelock) is unchanged — but note the **first real composition change has now occurred and went the benign direction**: the 2026-06-25 FILQ addition rotated ~17% of the book into a rated (Moody's AAA-mf), transparently-held second fund, improving quality and diversification rather than diluting it.
 - **Controls:** 3-of-5 quorum; no timelock
 
 #### tultra_upstream — custody-upstream
@@ -237,7 +239,7 @@ Two distinct risk shapes stack here:
 
 ### Red flags
 
-- **synthetic-tultra-wrapper** — The tULTRA contract holds zero ULTRA despite declaring ULTRA as its `asset()`. The 4626 contract has been dormant over a 70-day observation window (zero mint/burn/escrow events); the current 129.46M supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`. The 4626 interface is effectively ceremonial — institutional readers should not interpret "ERC-4626 vault" with the implicit trust assumptions that label normally carries.
+- **synthetic-tultra-wrapper** — The tULTRA contract (the ~83% majority leg) holds zero ULTRA despite declaring ULTRA as its `asset()`. The 4626 contract has been dormant over a 70-day observation window (zero mint/burn/escrow events); the current 129.46M supply was set under a prior implementation and carried through a UUPS upgrade. `totalAssets()` is fully attested via `totalAssetsPending`. The 4626 interface is effectively ceremonial — institutional readers should not interpret "ERC-4626 vault" with the implicit trust assumptions that label normally carries. **Contrast — the FILQ leg is not synthetic:** the ~17% FILQ share (added 2026-06-25) is held directly as a real permissioned ERC-20 (`0x54a4fc78…`) at a Theo custody EOA, so its balance is an actual on-chain-readable amount, not an attested value. The two legs now carry different verifiability profiles: tULTRA synthetic/attested, FILQ spot/on-chain-verifiable. The FILQ addition introduces its own new dependencies, however — Sygnum custody/tokenization and FILQ's permissioning/redemption terms (see §III).
 - **oft-adapter-code-likely-unaudited** — the destination-chain OFT adapter contracts that execute `lzReceive` mints were probably deployed after the single July 2025 Zenith audit closed. Adapter bugs are a separate risk surface from DVN config; a correct DVN quorum does not defend against an adapter implementation bug. Highest residual bridge-layer concern.
 - **default-dvn-on-unused-pathways-inert** — On the Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a`): 7 inbound EIDs at 1-DVN default + 1 at 2-DVN MIN-PASS default (Sei, Shimmer, Blast, Fraxtal, Etherlink, Bitlayer, Katana, Sonic); similar long-tail defaults on the L2s. **All currently inert — `peers()` returns zero for every such EID across every chain.** Forward-looking concern: if Theo expands to a new chain, the receive-lib DVN config for that source EID should be upgraded to ≥2 *before* `setPeer` is called, otherwise the bridge would be live at 1-DVN for the duration of any gap.
 - **no-oftadapter-pause-function** — The Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a`) does NOT expose a `paused()` function — it's not Pausable. L2 OFTs likewise don't have it. Pause control on the bridge layer relies on (i) Endpoint-level pause controls held by LayerZero governance, or (ii) pausing the underlying iToken vault (which IS Pausable; the OFTAdapter must `transferFrom`/`transfer` through it, indirectly halting bridge activity). Worth confirming with Theo whether the iToken's pause modifier covers transfer hooks specifically.
@@ -324,7 +326,7 @@ Not exploitable today (no peers configured on these EIDs as far as readable). Be
 
 ### II.a Collateral & Backing
 
-**Composition:** 100% tULTRA. tULTRA is a wrapped representation of Standard Chartered Libeara's tokenized Treasury fund, operated in collaboration with Wellington Management (sub-advisor) and FundBridge (MAS-regulated Singapore fund manager).
+**Composition:** Two-asset basket since 2026-06-25 — **tULTRA ~83%** + **FILQ ~17%**. tULTRA is a wrapped representation of Standard Chartered Libeara's tokenized Treasury fund, operated in collaboration with Wellington Management (sub-advisor) and FundBridge (MAS-regulated Singapore fund manager). FILQ is Fidelity International's USD Digital Liquidity Fund — an LVNAV prime money-market fund (Moody's AAA-mf), tokenized by Sygnum (Desygnate) with on-chain NAV via Chainlink (CRE) and daily NAV supplied by J.P. Morgan; it was added by rotating ~$20M out of ULTRA (compositional, not additive). Live $/% split on the dashboard.
 
 **Asset class:** Short-duration US Treasury bills. Lowest sovereign credit risk globally. Exposure is to interest-rate and duration risk (minimal for ultra-short T-bills), not default risk.
 
@@ -334,7 +336,7 @@ Not exploitable today (no peers configured on these EIDs as far as readable). Be
 
 **Collateral sufficiency:** 1:1 NAV representation. No over-collateralization, no junior tranche, no first-loss buffer.
 
-**Concentration:** Single underlying (tULTRA). Theo has stated a diversification roadmap (adding other regulated T-bill tokens) but it is not yet active.
+**Concentration:** Two underlyings as of 2026-06-25 (tULTRA ~83% + FILQ ~17%) — the previously-stated diversification roadmap is now active in its first instance. The FILQ addition cuts the formerly ~100% Wellington/Libeara single-issuer concentration and adds a rated, transparently-held second fund from a distinct manager (Fidelity International). Concentration is materially reduced but not eliminated — tULTRA remains the dominant leg, and FILQ adds its own dependencies (Sygnum custody, FILQ permissioning).
 
 **Liquidity of underlying:** US T-bills are among the most liquid fixed-income instruments globally. Conversion from fund share to USDC depends on Theo's settlement rails (up to 4 business days).
 
@@ -431,7 +433,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 **Lock-ups:** None for secondary trading. Primary redemption carries soft 4-business-day notice period. Whitelisting requirements can narrow the arbitrage participant base on some deployments.
 
-**Economic Risk Score: 5.3/10** — High-quality sovereign underlying, functional primary redemption with settlement lag, and a clean structural pass of the largest redemption on record (April 27, 2026, $65M, ~33% of supply). Deductions for: non-atomic redemption (USDC-only, T+4), single-underlying concentration, no first-loss buffer, no bankruptcy remoteness, persistent secondary discount with no competitive-arbitrage enforcement and multi-week recovery times from stress-driven widening (arbitrage gated to KYC'd participants who pay ULTRA-layer fees + 4-day settlement carry), non-transparent fee schedule at the ULTRA underlying layer. Additionally — `pendingAssets` operates as a centralized off-chain oracle with NAV-setting authority during every 4-day settlement window, with no Chainlink PoR / auditor attestation / on-chain bridge from Libeara to verify the reported value. The "tight peg discipline" headline obscures that the NAV claim is attestation-based, not contract-derived, at both the thBILL and tULTRA layers.
+**Economic Risk Score: 5.3/10** — High-quality sovereign underlying, functional primary redemption with settlement lag, and a clean structural pass of the largest redemption on record (April 27, 2026, $65M, ~33% of supply). Deductions for: non-atomic redemption (USDC-only, T+4), underlying concentration (two-asset since 2026-06-25 but still tULTRA-dominant ~83%), no first-loss buffer, no bankruptcy remoteness, persistent secondary discount with no competitive-arbitrage enforcement and multi-week recovery times from stress-driven widening (arbitrage gated to KYC'd participants who pay ULTRA-layer fees + 4-day settlement carry), non-transparent fee schedule at the ULTRA underlying layer. Additionally — `pendingAssets` operates as a centralized off-chain oracle with NAV-setting authority during every 4-day settlement window, with no Chainlink PoR / auditor attestation / on-chain bridge from Libeara to verify the reported value. The "tight peg discipline" headline obscures that the NAV claim is attestation-based, not contract-derived, at both the thBILL and tULTRA layers.
 
 ### II.d thBILL ↔ thUSD recursive backing
 
@@ -471,11 +473,14 @@ The dashboard at `tidresearch.com/dashboards/thbill/` surfaces the holder attrib
 
 | Partner | Role | Regulatory status |
 |---|---|---|
-| Standard Chartered Libeara | Tokenized fund issuer | Major global bank; tokenization venture |
-| FundBridge | Fund manager | MAS-regulated (Singapore) |
-| Wellington Management | Sub-advisor | SEC-registered investment adviser (US) |
+| Standard Chartered Libeara | tULTRA tokenized fund issuer | Major global bank; tokenization venture |
+| FundBridge | tULTRA fund manager | MAS-regulated (Singapore) |
+| Wellington Management | tULTRA sub-advisor | SEC-registered investment adviser (US) |
+| Fidelity International | FILQ fund manager/issuer (Fidelity USD Digital Liquidity Fund; $1T+ AUM) | Global asset manager; Moody's AAA-mf on the fund |
+| Sygnum (Desygnate) | FILQ tokenization + custody | Swiss-regulated digital-asset bank |
+| Chainlink (CRE) / J.P. Morgan | FILQ on-chain NAV / daily NAV | Oracle + global bank NAV administrator |
 
-The institutional partner set is a meaningful mitigant. FundBridge being MAS-regulated imposes real compliance discipline at the asset level, even if Theo itself is unregulated.
+The institutional partner set is a meaningful mitigant. FundBridge being MAS-regulated imposes real compliance discipline at the tULTRA asset level, even if Theo itself is unregulated. The 2026-06-25 FILQ addition broadens this set with a second, independently-managed fund (Fidelity International, Moody's AAA-mf) tokenized on a Swiss-regulated custody stack (Sygnum) — reducing single-issuer concentration but adding Sygnum-custody and FILQ-permissioning as new dependencies.
 
 ### Governance Dependencies
 
@@ -501,7 +506,7 @@ The institutional partner set is a meaningful mitigant. FundBridge being MAS-reg
 | Category | Score (0-10) | Weight | Key Points |
 |---|---|---|---|
 | Smart Contract | 5.5 | 40% | Single Zenith audit clean (0C/0H); no bug bounty; OFT expansion likely post-audit; under a year since July 2025 launch. Bridge config verified clean across all four EVM chains — every peered pathway at 3 DVNs OK, zero exposed-AND-peered. Trust holes: undocumented MPC scheme, no pause function on the OFTAdapter |
-| Economic / Market | 5.3 | 30% | High-quality UST underlying; functional primary redemption (T+4) and **mechanically clean handling of the Apr 27, 2026 $65M / ~33%-of-supply stress redemption** (largest on record); single-underlying concentration; no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule. Persistent secondary discount with no competitive-arbitrage enforcement and multi-week recovery times from stress-driven widening events (arbitrage gated to KYC'd participants who must clear ULTRA-layer fees + 4-day settlement carry). |
+| Economic / Market | 5.3 | 30% | High-quality UST underlying; functional primary redemption (T+4) and **mechanically clean handling of the Apr 27, 2026 $65M / ~33%-of-supply stress redemption** (largest on record); underlying concentration reduced by the 2026-06-25 FILQ addition but still tULTRA-dominant (~83%); no bankruptcy remoteness; pending-assets centralized oracle with NAV-setting authority; opaque ULTRA-layer fee schedule. Persistent secondary discount with no competitive-arbitrage enforcement and multi-week recovery times from stress-driven widening events (arbitrage gated to KYC'd participants who must clear ULTRA-layer fees + 4-day settlement carry). |
 | Project / Counterparty | 4.5 | 30% | Strong team and regulated institutional partners; fully centralized governance; Panama jurisdiction; no timelock |
 | **Overall** | **5.1** | | **Moderate-to-elevated risk — a high-quality asset (US T-bills) wrapped in an early-stage issuer with centralized governance, limited legal remoteness, and a synthetic tULTRA wrapper layer whose 4626 interface is effectively ceremonial. Bridge layer verified clean. BB+ credit equivalent at the middle of the band.** |
 
@@ -538,7 +543,7 @@ On the bridge dimension, thBILL's LayerZero OFT multi-DVN config is comparable t
 
 4. **Continue to re-query DEX pool depths before any sizing decision.** Aggregate DEX TVL runs in the low-single-digit-million range against fund TVL of $130M+; deepest single venue is typically Arbitrum (Uniswap V3 thBILL/USDC) or HyperEVM (Project X thBILL/USDT0) — concentration shifts between them over time (see §II.c). The long tail of HyperEVM pools (most with no flow) should be watched for activation around any Theo product launch. Live per-venue tiers on the dashboard.
 5. Monitor secondary-market peg weekly through the post-rsETH risk-off window. Any sustained >0.5% discount signals structural concerns.
-6. Watch for basket diversification beyond tULTRA. Single-issuer concentration is the largest un-mitigated economic risk.
+6. Track basket composition. Diversification began 2026-06-25 with the FILQ addition (~17%, Fidelity International) — watch `treasury_filq_tokens` for further rotations (a drop to 0 would signal reversal back to tULTRA-only) and for any lower-quality constituent being added. tULTRA-dominant concentration (~83%) remains the largest un-mitigated economic-underlying risk.
 7. Track settlement latency. 4-day baseline is longest in peer set; any drift higher is a liquidity-management signal.
 8. Look for bug bounty program launch.
 
@@ -571,7 +576,7 @@ thBILL is a moderate-to-elevated-risk tokenized T-bill product with high-quality
 The three dimensions defining the risk:
 - **Asset quality (strong):** US T-bills with institutional-grade fund management.
 - **Bridge security (verified clean across all four EVM chains):** LayerZero OFT with 3 DVNs custom config on every peered pathway, including the Ethereum OFTAdapter (`0xfDD22Ce6…F55A5a` — separate from the iToken vault). Zero exposed-AND-peered pathways. Materially stronger than the single-DVN config that broke Kelp rsETH on 2026-04-18. The bridge held cleanly through the incident and contagion.
-- **Issuer structure (weak):** No bankruptcy remoteness, fully centralized governance, no timelocks, undisclosed multisig signers, Panama jurisdiction without regulatory supervision of the issuer entity, single underlying (tULTRA), 4-day redemption lag.
+- **Issuer structure (weak):** No bankruptcy remoteness, fully centralized governance, no timelocks, undisclosed multisig signers, Panama jurisdiction without regulatory supervision of the issuer entity, tULTRA-dominant two-asset basket (~83% tULTRA + ~17% FILQ since 2026-06-25), 4-day redemption lag.
 
 For a DeFi user holding PT-thBILL or using thBILL as collateral, the pragmatic read is: the on-chain layer (contract + bridge) is adequately diligenced and passed the rsETH stress test; the off-chain layer (issuer solvency, legal recourse) remains the binding constraint. Sizing should reflect unsecured-counterparty exposure to Theo, not direct exposure to US T-bills.
 

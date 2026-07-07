@@ -9,7 +9,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "thbill-full"
 date: "2026-04-28"
-last_verified: "2026-05-19"
+last_verified: "2026-07-02"
 live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
@@ -34,6 +34,8 @@ underlying_managers:
   - "Libeara (Standard Chartered)"
   - "FundBridge (MAS-regulated Singapore)"
   - "Wellington Management (sub-advisor)"
+  - "Fidelity International (FILQ manager/issuer)"
+  - "Sygnum (FILQ tokenization)"
 ---
 
 # thBILL — Retail Risk Report
@@ -56,7 +58,7 @@ thBILL has been repositioned as a **backing asset for Theo's stablecoin product 
 
 thBILL is Theo Protocol's onchain wrapper around a regulated US Treasury bill fund. You buy the token, hold it, and the price slowly goes up — around 3% a year — because the underlying T-bills accrue interest. There are no rewards to claim, no rebases, no vesting. On paper, it's one of the cleanest "onchain savings account" products available in DeFi today.
 
-The structure is three layers deep: thBILL (the token you hold) → tULTRA → a Singapore-regulated T-bill fund run by **Wellington Management** and **Standard Chartered's Libeara**. Wellington and Standard Chartered are the strong part — household-name institutional players. Theo, the Panama-registered entity that issues thBILL, is the weak part: under a year old (launched July 2025), unlicensed, and your legal claim in the worst case is against a Panama corporation, not against the underlying T-bills directly.
+As of June 2026 the basket holds **two** underlying funds, not one. The majority (about 83%) is the Singapore-regulated T-bill fund run by **Wellington Management** and **Standard Chartered's Libeara**, reached through the tULTRA wrapper. In late June 2026 Theo added a second fund — **Fidelity International's tokenized dollar fund (FILQ, about 17% of the basket)** — a Moody's AAA-mf money-market fund, Fidelity-managed and tokenized by Sygnum. This is a modest positive: less reliance on a single fund, another household-name institution in the mix, and FILQ is actually the more transparent leg (thBILL holds it as a real, directly-readable on-chain token, whereas the tULTRA wrapper is synthetic — it holds no actual ULTRA and reports its value by attestation). Wellington, Standard Chartered and Fidelity are the strong part — household-name institutional players. Theo, the Panama-registered entity that issues thBILL, is the weak part: under a year old (launched July 2025), unlicensed, and your legal claim in the worst case is against a Panama corporation, not against the underlying T-bills directly.
 
 **Most retail allocators looking for Theo yield should look at [thUSD](/reports/thusd) instead.** thBILL is now primarily a backing asset for thUSD; new retail mint flows have effectively migrated. This report remains useful for existing thBILL holders and KYC'd allocators evaluating institutional-grade T-Bill exposure.
 
@@ -133,7 +135,7 @@ For sizing decisions, the holder-attribution and per-chain peg panels are the tw
 
 thBILL sits on top of two very different counterparties, and the risk is concentrated in one of them.
 
-**The strong part: Wellington Management + Libeara (Standard Chartered).** The fund underneath everything — the Delta Wellington Ultra Short Treasury On-Chain Fund — is sub-managed by Wellington Management, one of the largest asset managers in the world (\~$1.2T AUM). It's tokenized by Libeara, Standard Chartered's incubated RWA platform, and operated through FundBridge Capital, a MAS-regulated (Singapore) fund manager. Custody and regulatory oversight on the actual T-bills is institutional-grade.
+**The strong part: Wellington Management + Libeara (Standard Chartered), now joined by Fidelity International.** The majority fund underneath everything (about 83%) — the Delta Wellington Ultra Short Treasury On-Chain Fund — is sub-managed by Wellington Management, one of the largest asset managers in the world (\~$1.2T AUM). It's tokenized by Libeara, Standard Chartered's incubated RWA platform, and operated through FundBridge Capital, a MAS-regulated (Singapore) fund manager. Since late June 2026 about 17% of the basket sits in Fidelity International's FILQ — a Moody's AAA-mf money-market fund from another household-name manager, tokenized on the Swiss-regulated Sygnum stack. Custody and regulatory oversight on the actual T-bills and money-market instruments is institutional-grade. Adding FILQ modestly reduces the reliance on a single fund, though it also adds a new dependency on Sygnum's custody and FILQ's permissioning.
 
 **The weak part: Theo Protocol Corporation.** Theo is the Panama-registered entity that issues thBILL and wraps tULTRA. Theo is **not a licensed financial institution anywhere.** The founders are public (ex-Optiver and IMC quant traders) and the protocol is backed by Hack VC with $20M raised in April 2025. Audits beyond the Zenith report are not publicly disclosed. The project is about nine months old.
 
@@ -154,7 +156,7 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 | Liquidity | 3.5/10 |
 | Issuer | 4.5/10 |
 
-**On the scoring rubric.** This retail report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor. **Underlying** scores the collateral quality independently of wrapper-layer or issuer risk: thBILL's underlying is institutional-grade US Treasury bills custodied via Standard Chartered's Libeara, with Wellington Management as fund manager and FundBridge as administrator — among the safest financial assets in existence, which a Backing-only axis (measuring how much collateral exists, not how strong it is) doesn't surface.
+**On the scoring rubric.** This retail report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* The institutional companion report scores on contract / economic / project, which is more useful when you have primary-redemption access. **Liquidity** gets its own dial here precisely because retail can't redeem and must exit on-DEX at the structural discount floor. **Underlying** scores the collateral quality independently of wrapper-layer or issuer risk: thBILL's underlying is institutional-grade US Treasury and money-market assets — about 83% via Standard Chartered's Libeara (Wellington Management as fund manager, FundBridge as administrator) and, since late June 2026, about 17% via Fidelity International's FILQ (Moody's AAA-mf, tokenized by Sygnum) — among the safest financial assets in existence, which a Backing-only axis (measuring how much collateral exists, not how strong it is) doesn't surface. The FILQ addition is a modest net positive for this axis (diversification plus a rated, directly-held leg) but not enough to move the score on its own.
 
 **Who it's for:** Existing thBILL holders who want to understand current backing and exit dynamics. KYC'd allocators evaluating institutional-grade T-Bill exposure with primary-redemption access. Holders of thUSD who want to inspect the largest reserve component of that product. **New retail allocators seeking Theo yield should look at [thUSD](/reports/thusd) instead — the consumer-facing front-end has migrated.**
 

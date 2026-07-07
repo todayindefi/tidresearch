@@ -9,7 +9,7 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "syrupusdt-full"
 date: "2026-05-03"
-last_verified: "2026-05-04"
+last_verified: "2026-07-02"
 featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
@@ -49,7 +49,7 @@ underlying_managers:
 
 syrupUSDT is the USDT-denominated sibling of syrupUSDC in Maple Finance's "Syrup" institutional credit product line. Same Maple architecture, same Pool Delegate firm, same Maple Labs entity — but materially smaller pool (~$436M vs syrupUSDC's $1.22B). Yield is real (interest paid by real institutional borrowers), zero principal losses since launch, and the product runs on the same audited v2 contract codebase as its USDC sibling.
 
-**Pool composition (verified 2026-05-04 against Maple's own AUM Details page)**: $379M Loans (87% — third-party institutional credit, 84% BTC + 16% XRP at 125–150% init level) + $43M Liquidity (10% — pool-owned PYUSD/USDC-AMM/USDT-AMM positions). The Liquidity layer is at-par with the underlying asset and routes through Maple's lending infrastructure as accounting wrapper, but is functionally pool-owned strategy custody, NOT third-party credit. "Overcollateralized at all times" applies to the loan book; the Liquidity layer is intentionally at par.
+**Pool composition (structure verified against Maple's own AUM Details page)**: roughly 87% Loans (third-party institutional credit, 84% BTC + 16% XRP at 125–150% init level) + roughly 10% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM positions); the dollar magnitudes shift with the book and are surfaced live on the dashboard rather than pinned here. Note the 125–150% figure is each loan's *funding* collateral level, not a live health reading — the buffer that matters is how close current collateralization sits to par (100%), which the dashboard tracks. The Liquidity layer is at-par with the underlying asset and routes through Maple's lending infrastructure as accounting wrapper, but is functionally pool-owned strategy custody, NOT third-party credit. "Overcollateralized at all times" applies to the loan book; the Liquidity layer is intentionally at par.
 
 The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level, AND it shares borrowers with syrupUSDC.** The largest single loan in syrupUSDT is $175M / **~41% of the pool** — vs the largest loan in syrupUSDC at $200M / 16% of that pool. A single borrower default in syrupUSDT writes down ~40% of the principal in one event. And because the same borrowers borrow from BOTH pools, holding both syrupUSDC and syrupUSDT together does NOT diversify your credit exposure to those entities — it concentrates them.
 
