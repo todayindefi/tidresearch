@@ -8,7 +8,7 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 audience: "retail"
 date: "2026-07-08"
-last_verified: "2026-07-08"
+last_verified: "2026-07-09"
 featured: false
 production: true
 issuer: "Paxos Trust Company (on behalf of PayPal)"
@@ -37,7 +37,7 @@ PYUSD is PayPal's fiat-backed stablecoin, issued and managed by **Paxos Trust Co
 
 It has grown roughly 4x over the past year to a multi-billion supply — around **$2.77 billion**, off a **peak above $4 billion** in March 2026 — the fastest growth among the major stablecoins, and it now leads the Solana stablecoin market. PYUSD is native on **Ethereum, Solana, Arbitrum and Stellar**, with a **LayerZero OFT** layer extending its reach to further chains.
 
-The 7.0/10 reflects a top-tier regulated issuer and reserve posture, held back by two things: liquidity that is still below USDC and USDT, and a newly-added cross-chain bridge surface. On the qualities that matter most for a fiat dollar — who stands behind it and what actually backs it — PYUSD is among the strongest in the set. It sits a step below the biggest names purely on market depth and on the honesty of flagging the new multichain surface as an unverified watch item.
+The 7.0/10 reflects a top-tier regulated issuer and reserve posture, held back by two things: liquidity that is still below USDC and USDT, and a newly-added cross-chain bridge surface. On the qualities that matter most for a fiat dollar — who stands behind it and what actually backs it — PYUSD is among the strongest in the set. It sits a step below the biggest names purely on market depth and on the newness of its multichain surface — whose main bridge we have now verified is strongly configured.
 
 ## What you actually earn
 
@@ -71,7 +71,7 @@ This is the new structural point, and it deserves to be framed honestly rather t
 
 PYUSD's 2026 expansion added native **Arbitrum** and **Stellar** deployments plus a **LayerZero OFT** (Omnichain Fungible Token) cross-chain transport layer reaching additional chains. An OFT bridge introduces a specific exploit class: a compromised cross-chain verifier could, in principle, mint unbacked tokens on a destination chain. That is the class of failure that drained KelpDAO's rsETH in April 2026 — a bridge-layer compromise, not a reserve failure.
 
-Here is the part that matters for most readers: **your deep, canonical PYUSD lives on the native chains — Ethereum and Solana — and is not exposed to that class.** The exposure, to whatever extent it exists, would sit on the long-tail bridged chains, where balances are far smaller. We have flagged verifying the specific bridge security configuration (the verifier / DVN setup) as an open item, and we treat this as a **watch item, not a downgrade, today**. There is no live incident, and nothing here suggests a depeg is imminent.
+Here is the part that matters for most readers: **your deep, canonical PYUSD lives on the native chains — Ethereum and Solana — and is not exposed to that class.** The exposure, to whatever extent it exists, would sit on the long-tail bridged chains, where balances are far smaller. We verified the main (Paxos-run) bridge configuration on-chain: **every active route requires three independent verifiers to agree — LayerZero Labs, Paxos's own verifier, and a third (Canary) — with no single-point exposure.** That is a genuinely strong setup, stronger than several peers, and it means no one compromised verifier can forge a cross-chain mint. We treat the bridge as a **watch item, not a downgrade** — there is no live incident, nothing suggests a depeg is imminent, and one separate permissionless bridge layer (a different, Stargate-based deployment) we could not fully resolve, so we still say: for size, stay native.
 
 The practical takeaway for retail is simple: **hold and transact PYUSD on Ethereum or Solana** unless you specifically need one of the newer chains, in which case treat bridged PYUSD as not yet proven equivalent to native.
 
@@ -101,11 +101,11 @@ Holders who want a top-tier regulated dollar with strong reserve transparency an
 
 ## What to watch
 
-- **Cross-chain (LayerZero OFT) security config** — the key new item. Verify the bridge's verifier / DVN setup before treating bridged PYUSD as equivalent to native. Native ETH/SOL is unaffected.
+- **Cross-chain (LayerZero OFT) security config** — the main Paxos-run bridge mesh is verified strong (three independent required verifiers, no single-point exposure); the residual watch is a separate permissionless bridge layer we couldn't fully resolve, plus the fact that the config is issuer-changeable. Native ETH/SOL is unaffected in all cases.
 - **Liquidity trajectory** — PYUSD's growth and DeFi depth are the swing factor for its score. Continued deepening supports a higher liquidity mark over time.
 - **Market-cap volatility** — supply is off its 2026 peak (from above $4B toward ~$2.77B). Large mint/burn swings are normal for a distribution-driven stablecoin and are not, by themselves, a red flag.
 - **PayPal strategic commitment** — PYUSD's distribution edge depends on PayPal's continued push. A pullback would blunt the growth story that underpins the liquidity trajectory.
 
 ---
 
-*This report is based on Paxos/PayPal public documentation, monthly Withum reserve attestations, and market data through 2026-07-08. PYUSD's supply and multichain footprint shift over time, and its cross-chain (LayerZero) bridge security configuration has not been independently verified in this report. Corrections or attestation links welcome at info@tidresearch.com.*
+*This report is based on Paxos/PayPal public documentation, monthly Withum reserve attestations, on-chain reads, and market data through 2026-07-09. PYUSD's supply and multichain footprint shift over time. Its main (Paxos-run) cross-chain LayerZero bridge configuration was independently verified on-chain — three required independent verifiers, no single-point exposure — though that config is issuer-changeable; a separate permissionless bridge layer was not fully resolved. Corrections or attestation links welcome at info@tidresearch.com.*
