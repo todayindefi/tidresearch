@@ -7,6 +7,7 @@ category: "vault-share"
 underlying_assets: ["USDS"]
 assessment_type: "full"
 audience: "retail"
+production: true
 date: "2026-05-27"
 last_verified: "2026-05-27"
 featured: false

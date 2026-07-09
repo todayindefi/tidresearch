@@ -7,6 +7,7 @@ category: "stablecoin"
 peg_mechanism: "Hybrid (USDC PSM + DAI parity + crypto/RWA CDP)"
 assessment_type: "full"
 audience: "retail"
+production: true
 date: "2026-05-27"
 last_verified: "2026-05-27"
 featured: false
