@@ -7,6 +7,7 @@ category: "vault-share"
 underlying_assets: ["USDS"]
 assessment_type: "full"
 audience: "retail"
+production: true
 date: "2026-05-27"
 last_verified: "2026-05-27"
 featured: false
@@ -17,6 +18,7 @@ liquidity_score: 8.5
 structural_score: 7.0
 redemption_score: 8.5
 underlying_score: 7.5
+issuer_score: 7.0
 overall_score: 8.0
 ---
 
@@ -45,7 +47,7 @@ sUSDS pays yield by appreciating against USDS — there's no rebasing and nothin
 Two things to understand about that rate:
 
 - **It's variable and governance-set.** The SSR is not a market rate or a fixed contract term — Sky (SKY-token) governance sets it and can raise or cut it. It broadly tracks prevailing short-term dollar rates and Sky's own revenue, but it can change. Don't underwrite a position on the current number persisting.
-- **It's funded by diversified backing, not a single fund.** USDS is backed by a blend: short-term US Treasuries (via Sky's real-world-asset allocations), crypto-collateralized loans (ETH, staked ETH and similar, posted at heavy over-collateralization), and cash reserves held largely in USDC. Surplus revenue above the SSR flows to a buffer that cushions shortfalls. This diversification is a strength versus any product backed by one off-chain fund, but it's also where the USDC correlation enters (below).
+- **It's funded by diversified backing, not a single fund.** As of mid-2026, USDS is minted mostly through Sky's three "Star" allocators — **Spark, Grove, and Obex (~52% combined)** — which deploy into a broad book: tokenized short-term T-bills, other stablecoins (Sky holds USDT, PYUSD, and RLUSD, not just USDC), on-chain crypto lending, OTC crypto lending, private credit, and AAA-rated corporate debt (Grove routes into a Janus Henderson CLO). Alongside that sits a large raw-USDC reserve in the PSM (~33%) and a now-small overcollateralized crypto-vault sleeve (~7%, once a co-equal pillar, now a tail). Surplus revenue above the SSR flows to a buffer that cushions shortfalls. This diversification is a strength versus any product backed by one off-chain fund, but it now includes a newer, less-transparent credit sleeve (OTC lending + private credit + CLO ≈ 14% combined) and is still where the USDC correlation enters (below).
 
 ## How you get in and out
 
@@ -61,7 +63,7 @@ This is sUSDS's strongest dimension, and the whole reason it's the retail-usable
 
 **1. USDS is not the unfreezable DAI.** When MakerDAO rebranded to Sky, it introduced USDS as an *upgradeable* stablecoin. At launch USDS shipped without a freeze function, but with the upgrade machinery that would let Sky governance add an address-level **freeze / blacklist** later by vote. DAI, by contrast, remains immutable and unfreezable, and Sky has discussed an immutable "PureDai" fork. The practical takeaway for an sUSDS holder: you're exposed to USDS's upgradeable admin surface and the standing possibility that a future governance decision could freeze specific addresses — a censorship and centralization risk that simply doesn't exist for DAI or for trust-minimized stablecoins. It is governance-gated (it would take a public vote and a timelock delay, not a unilateral flip), and as of this writing no freeze function is enabled. But if you specifically need a censorship-resistant position, hold DAI instead.
 
-**2. About a third of USDS backing is USDC → real USDC correlation.** Sky keeps roughly a third of USDS backing in cash-equivalent reserves, predominantly USDC routed through the PSM at a fixed 1:1 swap. That's great for redemption liquidity, but it means USDS — and therefore sUSDS — is **correlated to USDC**, not diversified away from it. The precedent is March 2023: when USDC briefly depegged during the Silicon Valley Bank failure, DAI followed it down because of heavy USDC backing through the same kind of module. So treat sUSDS as roughly "two-thirds diversified collateral + one-third USDC," not as something safer than USDC. If you already hold a lot of USDC elsewhere, sUSDS adds to that exposure rather than diversifying it. This collateral mix — diversified and high-grade, but with a meaningful USDC concentration — is what the **Underlying axis (7.5)** captures: better than the STRC-backed yield wrappers, short of a Treasury-pure product. See the [USDS retail report](/reports/usds/) for the base-asset risk detail.
+**2. About a third of USDS backing is USDC → real USDC correlation.** Sky holds roughly a third of USDS backing as **raw USDC** — about $4.3 billion sitting in the PSM at a fixed 1:1 swap — with further USDC-denominated exposure inside the allocator deployments on top of that. That's great for redemption liquidity, but it means USDS — and therefore sUSDS — is **correlated to USDC**, not diversified away from it. The precedent is March 2023: when USDC briefly depegged during the Silicon Valley Bank failure, DAI followed it down because of heavy USDC backing through the same kind of module. So treat sUSDS as roughly "two-thirds diversified collateral + one-third USDC," not as something safer than USDC. If you already hold a lot of USDC elsewhere, sUSDS adds to that exposure rather than diversifying it. This collateral mix — now minted largely through Sky's Star allocators (Spark/Grove/Obex), diversified and high-grade but carrying a meaningful USDC concentration plus a newer allocator credit sleeve (OTC lending, private credit, and a AAA CLO, ≈14% combined) — is what the **Underlying axis (7.5)** captures: better than the STRC-backed yield wrappers, short of a Treasury-pure product. See the [USDS retail report](/reports/usds/) for the base-asset risk detail.
 
 ## What the contracts are doing
 
@@ -69,7 +71,7 @@ sUSDS is a standard ERC-4626 vault on Ethereum at `0xa3931d71877c0e7a3148cb7eb44
 
 For sizing, prefer the canonical Ethereum deployment. Balances on Base / Optimism / Arbitrum / Solana add a bridging and cross-chain-PSM dependency on top of the base vault — fine for everyday amounts, worth keeping in mind for large positions.
 
-The contracts themselves are the lowest-risk part of the story: the savings module, PSM, and vault all descend from MakerDAO's codebase, which has been live and heavily audited since 2017 (the savings-rate mechanism specifically since 2019, as the DAI Savings Rate and sDAI). The offsetting structural risk is governance: Sky's SKY-token governance — operating through the multi-"Star"/subDAO "Endgame" structure, which includes Spark — can adjust the savings rate, change collateral parameters, and execute upgrades (including, potentially, the freeze function) through governance "spells" that pass through a security-module timelock delay. A malicious or captured governance spell is the tail risk; the timelock and long track record are the mitigants.
+The contracts themselves are the lowest-risk part of the story: the savings module, PSM, and vault all descend from MakerDAO's codebase, which has been live and heavily audited since 2017 (the savings-rate mechanism specifically since 2019, as the DAI Savings Rate and sDAI). The offsetting structural risk is governance: Sky's SKY-token governance — operating through the multi-"Star"/subDAO "Endgame" structure, which includes Spark — can adjust the savings rate, change collateral parameters, and execute upgrades (including, potentially, the freeze function) through governance "spells" that pass through a security-module timelock delay. A malicious or captured governance spell is the tail risk; the timelock and long track record are the mitigants. The **issuer surface here is identical to USDS's** — sUSDS and USDS are the same legal entity (Sky Protocol), so a holder's ultimate claim is against Sky either way; that's why the Issuer axis below carries the same 7.0 as the [USDS report](/reports/usds/).
 
 ## Audits & security
 
@@ -86,6 +88,7 @@ The relevant residual risks are not contract bugs but design choices: the upgrad
 | Liquidity | 8.5 | Deepest in its category — around $6B in size, deep permissionless DEX liquidity, plus 1:1 PSM convertibility to USDC and 1:1 USDS↔DAI. No KYC or geographic gate on either the primary or secondary path. Small reservation for cross-chain reliance on the Spark PSM off Ethereum and for PSM liquidity under extreme USDC stress. |
 | Structural | 7.0 | Battle-tested MakerDAO-derived ERC-4626 / PSM / vault code — the lowest contract risk in the category — offset by USDS being upgradeable with a governance-addable freeze function, broad Sky-governance powers over rate/collateral/upgrades (timelock-gated), Endgame structural complexity, and a cross-chain bridge surface. The upgrade/freeze capability is the binding structural concern. |
 | Redemption | 8.5 | Atomic, permissionless, instant: sUSDS → USDS in the vault and USDS → USDC 1:1 via the PSM, with no KYC, no minimum, no lockup, and no fees. Best-in-class exit. Held just below the top only for the theoretical PSM-liquidity limit under a severe USDC-specific crisis. |
+| Issuer | 7.0 | Sky Protocol (ex-MakerDAO) — same entity as USDS; DAO-governed, 48h GSM timelock, broad audits, $10M bounty; docked for the upgradeable/freezable contract, Endgame governance complexity, and governance-capture tail. See the [USDS report](/reports/usds/). |
 | **Overall** | **8.0** | Lower risk — the most usable and most liquid tokenized-yield option for retail, on the most battle-tested codebase. Held below a stablecoin-grade score by the upgradeable/freezable USDS dollar and the ≈33% USDC backing correlation, plus a governance-set (not fixed) yield. |
 
 ## Who it's for
@@ -109,3 +112,5 @@ Holders who want a simple, liquid, permissionless way to earn a roughly money-ma
 ---
 
 *This report is based on Sky Protocol's public documentation, Spark documentation, public reporting on the USDS freeze-function debate, and on-chain reads of the sUSDS vault, through 2026-05-27. The Sky Savings Rate is governance-set and subject to change, and USDS's upgrade/freeze capability is a governance decision, not a fixed contract guarantee. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+
+*Revision history: 2026-07-09 — refreshed collateral model (Star-allocator system now ~52%, crypto CDPs ~7%; added credit-sleeve + non-USDC-stable detail); sUSDS issuer axis added (7.0). Overall and other scores unchanged.*
