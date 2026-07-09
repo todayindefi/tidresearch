@@ -54,15 +54,20 @@ No KYC, no minimum, no lockup, no gatekeeper. The one tail consideration is the 
 
 ## What backs it — and the USDC question
 
-USDS and DAI share one collateral pool, about $12.8 billion combined. The mix:
+USDS and DAI share one collateral pool, about $12.8 billion combined. As of mid-2026 the mix looks quite different from the classic MakerDAO picture, and it's worth understanding how the system actually mints dollars today:
 
-- **Short-term US Treasuries**, via Sky's real-world-asset allocations (Spark is now a leading on-chain Treasury allocator, alongside the BlockTower / Monetalis lineage).
-- **Overcollateralized crypto vaults** — ETH, staked ETH, WBTC and similar, posted well above the value borrowed.
-- **A large USDC reserve** sitting in the Peg Stability Module.
+- **A large raw-USDC reserve (~33%)** — roughly $4.3 billion of actual USDC sitting in the Peg Stability Module. This is the single largest asset and the direct 1:1 swap inventory.
+- **The Star-allocator system (~52%)** — the dominant mechanism now. Most USDS is minted by three "Star" allocators — **Spark (~26%), Grove (~21%), and Obex (~5%)** — that then deploy that liquidity downstream into a diversified book: tokenized short-term T-bills, other stablecoins, on-chain crypto lending, over-the-counter (OTC) crypto lending, private credit, and AAA-rated corporate debt (Grove routes into a Janus Henderson CLO). This allocator layer, not the old crypto-vault sleeve, is the centerpiece of Sky's backing in 2026.
+- **Overcollateralized crypto vaults (~7%)** — ETH, staked ETH, WBTC and similar, posted well above the value borrowed. Once a co-equal pillar of MakerDAO, this is now a small tail sleeve.
+- **A small slice of direct real-world-asset vaults** (<1%).
 
-Here's the single most important thing to understand: **about a third of the system's backing is USDC** — roughly $4.2 billion, verified directly on-chain. That makes USDC the largest single backing asset, and the share has risen over time. The practical takeaway: **USDS is not safer than USDC; it carries roughly a third of USDC's risk directly**, on top of its own. If a USDC depeg happened, USDS would feel it. The precedent is March 2023, when DAI briefly followed USDC down during the Silicon Valley Bank scare because of heavy USDC backing through the same kind of module. (USDS itself didn't exist yet, and has never depegged in its own roughly 20-month history — but the channel is the same, and the USDC share is now larger.) If you already hold a lot of USDC elsewhere, USDS adds to that exposure rather than diversifying it.
+Two things a retail holder should take from this.
 
-The rest of the backing is genuinely diversified, overcollateralized, and largely on-chain transparent — a stronger posture than a single off-chain fund. The Treasury sleeve does carry off-chain manager and custody dependence.
+**First, the USDC concentration.** About a third of the system's backing is **raw USDC held** — roughly $4.3 billion in the PSM pocket, verified directly on-chain — and that's before counting broader **USDC-denominated** exposure sitting inside the allocator deployments (a wider, softer correlation on top of the direct one). USDC is still the largest single asset. The practical takeaway is unchanged: **USDS is not safer than USDC; it carries roughly a third of USDC's risk directly**, on top of its own. If a USDC depeg happened, USDS would feel it. The precedent is March 2023, when DAI briefly followed USDC down during the Silicon Valley Bank scare because of heavy USDC backing through the same kind of module. (USDS itself didn't exist yet, and has never depegged in its own roughly 20-month history — but the channel is the same.) If you already hold a lot of USDC elsewhere, USDS adds to that exposure rather than diversifying it. Note too that Sky's cash reserve is no longer USDC-only — it also holds meaningful balances of **USDT, PYUSD, and RLUSD** — so the stablecoin basket is broader than a single issuer.
+
+**Second, a newer credit sleeve.** Routing through the Star allocators, Sky now carries credit and counterparty exposures that go beyond the old "T-bills + overcollateralized crypto" story: **OTC crypto lending (~10% of look-through backing), AAA corporate debt via the Grove/Janus Henderson CLO (~3.5%), and some private credit.** Combined, this less-transparent credit sleeve is on the order of ~14%. It is still diversified, still largely reported through Sky's on-chain risk dashboards, and small relative to the whole — but it is a genuinely newer, less-visible risk than a pure Treasury-and-crypto book, and it's the thing to watch if it grows or if one of the Star allocators hits trouble.
+
+The rest of the backing remains diversified, overcollateralized where it's crypto-backed, and largely on-chain transparent — a stronger posture than a single off-chain fund. The T-bill and credit sleeves do carry off-chain manager, custody, and counterparty dependence.
 
 ## The upgrade and freeze caveat
 
@@ -112,5 +117,7 @@ If you want yield on USDS, the relevant product is **sUSDS** — the ERC-4626 sa
 ---
 
 *This report is based on Sky Protocol's public documentation, governance materials, and on-chain reads of the USDS token, the USDC Peg Stability Module, and the governance/timelock contracts, through 2026-05-27. USDS's upgrade/freeze capability is a governance decision, not a fixed contract guarantee, and the backing composition shifts over time. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+
+*Revision history: 2026-07-09 — refreshed collateral model (Star-allocator system now ~52%, crypto CDPs ~7%; added credit-sleeve + non-USDC-stable detail). Scores unchanged.*
 </content>
 </invoke>
