@@ -7,16 +7,16 @@ category: "stablecoin"
 peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
 audience: "retail"
-date: "2026-05-04"
-last_verified: "2026-07-02"
+date: "2026-07-13"
+last_verified: "2026-07-13"
 production: true
 issuer: "Theo Network (Panama)"
 peg_mechanism_score: 4.0
-backing_score: 4.0
-underlying_score: 3.5
+backing_score: 3.5
+underlying_score: 3.0
 liquidity_score: 3.5
 issuer_score: 5.5
-overall_score: 4.1
+overall_score: 4.0
 audited: true
 audit_count: 1
 audit_firms: ["Zenith"]
@@ -33,7 +33,7 @@ underlying_managers:
 
 # thUSD — Retail Risk Report
 
-**Elevated risk · 4.1/10**
+**Elevated risk · 4.0/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -57,7 +57,9 @@ The yield comes from a **delta-neutral gold strategy** plus a T-Bill float: phys
 
 The institutional pieces are genuinely strong. Wellington Management, Standard Chartered's Libeara, FundBridge, SIG, Flowdesk, Amber, and Concrete (which ran the $100M Genesis pre-deposit vault) are all real names. The founders are ex-Optiver and IMC quant traders — directly relevant experience for the gold-futures basis trade. Theo's prior product, thBILL, has run since July 2025 without a public incident.
 
-The catch for retail is the same as thBILL's: **you do not have a primary redemption path.** Mint and redeem are KYC-whitelisted, so non-institutional users can only enter and exit via DEX. Secondary liquidity is structurally thin (aggregate DEX TVL on Arbitrum is ~$32K across the live pools with effectively zero meaningful volume), and the primary rail itself has a hard $200,000-per-transaction redemption cap. The product is best read as opt-in early access for institutional capital — retail can hold it, but the structural exit story is meaningfully worse than crvUSD, OUSD, or even thBILL.
+**The headline shift since our last update: on-chain coverage has fallen to ≈59.5%** (from ≈92% in mid-May), because the off-chain gold-carry leg has scaled from ≈8% to ≈40% of backing (roughly $7.5M → $43M). Read this correctly. For this product, on-chain coverage below 100% is the **expected operating state** as the strategy deploys capital off-chain — it is **not** a depeg or an undercollateralization alarm on its own, and thUSD has held ≈$1.00 throughout. What genuinely worsened is **verifiability and the rate of change**: about 40% of backing now sits in an off-chain book with no proof-of-reserves, no disclosed gold custody address, and no third-party attestation, and it got there fast enough — roughly −17 percentage points in a single week — to breach our backing monitor's 70% floor for the first time. By design, yes; but the opaque, unverifiable share is now large and growing quickly, and full backing depends almost entirely on that off-chain book.
+
+The catch for retail is the same as thBILL's: **you do not have a primary redemption path.** Mint and redeem are KYC-whitelisted, so non-institutional users can only enter and exit via DEX. Secondary liquidity is structurally thin — the real price-discovery venue is a ≈$4.75M Uniswap V4 pool on Ethereum (Arbitrum is dust, and the pair public aggregators surface there is a different token; see below), modest for a ≈$107M supply — and the primary rail itself has a hard $200,000-per-transaction redemption cap. The product is best read as opt-in early access for institutional capital — retail can hold it, but the structural exit story is meaningfully worse than crvUSD, OUSD, or even thBILL.
 
 Appropriate for: DeFi-comfortable users who already understand Ethena-style synthetic dollars, are sizing well below DEX depth, and want exposure to the gold-basis trade. Not appropriate for: anyone who needs instant or sized liquidity, anyone who wants direct legal claim on the underlying gold or Treasuries, or anyone uncomfortable with a very young product running an off-chain strategy with zero proof-of-reserves.
 
@@ -81,11 +83,11 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 
 ## II. Economic / Backing Risk
 
-**A meaningful portion of backing is now off-chain, with no proof-of-reserves on the off-chain leg.** As of 2026-05-19 the on-chain visible coverage is **91.93%** of thUSD supply (~$85.4M of on-chain reserves against $92.9M outstanding) — composed primarily of thBILL at NAV ($83.3M), plus USDT ($1.72M) and USDC ($0.36M) at the reserve safe `0xec417ccb…3c2f`. The implied off-chain backing is **~$7.49M (~8% of supply)** — inferred from the coverage gap, *not* from any direct attestation. This gap appeared on 2026-05-13 when $2.75M USDC moved from the reserve safe to a new destination (`0x021bc771…ae4`), consistent with the gold-carry strategy starting to deploy capital off-chain. Coverage was 94.85% before that date and has been stable at 91.93% since. The on-chain ratio dropping is by design for this product — but the off-chain leg has no proof-of-reserves, no disclosed gold custody address, no third-party attestation. The product is becoming structurally less on-chain-verifiable over time. This is materially less transparent than thBILL (where at least the T-Bill leg is observable via Libeara on-chain).
+**A large and fast-growing portion of backing is now off-chain, with no proof-of-reserves on the off-chain leg.** As of 2026-07-13, on-chain visible coverage is **≈59.5%** of thUSD supply (≈$63.5M of on-chain reserves against ≈$106.7M outstanding) — composed primarily of thBILL at NAV (≈$61.1M), plus USDT (≈$2.0M) and USDC (≈$0.4M) at the reserve safe `0xec417ccb…3c2f`. The implied off-chain backing is **≈$43.2M (≈40% of supply)** — inferred from the coverage gap, *not* from any direct attestation. **This is the story of this refresh:** the off-chain leg has quadrupled from ≈$7.5M (≈8%) at our May report, and on-chain coverage fell **≈16.8 percentage points in the single week to 2026-07-13** — enough to breach our PegTracker monitor's **70% floor** (its first floor breach) and its 10pp/week guardrail. On-chain coverage below 100% is *by design* for this product as the gold-carry strategy scales off-chain, and it is not a solvency signal on its own — thUSD held ≈$1.00 throughout. But the off-chain leg has no proof-of-reserves, no disclosed gold custody address, and no third-party attestation, so full backing now depends almost entirely on an unverifiable off-chain book. The open judgment call is **designed scaling versus the strategy outgrowing its 20% first-loss buffer** — currently unresolved; watch the trend, not just the level. Either way, thUSD is now materially less on-chain-verifiable than it was, and than thBILL (where at least the T-Bill leg is observable via Libeara on-chain).
 
 **The strategy itself is principled.** Long physical gold (custodied at FundBridge, lent to retail/wholesale gold borrowers including Mustafa Gold for interest) hedged short on CME gold futures (capturing the contango/roll-yield basis), with a thBILL reserve. A 20% first-loss buffer sits over the gold inventory. None of this is novel in TradFi — it's the same kind of basis trade prop desks have run for decades. The novel part is running it as backing for an onchain stablecoin with a 7-day track record.
 
-**Yield is running modestly below the target band.** 19.7 days of sthUSD share-price history (2026-04-29 → 2026-05-19) shows accrual from 1.003378 to 1.006291 — annualized this is **~5.5% APY**, about 50 bps below the 6% floor of the 6–10% target band. The strategy is generating real yield, just less than the published range so far; this could narrow with more data (the sample is short and the gold-carry deployment only began mid-May), but at present the realized rate does not yet land inside the target range. Whether it sustains across a stress event (a sharp gold move, a basis compression, a borrower default) is the open question. Gold curves *can* flatten or even invert in stress (briefly happened during COVID 2020), and at $1B target size on a $50B-notional CME open-interest market the strategy starts to be a price-taker on its own roll.
+**Yield is running modestly below the target band.** 19.7 days of sthUSD share-price history (2026-04-29 → 2026-05-19) shows accrual from 1.003378 to 1.006291 — annualized this is **≈5.5% APY**, about 50 bps below the 6% floor of the 6–10% target band. The strategy is generating real yield, just less than the published range so far; this could narrow with more data (the sample is short and the gold-carry deployment only began mid-May), but at present the realized rate does not yet land inside the target range. Whether it sustains across a stress event (a sharp gold move, a basis compression, a borrower default) is the open question. Gold curves *can* flatten or even invert in stress (briefly happened during COVID 2020), and at $1B target size on a $50B-notional CME open-interest market the strategy starts to be a price-taker on its own roll.
 
 **Retail has no primary redemption.** Mint and redeem at $1 are KYC-whitelisted and execute via EIP712-signed orders constructed by Theo's backend. Without KYC you cannot redeem at par. Your practical exit is selling on a DEX.
 
@@ -95,23 +97,25 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 
 **Mint-rail capacity is real.** The mint path has absorbed multi-tens-of-millions single-tx institutional inflows without incident — the EIP712 mint rail is validated up to large-allocator scale. Recipient-side attribution (Theo-internal vs external new allocator) is sometimes unclear without off-chain confirmation.
 
-**Reserve composition — thBILL-anchored, with a growing off-chain leg.** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's *on-chain* reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f` — dominated by thBILL (~95%+ of on-chain reserves at NAV) plus small USDT/USDC liquidity buffers. On-chain coverage has stepped down through 2026 — from the low-90s% in mid-May toward the mid-70s% by mid-year — as Theo scales the off-chain gold-carry leg, with the implied off-chain backing growing correspondingly into the tens of millions. **On-chain coverage below 100% is expected operating state here, not a solvency signal**, as long as the off-chain gold/futures backing is intact. Live coverage on [the dashboard](/dashboards/?asset=thusd) and `app.theo.xyz/transparency`. The largest reserve component (thBILL) has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington.
+**Reserve composition — thBILL-anchored, with a growing off-chain leg.** Theo's transparency dashboard at `app.theo.xyz/transparency` discloses a single Safe holding all of thUSD's *on-chain* reserves at `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f` — dominated by thBILL (≈95%+ of on-chain reserves at NAV) plus small USDT/USDC liquidity buffers. On-chain coverage has stepped down sharply through 2026 — from the low-90s% in mid-May to **≈59.5% by mid-July** — as Theo scales the off-chain gold-carry leg, with the implied off-chain backing now grown to ≈$43M (≈40% of supply). **On-chain coverage below 100% is expected operating state here, not a solvency signal**, as long as the off-chain gold/futures backing is intact — but at ≈40% of backing, the unverifiable share is now large, and the mid-July decline breached the backing monitor's 70% floor (see the coverage discussion above). Live coverage on [the dashboard](/dashboards/?asset=thusd) and `app.theo.xyz/transparency`. The largest reserve component (thBILL) has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington.
 
 **The thBILL-anchored reserve creates a recursive trust chain.** thBILL itself has its own backing structure (off-chain T-Bills via Libeara, with synthetic intermediate wrappers — see `tidresearch.com/reports/thbill`), and its on-chain backing ratio fluctuates within a Libeara settlement window (T+1 to T+7) — periodic dips during Stage A windows when Theo has minted new thBILL but the corresponding ULTRA hasn't yet arrived from Libeara. **During those windows, thUSD's thBILL reserves are technically backed by Theo's promise to Libeara, not by ULTRA-equivalent collateral.** Theo's "100% backed" attestation remains formally correct (thUSD-supply ÷ thBILL-at-NAV-plus-stables ≥ 100%) but the next layer down is where the periodic gap lives. Practically — the gap closes within the historical T+1 to T+7 envelope and the chain works as designed; the structural point is just that "100% backed" rests on attestations at multiple layers.
 
 **thUSD growth drives thBILL primary minting, not secondary buying.** Each new dollar of thUSD demand produces a corresponding silent thBILL mint at the reserve (the thBILL contract emits **zero on-chain events** during the supply mutation — same silent-mint pattern documented for the underlying tULTRA layer), with backing reconciled later via Libeara settlement. Standard ERC-20 indexers (Etherscan, Dune, The Graph) cannot track these mints; only direct `totalSupply()` polling captures them.
 
-**Not all chains are equal.** The great majority of bridged thUSD lives on Stable (recently ~95%+ of bridged supply), a chain that's itself only a few months old. Any Stable-side incident — a chain halt, a sequencer fault, a bridge anomaly — affects nearly all bridged thUSD. Concentrated chain-level liveness risk for cross-chain holders.
+**Not all chains are equal.** The great majority of bridged thUSD lives on Stable (recently ≈95%+ of bridged supply), a chain that's itself only a few months old. Any Stable-side incident — a chain halt, a sequencer fault, a bridge anomaly — affects nearly all bridged thUSD. Concentrated chain-level liveness risk for cross-chain holders.
 
 **NAV oracle architecture is undisclosed.** The share price that determines sthUSD redemption combines on-chain thBILL NAV, an off-chain CME futures mark, off-chain gold spot, and off-chain lending interest. Whoever publishes that share price is the most-trusted contract in the system, and Theo has not publicly documented who it is. The thBILL pattern suggests it's an MPC-attested value from Theo's own infrastructure.
 
 ## III. Liquidity (Retail Exit)
 
-**Secondary venues are extremely thin.** Aggregate Arbitrum DEX TVL is **~$32K across 17 live pools** with effectively zero meaningful volume (~$2.5K 24h) — a small market sell would crater price by orders of magnitude more than thBILL's secondary. The live venues are entirely Uniswap V4 thUSD/USDC and thUSD/USDT pools (the long tail is mostly sub-$1K). There is no meaningful Ethereum DEX liquidity for canonical thUSD. There is no Pendle or Curve presence at the size you'd expect for a stablecoin of this supply scale. Absence of peg pressure on these pools is not evidence of peg discipline; the pools exist for accounting/listing reasons rather than as a real exit path. (For context: weighted DEX price is currently 0.999, an 8 bp discount vs $1 — but on $32K TVL that's noise, not a signal about the canonical peg.)
+**The real price-discovery venue is on Ethereum — a correction to our earlier read.** Secondary liquidity centers on a **≈$4.75M Uniswap V4 thUSD/USDC 0.01% pool on Ethereum** (`0xb30bf32e…5b5a0d`), trading at ≈$1.001 with ≈$110K/day volume (GeckoTerminal, 2026-07-02). Our prior report centered Arbitrum and stated there was "no meaningful Ethereum DEX liquidity" — **that was wrong**; the Ethereum pool is the venue that matters. Arbitrum is ≈$30K of dust across ≈17 pools with negligible volume — ignore it. CoinGecko lists no thUSD tickers (this asset is DEX-only).
+
+**But "real venue" still means "modest venue."** ≈$4.75M of depth is thin relative to a ≈$107M supply: a sized retail sell still prints at a discount, and there is no Pendle or Curve presence at the scale you'd expect for a stablecoin this size. The pool being near-peg (≈$1.001) is not, by itself, evidence of deep peg discipline at size — it reflects light two-way flow, not a guarantee you can exit a large position at par.
 
 **The DEX Screener pair you may have seen is the wrong token.** As noted up top, the Arbitrum Uniswap V3 pool that public aggregators surfaced as "Theo USD / USDC on Arbitrum" is paired with the unrelated 18-decimal phantom token, not canonical thUSD. Don't size off that pool's depth or its reported price.
 
-**Practical exit cost for retail is unknown.** With this little secondary depth, even small sells will print at a discount, and there is no observed daily volume to anchor a discount estimate against. **The practical answer for sized retail allocations is: there is currently no meaningful retail exit at scale.** The peg is structurally underwritten by the gated KYC arb (Minter `redeem()` at $1 par), not by deep secondary liquidity.
+**Practical exit cost for sized retail is still adverse.** There is now some observable volume to anchor against (≈$110K/day on the Ethereum pool), but at ≈$4.75M depth a large sell moves the price, and there is no Pendle/Curve backstop. **The practical answer for sized retail allocations remains: no meaningful retail exit at scale.** The peg is structurally underwritten by the gated KYC arb (Minter `redeem()` at $1 par), not by deep secondary liquidity.
 
 ## IV. Project / Issuer Risk
 
@@ -131,20 +135,24 @@ Strong partner stack and a credentialed team, undermined by a young, unlicensed,
 
 | | |
 |---|---|
-| **Overall Risk** | **4.1/10 — Elevated** |
+| **Overall Risk** | **4.0/10 — Elevated** |
 | Peg Mechanism | 4.0/10 |
-| Backing | 4.0/10 |
-| Underlying | 3.5/10 |
+| Backing | 3.5/10 |
+| Underlying | 3.0/10 |
 | Liquidity | 3.5/10 |
 | Issuer | 5.5/10 |
 
-**On the scoring rubric.** This report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* Liquidity gets its own dial here precisely because retail can't redeem at par and must exit on-DEX, and current DEX depth is very thin. **Underlying** scores the collateral quality independently of wrapper-layer risk: thUSD's reserve splits ~92% thBILL chain (institutional T-Bills via Libeara/Wellington/FundBridge — bluechip standalone, scored 5.0 in the [thBILL retail report](/reports/thbill)) and ~8% off-chain gold-carry positions (long physical gold + short CME futures) with no proof-of-reserves attestation. The thBILL portion is bluechip; the gold-carry sleeve is structurally weaker because it cannot be independently verified on-chain, and any thBILL-layer stress propagates upward. Net read: weaker than a pure-T-Bill underlying, stronger than a pure-algorithmic-stable underlying.
+**On the scoring rubric.** This report scores on peg / backing / underlying / liquidity / issuer because the question a retail user actually faces is *"is this onchain dollar safe and how do I get out?"* Liquidity gets its own dial here precisely because retail can't redeem at par and must exit on-DEX, and current DEX depth is very thin. **Underlying** scores the collateral quality independently of wrapper-layer risk: thUSD's reserve now splits ≈59% thBILL chain (institutional T-Bills via Libeara/Wellington/FundBridge — bluechip standalone, scored 5.0 in the [thBILL retail report](/reports/thbill)) and ≈40% off-chain gold-carry positions (long physical gold + short CME futures) with no proof-of-reserves attestation. The thBILL portion is still bluechip; the gold-carry sleeve is structurally weaker because it cannot be independently verified on-chain, and any thBILL-layer stress propagates upward. That off-chain, unverifiable sleeve was ≈8% of the blend at our May report and is now ≈40% — much more weight on the weaker leg — which is why we lowered Underlying from 3.5 to 3.0 and Backing from 4.0 to 3.5 this cycle. Net read: weaker than a pure-T-Bill underlying, stronger than a pure-algorithmic-stable underlying.
 
 **Who it's for:** DeFi-comfortable users who already understand Ethena-style synthetic dollar mechanics, want exposure to the gold-basis trade, and are sizing well below current DEX depth. Genuinely opt-in early access — best read alongside an awareness that institutional allocators get a redemption rail you don't.
 
-**Who should avoid:** Anyone who needs sized or instant liquidity. Anyone uncomfortable with off-chain backing and zero proof-of-reserves. Anyone who wants direct legal claim on the underlying gold or Treasuries. Anyone who would size larger than ~$5–10K on the current secondary market.
+**Who should avoid:** Anyone who needs sized or instant liquidity. Anyone uncomfortable with off-chain backing and zero proof-of-reserves. Anyone who wants direct legal claim on the underlying gold or Treasuries. Anyone who would size larger than ≈$5–10K on the current secondary market.
 
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. The off-chain leg of the strategy — CME futures positions, physical gold inventory, lending counterparties, MPC custody composition, NAV-oracle source — is opaque to us and may carry risk this report cannot enumerate. Theo's prior product (thBILL) has demonstrated a multi-month clean operating track record on a similar trust model; that is encouraging but does not constitute proof for thUSD's more complex strategy. Sized positions should leave room for residual unknowns this analysis cannot enumerate.
+
+## Revision history
+
+- **2026-07-13 — coverage escalation + liquidity correction + score refresh.** On-chain coverage 91.9% (May) → **≈59.5%** (−16.8pp in the week to 07-13, first breach of the backing monitor's 70% floor); off-chain, un-attested gold-carry leg **≈8% → ≈40%** of backing (≈$7.5M → ≈$43M) as thUSD supply grew ≈$92.9M → ≈$106.7M. Framing held to "expected-by-design as the strategy deploys off-chain, **not** a depeg" — thUSD held ≈$1.00 — while stating plainly that the unverifiable share is now large and growing fast. §III liquidity **corrected**: the real venue is a ≈$4.75M Uniswap V4 thUSD/USDC pool on **Ethereum** (≈$110K/day, ≈$1.001), not the Arbitrum dust the prior report centered. Scores: Backing 4.0 → **3.5**, Underlying 3.5 → **3.0**, Overall 4.1 → **4.0** (peg 4.0, liquidity 3.5, issuer 5.5 unchanged; band stays "Elevated"). Admin-chain hardening (48h Timelock, 4-of-6 Safe) unchanged from the prior revision.
 
 ## Corrections
 
