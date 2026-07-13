@@ -41,17 +41,19 @@ underlying_managers:
 
 *Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).*
 
+> *What's pinned in this report is structural risk — architecture, the issuer menu, the risk axes, and the scores. Current magnitudes (pool split, per-issuer allocation, collateral ratio, concentration, exit tiers) drift weekly and are live on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt). This report is written to stay correct across that drift.*
+
 | Yield | Exit method | Primary redemption | Pool size | Chains |
 |---|---|---|---|---|
-| ~4.5–5% live (organic loan interest) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | ~$436M (smaller than syrupUSDC's ~$1.22B) | Ethereum primary |
+| ~4.5–5% live (organic loan interest) | DEX aggregator (sub-minute) or queue | Permissionless (no KYC) | Materially smaller than syrupUSDC (live on the dashboard) | Ethereum primary |
 
 ## Summary
 
-syrupUSDT is the USDT-denominated sibling of syrupUSDC in Maple Finance's "Syrup" institutional credit product line. Same Maple architecture, same Pool Delegate firm, same Maple Labs entity — but materially smaller pool (~$436M vs syrupUSDC's $1.22B). Yield is real (interest paid by real institutional borrowers), zero principal losses since launch, and the product runs on the same audited v2 contract codebase as its USDC sibling.
+syrupUSDT is the USDT-denominated sibling of syrupUSDC in Maple Finance's "Syrup" institutional credit product line. Same Maple architecture, same Pool Delegate firm, same Maple Labs entity — but materially smaller pool than syrupUSDC (live sizes on the dashboards). Yield is real (interest paid by real institutional borrowers), zero principal losses since launch, and the product runs on the same audited v2 contract codebase as its USDC sibling.
 
-**Pool composition (structure verified against Maple's own AUM Details page)**: roughly 87% Loans (third-party institutional credit, 84% BTC + 16% XRP at 125–150% init level) + roughly 10% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM positions); the dollar magnitudes shift with the book and are surfaced live on the dashboard rather than pinned here. Note the 125–150% figure is each loan's *funding* collateral level, not a live health reading — the buffer that matters is how close current collateralization sits to par (100%), which the dashboard tracks. The Liquidity layer is at-par with the underlying asset and routes through Maple's lending infrastructure as accounting wrapper, but is functionally pool-owned strategy custody, NOT third-party credit. "Overcollateralized at all times" applies to the loan book; the Liquidity layer is intentionally at par.
+**Pool composition (structure verified against Maple's own AUM Details page)**: roughly 85–90% Loans (third-party institutional credit, BTC-heavy + XRP at 125–150% init level) + roughly 10–15% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM positions, a thinner Liquidity layer than syrupUSDC); the dollar magnitudes shift with the book and are surfaced live on the dashboard rather than pinned here. Note the 125–150% figure is each loan's *funding* collateral level, not a live health reading — the buffer that matters is how close current collateralization sits to par (100%), which the dashboard tracks. The Liquidity layer is at-par with the underlying asset and routes through Maple's lending infrastructure as accounting wrapper, but is functionally pool-owned strategy custody, NOT third-party credit. "Overcollateralized at all times" applies to the loan book; the Liquidity layer is intentionally at par.
 
-The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level, AND it shares borrowers with syrupUSDC.** The largest single loan in syrupUSDT is $175M / **~41% of the pool** — vs the largest loan in syrupUSDC at $200M / 16% of that pool. A single borrower default in syrupUSDT writes down ~40% of the principal in one event. And because the same borrowers borrow from BOTH pools, holding both syrupUSDC and syrupUSDT together does NOT diversify your credit exposure to those entities — it concentrates them.
+The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level, AND it shares borrowers with syrupUSDC.** The largest single loan in syrupUSDT is **~40%+ of the pool** — vs the largest loan in syrupUSDC at roughly mid-teens % of that pool (live figures on the dashboards). A single borrower default in syrupUSDT writes down ~40% of the principal in one event. And because the same borrowers borrow from BOTH pools, holding both syrupUSDC and syrupUSDT together does NOT diversify your credit exposure to those entities — it concentrates them.
 
 ## What you actually earn
 
@@ -81,11 +83,11 @@ Top-3 family borrowers ~49% of the family loan book; single-largest ~19% — bot
 
 Two paths, same mechanics as syrupUSDC, but smaller pool depth:
 
-**1. DEX aggregator (preferred for retail).** Use KyberSwap, 1inch, or any DEX aggregator. Smaller pool means materially shallower DEX depth than syrupUSDC's empirical ~12 bps to $100K — expect higher slippage at any given notional size.
+**1. DEX aggregator (preferred for retail).** Use KyberSwap, 1inch, or any DEX aggregator. Smaller pool means materially shallower DEX depth than syrupUSDC's low-bps base case — expect higher slippage at any given notional size.
 
 **2. Direct redemption.** Submit to the WithdrawalManager; processed at NAV from free pool USDT. Same cycle-based queue as syrupUSDC.
 
-For sizing above the low retail range (~$50K+), you'll likely use the queue. Stress-case redemption depth is bound by loan-repayment cadence on the smaller $422M principal base — expect queue latency of weeks rather than days for institutional sizes during correlated outflow stress.
+For sizing above the low retail range (~$50K+), you'll likely use the queue. Stress-case redemption depth is bound by loan-repayment cadence on the smaller principal base — expect queue latency of weeks rather than days for institutional sizes during correlated outflow stress.
 
 ## What the contracts are doing
 
@@ -102,8 +104,8 @@ Same audit profile as syrupUSDC: 8+ audits, Spearbit + Trail of Bits on the v2/S
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg mechanism | 7.0 | NAV-accruing, organic yield, no losses to date |
-| Backing | 6.5 | Two-bucket: 87% Loans (BTC/XRP overcollateralized at 125–150%) + 10% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM). Per-pool concentration significantly higher than syrupUSDC (largest single loan ~41% of pool vs 16%). |
-| Liquidity | 6.0 | $436M Ethereum pool. Smaller depth than syrupUSDC; expect higher aggregator slippage and longer queue cadence at institutional sizing. **Permissionless mint/redeem at the vault layer is the same as syrupUSDC** — no KYC gating. The smaller pool caps the score below syrupUSDC's 7.5 but the access pattern is still a meaningful advantage over KYC-gated peers. |
+| Backing | 6.5 | Two-bucket: ~85–90% Loans (BTC/XRP overcollateralized at 125–150%) + ~10–15% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM, a thinner Liquidity layer than syrupUSDC). Per-pool concentration significantly higher than syrupUSDC (largest single loan ~40%+ of pool vs mid-teens %). |
+| Liquidity | 6.0 | Materially smaller Ethereum pool than syrupUSDC. Smaller depth; expect higher aggregator slippage and longer queue cadence at institutional sizing. **Permissionless mint/redeem at the vault layer is the same as syrupUSDC** — no KYC gating. The smaller pool caps the score below syrupUSDC's 7.5 but the access pattern is still a meaningful advantage over KYC-gated peers. |
 | Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. |
 | **Overall** | **6.0** | Slightly worse than syrupUSDC's 6.75 — primarily due to higher per-pool concentration and shallower exit liquidity |
 
@@ -120,7 +122,7 @@ Allocators who already hold or are sizing into syrupUSDC and want USDT-denominat
 ## What to watch
 
 - **Per-pool concentration.** Largest single loan is 41% of pool. Watch the live dashboard for changes.
-- **Cross-pool concentration if you also hold syrupUSDC.** Top-3 cross-pool borrowers carry ~48.8% of the family loan book; single-largest carries ~19.3%. Liquidity layer custody is also shared between pools. Compute combined per-borrower exposure rather than treating the pools as independent.
+- **Cross-pool concentration if you also hold syrupUSDC.** Top-3 cross-pool borrowers persistently run well above the 10%-per-counterparty norm; single-largest near ~1/5 of the family loan book (live figures on the dashboard). Liquidity layer custody is also shared between pools. Compute combined per-borrower exposure rather than treating the pools as independent.
 - **Pool Delegate roster changes.** Same Pool Delegate firm runs both pools but with different operational EOAs.
 
 ## Live dashboard
