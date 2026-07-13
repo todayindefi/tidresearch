@@ -6,8 +6,8 @@ chains: ["tron", "eth", "bsc"]
 category: "stablecoin"
 peg_mechanism: "hybrid"
 assessment_type: "full"
-date: "2026-03-31"
-last_verified: "2026-04-01"
+date: "2026-07-13"
+last_verified: "2026-07-13"
 peg_mechanism_score: 4.0
 backing_score: 3.0
 liquidity_score: 3.0
@@ -15,7 +15,7 @@ issuer_score: 2.0
 overall_score: 3.5
 issuer: "TRON DAO Reserve"
 audited_reserves: false
-market_cap_approx: 1344000000
+market_cap_approx: 1558000000
 chain_overrides:
   eth:
     liquidity_score: 4.0
@@ -35,9 +35,13 @@ chain_overrides:
 
 USDD 2.0 is an overcollateralized stablecoin on TRON, forking MakerDAO's smart contract architecture. Users deposit TRX, sTRX, or USDT into vaults to mint USDD. On Ethereum and BNB Chain, a Peg Stability Module (PSM) allows 1:1 swaps against USDT/USDC.
 
-Total circulating supply is **$1.344B** across all chains (Tron: $1.091B, Ethereum: $124M, BNB: $111M), with total backing of **$1.544B** (114.8% headline CR). On-chain analysis shows **69.8% of collateral originates from HTX** (Justin Sun's exchange) via the Smart Allocator ($913M) and PSM ($164M). Independent user vaults contribute $466M (34.7% independent CR). On-chain overlap verification confirmed no double-counting — the SA uses Spark on Ethereum (not Aave), and JustLend positions are separate from HTX's. However, the admin multisig can access all user funds instantly (zero timelock) per the protocol's own ChainSecurity audit — contradicting marketing claims of "no admin keys." PSM reserves have declined significantly: from $236M to $164M (-$72M, -30%) in 24 hours as of April 1, 2026.
+Total circulating supply is **$1.558B** across all chains (Tron: $1.328B, Ethereum: $124M, BNB: $111M), with total backing of **$1.578B** (**101.3% headline CR**). On-chain analysis shows **≈70.8% of collateral originates from HTX** (Justin Sun's exchange) via the Smart Allocator (≈$985M) and PSM (≈$132M). Independent user vaults contribute ≈$461M (**29.6% independent CR**). On-chain overlap verification confirmed no double-counting — the SA uses Spark on Ethereum (not Aave), and JustLend positions are separate from HTX's. However, the admin multisig can access all user funds instantly (zero timelock) per the protocol's own ChainSecurity audit — contradicting marketing claims of "no admin keys."
+
+**Trajectory since the last review (Apr 1 → Jul 13, 2026):** supply grew ≈16% ($1.344B → $1.558B), but the growth was funded by HTX Smart Allocator expansion, **not** independent user collateral (user vaults roughly flat at ≈$461M). As a result the headline surplus thinned from +14.8pp to **+1.3pp** (headline CR 114.8% → 101.3%), the independent/ex-HTX CR **fell** from 34.7% → 29.6%, and HTX's share of backing **rose** from 69.8% → 70.8%. The "improving, HTX-share-declining" trend noted in the April review has reversed — USDD is now marginally *more* HTX-dependent with a thinner buffer. Peg held throughout (≈$0.999).
 
 **Live data:** [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd) (hourly on-chain updates)
+
+> **⚠ Dashboard data-quality note (2026-07-13):** the hourly backing snapshot at `2026-07-13T01:39Z` returned a **transient TRON-side Smart Allocator read of $0** (the `smart_allocator.tron` field), which collapsed the displayed headline CR to a false **48.55%** and raised a spurious "CRITICAL — UNDERCOLLATERALIZED" flag. This is a data artifact, not a backing event: the immediately preceding hourly entry (`00:40Z`) read a clean CR 101.28% / backing $1,578M, USDD held ≈$0.999, and the supply/user-vault reads were unaffected. All figures in this report use the clean series, **not** the artifact snapshot. Flagged to the backing-monitor pipeline for a TRON-RPC read guard.
 
 **Contracts:** Tron: `TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn` | Ethereum: `0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6` | BNB Chain: `0xd17479997f34dd9156deef8f95a52d81d265be9c`
 
@@ -45,11 +49,11 @@ Total circulating supply is **$1.344B** across all chains (Tron: $1.091B, Ethere
 
 - **Centralized control under Justin Sun** — No functional DAO exists despite "TRON DAO Reserve" branding. The governance portal was removed. All major decisions made unilaterally. The admin multisig (unknown signers) has full system control with zero governance delay.
 - **Admin can access user funds** — ChainSecurity audit (Jan 2025) confirms the admin can "access the funds of users" via `customExec()` and `execSpell()` with no timelock. This directly contradicts USDD's "no admin keys" marketing.
-- **69.8% of collateral sourced from HTX** — The Smart Allocator ($913M, 59%) and PSM ($164M, 11%) are both funded from HTX addresses. Independent user vaults contribute $466M (30%). Improving trend (was 75.6% on March 31) but still heavily concentrated.
+- **≈70.8% of collateral sourced from HTX** — The Smart Allocator (≈$985M, 62%) and PSM (≈$132M, 8%) are both funded from HTX addresses. Independent user vaults contribute ≈$461M (30%). **Trend reversed vs the April review**: HTX share rose from 69.8% as 16% supply growth was funded by the SA, not user collateral. Heavily concentrated.
 - **No double-counting detected (verified on-chain)** — The SA deploys to **Spark** on Ethereum (not Aave) and has separate JustLend positions on Tron. HTX uses Aave on Ethereum. Different protocols = different positions. Verified by querying all 27 HTX PoR addresses live. Funds are same-source (HTX) but not same-position. See [HTX Overlap Analysis](#htx-overlap-analysis-confirmed-vs-suspected).
-- **Circular TRX backing** — TRX vaults hold $466M in user collateral. A 50% TRX drop pushes headline CR **below 100%** (97.5% per stress test). A 70% drop → 90.6% CR.
-- **Thin, concentrated liquidity** — 24h volume ~$4-5M. Concentrated on Sun-controlled venues (HTX, Poloniex, SunSwap).
-- **PSM draining rapidly** — PSM reserves dropped from $236M to $164M (-$72M, -30.4%) in 24 hours as of April 1. Coverage now 12.2% of supply. Tron PSM: $70M (6.5% of Tron supply). Ethereum PSM: $58M (46.5%). BNB PSM: $17.5M (15.8%).
+- **Circular TRX backing** — TRX vaults hold ≈$461M in user collateral. With the headline buffer now only +1.3pp, a ≈50% TRX drop pushes headline CR to ≈34% on the current mix — solvency depends almost entirely on the HTX-funded Smart Allocator holding.
+- **Thin, concentrated liquidity** — 24h volume ≈$4-5M. Concentrated on Sun-controlled venues (HTX, Poloniex, SunSwap).
+- **PSM thinning structurally** — total PSM reserves ≈$132M (down from $164M in April) as supply grew, so coverage fell to **≈8.5%** of supply. Tron PSM ≈$48.5M (**3.7%** of Tron supply — critically thin). Ethereum PSM ≈$74.6M (60.1%). BNB PSM ≈$13.4M (12.1%). The acute -30%/24h Tron+Eth drain observed on Apr 1 did not recur, but Tron-side coverage has continued to erode.
 - **Unsustainable yield subsidies** — Launched at 20% APY, now 8-12%. Justin Sun: "fully subsidized" because "we have plenty of money."
 - **Terra/Anchor parallel** — 61% of USDD 2.0 supply on JustLend at subsidized yield mirrors Anchor holding 75% of UST before collapse.
 - **SEC fraud charges settled** — Market manipulation, unregistered securities. $10M penalty (March 2026). Congressional analysis: 58% of illicit crypto finance on TRON.
@@ -70,30 +74,30 @@ USDD 2.0 operates differently across chains:
 - Peg Stability Module (PSM): Fixed-rate 1:1 minting/redemption against USDT and USDC with zero fees and zero slippage.
 - This provides a hard price floor/ceiling on these chains — but only as deep as the PSM's USDT/USDC reserves.
 
-**PSM reserves (on-chain, April 1, 2026):**
+**PSM reserves (on-chain, July 13, 2026):**
 
 | Chain | PSM USDT | USDD Supply | PSM Coverage |
 |-------|----------|-------------|-------------|
-| Tron | $70M | $1.091B | 6.5% |
-| Ethereum | $58M | $124M | 46.5% |
-| BNB Chain | $17.5M | $111M | 15.8% |
-| **Total** | **$164M** | **$1.344B** | **12.2%** |
+| Tron | ≈$48.5M | $1.328B | 3.7% |
+| Ethereum | ≈$74.6M | $124M | 60.1% |
+| BNB Chain | ≈$13.4M | $111M | 12.1% |
+| **Total** | **≈$132M** | **$1.558B** | **8.5%** |
 
-**PSM drain alert:** Reserves dropped from $236M to $164M (-$72M, -30.4%) in 24 hours. Tron PSM fell from $106M to $70M. Ethereum PSM fell from $111M to $58M. This is the largest observed PSM outflow since monitoring began.
+**PSM trend:** Total PSM reserves have declined from $164M (Apr 1) to ≈$132M while supply grew ≈16%, so coverage fell from 12.2% to ≈8.5%. The mix shifted — Ethereum PSM rose (≈$58M → ≈$74.6M, now 60.1% of ETH supply) while Tron PSM eroded further (≈$70M → ≈$48.5M, just 3.7% of the $1.328B Tron float). The acute -30%/24h drain flagged on Apr 1 was a one-day event and did not repeat.
 
 ### PSM Limitations (Why It Doesn't Mitigate Core Risk)
 
 The PSM is the strongest mechanical feature of USDD 2.0, but it does not meaningfully offset the HTX concentration and circular backing risks:
 
-1. **Scale mismatch:** $164M in PSM reserves vs $1.344B in outstanding USDD. The PSM covers only 12.2% of supply — and declining rapidly (was 19.6% just 24 hours prior).
+1. **Scale mismatch:** ≈$132M in PSM reserves vs $1.558B in outstanding USDD. The PSM covers only ≈8.5% of supply, and coverage has thinned as supply outgrew reserves.
 
-2. **Tron PSM is critically thin.** Tron PSM has $70M USDT covering $1.091B in supply (6.5%). Ethereum PSM at $58M covers 46.5% of its smaller $124M supply.
+2. **Tron PSM is critically thin.** Tron PSM has ≈$48.5M USDT covering $1.328B in supply (**3.7%**). Ethereum PSM at ≈$74.6M covers 60.1% of its smaller $124M supply.
 
 3. **Replenishment is opaque and discretionary.** No documented mechanism exists for PSM refills. Presumably TRON DAO Reserve (Justin Sun) tops it up at their discretion — making it a discretionary backstop, not a mechanical guarantee.
 
 4. **Same-source risk.** Both the PSM reserves and the Smart Allocator originate from HTX-controlled addresses. If HTX has a solvency issue, both the PSM and the collateral behind it are compromised simultaneously.
 
-5. **Death spiral drain sequence.** If TRX crashes and Tron-side collateralization deteriorates, rational actors drain the PSMs for clean USDT. Ethereum PSM ($111M) gets drained first as the best exit. Once empty, the remaining ~$1B+ in USDD has no stable exit.
+5. **Death spiral drain sequence.** If TRX crashes and Tron-side collateralization deteriorates, rational actors drain the PSMs for clean USDT. Ethereum PSM ($111M) gets drained first as the best exit. Once empty, the remaining ≈$1B+ in USDD has no stable exit.
 
 **sUSDD (yield-bearing wrapper):**
 - Launched October 2025 on Ethereum and BNB Chain.
@@ -103,32 +107,32 @@ The PSM is the strongest mechanical feature of USDD 2.0, but it does not meaning
 
 ### USDD 2.0 Collateral — What's Real
 
-**On-chain collateral breakdown (live, April 1, 2026):**
+**On-chain collateral breakdown (live, July 13, 2026):**
 
 | Component | Value | % of Backing | Source | Independent? |
 |-----------|-------|-------------|--------|-------------|
-| Smart Allocator (HTX) | **$913M** | 59.2% | HTX addresses | **No** |
-| PSM Reserves (HTX) | **$164M** | 10.7% | HTX addresses | **No** |
-| TRX Vaults (User) | **$457M** | 29.6% | Open market | **Yes** |
-| sTRX Vaults (User) | **$8.9M** | 0.6% | Open market | **Yes** |
-| USDT Vaults (User) | **$559K** | 0.0% | Open market | **Yes** |
-| **Total Backing** | **$1.544B** | | | |
+| Smart Allocator (HTX) | **≈$985M** | 62.4% | HTX addresses | **No** |
+| PSM Reserves (HTX) | **≈$132M** | 8.4% | HTX addresses | **No** |
+| TRX / sTRX / USDT Vaults (User) | **≈$461M** | 29.2% | Open market | **Yes** |
+| **Total Backing** | **≈$1.578B** | | | |
+
+The Smart Allocator (HTX) figure is derived from the clean backing series (total backing × HTX share, less PSM); the raw hourly snapshot on 2026-07-13 had a corrupted TRON SA read and is not used (see data-quality note above).
 
 Data source: On-chain VAT queries across Tron (`TH5dhX...`), Ethereum (`0xff77...`), and BNB Chain (`0x41f1...`). Live dashboard: [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd).
 
 The collateral resides in MakerDAO-fork smart contracts (Vat), not in HTX wallets directly. The Smart Allocator deploys to **Spark** on Ethereum and **JustLend** on Tron (verified on-chain — not Aave as previously reported). This provides structural protection against third-party attacks. **However**, the admin multisig can access these funds at any time (see [Admin Control](#admin-control-vs-no-admin-keys-claim-audit-contradiction)).
 
-| Metric | Value | Trend (vs Mar 31) |
+| Metric | Value | Trend (vs Apr 1) |
 |--------|-------|-------------------|
-| Headline CR | 114.8% | ↓ from 117.7% |
-| Independent CR (user vaults only) | **34.7%** | ↑ from 28.7% |
-| HTX share of backing | 69.8% | ↓ from 75.6% (improving) |
-| Surplus over supply | $199M | ↓ from $214M |
-| PSM reserves | $164M | ↓↓ from $236M (-30.4% in 24h) |
+| Headline CR | 101.3% | ↓ from 114.8% (buffer thinned) |
+| Independent CR (user vaults only) | **29.6%** | ↓ from 34.7% |
+| HTX share of backing | 70.8% | ↑ from 69.8% (more concentrated) |
+| Surplus over supply | ≈$20M (+1.3pp) | ↓ from $199M (+14.8pp) |
+| PSM reserves | ≈$132M | ↓ from $164M (coverage 8.5% vs 12.2%) |
 
-The independent CR (34.7%) continues to improve — $466M in user vaults is real, independent collateral, up from $346M a day earlier. The HTX share is declining as user vaults grow faster. However, PSM reserves are draining significantly, and the headline CR has tightened.
+The April review's "improving" thesis has reversed. Over ≈3.5 months supply grew ≈16% ($1.344B → $1.558B) but user-vault collateral stayed roughly flat (≈$461M), so the growth was carried by the HTX-funded Smart Allocator. The headline buffer collapsed from +14.8pp to +1.3pp, the independent (ex-HTX) CR fell to 29.6%, and HTX concentration ticked up. Peg held (≈$0.999) throughout, but the standalone equity cushion above par is now negligible.
 
-**Per-ilk detail (on-chain):**
+**Per-ilk detail (on-chain, as of April 1, 2026 — Tron VAT not re-queried this cycle; treat as structural shape, not current balances):**
 
 | Ilk | Chain | Debt | Ceiling | Utilization | HTX? |
 |-----|-------|------|---------|-------------|------|
@@ -172,9 +176,9 @@ All three previously flagged addresses remain in HTX's PoR (verified live agains
 
 2. **`TDToUxX8sH4z6moQpK3ZLAN24eupu2ivA4`** (Tron) — $17.4M in JustLend + $19.7M in USDD tokens. This address funded the SA's Tron deployment. It also holds $19.7M in USDD directly — not included in HTX's PoR (HTX excludes USDD from PoR).
 
-3. **`TZ1SsapyhKNWaVLca6P2qgVzkHTdk6nkXa`** (Tron) — 118M TRX (~$37M). The original USDD 1.0 double-counted address. Live balance has decreased from 1.064B TRX (March PoR CSV) to 118M TRX — approximately 946M TRX moved out, likely redistributed across other HTX wallets.
+3. **`TZ1SsapyhKNWaVLca6P2qgVzkHTdk6nkXa`** (Tron) — 118M TRX (≈$37M). The original USDD 1.0 double-counted address. Live balance has decreased from 1.064B TRX (March PoR CSV) to 118M TRX — approximately 946M TRX moved out, likely redistributed across other HTX wallets.
 
-**Additional finding:** HTX addresses collectively hold **3.38B TRX (~$1.065B)** across 11 Tron addresses, plus **$413.8M in stablecoins** and **$276.5M in Aave lending positions** across 10 Ethereum addresses. All monitored live via the [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd).
+**Additional finding:** HTX addresses collectively hold **3.38B TRX (≈$1.065B)** across 11 Tron addresses, plus **$413.8M in stablecoins** and **$276.5M in Aave lending positions** across 10 Ethereum addresses. All monitored live via the [Backing Monitor](https://tidresearch.com/dashboards/?asset=usdd).
 
 ### Structural Risk Remains
 
@@ -199,21 +203,21 @@ This is the same dynamic that destroyed UST/LUNA in May 2022 — the very event 
 ### Terra/Anchor Parallel
 
 This structure mirrors Terra/UST before its collapse:
-- **Anchor held ~75% of UST supply** at ~20% subsidized yield → **JustLend holds ~61% of USDD 2.0 supply** at ~20% subsidized yield
+- **Anchor held ≈75% of UST supply** at ≈20% subsidized yield → **JustLend holds ≈61% of USDD 2.0 supply** at ≈20% subsidized yield
 - Both yields were explicitly subsidized by the issuer rather than generated organically
 - Both had circular backing (UST backed by LUNA; USDD backed by TRX)
 - Both had single points of control despite "decentralized" branding
 
-### USDD Supply by Chain (On-Chain, April 1, 2026)
+### USDD Supply by Chain (On-Chain, July 13, 2026)
 
-| Chain | Supply | % of Total | VAT Debt | PSM Coverage |
-|-------|--------|-----------|----------|-------------|
-| Tron | $1.091B | 81.2% | $1.092B | 6.5% |
-| Ethereum | $124M | 9.2% | $430M | 46.5% |
-| BNB Chain | $111M | 8.3% | $18.5M | 15.8% |
-| **Total** | **$1.344B** | | **$1.544B** | **12.2%** |
+| Chain | Supply | % of Total | PSM Coverage |
+|-------|--------|-----------|-------------|
+| Tron | $1.328B | 85.2% | 3.7% |
+| Ethereum | $124M | 8.0% | 60.1% |
+| BNB Chain | $111M | 7.1% | 12.1% |
+| **Total** | **$1.558B** | | **≈8.5%** |
 
-Note: Ethereum VAT debt ($430M) exceeds Ethereum token supply ($124M) because the Smart Allocator on Ethereum mints USDD that may be bridged or held elsewhere. Tron supply increased from $971M to $1.091B since March 31.
+Note: Tron supply grew from $1.091B (Apr 1) to $1.328B, driving essentially all of the ≈16% total-supply increase, while Ethereum and BNB floats were roughly flat. This is why Tron PSM coverage thinned further (to 3.7%) even though total PSM reserves held near their April level.
 
 ## Issuer & Governance Risk
 
@@ -286,42 +290,42 @@ This means: while collateral does reside in MakerDAO-fork smart contracts (not i
 | Uniswap V3 | DEX (Ethereum) | Limited pools |
 | PancakeSwap V2 | DEX (BNB Chain) | Limited pools |
 
-**Volume is extremely thin.** The most active independent pair (USDD/TRX on KuCoin) shows only ~$59K in daily volume. Liquidity is heavily concentrated on Sun-controlled platforms, which means exit liquidity in a crisis may be unreliable — the same entity controlling the stablecoin controls the primary trading venues.
+**Volume is extremely thin.** The most active independent pair (USDD/TRX on KuCoin) shows only ≈$59K in daily volume. Liquidity is heavily concentrated on Sun-controlled platforms, which means exit liquidity in a crisis may be unreliable — the same entity controlling the stablecoin controls the primary trading venues.
 
 ### Cross-Chain Considerations
 
 - **Tron:** Primary chain, deepest liquidity (such as it is) via SunSwap and JustLend
-- **Ethereum:** PSM provides 1:1 exit to USDT/USDC, but PSM reserves are limited (~$87M)
-- **BNB Chain:** Smallest deployment (~$12.5M supply), thinnest liquidity
+- **Ethereum:** PSM provides 1:1 exit to USDT/USDC, but PSM reserves are limited (≈$74.6M)
+- **BNB Chain:** Smallest deployment (≈$111M supply), thinnest liquidity
 - **Defunct bridges:** Previously bridged to Fantom, Avalanche, Arbitrum, Optimism via Multichain (collapsed 2023) — those bridged versions are likely stranded
 
 ## Scoring Rationale
 
 | Category | Score | Notes |
 |----------|-------|-------|
-| Peg Mechanism | 4.0 | MakerDAO-fork vault model is a real structural improvement. PSM provides clean exit but coverage has dropped to 12.2% (was 19.6%) with $72M drained in 24h. TRX burn mechanism retained. System untested under severe market stress. |
-| Backing | 3.0 | 69.8% of collateral from one counterparty (HTX) — improving trend but still dominant. Independent CR is 34.7% (improving). **On-chain verification confirmed no double-counting** (SA uses Spark, HTX uses Aave — different protocols). Collateral is real and in separate positions. No third-party attestations. Admin can access funds with zero delay. TRX -50% pushes CR below 100% (97.5%). Score improved from 2.5 → 3.0 based on verified position separation and growing independent collateral. |
-| Liquidity | 3.0 | 24h volume ~$4-5M. Concentrated on Sun-controlled venues. PSM exit on Ethereum is moderate (46.5% of ETH supply), but Tron PSM is critically thin (6.5% of $1.091B). PSM draining rapidly. |
+| Peg Mechanism | 4.0 | MakerDAO-fork vault model is a real structural improvement. PSM provides clean exit but coverage has thinned to ≈8.5% of supply (Tron side just 3.7%). TRX burn mechanism retained. System untested under severe market stress. |
+| Backing | 3.0 | ≈70.8% of collateral from one counterparty (HTX) — concentration ticked **up** vs April as supply growth was funded by the HTX Smart Allocator, not user vaults. Independent (ex-HTX) CR **fell to 29.6%** and the headline buffer is now only +1.3pp. **On-chain verification confirmed no double-counting** (SA uses Spark, HTX uses Aave — different protocols); collateral is real and in separate positions. No third-party attestations. Admin can access funds with zero delay. Score held at 3.0: the position-separation basis that lifted it off 2.5 still holds, but the "growing independent collateral" tailwind has reversed, so no further credit. |
+| Liquidity | 3.0 | 24h volume ≈$4-5M. Concentrated on Sun-controlled venues. PSM exit on Ethereum improved (60.1% of ETH supply), but Tron PSM is critically thin (3.7% of $1.328B) and eroding. |
 | Issuer | 2.0 | De facto single-person control (Justin Sun). No functional DAO. SEC fraud charges (settled). Unknown admin multisig signers. "No admin keys" claim contradicted by own audit. Congressional allegations of TRON enabling illicit finance. |
-| **Overall** | **3.5** | **High risk, improving — USDD 2.0's architecture is a genuine mechanical improvement. On-chain verification confirmed no double-counting (positions are separate). Independent user vaults growing ($466M, 34.7% CR) and HTX share declining (69.8%). But the admin can access all funds instantly, TRX -50% breaks solvency, and PSM reserves are draining rapidly (-30% in 24h). Score improved from 3.0 → 3.5 based on verified position separation; would improve further if HTX share drops below 50% and admin timelock is enabled.** |
+| **Overall** | **3.5** | **High risk, no longer improving — USDD 2.0's architecture is a genuine mechanical improvement and on-chain verification still confirms no double-counting (positions are separate), which is what holds the score at 3.5. But the April "improving" thesis reversed this cycle: 16% supply growth ($1.344B → $1.558B) was carried by the HTX Smart Allocator, the independent CR fell to 29.6%, the headline buffer thinned to +1.3pp, and HTX concentration rose to 70.8%. The admin can still access all funds instantly and a TRX shock breaks solvency on the current thin margin. Would deteriorate toward 3.0 if the headline buffer erodes below par or HTX share climbs further; would improve only if independent collateral resumes growing and an admin timelock is enabled.** |
 
 ## Chain-Specific Notes
 
 | Chain | Adjusted Overall | Notes |
 |-------|-----------------|-------|
-| **Tron** | 3.5 (default) | Primary chain, deepest (relative) liquidity, but fully within Sun-controlled ecosystem. PSM thin at 6.5% coverage. |
-| **Ethereum** | 4.0 | PSM provides 1:1 exit to USDT/USDC at 46.5% coverage. Verified no overlap with HTX Aave positions. |
-| **BNB Chain** | 3.0 | Smallest deployment, thinnest liquidity, but PSM provides 15.8% coverage. |
+| **Tron** | 3.5 (default) | Primary chain, deepest (relative) liquidity, but fully within Sun-controlled ecosystem. PSM critically thin at 3.7% coverage. |
+| **Ethereum** | 4.0 | PSM provides 1:1 exit to USDT/USDC at 60.1% coverage. Verified no overlap with HTX Aave positions. |
+| **BNB Chain** | 3.0 | Smallest deployment, thinnest liquidity, but PSM provides 12.1% coverage. |
 
 ## Comparison to Peers
 
 | | USDD | FRAX (Legacy) | crvUSD | USDC |
 |---|---|---|---|---|
-| Market Cap | $1.344B | ~$153M | ~$60M | ~$52B |
-| Collateral Ratio | 114.8% headline / 34.7% independent | 91.4% (under-collateralized) | >100% (algorithmic) | ~100% (fiat) |
+| Market Cap | $1.558B | ≈$153M | ≈$60M | ≈$52B |
+| Collateral Ratio | 101.3% headline / 29.6% independent | 91.4% (under-collateralized) | >100% (algorithmic) | ≈100% (fiat) |
 | Reserve Verification | Self-reported; admin has full access | On-chain, auditable | On-chain, transparent | Deloitte attested |
 | Governance | None (admin multisig, unknown signers) | DAO (active) | DAO (active) | Corporate (regulated) |
-| Depeg History | Multiple under 1.0 (worst: 8%); untested under 2.0 | Mild (~$0.99) | Mild | One major (SVB) |
+| Depeg History | Multiple under 1.0 (worst: 8%); untested under 2.0 | Mild (≈$0.99) | Mild | One major (SVB) |
 | Overall Score | **3.5** | 2.5 | 5.0 | 9.0 |
 
 USDD 2.0 scores higher than Legacy FRAX on headline collateralization, but FRAX's risks are primarily mechanical (wind-down mode, frozen AMOs) rather than counterparty/trust risks. USDD's risks are fundamentally about trust in a single individual and unverifiable claims — a qualitatively different and arguably more dangerous risk profile.
@@ -330,7 +334,7 @@ USDD 2.0 scores higher than Legacy FRAX on headline collateralization, but FRAX'
 
 ## USDD 1.0 Historical Context (May 2022 – January 2025)
 
-> This section documents the deprecated USDD 1.0 for historical context. USDD 1.0 still has ~$262M in circulating supply across chains (Tron: ~28M, Ethereum: ~124M, BSC: ~111M) but is no longer the active system. The risks documented here informed the design of 2.0 but are distinct from current 2.0 risks.
+> This section documents the deprecated USDD 1.0 for historical context. USDD 1.0 still has ≈$262M in circulating supply across chains (Tron: ≈28M, Ethereum: ≈124M, BSC: ≈111M) but is no longer the active system. The risks documented here informed the design of 2.0 but are distinct from current 2.0 risks.
 
 ### USDD 1.0 Architecture
 
@@ -340,20 +344,20 @@ USDD 1.0 launched May 5, 2022 as an **algorithmic stablecoin** using a UST-style
 
 | Date | Trigger | Low Price | Duration |
 |------|---------|-----------|----------|
-| June 2022 | 3AC/Celsius/Voyager collapses | ~$0.96 | Weeks |
-| Nov 2022 | FTX collapse; Alameda USDD selling | ~$0.985 | Days |
-| Dec 2022 | Continued post-FTX pressure | ~$0.9695 (ATL) | Weeks |
-| Mar 2023 | SVB crisis, broad stablecoin contagion | ~$0.92 | Days |
+| June 2022 | 3AC/Celsius/Voyager collapses | ≈$0.96 | Weeks |
+| Nov 2022 | FTX collapse; Alameda USDD selling | ≈$0.985 | Days |
+| Dec 2022 | Continued post-FTX pressure | ≈$0.9695 (ATL) | Weeks |
+| Mar 2023 | SVB crisis, broad stablecoin contagion | ≈$0.92 | Days |
 
 ### USDD 1.0 HTX Double-Counting (Confirmed, January 2024)
 
-Address **TZ1SsapyhKNWaVLca6P2qgVzkHTdk6nkXa** held ~972 million TRX (~$120M), nearly all staked. This address was simultaneously:
+Address **TZ1SsapyhKNWaVLca6P2qgVzkHTdk6nkXa** held ≈972 million TRX (≈$120M), nearly all staked. This address was simultaneously:
 - Listed as USDD 1.0 collateral by the TRON DAO Reserve
 - Included in HTX's proof-of-reserves as exchange assets
 
 The same tokens were counted twice — once as collateral backing USDD, once as reserves backing HTX exchange user deposits. First reported by Protos ([January 2024](https://protos.com/justin-sun-stored-usdd-reserves-at-htx-for-proof-of-reserves/)), originally discovered by Twitter user @NoCryptFish cross-referencing HTX's PoR snapshot (December 2023) against USDD's reserve page. HTX never responded to press inquiries. No governance vote authorized storing USDD collateral at HTX.
 
-The USDD 1.0 BTC reserves were also stored in wallet `1KVpuCfhftkzJ67ZUegaMuaYey7qni7pPj`, which HTX claimed as their own. Those 12,000 BTC (~$726M) were later removed from USDD reserves entirely (mid-2024) without a governance vote.
+The USDD 1.0 BTC reserves were also stored in wallet `1KVpuCfhftkzJ67ZUegaMuaYey7qni7pPj`, which HTX claimed as their own. Those 12,000 BTC (≈$726M) were later removed from USDD reserves entirely (mid-2024) without a governance vote.
 
 **Bluechip** (stablecoin rating agency, backed by MakerDAO's Rune Christensen) rated USDD 1.0 an **F** and estimated effective collateralization at just **53%** due to the HTX overlap. Their recommendation: do not use USDD.
 
@@ -361,9 +365,9 @@ The USDD 1.0 BTC reserves were also stored in wallet `1KVpuCfhftkzJ67ZUegaMuaYey
 
 | Chain | USDD 1.0 Supply | Concentration |
 |-------|----------------|---------------|
-| Tron | ~28M | 56% in single address |
-| Ethereum | ~124M | ~99% in bridge contract |
-| BSC | ~111M | ~99.5% in bridge contract |
+| Tron | ≈28M | 56% in single address |
+| Ethereum | ≈124M | ≈99% in bridge contract |
+| BSC | ≈111M | ≈99.5% in bridge contract |
 
 ### USDD 1.0 Whitelisted Minters (Defunct Partners)
 
@@ -376,7 +380,7 @@ Authorized minting institutions included several now-defunct or compromised enti
 
 ### Status Under USDD 2.0
 
-The original double-counted address (`TZ1Ss...`) is not referenced in post-2.0 Protos investigations (June/September 2025). It is unclear whether the USDD 2.0 restructuring retired this address from USDD's side. **However, as of the March 2026 HTX PoR snapshot, this address is still listed in HTX's proof-of-reserves with 1,064,078,456 TRX (~$336M).** HTX never removed it. Whether USDD still claims it as collateral is unconfirmed — but HTX is still counting it as exchange reserves.
+The original double-counted address (`TZ1Ss...`) is not referenced in post-2.0 Protos investigations (June/September 2025). It is unclear whether the USDD 2.0 restructuring retired this address from USDD's side. **However, as of the March 2026 HTX PoR snapshot, this address is still listed in HTX's proof-of-reserves with 1,064,078,456 TRX (≈$336M).** HTX never removed it. Whether USDD still claims it as collateral is unconfirmed — but HTX is still counting it as exchange reserves.
 
 ## Monitoring Recommendations
 
@@ -417,3 +421,8 @@ To properly monitor USDD 2.0, the following would be needed:
 - [CoinMarketCap: USDD](https://coinmarketcap.com/currencies/usdd/)
 - [SEC v. Sun settlement (March 2026)](https://www.coindesk.com/policy/2026/03/05/sec-justin-sun-reach-settlement-over-tron-lawsuit)
 - [ChainSecurity fifth audit announcement](https://medium.com/@usddio/chainsecurity-completes-fifth-usdd-audit-report-affirming-high-safety-standards-49b60cb1bb6c)
+
+## Revision history
+
+- **2026-07-13 — weekly refresh + backing-methodology reconciliation:** supply $1.344B → $1.558B (+16%), backing $1.544B → $1.578B, headline CR 114.8% → 101.3%, independent/ex-HTX CR 34.7% → 29.6%, HTX share 69.8% → 70.8%, PSM reserves $164M → ≈$132M. The April "improving" thesis reversed — 16% growth was funded by the HTX Smart Allocator, not user vaults, so the headline buffer thinned to +1.3pp and concentration rose. Scores unchanged (peg 4.0, backing 3.0, liquidity 3.0, issuer 2.0, overall 3.5); rationale narrative flipped from "improving" to "no longer improving." Added a dashboard data-quality note: the hourly snapshot at `2026-07-13T01:39Z` had a transient TRON-side Smart Allocator read of $0 that produced a false 48.55% CR / "UNDERCOLLATERALIZED" flag — a fetch artifact, not a backing event; all figures use the clean series (≈$0.999 peg held).
+- **2026-04-01 — verified position separation:** on-chain overlap check confirmed no double-counting (SA on Spark, HTX on Aave); overall raised 3.0 → 3.5.
