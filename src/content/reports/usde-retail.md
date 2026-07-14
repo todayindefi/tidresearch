@@ -10,6 +10,7 @@ audience: "retail"
 date: "2026-06-10"
 last_verified: "2026-07-14"
 featured: false
+production: true
 issuer: "Ethena Labs"
 audited_reserves: true
 market_cap_approx: 4480000000
@@ -174,4 +175,6 @@ If you're reading this and considering the staked sibling sUSDe: it's the yield-
 
 ---
 
-*This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-06-10. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-07-14. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+
+*Revision history: 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*

@@ -10,6 +10,7 @@ audience: "retail"
 date: "2026-05-22"
 last_verified: "2026-05-22"
 featured: false
+production: true
 issuer: "Ethena Labs"
 yield_bearing: true
 volatility_score: 6.5
