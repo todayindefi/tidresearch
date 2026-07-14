@@ -8,8 +8,9 @@ peg_mechanism: "Hybrid (institutional credit + RWA + 11% residual basis trade)"
 assessment_type: "full"
 audience: "retail"
 date: "2026-06-10"
-last_verified: "2026-06-10"
+last_verified: "2026-07-14"
 featured: false
+production: true
 issuer: "Ethena Labs"
 audited_reserves: true
 market_cap_approx: 4480000000
@@ -66,6 +67,8 @@ The catch: supply has contracted about 70% from the $14.7B September 2025 peak t
 **2. Primary mint/burn at $1 NAV (whitelisted institutions only).** Ethena operates a direct mint/burn flow against the reserve portfolio for KYC'd institutional counterparties. Retail and non-whitelisted holders cannot access this path directly. Critically, **this is not a §II.4 access-asymmetry penalty in the framework sense** — the arbitrage mechanism (institutions buying discounted USDe on DEX, redeeming at $1 with Ethena) is what keeps the secondary peg tight. Retail benefits from the same peg pressure even without direct primary access.
 
 This is the same pattern used by USDC (Circle's primary is institutional; retail uses Coinbase or DEX).
+
+**Update (July 9, 2026):** Ethena made this primary mint/redeem **free (0bps) and settled in USDC** for its onboarded institutional counterparties. This doesn't open the door any wider — retail still can't redeem directly, and it's still whitelisted/KYC'd counterparties only — but it makes the arbitrage that holds the peg *frictionless*: a market maker can now buy discounted USDe and redeem it at $1 for essentially just gas, instead of eating fees plus slippage. In practice that means the peg should hold a little tighter in normal conditions. The caveats: it only helps while those market makers are willing and capitalized, it runs specifically through USDC (so a USDC disruption would degrade this rail), and Ethena can pause it — so it doesn't add protection in a genuine stress event.
 
 ## What October 10, 2025 actually proved
 
@@ -131,7 +134,7 @@ The Risk Committee structure (LlamaRisk + Blockworks Advisory + Chaos Labs + Cha
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Peg mechanism | 6.5 | Hybrid backing — 89% conventional credit-style assets + 11% residual perps. Mint/burn primary path with arb-driven secondary peg, similar to USDC/USDT. Survived October 2025 ($1.5B+ single-event outflow) without peg failure. The $0.97 wick was venue-specific oracle artifact, not redemption-mechanism break. |
+| Peg mechanism | 6.5 | Hybrid backing — 89% conventional credit-style assets + 11% residual perps. Mint/burn primary path with arb-driven secondary peg, similar to USDC/USDT; mint/redeem for whitelisted counterparties moved to 0bps in USDC on 2026-07-09, tightening the normal-conditions arb band (score unchanged — MM-only, USDC-specific, pausable). Survived October 2025 ($1.5B+ single-event outflow) without peg failure. The $0.97 wick was venue-specific oracle artifact, not redemption-mechanism break. |
 | Backing | 6.5 | Reserve Fund ~9× overcapitalized vs Risk Committee floor (LlamaRisk $5–7M / Blockworks $6.3M / actual $62M). Chaos Labs Edge PoR continuously verifies reserves; Kraken Custody added weekly PoR Jan 2026. Counter-pressure: institutional loan book is new and not operationally seasoned through stress; the June 2026 JAAA AAA-CLO sleeve (first realized non-BUIDL RWA, ~$310M cap) adds credit diversification but also corporate-credit cyclicality + a Centrifuge/Solana tokenization layer — net score-neutral at current size. |
 | Liquidity | 7.0 | Still genuinely deep — Curve, Uniswap V3, Balancer on DEX; Binance, Bybit, OKX on CEX; $100M+ daily volume. About 70% supply contraction from $14.7B peak to ~$4.5B current has compressed absolute depth in lockstep. Retail and mid-institutional exit at fair value remains unproblematic. |
 | Issuer | 7.0 | Doxxed team (Guy Young, ex-Cerberus Capital), top-tier investors (Dragonfly, Wintermute, Maelstrom, Bybit, Deribit, OKX), regulatory engagement via Ethena GmbH (Germany), **proven through October 2025 stress**. Mature Risk Committee (LlamaRisk + Blockworks + Chaos Labs + Chainlink) + monthly Reserve Fund subcommittee posts. |
@@ -172,4 +175,6 @@ If you're reading this and considering the staked sibling sUSDe: it's the yield-
 
 ---
 
-*This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-06-10. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-07-14. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+
+*Revision history: 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
