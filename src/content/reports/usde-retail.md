@@ -8,7 +8,7 @@ peg_mechanism: "Hybrid (institutional credit + RWA + 11% residual basis trade)"
 assessment_type: "full"
 audience: "retail"
 date: "2026-06-10"
-last_verified: "2026-07-14"
+last_verified: "2026-07-15"
 featured: false
 production: true
 issuer: "Ethena Labs"
@@ -46,7 +46,7 @@ If you held a "USDe is a synthetic dollar / unproven basis trade" mental model f
 
 ## What you actually earn
 
-**Nothing on USDe itself** — yield is intentionally diverted to the staked sibling token, **sUSDe**. USDe holders accept zero yield in exchange for the $1 peg and broader DeFi compatibility. If you want yield exposure to Ethena's reserve portfolio, sUSDe is the relevant product — see the companion [sUSDe retail report](/reports/susde/) (separate 7-day cooldown risk on exit; current ~3.72% APY post-pivot, materially lower than the 8–40% range of the pre-pivot era).
+**Nothing on USDe itself** — yield is intentionally diverted to the staked sibling token, **sUSDe**. USDe holders accept zero yield in exchange for the $1 peg and broader DeFi compatibility. If you want yield exposure to Ethena's reserve portfolio, sUSDe is the relevant product — see the companion [sUSDe retail report](/reports/susde/) (separate cooldown risk on exit — a dynamic 1–7-day wait, 1 day as of 2026-07-15; ~3.72% APY as of Q1 2026, materially lower than the 8–40% range of the pre-pivot era).
 
 For USDe specifically: this is a $1-peg stablecoin you hold for the peg and DeFi composability, not for yield.
 
@@ -100,7 +100,7 @@ What sits behind the token:
 
 - **Liquid stablecoin reserves** — USDC at Coinbase and OES-custodied stables
 - **Institutional overcollateralized loans** (new April 2026) — Ethena lends stables from USDe reserves to Anchorage Digital, Maple Institutional (the OTC institutional desk, not the Syrup retail pools), and Coinbase Asset Management. Borrowers post BTC/ETH collateral in secured triparty custody.
-- **Tokenized RWAs** — BlackRock's BUIDL via the USDtb wrapper, and — new in June 2026 — **JAAA**, Janus Henderson's AAA-rated CLO fund, tokenized via Centrifuge on Solana and approved by Ethena's Risk Committee with a ~$310M position cap (~$200M live initially). JAAA is USDe's **first corporate-credit exposure** — it adds two new vectors: corporate-credit cyclicality and a Centrifuge/Solana tokenization layer (the token is on-chain readable on Solana; the underlying CLO NAV is fund-attested off-chain). Still planned beyond these: investment-grade corporate bond funds, short-duration and structured credit, gold futures.
+- **Tokenized RWAs** — BlackRock's BUIDL via the USDtb wrapper, and — new in June 2026 — **JAAA**, Janus Henderson's AAA-rated CLO fund, tokenized via Centrifuge on Solana and approved by Ethena's Risk Committee with a position cap of roughly $310M (about $200M live initially). JAAA is USDe's **first corporate-credit exposure** — it adds two new vectors: corporate-credit cyclicality and a Centrifuge/Solana tokenization layer (the token is on-chain readable on Solana; the underlying CLO NAV is fund-attested off-chain). Still planned beyond these: investment-grade corporate bond funds, short-duration and structured credit, gold futures.
 - **Residual basis trade (~11%)** — BTC/ETH perpetual short positions on Binance, Bybit, OKX, Deribit, Bitfinex, executed via Off-Exchange Settlement (OES) custody through Copper, Ceffu, Cobo, Anchorage, and (since January 2026) Kraken.
 
 The Reserve Fund — a separate $62M loss-absorption buffer — is held entirely in USDtb (about $41.98M) and a USDtb/USDC liquidity pool position (about $20.02M). Because USDtb is >90% BUIDL-backed, the Reserve Fund's stability now depends on BlackRock BUIDL's continued health. This is a structural improvement over the pre-pivot setup (which held the fund in a USDe/USDT Uniswap V3 LP — a circular dependency that LlamaRisk's pre-pivot addendum flagged as a material risk).
@@ -171,10 +171,10 @@ The retail framing: **the system has been stress-tested at $1.5B+ single-event s
 
 ## A note on sUSDe
 
-If you're reading this and considering the staked sibling sUSDe: it's the yield-bearing wrapper (~3.72% APY post-pivot, down from 8–40% in the basis-trade era but with much lower variance). It has a **7-day cooldown silo** on exit to the primary path — there is no instant primary exit. Secondary markets are deep (Curve, Pendle) with historical mean discount of just -17bps and max -127bps. An active governance proposal would migrate to a **dynamic cooldown** keyed on liquid backing coverage ratio (potentially 0 days during normal conditions; longer during stress) — see the companion [sUSDe retail report](/reports/susde/) for the wrapper-specific risk profile.
+If you're reading this and considering the staked sibling sUSDe: it's the yield-bearing wrapper (~3.72% APY as of Q1 2026, down from 8–40% in the basis-trade era but with much lower variance). Exit to the primary path runs through a **cooldown silo** — there is no instant primary exit. Ethena has since shipped a **dynamic cooldown** (proposal #759) keyed on liquid backing coverage: the old fixed 7-day wait is now a coverage-tiered **1 / 3 / 5 / 7 days**, verified on-chain at **1 day** as of 2026-07-15, with an auto-extend safeguard under stress. Secondary markets are deep (Curve, Pendle) with historical mean discount of just -17bps and max -127bps. See the companion [sUSDe retail report](/reports/susde/) for the wrapper-specific risk profile.
 
 ---
 
 *This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-07-14. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
 
-*Revision history: 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
+*Revision history: 2026-07-15 — updated the sUSDe cross-references for Ethena's shipped dynamic cooldown (1–7-day coverage-tiered, 1 day on-chain); USDe scores unchanged. 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
