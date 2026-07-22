@@ -11,6 +11,7 @@ companion_report: "usdai"
 date: "2026-05-28"
 last_verified: "2026-07-23"
 featured: false
+production: true
 issuer: "Permian Labs"
 yield_bearing: true
 volatility_score: 5.5
