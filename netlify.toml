@@ -48,3 +48,13 @@
   from = "/dashboards/*"
   to = "https://todayindefi.github.io/backing-monitor/:splat"
   status = 200
+
+# YLDS report merged into wYLDS (YLDS now analyzed as wYLDS's backing, not a
+# standalone asset). The old /reports/ylds page was deleted; 301 it to /reports/wylds
+# so external links don't 404. Netlify normalizes trailing slashes before matching,
+# so this single rule catches both /reports/ylds and /reports/ylds/. No force needed —
+# there is no longer a static page at this path for it to shadow.
+[[redirects]]
+  from = "/reports/ylds"
+  to = "/reports/wylds"
+  status = 301
