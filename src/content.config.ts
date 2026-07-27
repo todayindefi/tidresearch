@@ -88,6 +88,7 @@ const wrappedAxes = {
   underlying_score: score.optional(),
   yield_bearing: z.boolean().optional(),
   underlying_assets: z.array(z.string()).default([]),
+  market_cap_approx: z.number().optional(),
 };
 
 const wrappedToken = z.object({

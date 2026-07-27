@@ -239,10 +239,12 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      (isStable || isRwa || isLendingVault) && fmtUSD(data.market_cap_approx ?? data.tvl_gross) && (
+      fmtUSD(data.market_cap_approx ?? (isLendingVault ? data.tvl_gross : undefined)) && (
         <div>
           <div class="eyebrow mb-1">{isLendingVault ? "Pool TVL" : "Market Cap"}</div>
-          <div class="font-mono">{fmtUSD(data.market_cap_approx ?? data.tvl_gross)}</div>
+          <div class="font-mono">
+            {fmtUSD(data.market_cap_approx ?? (isLendingVault ? data.tvl_gross : undefined))}
+          </div>
         </div>
       )
     }

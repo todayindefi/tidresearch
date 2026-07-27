@@ -2,71 +2,71 @@
 asset: "wYLDS"
 slug: "wylds"
 aliases: ["wYLDS", "Wrapped YLDS", "Hastra Wrapped YLDS"]
-chains: ["solana"]
+chains: ["solana", "ethereum"]
 category: "wrapped-token"
 assessment_type: "light"
 audience: "retail"
 date: "2026-07-24"
-last_verified: "2026-07-25"
+last_verified: "2026-07-27"
 featured: false
 production: true
 yield_bearing: true
 underlying_assets: ["YLDS"]
 issuer: "Hastra (wrapper) / Figure Certificate Company (backing)"
-market_cap_approx: 200000000
+market_cap_approx: 459000000
 volatility_score: 7.0
 liquidity_score: 4.0
-structural_score: 6.5
+structural_score: 6.0
 redemption_score: 6.5
 underlying_score: 7.5
-overall_score: 6.5
+overall_score: 6.0
 companion_report: "hastra-prime"
 ---
 
-# wYLDS — Retail Risk Report
+# wYLDS — Risk Report
+**Lower-to-moderate risk · 6.0 / 10**
+*Wrapped token · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), backed by Figure's YLDS · ~$459M · verified 2026-07-27*
 
-**Lower-to-moderate risk · 6.5/10**
+## Summary
 
-wYLDS is Hastra's on-chain, 1:1 wrapper of Figure's SEC-registered YLDS, and it is the layer [Hastra PRIME](/reports/hastra-prime) actually redeems into. If you hold PRIME and unstake, you land in wYLDS — not YLDS — so this report covers that base layer on its own, with the YLDS backing folded in rather than split into a separate file.
+wYLDS is Hastra's 1:1 wrapper of YLDS, Figure Certificate Company's SEC-registered, Treasury-backed yield product. Retail users mint wYLDS with USDC without KYC; Hastra buys and holds YLDS. Yield of roughly 3.27% is paid as extra wYLDS tokens, so its price targets about $1. It is also the layer [Hastra PRIME](/reports/hastra-prime) returns when a holder unstakes.
 
-## What it is
+Independent public-chain reads confirm that the backing exists. Roughly $479M of YLDS was visible against about $460M of wYLDS, consistent with a fully backed wrapper. That is the most important positive: this re-score does not mean the YLDS is missing.
 
-wYLDS is a non-appreciating, yield-bearing wrapper. You mint it by swapping USDC 1:1 — instant, on-chain, and with no KYC — and Hastra uses that USDC to buy YLDS from Figure Markets and hold it 1:1 in reserve. The yield (around 3.27%, sourced from the underlying YLDS Treasuries) is paid monthly as additional wYLDS tokens, so the token targets a price of about $1 rather than appreciating the way PRIME does. It trades close to $0.9998 — a tight peg, held there by full backing and redeemability rather than by market depth. wYLDS is Solana-first: the canonical SPL mint is `8fr7WGTVFszfyNWRMXj6fRjZZAnDwmXwEpCrtzmUkdih`, and CoinGecko lists it as Solana-only.
+The reserve is less tidy than the proof-of-reserves headline suggests. Most YLDS was found in two Figure operational accounts, including a warehouse account holding tokenized loan assets, rather than in a clearly ring-fenced wYLDS reserve. An outside reader can verify the balances but must trust Hastra's mapping of those balances to wYLDS. Ethereum is also now the majority deployment—about 292.7M wYLDS versus 166.9M on Solana—while nearly all Solana wYLDS is locked inside PRIME. wYLDS is therefore a staking substrate with a thin standalone market, not a broadly liquid Treasury token.
 
-## The backing (YLDS, folded in)
+## At a glance
 
-Each wYLDS is backed 1:1 by YLDS, a blockchain-native face-amount certificate — the first SEC-registered yield-bearing stablecoin, and legally a registered security rather than a payment stablecoin. It is issued by Figure Certificate Company under Section 28 of the Investment Company Act of 1940 (an affiliate of Nasdaq-listed Figure Technology Solutions, FIGR), backed by short-dated U.S. Treasuries and Treasury repo yielding roughly SOFR minus 35 basis points, with reserves managed by a registered investment advisor (Figure Investment Advisors) and custodied at UMB Bank. Hastra's live Proof-of-Reserves dashboard shows wYLDS about 100.31% backed, with the reserve wallets verifiable on-chain.
+| | |
+|---|---|
+| **Backing** | YLDS reserves exist on Provenance and exceed wYLDS roughly 1:1, but are co-mingled in Figure operational accounts rather than demonstrably segregated. |
+| **How to redeem** | Request wYLDS→USDC and wait for Hastra to sell YLDS, or use a thin Solana DEX. Recent requests cleared 1:1 with a median near 49 minutes. |
+| **Liquidity** | Thin standalone DEX market. About 98.4% of Solana wYLDS was locked in PRIME, leaving roughly 2.67M unstaked. |
+| **Yield** | About 3.27%, paid monthly as additional tokens from the underlying YLDS return. |
+| **Admin & custody** | Hastra runs redemption and retains freeze controls; Figure manages the YLDS reserve relationship. |
+| **Regulated?** | YLDS/Figure is SEC-registered. Hastra and wYLDS are not, so retail recourse still runs through the wrapper operator. |
+| **Biggest risk** | No clean reserve segregation and essentially no ready USDC redemption buffer. |
 
-YLDS itself is KYC and accredited-gated through Figure Markets — but a wYLDS holder never touches it. Hastra is the KYC'd party that mints and redeems YLDS on your behalf, which is what gives retail "regulated yield without direct YLDS ownership." This backing is the strongest part of the stack; on its own it would score around 7.5.
+## Risk by axis
 
-## How you exit (the honest picture)
+**Underlying — 7.5.** YLDS is a face-amount certificate backed by short-dated US Treasuries and repo, managed by a registered investment adviser and custodied at UMB Bank. Public Provenance balances show enough YLDS to cover wYLDS. This remains the strongest layer, though wYLDS holders do not directly own or redeem YLDS and the reserve's bankruptcy-remoteness is unproven.
 
-There are two exit paths, both no-KYC.
+**Volatility — 7.0.** wYLDS targets $1 and distributes yield as more tokens rather than through price appreciation. It has generally held close to par, with the realistic 2–3% drawdowns attributable mainly to thin markets. That is strong price behavior, but not deep-liquidity stablecoin behavior.
 
-- **Primary redemption (wYLDS → USDC):** a permissionless `request_redeem` ticket, followed by an admin-fulfilled completion in which Hastra sells YLDS to source the USDC. This is not instant and not trustless — but on-chain evidence over the trailing eight days shows it genuinely works: about 6 redemptions a day, 1:1 to the cent, with a median turnaround near 49 minutes and most clearing within the hour, and nothing stuck in transit. Off-hours requests can wait until the next business morning, but in normal conditions this is a reliable sub-hour 1:1 burn.
-- **Secondary market (sell on a Solana DEX):** Raydium or Kamino give an instant exit, but the pool is thin and single-venue (roughly $27K to $80K of 24h volume), so this path only works for small size.
+**Liquidity — 4.0.** The weak axis. Standalone DEX volume has been roughly $27K–$80K a day, and independent Solana reads found about 164.26M of 166.93M wYLDS locked in PRIME—around 98.4%. The genuine unstaked Solana float was only about 2.67M. A primary redemption helps in calm markets, but there is no deep trustless market exit for size.
 
-## Why it scores 6.5 (not higher)
+**Structural — 6.0.** The vault is open-source and has two audits: [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) found and fixed a critical issue, and [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) later reported no critical or high findings across both chains. The negative is reserve architecture. Hastra's [proof-of-reserves](https://hastra.io/proof-of-reserves) “pool” labels do not map cleanly to the accounts holding most YLDS; the backing is co-mingled with Figure's operational loan assets, so segregation and the wYLDS claim cannot be proven from balances alone. Ethereum now holds most supply, increasing the weight of multichain implementation risk, while issuer freeze and mint controls remain.
 
-The collateral is excellent, and the primary redemption is better than a raw "pending until liquid" queue would suggest. What holds wYLDS below its backing quality is the wrapper and access layer: shallow secondary DEX liquidity (the weakest axis, 4.0); an admin-mediated redemption with a single fulfiller that is market-hours-dependent and stress-untested; and Hastra as a newer operator that carries account-freeze authority stacked on top of Figure. Excellent collateral, with reliable-but-not-trustless access to it.
+**Redemption — 6.5.** Minting is instant and permissionless. The reverse path is admin-mediated: a user requests USDC, then Hastra sells YLDS off-chain and fulfills the request. An eight-day sample showed about six redemptions a day, 1:1 to the cent, with a median near 49 minutes—good evidence that the process works normally. But the redeem vault held only about $0.05 USDC. There is no standing liquid buffer for a rush, and off-hours or stressed requests depend entirely on Figure-market liquidity and a single fulfiller.
 
-## Who this is for
+## Bottom line
 
-Holders who want tokenized short-duration Treasury yield on Solana, with a fast primary redemption, and who are comfortable with a shallow DEX and an admin in the loop on the redeem. It is not for anyone who needs deep instant secondary depth or a fully trustless burn.
+wYLDS is fully backed on the numbers we can independently read, and normal redemptions have worked quickly. It scores 6.0 because “backed” is not the same as “segregated and liquid”: most reserves sit in Figure operating accounts, the instant USDC buffer is effectively zero, and secondary depth is thin. It can fit holders comfortable with an operator-run Treasury wrapper. It does not offer direct regulated recourse, deep instant liquidity, or a stress-proven redemption reserve.
 
-## Score rationale
+Figure's own HELOC quality figures also deserve measured treatment. Reported LTV, FICO and loss metrics are consistent with independently rated FIGRE Trust securitizations, but the warehouse loan tape is not public. Figure's loans-held-for-sale delinquency rose from 3.91% to 5.46% year over year in SEC filings, while a separate, contested DefiLlama dispute over Figure's claimed on-chain scale reinforces the case for treating issuer metrics as claims unless independently reproducible.
 
-| Category | Score | Notes |
-|---|---:|---|
-| Volatility | 7.0 | Par-targeting Treasury wrapper (yield paid as tokens, not price). Tight peg near $0.9998; roughly a −2 to −3% drawdown band on thin books. |
-| Liquidity | 4.0 | Weakest axis. Single-venue Solana DEX, about $27K to $80K of 24h volume — you can't exit size on-chain. A fast primary redeem mitigates the reliance, but the axis scores observed depth. |
-| Structural | 6.5 | Open-source vault, two audits (Informal Systems — a Critical found and fixed; Sherlock — 0 Critical/High), live Proof-of-Reserves at 100.31%, Squads v4 upgrade authority. Below 7 by Hastra's freeze authority, the wrapper layer, and operator newness. |
-| Redemption | 6.5 | Instant permissionless mint; an admin-mediated redeem that is on-chain-verified active, 1:1, and near 49-minute median, with no KYC. Below 7+ by the single fulfiller, market-hours and off-chain dependency, and a stress-untested sample. |
-| Underlying | 7.5 | Figure's SEC-registered, Treasury-backed YLDS — pristine, regulated collateral. |
-| **Overall** | **6.5** | Excellent Treasury backing plus a working, fast 1:1 primary redemption, gated only by a shallow DEX and an admin in the loop. The clean regulated base of the wYLDS → PRIME stack. |
+**Watch items:** reserve segregation and legal claim; standing USDC and redemption-queue growth; Ethereum/Solana supply reconciliation; post-incentive liquidity; and third-party credit reporting.
 
----
+*This report uses public documentation, market data, two published audits, and independent Solana, Ethereum, and Provenance reads. YLDS is folded in as wYLDS's backing. Corrections welcome to info@tidresearch.com.*
 
-*This report is built from public documentation, third-party market data, the open-source Hastra vault repo, two published audits, and a live on-chain Proof-of-Reserves. We fold in the YLDS backing (formerly a standalone report) as wYLDS's collateral. Corrections welcome to info@tidresearch.com.*
-
-*Revision history: 2026-07-25 — published (replaces the standalone YLDS report, now folded in here as backing). wYLDS 6.5: SEC-registered Treasury backing via Figure's YLDS, on-chain-verified sub-hour 1:1 redemption; held below its backing quality by shallow Solana DEX liquidity and an admin-mediated (not trustless) redeem.*
+*Revision history: 2026-07-25 — published at 6.5, replacing the standalone YLDS report. 2026-07-27 — independent on-chain verification: backing confirmed 1:1, but reserve found co-mingled rather than segregated, liquid redemption buffer approximately nil, Ethereum now the majority deployment, and adverse independent Figure signals surfaced; structural 6.5 → 6.0, overall 6.5 → 6.0.*
