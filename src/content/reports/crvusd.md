@@ -7,7 +7,7 @@ category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
-last_verified: "2026-06-09"
+last_verified: "2026-07-28"
 peg_mechanism_score: 6.0
 backing_score: 5.0
 liquidity_score: 6.0
@@ -120,24 +120,34 @@ Four mechanisms create new crvUSD. DefiLlama also counts LlamaLend debt as suppl
 
 | Source | Structural Role | How It Works |
 |--------|----------------|-------------|
-| **Minting markets (CDP)** | Original mechanism | Users deposit collateral (WBTC, WETH, wstETH, etc.), mint crvUSD as debt. Over-collateralized. 8 active markets, 2 in wind-down (sfrxETH, LBTC have $0 ceiling). |
+| **Minting markets (CDP)** | Original mechanism | Users deposit collateral (WBTC, WETH, wstETH, etc.), mint crvUSD as debt. Over-collateralized. 8 markets deployed, of which **6 are active and 2 are winding down** (sfrxETH, LBTC — both at $0 debt ceiling, residual debt only). |
 | **YieldBasis credit line** | Dominant source since Sep 2025 | $1B ceiling from ControllerFactory. YB factory (`0x370a...`) receives pre-minted crvUSD, deploys it into BTC/crvUSD Curve pools as users deposit BTC. Pre-minted balance includes idle buffer — actual deployment depends on BTC deposits. |
 | **PegKeepers** | Peg defense | Multiple keepers mint crvUSD into stable pools (active set with material reserves: crvUSD/USDC, crvUSD/USDT, crvUSD/frxUSD, pyUSD/crvUSD, GHO/crvUSD) when price > $1, burn when price < $1. Debt currently concentrated in the USDT keeper. Protocol-owned, not collateral-backed. |
-| **CurveLendOperator** | DAO-minted lending liquidity (Oct 2025) | Governance-approved operator (`0x21862...eCD`) receives debt ceiling from ControllerFactory and mints fresh crvUSD into specific LlamaLend vaults as protocol-owned liquidity. Currently small (5M ceiling for sreUSD market). Tracks `mintedAmount`. **Precedent-setting** — the DAO can create new operators to mint into any LlamaLend market. |
+| **CurveLendOperator** | DAO-minted lending liquidity (Oct 2025) | Governance-approved operator (`0x21862...eCD`) receives debt ceiling from ControllerFactory and mints fresh crvUSD into specific LlamaLend vaults as protocol-owned liquidity. Tracks `mintedAmount` — **$15M minted as of 2026-07-28**, up from the original 5M sreUSD-market ceiling. This line has grown 3x and is no longer a rounding error. **Precedent-setting** — the DAO can create new operators to mint into any LlamaLend market. |
 
 **LlamaLend and supply accounting:**
 
-Standard LlamaLend markets (OneWayLendingFactory) accept user-deposited crvUSD — the factory itself has no minting authority. Only the CurveLendOperator (~5M) mints fresh crvUSD into LlamaLend. The remaining ~$30M+ of LlamaLend debt is crvUSD that was originally minted elsewhere (CDP, YB, or PK), bought by users on DEXes, and then deposited into LlamaLend vaults as lending liquidity.
+Standard LlamaLend markets (OneWayLendingFactory) accept user-deposited crvUSD — the factory itself has no minting authority. Only the CurveLendOperator (**$15M** as of 2026-07-28) mints fresh crvUSD into LlamaLend. The remaining ~$26M of LlamaLend debt is crvUSD that was originally minted elsewhere (CDP, YB, or PK), bought by users on DEXes, and then deposited into LlamaLend vaults as lending liquidity.
 
-DefiLlama counts **all** LlamaLend debt as supply. This is a **deployment-based** methodology — it tracks where crvUSD is actively in use, not where it was originally minted. There is no double-counting because each component measures crvUSD in different contracts:
-- Mint market debt = crvUSD outstanding from CDP borrowers
-- PK debt = crvUSD sitting in PegKeeper stable pools (protocol-owned)
-- YB AMM = crvUSD paired with BTC in YieldBasis Curve pools
-- LlamaLend = crvUSD borrowed from lending vaults
+**Two supply definitions — do not mix them.** The distinction matters because one of them is the denominator of every collateral ratio we publish.
 
-This methodology produces a number in the mid $200Ms in Q2 2026 (including PK debt as supply) and cross-checks against DefiLlama.
+- **Issuance-side (authoritative here, and what the dashboard reports):**
+  **`mint market debt + PK debt + YB AMM crvUSD + CurveLendOperator minted`**
+  This counts each crvUSD token exactly once, at the point it was created. It is the only
+  definition that can legitimately sit under a collateral ratio: CR compares collateral
+  against the crvUSD that *exists*, not against how many times it was re-lent.
+- **Deployment-based (DefiLlama):** substitutes *all* LlamaLend debt for the operator
+  line, tracking where crvUSD is actively in use. This is a valid but **different and
+  larger** number — the ~$26M of non-operator LlamaLend debt is crvUSD already counted
+  once at its CDP/YB/PK origin and then counted again when a second borrower draws it
+  from a lending vault. Useful as a utilization measure; **not comparable to backing**,
+  and never to be used as a CR denominator.
 
-**Total supply = mint market debt + PK debt + YB AMM crvUSD + LlamaLend debt**
+Everything outside the operator line is therefore **recirculation**, not supply — the
+dashboard breaks it out under that heading (LlamaLend borrowed, scrvUSD savings) precisely
+so it can be seen without being added in.
+
+Q2–Q3 2026: the issuance-side number runs in the mid $200Ms including PK debt.
 
 **The universal minting gate:** `set_debt_ceiling` on ControllerFactory is the only way to authorize new crvUSD creation. Any address that receives a ceiling can mint. The DAO controls who gets ceilings via governance votes. To monitor for new supply sources, enumerate all `set_debt_ceiling` events on ControllerFactory — this is the complete list of entities that can create crvUSD.
 
@@ -163,7 +173,7 @@ This methodology produces a number in the mid $200Ms in Q2 2026 (including PK de
 
 ### Collateral Ratio
 
-**Total crvUSD supply** = mint market debt + PK debt + YB AMM crvUSD + LlamaLend debt. This matches DefiLlama's methodology and cross-checks accurately. Do not use `totalSupply()` (includes ceiling buffers), StablecoinLens (misses YB and operators), or CoinGecko (unknown methodology).
+**Total crvUSD supply (issuance-side, the CR denominator)** = mint market debt + PK debt + YB AMM crvUSD + CurveLendOperator minted. This counts each token once at creation and matches the dashboard's methodology. Do not use `totalSupply()` (includes ceiling buffers) or StablecoinLens (misses YB and operators); CoinGecko's undocumented figure is a cross-check only, never a source.
 
 Two coherent CR readings, both symmetric:
 
@@ -200,11 +210,14 @@ No single contract or API gives an accurate crvUSD supply:
 
 | Metric | What It Shows | What It Misses |
 |--------|--------------|----------------|
-| `totalSupply()` | All ceiling capacity (~$2B+) | Meaningless — includes all undeployed buffers |
-| StablecoinLens | CDP debt + PK debt only | YieldBasis entirely. Predates YB, never updated. |
-| CoinGecko | "circulating" (low $200Ms) | Methodology unknown. Likely excludes contract-held crvUSD. |
+| `totalSupply()` | Mint *authorization* capacity (~$2.09B, 2026-07-28) | Meaningless as supply — includes all undeployed ceiling buffers |
+| StablecoinLens `circulating_supply` | CDP debt + PK debt only ($69.95M, 2026-07-28) | YieldBasis and operator mints entirely. Predates YB, never updated. |
+| CoinGecko | "circulating" ($212.5M, 2026-07-28) | Methodology undocumented. Cross-check only — never a source. Currently reads ~6.5% below our issuance-side figure; the gap is tracked in the dashboard's reconciliation block. |
 | YB factory `balanceOf` | Pre-minted allocation | Doesn't distinguish deployed vs idle buffer |
-| **Mint + PK + YB AMMs + LlamaLend** | **Authoritative total supply (matches DefiLlama)** | Requires querying multiple contracts — see dashboard |
+| **Mint + PK + YB AMMs + operator minted** | **Authoritative issuance-side supply — the CR denominator** ($226.2M, 2026-07-28) | Requires querying multiple contracts — see dashboard |
+| Mint + PK + YB AMMs + *all* LlamaLend debt | DefiLlama's deployment-based figure | Double-counts re-lent crvUSD. Utilization measure, not a backing denominator. |
+
+All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crvUSD's canonical chain, and every other deployment is lock-and-mint through the native L2 bridges or the LayerZero FastBridge. Cross-chain crvUSD was minted on Ethereum first and is already inside the issuance-side number — adding chain balances on top would double-count.
 
 **⚠️ This opacity is itself a risk factor.** Unlike USDC (clear attestations) or DAI (Dai Stats dashboard), there is no authoritative crvUSD supply dashboard from Curve itself. Our [backing dashboard](https://tidresearch.com/dashboards/?asset=crvusd) attempts to fill this gap by querying on-chain primitives directly.
 
