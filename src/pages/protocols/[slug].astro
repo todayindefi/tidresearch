@@ -1,9 +1,11 @@
 ---
 import { getCollection, render } from "astro:content";
 import ReportLayout from "@/layouts/ReportLayout.astro";
-import { visibleAtCurrentStage } from "@/lib/stage";
+import { sectionEnabled, visibleAtCurrentStage } from "@/lib/stage";
 
 export async function getStaticPaths() {
+  if (!sectionEnabled("protocols")) return [];
+
   const protocols = await getCollection("protocols");
   return protocols
     .filter((entry) => visibleAtCurrentStage(entry.data))
