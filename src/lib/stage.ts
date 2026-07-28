@@ -7,6 +7,13 @@ export const STAGE: "production" | "staging" =
 
 export const isProductionStage = STAGE === "production";
 
+// Sections not yet public. Delete the entry to launch the section.
+const HIDDEN_IN_PRODUCTION = new Set(["protocols"]);
+
+export function sectionEnabled(name: string): boolean {
+  return !(isProductionStage && HIDDEN_IN_PRODUCTION.has(name));
+}
+
 // Single predicate used by every place that lists reports / dashboards.
 // On staging: anything not explicitly hidden via published: false.
 // On production: also requires production: true.

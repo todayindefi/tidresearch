@@ -1,9 +1,11 @@
 ---
 import Button from "../ui/Button.astro";
+import { sectionEnabled } from "@/lib/stage";
+
 const path = Astro.url.pathname;
 const nav = [
   { href: "/reports", label: "Assets" },
-  { href: "/protocols", label: "Protocols" },
+  ...(sectionEnabled("protocols") ? [{ href: "/protocols", label: "Protocols" }] : []),
   { href: "/dashboards", label: "Dashboards" },
   { href: "/services/risk", label: "Services" },
   { href: "/about", label: "About" },
