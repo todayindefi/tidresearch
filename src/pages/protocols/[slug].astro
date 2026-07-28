@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from "astro:content";
+import ReportLayout from "@/layouts/ReportLayout.astro";
+import { visibleAtCurrentStage } from "@/lib/stage";
+
+export async function getStaticPaths() {
+  const protocols = await getCollection("protocols");
+  return protocols
+    .filter((entry) => visibleAtCurrentStage(entry.data))
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<ReportLayout data={entry.data} headings={headings}>
+  <Content />
+</ReportLayout>

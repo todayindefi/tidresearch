@@ -46,6 +46,11 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
     { key: "operational_score", label: "Operational" },
     { key: "supply_integrity_score", label: "Supply Integrity" },
   ],
+  protocol: [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "economic_score", label: "Economic" },
+    { key: "project_score", label: "Project" },
+  ],
 };
 
 const axes = (AXES_BY_CATEGORY[data.category as string] ?? []).filter(
@@ -53,7 +58,8 @@ const axes = (AXES_BY_CATEGORY[data.category as string] ?? []).filter(
 );
 const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
-const weights: Record<string, number> | null = isRwa && data.score_weights
+const isProtocol = data.category === "protocol";
+const weights: Record<string, number> | null = (isRwa || isProtocol) && data.score_weights
   ? {
       contract_score: data.score_weights.contract,
       economic_score: data.score_weights.economic,
@@ -78,17 +84,25 @@ const fmtUSD = (n?: number) =>
     : null;
 
 const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
+const reportName = data.protocol ?? data.asset;
 ---
 
 <header class="bg-card border border-border p-6 md:p-8 mb-10">
   <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-6">
     <div class="min-w-0">
-      <p class="eyebrow mb-2">Risk Assessment · Institutional</p>
-      <h1 class="text-3xl md:text-4xl font-bold mb-2">{data.asset}</h1>
+      <p class="eyebrow mb-2">
+        Risk Assessment · {isProtocol ? "Protocol" : "Institutional"}
+      </p>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">{reportName}</h1>
       {data.issuer && (
         <p class="text-muted-foreground text-sm">
           Issued by <span class="text-foreground">{data.issuer}</span>
           {data.legal_jurisdiction && <> · {data.legal_jurisdiction}</>}
+        </p>
+      )}
+      {isProtocol && data.built_on?.length > 0 && (
+        <p class="text-muted-foreground text-sm">
+          Built on <span class="text-foreground">{data.built_on.join(" · ")}</span>
         </p>
       )}
     </div>
@@ -99,7 +113,13 @@ const fmtDate = (d: Date) => new Date(d).toISOString().slice(0, 10);
     </div>
   </div>
 
-  <div class={`grid grid-cols-2 ${axes.length === 5 ? "md:grid-cols-5" : "md:grid-cols-4"} gap-3 mb-6`}>
+  <div class={`grid grid-cols-2 ${
+    axes.length === 5
+      ? "md:grid-cols-5"
+      : axes.length === 3
+        ? "md:grid-cols-3"
+        : "md:grid-cols-4"
+  } gap-3 mb-6`}>
     {
       axes.map((a) => {
         const v = data[a.key];
