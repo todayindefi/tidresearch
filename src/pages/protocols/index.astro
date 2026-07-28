@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReportsFilter from "@/components/islands/ReportsFilter.tsx";
+import { getCollection } from "astro:content";
+import { chainLabel } from "@/lib/chains";
+import { visibleAtCurrentStage } from "@/lib/stage";
+
+const all = await getCollection("protocols");
+
+const rows = all
+  .filter((entry) => visibleAtCurrentStage(entry.data))
+  .map((entry) => ({
+    slug: entry.data.slug,
+    asset: entry.data.protocol,
+    category: entry.data.category,
+    assessment_type: entry.data.assessment_type,
+    audience: entry.data.audience,
+    chains: entry.data.chains,
+    chain_labels: Array.from(new Set(entry.data.chains.map(chainLabel))),
+    overall_score: entry.data.overall_score,
+    last_verified: new Date(entry.data.last_verified).toISOString().slice(0, 10),
+    featured: Boolean(entry.data.featured),
+  }))
+  .sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return b.last_verified.localeCompare(a.last_verified);
+  });
+---
+
+<BaseLayout
+  title="Protocol Risk Reports | TID Research"
+  description="Independent protocol risk assessments covering smart-contract, economic, and project risk."
+>
+  <section class="container-page py-16">
+    <div class="mb-10">
+      <p class="eyebrow mb-3">Research</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Protocol Risk Reports</h1>
+      <p class="text-muted-foreground max-w-2xl">
+        Independent assessments of protocol smart-contract, economic, and project risk.
+        Looking for token and asset coverage? <a href="/reports">Browse asset reports</a>.
+      </p>
+    </div>
+
+    {
+      rows.length > 0 ? (
+        <ReportsFilter
+          client:load
+          reports={rows}
+          basePath="/protocols"
+          searchNoun="protocols"
+        />
+      ) : (
+        <div class="border border-border bg-card p-12 text-center text-muted-foreground">
+          New protocol reports coming soon.
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

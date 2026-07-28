@@ -19,6 +19,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "vault-share": "Vault Share",
   "lending-vault": "Lending Vault",
   "tokenized-treasury": "RWA",
+  protocol: "Protocol",
 };
 
 const categoryLabel = (c: string) => CATEGORY_LABELS[c] ?? c.replace("-", " ");
@@ -39,7 +40,15 @@ function tone(s: number) {
   return "bg-primary/20 text-primary border-primary/50";
 }
 
-export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
+export default function ReportsFilter({
+  reports,
+  basePath = "/reports",
+  searchNoun = "assets",
+}: {
+  reports: ReportRow[];
+  basePath?: string;
+  searchNoun?: string;
+}) {
   const [category, setCategory] = useState<string>("all");
   const [chain, setChain] = useState<string>("all");
   const [band, setBand] = useState<string>("any");
@@ -74,7 +83,7 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
         <input
           type="search"
-          placeholder="Search assets…"
+          placeholder={`Search ${searchNoun}…`}
           value={q}
           onChange={(e) => setQ(e.target.value)}
           className={selectClass + " col-span-2 md:col-span-1"}
@@ -121,8 +130,8 @@ export default function ReportsFilter({ reports }: { reports: ReportRow[] }) {
           {filtered.map((r) => {
             const isInstitutional = r.audience === "institutional";
             const href = isInstitutional
-              ? `/reports/${r.slug}/request`
-              : `/reports/${r.slug}`;
+              ? `${basePath}/${r.slug}/request`
+              : `${basePath}/${r.slug}`;
             return (
             <a
               key={r.slug}
