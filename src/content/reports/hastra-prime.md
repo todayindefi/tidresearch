@@ -28,6 +28,8 @@ market_cap_approx: 457000000
 **Moderate risk · 5.5 / 10**
 *Vault share · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), with Figure/YLDS backing · ~$457M · verified 2026-07-27*
 
+*Live independent backing, reserve segregation, cross-chain supply, redemption-buffer health, and liquidity are on the [dashboard](https://tidresearch.com/dashboards/?asset=hastra-prime).*
+
 ## Summary
 
 PRIME is a non-rebasing yield token: you stake [wYLDS](/reports/wylds), receive PRIME, and earn through a rising PRIME price rather than extra tokens. Its roughly 7.5% headline yield does **not** come only from the Treasuries behind YLDS. Hastra deploys into Figure's “Democratized Prime” warehouse, which finances home-equity loans between origination and securitization. PRIME is therefore closer to a tokenized private-credit sleeve than cash.
