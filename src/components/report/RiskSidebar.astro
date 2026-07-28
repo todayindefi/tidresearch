@@ -65,11 +65,17 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
     { key: "operational_score", label: "Operational" },
     { key: "supply_integrity_score", label: "Supply Integrity" },
   ],
+  protocol: [
+    { key: "contract_score", label: "Smart Contract" },
+    { key: "economic_score", label: "Economic" },
+    { key: "project_score", label: "Project" },
+  ],
 };
 
 const isStable = data.category === "stablecoin";
 const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
+const isProtocol = data.category === "protocol";
 
 // Retail RWA reports score on peg/backing/liquidity/issuer (the stablecoin rubric)
 // rather than the institutional contract/economic/project rubric, because retail users
@@ -82,7 +88,7 @@ const axes = useStablecoinAxes
   : (AXES_BY_CATEGORY[data.category as string] ?? []);
 
 const weights: Record<string, number> | null =
-  isRwa && !useStablecoinAxes && data.score_weights
+  (isRwa && !useStablecoinAxes || isProtocol) && data.score_weights
     ? {
         contract_score: data.score_weights.contract,
         economic_score: data.score_weights.economic,
@@ -115,6 +121,8 @@ const categoryLabel = (c: string) =>
     ? "Lending Vault"
     : c === "tradfi-equity"
     ? "TradFi Equity"
+    : c === "protocol"
+    ? "Protocol"
     : c.replace("-", " ");
 ---
 
@@ -124,7 +132,7 @@ const categoryLabel = (c: string) =>
     <RiskBadge score={data.overall_score} size="lg" />
     <p class="text-xs text-muted-foreground mt-2">
       Scale 1–10. Higher is safer.
-      {(isRwa || isLendingVault) && weights && (
+      {(isRwa || isLendingVault || isProtocol) && weights && (
         <span class="block mt-1">Weighted composite — see report §IV/§V.</span>
       )}
     </p>
@@ -239,10 +247,26 @@ const categoryLabel = (c: string) =>
     }
 
     {
-      (isStable || isRwa || isLendingVault) && fmtUSD(data.market_cap_approx ?? data.tvl_gross) && (
+      (isStable || isRwa || isLendingVault || isProtocol) &&
+      fmtUSD(data.market_cap_approx ?? data.tvl_gross) && (
         <div>
-          <div class="eyebrow mb-1">{isLendingVault ? "Pool TVL" : "Market Cap"}</div>
-          <div class="font-mono">{fmtUSD(data.market_cap_approx ?? data.tvl_gross)}</div>
+          <div class="eyebrow mb-1">
+            {isProtocol ? "Protocol TVL" : isLendingVault ? "Pool TVL" : "Market Cap"}
+          </div>
+          <div class="font-mono">
+            {fmtUSD(data.market_cap_approx ?? data.tvl_gross)}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      isProtocol && data.built_on?.length > 0 && (
+        <div>
+          <div class="eyebrow mb-1">Built On</div>
+          <div class="flex flex-wrap gap-1">
+            {data.built_on.map((name: string) => <Badge variant="muted">{name}</Badge>)}
+          </div>
         </div>
       )
     }

@@ -222,6 +222,41 @@ const tradfiEquity = z.object({
   underlying_assets: z.array(z.string()).default([]),
 });
 
+// Protocol-level risk reports (lending markets, DEXs, aggregators, leverage layers).
+// These use the protocol framework's contract / economic / project axes and deliberately
+// replace the asset field with protocol so future reports do not blur the two collections.
+const protocolReport = z.object({
+  ...common,
+  asset: z.never().optional(),
+  protocol: z.string(),
+  category: z.literal("protocol"),
+  protocol_category: z.string().optional(),
+  contract_score: score,
+  economic_score: score,
+  project_score: score,
+  score_weights: z
+    .object({
+      contract: z.number(),
+      economic: z.number(),
+      project: z.number(),
+    })
+    .optional(),
+  built_on: z.array(z.string()).default([]),
+  tvl_gross: z.number().optional(),
+  tvl_borrowed: z.number().optional(),
+  live_since: z.string().optional(),
+  audited: z.boolean().optional(),
+  audit_count: z.number().optional(),
+  audit_firms: z.array(z.string()).default([]),
+  bug_bounty: z.boolean().optional(),
+  bug_bounty_amount: z.number().optional(),
+  bug_bounty_platform: z.string().optional(),
+  team_doxxed: z.boolean().optional(),
+  incident_history: z.boolean().optional(),
+  is_fork: z.boolean().optional(),
+  fork_of: z.string().optional(),
+});
+
 export const collections = {
   reports: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/reports" }),
@@ -233,5 +268,9 @@ export const collections = {
       lendingVault,
       tradfiEquity,
     ]),
+  }),
+  protocols: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/protocols" }),
+    schema: protocolReport,
   }),
 };

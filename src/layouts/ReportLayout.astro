@@ -23,7 +23,10 @@ interface Props {
 }
 
 const { data, hasDashboard = false, headings = [], dashboardUrl } = Astro.props;
-const description = `${data.asset} risk assessment — ${data.category.replace("-", " ")} | TID Research`;
+const reportName = data.protocol ?? data.asset;
+const isProtocol = data.category === "protocol";
+const collectionPath = isProtocol ? "/protocols" : "/reports";
+const description = `${reportName} risk assessment — ${data.category.replace("-", " ")} | TID Research`;
 
 // liveDashboardUrl drives only the *embed* (external standalone dashboards like thBILL set
 // their own url; slug-based assets fall back to the backing-monitor inside DashboardEmbed).
@@ -37,14 +40,14 @@ const isInstitutional = data.audience === "institutional";
 const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
 ---
 
-<BaseLayout title={`${data.asset} — Risk Assessment | TID Research`} description={description}>
+<BaseLayout title={`${reportName} — Risk Assessment | TID Research`} description={description}>
   <article class={`container-page py-12 ${isInstitutional ? "institutional-report" : ""}`}>
     <div class="mb-8 print-hide flex items-center justify-between gap-4">
       <a
-        href="/reports"
+        href={collectionPath}
         class="text-xs uppercase tracking-wider text-muted-foreground hover:text-primary font-mono"
       >
-        ← All Reports
+        ← All {isProtocol ? "Protocols" : "Reports"}
       </a>
       <div class="flex items-center gap-2">
         {isInstitutional && (
@@ -104,6 +107,7 @@ const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
           {showTrustDisclaimer && (
             <TrustDisclaimer dashboardUrl={dashboardUrl} />
           )}
+          {isProtocol && <ScoreHero data={data} />}
           <div class="prose-report">
             <slot />
             {hasDashboard && (
