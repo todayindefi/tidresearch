@@ -40,7 +40,7 @@ const services = [
   },
   {
     href: "/services/portfolio",
-    title: "Portfolio Operations",
+    title: "Portfolio Tracking",
     description:
       "Daily position reconciliation, yield attribution, and reporting for on-chain portfolios.",
     Icon: LayoutDashboard,
@@ -249,12 +249,11 @@ const dashboards = isProductionStage
   <!-- Risk Score Feed -->
   <section class="py-24">
     <div class="container-page max-w-3xl text-center">
-      <p class="eyebrow mb-3">Free &amp; Public</p>
+      <p class="eyebrow mb-3">For Integration Partners</p>
       <h2 class="text-3xl md:text-4xl font-bold">Risk Score Feed</h2>
       <p class="text-muted-foreground mt-4">
-        Every asset and protocol score we maintain, published as static JSON — no
-        auth, no rate limits. Built for teams that want risk scores inside their own
-        systems rather than in a PDF.
+        Every asset and protocol score we maintain, available as structured JSON — for
+        teams that want risk scores inside their own systems rather than in a PDF.
       </p>
       <div class="flex flex-wrap items-center justify-center gap-10 my-10">
         <div>
@@ -270,8 +269,8 @@ const dashboards = isProductionStage
           </div>
         </div>
       </div>
-      <Button href="https://todayindefi.github.io/risk-feed/" variant="outline" size="lg" external>
-        Browse the Feed
+      <Button href="/contact" variant="outline" size="lg">
+        Request Feed Access
       </Button>
     </div>
   </section>
