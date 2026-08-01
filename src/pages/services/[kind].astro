@@ -58,7 +58,7 @@ const content: Record<
       "Daily tracking across the full governance stack — Discourse forums, Snapshot, Tally, on-chain Aragon votes, and initiative-based systems.",
       "Proposal-by-proposal analysis with explicit voting recommendations and published rationale.",
       "Vote-incentive market coverage: Votemarket and Votium campaign budgets, renewal signals, and gauge-level attribution.",
-      "Active Arbitrum DAO delegates since October 2024 — structured, transparent voting on behalf of token holders.",
+      "Active Arbitrum DAO delegates since October 2024 — 140+ contributions to forum debate and published vote rationales, not silent delegation.",
       "Custom governance briefings for funds and treasuries managing significant voting power.",
     ],
     cta: "Discuss governance support",
@@ -116,6 +116,28 @@ const { Icon } = c;
         {c.bullets.map((b) => <li>{b}</li>)}
       </ul>
     </div>
+
+    {
+      kind === "governance" && (
+        <div class="mt-12 p-6 border border-border/60 bg-card/40">
+          <p class="eyebrow mb-3">Verify our record</p>
+          <h2 class="text-xl font-bold mb-2">Arbitrum DAO</h2>
+          <p class="text-muted-foreground text-sm leading-relaxed mb-4">
+            We have been delegates in the Arbitrum DAO since October 2024, arguing
+            positions in public under our own name. Our full posting history is on the
+            governance forum — read it before you delegate to anyone.
+          </p>
+          <a
+            href="https://forum.arbitrum.foundation/u/TodayInDeFi/summary"
+            class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold font-mono"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            forum.arbitrum.foundation/u/TodayInDeFi
+          </a>
+        </div>
+      )
+    }
 
     {
       kind === "risk" && (
