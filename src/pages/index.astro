@@ -7,35 +7,42 @@ import RiskBadge from "@/components/report/RiskBadge.astro";
 import { getCollection } from "astro:content";
 import { chainLabel } from "@/lib/chains";
 import { visibleAtCurrentStage, isProductionStage } from "@/lib/stage";
-import { ShieldCheck, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
+import { ShieldCheck, Activity, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
 
 const services = [
   {
     href: "/services/risk",
     title: "Risk Analysis",
     description:
-      "Asset risk analysis and due diligence to support DeFi projects and institutions.",
+      "Asset and protocol risk assessment and due diligence to support DeFi projects and institutions.",
     Icon: ShieldCheck,
+  },
+  {
+    href: "/services/monitoring",
+    title: "Continuous Monitoring",
+    description:
+      "Hourly on-chain surveillance of backing, peg, and governance surface — with alerts when the risk picture changes.",
+    Icon: Activity,
   },
   {
     href: "/services/governance",
     title: "Governance Services",
     description:
-      "Professional DAO governance support — proposal tracking, analysis, and voting recommendations.",
+      "Arbitrum DAO delegates since 2024 — proposal tracking, analysis, and voting recommendations.",
     Icon: Scale,
   },
   {
     href: "/services/investment",
     title: "Investment Analysis",
     description:
-      "Valuation and growth-based analysis of DeFi sectors to identify category leaders and opportunities.",
+      "Token economics and yield-market analysis grounded in on-chain supply, demand, and rate data.",
     Icon: TrendingUp,
   },
   {
     href: "/services/portfolio",
-    title: "Portfolio Tracking",
+    title: "Portfolio Operations",
     description:
-      "Custom dashboards and spreadsheets to monitor and manage farming portfolios.",
+      "Daily position reconciliation, yield attribution, and reporting for on-chain portfolios.",
     Icon: LayoutDashboard,
   },
 ];
@@ -186,7 +193,7 @@ const dashboards = isProductionStage
         <h2 class="text-3xl md:text-4xl font-bold">What we do for clients</h2>
         <div class="h-1 w-16 bg-primary mx-auto mt-6"></div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
           services.map(({ href, title, description, Icon }) => (
             <Card href={href} hoverable>
@@ -236,6 +243,36 @@ const dashboards = isProductionStage
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <!-- Risk Score Feed -->
+  <section class="py-24">
+    <div class="container-page max-w-3xl text-center">
+      <p class="eyebrow mb-3">Free &amp; Public</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Risk Score Feed</h2>
+      <p class="text-muted-foreground mt-4">
+        Every asset and protocol score we maintain, published as static JSON — no
+        auth, no rate limits. Built for teams that want risk scores inside their own
+        systems rather than in a PDF.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-10 my-10">
+        <div>
+          <div class="text-4xl font-bold text-primary">130+</div>
+          <div class="text-xs text-muted-foreground uppercase tracking-wider font-mono mt-1">
+            Assets Scored
+          </div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary">60+</div>
+          <div class="text-xs text-muted-foreground uppercase tracking-wider font-mono mt-1">
+            Protocols Scored
+          </div>
+        </div>
+      </div>
+      <Button href="https://todayindefi.github.io/risk-feed/" variant="outline" size="lg" external>
+        Browse the Feed
+      </Button>
     </div>
   </section>
 </BaseLayout>
