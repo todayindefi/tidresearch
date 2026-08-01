@@ -91,7 +91,7 @@ claim a holder actually owns is unregulated.
 | **Used as collateral** | Heavily. Over half the supply is posted against borrowing on Morpho and Kamino at 86–88% LTV. Priced by an accrued-value oracle, so market dips don't trigger liquidations — but the mark can exceed what the collateral would sell for. |
 | **Admin & custody** | Hastra controls fulfillment and freeze functions; the token stack spans Ethereum, Solana, and Provenance. Hastra is a disclosed Figure related party and uses licensed Figure software. |
 | **Regulated?** | FCC/YLDS is SEC-registered and KPMG-audited. Hastra and PRIME are not, so holders rely on an unregulated wrapper and staking stack above the regulated certificate. |
-| **Biggest risk** | Deteriorating private-credit performance inside an opaque facility, imperfect reserve segregation, and an admin-mediated primary exit with virtually no instant USDC buffer. |
+| **Biggest risk** | Deteriorating private-credit performance inside an opaque facility, imperfect reserve segregation, and an admin-mediated primary exit that is funded sale-by-sale rather than from a standing reserve. |
 
 ## Risk by axis
 
@@ -171,7 +171,7 @@ The 5.0 score reflects how those risks compound. Well over $200M has been borrow
 
 That is why the mark falls to 5.0, but not lower. Backing still reconciles roughly 1:1, two audits closed their findings, no lending market has bad debt, and the base certificate issuer is SEC-registered with KPMG-audited annual statements. PRIME can fit a small private-credit allocation for a holder who understands the HELOC facility, administrator-mediated redemption, and multichain implementation. It is not a cash equivalent, a direct Treasury claim, or an instant trustless redemption product.
 
-**Watch items:** reserve-account segregation; the USDC buffer and pending redemption queue; facility inventory and securitization cadence on the [monitor](https://todayindefi.github.io/backing-monitor/?asset=hastra-prime), updated hourly; Figure loan delinquency and any facility-level disclosure; Ethereum pool depth after incentives; the Q2 FCC filing expected around mid-August; and termination or breach of the Figure software licence the protocol runs on.
+**Watch items:** reserve-account segregation; redemption throughput and the pending queue; facility inventory and securitization cadence on the [monitor](https://todayindefi.github.io/backing-monitor/?asset=hastra-prime), updated hourly; Figure loan delinquency and any facility-level disclosure; Ethereum pool depth after incentives; the Q2 FCC filing expected around mid-August; and termination or breach of the Figure software licence the protocol runs on.
 
 ## Related reports
 
