@@ -8,14 +8,14 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 audience: "retail"
 date: "2026-07-08"
-last_verified: "2026-07-08"
+last_verified: "2026-08-03"
 featured: false
 production: true
 issuer: "Tether Limited (BVI) / iFinex"
 audited_reserves: false
-market_cap_approx: 187000000000
+market_cap_approx: 183500000000
 peg_mechanism_score: 7.5
-backing_score: 6.5
+backing_score: 6.0
 liquidity_score: 9.5
 issuer_score: 5.5
 overall_score: 7.0
@@ -33,11 +33,13 @@ overall_score: 7.0
 
 ## Summary
 
-USDT is the largest stablecoin in existence — roughly **$187 billion** in circulation — issued by **Tether Limited**, a BVI-domiciled company affiliated with iFinex, the parent of the Bitfinex exchange. It is backed primarily by short-term US Treasuries (around 82% of reserves), alongside cash equivalents, Bitcoin and gold, and it is verified by quarterly reserve *attestations* from BDO Italia. A first full audit — engaged with KPMG in early 2026 — is in progress but not yet delivered.
+USDT is the largest stablecoin in existence — roughly **$183.5 billion** in circulation — issued by **Tether Limited**, a BVI-domiciled company affiliated with iFinex, the parent of the Bitfinex exchange. It is backed primarily by short-term US Treasuries (around 77% of reserves), alongside cash equivalents, Bitcoin and gold, and it is verified by quarterly reserve *attestations* from BDO Italia. A first full audit — engaged with KPMG in early 2026 — is in progress but not yet delivered.
 
 Two things define USDT's risk. First, it has the deepest liquidity of any crypto asset, on every major venue and virtually every chain, and it has held its peg through a decade of FUD cycles, regulatory actions and market crashes. Second, its issuer is the least transparent among the blue-chip stablecoins: attestations rather than a completed audit, no on-chain proof of reserves, a complex corporate structure, and two resolved regulatory settlements in the record.
 
 The **7.0/10** reflects that balance — unmatched liquidity and a proven peg against issuer transparency as the dominant residual risk. It lands one notch below fully-audited, US-regulated USDC, and the gap is driven by issuer and backing transparency, not by any weakness in the peg itself.
+
+Tether's **Q2 2026 attestation**, published 2026-07-31, moved one part of that picture. USDT is still over-collateralized and the peg did not budge, but the cushion of reserves above what Tether owes holders **halved in a single quarter**, from a record $8.23 billion to $4.11 billion. We have cut the Backing score from 6.5 to **6.0** on that. The overall score **holds at 7.0** — liquidity and peg resilience are untouched, and one quarter of evidence on one axis does not re-price a decade-proven asset. The detail is in "What backs it" below.
 
 ## What you actually earn
 
@@ -51,14 +53,50 @@ What keeps the peg tight is that those qualified redeemers *do* arbitrage. Any d
 
 ## What backs it — and the transparency question
 
-This is the core caveat, and it is best understood as *structure* rather than a fast-moving number.
+**Start with what did not happen.** USDT is over-collateralized. Tether holds more assets than it owes to holders, the Q2 2026 attestation confirms it, and the peg never moved — not by a basis point that mattered. Nothing below is a shortfall, and none of it is a reason to expect one tomorrow.
 
-Reserves are now majority short-term US Treasuries — around **82%** — a major improvement over the 2021 commercial-paper era, with total assets exceeding liabilities by a multi-billion-dollar excess buffer per Tether's own reports. The composition is genuinely stronger than it was. Two durable caveats remain:
+What changed is the size of the margin, and how fast it changed.
 
-- **Attestations, not a full audit.** Tether publishes quarterly reserve *attestations* through BDO Italia — point-in-time snapshots confirming that assets were at least equal to liabilities on a given date. That is not a continuous Big-Four audit of reserve quality, encumbrance, or intra-quarter availability. A first full audit (KPMG) is underway in 2026 but has not yet been delivered.
+Reserves are majority short-term US Treasuries — around **77%** of what Tether owes, counting T-bills and reverse repo together. That is a major improvement over the 2021 commercial-paper era and it is the load-bearing part of the book. (This report previously said around 82%. That figure was overstated; see the revision note at the foot.) Around the Treasury core sit cash equivalents, secured loans, physical gold and bitcoin — and that outer ring is where the Q2 story is.
+
+### The cushion halved in one quarter
+
+The **excess reserve** is the buffer: total assets minus everything owed to USDT holders. It is the only thing standing between a loss on Tether's investments and the dollar you are holding. Here is what one quarter did to it:
+
+| | Q1 2026 (Mar 31) | Q2 2026 (Jun 30) |
+|---|---|---|
+| **Excess reserves** | **$8.23B** — a record | **$4.11B** |
+| **Collateralization** | about 104.5% | **about 102.2%** |
+| Physical gold | $19.84B / 132.2 tonnes | $18.84B / 146.2 tonnes |
+| Bitcoin | $6.62B / 97,137 BTC | $5.80B / 98,933 BTC |
+| Secured loans | about $15.9B | about $13.5B (down 15%) |
+| Owed to holders | about $183.5B | $183.64B (flat) |
+
+Liabilities were flat. The buffer fell by half anyway, because the assets fell — mostly gold and bitcoin, which had a bad quarter. Gold dropped about 15%; bitcoin fell from $68,200 to $58,600.
+
+**That is the structural point worth taking away: the cushion is roughly 6× levered to two volatile assets.** Gold and bitcoin together are worth about $24.6 billion, sitting on top of a $4.11 billion buffer — so a combined drawdown of a bit under a fifth in those two positions would, on paper, consume the entire surplus. Q2 was that arithmetic running in slow motion. Not a crisis; a demonstration.
+
+Two things make it worth a score change rather than a shrug:
+
+- **Tether grew the volatile book in the same quarter the cushion halved.** It *added* 14 tonnes of gold and 1,796 BTC while the buffer was falling. Prices went down; the position sizes went up. That is a deliberate choice about risk posture, not something the market did to them. It may well be a good long-term bet. It is still the opposite of what a conservative reserve manager does when the margin is thinning.
+- **About $3.8 billion left the reserve and nobody has said where it went.** Run the arithmetic: Tether earned $1.5 billion in operating profit and took roughly $1.8 billion of mark-downs on gold and bitcoin, so assets should have moved by about *negative $0.3 billion*. They actually fell $4.05 billion. The gap is around $3.8 billion. The likely explanation is mundane — distributions to shareholders, or transfers into Tether's separate investment arm — but "likely" is doing real work in that sentence, because no one has confirmed it.
+
+### Why the missing $3.8B is the best argument in this report
+
+That gap is the clearest illustration we have ever had of what "attestation, not audit" actually costs you, so the two durable caveats below are no longer abstract:
+
+- **Attestations, not a full audit.** Tether publishes quarterly reserve *attestations* through BDO Italia — point-in-time snapshots confirming that assets were at least equal to liabilities on a given date. That is not a continuous Big-Four audit of reserve quality, encumbrance, or intra-quarter availability — and, crucially, it carries no obligation to explain movements. An attestation confirms the numbers add up on June 30th. It does not have to say where $3.8 billion went between April and June, and it didn't. A full audit would have to. A first one (KPMG) is underway in 2026 but has not been delivered.
 - **No on-chain proof of reserves.** Unlike newer stablecoins that publish a Chainlink proof-of-reserves feed, USDT's reserves are verified only by the periodic report. You are trusting the attestor, not the chain.
 
-The rest of the reserve — cash equivalents, Bitcoin and gold — adds some volatility that a pure T-bill book would not carry, though the Treasury majority is the load-bearing part.
+### The other side of the ledger
+
+Three genuine positives in the same report, and they are why this is a 0.5 move on one axis rather than something louder:
+
+- **Treasury exposure held flat** at about $140.6 billion. The safe core of the reserve did not shrink; the volatile ring around it did.
+- **Secured lending was cut 15%**, from about $15.9 billion to about $13.5 billion. That is real de-risking of the least transparent asset class in the book.
+- **USDT kept growing** — issuance was up $446 million into a quarter when the stablecoin market overall contracted. Demand for the product is not the problem here.
+
+Since June 30th both gold and bitcoin have partly recovered, which on a mark-to-market basis puts the cushion back near $4.8 billion. That recovery is a reason not to over-read a single quarterly snapshot — and also a reminder of the underlying point, since a buffer that moves that much on price alone is a buffer that depends on prices.
 
 ## The issuer
 
@@ -67,7 +105,15 @@ Tether Limited is BVI-domiciled, sits inside a complex iFinex/Bitfinex corporate
 - The **2019 NYAG finding** — commingled funds and an undisclosed credit facility to Bitfinex — settled for $18.5 million.
 - The **2021 CFTC fine** — $41 million, for reserve misrepresentation over the 2016–2019 period.
 
-Both are settled, and both reflect a historical pattern of opacity that improved transparency has since narrowed but not erased. USDT also sits **outside the US GENIUS Act framework**: Tether's US-compliant offering is a *separate* product (USA₮/USAT, an OCC-chartered bank product), so USDT itself carries no US regulatory wrapper.
+Both are settled, and both reflect a historical pattern of opacity that improved transparency has since narrowed but not erased.
+
+USDT also sits **outside the US GENIUS Act framework**, and that timetable is now firm rather than speculative:
+
+- Implementing rules were due **2026-07-18**.
+- The broad provisions take effect on the earlier of **2027-01-18** or 120 days after final rules.
+- From **2028-07-18**, US exchanges and custodians may generally offer only *permitted* stablecoins. For USDT to still be on a US venue that day, Tether would need to qualify through the foreign-issuer comparability pathway.
+
+**For a US retail holder this is a two-year horizon, not a today problem.** Nothing about your access changes this year, and the 2028 date is the one to diarize. But it is worth understanding Tether's actual strategy, because it is not "get USDT compliant". Tether's US-regulated product is a *separate* token: **USA₮/USAT**, launched 2026-01-28, issued by Anchorage Digital Bank (OCC-chartered) with Cantor Fitzgerald as reserve custodian, and expanded to Celo on 2026-07-29. The read is that USAT exists so that USDT does not have to comply — USDT is being positioned for offshore and emerging-market demand, where most of its use already is. That is a coherent business plan. It also means USDT itself is unlikely to ever pick up a US regulatory wrapper.
 
 ## Peg resilience
 
@@ -84,10 +130,10 @@ The token contracts themselves are simple, long-lived and heavily battle-tested 
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg Mechanism | 7.5 | Standard fiat mint/redeem, proven across a decade including TerraUST contagion. High redemption minimums are offset by the deepest arbitrage network in crypto. |
-| Backing | 6.5 | Reserves now majority US Treasuries (~82%) — a major improvement — but attestations only (BDO Italia, not Big Four), no on-chain proof of reserves, and a history of misrepresentation settlements. |
+| Backing | 6.0 | **Down from 6.5 (2026-08-03).** Reserves remain majority US Treasuries (about 77%), but the Q2 2026 attestation halved the surplus from $8.23B to $4.11B (104.5% to 102.2% collateralization) while the issuer grew a gold-plus-bitcoin book now roughly 6× the cushion, and about $3.8B left the reserve unexplained. Still attestations only (BDO Italia, not Big Four), no on-chain proof of reserves, and a history of misrepresentation settlements. |
 | Liquidity | 9.5 | Best-in-class — deepest stablecoin liquidity on every major CEX and DEX, the highest trading volume of any crypto asset, on virtually every chain. Near-zero slippage at any realistic size. |
 | Issuer | 5.5 | Two resolved regulatory settlements (NYAG + CFTC), BVI domicile with a complex iFinex/Bitfinex structure, no completed full audit, and USDT sits outside the US GENIUS Act framework. Offset by 10+ years operating, improved transparency, and no sustained depeg. |
-| **Overall** | **7.0** | Unmatched liquidity and a decade of peg resilience carry real weight; issuer transparency and regulatory history are the dominant residual risks. Reserve-composition gains and the track record justify a score above the midpoint, but a notch below fully-audited, regulated USDC. |
+| **Overall** | **7.0** | **Held at 7.0 (2026-08-03).** Unmatched liquidity and a decade of peg resilience carry real weight, and neither was touched by the Q2 print — peg and liquidity scores are unchanged, and the drawdown that halved the surplus was substantially a gold and bitcoin move that has since partly reversed. Backing comes down one notch on a single quarter of evidence, which is documented here rather than compounded into the headline score. Issuer transparency and regulatory history remain the dominant residual risks. A second consecutive quarter of surplus erosion in Q3 would take this to 6.5. |
 
 ## Who it's for
 
@@ -96,16 +142,19 @@ Anyone who needs maximum liquidity and cross-chain reach, values a decade-proven
 ## Who should avoid
 
 - Anyone who requires audited, on-chain-verifiable reserves or a regulated US issuer — prefer USDC.
-- Anyone who needs an EU-MiCA-compliant stablecoin — USDT faces MiCA-driven delistings on some EU venues.
+- Anyone who needs an EU-MiCA-compliant stablecoin. Tether has declined to seek MiCA authorization, and EU venues are acting on it: **Revolut delists USDT for EU users on 2026-08-31**, with a staged wind-down that converts residual balances to fiat. If you hold USDT on an EU platform, check your venue's timeline now rather than later.
 - Anyone uncomfortable holding the single most systemically concentrated asset in crypto.
 
 ## What to watch
 
-- **The KPMG full audit.** This is the catalyst. A clean first full audit would plausibly lift Backing (6.5 → 7.0+) and Issuer (5.5 → 6.5) — track for delivery; the scores are held until it lands.
-- **Reserve-composition disclosures** each quarter — the T-bill share, and any drift back toward riskier assets.
-- **MiCA / EU regulatory status** — further EU delistings would signal tightening regulatory access.
-- **Any move to bring USDT itself** (not just USA₮) under a US regulatory framework.
+- **The Q3 2026 attestation, due around the end of October.** This is now the decisive datapoint. A second consecutive decline in the surplus — or a surplus under about $3 billion, or collateralization under about 101.5% — would take the overall score from 7.0 to 6.5. A rebuild toward $8 billion would argue Q2 was a drawdown artifact and nothing more.
+- **Whether the missing $3.8 billion repeats,** and whether Tether ever publishes a distribution policy. A one-off transfer is unremarkable. A recurring, undisclosed drain would be an *issuer* problem rather than just a backing one, and would hit a second axis.
+- **Gold and bitcoin prices.** Unusually for a stablecoin, these are worth watching directly: the two positions are roughly 6× the cushion, so a large drawdown in either is the actual mechanism by which USDT's buffer erodes. As of 2026-08-03 both had partly recovered (bitcoin around $63,000, gold around $4,063/oz), putting the marked cushion near $4.8 billion.
+- **The KPMG full audit.** Still the biggest forward-positive. It was engaged in March 2026, has no delivery date, and Tether describes it as a multi-year initiative — so do not expect it soon. A clean first audit would plausibly lift Backing to 7.0+ and Issuer to 6.5; the scores are held until it lands.
+- **Further EU delistings** after Revolut, and any sign Tether pursues the GENIUS foreign-issuer pathway for USDT itself rather than ceding the US market to USAT.
 
 ---
 
-*This report is based on Tether's public attestations, reserve reports, and on-chain data through 2026-07-08. USDT's reserves are attested (BDO Italia), not fully audited (a KPMG audit is in progress), and the reserve composition shifts over time. Corrections or attestation links welcome at info@tidresearch.com.*
+*This report is based on Tether's public attestations — most recently the **Q2 2026 Consolidated Reserves Report (BDO Italia, published 2026-07-31, as of 2026-06-30)** — plus reserve reports and on-chain data through 2026-08-03. USDT's reserves are attested, not fully audited (a KPMG audit is in progress), and the reserve composition shifts over time. Corrections or attestation links welcome at info@tidresearch.com.*
+
+*Revision history: 2026-08-03 — Backing 6.5 → 6.0 following Tether's Q2 2026 attestation; overall held at 7.0. **Corrected the reserve Treasury share from around 82% to around 77%** — the earlier figure was overstated. Direct plus indirect US Treasury exposure was about $140.6B ($114.96B T-bills plus $25.62B reverse repo) against $183.64B in liabilities, which is 76.6%; the Q1 figure was 76.8% on the same basis, so this was never 82% and the correction applies retroactively rather than reflecting a change in composition. Also added the Q2 reserve deterioration, firmed up the Revolut/MiCA and GENIUS Act dates, and rewrote "What to watch". Initial production publish 2026-07-08.*
