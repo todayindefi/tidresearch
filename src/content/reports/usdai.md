@@ -9,12 +9,12 @@ assessment_type: "light"
 audience: "retail"
 companion_report: "susdai"
 date: "2026-05-28"
-last_verified: "2026-07-23"
+last_verified: "2026-08-12"
 featured: false
 production: true
 issuer: "Permian Labs"
 audited_reserves: false
-market_cap_approx: 155000000
+market_cap_approx: 172630000
 peg_mechanism_score: 7.0
 backing_score: 7.5
 underlying_score: 7.5
@@ -28,46 +28,102 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdai"
 
 **Moderate risk · 6.5/10**
 
-USDai is the synthetic-dollar peg leg of the USD.AI protocol by Permian Labs, built on M0's PYUSDx stablecoin platform. Every USDai is backed 1-for-1 by **PYUSD** (PayPal's regulated, Paxos-issued, T-bill-backed stablecoin) held directly in the USDai contract on Arbitrum. The yield-bearing, credit-risk-bearing leg is **sUSDai** — covered separately. If you're here for the headline "≈7% yield on GPU loans," that's sUSDai's report, not this one. USDai itself carries no GPU-loan exposure.
+| Backing | Exit methods | Effective time-to-cash | Age | Chains |
+|---|---|---|---|---|
+| 100% PYUSD held in the token contract, verifiable in two on-chain reads | 1:1 PYUSD redemption (onboarded market makers and institutions only) or Curve USDai/USDC (anyone) | Same-day for onboarded; minutes via Curve at retail size | About 10 months | Arbitrum |
 
-## What makes it interesting
+## Summary
 
-Most stablecoins ask you to trust a monthly attestation. USDai is **100% on-chain verifiable in two RPC reads**: the USDai contract literally holds 156.9M PYUSD against 154.8M USDai supply (≈101.4% coverage, re-verified July 2026). You don't need to wait for a quarterly report — you can refresh the live dashboard. That class of verifiability is rare in our coverage; the only peer is Saturn USDat. And the underlying PYUSD is itself regulated, NYDFS-supervised, and attested by Paxos.
+USDai is the synthetic-dollar peg leg of the USD.AI protocol by Permian Labs, issued on M0's PYUSDx platform. Every USDai is backed 1-for-1 by **PYUSD** — PayPal's regulated, Paxos-issued, T-bill-backed stablecoin — held directly in the USDai contract on Arbitrum. The yield-bearing, credit-risk-bearing leg is **sUSDai**, covered [separately](/reports/susdai/). If you are here for the headline yield on GPU loans, that is the other report. **USDai itself carries no GPU-loan exposure.**
 
-USDai's supply has roughly halved since May (≈283M → ≈155M) as holders rotated into the staked sUSDai leg for yield; PYUSD coverage held above 100% throughout (re-verified on-chain at 101.4%, 156.9M PYUSD vs 154.8M supply), so this is a capital rotation, not a redemption-stress event.
+The 6.5/10 is driven by an unusually strong backing story set against an unusually weak exit story. On the strong side: reserves are not attested monthly, they are **visible on demand in two RPC reads**, and the protocol's own reported reserve figure agrees with the on-chain balance exactly. The underlying is a regulated, NYDFS-supervised, T-bill-backed instrument rather than something the issuer manufactured. On the weak side: **secondary depth is under $2M against a supply near $173M**, there is no centralized-exchange listing, and contract-level redemption is gated to onboarded market makers and institutions — so a retail holder's practical exit is the thin pool, not the redemption window.
 
-## Why it's not higher
+Supply has moved a lot and is worth reading correctly. It fell from about $283M in May to about $155M in late July as holders rotated into the staked sUSDai leg for yield, and has since **recovered to $172.63M**. Coverage held above par through all of it. This is capital moving between the two legs of one protocol, not redemption stress.
 
-Three real constraints keep this from being a top-tier rating:
+## Backing & solvency
 
-- **Thin secondary market.** USDai/USDC on Curve sits below about $2M against a ~$155M supply. There's no centralized-exchange listing. Direct 1-for-1 PYUSD redemption is available, but only to KYC'd authorized market makers and institutions from Q2 2026 onward — retail holders are routed through the thin secondary market by default.
-- **Short track record.** Roughly ten months live, with a single security audit (Cantina/Spearbit, 0 critical, 0 high). No stress event has tested the operating model.
-- **The reserve sits in an upgradeable contract.** Today's PYUSD coverage is genuinely on-chain at 101.4%, but the contract is governed by a 48-hour timelock and a 3-of-3 multisig. A malicious or buggy upgrade is visible on-chain for 48 hours before it can land — that gives holders a real exit window — but it's not the same as a non-upgradable, trustless reserve.
+USDai's distinguishing property is that the reserve is not somewhere else. There is no custodian wallet, no off-chain treasury, no reserve-manager contract — the **USDai token contract holds the PYUSD itself**. Verified on-chain on 2026-08-12, the contract held **174,318,300 PYUSD against 172,630,798 USDai outstanding — coverage of 100.98%**.
 
-## How holders actually exit
+Two details make that number stronger than a bare ratio. First, **it is reproducible by anyone in two reads**: query `baseToken()` to confirm the reserve asset is PYUSD, then read the contract's PYUSD balance against total supply. No oracle, no attestation, no waiting for a quarterly report. That class of verifiability is rare in our coverage — the only close peer is [Saturn's USDat](/reports/usdat/), and USDat's reserve is a claim on a token whose own backing layer this coverage has had to discount. Second, **Permian's published reserve figure matches the on-chain balance exactly** — zero divergence at the last read, which is the check that catches an issuer reporting a number its own contract does not support.
 
-Three paths, in practice:
+Coverage eased slightly from the 101.4% recorded in July, and the reason is benign: supply grew faster than reserves over three weeks while staying above par throughout. What matters for a holder is that the ratio has never gone below 100%, across both a 45% supply contraction and the subsequent recovery.
 
-1. **You're an onboarded MM / institutional depositor** — direct 1:1 PYUSD redemption at the contract. The cleanest exit.
-2. **You're a retail holder** — your practical exit is the thin secondary market. In calm conditions arbitrageurs keep the price near peg (live around $1.0007). Under stress, the secondary depth is what carries you, and there isn't much of it.
-3. **You stake into sUSDai instead** — different risk profile, different report.
+**The residual risk is not reserve quality — it is contract authority.** The PYUSD sits in an upgradeable contract. "Your PYUSD is in the contract today" is a real-time on-chain fact, not a trustless guarantee against a future privileged withdrawal. What converts that from a serious concern into a manageable one is the admin posture described below, which gives 48 hours of visible notice before any upgrade can land. There is also **no formal third-party reserve attestation at the USDai level** — the frontmatter records `audited_reserves: false` deliberately — but for this asset the on-chain proof is strictly better evidence than an attestation would be.
 
-The exit asymmetry between (1) and (2) is the single biggest retail-relevant risk on this asset.
+**One commercial dependency worth naming:** PayPal pays 4.5% a year on PYUSD held in the protocol and has guided up to $1B in loan backing for 2026. That is a tailwind, but it means the reserve relationship is an incentivized commercial arrangement rather than a neutral custody one, and reserve composition responds to incentive economics as well as to peg defense.
 
-## Governance — a relative strength
+## The underlying: PYUSD, and what USDai is not exposed to
 
-USDai is upgradeable, but well-governed for an asset of its age. Upgrades flow through an OpenZeppelin TimelockController with a **48-hour minimum delay**, controlled by a **3-of-3 Safe multisig** (three known signers). Operational permissions on the token sit with a sibling 3-of-3 multisig. No role revocations have happened since deployment. This is meaningfully stronger than single-key peers in the same age cohort.
+The **Underlying axis sits at 7.5** because PYUSD is high-quality collateral by any reasonable standard: a Paxos Trust Company stablecoin under New York Department of Financial Services supervision, fully reserved in US Treasury bills, overnight repo and cash, with monthly Paxos attestations. Holding USDai is a 1:1 claim on that. It is capped below 8 only because of the one-layer indirection — you hold a token that holds PYUSD, which holds T-bills, rather than holding the bills.
+
+**A clarification that matters for anyone reading across our coverage: USDai is not backed by `$M`.** M^0's `$M` is the reserve asset behind Saturn's [USDat](/reports/usdat/), and it is the reason that report's backing axis carries a discount — the layer beneath `$M` depends on a federation of authorized minters posting collateral, is not on-chain-verifiable, and is not separately assessed on this site. **None of that reaches USDai.** Its reserve is PYUSD, and the verification above reads the actual token balance rather than trusting a description of it.
+
+The confusion is understandable and worth resolving explicitly. USD.AI's **original 2025 design did back USDai with `$M`**, and M0's research post announcing that integration still circulates widely. The protocol **migrated to PYUSD reserves in February 2026** with the launch of PYUSDx — a framework in which **PayPal supplies the reserves, MoonPay supplies infrastructure, and M0 supplies the issuance rails**. USD.AI is its flagship implementation. Permian does not run an independent mint of base `$M`, and the reserve asset in the contract today is PYUSD, which is what the two-read verification above actually confirms.
+
+**Using M0's rails is not holding M0's collateral.** No ceiling from the `$M` assessment applies here, and USDai's backing score is unaffected by it.
+
+## Exit liquidity
+
+This is the weakest dimension by a distance, and the reason a strong backing score does not produce a strong overall one.
+
+**For onboarded market makers and institutional depositors:** direct 1:1 PYUSD mint and redemption at the contract. This is the clean exit — no slippage, no AMM tax. It requires completing Permian's KYC onboarding, and since Q2 2026 contract-level mint and redeem have been **restricted to that group**.
+
+**For everyone else:** the secondary market, dominated by the Curve USDai/USDC pool, with a Uniswap V4 pool alongside it. That pool sits **below about $2M against a supply near $173M** — roughly one percent of the float — and there is **no centralized-exchange listing**. Retail-size exits price fine; in calm conditions arbitrageurs hold USDai close to par, and it has traded around $1.0007. But the depth that carries you in a stress event is not there, and a holder of any size cannot exit through secondary without moving the price against themselves.
+
+**The asymmetry between those two paths is the single biggest retail-relevant risk on this asset.** It is not a solvency risk — the reserve is there and verifiable — it is a risk that the mechanism which guarantees par is unavailable to you specifically. Holding, transferring and staking remain fully permissionless; only the redemption window is gated.
+
+The third path in practice is to **stake into sUSDai** rather than exit, which trades a liquidity problem for a credit-and-queue problem. Different risk profile, [different report](/reports/susdai/).
+
+## Peg & yield dynamics
+
+**Peg.** USDai has held close to par since launch, with the Curve-implied price sitting a fraction above the dollar at the last read. The **Peg axis sits at 7.0**: the 1:1 PYUSD redemption available to onboarded participants is a genuine par-enforcement mechanism, and the arbitrage that transmits it to the secondary market has worked in calm conditions. What holds it there rather than higher is that the enforcement mechanism runs through a gated participant set, so the peg's defense in a stress event depends on onboarded market makers choosing to arbitrage into a thin pool. Extreme historical depeg prints on data aggregators are seed-pool artifacts and should be disregarded.
+
+**Yield.** USDai is **non-yield-bearing.** The reserve economics are captured at the protocol level, and holders seeking yield stake into sUSDai, which is where NAV growth, GPU credit exposure and the 30-day redemption queue all live. On the holder side this makes USDai structurally comparable to holding USDC — a stable unit of account, no yield — with the difference that its float is considerably smaller and its secondary market considerably thinner.
+
+## Audits, admin & team
+
+**Admin control sits behind a 48-hour on-chain timelock, and the delay is binding rather than decorative.** USDai's ProxyAdmin (`0x2ddf39c7…`) is owned by a **`TimelockController` at `0x0EEA1EE0…639b` with a minimum delay of 172,800 seconds — exactly 48 hours** — re-verified independently on-chain on 2026-08-12. The detail that makes it real: **the timelock holds its own admin role**, so the delay cannot be shortened, and no new role can be granted, without first passing through the full 48 hours. Proposal authority sits with a **3-of-3 Safe multisig** with three known signers; operational permissions on the token sit with a sibling 3-of-3 multisig, and no role revocations have occurred since deployment.
+
+That distinction — a timelock that governs itself versus one an admin can shorten at will — is the same test applied in the [Saturn reports](/reports/usdat/), and it lets you compare admin posture across issuers on like terms. USDai passes it. In practice it means a malicious or buggy upgrade is publicly visible for two days before it can take effect, and for a holder whose realistic exit is a secondary pool that clears in minutes, **two days is a usable window**. The same timelock owns the ProxyAdmin on sUSDai, so both legs of the protocol share one authority chain.
+
+This is meaningfully stronger than the single-key setups common among stablecoins of the same age, and it is why the Issuer axis holds at 6.0 despite a short track record.
+
+**Audits:** one security review, by Cantina (Spearbit), covering USDai and sUSDai together — 0 critical, 0 high, 1 medium since fixed. A live bug bounty is running. One audit is thin by the standards of a mature issuer, adequate for a protocol under a year old.
+
+**Team and backers:** Permian Labs carries MetaStreet lineage and raised a $13.4M Series A from Framework, Dragonfly, Coinbase Ventures and Arbitrum. Roughly ten months live, single operator, no incidents to date — and no stress event either.
 
 ## Who this is for
 
-USDai is suitable as a transactional / transfer-rail dollar in the USD.AI ecosystem — moving in or out of sUSDai, paying flows on Arbitrum, or holding a PYUSD-backed position with on-chain reserve verifiability. It is **not** a substitute for USDC or USDT for size: secondary depth and the retail redemption gate make exit fragile above retail size.
+- **Holders who want a PYUSD-backed dollar with reserve verifiability they can check themselves**, at retail size, and who value that over depth.
+- **Anyone moving in and out of sUSDai**, or settling flows inside the USD.AI ecosystem on Arbitrum, where USDai is the natural transactional unit.
+- **Onboarded market makers and institutional depositors**, for whom the 1:1 PYUSD redemption path makes this a clean instrument.
+
+## Who this is NOT for
+
+- Anyone substituting it for USDC or USDT at size. Secondary depth under $2M against a $173M float means the exit is fragile above retail scale, and there is no CEX listing to fall back on.
+- Anyone who needs a redemption guarantee they can personally exercise. Without onboarding, par redemption is not available to you.
+- Yield-seekers — USDai pays nothing; [sUSDai](/reports/susdai/) is the yield leg, with a materially different and considerably riskier profile.
+- Anyone requiring a formal third-party reserve attestation as a matter of policy. The on-chain proof is better evidence, but it is not the same document.
+
+## What to watch
+
+- **Coverage drifting below 100%.** It has held above par across a 45% contraction and the subsequent recovery; sustained drift below par would be a tier-1 signal. The dashboard tracks it hourly.
+- **Divergence between the protocol's reported reserve and the on-chain balance.** They currently match exactly. Any gap opening between them matters more than the ratio itself.
+- **Anything queued in the timelock.** Scheduled operations are visible for 48 hours before execution — this is the practical benefit of the admin posture, and the dashboard surfaces pending operations with their countdown.
+- **Any change in the reserve asset.** The backing thesis is specifically PYUSD. A migration to a different reserve — including back toward `$M` — would require re-rating both backing and underlying.
+- **Secondary depth and any CEX listing.** Liquidity at 4.5 is the binding constraint on the overall score; it is also the one most easily fixed.
+- **Whether retail redemption ever reopens.** The Q2 2026 gating is what creates the exit asymmetry. Reversing it would move the peg and liquidity axes together.
 
 ## Live dashboard
 
-Live PYUSD coverage, the on-chain proof-of-reserves panel (with the actual cast commands to reproduce the reads yourself), peg behavior, secondary-market depth, slippage tiers, and a live pending-upgrade watch on the 48-hour timelock are all on the embedded dashboard below.
+Live PYUSD coverage, the on-chain proof-of-reserves panel with the exact commands to reproduce the reads yourself, peg behavior, secondary depth and slippage tiers, and the 48-hour pending-upgrade watch are on the embedded dashboard below.
+
+## Sibling
+
+- [sUSDai](/reports/susdai/) — the staked leg, carrying the GPU-loan credit exposure, NAV growth and a 30-day redemption queue
 
 ---
 
-*This report is built from publicly available documentation and on-chain reads only. We hold no privileged information about the issuer. Corrections welcome to info@tidresearch.com.*
+*This report is built from publicly available documentation and independent on-chain reads, most recently on 2026-08-12. We hold no privileged information about the issuer. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).*
 
-*Revision history: 2026-07-23 — freshness re-verify: PYUSD coverage re-confirmed on-chain at 101.4% (156.9M PYUSD vs 154.8M supply); supply roughly halved since May as capital rotated into staked sUSDai; all scores unchanged. Initial production publish 2026-05-28.*
+*Revision history: 2026-08-12 — all scores held (Peg 7.0 / Backing 7.5 / Underlying 7.5 / Liquidity 4.5 / Issuer 6.0 / Overall 6.5). Figures restated on a fresh on-chain read: PYUSD coverage 100.98% (174.32M PYUSD against 172.63M supply, with the protocol's reported reserve matching the on-chain balance exactly), and supply recovered to $172.63M from the $154.8M July trough after the earlier rotation out of the unstaked leg. **Two substantive additions rather than corrections.** The admin posture is stated more precisely than before: the 48-hour TimelockController holds its own admin role, so the delay cannot be shortened without passing through it — verified on-chain, and the same binding-versus-decorative test used in the Saturn reports. And USDai is stated explicitly as **not** exposed to `$M`, the reserve asset that constrains the backing axis on Saturn's USDat: USD.AI migrated from `$M` to PYUSD reserves in February 2026 and uses M0 for issuance rails only, so none of that dependency reaches this asset. 2026-07-23 — freshness re-verify: coverage re-confirmed at 101.4%; supply roughly halved since May as capital rotated into staked sUSDai; all scores unchanged. Initial production publish 2026-05-28.*
