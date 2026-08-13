@@ -8,15 +8,15 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 audience: "retail"
 date: "2026-06-10"
-last_verified: "2026-06-08"
+last_verified: "2026-08-13"
 peg_mechanism_score: 6.5
 backing_score: 6.5
 liquidity_score: 5.5
-issuer_score: 5.0
+issuer_score: 5.5
 overall_score: 5.5
 issuer: "Frax Finance"
 audited_reserves: false
-market_cap_approx: 124000000
+market_cap_approx: 105500000
 featured: false
 production: true
 ---
@@ -31,7 +31,7 @@ frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as par
 
 | Peg | Yield | Exit | Status | Chains |
 |---|---|---|---|---|
-| $1.00 (trades ≈$0.9997) | None (stake to sfrxUSD for yield) | Per-custodian redemption; USDC exit gated by a ≈$10M buffer | Active flagship | Ethereum + 10 chains (LayerZero OFT) |
+| $1.00 (trades ≈$0.9993) | None (stake to sfrxUSD for yield) | Per-custodian redemption; USDC exit gated by a ≈$10M buffer | Active flagship, float contracting | Ethereum + 10 chains (LayerZero OFT) |
 
 ## Backing & reserves
 
@@ -39,13 +39,13 @@ frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as par
 
 frxUSD is collateralized by a basket of tokenized Treasury products: **BlackRock BUIDL** (via Securitize), **Superstate USTB and USCC**, **WisdomTree WTGXX**, plus USDC (Circle), AUSD (Agora), and JTRSY (Centrifuge). Per LlamaRisk's July 2025 review the collateral ratio was about **103.7%**, and despite the BlackRock-forward marketing, **Superstate funds (USTB + USCC) represented over 90% of backing in aggregate** at that time. T-bill quality is excellent; the concentration in a single fund manager is the risk vector. The current public framing emphasizes custodian diversification, but the live split could not be independently re-verified on this pass — treat the ≈90% Superstate figure as the last confirmed reading, not a guarantee of today's mix.
 
-**A consolidated proof-of-reserves feed now exists, but it isn't currently readable.** frxUSD integrated **Chaos Labs Proof of Reserves** in late 2025 to publish on-chain collateralization attestations as the token expands cross-chain. This is a real transparency improvement over launch — but when checked on 2026-06-08, the frxUSD PoR card on the Chaos dashboard rendered empty ("—") while sibling feeds (USDe, AUSD, USDT0) populated normally. So the PoR "exists but is currently unverified"; the fallback remains the underlying-fund attestations (EY for USTB/WTGXX, PwC for BUIDL). **There is no third-party audit of the frxUSD stablecoin contracts themselves** (see Contracts below) — the audits cover the underlying funds, not the token.
+**A consolidated proof-of-reserves feed now exists, but we still have not been able to read it.** frxUSD integrated **Chaos Labs Proof of Reserves** in late 2025 to publish on-chain collateralization attestations as the token expands cross-chain. This is a real transparency improvement over launch — but it has now failed verification on two consecutive passes, by two different failure modes: on 2026-06-08 the frxUSD PoR card rendered empty ("—") while sibling feeds (USDe, AUSD, USDT0) populated normally, and on 2026-08-13 `oracles.chaoslabs.xyz` did not resolve at all from our environment. That second failure may well be transient or local to us — but the practical status is unchanged, and it has been unchanged for two months: the PoR "exists but is unverified." The fallback remains the underlying-fund attestations (EY for USTB/WTGXX, PwC for BUIDL). **There is no third-party audit of the frxUSD stablecoin contracts themselves** (see Contracts below) — the audits cover the underlying funds, not the token.
 
 ## Exit liquidity & redemption
 
 **This is the most underappreciated risk: redemption is fragmented, and clean USDC exit at scale is shallower than the headline suggests.**
 
-Redemptions run through Frax's deposit/redemption coordinator, and they are **non-fungible across custodians** — each custodian redeems into its own asset (BUIDL → BUIDL, USTB → USTB, and so on). A retail holder who wants to exit to **USDC** is funneled through a **≈$10M Superstate USDC buffer**. Beyond that buffer, large redemptions push you into BUIDL/USTB shares and a separate institutional off-ramp. In practice, USDC-at-par exit liquidity is much thinner than the ≈$124M float implies.
+Redemptions run through Frax's deposit/redemption coordinator, and they are **non-fungible across custodians** — each custodian redeems into its own asset (BUIDL → BUIDL, USTB → USTB, and so on). A retail holder who wants to exit to **USDC** is funneled through a **≈$10M Superstate USDC buffer**. Beyond that buffer, large redemptions push you into BUIDL/USTB shares and a separate institutional off-ramp. In practice, USDC-at-par exit liquidity is much thinner than the ≈$105.5M float implies.
 
 On the secondary market, liquidity has improved but is still mid-tier:
 
@@ -60,21 +60,46 @@ Daily volume is now about **$10.8M** (roughly 3.7× the ≈$2.9M seen in April),
 
 ## Peg performance
 
-**frxUSD has held its peg tightly since launch — this is the strongest part of the picture.** Per LlamaRisk, the maximum deviation has been about **$0.00985**, with only one wick beyond 0.5% (June 26, 2025) that recovered within hours. Hourly volatility has been tighter than USDe. Current price is about **$0.9997**. The risks in this report are structural (contracts, redemption), not operational — the token has done what a stablecoin should so far.
+**frxUSD has held its peg tightly since launch — this is the strongest part of the picture.** Per LlamaRisk, the maximum deviation has been about **$0.00985**, with only one wick beyond 0.5% (June 26, 2025) that recovered within hours. Hourly volatility has been tighter than USDe. Current price is about **$0.9993** (roughly 7bps below par, 2026-08-13). The risks in this report are structural (contracts, redemption), not operational — the token has done what a stablecoin should so far.
 
 ## Contracts & admin
 
 **This is where the score is lost.** Three things compound:
 
 - **No third-party audit of the frxUSD stablecoin contracts.** LlamaRisk states this explicitly. The contracts are **upgradeable proxies**. Frax's in-house "Security Cartel" reviewed the FIP-430 upgrade path, and ChainSecurity audited the FXB-side upgrade — but the frxUSD ERC-20 itself has no public third-party audit report. For an upgradeable stablecoin, that is the single biggest contract-level risk.
-- **A 3-of-5 multisig with no timelock controls upgrades.** The owner (`0xB174…3f27`, re-verified on-chain 2026-06-08: 3 of 5 signers, unchanged) can pause, upgrade the implementation, and modify parameters with **zero delay**. Combine that with "upgradeable + unaudited" and you have a high-trust configuration.
-- **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the 3-of-5 / no-timelock / upgradeable / unaudited setup is exactly what would *enable* such an action silently, which is why it's worth flagging.
+- **A multisig with no timelock controls upgrades — now 4-of-7, previously 3-of-5.** The owner (`0xfFFffF4F3baC444b2C0ecf2A1840d018bE783937`, verified on-chain 2026-08-13: a 4-of-7 Safe) can pause, upgrade the implementation, and modify parameters with **zero delay**. Combine that with "upgradeable + unaudited" and you have a high-trust configuration.
+- **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the 4-of-7 / no-timelock / upgradeable / unaudited setup is exactly what would *enable* such an action silently, which is why it's worth flagging.
+
+### The owner address changed, and we found it by re-reading the chain
+
+**A previous version of this report named `0xB174…3f27`, a 3-of-5 Safe, as the controlling multisig. That is no longer true.** Verified on-chain 2026-08-13:
+
+| | Previously published | Verified 2026-08-13 |
+|---|---|---|
+| Owner | `0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27` | **`0xfFFffF4F3baC444b2C0ecf2A1840d018bE783937`** |
+| Configuration | 3-of-5 Safe | **4-of-7 Safe (v1.3.0)** |
+| Timelock | none | **none** — unchanged |
+| Signer overlap | — | **zero** (`isOwner()` on the new Safe returns false for the old one) |
+
+The old Safe still exists and is still 3-of-5; it simply no longer controls frxUSD.
+
+There are two honest readings here and you should hold both.
+
+**The direction is better.** Four independent keys out of seven is a higher bar to compromise than three out of five, and key compromise is the most likely failure mode for an upgradeable, unaudited stablecoin contract. That is a real improvement, and it is why the Issuer score moves from 5.0 to 5.5.
+
+**The manner is not reassuring.** This was a complete, zero-overlap replacement of the controlling signer set, on a contract that is an upgradeable proxy with no public third-party audit and no execution delay — and we found it by routinely re-reading the chain, not from any announcement or governance record. **We could not locate the record authorising the handover.** That absence does not mean no such record exists; it means we cannot distinguish "a maturing issuer widening its multisig through proper process" from "a signer set replaced quietly" using on-chain state alone. Both are consistent with what we can see. Treat the improvement as provisional until the authorising record surfaces.
+
+**The binding criticism is unchanged.** A timelock, not a wider signer set, is what would actually fix this configuration. Every property that made the December 2025 stealth-patch allegation credible is still present today.
 
 Frax Finance itself is an established team (Sam Kazemian, 5+ years, active development on frxUSD, Fraxtal L2, and frxETH) — the issuer-level track record is real. The contract-trust profile is the offsetting concern.
 
 ## Growth & adoption
 
-frxUSD has **plateaued**: ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124M (Jun 2026) circulating. Supply is essentially flat over the last two months, and more than a year after launch it remains a sub-top-50 stablecoin — well behind newer entrants like USDS and USDe. Integration (Aave V4, OFT chains) is broadening faster than the float is growing.
+**The float is now contracting, not flat.** ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124M (Jun 2026) → **≈$105.5M (Aug 2026)** circulating — down roughly **15% in nine weeks**. A previous version of this report called this "plateaued"; that framing is now too kind.
+
+What makes it worth a second look is the combination: the float is shrinking *while* integrations keep broadening (Aave V4 as a default borrowable asset, more OFT chains). A stablecoin adding venues and losing float usually means the new venues are not where the demand is. More than a year after launch it remains a sub-top-50 stablecoin, well behind newer entrants like USDS and USDe.
+
+(Circulating figures are DefiLlama's **Frax USD** series — the one to watch is frxUSD, id 235. Legacy FRAX is a different token with a different balance sheet under id 6; the two are frequently confused.)
 
 ## Who it's for · Who should avoid
 
@@ -84,17 +109,20 @@ frxUSD has **plateaued**: ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124
 
 **Avoid / size down if:**
 - You need deep, instant, at-par **USDC** exit for a sized position — the redemption fragmentation and ≈$10M buffer are the binding constraint.
-- You weight unaudited upgradeable contracts under a no-timelock 3-of-5 multisig heavily — that is the structural risk here.
+- You weight unaudited upgradeable contracts under a no-timelock multisig heavily — 4-of-7 is better than the 3-of-5 that preceded it, but instant execution is the structural risk here, and that has not changed.
 - You're confusing it with Legacy FRAX — they are different assets (see the disambiguation note at the top).
 
 ## What to watch
 
 - **Chaos PoR feed.** If the frxUSD card on the Chaos dashboard starts populating with live numbers, that closes the current "exists but unverified" gap and is a genuine backing-transparency uplift.
 - **Backing concentration.** The ≈90% Superstate exposure (USTB + USCC) vs the "diversified custodians" marketing — watch for the live split to be re-confirmed either way.
-- **Multisig / upgrades.** The 3-of-5 owner (`0xB174…3f27`) can upgrade with no delay. Any implementation upgrade, or resolution of the Dec 2025 patch allegation, would be material.
+- **Multisig / upgrades.** The 4-of-7 owner (`0xfFFf…3937`, in place as of 2026-08-13) can upgrade with no delay. Any implementation upgrade, another owner change, or resolution of the Dec 2025 patch allegation would be material — as would a timelock, which is the change that would actually move this score.
+- **The authorising record for the August 2026 owner migration.** A Frax governance post or vote documenting the handover to the 4-of-7 Safe would resolve the open question above. Its appearance would firm up the Issuer score; continued absence keeps the improvement provisional.
 - **USDC-exit depth.** The Superstate USDC buffer and Curve USDC-pairing depth are the real exit constraint — more than headline float.
 - **FXB redemption asset.** Note that Frax Bonds (FXBs) currently redeem to *Legacy FRAX* on mainnet, not frxUSD — the Fraxtal upgrade making frxUSD the FXB underlying was still being audited at last check. Verify before relying on it.
 
 ---
 
-*This report describes frxUSD as of June 2026, based on public Frax/LlamaRisk documentation and on-chain reads (multisig re-verified 2026-06-08). Frax Finance has not engaged on this report. The backing sits partly off-chain with regulated custodians and tokenized-fund issuers; figures rely on those issuers' attestations plus on-chain data. Corrections welcome at info@tidresearch.com.*
+*This report describes frxUSD as of August 2026, based on public Frax/LlamaRisk documentation and direct on-chain reads (owner, threshold, signer overlap and supply re-verified 2026-08-13). Frax Finance has not engaged on this report. The backing sits partly off-chain with regulated custodians and tokenized-fund issuers; figures rely on those issuers' attestations plus on-chain data. The Chaos Labs PoR feed could not be retrieved on either of the last two passes. Corrections welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+
+*Revision history: 2026-08-13 — admin migration found on-chain: the frxUSD owner moved from the 3-of-5 Safe `0xB174…3f27` to a 4-of-7 Safe `0xfFFf…3937` with zero signer overlap and still no timelock; no authorising governance record located. Issuer 5.0 → 5.5, overall held at 5.5. Circulating restated ≈$124M → ≈$105.5M (down about 15% in nine weeks), reframing "plateaued" as contracting. Price ≈$0.9997 → ≈$0.9993. Chaos PoR unverified for a second consecutive pass, this time unreachable rather than empty. 2026-06-10 — initial publication (multisig verified 3-of-5 on 2026-06-08; liquidity 5.0 → 5.5 on the Aave V4 listing).*
