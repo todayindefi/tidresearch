@@ -24,7 +24,7 @@ overall_score: 4.5
 live_dashboard_url: "https://app.avantprotocol.com/transparency"
 ---
 
-# savUSD — Retail Risk Report
+# savUSD — Risk Report
 
 **Moderate risk · 4.5/10 · No reduce/exit flag**
 

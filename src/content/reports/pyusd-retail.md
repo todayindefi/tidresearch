@@ -21,7 +21,7 @@ issuer_score: 7.5
 overall_score: 7.0
 ---
 
-# PYUSD — Retail Risk Report
+# PYUSD — Risk Report
 
 **Moderate risk · 7.0/10**
 

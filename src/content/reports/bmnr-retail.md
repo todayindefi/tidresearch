@@ -17,7 +17,7 @@ underlying_assets: ["eth"]
 overall_score: 5.0
 ---
 
-# BMNR (BitMine Immersion Technologies) — Retail Risk Report
+# BMNR (BitMine Immersion Technologies) — Risk Report
 
 **Moderate risk · 5.0/10** | Listed: NYSE: BMNR | Issuer-entity / firepower analysis (NOT an equity buy/sell recommendation)
 

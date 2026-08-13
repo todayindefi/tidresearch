@@ -30,7 +30,7 @@ chain_overrides:
     overall_score: 6.0
 ---
 
-# USDm — Retail Risk Report
+# USDm — Risk Report
 
 **Moderate-elevated risk · 5.0/10** (4.5/10 on Monad, 6.0/10 on Celo)
 

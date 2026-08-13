@@ -21,7 +21,7 @@ market_cap_approx: 132000000
 featured: false
 ---
 
-# Legacy Frax Dollar (FRAX) — Retail Risk Report
+# Legacy Frax Dollar (FRAX) — Risk Report
 
 **High risk · 2.5/10 · Wind-down asset, existing holders should exit**
 

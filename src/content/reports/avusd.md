@@ -23,7 +23,7 @@ market_cap_approx: 108000000
 live_dashboard_url: "https://app.avantprotocol.com/transparency"
 ---
 
-# avUSD — Retail Risk Report
+# avUSD — Risk Report
 
 **Moderate risk · 4.5/10**
 

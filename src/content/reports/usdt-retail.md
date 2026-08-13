@@ -21,7 +21,7 @@ issuer_score: 5.5
 overall_score: 7.0
 ---
 
-# USDT — Retail Risk Report
+# USDT — Risk Report
 
 **Moderate risk · 7.0/10**
 

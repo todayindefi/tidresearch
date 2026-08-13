@@ -30,7 +30,7 @@ incident_history: true
 is_fork: false
 ---
 
-# apxUSD — Retail Risk Report
+# apxUSD — Risk Report
 
 **Significant risk · 3.0/10**
 
@@ -136,7 +136,7 @@ The durable finding on this axis is that secondary depth is **variable and issue
 
 ## A note on the apyUSD sibling
 
-If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD retail report](/reports/apyusd/). apyUSD captures the dividend stream (≈13% APY ongoing) but exits through a **3-to-20-day unlock window with a declining fee** (and now sits on top of the same below-par collateral). The two products are claims against the same Apyx + STRC backing — holding both doesn't diversify.
+If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD report](/reports/apyusd/). apyUSD captures the dividend stream (≈13% APY ongoing) but exits through a **3-to-20-day unlock window with a declining fee** (and now sits on top of the same below-par collateral). The two products are claims against the same Apyx + STRC backing — holding both doesn't diversify.
 
 ## Revision history
 

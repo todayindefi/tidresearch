@@ -17,7 +17,7 @@ underlying_assets: ["btc"]
 overall_score: 4.5
 ---
 
-# MSTR (Strategy Inc.) — Retail Risk Report
+# MSTR (Strategy Inc.) — Risk Report
 
 > **Scope: dependency analysis.** This report analyzes Strategy as an upstream issuer for STRC, STRCx, and downstream-asset holders (apxUSD, apyUSD, sUSDat, etc.).
 > It is **NOT an equity investment analysis** of MSTR common stock. No buy or sell guidance on MSTR is intended or implied.
@@ -200,8 +200,8 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 ## Related reports
 
 - [STRC + STRCx retail report](/reports/strcx/) — the variable-rate perpetual preferred that is Strategy's primary funding instrument, and Backed Finance's on-chain wrapper. **The most direct retail exposure to Strategy's preferred-dividend stream.**
-- [apxUSD retail report](/reports/apxusd/) — Apyx's $1 stablecoin backed partly by STRC family (~30-40% of reserves).
-- [apyUSD retail report](/reports/apyusd/) — Apyx's yield-bearing sibling, captures the STRC dividend stream as NAV growth.
+- [apxUSD report](/reports/apxusd/) — Apyx's $1 stablecoin backed partly by STRC family (~30-40% of reserves).
+- [apyUSD report](/reports/apyusd/) — Apyx's yield-bearing sibling, captures the STRC dividend stream as NAV growth.
 - [sUSDat retail report](/reports/susdat/) — Saturn's yield wrapper, ~81% backed by raw STRC at steady state.
 
 ---

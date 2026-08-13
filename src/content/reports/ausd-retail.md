@@ -21,7 +21,7 @@ issuer_score: 7.0
 overall_score: 7.0
 ---
 
-# AUSD — Retail Risk Report
+# AUSD — Risk Report
 
 **Moderate risk · 7.0/10**
 

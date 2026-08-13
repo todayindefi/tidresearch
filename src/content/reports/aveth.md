@@ -24,7 +24,7 @@ overall_score: 4.5
 live_dashboard_url: "https://app.avantprotocol.com/transparency"
 ---
 
-# avETH — Retail Risk Report
+# avETH — Risk Report
 
 **Moderate-elevated risk · 4.5/10**
 

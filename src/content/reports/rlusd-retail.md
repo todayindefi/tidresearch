@@ -21,7 +21,7 @@ issuer_score: 7.5
 overall_score: 7.0
 ---
 
-# RLUSD — Retail Risk Report
+# RLUSD — Risk Report
 
 **Moderate risk · 7.0/10**
 

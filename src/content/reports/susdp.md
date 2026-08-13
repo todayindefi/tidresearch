@@ -22,7 +22,7 @@ underlying_score: 5.0
 overall_score: 4.5
 ---
 
-# sUSDp — Retail Risk Report
+# sUSDp — Risk Report
 
 **Elevated risk · 4.5/10**
 

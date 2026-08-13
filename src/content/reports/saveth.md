@@ -24,7 +24,7 @@ overall_score: 4.0
 live_dashboard_url: "https://app.avantprotocol.com/transparency"
 ---
 
-# savETH — Retail Risk Report
+# savETH — Risk Report
 
 **Elevated risk · 4.0/10 · Position view: reduce / exit while calm**
 

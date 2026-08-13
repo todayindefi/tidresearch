@@ -46,7 +46,7 @@ If you held a "USDe is a synthetic dollar / unproven basis trade" mental model f
 
 ## What you actually earn
 
-**Nothing on USDe itself** — yield is intentionally diverted to the staked sibling token, **sUSDe**. USDe holders accept zero yield in exchange for the $1 peg and broader DeFi compatibility. If you want yield exposure to Ethena's reserve portfolio, sUSDe is the relevant product — see the companion [sUSDe retail report](/reports/susde/) (separate cooldown risk on exit — a dynamic 1–7-day wait, 1 day as of 2026-07-15; ~3.72% APY as of Q1 2026, materially lower than the 8–40% range of the pre-pivot era).
+**Nothing on USDe itself** — yield is intentionally diverted to the staked sibling token, **sUSDe**. USDe holders accept zero yield in exchange for the $1 peg and broader DeFi compatibility. If you want yield exposure to Ethena's reserve portfolio, sUSDe is the relevant product — see the companion [sUSDe report](/reports/susde/) (separate cooldown risk on exit — a dynamic 1–7-day wait, 1 day as of 2026-07-15; ~3.72% APY as of Q1 2026, materially lower than the 8–40% range of the pre-pivot era).
 
 For USDe specifically: this is a $1-peg stablecoin you hold for the peg and DeFi composability, not for yield.
 
@@ -171,7 +171,7 @@ The retail framing: **the system has been stress-tested at $1.5B+ single-event s
 
 ## A note on sUSDe
 
-If you're reading this and considering the staked sibling sUSDe: it's the yield-bearing wrapper (~3.72% APY as of Q1 2026, down from 8–40% in the basis-trade era but with much lower variance). Exit to the primary path runs through a **cooldown silo** — there is no instant primary exit. Ethena has since shipped a **dynamic cooldown** (proposal #759) keyed on liquid backing coverage: the old fixed 7-day wait is now a coverage-tiered **1 / 3 / 5 / 7 days**, verified on-chain at **1 day** as of 2026-07-15, with an auto-extend safeguard under stress. Secondary markets are deep (Curve, Pendle) with historical mean discount of just -17bps and max -127bps. See the companion [sUSDe retail report](/reports/susde/) for the wrapper-specific risk profile.
+If you're reading this and considering the staked sibling sUSDe: it's the yield-bearing wrapper (~3.72% APY as of Q1 2026, down from 8–40% in the basis-trade era but with much lower variance). Exit to the primary path runs through a **cooldown silo** — there is no instant primary exit. Ethena has since shipped a **dynamic cooldown** (proposal #759) keyed on liquid backing coverage: the old fixed 7-day wait is now a coverage-tiered **1 / 3 / 5 / 7 days**, verified on-chain at **1 day** as of 2026-07-15, with an auto-extend safeguard under stress. Secondary markets are deep (Curve, Pendle) with historical mean discount of just -17bps and max -127bps. See the companion [sUSDe report](/reports/susde/) for the wrapper-specific risk profile.
 
 ---
 

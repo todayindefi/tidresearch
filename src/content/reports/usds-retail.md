@@ -21,7 +21,7 @@ issuer_score: 7.0
 overall_score: 7.5
 ---
 
-# USDS — Retail Risk Report
+# USDS — Risk Report
 
 **Moderate-low risk · 7.5/10**
 
@@ -41,7 +41,7 @@ The 7.5/10 reflects a genuinely robust, systemically important stablecoin — cl
 
 ## What you actually earn
 
-**Nothing on USDS itself** — like DAI, plain USDS pays no yield. To earn Sky's savings rate (around 3.75% APY, variable and set by governance), you stake USDS into **sUSDS**, the yield-bearing savings token. If you want yield, see the companion [sUSDS retail report](/reports/susds/). Holding USDS is for people who want a liquid, DeFi-native dollar rather than yield.
+**Nothing on USDS itself** — like DAI, plain USDS pays no yield. To earn Sky's savings rate (around 3.75% APY, variable and set by governance), you stake USDS into **sUSDS**, the yield-bearing savings token. If you want yield, see the companion [sUSDS report](/reports/susds/). Holding USDS is for people who want a liquid, DeFi-native dollar rather than yield.
 
 ## How exit works
 
@@ -113,7 +113,7 @@ Holders who want a deep, liquid, permissionless, DeFi-native dollar from the mos
 
 ## A note on sUSDS
 
-If you want yield on USDS, the relevant product is **sUSDS** — the ERC-4626 savings token that accrues Sky's savings rate (around 3.75% APY, governance-set). It carries all of the above at the underlying level, plus the wrapper and the variable rate. See the companion [sUSDS retail report](/reports/susds/).
+If you want yield on USDS, the relevant product is **sUSDS** — the ERC-4626 savings token that accrues Sky's savings rate (around 3.75% APY, governance-set). It carries all of the above at the underlying level, plus the wrapper and the variable rate. See the companion [sUSDS report](/reports/susds/).
 
 ---
 

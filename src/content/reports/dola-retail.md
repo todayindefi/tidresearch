@@ -20,7 +20,7 @@ issuer_score: 5.0
 overall_score: 4.5
 ---
 
-# DOLA — Retail Risk Report
+# DOLA — Risk Report
 
 **Moderate risk · 4.5/10**
 
@@ -38,7 +38,7 @@ DOLA is small — about $39M in circulation, with light daily trading volume —
 
 ## What you actually earn
 
-**Nothing on DOLA itself.** Plain DOLA pays no yield. To earn Inverse's savings rate, you stake DOLA into **sDOLA**, the yield-bearing version — see the companion [sDOLA retail report](/reports/sdola/). Holding DOLA is for people who want the DeFi-native dollar, not the yield.
+**Nothing on DOLA itself.** Plain DOLA pays no yield. To earn Inverse's savings rate, you stake DOLA into **sDOLA**, the yield-bearing version — see the companion [sDOLA report](/reports/sdola/). Holding DOLA is for people who want the DeFi-native dollar, not the yield.
 
 ## How exit works
 

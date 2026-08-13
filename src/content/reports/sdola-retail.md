@@ -21,7 +21,7 @@ issuer_score: 5.0
 overall_score: 4.5
 ---
 
-# sDOLA — Retail Risk Report
+# sDOLA — Risk Report
 
 **Moderate risk · 4.5/10**
 

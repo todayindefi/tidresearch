@@ -24,7 +24,7 @@ overall_score: 3.0
 audited_reserves: true
 ---
 
-# apyUSD — Retail Risk Report
+# apyUSD — Risk Report
 
 **Significant risk · 3.0/10**
 
@@ -52,7 +52,7 @@ Treat the specific discount as a **moving event, not a fixed number** — check 
 
 apyUSD inherits everything that drives the [apxUSD reliability picture](/reports/apxusd/): a continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi); monthly Wolf & Company AICPA-standards examinations published at [`docs.apyx.fi`](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) (March 2026 full scope + April 2026 securities-only — cash dropped from April scope, may return in May report); and STRC family as the largest single-issuer concentration. Live reserves and collateralization are on the [dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
 
-**The inherited backing got worse on inspection (June 2026).** Apyx's post-mortem corrected the reserve composition: its public dashboard had been folding **Protocol Owned Liquidity (POL)** and a **net-zero Inventory line** (minted-but-unsold apxUSD — an asset offset by a burnable liability, not real backing) into "Cash." Net of that Inventory, the reserve is roughly **three-quarters STRC family (≈74%)** — *more* concentrated than the ≈66% gross figure suggested — plus ≈13% cash and ≈13% reflexive POL (capped at 15% of reserves, deployed against Apyx's own assets, so lower-quality than cash). Combined with the deepened depeg (apxUSD's attested collateral ratio down to ~84%), that drops apxUSD's Backing axis to **2.0** and its Overall to **3.0**, and apyUSD's **Underlying axis to 3.0** (it tracks apxUSD's overall score, since the vault is a near pass-through onto apxUSD). Strategy's 06-29 soft floor steadies the STRC mark beneath all of this but does not restock Apyx's reserve. See the [apxUSD retail report](/reports/apxusd/) "Backing & solvency" for the full reserve breakdown.
+**The inherited backing got worse on inspection (June 2026).** Apyx's post-mortem corrected the reserve composition: its public dashboard had been folding **Protocol Owned Liquidity (POL)** and a **net-zero Inventory line** (minted-but-unsold apxUSD — an asset offset by a burnable liability, not real backing) into "Cash." Net of that Inventory, the reserve is roughly **three-quarters STRC family (≈74%)** — *more* concentrated than the ≈66% gross figure suggested — plus ≈13% cash and ≈13% reflexive POL (capped at 15% of reserves, deployed against Apyx's own assets, so lower-quality than cash). Combined with the deepened depeg (apxUSD's attested collateral ratio down to ~84%), that drops apxUSD's Backing axis to **2.0** and its Overall to **3.0**, and apyUSD's **Underlying axis to 3.0** (it tracks apxUSD's overall score, since the vault is a near pass-through onto apxUSD). Strategy's 06-29 soft floor steadies the STRC mark beneath all of this but does not restock Apyx's reserve. See the [apxUSD report](/reports/apxusd/) "Backing & solvency" for the full reserve breakdown.
 
 **apyUSD-specific reliability concern:** the vault contract has had one observable implementation upgrade since launch (about a month after going live). Future upgrades have a 3-day visibility window for the guardian role to cancel, but the upgrade path itself is a live risk surface.
 
@@ -77,7 +77,7 @@ Trading on the apyUSD/apxUSD pool is sporadic (market-maker driven rather than c
 
 This window is both an **exit cost** and the protocol's **anti-bank-run feature** — Apyx's June post-mortem credits it with preventing a run during the depeg by disincentivizing the simultaneous exits that would have forced more STRC selling. The max window was shortened from 30 → 20 days by the Apyx admin on 2026-04-15 (verified on-chain); it remains admin-mutable subject to a 72-hour visibility window. For institutional sizing the window is binding, and it now also exposes the holder to days of further collateral drift before the (below-par) terminal asset is received — which is why the **Liquidity and Redemption axes both sit at 3.5**.
 
-Because the canonical path terminates in apxUSD, apyUSD inherits the underlying's redemption model: Apyx's June-15 "Apyx 2.0" announcement to move apxUSD mint/redeem to a single **Redemption Value** floor (via an approved-counterparty RFQ), closing the prior first-mover "free put option," would improve the *terminal* apxUSD you receive — but it is blog-only as of this revision (not yet in docs or on-chain) and it does **not** change apyUSD's own 3-to-20-day unlock window or any of its scores. See the [apxUSD retail report](/reports/apxusd/) for the full Apyx 2.0 detail.
+Because the canonical path terminates in apxUSD, apyUSD inherits the underlying's redemption model: Apyx's June-15 "Apyx 2.0" announcement to move apxUSD mint/redeem to a single **Redemption Value** floor (via an approved-counterparty RFQ), closing the prior first-mover "free put option," would improve the *terminal* apxUSD you receive — but it is blog-only as of this revision (not yet in docs or on-chain) and it does **not** change apyUSD's own 3-to-20-day unlock window or any of its scores. See the [apxUSD report](/reports/apxusd/) for the full Apyx 2.0 detail.
 
 ## Peg & yield dynamics
 
@@ -102,7 +102,7 @@ Same protocol, same audits, same admin as apxUSD — and the same two-sided June
 - No bug bounty.
 - Cross-chain bridge (audited Chainlink CCIP, Ethereum ↔ Base) is governed by a smaller 3-of-6 multisig with no time-delay — weaker than token governance.
 
-See the [apxUSD retail report](/reports/apxusd/) for the full team-trust and reserve write-up.
+See the [apxUSD report](/reports/apxusd/) for the full team-trust and reserve write-up.
 
 ## Who it's for · Who should avoid
 
@@ -123,7 +123,7 @@ See the [apxUSD retail report](/reports/apxusd/) for the full team-trust and res
 
 ## A note on the apxUSD companion
 
-The [apxUSD retail report](/reports/apxusd/) covers the non-yield-bearing sibling, which broke peg in June 2026 and is the asset apyUSD wraps. apxUSD has faster exit at any size (Curve DEX or USDC settlement) but earns no yield; apyUSD adds the dividend pass-through and the 3-to-20-day unlock window. The two products are claims against the same Apyx + STRC backing — holding both does not diversify.
+The [apxUSD report](/reports/apxusd/) covers the non-yield-bearing sibling, which broke peg in June 2026 and is the asset apyUSD wraps. apxUSD has faster exit at any size (Curve DEX or USDC settlement) but earns no yield; apyUSD adds the dividend pass-through and the 3-to-20-day unlock window. The two products are claims against the same Apyx + STRC backing — holding both does not diversify.
 
 ## Revision history
 

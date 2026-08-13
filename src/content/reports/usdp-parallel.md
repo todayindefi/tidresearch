@@ -28,7 +28,7 @@ incident_history: false
 is_fork: false
 ---
 
-# USDp (Parallel) — Retail Risk Report
+# USDp (Parallel) — Risk Report
 
 **Elevated risk · 5.0/10**
 

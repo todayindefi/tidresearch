@@ -23,7 +23,7 @@ issuer_score: 4.5
 overall_score: 3.5
 ---
 
-# USD3 (3Jane) — Retail Risk Report
+# USD3 (3Jane) — Risk Report
 
 **Speculative · 3.5/10**
 

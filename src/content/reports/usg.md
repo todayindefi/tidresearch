@@ -21,7 +21,7 @@ market_cap_approx: 3210000
 featured: false
 ---
 
-# Tangent USG — Retail Risk Report
+# Tangent USG — Risk Report
 
 **Higher risk · 4.0/10 · Early-stage crvUSD fork — genuinely backed, but tiny, thinly traded, and weakly governed**
 

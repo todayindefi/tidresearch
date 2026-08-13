@@ -21,7 +21,7 @@ issuer_score: 8.5
 overall_score: 9.0
 ---
 
-# USDC — Retail Risk Report
+# USDC — Risk Report
 
 **Low risk · 9.0/10**
 

@@ -21,7 +21,7 @@ overall_score: 6.5
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susde"
 ---
 
-# sUSDe — Retail Risk Report
+# sUSDe — Risk Report
 
 **Moderate risk · 6.5/10**
 
