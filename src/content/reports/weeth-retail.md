@@ -10,7 +10,7 @@ audience: "retail"
 date: "2026-08-13"
 last_verified: "2026-08-13"
 featured: false
-production: false
+production: true
 issuer: "ether.fi"
 yield_bearing: true
 volatility_score: 7.5
@@ -35,7 +35,7 @@ chain_overrides:
     overall_score: 6.0
 ---
 
-# weETH — Retail Risk Report
+# weETH — Risk Report
 
 **Moderate risk · 7.0/10**
 

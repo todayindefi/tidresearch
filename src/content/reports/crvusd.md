@@ -166,7 +166,7 @@ Q2–Q3 2026: the issuance-side number runs in the mid $200Ms including PK debt.
 | WETH | ETH | Mid-2023 | Native Ethereum — most loans by count |
 | tBTC | BTC | Mid-2023 | Threshold Network |
 | cbBTC | BTC | 2025 | Coinbase wrapped BTC |
-| weETH | ETH LST | 2025 | ether.fi wrapped eETH. Was an LRT when added; ether.fi removed restaking from weETH on 2026-08-06, moving it to the separate opt-in weETHs token. |
+| weETH | ETH LST | 2025 | ether.fi wrapped eETH — see the [weETH report](/reports/weeth/). Was an LRT when added; ether.fi removed restaking on 2026-08-06, moving it to the separate opt-in weETHs token. |
 | LBTC | BTC | 2025 | Lombard BTC. **Wind-down** ($0 ceiling). |
 
 **Structural trend:** CDP minting has declined from hundreds of millions to tens of millions in active debt, while YieldBasis has become the dominant supply source. BTC-denominated collateral (WBTC, tBTC, cbBTC) now dominates CDP markets by debt value. Check the dashboard for current per-market debt, CR, and utilization.
