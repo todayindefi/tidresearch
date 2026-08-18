@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "tsx scripts/build-gated-slugs.ts",
+    "prebuild": "tsx scripts/build-gated-slugs.ts && tsx scripts/check-frontmatter-keys.ts",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "sync-reports": "tsx scripts/sync-reports.ts",
-    "gated-slugs": "tsx scripts/build-gated-slugs.ts"
+    "gated-slugs": "tsx scripts/build-gated-slugs.ts",
+    "check-frontmatter": "tsx scripts/check-frontmatter-keys.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
