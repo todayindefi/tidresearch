@@ -3,20 +3,23 @@ asset: "syrupUSDT"
 slug: "syrupusdt"
 aliases: ["syrupUSDT", "SYRUPUSDT", "Syrup USDT", "Maple Syrup USDT"]
 chains: ["eth"]
-category: "stablecoin"
-peg_mechanism: "nav-accruing"
+category: "vault-share"
+underlying_assets: ["USDT"]
+yield_bearing: true
 assessment_type: "light"
 audience: "retail"
 companion_report: "syrupusdt-full"
 date: "2026-05-03"
-last_verified: "2026-07-02"
+last_verified: "2026-08-18"
 featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
 tvl_gross: 436000000
-peg_mechanism_score: 7.0
-backing_score: 6.5
+volatility_score: 8.5
+structural_score: 6.0
+redemption_score: 6.5
+underlying_score: 6.5
 liquidity_score: 6.0
 issuer_score: 5.5
 overall_score: 6.0
@@ -55,6 +58,8 @@ syrupUSDT is the USDT-denominated sibling of syrupUSDC in Maple Finance's "Syrup
 
 The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level, AND it shares borrowers with syrupUSDC.** The largest single loan in syrupUSDT is **~40%+ of the pool** — vs the largest loan in syrupUSDC at roughly mid-teens % of that pool (live figures on the dashboards). A single borrower default in syrupUSDT writes down ~40% of the principal in one event. And because the same borrowers borrow from BOTH pools, holding both syrupUSDC and syrupUSDT together does NOT diversify your credit exposure to those entities — it concentrates them.
 
+**The clearest way to see the difference is loan count.** At the August 2026 check syrupUSDT's book was **five loans**, against **27** for syrupUSDC — on a pool roughly two-fifths the size. A five-loan book is a categorically different risk shape from a 27-loan one: there is no meaningful diversification within it, one borrower's problem is the pool's problem, and there are fewer repayment events arriving to refill the queue that services redemptions. That single fact is a large part of why this report's **Underlying, Liquidity and Redemption axes all sit below syrupUSDC's** despite identical contracts, identical audits and the same curator. Loan counts turn over; the small-book pattern is the durable feature, and current counts are live on the dashboard.
+
 ## What you actually earn
 
 **~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries`). Same yield mechanics as syrupUSDC: borrower interest, net of Maple's protocol fee + 3.33% delegate fee.
@@ -89,6 +94,10 @@ Two paths, same mechanics as syrupUSDC, but smaller pool depth:
 
 For sizing above the low retail range (~$50K+), you'll likely use the queue. Stress-case redemption depth is bound by loan-repayment cadence on the smaller principal base — expect queue latency of weeks rather than days for institutional sizes during correlated outflow stress.
 
+**Free liquidity is the number that decides how quickly the queue clears, and this pool runs it thinner than syrupUSDC.** Both pools sit around 97% deployed into loans, so the uncommitted cash available to settle redemptions immediately is a low single-digit percentage of the pool in both cases. But syrupUSDT has been running at the bottom of that range — under 2% — where our monitor flags exits as *forced into the queue*, while syrupUSDC has been sitting in the 2–5% band where the flag reads only that large exits will queue. Live figures on the dashboard; the durable point is that the same architecture, run on a smaller pool with a five-loan book, leaves less cash standing between a redemption request and a wait.
+
+**The credit read itself is reassuring, and worth separating from the exit question.** At the August 2026 check the Syrup family's loans-only collateral ratio came in at **175%** — above the 145–170% band these reports describe as typical — with pool collateral ratio at 100% and **zero** unrealized losses. No loan is impaired, called, or in default. Nothing about the loan book deteriorated; what this report changed in August is that redemption finally has a score of its own.
+
 ## What the contracts are doing
 
 Same architecture as syrupUSDC. ERC-4626 vault. Borrowers post collateral that's held off-chain by custodians under Pool Delegate policy. The smart contract handles loan accounting, payment scheduling, and time-based default triggering — but the credit-relevant decisions (who to lend to, on what terms, when to call) are human-discretionary at the Pool Delegate level.
@@ -103,11 +112,17 @@ Same audit profile as syrupUSDC: 8+ audits, Spearbit + Trail of Bits on the v2/S
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Peg mechanism | 7.0 | NAV-accruing, organic yield, no losses to date |
-| Backing | 6.5 | Two-bucket: ~85–90% Loans (BTC/XRP overcollateralized at 125–150%) + ~10–15% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM, a thinner Liquidity layer than syrupUSDC). Per-pool concentration significantly higher than syrupUSDC (largest single loan ~40%+ of pool vs mid-teens %). |
+| Stability | 8.5 | NAV-accruing share, organic yield, zero principal losses to date across the Syrup product line. Same as syrupUSDC — the share price only climbs in normal operation, and the path to a drawdown is a credit loss, scored under Underlying. |
+| Contract & Admin | 6.0 | Same audit profile, ERC-4626 standard and 24-hour timelock as syrupUSDC, and the same Pool Delegate discretion with $0 first-loss cover. **Half a notch below syrupUSDC because per-pool concentration is materially higher** — the largest single loan runs around 40% of this pool against mid-teens percent for syrupUSDC. Custody addresses are shared with syrupUSDC under Maple operational control. |
+| Redemption | 6.5 | **Newly visible on this page — see the note below.** Same two permissionless paths as syrupUSDC, no KYC on either, but against a smaller principal base. That is the whole difference: with a thinner pool and a thinner Liquidity layer, free cash available to settle the queue is smaller, so the queue binds sooner and for longer. At retail size the aggregator route works; at institutional size expect queue latency measured in weeks rather than days during correlated outflows. |
+| Underlying | 6.5 | The collateral is the loan book: roughly 85–90% Loans (institutional credit against BTC-heavy plus XRP collateral at 125–150% funding-time level) plus a thinner 10–15% Liquidity layer of pool-owned PYUSD/USDC-AMM/USDT-AMM positions held at par. Loans-only collateral ratio was **above** its 145–170% band at the August 2026 check, with zero unrealized losses. Held half a notch below syrupUSDC's 7.0 for **loan-count concentration**: this pool is about five loans, so a single borrower default writes down a far larger share of principal in one event. Same off-chain-custody and public-data caveats as syrupUSDC. |
 | Liquidity | 6.0 | Materially smaller Ethereum pool than syrupUSDC. Smaller depth; expect higher aggregator slippage and longer queue cadence at institutional sizing. **Permissionless mint/redeem at the vault layer is the same as syrupUSDC** — no KYC gating. The smaller pool caps the score below syrupUSDC's 7.5 but the access pattern is still a meaningful advantage over KYC-gated peers. |
-| Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. |
+| Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. This axis scores the **entity**, so it is deliberately identical to [syrupUSDC](/reports/syrupusdc/); per-pool differences belong under Contract & Admin. |
 | **Overall** | **6.0** | Slightly worse than syrupUSDC's 6.75 — primarily due to higher per-pool concentration and shallower exit liquidity |
+
+**A note on the axes, because they changed in August 2026.** This report used to score on the stablecoin rubric — peg mechanism and backing — which was the wrong lens. syrupUSDT is not a pegged dollar; it is a **share in a lending vault** whose price tracks NAV, and it now scores on the same six axes as every other vault-share report on this site.
+
+The concrete cost of the old rubric was that **it had no redemption axis.** For a vault about 97% deployed into loans, "can I get my money out, and how fast?" is the binding question, and on this pool more so than on syrupUSDC. The material was always here in prose; it just never reached a score. **Redemption 6.5 is not a new judgement — it is a number that existed internally and was never shown.** No score was changed to fit the new table; every axis published on both sides already agreed. The old backing axis became **Underlying**, which owns collateral quality and now also carries the verifiability question backing used to answer.
 
 ## Who it's for
 
@@ -132,6 +147,10 @@ A live monitoring view is available at [tidresearch.com/dashboards/?asset=syrupu
 ## A note on Maple's history
 
 Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ during the 2022 credit cycle. The Syrup product line is Maple's structural response — overcollateralized loans on the third-party credit book, vetted Pool Delegates, active margin calls. Same legal entity (Maple Labs, Cayman Islands), same broader team. The v2 Syrup product has run cleanly for ~3 years through May 2026. This report treats it as background context rather than a leading risk factor. See [syrupUSDC retail report](/reports/syrupusdc/) for the same context (applies equally to both pools).
+
+## Revision history
+
+- **2026-08-18 — moved onto the correct scoring rubric; no score changed.** This report was filed as a stablecoin and rendered the stablecoin axes (peg mechanism, backing). syrupUSDT is a **vault share**, and the practical cost was that the stablecoin rubric has **no redemption axis** — so for a vault roughly 97% deployed into loans, and one running free liquidity thinner than its sibling, the binding retail question was discussed in prose but never scored. The page now carries Stability 8.5 / Contract & Admin 6.0 / **Redemption 6.5** / Underlying 6.5 / Liquidity 6.0 / Issuer 5.5, Overall unchanged at **6.0**. Stability, Contract & Admin and Redemption are newly *visible*, not newly *assigned*; every axis published on both sides already agreed. Backing 6.5 became Underlying 6.5, which now also carries the verifiability question backing used to answer. Figures refreshed to the August 2026 check: the credit read is **reassuring** — loans-only collateral ratio 175%, above its band, pool collateral ratio 100%, zero unrealized losses — and the newly recorded structural fact is loan count, **five loans against syrupUSDC's 27**, which is a large part of why this pool's Underlying, Liquidity and Redemption axes all sit below its sibling's.
 
 ---
 
