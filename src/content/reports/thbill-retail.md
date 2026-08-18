@@ -35,6 +35,12 @@ underlying_managers:
 
 **Elevated risk · 4.0/10**
 
+> **Read this first — thBILL is not a retail product any more.** Theo has repositioned it as the reserve asset behind **[thUSD](/reports/thusd)**. You can check that without taking our word for it: the front-end routes new users to thUSD, the `/thbill` path redirects, the docs are written thUSD-first, and most thBILL outstanding now sits inside the thUSD reserve rather than in public hands.
+>
+> **What that means if you hold it, or are thinking about it.** Primary redemption is KYC-gated and, on the evidence, closed — nothing has redeemed through it since **2026-07-09**. The secondary market is a different question and it is **open**: you can buy and sell thBILL on a DEX today. The problem is the terms. Depth is **under $1M against a roughly $87M fund**, and the market has been trading **persistently below NAV, in the region of 1.5% to 1.7% under** — worse than the stress-peak band this report records for the April 2026 dislocation, in a quiet market with no stress event. Selling is possible; it means accepting that discount.
+>
+> **So read this page as a look-through, not a buy case.** It exists because thBILL is what stands behind thUSD, and retail *can* hold thUSD. If you are deciding where to put money, the asset you can actually act on is **[thUSD](/reports/thusd)** — this report is here to tell you what backs it.
+
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
 | about 3% APY | Sell on DEX at a NAV discount | KYC-gated, and not converting in practice | about 13 months | Ethereum, Arbitrum, Base, HyperEVM |
@@ -205,6 +211,7 @@ It sits at 5.0 because this axis has to answer a second question as well: **can 
 
 ## Revision history
 
+- **2026-08-18 — added the standing access banner at the top. No score change.** The point it makes was already on the page, but it was inside the update box below, where a changelog entry reads as "what changed recently" — it gets skipped, gets superseded by the next entry, and frames a standing property of the asset as a recent event. That thBILL is no longer a retail-facing product is not news about August; it is what thBILL now is, so it belongs above the changelog. The banner also fixes an overstatement worth naming: it would be wrong to say you cannot transact. Primary redemption is closed in practice, but the **secondary market is open and working** — the accurate claim is that you can trade it and probably shouldn't, because depth is thin and you sell into a persistent discount.
 - **2026-08-18 — rubric migration + re-rate. Overall 4.5 → 4.0.** Moved off the stablecoin rubric onto the vault-share axes this asset should always have used; the previous rubric had no redemption axis, so thBILL's binding retail constraint could not be scored on the page. Peg-mechanism material moved into the Liquidity discussion, backing material into Underlying. **Redemption 3.5 → 2.0** — the primary path is effectively closed to outside holders, not merely gated: nothing has redeemed since 2026-07-09, and Theo has repositioned thBILL as reserve plumbing for thUSD. **Liquidity 3.5 → 2.0** — aggregate DEX depth is $671,715 against a fund of about $87.0M (0.77%), down from "low-single-digit-million against $130M+"; the external float has shrunk in absolute terms, and the Ethereum venue is dead at $109/day. **Stability 8.0, Contract & Admin 4.5, Underlying 5.0 and Issuer 4.5 all held** — the NAV and the collateral are unaffected; what deteriorated is access. Also corrected: the discount is now −1.63% to NAV, outside the −80 to −150 bps band this report describes as *stress* peaks, with no stress event.
 
 ## Corrections
