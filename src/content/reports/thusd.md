@@ -17,11 +17,17 @@ underlying_score: 3.0
 liquidity_score: 3.5
 issuer_score: 5.5
 overall_score: 4.0
-audited: true
+# audited: withheld — a boolean cannot carry this claim and gets it backwards.
+# §I: the Zenith audit covers exactly one file (the sthUSD vault); the token, the
+# Minter, the OFT adapters and the strategy adapter are "not in any public audit";
+# "roughly one of five on-chain surfaces has audit coverage"; Theo calling it "the
+# thUSD audit" "materially overstates breadth". `audited: true` publishes precisely
+# the overstatement this report exists to correct. Needs a scoped string, not a flag.
 audit_count: 1
 audit_firms: ["Zenith"]
 bug_bounty: false
-team_doxxed: true
+# team_doxxed: withheld — §IV says the team is "semi-doxxed and credentialed".
+# True/false has no way to express "semi", and the true branch is the wrong one.
 incident_history: false
 is_fork: false
 live_since: "2026-04"

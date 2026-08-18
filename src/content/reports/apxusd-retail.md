@@ -27,7 +27,11 @@ overall_score: 3.0
 audited: true
 audit_count: 3
 audit_firms: ["Quantstamp", "Zellic", "Certora"]
-audited_reserves: true
+# audited_reserves: withheld — the reserves are only partly examined, and the
+# unexamined part is the one this report keeps flagging. Wolf's engagement narrowed
+# to securities-only after 2026-03-31 and the June 2026 report "again excluded cash",
+# so the largest reserve component has had no CPA coverage for months; the body also
+# states this is "not a full financial-statement audit". `true` asserts the opposite.
 bug_bounty: false
 team_doxxed: false
 incident_history: true
