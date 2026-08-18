@@ -28,6 +28,15 @@ const chainOverride = z
   })
   .partial();
 
+// ⚠️ Consumption depends on `audience`, not just `category`. Institutional reports
+// render via ScoreHero (ReportLayout's isInstitutional branch) and get NO RiskSidebar,
+// so any field only RiskSidebar reads is inert on them however legal it is here:
+// `tvl_gross`, `underlying_managers`, `underlying_assets`, `peg_mechanism`.
+// ScoreHero does read issuer / legal_jurisdiction / credit_rating_equiv /
+// market_cap_approx / settlement_lag_days, so those are fine on both.
+// Before adding a display field to an institutional report, check which component
+// reads it — schema-legal is not the same as rendered.
+
 // Common across every report.
 const common = {
   asset: z.string(),

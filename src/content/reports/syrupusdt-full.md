@@ -12,14 +12,9 @@ last_verified: "2026-07-02"
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
-tvl_gross: 436000000
 legal_jurisdiction: "Cayman Islands"
 bankruptcy_remote: false
 yield_bearing: true
-underlying_assets: ["USDT"]
-underlying_managers:
-  - "Maple Labs (protocol operator)"
-  - "Pool Delegate (operator EOA 0x93aA...501A — same firm as syrupUSDC, different operational key)"
 
 contract_score: 7.0
 credit_score: 5.5

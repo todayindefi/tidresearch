@@ -30,12 +30,6 @@ multisig_configs:
   owner: "3-of-5"
   whitelist: "3-of-5"
   emergency: "2-of-4"
-underlying_managers:
-  - "Libeara (Standard Chartered)"
-  - "FundBridge (MAS-regulated Singapore)"
-  - "Wellington Management (sub-advisor)"
-  - "Fidelity International (FILQ manager/issuer)"
-  - "Sygnum (FILQ tokenization / Desygnate)"
 asset_symbols: ["thBILL"]
 mint_paths:
   - id: "kyc_mint"

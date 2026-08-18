@@ -12,14 +12,9 @@ last_verified: "2026-07-02"
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1073570000
-tvl_gross: 1073570000
 legal_jurisdiction: "Cayman Islands"
 bankruptcy_remote: false
 yield_bearing: true
-underlying_assets: ["USDC"]
-underlying_managers:
-  - "Maple Labs (protocol operator)"
-  - "Pool Delegate (operator EOA 0xC1e1...49f — firm identity TBD via Maple docs)"
 
 contract_score: 7.0
 credit_score: 6.0
