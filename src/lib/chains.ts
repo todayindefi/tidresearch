@@ -25,6 +25,7 @@ const ALIASES: Record<string, string> = {
   matic: "polygon",
   mantle: "mantle",
   stable: "stable",
+  plasma: "plasma",
 };
 
 const LABELS: Record<string, string> = {
@@ -44,6 +45,7 @@ const LABELS: Record<string, string> = {
   polygon: "Polygon",
   mantle: "Mantle",
   stable: "Stable",
+  plasma: "Plasma",
 };
 
 export function normalizeChain(c: string): string {
