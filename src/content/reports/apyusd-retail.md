@@ -21,7 +21,6 @@ liquidity_score: 3.5
 issuer_score: 5.0
 underlying_score: 3.0
 overall_score: 3.0
-audited_reserves: true
 ---
 
 # apyUSD — Risk Report

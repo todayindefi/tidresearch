@@ -13,7 +13,6 @@ last_verified: "2026-08-12"
 featured: false
 production: true
 issuer: "Permian Labs"
-audited_reserves: false
 market_cap_approx: 172630000
 peg_mechanism_score: 7.0
 backing_score: 7.5

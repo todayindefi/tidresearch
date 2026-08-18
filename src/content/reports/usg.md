@@ -16,7 +16,6 @@ liquidity_score: 3.5
 issuer_score: 4.0
 overall_score: 4.0
 issuer: "Tangent Finance"
-audited_reserves: false
 market_cap_approx: 3210000
 featured: false
 ---

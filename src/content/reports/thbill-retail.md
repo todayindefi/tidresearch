@@ -20,14 +20,6 @@ underlying_score: 5.0
 liquidity_score: 2.0
 issuer_score: 4.5
 overall_score: 4.0
-audited: true
-audit_count: 1
-audit_firms: ["Zenith Audits"]
-bug_bounty: false
-team_doxxed: true
-incident_history: false
-is_fork: false
-live_since: "2025-07"
 legal_jurisdiction: "Panama"
 credit_rating_equiv: "BB+"
 settlement_lag_days: 4

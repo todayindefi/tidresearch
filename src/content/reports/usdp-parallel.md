@@ -18,14 +18,6 @@ liquidity_score: 4.0
 issuer_score: 5.0
 overall_score: 5.0
 market_cap_approx: 3250000
-audited: true
-audit_count: 2
-audit_firms: ["Certora", "Bail Security"]
-audited_reserves: false
-bug_bounty: false
-team_doxxed: false
-incident_history: false
-is_fork: false
 ---
 
 # USDp (Parallel) — Risk Report

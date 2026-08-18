@@ -12,7 +12,6 @@ last_verified: "2026-07-08"
 featured: false
 production: true
 issuer: "Paxos Digital Singapore"
-audited_reserves: true
 market_cap_approx: 3150000000
 peg_mechanism_score: 8.0
 backing_score: 7.5

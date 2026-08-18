@@ -12,7 +12,6 @@ last_verified: "2026-07-08"
 featured: false
 production: true
 issuer: "Agora Finance (Agora Bermuda Limited)"
-audited_reserves: true
 market_cap_approx: 181000000
 peg_mechanism_score: 8.5
 backing_score: 8.0

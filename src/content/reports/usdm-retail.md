@@ -12,7 +12,6 @@ date: "2026-05-29"
 last_verified: "2026-07-23"
 featured: false
 issuer: "Mento Labs (Germany)"
-audited_reserves: true
 market_cap_approx: 15820000
 peg_mechanism_score: 7.0
 backing_score: 4.5

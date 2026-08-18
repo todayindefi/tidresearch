@@ -12,7 +12,6 @@ last_verified: "2026-08-04"
 featured: false
 production: true
 issuer: "Tether Limited (BVI) / iFinex"
-audited_reserves: false
 market_cap_approx: 183500000000
 peg_mechanism_score: 7.5
 backing_score: 6.0

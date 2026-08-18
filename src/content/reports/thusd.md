@@ -23,18 +23,8 @@ overall_score: 4.0
 # "roughly one of five on-chain surfaces has audit coverage"; Theo calling it "the
 # thUSD audit" "materially overstates breadth". `audited: true` publishes precisely
 # the overstatement this report exists to correct. Needs a scoped string, not a flag.
-audit_count: 1
-audit_firms: ["Zenith"]
-bug_bounty: false
 # team_doxxed: withheld — §IV says the team is "semi-doxxed and credentialed".
 # True/false has no way to express "semi", and the true branch is the wrong one.
-incident_history: false
-is_fork: false
-live_since: "2026-04"
-underlying_managers:
-  - "FundBridge Capital (gold custody)"
-  - "Standard Chartered Libeara (T-Bill leg via thBILL)"
-  - "Wellington Management (T-Bill sub-advisor)"
 ---
 
 # thUSD — Retail Risk Report

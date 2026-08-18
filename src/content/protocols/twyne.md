@@ -18,16 +18,6 @@ project_score: 5.0
 overall_score: 4.5
 tvl_gross: 13670000
 tvl_borrowed: 11860000
-live_since: "2025-08"
-audited: true
-audit_count: 9
-audit_firms: ["Electisec (yAudit)", "Enigma Dark", "SecEureka"]
-bug_bounty: true
-bug_bounty_amount: 50000
-bug_bounty_platform: "Immunefi"
-team_doxxed: false
-incident_history: false
-is_fork: false
 ---
 
 # Twyne — Risk Report

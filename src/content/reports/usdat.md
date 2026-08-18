@@ -13,7 +13,6 @@ last_verified: "2026-08-11"
 featured: false
 production: true
 issuer: "Saturn Labs"
-audited_reserves: true
 market_cap_approx: 96323000
 peg_mechanism_score: 6.5
 backing_score: 6.5

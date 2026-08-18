@@ -12,7 +12,6 @@ last_verified: "2026-07-08"
 featured: false
 production: true
 issuer: "Standard Custody & Trust Company (Ripple)"
-audited_reserves: true
 market_cap_approx: 1780000000
 peg_mechanism_score: 7.0
 backing_score: 7.0

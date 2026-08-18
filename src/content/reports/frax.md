@@ -16,7 +16,6 @@ liquidity_score: 3.0
 issuer_score: 5.0
 overall_score: 2.5
 issuer: "Frax Finance"
-audited_reserves: false
 market_cap_approx: 132000000
 featured: false
 ---

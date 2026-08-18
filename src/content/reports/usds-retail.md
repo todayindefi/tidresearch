@@ -12,7 +12,6 @@ date: "2026-05-27"
 last_verified: "2026-05-27"
 featured: false
 issuer: "Sky Protocol (formerly MakerDAO)"
-audited_reserves: true
 market_cap_approx: 8411000000
 peg_mechanism_score: 7.5
 backing_score: 7.0

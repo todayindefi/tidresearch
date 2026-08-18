@@ -17,16 +17,6 @@ project_score: 8.0
 overall_score: 8.0
 tvl_gross: 24590000000
 tvl_borrowed: 10840000000
-live_since: "2022-03"
-audited: true
-audit_count: 25
-audit_firms: ["Certora", "Trail of Bits", "SigmaPrime", "OpenZeppelin", "PeckShield", "ABDK", "MixBytes"]
-bug_bounty: true
-bug_bounty_amount: 10000000
-bug_bounty_platform: "Immunefi"
-team_doxxed: true
-incident_history: true
-is_fork: false
 ---
 
 # Aave V3 — Risk Report

@@ -10,7 +10,6 @@ date: "2026-05-18"
 last_verified: "2026-05-18"
 featured: false
 issuer: "Resilience BVI Ltd."
-audited_reserves: true
 market_cap_approx: 19110000
 volatility_score: 3.5
 liquidity_score: 2.5

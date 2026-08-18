@@ -21,14 +21,6 @@ score_weights:
   contract: 0.4
   economic: 0.3
   project: 0.3
-audited: true
-audit_count: 1
-audit_firms: ["Zenith Audits"]
-bug_bounty: false
-team_doxxed: true
-incident_history: false
-is_fork: false
-live_since: "2025-07"
 legal_jurisdiction: "Panama"
 bankruptcy_remote: false
 credit_rating_equiv: "BB+"

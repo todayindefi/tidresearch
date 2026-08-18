@@ -17,14 +17,6 @@ economic_score: 3.0
 project_score: 3.5
 overall_score: 3.5
 tvl_gross: 2670000
-live_since: "2026-05"
-audited: true
-audit_count: 1
-audit_firms: ["Code4rena"]
-bug_bounty: false
-team_doxxed: false
-incident_history: false
-is_fork: false
 ---
 
 # Monetrix — Risk Report

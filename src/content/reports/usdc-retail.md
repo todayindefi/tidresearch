@@ -12,7 +12,6 @@ last_verified: "2026-07-08"
 featured: false
 production: true
 issuer: "Circle"
-audited_reserves: true
 market_cap_approx: 75500000000
 peg_mechanism_score: 9.0
 backing_score: 9.0

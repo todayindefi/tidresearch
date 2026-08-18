@@ -12,7 +12,6 @@ last_verified: "2026-07-09"
 featured: false
 production: true
 issuer: "Paxos Trust Company (on behalf of PayPal)"
-audited_reserves: true
 market_cap_approx: 2770000000
 peg_mechanism_score: 7.5
 backing_score: 8.0

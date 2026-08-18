@@ -18,7 +18,6 @@ last_verified: "2026-07-04"
 featured: false
 production: false
 issuer: "Avant Protocol"
-audited_reserves: false
 market_cap_approx: 108000000
 live_dashboard_url: "https://app.avantprotocol.com/transparency"
 ---

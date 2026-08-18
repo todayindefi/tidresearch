@@ -11,7 +11,6 @@ last_verified: "2026-06-30"
 featured: false
 production: false
 issuer: "Anemoy (manager) / Janus Henderson (sub-advisor) / Centrifuge"
-audited_reserves: true
 market_cap_approx: 686000000
 yield_bearing: true
 underlying_assets: ["AAA-rated CLO tranches", "Janus Henderson AAA CLO strategy"]

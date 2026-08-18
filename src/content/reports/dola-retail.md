@@ -11,7 +11,6 @@ date: "2026-07-01"
 last_verified: "2026-07-01"
 featured: false
 issuer: "Inverse Finance DAO"
-audited_reserves: false
 market_cap_approx: 39000000
 peg_mechanism_score: 5.5
 backing_score: 4.5

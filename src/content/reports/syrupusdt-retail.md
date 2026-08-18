@@ -15,7 +15,6 @@ featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
-tvl_gross: 436000000
 volatility_score: 8.5
 structural_score: 6.0
 redemption_score: 6.5
@@ -23,19 +22,6 @@ underlying_score: 6.5
 liquidity_score: 6.0
 issuer_score: 5.5
 overall_score: 6.0
-audited: true
-audit_count: 8
-audit_firms: ["Spearbit", "Trail of Bits", "Three Sigma", "Peckshield"]
-bug_bounty: true
-bug_bounty_amount: 1000000
-bug_bounty_platform: "Immunefi"
-team_doxxed: true
-incident_history: true
-is_fork: false
-live_since: "2024"
-underlying_managers:
-  - "Maple Labs"
-  - "Pool Delegates (vetted institutional credit firms)"
 ---
 
 # syrupUSDT — Retail Risk Report

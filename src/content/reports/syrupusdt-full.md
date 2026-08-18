@@ -14,7 +14,6 @@ issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 436000000
 tvl_gross: 436000000
 legal_jurisdiction: "Cayman Islands"
-live_since: "2024-08"
 bankruptcy_remote: false
 yield_bearing: true
 underlying_assets: ["USDT"]
@@ -40,15 +39,6 @@ multisig_configs:
   securityAdmin: "Safe v1.3.0, 3-of-6 (same as syrupUSDC)"
   poolDelegate: "EOA, single-key (0x93aA06F8...501A — distinct from syrupUSDC's 0xC1e1...49f)"
 
-audited: true
-audit_count: 8
-audit_firms: ["Spearbit", "Trail of Bits", "Three Sigma", "Peckshield"]
-bug_bounty: true
-bug_bounty_amount: 1000000
-bug_bounty_platform: "Immunefi"
-team_doxxed: true
-incident_history: true
-is_fork: false
 
 supply_integrity_flags:
   - "pool-delegate-credit-discretion"

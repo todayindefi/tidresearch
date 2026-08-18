@@ -12,7 +12,6 @@ last_verified: "2026-07-15"
 featured: false
 production: true
 issuer: "Ethena Labs"
-audited_reserves: true
 market_cap_approx: 4480000000
 peg_mechanism_score: 6.5
 backing_score: 6.5

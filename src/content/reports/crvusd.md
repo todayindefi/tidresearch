@@ -14,7 +14,6 @@ liquidity_score: 6.0
 issuer_score: 6.0
 overall_score: 5.0
 issuer: "Curve Finance"
-audited_reserves: false
 market_cap_approx: 225000000
 production: true
 ---

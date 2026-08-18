@@ -14,7 +14,6 @@ liquidity_score: 3.0
 issuer_score: 2.0
 overall_score: 3.5
 issuer: "TRON DAO Reserve"
-audited_reserves: false
 market_cap_approx: 1558000000
 chain_overrides:
   eth:
