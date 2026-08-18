@@ -26,8 +26,13 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
-/** Flip to false once the existing backlog is cleared; this becomes a build gate. */
-const WARN_ONLY = true;
+/**
+ * Gate, not a warning. The backlog it was staged behind is clear: as of 2026-08-18
+ * the repo reports 0 dropped keys of 54 files, so any new one is a regression
+ * introduced by the commit under test, and failing is cheaper than discovering it
+ * the way the `issuer` bug was found — by accident, 21 reports later.
+ */
+const WARN_ONLY = false;
 
 const REPO_ROOT = resolve(import.meta.dirname, "..");
 const CONFIG = join(REPO_ROOT, "src", "content.config.ts");
