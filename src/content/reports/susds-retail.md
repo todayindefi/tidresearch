@@ -9,7 +9,7 @@ assessment_type: "full"
 audience: "retail"
 production: true
 date: "2026-05-27"
-last_verified: "2026-05-27"
+last_verified: "2026-08-18"
 featured: false
 issuer: "Sky Protocol (formerly MakerDAO)"
 yield_bearing: true
@@ -19,14 +19,14 @@ structural_score: 7.0
 redemption_score: 8.5
 underlying_score: 7.5
 issuer_score: 7.0
-overall_score: 8.0
+overall_score: 7.5
 ---
 
 # sUSDS — Risk Report
 
-**Lower risk · 8.0/10**
+**Moderate-low risk · 7.5/10**
 
-> **The permissionless one.** Of the on-chain ways to earn a Treasury-style yield on dollars, sUSDS is the one with no KYC, no geographic gate, no minimum, and no lockup — anyone can hold, transfer, and redeem it instantly. That accessibility, deep liquidity, and a battle-tested codebase are why it scores highest in this category. Two caveats keep it from scoring higher: the USDS dollar it's built on is upgradeable (with a freeze function Sky could switch on by governance vote), and about a third of USDS's backing is USDC, so sUSDS carries real USDC depeg correlation.
+> **The permissionless one.** Of the on-chain ways to earn a Treasury-style yield on dollars, sUSDS is the one with no KYC, no geographic gate, no minimum, and no lockup — anyone can hold, transfer, and redeem it instantly. That accessibility, deep liquidity, and a battle-tested codebase are what make it the most usable option in its category. Two caveats keep it from scoring higher: the USDS dollar it's built on is upgradeable (with a freeze function Sky could switch on by governance vote), and about a third of USDS's backing is USDC, so sUSDS carries real USDC depeg correlation. Its score is now set **equal to** the [USDS](/reports/usds/) dollar it wraps, not above it — see the note below.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -38,7 +38,9 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 The reason sUSDS matters for a retail holder is **access**. It is a DeFi savings position, not a securities wrapper, so there's no KYC, no allowlist, no non-US restriction, no minimum, and no waiting period. You can mint it, buy it on a DEX, transfer it, and redeem it at any time — and redemption is instant and atomic: sUSDS converts back to USDS in the vault, and USDS converts 1:1 to USDC through Sky's Peg Stability Module (PSM). At around $6 billion in size with deep on-chain liquidity, exiting at fair value is essentially frictionless under normal conditions. That's the opposite of tokenized money-market tokens like USYC (allowlisted, non-US, $100k minimum — retail can't hold it at all) or Ondo's USDY (non-US only, a 40-50 day lockup on fresh mints, and fiat-wire-only primary redemption).
 
-The 8.0/10 score is the highest among comparable tokenized-yield products, reflecting that accessibility plus deep liquidity, instant exit, and the lowest smart-contract risk in the category (the savings, PSM, and vault contracts descend from MakerDAO's heavily audited, multi-year codebase). What holds it back from a stablecoin-grade score are two real, retail-relevant caveats covered below: USDS is upgradeable with a latent freeze function, and it carries meaningful USDC correlation.
+The 7.5/10 score reflects that accessibility plus deep liquidity, instant exit, and the lowest smart-contract risk among comparable tokenized-yield products (the savings, PSM, and vault contracts descend from MakerDAO's heavily audited, multi-year codebase). What holds it back are two real, retail-relevant caveats covered below: USDS is upgradeable with a latent freeze function, and it carries meaningful USDC correlation.
+
+**A note on why this is 7.5 and not 8.0.** An earlier version of this report scored sUSDS 8.0 — above the **7.5** we publish for [USDS](/reports/usds/), the dollar sUSDS is a wrapper around. That ranking does not hold up: sUSDS is an ERC-4626 savings share whose entire value is a claim on USDS, so every risk in the USDS report is also a risk here, and a wrapper cannot be safer than the thing it wraps. The 8.0 came from comparing sUSDS against *other yield tokens*, where it genuinely is the strongest on access and liquidity — a fair observation, but not a reason to rank it above its own underlying on the same website. The correct treatment is **equal, not lower**: the ERC-4626 wrapper sits on the same battle-tested codebase and adds no material risk of its own, so it inherits USDS's score rather than taking a further deduction. If USDS re-rates in either direction, expect this to move with it.
 
 ## What you actually earn
 
@@ -89,7 +91,7 @@ The relevant residual risks are not contract bugs but design choices: the upgrad
 | Structural | 7.0 | Battle-tested MakerDAO-derived ERC-4626 / PSM / vault code — the lowest contract risk in the category — offset by USDS being upgradeable with a governance-addable freeze function, broad Sky-governance powers over rate/collateral/upgrades (timelock-gated), Endgame structural complexity, and a cross-chain bridge surface. The upgrade/freeze capability is the binding structural concern. |
 | Redemption | 8.5 | Atomic, permissionless, instant: sUSDS → USDS in the vault and USDS → USDC 1:1 via the PSM, with no KYC, no minimum, no lockup, and no fees. Best-in-class exit. Held just below the top only for the theoretical PSM-liquidity limit under a severe USDC-specific crisis. |
 | Issuer | 7.0 | Sky Protocol (ex-MakerDAO) — same entity as USDS; DAO-governed, 48h GSM timelock, broad audits, $10M bounty; docked for the upgradeable/freezable contract, Endgame governance complexity, and governance-capture tail. See the [USDS report](/reports/usds/). |
-| **Overall** | **8.0** | Lower risk — the most usable and most liquid tokenized-yield option for retail, on the most battle-tested codebase. Held below a stablecoin-grade score by the upgradeable/freezable USDS dollar and the ≈33% USDC backing correlation, plus a governance-set (not fixed) yield. |
+| **Overall** | **7.5** | Moderate-low risk — the most usable and most liquid tokenized-yield option for retail, on the most battle-tested codebase. Held here by the upgradeable/freezable USDS dollar and the ≈33% USDC backing correlation, plus a governance-set (not fixed) yield. **Set equal to [USDS](/reports/usds/) (7.5), corrected down from 8.0 in August 2026**: a wrapper cannot outrank the asset it wraps, and the ERC-4626 layer adds no material risk of its own to justify going lower either. |
 
 ## Who it's for
 
@@ -113,4 +115,4 @@ Holders who want a simple, liquid, permissionless way to earn a roughly money-ma
 
 *This report is based on Sky Protocol's public documentation, Spark documentation, public reporting on the USDS freeze-function debate, and on-chain reads of the sUSDS vault, through 2026-05-27. The Sky Savings Rate is governance-set and subject to change, and USDS's upgrade/freeze capability is a governance decision, not a fixed contract guarantee. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
 
-*Revision history: 2026-07-09 — refreshed collateral model (Star-allocator system now ~52%, crypto CDPs ~7%; added credit-sleeve + non-USDC-stable detail); sUSDS issuer axis added (7.0). Overall and other scores unchanged.*
+*Revision history: 2026-08-18 — **Overall corrected 8.0 → 7.5. The previous 8.0 is superseded, not restated.** sUSDS was publishing above the 7.5 we publish for [USDS](/reports/usds/), the dollar it wraps — a wrapper ranked above its own underlying on the same site. The 8.0 had been argued on a cross-category comparison (strongest of the tokenized-yield products on access and liquidity), which is a fair observation but not a basis for exceeding the underlying. Set equal to USDS rather than notched below it, because the ERC-4626 wrapper adds no material risk beyond USDS. No other axis moved; Liquidity stays 8.5, and USDS was re-reviewed and held at 7.5. Prior: 2026-07-09 — refreshed collateral model (Star-allocator system now ~52%, crypto CDPs ~7%; added credit-sleeve + non-USDC-stable detail); sUSDS issuer axis added (7.0). Overall and other scores unchanged.*
