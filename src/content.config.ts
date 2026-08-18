@@ -137,7 +137,18 @@ const tokenizedTreasury = z.object({
     })
     .optional(),
   // Retail axes — when an RWA report is framed for retail (no primary-redemption path),
-  // peg/backing/liquidity/issuer is the more useful rubric. Sidebar prefers these when present.
+  // the institutional contract/economic/project rubric is the wrong lens. Two retail
+  // rubrics are permitted; the sidebar and hero prefer whichever is present:
+  //   (a) vault-share axes (volatility/structural/redemption/underlying/liquidity/issuer)
+  //       — correct when the asset IS a vault share and redemption is the binding retail
+  //       question. The stablecoin rubric has no redemption axis, so a gated or closed
+  //       primary path has nowhere to land. e.g. thbill-retail.
+  //   (b) stablecoin axes (peg/backing/underlying/liquidity/issuer) — for RWA-framed
+  //       tokens that a retail holder reads as a dollar rather than as a fund share.
+  // Match the axis set to the internal `category` for the asset; do not mix the two.
+  volatility_score: score.optional(),
+  structural_score: score.optional(),
+  redemption_score: score.optional(),
   peg_mechanism_score: score.optional(),
   backing_score: score.optional(),
   issuer_score: score.optional(),

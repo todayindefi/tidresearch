@@ -77,19 +77,24 @@ const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
 const isProtocol = data.category === "protocol";
 
-// Retail RWA reports score on peg/backing/liquidity/issuer (the stablecoin rubric)
-// rather than the institutional contract/economic/project rubric, because retail users
-// without primary-redemption access need peg and liquidity surfaced as their own dials.
-const useStablecoinAxes =
-  isRwa && typeof data.peg_mechanism_score === "number";
+// Retail RWA reports don't use the institutional contract/economic/project rubric —
+// a retail holder without primary-redemption access needs exit surfaced as its own dial.
+// Two retail rubrics are supported (see content.config.ts): vault-share axes when the
+// asset is a fund share and redemption is the binding question, stablecoin axes when the
+// holder reads it as a dollar. Detect by which axis set the frontmatter actually carries.
+const rwaRetailAxes = !isRwa
+  ? null
+  : typeof data.volatility_score === "number"
+    ? AXES_BY_CATEGORY["vault-share"]
+    : typeof data.peg_mechanism_score === "number"
+      ? AXES_BY_CATEGORY.stablecoin
+      : null;
 
-const axes = useStablecoinAxes
-  ? AXES_BY_CATEGORY.stablecoin
-  : (AXES_BY_CATEGORY[data.category as string] ?? []);
+const axes = rwaRetailAxes ?? (AXES_BY_CATEGORY[data.category as string] ?? []);
 const scoredAxes = axes.filter((a) => typeof data[a.key] === "number");
 
 const weights: Record<string, number> | null =
-  (isRwa && !useStablecoinAxes || isProtocol) && data.score_weights
+  (isRwa && !rwaRetailAxes || isProtocol) && data.score_weights
     ? {
         contract_score: data.score_weights.contract,
         economic_score: data.score_weights.economic,

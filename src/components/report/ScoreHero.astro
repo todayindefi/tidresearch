@@ -53,13 +53,22 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
 };
 
-const axes = (AXES_BY_CATEGORY[data.category as string] ?? []).filter(
+const isRwa = data.category === "tokenized-treasury";
+// Mirrors RiskSidebar: retail-framed RWA reports use a retail rubric (vault-share or
+// stablecoin) rather than the institutional contract/economic/project axes.
+const rwaRetailAxes = !isRwa
+  ? null
+  : typeof data.volatility_score === "number"
+    ? AXES_BY_CATEGORY["vault-share"]
+    : typeof data.peg_mechanism_score === "number"
+      ? AXES_BY_CATEGORY.stablecoin
+      : null;
+const axes = (rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []).filter(
   (a) => typeof data[a.key] === "number"
 );
-const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
 const isProtocol = data.category === "protocol";
-const weights: Record<string, number> | null = (isRwa || isProtocol) && data.score_weights
+const weights: Record<string, number> | null = ((isRwa && !rwaRetailAxes) || isProtocol) && data.score_weights
   ? {
       contract_score: data.score_weights.contract,
       economic_score: data.score_weights.economic,
