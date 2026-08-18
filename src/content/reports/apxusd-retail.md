@@ -13,7 +13,11 @@ date: "2026-04-10"
 last_verified: "2026-08-18"
 featured: false
 production: true
-issuer: "Apyx (DFDV-affiliated)"
+# issuer: withheld pending review — this report states the issuing entity is
+# Preference Foundation, and describes Apyx as "appearing separate" from DFDV as
+# a legal entity. "Apyx (DFDV-affiliated)" therefore names neither the entity the
+# report identifies as the issuer nor a relationship the report asserts. Restore
+# only with the legal issuer confirmed against the body.
 peg_mechanism_score: 2.5
 backing_score: 2.0
 liquidity_score: 3.0

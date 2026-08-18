@@ -204,8 +204,14 @@ const categoryLabel = (c: string) =>
       )
     }
 
+    {/*
+      No category gate: if a report declares an issuer, show it. This used to be
+      limited to stablecoin/RWA/lending-vault, which silently hid the issuer on
+      every vault-share, wrapped-token and tradfi-equity page — 24 reports that
+      declared one and never displayed it.
+    */}
     {
-      (isStable || isRwa || isLendingVault) && data.issuer && (
+      data.issuer && (
         <div>
           <div class="eyebrow mb-1">Issuer</div>
           <div>{data.issuer}</div>

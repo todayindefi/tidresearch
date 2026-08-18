@@ -43,6 +43,11 @@ const common = {
   date: z.coerce.date(),
   last_verified: z.coerce.date(),
   overall_score: score,
+  // Every asset has an issuer, whatever its category. This lives in `common` on
+  // purpose: it used to be declared per-category, and the categories that forgot
+  // it (vault-share, wrapped-token) silently DROPPED the field at parse time, so
+  // 21 reports declared an issuer that never rendered. Do not move it back.
+  issuer: z.string().optional(),
   // Optional: not every category uses a liquidity axis (e.g. RWAs score liquidity inside economic risk).
   liquidity_score: score.optional(),
   chain_overrides: z.record(z.string(), chainOverride).optional(),
@@ -72,7 +77,6 @@ const stablecoin = z.object({
   // Optional 5th axis: collateral quality (e.g. T-Bills) independent of wrapper-layer risk.
   underlying_score: score.optional(),
   peg_mechanism: z.string().optional(),
-  issuer: z.string().optional(),
   audited_reserves: z.boolean().optional(),
   market_cap_approx: z.number().optional(),
 });
@@ -155,7 +159,6 @@ const tokenizedTreasury = z.object({
   // Optional 5th retail axis: collateral quality (used by RWA-framed-retail reports).
   underlying_score: score.optional(),
   peg_mechanism: z.string().optional(),
-  issuer: z.string().optional(),
   market_cap_approx: z.number().optional(),
   tvl_gross: z.number().optional(),
   legal_jurisdiction: z.string().optional(),
@@ -199,7 +202,6 @@ const lendingVault = z.object({
     })
     .optional(),
   // Institutional frontmatter (mirrors tokenized-treasury — same shape, different axes)
-  issuer: z.string().optional(),
   market_cap_approx: z.number().optional(),
   tvl_gross: z.number().optional(),
   legal_jurisdiction: z.string().optional(),
@@ -229,7 +231,6 @@ const lendingVault = z.object({
 const tradfiEquity = z.object({
   ...common,
   category: z.literal("tradfi-equity"),
-  issuer: z.string().optional(),
   yield_bearing: z.boolean().optional(),
   underlying_assets: z.array(z.string()).default([]),
 });

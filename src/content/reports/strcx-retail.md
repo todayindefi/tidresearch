@@ -11,7 +11,10 @@ last_verified: "2026-08-18"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
-issuer: "Backed Finance (Backed Assets JE Ltd.)"
+# issuer: withheld pending review — this report calls Backed a "Swiss DLT issuer"
+# twice and never mentions Jersey or "Backed Assets JE Ltd." anywhere in the body.
+# The jurisdiction in the frontmatter and the one in the prose disagree, and the
+# Kraken acquisition of Backed (Dec 2025) may have moved the entity again.
 yield_bearing: true
 underlying_assets: ["STRC"]
 volatility_score: 4.5

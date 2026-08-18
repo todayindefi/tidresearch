@@ -12,7 +12,10 @@ date: "2026-07-25"
 last_verified: "2026-07-31"
 featured: false
 production: true
-issuer: "Hastra (Figure / Provenance)"
+# issuer: withheld pending review — "Provenance" is the blockchain the token
+# stack runs on, not an issuing entity, so this string would publish a chain as a
+# legal counterparty. The Figure relationship is supported (the report calls
+# Hastra a disclosed Figure related party), but the composite is not.
 yield_bearing: true
 volatility_score: 6.0
 structural_score: 5.0
