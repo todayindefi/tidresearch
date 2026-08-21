@@ -126,10 +126,14 @@ company's controlling shareholder is distressed. The blocks are large relative t
 too: Frankencoin's contracts hold **22% of Boss Info AG** and **36% of quitt.shares**.
 
 And the mark all of those figures rest on does not reconcile. The shares *do* trade — an on-chain
-OTC venue printed **CHF 107,000 of BOSS across 14 trades in six weeks**, and **CHF 2.6M of DQTS
-over five months** in blocks up to 80,000 shares — so this is not a market that fails to exist.
-But BOSS printed at **6.90–8.20, clustering 7.30–7.55**, against the **8.072** mark Frankencoin
-displays, leaving that position carried roughly **CHF 1.6–2.2M above realised prices**. And Boss
+OTC venue printed **CHF 107,000 of BOSS across 14 trades in six weeks** — so this is not a market
+that fails to exist. But the scale is the point: that is about **CHF 2,500 a day**, against a BOSS
+position of 2.4 million shares. At the observed rate it would take **roughly seven years of flow
+just to raise the CHF 6.9M of debt those shares secure**. DQTS looks deeper at first glance —
+CHF 2.6M over five months — until you notice **99% of it was a single day** at a pre-agreed price
+of exactly 8.000; strip that placement and five months of trading is CHF 25,000. And BOSS printed
+at **6.90–8.20, clustering 7.30–7.55**, against the **8.072** mark Frankencoin displays, leaving
+that position carried roughly **CHF 1.6–2.2M above realised prices**. And Boss
 Info AG's audited consolidated accounts show **CHF 362,014 of total equity**, with 2025 net income
 of CHF 57,318 after a CHF 3.99M loss the year before — against a mark implying an **CHF 86M**
 market capitalisation. Frankencoin's stake is carried at CHF 19.19M; the attributable consolidated
@@ -142,8 +146,10 @@ Deutsche Bank/DWS/Galaxy venture AllUnity — better credit than a private share
 regulated, freezable counterparty into a system whose whole proposition is not having one, and its
 approved ceiling is already **10M, a third of supply**, with no further vote required. In fairness
 to the issuers: both share positions carry the protocol's **top-tier 40% borrower reserve**, DQTS
-is marked *below* its own prints, and Swiss company law limits how much of its own stock Boss Info
-could buy back even if it wanted to. The score would move up if BOSS prints converge to its mark
+is marked *below* its own prints, an atomic on-chain settlement venue exists at all, and Swiss
+company law limits how much of its own stock Boss Info could buy back even if it wanted to. The
+realistic exit for a position this size is a negotiated block sale or a corporate transaction, not
+a market. The score would move up if BOSS prints converge to its mark
 or the tokenized-equity share falls; down if the CHFAU ceiling is used, if that share passes ~45%,
 or if any issuer key is exercised against a live position.
 
