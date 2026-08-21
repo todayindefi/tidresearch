@@ -16,13 +16,13 @@ issuer_score: 5.5
 overall_score: 4.5
 issuer: "None — no issuing entity; the Frankencoin Association develops the protocol"
 audited_reserves: false
-market_cap_approx: 42800000
-production: false
+market_cap_approx: 42800000   # USD, per site convention (fmtUSD); ≈ CHF 34.21M at USD/CHF 0.80
+production: true
 ---
 
 # ZCHF (Frankencoin) — Risk Report
 **Moderate-elevated risk · 4.5 / 10**
-*Stablecoin · Swiss francs · Ethereum + 7 chains · No issuer · ~CHF 32M · verified 2026-08-21*
+*Stablecoin · Swiss francs · Ethereum + 7 chains · No issuer · ~CHF 34M · verified 2026-08-21*
 
 > **This token is pegged to the Swiss franc, not the dollar.** If you price it in USD you will see
 > it swing 10% or more and conclude it is broken. That is the dollar moving, not ZCHF. Every peg
@@ -47,8 +47,9 @@ contract. There is no admin key, no freeze function, no custodian and no company
 subpoenaed. New minting rights arrive only through a 14-day public application that any 2% of
 governance-token holders can veto. That is the entire control surface, and it is unusually clean.
 
-The problem is not the design — it is what is behind it and how much of it there is. About CHF 32M
-of ZCHF is outstanding against CHF 33.5M of borrower debt, and **roughly 31% of that debt is
+The problem is not the design — it is what is behind it and how much of it there is. About **CHF
+34.2M** of ZCHF is outstanding — CHF 30.3M on Ethereum plus CHF 3.9M bridged, mostly to Base and
+Gnosis — against CHF 33.5M of borrower debt, and **roughly 31% of that debt is
 collateralised by shares in two private Swiss companies** that have essentially no market. The
 first-loss capital standing behind the whole system is **CHF 3.81M**. Three borrowers account for
 77% of all debt. And the largest single collateral, the tokenized share register of an ICT company
