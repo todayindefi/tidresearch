@@ -10,10 +10,10 @@ audience: "retail"
 date: "2026-08-21"
 last_verified: "2026-08-21"
 peg_mechanism_score: 6.5
-backing_score: 4.5
+backing_score: 4.0
 liquidity_score: 5.5
 issuer_score: 5.5
-overall_score: 4.5
+overall_score: 4.0
 issuer: "None — no issuing entity; the Frankencoin Association develops the protocol"
 audited_reserves: false
 market_cap_approx: 42800000   # USD, per site convention (fmtUSD); ≈ CHF 34.21M at USD/CHF 0.80
@@ -21,7 +21,7 @@ production: true
 ---
 
 # ZCHF (Frankencoin) — Risk Report
-**Moderate-elevated risk · 4.5 / 10**
+**Elevated risk · 4.0/10**
 *Stablecoin · Swiss francs · Ethereum + 7 chains · No issuer · ~CHF 34M · verified 2026-08-21*
 
 > **This token is pegged to the Swiss franc, not the dollar.** If you price it in USD you will see
@@ -49,14 +49,17 @@ governance-token holders can veto. That is the entire control surface, and it is
 
 The problem is not the design — it is what is behind it and how much of it there is. About **CHF
 34.2M** of ZCHF is outstanding — CHF 30.3M on Ethereum plus CHF 3.9M bridged, mostly to Base and
-Gnosis — against CHF 33.5M of borrower debt, and **roughly 31% of that debt is
-collateralised by shares in two private Swiss companies** that have essentially no market. The
-first-loss capital standing behind the whole system is **CHF 3.81M**. Three borrowers account for
-77% of all debt. And the largest single collateral, the tokenized share register of an ICT company
-called Boss Info AG, sits behind a contract where **one ordinary private key can destroy the exact
-collateral backing four million francs of debt**. None of that is hidden — all of it is readable
-on-chain, which is more than most stablecoins can say — but it is a concentrated credit view on a
-handful of counterparties, not a cash-equivalent.
+Gnosis — against CHF 33.5M of borrower debt, and **roughly 31% of that debt is collateralised by
+shares in two private Swiss companies**. Those shares do trade, in small size, on an on-chain OTC
+venue — but the larger of them, the tokenized share register of an ICT company called Boss Info
+AG, is **marked above the prices it actually changes hands at**, and its issuer's audited
+consolidated accounts show **CHF 362,014 of total equity** behind a mark implying an CHF 86M
+valuation. The first-loss capital standing behind the whole system is **CHF 3.81M**. Three
+borrowers account for 77% of all debt; the largest holder of Boss Info shares — **52.8% of the
+company** — is the same person borrowing against them; and the share contract is one where **a
+single ordinary key can destroy the exact collateral backing four million francs of debt**. None
+of it is hidden — all of it is readable on-chain, which is more than most stablecoins can say —
+but it is a concentrated credit view on a handful of counterparties, not a cash-equivalent.
 
 ## At a glance
 
@@ -68,7 +71,7 @@ handful of counterparties, not a cash-equivalent.
 | **Yield** | ~1% on the protocol's own savings module, which holds 39% of all ZCHF. Funded by borrower interest with roughly a 1% margin. |
 | **Admin & custody** | No admin key on the token — verified, `owner()` reverts. Governance is a 14-day minter application vetoable by 2% of FPS holders, which costs about **CHF 228k** to exercise. |
 | **Regulated?** | No, and deliberately so. Not e-money, not a deposit, no licence, no deposit insurance. The LEXR opinion classifies it as a payment token with no identifiable issuer. |
-| **Biggest risk** | 31% of the debt is backed by tokenized private-company shares whose issuers control the register — one key can mint or burn them — and only CHF 3.81M of shared first-loss capital sits behind the system. |
+| **Biggest risk** | 31% of the debt is backed by tokenized private-company shares — register entries one key can mint or burn, held in blocks worth 22% and 36% of the companies themselves. The larger is marked above the prices it trades at, its issuer's audited consolidated equity is CHF 362,014, and its majority shareholder is the borrower. Only CHF 3.81M of shared first-loss capital sits behind the system. |
 
 ## Risk by axis
 
@@ -94,7 +97,7 @@ auction can fall less than 7% before proceeds stop covering the debt. The buffer
 between the declared liquidation price and the market price, which is comfortable today. It is not
 a structural cushion.
 
-**Backing — 4.5.** Start with the genuine strength: this is one of the very few stablecoins whose
+**Backing — 4.0.** Start with the genuine strength: this is one of the very few stablecoins whose
 backing can be reconstructed **entirely from public blockchain calls**, to the franc, with no
 attestation, auditor or issuer dashboard in the loop. We did exactly that. Reserves in the equity
 contract total CHF 12.44M against CHF 30.3M on mainnet, and the internal accounting reconciles
@@ -114,14 +117,35 @@ burn call succeeds for exactly that position's 800,000-share balance. Under Swis
 that control is *required* — an issuer must be able to record capital increases and cancellations —
 but Frankencoin's contracts hold nothing that protects against it.
 
-Concentration compounds it. **Three borrowers hold 77% of all debt**, and a single address accounts
-for 98.7% of the BOSS borrowing. Separately, 2.3% of supply is now issued against CHFAU, a
-BaFin-licensed franc stablecoin from the Deutsche Bank/DWS/Galaxy venture AllUnity — better credit
-than a private share, but it inserts a regulated, freezable counterparty into a system whose whole
-proposition is not having one, and its approved ceiling is already **10M, a third of supply**, with
-no further vote required. The score would move up on collateral diversification away from private
-shares, or down if the CHFAU ceiling is used, if the tokenized-equity share passes ~45%, or if any
-issuer key is exercised against a live position.
+Concentration compounds it, and in a specific way. **Three borrowers hold 77% of all debt.** The
+largest holder of BOSS — 5.6 million shares, **52.8% of the company** — is the same address that
+owns three of the five BOSS positions and carries 24.7% of all ZCHF debt; between his wallet and
+his posted collateral he controls **75% of Boss Info AG**. Collateral value and borrower solvency
+are therefore one variable rather than two, and a forced sale would come precisely when the
+company's controlling shareholder is distressed. The blocks are large relative to the companies
+too: Frankencoin's contracts hold **22% of Boss Info AG** and **36% of quitt.shares**.
+
+And the mark all of those figures rest on does not reconcile. The shares *do* trade — an on-chain
+OTC venue printed **CHF 107,000 of BOSS across 14 trades in six weeks**, and **CHF 2.6M of DQTS
+over five months** in blocks up to 80,000 shares — so this is not a market that fails to exist.
+But BOSS printed at **6.90–8.20, clustering 7.30–7.55**, against the **8.072** mark Frankencoin
+displays, leaving that position carried roughly **CHF 1.6–2.2M above realised prices**. And Boss
+Info AG's audited consolidated accounts show **CHF 362,014 of total equity**, with 2025 net income
+of CHF 57,318 after a CHF 3.99M loss the year before — against a mark implying an **CHF 86M**
+market capitalisation. Frankencoin's stake is carried at CHF 19.19M; the attributable consolidated
+book value is about **CHF 80,700**. Operating cash flow is healthy and a services business can
+legitimately trade well above book, so this is not a valuation call — but nothing in the audited
+record anchors a gap of that size. **That, not illiquidity, is why this axis is 4.0.**
+
+Separately, 2.3% of supply is now issued against CHFAU, a BaFin-licensed franc stablecoin from the
+Deutsche Bank/DWS/Galaxy venture AllUnity — better credit than a private share, but it inserts a
+regulated, freezable counterparty into a system whose whole proposition is not having one, and its
+approved ceiling is already **10M, a third of supply**, with no further vote required. In fairness
+to the issuers: both share positions carry the protocol's **top-tier 40% borrower reserve**, DQTS
+is marked *below* its own prints, and Swiss company law limits how much of its own stock Boss Info
+could buy back even if it wanted to. The score would move up if BOSS prints converge to its mark
+or the tokenized-equity share falls; down if the CHFAU ceiling is used, if that share passes ~45%,
+or if any issuer key is exercised against a live position.
 
 **Liquidity — 5.5.** These are measured executable quotes, not pool TVL. On the main Uniswap V3
 ZCHF/USDT pool, 100k ZCHF costs about 18bp, 400k costs **51bp**, and at roughly 450k the range is
@@ -180,6 +204,8 @@ about half a million francs quickly, or is treating this as a dollar cash equiva
 - CHFAU-backed supply rising toward its approved 10M ceiling (a third of supply, no vote needed).
 - Tokenized private-share collateral rising above ~45% of debt.
 - Any change to the BOSS token's owner or proxy admin, or a rise in its share count.
+- Boss Info OTC prints drifting further below the 8.07 mark its collateral is carried at.
+- A DQTS drag-along vote opening — a 75% vote can force conversion of the shares held inside the position.
 - FPS equity falling toward CHF 2M.
 - ZCHF closing below 0.98 **against the franc** — never against the dollar.
 
@@ -191,5 +217,4 @@ observations about token contract permissions describe capabilities readable on-
 suggestion that they have been misused. If something here is wrong, write to info@tidresearch.com
 and we will correct it in the next revision and credit the source.*
 
-*Revision history: 2026-08-21 — first publication. Overall 4.5 (peg 6.5 / backing 4.5 / liquidity
-5.5 / issuer 5.5).*
+*Revision history: 2026-08-21 — first publication at overall 4.5. 2026-08-21, revised — supply corrected to CHF 34.2M; backing 4.5 → 4.0 and overall 4.5 → 4.0 after tracing the tokenized-share collateral to its trading venues and reading the issuer's audited accounts. Overall 4.0 (peg 6.5 / backing 4.0 / liquidity 5.5 / issuer 5.5).*
