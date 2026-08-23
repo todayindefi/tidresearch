@@ -8,7 +8,7 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 audience: "retail"
 date: "2026-06-10"
-last_verified: "2026-08-13"
+last_verified: "2026-08-23"
 peg_mechanism_score: 6.5
 backing_score: 6.5
 liquidity_score: 5.5
@@ -66,7 +66,19 @@ Daily volume is now about **$10.8M** (roughly 3.7× the ≈$2.9M seen in April),
 **This is where the score is lost.** Three things compound:
 
 - **No third-party audit of the frxUSD stablecoin contracts.** LlamaRisk states this explicitly. The contracts are **upgradeable proxies**. Frax's in-house "Security Cartel" reviewed the FIP-430 upgrade path, and ChainSecurity audited the FXB-side upgrade — but the frxUSD ERC-20 itself has no public third-party audit report. For an upgradeable stablecoin, that is the single biggest contract-level risk.
-- **A multisig with no timelock controls upgrades — now 4-of-7, previously 3-of-5.** The owner (`0xfFFffF4F3baC444b2C0ecf2A1840d018bE783937`, verified on-chain 2026-08-13: a 4-of-7 Safe) can pause, upgrade the implementation, and modify parameters with **zero delay**. Combine that with "upgradeable + unaudited" and you have a high-trust configuration.
+- ⚠️ **Corrected 2026-08-23: there IS a timelock on upgrades, it is 24 hours, and it does not cover the powers that matter most.** This report previously said upgrades execute with zero delay and that no timelock existed. Both were wrong. Read at Ethereum head with a USDC control passing: the frxUSD proxy's admin is a ProxyAdmin at `0x0b2c3df0…`, whose owner is a **Compound-style Timelock** at `0xb898ad29…` with `delay()` = **86,400 seconds, 24 hours**.
+
+  **But the correction cuts the other way too, and on balance the picture is not better.** The timelock's own `admin()` is `0xffFFfF4F…3937` — **the same address as `frxUSD.owner()`**, an equality checked directly rather than assumed. That Safe is **threshold 4 of 7 owners, all seven of them plain externally-owned accounts.** So one holder controls three powers at three different speeds:
+
+  | power | route | delay |
+  |---|---|---|
+  | Upgrade the implementation | ProxyAdmin → Timelock | **24 hours** |
+  | **Mint** | owner-gated directly | **none** |
+  | **Freeze / pause** | owner-gated directly | **none** |
+
+  **The powers that can seize or halt a holder's balance are the ones with no delay on them.** These are not three independent failure paths — it is one signer set with three routes out, and threshold 4 governs all of them.
+
+  ⚠️ **And the delay is only as deep as its floor.** The timelock reports `MINIMUM_DELAY()` = **7,200 seconds — two hours.** The same Safe that the delay constrains is the body that can call `setDelay` on it, so the practical protection is 24 hours of notice **once**, and two hours thereafter. A gate whose depth is set by the party it gates is a different instrument from one with a hard floor beneath it.
 - **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the 4-of-7 / no-timelock / upgradeable / unaudited setup is exactly what would *enable* such an action silently, which is why it's worth flagging.
 
 ### The owner address changed, and we found it by re-reading the chain
@@ -88,7 +100,9 @@ There are two honest readings here and you should hold both.
 
 **The manner is not reassuring.** This was a complete, zero-overlap replacement of the controlling signer set, on a contract that is an upgradeable proxy with no public third-party audit and no execution delay — and we found it by routinely re-reading the chain, not from any announcement or governance record. **We could not locate the record authorising the handover.** That absence does not mean no such record exists; it means we cannot distinguish "a maturing issuer widening its multisig through proper process" from "a signer set replaced quietly" using on-chain state alone. Both are consistent with what we can see. Treat the improvement as provisional until the authorising record surfaces.
 
-**The binding criticism is unchanged.** A timelock, not a wider signer set, is what would actually fix this configuration. Every property that made the December 2025 stealth-patch allegation credible is still present today.
+⚠️ **The binding criticism is unchanged, but this report had the fix wrong.** It previously said that a timelock, rather than a wider signer set, is what would actually fix this configuration. **A timelock already exists — and it did not fix it**, for two reasons now visible: it covers upgrade only, leaving mint, freeze and pause on a direct owner-gated path with no delay at all; and its own floor is two hours, set by the same Safe it constrains.
+
+**So the honest restatement of what would fix this:** a delay over the *balance-affecting* powers, not only over upgrade; a floor that the governed party cannot lower; and a signer set that is not seven externally-owned accounts. Every property that made the December 2025 stealth-patch allegation credible is still present today — the allegation concerned a silent change to contract behaviour, and 24 hours of notice on the upgrade path is a real but partial answer to it.
 
 Frax Finance itself is an established team (Sam Kazemian, 5+ years, active development on frxUSD, Fraxtal L2, and frxETH) — the issuer-level track record is real. The contract-trust profile is the offsetting concern.
 
@@ -108,14 +122,14 @@ What makes it worth a second look is the combination: the float is shrinking *wh
 
 **Avoid / size down if:**
 - You need deep, instant, at-par **USDC** exit for a sized position — the redemption fragmentation and ≈$10M buffer are the binding constraint.
-- You weight unaudited upgradeable contracts under a no-timelock multisig heavily — 4-of-7 is better than the 3-of-5 that preceded it, but instant execution is the structural risk here, and that has not changed.
+- You weight unaudited upgradeable contracts under a thinly-timelocked multisig heavily — 4-of-7 is better than the 3-of-5 that preceded it, and upgrades now carry 24 hours' notice, but **mint, freeze and pause still execute instantly** and the delay's floor is two hours, set by the Safe it governs here, and that has not changed.
 - You're confusing it with Legacy FRAX — they are different assets (see the disambiguation note at the top).
 
 ## What to watch
 
 - **Chaos PoR feed.** If the frxUSD card on the Chaos dashboard starts populating with live numbers, that closes the current "exists but unverified" gap and is a genuine backing-transparency uplift.
 - **Backing concentration.** The ≈90% Superstate exposure (USTB + USCC) vs the "diversified custodians" marketing — watch for the live split to be re-confirmed either way.
-- **Multisig / upgrades.** The 4-of-7 owner (`0xfFFf…3937`, in place as of 2026-08-13) can upgrade with no delay. Any implementation upgrade, another owner change, or resolution of the Dec 2025 patch allegation would be material — as would a timelock, which is the change that would actually move this score.
+- **Multisig / upgrades.** The 4-of-7 owner (`0xfFFf…3937`, in place as of 2026-08-13) can upgrade behind a **24-hour timelock it also administers**, and can mint, freeze and pause **with no delay at all**. Watch for a `setDelay` call — the floor is two hours. Any implementation upgrade, another owner change, or resolution of the Dec 2025 patch allegation would be material — as would a timelock, which is the change that would actually move this score.
 - **The authorising record for the August 2026 owner migration.** A Frax governance post or vote documenting the handover to the 4-of-7 Safe would resolve the open question above. Its appearance would firm up the Issuer score; continued absence keeps the improvement provisional.
 - **USDC-exit depth.** The Superstate USDC buffer and Curve USDC-pairing depth are the real exit constraint — more than headline float.
 - **FXB redemption asset.** Note that Frax Bonds (FXBs) currently redeem to *Legacy FRAX* on mainnet, not frxUSD — the Fraxtal upgrade making frxUSD the FXB underlying was still being audited at last check. Verify before relying on it.
@@ -124,4 +138,4 @@ What makes it worth a second look is the combination: the float is shrinking *wh
 
 *This report describes frxUSD as of August 2026, based on public Frax/LlamaRisk documentation and direct on-chain reads (owner, threshold, signer overlap and supply re-verified 2026-08-13). Frax Finance has not engaged on this report. The backing sits partly off-chain with regulated custodians and tokenized-fund issuers; figures rely on those issuers' attestations plus on-chain data. The Chaos Labs PoR feed could not be retrieved on either of the last two passes. Corrections welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
-*Revision history: 2026-08-13 — admin migration found on-chain: the frxUSD owner moved from the 3-of-5 Safe `0xB174…3f27` to a 4-of-7 Safe `0xfFFf…3937` with zero signer overlap and still no timelock; no authorising governance record located. Issuer 5.0 → 5.5, overall held at 5.5. Circulating restated ≈$124M → ≈$105.5M (down about 15% in nine weeks), reframing "plateaued" as contracting. Price ≈$0.9997 → ≈$0.9993. Chaos PoR unverified for a second consecutive pass, this time unreachable rather than empty. 2026-06-10 — initial publication (multisig verified 3-of-5 on 2026-06-08; liquidity 5.0 → 5.5 on the Aave V4 listing).*
+*Revision history: 2026-08-23 — **admin topology corrected in both directions; no score change.** This report stated that frxUSD upgrades execute with **zero delay** and that **no timelock** existed, and that a timelock *"is what would actually fix this configuration"*. All three were wrong. Read at Ethereum head with a USDC control passing: the proxy's admin is a ProxyAdmin at `0x0b2c3df0…` owned by a **Compound-style Timelock** at `0xb898ad29…`, `delay()` **86,400 seconds — 24 hours**. **So the fix this report called for had already been implemented, and it did not resolve the concern.** Two reasons, both now on the page. **First, it covers upgrade only:** the timelock's `admin()` is `0xffFFfF4F…3937`, verified as **the same address** as `frxUSD.owner()` — a Safe at **threshold 4 of 7, all seven owners plain EOAs** — and **mint, freeze and pause are owner-gated directly with no delay at all.** The powers that can seize or halt a holder's balance are precisely the undelayed ones. These are not three independent failures: one signer set, three routes, threshold 4 on each. **Second, the delay has a two-hour floor:** `MINIMUM_DELAY()` is 7,200 seconds and the Safe the timelock constrains is the body that can call `setDelay` on it — so the protection is 24 hours' notice once and two hours thereafter. **A gate whose depth is set by the party it gates is a different instrument from one with a hard floor.** ⚠️ **This should not be read as frxUSD having improved.** Correcting only the upgrade half would leave a materially rosier page than the facts support; the balance-affecting powers are exactly where the delay is absent. **No score change (Issuer 5.5, Overall 5.5):** the prior rationale was worse than reality on the upgrade path and equal to it on everything else, so the net does not move — but it was wrong in both directions and is restated rather than patched. Found by grepping the claim across the whole file rather than re-reading the admin section, which surfaced instances in the who-should-avoid list and the watch items as well. `last_verified` **is** bumped to 2026-08-23; the admin chain was read end to end. 2026-08-13 — admin migration found on-chain: the frxUSD owner moved from the 3-of-5 Safe `0xB174…3f27` to a 4-of-7 Safe `0xfFFf…3937` with zero signer overlap and still no timelock; no authorising governance record located. Issuer 5.0 → 5.5, overall held at 5.5. Circulating restated ≈$124M → ≈$105.5M (down about 15% in nine weeks), reframing "plateaued" as contracting. Price ≈$0.9997 → ≈$0.9993. Chaos PoR unverified for a second consecutive pass, this time unreachable rather than empty. 2026-06-10 — initial publication (multisig verified 3-of-5 on 2026-06-08; liquidity 5.0 → 5.5 on the Aave V4 listing).*
