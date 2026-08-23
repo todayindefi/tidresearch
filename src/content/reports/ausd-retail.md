@@ -73,7 +73,7 @@ This is the one structural nuance every holder should understand, and it's simpl
 
 ## A note on chain concentration
 
-A large and growing share of AUSD now lives on **Monad** — roughly 40% of supply, where AUSD is the largest stablecoin, boosted by Pendle yield pools. Monad is a young chain. The relevant risk there isn't a bridge exploit (that route rides AUSD0's strongest-secured configuration) but **chain liveness**: if Monad halted, bridging that supply back to Ethereum could be delayed. It's a "how young is the chain" consideration, not a "can the bridge be hacked" one.
+A large and growing share of AUSD now lives on **Monad** — roughly 40% of supply as at this report's 2026-07-08 pass, where AUSD is the largest stablecoin, boosted by Pendle yield pools. Treat that share as indicative rather than current: it is a ratio of two figures that both move, Monad is among the AUSD deployments this coverage cannot read directly, and a chain share can drift materially without either underlying number looking unusual. Monad is a young chain. The relevant risk there isn't a bridge exploit (that route rides AUSD0's strongest-secured configuration) but **chain liveness**: if Monad halted, bridging that supply back to Ethereum could be delayed. It's a "how young is the chain" consideration, not a "can the bridge be hacked" one.
 
 ## The issuer — Agora
 
