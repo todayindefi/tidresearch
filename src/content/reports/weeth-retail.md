@@ -8,7 +8,7 @@ underlying_assets: ["ETH"]
 assessment_type: "full"
 audience: "retail"
 date: "2026-08-13"
-last_verified: "2026-08-13"
+last_verified: "2026-08-23"
 featured: false
 production: true
 issuer: "ether.fi"
@@ -43,7 +43,7 @@ chain_overrides:
 
 | Backing | What it earns | Exit methods | Age | Chains |
 |---|---|---|---|---|
-| ETH staked on the beacon chain by ether.fi (1.101341 eETH per weETH, verified 2026-08-13) | Ethereum consensus rewards only, accrued into the exchange rate | Unwrap to eETH then withdraw (validator exit queue), or sell on Curve / Balancer / Uniswap / Pendle | Live since 2023, no major exploit | Ethereum (canonical) plus Base, Arbitrum, Optimism and other L2s (bridged) |
+| ETH staked on the beacon chain by ether.fi (1.102072 eETH per weETH, verified 2026-08-23) | Ethereum consensus rewards only, accrued into the exchange rate | Unwrap to eETH then withdraw (validator exit queue), or sell on Curve / Balancer / Uniswap / Pendle | Live since 2023, no major exploit | Ethereum (canonical) plus Base, Arbitrum, Optimism and other L2s (bridged) |
 
 ## Summary
 
@@ -60,15 +60,16 @@ What is left is ordinary LST risk plus a thin wrapping layer, and one genuine st
 This is the trap most weETH commentary falls into right now. Between 2026-05-26 and 2026-08-13:
 
 - ETH-equivalent supply **grew 9.3%**, from about 1.61M to **1,933,335 ETH-equivalent** (1,755,436 weETH at a rate of 1.101341).
-- The dollar figure **fell**, from the $5–6B recorded in May to roughly **$3.6B** at an ETH price near $1,882.
+- ✅ **Re-measured 2026-08-23, and it kept going: ETH-equivalent has crossed 2,000,000 — now 2,009,656** (1,823,525 weETH at a rate of 1.102072), a further **+3.95%** in ten days. The wrapped share of eETH rose again, 95.8% → **96.15%**.
+- The dollar figure **fell**, from the $5–6B recorded in May to roughly **$3.6B** at an ETH price near $1,882 — **both as at 2026-08-13; the USD line has not been re-measured since**, and per this section's own argument it is the figure least worth chasing.
 
-Both are true. The dollar decline is the ETH price, not people leaving. If you read weETH's risk off a USD chart you will conclude there was a large outflow through a period of structural change, and you will be wrong — more ETH is in this token than there was in May, and the share of eETH that is wrapped rose from roughly 93% to 95.8%. **Denominate this position in ETH.** A USD-framed narrative on an ETH-denominated asset invents an event that did not happen.
+Both are true. The dollar decline is the ETH price, not people leaving. If you read weETH's risk off a USD chart you will conclude there was a large outflow through a period of structural change, and you will be wrong — more ETH is in this token than there was in May, and the share of eETH that is wrapped rose from roughly 93% to 95.8%, and again to 96.15% by 2026-08-23. **Denominate this position in ETH.** A USD-framed narrative on an ETH-denominated asset invents an event that did not happen.
 
 ## What you actually earn
 
 weETH accrues value through its exchange rate, readable on-chain as `getRate()`. It does not rebase, and it does not pay anything out.
 
-- **Rate on 2026-08-13: 1.101341 eETH per weETH**, up 0.53% over the 79 days since 2026-05-26 — about **2.5% annualised**, net of ether.fi's fee, over that specific window.
+- **Rate on 2026-08-23: 1.102072 eETH per weETH** (1.101341 on 08-13). Accrual now measures **consistent across two independent, non-overlapping windows**: the 79 days from 2026-05-26 to 08-13 annualise to about **2.5%**, and the 10 days from 08-13 to 08-23 annualise to **2.45%** — agreement within 5 basis points, net of ether.fi's fee. **Two windows is better evidence than one, and it is still two windows:** this is a rate that can change with validator performance, fee policy or network conditions, so treat it as an observed range rather than a yield the token promises.
 - That is consensus yield only now. Restaking rewards moved to weETHs, so post-2026-08-06 the return is Ethereum staking and nothing else. Anyone quoting a weETH yield that includes restaking or points incentives is describing the old product.
 - Staking yield is not fixed. It moves with validator counts and network activity, so treat the figure above as an observed window, not a quote.
 
@@ -100,7 +101,7 @@ This is weETH's strongest feature, and it was re-verified directly on-chain for 
 
 | Contract | Address | Verified |
 |---|---|---|
-| weETH (Ethereum) | `0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee` | UUPS proxy, `getRate()` = 1.101341 |
+| weETH (Ethereum) | `0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee` | UUPS proxy, `getRate()` = 1.102072 (2026-08-23) |
 | eETH (rebasing underlying) | `0x35fA164735182de50811E8e2E824cFb9B6118ac2` | totalSupply 2,018,015 eETH |
 | RoleRegistry | `0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9` | `owner()` is the timelock below |
 | TimelockController | `0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761` | `getMinDelay()` = 864000s (**10 days**) |
@@ -166,4 +167,4 @@ Holders who want ETH staking exposure in the form DeFi is built around, who valu
 
 *This report is based on ether.fi's public documentation and blog, contemporaneous reporting from The Defiant and CoinDesk, and direct on-chain reads of the weETH, eETH, RoleRegistry, timelock and Safe contracts at Ethereum block 25,743,010 on 2026-08-13. The 2026-08-06 removal of restaking from weETH is press-reported and attributed by those outlets to ether.fi's own slashing-risk documentation; we retrieved no primary ether.fi document confirming it, and our on-chain reads are consistent with but do not prove the change. Supply, rate and price figures are point-in-time reads at that block. weETHs, ether.fi's separate restaking token, is not assessed here. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
-*Revision history: 2026-08-13 — initial publication. Reflects the 2026-08-06 removal of restaking from weETH: recategorised from liquid restaking token to liquid staking token, volatility 7.0 to 7.5, structural 6.5 to 7.0, redemption 6.5 to 7.0, overall 6.5 to 7.0, L2 overrides 5.5 to 6.0. Admin chain re-verified on-chain; mainnet implementation noted as changed to `0xA6Ca…ccf3` on an undated earlier upgrade.*
+*Revision history: 2026-08-23 — **re-measured; figures updated; thesis unchanged; no score change.** Recording this as a result rather than only moving the date, because on a report whose central argument is that a naive reading invents an event, **a checked-and-held pass is the evidence that the argument survived contact.** At head, with a USDC control passing: `getRate()` **1.101341 → 1.102072**, weETH supply **1,755,436 → 1,823,525**, **ETH-equivalent 1,933,335 → 2,009,656 (+3.95%)** — through 2,000,000 for the first time — and the wrapped share of eETH **95.8% → 96.15%**. **Everything this report argues is more true, not less:** it instructs readers to denominate the position in ETH on the grounds that the USD figure fell while ETH-equivalent grew, and ten further days show ETH-equivalent up again and the wrap share up again. The published 1,933,335 now reads noticeably light, which is why the figures move rather than merely being reaffirmed. ⚠️ **One claim is strengthened rather than restated.** The report derived accrual of about 2.5% annualised from a **single** 79-day observation and hedged it as "over that specific window". An independent, **non-overlapping** 10-day window annualises to **2.45%** — agreement within 5 basis points. The wording moves from one observation to **two**, and the hedge survives the change: two windows is better evidence than one, and it is still two windows on a rate that can move with validator performance or fee policy. ⚠️ **What was NOT re-measured, stated so it is not mistaken for verified-clean:** the **USD figure** (still as at 2026-08-13, and now marked as such inline), the **per-chain rows** and the **Base bridge admin** `0x2f6f…fb68`, and the **weETH/weETHs split dynamics**. `last_verified` is bumped because the rate, supply and wrap share were read at source — the unchecked items above are the boundary of that stamp. *Revision history: 2026-08-13 — initial publication. Reflects the 2026-08-06 removal of restaking from weETH: recategorised from liquid restaking token to liquid staking token, volatility 7.0 to 7.5, structural 6.5 to 7.0, redemption 6.5 to 7.0, overall 6.5 to 7.0, L2 overrides 5.5 to 6.0. Admin chain re-verified on-chain; mainnet implementation noted as changed to `0xA6Ca…ccf3` on an undated earlier upgrade.*
