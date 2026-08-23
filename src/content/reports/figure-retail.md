@@ -79,11 +79,38 @@ FCC's filing uses “Parent” for more than one group entity, so a parent commi
 
 ## The loan book
 
-The most useful credit series is Figure's loans held for sale: loans still on its balance sheet awaiting a whole-loan transfer, securitization or another funding exit. On a consistent basis — loans at least 30 days late plus loans in forbearance, divided by total unpaid principal — delinquency rose from **3.91% at the end of 2024 to 5.46% at 31 December 2025 and 6.61% at 31 March 2026**.
+The most useful credit series is Figure's loans held for sale: loans still on its balance sheet awaiting a whole-loan transfer, securitization or another funding exit. On a consistent basis — loans at least 30 days late plus loans in forbearance, divided by total unpaid principal — delinquency rose from **3.91% at the end of 2024 to 5.46% at 31 December 2025 and 6.61% at 31 March 2026** — and then **fell to 5.05% at 30 June 2026**, per Figure's Q2 10-Q filed 2026-08-14 (unaudited interim, like the quarters before it).
+
+⚠️ **The headline improved, the improvement is real, and this report is holding its score anyway. All three of those need saying together.**
+
+**It is real, and we checked the obvious reason it might not be.** A book growing fast can flatter a delinquency *rate* without anything improving, and this book grew **17.8%** over the quarter — exactly the shape that manufactures a fake recovery. So the numerator was tested separately: **delinquent dollars fell 9.9%** while unpaid principal rose 17.8%. **Both legs moved favourably**, which a denominator artifact cannot produce. The **30–59 day bucket fell 53%**, reversing the 365% spike recorded below. (Reconstructing 31 December 2025 from the new filing's comparative column returns **5.457%** against the 5.46% published here, so these figures sit on this report's own basis rather than merely near it.)
+
+⚠️ **But the trend did not reverse. It matured — and this report predicted the mechanism in the paragraph below**, which says the 30–59 spike "matters because it feeds the 60–89 and 90-plus day buckets over the next few quarters." That is what the quarter shows:
+
+| | 31 Mar 2026 | 30 Jun 2026 | |
+|---|---:|---:|---|
+| Headline delinquency | 6.61% | **5.05%** | improved |
+| 30–59 day bucket | $10.724M | — | **−53%** |
+| **90-plus day bucket** | $14.387M | **$19.543M** | ⚠️ **+35.8%** |
+| 60–89 day loans | 4,193 | 4,267 | flat |
+| **Nonaccrual UPB** | $2.4M | **$14.1M** | ⚠️ share of 90+ on nonaccrual, ~17% → ~72% |
+| **Securitized w-avg 60+** | 0.8% | **1.1%** | ⚠️ broke a flat line |
+
+**The 60–89 bucket staying flat while 90-plus rose is the signature of a wave passing *through* rather than stopping.** The early bucket emptied because its contents aged, not only because fewer loans entered it. And the nonaccrual move is the sharper read: the 90-plus dollars are not merely larger, a much larger share of them have been reclassified as loans Figure no longer expects to accrue interest on.
+
+⚠️ **The securitized line is the one that matters most, because it is this report's own mechanism turning.** The section below explains that Democratized Prime forces loans more than 60 days delinquent *out* of the collateral pool, which is why the securitized statistic stayed clean at 0.8% at both December and March. **It is now 1.1%.** The clean pool is less clean, and that is the number the selection-bias argument said should stay flat.
+
+**So the score holds at 5.0, and the reason it holds is the same reason it was 5.0 before.** This report says the direction of travel on the loan book is why Figure is not scored higher. At the 90-plus, nonaccrual and securitized ends that direction is still adverse — the improvement is at the front of the pipeline, the deterioration is at the back, and the back is where losses are realised.
+
+**What would change it, stated so the hold is falsifiable:** a **second consecutive quarter** of falling headline delinquency, **with 90-plus dollars flat or falling and securitized 60+ back at or below 0.8%.** One quarter of a front-bucket improvement while the back buckets fill is not that. The Q3 10-Q is due around **2026-11-14**.
+
+⚠️ **And a reading habit worth carrying off this page.** A favourable headline can move for reasons that do not mean what they look like — here a delinquency rate fell partly because its denominator grew and its worst dollars aged into a slower bucket. [wYLDS](/reports/wylds/) shows the same shape from the other side, where a coverage ratio *improved* because its denominator shrank, and [thUSD](/reports/thusd/) shows it again where matched dollars flattered a sub-100% ratio. **When a ratio moves in your favour, check which side of it moved.**
+
+The quarter-by-quarter detail below is retained on the March basis.
 
 The deterioration is not an artifact of a smaller book. Between year-end and 31 March, unpaid principal grew from $396.475M to $492.725M, or 24.3%, while delinquent dollars grew 54.2%. The 30–59 day bucket rose from $2.308M to $10.724M — **365% in one quarter**. That earliest bucket matters because it feeds the 60–89 and 90-plus day buckets over the next few quarters. The 90-plus bucket had already risen 34% and represented 3.90% of the book on its own.
 
-Those figures cover all loans held for sale, not the exact collateral pledged to PRIME's facility. They are a proxy. But Figure highlights its reliance on HELOCs, and the proxy has moved adversely for three periods. With no public facility-level tape, it is the closest recurring filing measure.
+Those figures cover all loans held for sale, not the exact collateral pledged to PRIME's facility. They are a proxy. But Figure highlights its reliance on HELOCs, and the proxy moved adversely for three periods before improving at the headline in Q2 — with the back buckets continuing to fill, as set out above. With no public facility-level tape, it is the closest recurring filing measure.
 
 Borrower statistics look reassuring: credit scores around 741 and combined loan-to-value around 59%. But they do not show Figure's recovery position. The facility collateral is about **40% first lien and roughly 58% second lien**, with a small third-lien remainder. Second liens are paid after the first mortgage, so loss severity can exceed what the property-equity figure suggests.
 
@@ -91,7 +118,7 @@ The facility's contractual advance rate is up to **95%** of pledged balances, le
 
 ## Why the two delinquency numbers disagree
 
-Figure's securitized pools reported weighted-average delinquency of **0.8% at both 31 December 2025 and 31 March 2026**. That looks inconsistent with a held-for-sale book moving from 5.46% to 6.61%. It is not inconsistent; the two groups are selected differently.
+Figure's securitized pools reported weighted-average delinquency of **0.8% at both 31 December 2025 and 31 March 2026** — and ⚠️ **1.1% at 30 June 2026, the first break in that flat line.** That looks inconsistent with a held-for-sale book moving from 5.46% to 6.61%. It is not inconsistent; the two groups are selected differently.
 
 Democratized Prime requires loans more than 60 days delinquent to leave its collateral pool. The troubled loan does not vanish: it moves out of the clean pool and back toward Figure's balance sheet, where Figure must substitute collateral, repay funding or absorb the problem.
 
@@ -153,3 +180,11 @@ headline loan-to-value figures imply. Neither is a reason to avoid the stack, an
 it as a cash equivalent.
 
 *This report uses Figure Technology Solutions and Figure Certificate Company filings available through [EDGAR](https://www.sec.gov/edgar/browse/?CIK=2064124&owner=exclude), Figure's published facility terms, and public protocol and account records. It is counterparty analysis for downstream token holders, not equity investment research. Corrections welcome to info@tidresearch.com.*
+
+*Revision history: 2026-08-23 — **refreshed to Figure Technology Solutions' Q2-2026 10-Q (filed 2026-08-14; unaudited interim); Overall held at 5.0.** The delinquency series this report's thesis rests on gained its fourth data point. **Headline held-for-sale delinquency fell 6.61% → 5.05%**, and the improvement is genuine rather than a denominator effect: the book grew **17.8%** — the exact shape that manufactures a false recovery — so the numerator was tested separately and **delinquent dollars fell 9.9%**. Both legs moved favourably, and the 30–59 day bucket fell 53%, reversing the 365% spike recorded for Q1. Method control: reconstructing 31 December 2025 from the new filing's comparative column returns 5.457% against the 5.46% published here, so the new figure sits on this report's own basis.
+
+⚠️ **The score is held anyway, and the reasoning is on the page rather than implied — a held score against a favourable headline reads as refusing to update unless the argument is shown.** The trend did not reverse, it **matured**, exactly as this report's own text predicted when it said the 30–59 spike "feeds the 60–89 and 90-plus day buckets over the next few quarters": **90-plus dollars rose $14.387M → $19.543M (+35.8%)**, the 60–89 bucket stayed flat at 4,193 → 4,267 loans — the signature of a wave passing *through* rather than stopping — and **nonaccrual UPB went $2.4M → $14.1M**, taking the share of 90-plus loans on nonaccrual from about 17% to about 72%. **Most importantly, the securitized weighted-average 60+ figure broke its flat line at 0.8% (December and March) and printed 1.1%.** That is this report's own selection-bias mechanism turning: Democratized Prime forces 60+ loans out of the collateral pool, which is why that number had stayed clean — and the clean pool is now less clean. The improvement is at the front of the pipeline and the deterioration is at the back, where losses are realised.
+
+**The hold is made falsifiable rather than left as judgement:** what would move it is a **second consecutive quarter** of falling headline delinquency **with 90-plus dollars flat or falling and securitized 60+ back at or below 0.8%**. Q3 10-Q due around 2026-11-14.
+
+**Also added, as a reading habit rather than a per-report caveat:** a favourable headline can move for reasons that do not mean what they look like. Here a rate fell partly because its denominator grew and its worst dollars aged into a slower bucket; [wYLDS](/reports/wylds/) shows the inverse, a coverage ratio improving because its denominator shrank; [thUSD](/reports/thusd/) shows matched dollars flattering a sub-100% ratio. **When a ratio moves in your favour, check which side of it moved.** `last_verified` is **not** bumped — only the Figure filing layer was refreshed, and the facility terms and on-chain material in this body still date from the earlier pass.*
