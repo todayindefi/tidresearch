@@ -61,7 +61,7 @@ Two paths:
 - Typical daily volume: $100M+ in calm conditions
 - Retail-size exits clear at sub-10bps slippage in normal markets
 
-The catch: supply has contracted about 70% from the $14.7B September 2025 peak to ~$4.5B current. Absolute liquidity depth has shrunk in lockstep. Still genuinely deep — but the cushion has thinned.
+The catch: supply has contracted about 70% from the $14.7B September 2025 peak to the ~$4.5B recorded in June 2026. Absolute liquidity depth has shrunk in lockstep. **On how current that figure is:** USDe's Ethereum leg alone read 4,094,723,705 on 2026-08-23, and USDe's satellite deployments sit at *different* addresses on other chains rather than at the mainnet address, so an Ethereum read is a floor rather than a total. The June figure has therefore not been shown to be stale — any further contraction since is at most single-digit percent and may be nil. Still genuinely deep — but the cushion has thinned.
 
 **2. Primary mint/burn at $1 NAV (whitelisted institutions only).** Ethena operates a direct mint/burn flow against the reserve portfolio for KYC'd institutional counterparties. Retail and non-whitelisted holders cannot access this path directly. Critically, **this is not a §II.4 access-asymmetry penalty in the framework sense** — the arbitrage mechanism (institutions buying discounted USDe on DEX, redeeming at $1 with Ethena) is what keeps the secondary peg tight. Retail benefits from the same peg pressure even without direct primary access.
 

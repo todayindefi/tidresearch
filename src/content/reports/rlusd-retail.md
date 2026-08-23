@@ -12,7 +12,7 @@ last_verified: "2026-07-08"
 featured: false
 production: true
 issuer: "Standard Custody & Trust Company (Ripple)"
-market_cap_approx: 1780000000
+market_cap_approx: 1589600000
 peg_mechanism_score: 7.0
 backing_score: 7.0
 liquidity_score: 7.0
@@ -28,13 +28,15 @@ overall_score: 7.0
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| None | Sell on a CEX (Binance-listed) or DEX at peg; redeem 1:1 via the issuer | Mint/redeem 1:1 through Ripple's regulated trust issuer; retail exits via market | Since Dec 2024 (~18 months) | Ethereum (~82% of supply) + XRP Ledger; L2s via Wormhole in progress |
+| None | Sell on a CEX (Binance-listed) or DEX at peg; redeem 1:1 via the issuer | Mint/redeem 1:1 through Ripple's regulated trust issuer; retail exits via market | Since Dec 2024 (~18 months) | Ethereum (roughly two-thirds of supply) + XRP Ledger; L2s via Wormhole in progress |
 
 ## Summary
 
 RLUSD is Ripple's fiat-backed stablecoin, issued through **Standard Custody & Trust Company**, an **NYDFS-regulated** trust entity. It is backed 1:1 by USD deposits, US Treasuries and cash equivalents held in segregated accounts at **BNY Mellon**, with monthly third-party attestations on the reserve.
 
-Launched in December 2024, RLUSD has scaled roughly 4x to about **$1.78 billion** (approaching $2 billion) while holding its peg, and it now sits inside the regulated dollar cluster alongside PYUSD and GUSD. Along the way it picked up a Binance listing and began expanding institutionally: a JFSA-approved Japan launch via SBI, Deutsche Bank adopting Ripple's payment infrastructure, and a Mastercard/Gemini card pilot.
+Launched in December 2024, RLUSD has scaled to the multi-billion tier while holding its peg, and it now sits inside the regulated dollar cluster alongside PYUSD and GUSD. Along the way it picked up a Binance listing and began expanding institutionally: a JFSA-approved Japan launch via SBI, Deutsche Bank adopting Ripple's payment infrastructure, and a Mastercard/Gemini card pilot.
+
+**On the supply figure, and how to read any RLUSD supply figure.** Circulating supply was **$1,589.6M as published by Ripple on 2026-08-06** — below the roughly $1.78 billion this report carried at its 2026-07-08 pass, so the trajectory has flattened rather than continued toward $2 billion. **That number is issuer-published and cannot be reproduced from an Ethereum read.** RLUSD is issued natively on both the XRP Ledger and Ethereum, and the XRPL is not an EVM chain, so no Ethereum query returns the total. For scale: the Ethereum leg alone read 1,085,003,648 on 2026-08-23, roughly two-thirds of the issuer's cross-ledger total — the two readings are seventeen days apart, so treat that split as approximate. The practical point is that a quoted RLUSD "supply" is either the issuer's cross-ledger total or one chain's slice, and they differ by about a third. We have no non-EVM reader, so on this asset we are relying on Ripple's disclosure rather than on our own measurement.
 
 The 7.0/10 reflects a well-regulated, increasingly liquid stablecoin whose main residual risks are a still-short multi-cycle track record and attestation-versus-real-time-PoR transparency — not reserve quality or issuer strength. It's worth noting that RLUSD, USDT, USDG and PYUSD all cluster around 7.0 for *different* reasons. RLUSD's profile is issuer-strong and liquidity-solid but multi-cycle-record-short — close to the mirror image of USDT's liquidity-strong, issuer-opaque profile.
 
@@ -46,7 +48,7 @@ The 7.0/10 reflects a well-regulated, increasingly liquid stablecoin whose main 
 
 This is materially better than a year ago. RLUSD now carries a **Binance** Tier-1 listing plus other venues, with daily volume in the **$100M+** range, so large exits no longer hinge solely on issuer redemption — deep CEX liquidity is available at the peg. Institutions can mint and redeem 1:1 directly with the regulated issuer.
 
-The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC and USDT and is fragmented across XRP Ledger, Ethereum and the newer L2 deployments, so very large **on-chain-only** exits still benefit from routing through a CEX. For DeFi composability specifically, the Ethereum-side liquidity is what matters, and that's where the bulk of supply lives (~82%).
+The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC and USDT and is fragmented across XRP Ledger, Ethereum and the newer L2 deployments, so very large **on-chain-only** exits still benefit from routing through a CEX. For DeFi composability specifically, the Ethereum-side liquidity is what matters, and that is where the bulk of supply lives — roughly two-thirds of the cross-ledger total.
 
 ## What backs it
 
