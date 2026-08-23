@@ -36,17 +36,36 @@ Legacy FRAX is the original Frax stablecoin (launched Dec 2020), now in wind-dow
 
 **L-FRAX is under-collateralized, and the realistic backing is shrinking.**
 
-| Metric | Value (June 1, 2026) |
-|---|---|
-| Headline collateral ratio | 90.99% |
-| External-only CR (non-FRAX backing only) | **13.5%** |
-| Net deficit | -$16.3M |
-| Circular treasury (protocol holding its own token) | 77% of "backing" |
-| Real external assets | $24.4M |
+| Metric | June 1, 2026 | **August 23, 2026** |
+|---|---|---|
+| Headline collateral ratio | 90.99% | **91.05%** |
+| External-only CR (non-FRAX backing only) | **13.5%** | **17.1%** |
+| Net deficit | −$16.3M | **−$10.88M** |
+| Circular treasury (protocol holding its own token) | 77% of "backing" | **70.7%** |
+| Real external assets | $24.4M | **$20.84M** |
+| Total liabilities | ~$180.8M | **$121.57M** |
 
-The headline 91% CR moves slowly, but the **External-only CR** — the share of backing that is *not* L-FRAX, sFRAX, or Frax-ecosystem tokens — has fallen from 15.8% in March to 13.5% in June. The real external assets went from $28.6M → $24.4M in two months while supply contracted less. The deficit is widening on the axis that matters.
+The headline 91% CR moves slowly, but the **External-only CR** — the share of backing that is *not* L-FRAX, sFRAX, or Frax-ecosystem tokens — fell from 15.8% in March to 13.5% in June, as real external assets went from $28.6M → $24.4M while supply contracted less.
 
-**The on-chain CR oracle is frozen.** The on-chain `collateral_ratio()` value reads 94.5% and has not changed since **June 19, 2023** — predating the "100% CR" vote and the North Star upgrade entirely. Any protocol reading this oracle for risk parameters is consuming a 3-year-old value with no relationship to current state. The actual CR (90.99%) is 3.5 percentage points below the stale read.
+⚠️ **Updated 2026-08-23, and the ratio has since reversed — for a reason that is not good news.** External-only CR is now **17.1%**, up from 13.5%. **But external assets did not grow. They fell again, $24.4M → $20.84M, another 14.6%.** The ratio improved because **liabilities collapsed faster: ~$180.8M → $121.57M, down 32.8% in twelve weeks.**
+
+**Read the numerator across all three readings and the picture is unambiguous:**
+
+| | March | June | August |
+|---|---:|---:|---:|
+| Real external assets | $28.6M | $24.4M | **$20.84M** |
+| period change | — | **−14.7%** | **−14.6%** |
+| External-only CR | 15.8% | 13.5% | **17.1%** |
+
+**External backing has fallen by essentially the same proportion in each of two consecutive periods — about 15% a quarter, 27% since March — while the ratio measuring it fell, then rose.** The reversal is entirely a denominator effect.
+
+**So the sentence this report previously ended on — "the deficit is widening on the axis that matters" — needs restating rather than deleting.** In dollar terms the external asset base is still shrinking, steadily and at a consistent rate, which is what that sentence was pointing at. But the *metric* it cited has moved the other way, and a reader checking the External-only CR today would find it improving and conclude the report was wrong. **Both facts are true and they point in opposite directions; the numerator is the one that describes the asset.**
+
+⚠️ **What that adds up to is a book retiring, not one recovering or deteriorating.** Liabilities down a third, deficit down a third, circular share falling from 77% to 70.7% — every ratio improving, on a backing base that is still about **71% the protocol's own tokens**. This report already describes L-FRAX as in wind-down; what is new is that **the wind-down is now visible in the ratios themselves, and the improving ratios are a symptom of it rather than evidence against it.** A holder should not read the improvement as repair.
+
+⚠️ **Provenance, stated because it bears on how much weight these figures carry:** they come from the issuer's API plus on-chain reads, and the independent third-party cross-check is **21.7 days old and was not attempted on this run** — it runs monthly. **These numbers are not independently corroborated**, unlike most figures in this coverage.
+
+**The on-chain CR oracle is frozen.** The on-chain `collateral_ratio()` value reads 94.5% and has not changed since **June 19, 2023** — predating the "100% CR" vote and the North Star upgrade entirely. Any protocol reading this oracle for risk parameters is consuming a value more than three years old with no relationship to current state. The actual CR was 90.99% at the June reading — 3.5 percentage points below the stale figure — and **91.05% at 2026-08-23, a gap of 3.4 points.** ✅ **That re-read strengthens this finding rather than ageing it:** across 83 days in which liabilities fell by a third and every other ratio on this page moved, **the oracle did not move at all and the gap stayed within a tenth of a point.** It is not drifting toward correctness; it is simply frozen, and the passage of time keeps making that more demonstrable.
 
 **There is no reserves audit.** The balance sheet is on-chain and publicly visible via the [live dashboard](https://tidresearch.com/dashboards/?asset=frax) and [Frax Facts](https://facts.frax.finance/frxusd/lfrax-balance-sheet), but no third-party CPA firm attests to the AMO positions, and S&P rated FRAX 5/5 (Weak) in December 2023 — the worst score among the eight stablecoins it assessed at the time.
 
@@ -103,4 +122,11 @@ L-FRAX has a related instrument worth disambiguating: **FXBs** (Frax Bonds) are 
 
 ---
 
-*This report describes Legacy FRAX as of June 1, 2026. Live balance sheet, CR, AMO positions, and Curve pool depth are on the [live dashboard](https://tidresearch.com/dashboards/?asset=frax). Frax Finance has not engaged on this report; figures are sourced from on-chain reads, the Frax Facts API, and the Frax governance forum. Corrections welcome at info@tidresearch.com.*
+*This report describes Legacy FRAX as of June 1, 2026, with balance-sheet figures re-read 2026-08-23. Live balance sheet, CR, AMO positions, and Curve pool depth are on the [live dashboard](https://tidresearch.com/dashboards/?asset=frax). Frax Finance has not engaged on this report; figures are sourced from on-chain reads, the Frax Facts API, and the Frax governance forum. Corrections welcome at info@tidresearch.com.*
+
+*Revision history: 2026-08-23 — **balance sheet re-read after 83 days; no score change.** Liabilities **~$180.8M → $121.57M (−32.8%)**, real external assets **$24.4M → $20.84M (−14.6%)**, net deficit **−$16.3M → −$10.88M**, circular treasury **77% → 70.7%**, and External-only CR **13.5% → 17.1%**. ⚠️ **The ratio improved and the thing it measures did not.** External backing fell again, by almost exactly the rate it fell the previous period — **−14.7% March→June, −14.6% June→August, −27% since March** — while liabilities collapsed twice as fast. **The reversal is a denominator effect**, and this is the fourth figure in this coverage to move favourably for a reason that does not mean what it looks like, after [Figure](/reports/figure/), [wYLDS](/reports/wylds/) and [reUSD](/reports/reusd-re/). **When a ratio moves in your favour, check which side of it moved.** "
+"**The previous conclusion — "the deficit is widening on the axis that matters" — is restated rather than deleted:** the dollar external base is still shrinking steadily, which is what that sentence was pointing at, but the *metric* it cited has reversed, and a reader checking the External-only CR today would find it improving and conclude the report was wrong. The numerator is the figure that describes the asset. "
+"**The reading this adds is that the book is retiring rather than recovering or deteriorating** — every ratio improving on a backing base still about 71% the protocol's own tokens. This report already described L-FRAX as in wind-down; what is new is that the wind-down is now visible in the ratios, and the improving ratios are a symptom of it. "
+"✅ **And the frozen on-chain oracle finding strengthens:** `collateral_ratio()` still reads 94.5% against a computed 91.05%, a gap of 3.4 points — **unchanged within a tenth of a point across 83 days in which liabilities fell by a third.** Not drifting toward correctness; frozen, and more demonstrably so with time. "
+"⚠️ **Provenance caveat, stated on the page:** these figures come from the issuer's API plus on-chain reads, with the independent third-party cross-check **21.7 days old and not attempted on this run** — it runs monthly. **They are not independently corroborated**, unlike most figures in this coverage. "
+"**No axis moves:** Backing 2.0 is near the floor of the scale, and a wind-down is not obviously better for a holder than a widening deficit — the exit remains the same and the backing base remains overwhelmingly circular. `last_verified` is **not** bumped: the balance sheet was re-read but the peg series, AMO positions and Curve depth in this body still date from the 2026-06-01 pass. **This report remains staging-only** — it carries no `production` flag and is not published — though it is the analytical reference behind a public dashboard.*
