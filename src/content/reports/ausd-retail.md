@@ -16,15 +16,15 @@ market_cap_approx: 181000000
 peg_mechanism_score: 8.5
 backing_score: 8.0
 liquidity_score: 6.5
-issuer_score: 7.0
-overall_score: 7.0
+issuer_score: 6.5
+overall_score: 6.5
 ---
 
 # AUSD — Risk Report
 
-**Moderate risk · 7.0/10**
+**Moderate risk · 6.5/10**
 
-> **A small dollar with big-league backing and unusually good transparency.** AUSD is Agora's fiat-backed stablecoin — reserves managed by VanEck and custodied at State Street, held in a bankruptcy-remote structure, backed only by cash, overnight repos and short-term US Treasuries, with monthly PwC attestations *and* real-time on-chain proof-of-reserves from Chaos Labs. On backing quality and transparency it punches well above its weight. What holds it to a 7.0 rather than higher: it's small (~$180M), young (~2 years), regulated in Bermuda rather than under a US regime like NYDFS, and its reserves run through a single manager and a single custodian — a concentration real enough that one institutional custodian, Anchorage, delisted it. There's also a structural nuance worth knowing: the plain AUSD you hold has no cross-chain bridge risk, but its cross-chain wrapper (AUSD0) does route through LayerZero.
+> **A small dollar with big-league backing and unusually good transparency.** AUSD is Agora's fiat-backed stablecoin — reserves managed by VanEck and custodied at State Street, held in a bankruptcy-remote structure, backed only by cash, overnight repos and short-term US Treasuries, with monthly PwC attestations *and* real-time on-chain proof-of-reserves from Chaos Labs. On backing quality and transparency it punches well above its weight. What holds it to a 6.5 rather than higher: it's small (~$180M), young (~2 years), regulated in Bermuda rather than under a US regime like NYDFS, and its reserves run through a single manager and a single custodian — a concentration real enough that one institutional custodian, Anchorage, delisted it. There's also a structural nuance worth knowing: the plain AUSD you hold has no cross-chain bridge risk, but its cross-chain wrapper (AUSD0) does route through LayerZero.
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@ overall_score: 7.0
 
 AUSD is a fully fiat-backed stablecoin issued by **Agora Bermuda Limited**, backed 1:1 by cash, overnight reverse repos and short-term US Treasuries. Reserves are **managed by VanEck** and **custodied by State Street** in a bankruptcy-remote, segregated structure, with **monthly PwC attestations** and **on-chain proof-of-reserves via Chaos Labs**. It launched in mid-2024 and sits at roughly $181M across 17+ chains.
 
-The 7.0/10 reflects genuinely strong, transparent backing offset by small scale, a roughly two-year record, Bermuda (non-US) regulation, and single-manager / single-custodian concentration. It's worth stating the anchor plainly: AUSD reaches the same 7.0 as USDT, but from the opposite direction. USDT gets there on deep, everywhere liquidity despite weak issuer transparency; AUSD gets there on strong backing transparency despite thin liquidity. Same score, opposite shape.
+The 6.5/10 reflects genuinely strong, transparent backing offset by small scale, a roughly two-year record, Bermuda (non-US) regulation, and single-manager / single-custodian concentration. It's worth stating the anchor plainly: AUSD lands just below USDT's 7.0, and from the opposite direction. USDT gets there on deep, everywhere liquidity despite weak issuer transparency; AUSD gets close on strong backing transparency despite thin liquidity. Nearly the same score, opposite shape.
 
 ## What you actually earn
 
@@ -89,7 +89,13 @@ The honest caveat is that this record was built in a **calm regime**. AUSD has n
 
 ## Audits & security
 
-AUSD's canonical token has been audited by top-tier firms — Cantina/Spearbit, with Certora formal verification, plus Zellic/MoveBit for the Sui build — and carries an Immunefi bug bounty. The AUSD0 wrapper inherits LayerZero's audited reference implementation; Agora's AUSD0-specific audit scope is less clearly documented. The takeaway: the residual risks here are **issuer, concentration, and scale — not contract bugs in the canonical token.**
+AUSD's canonical token has been audited by top-tier firms — Cantina/Spearbit, with Certora formal verification, plus Zellic/MoveBit for the Sui build — and carries an Immunefi bug bounty. The AUSD0 wrapper inherits LayerZero's audited reference implementation; Agora's AUSD0-specific audit scope is less clearly documented. The residual risks here are **issuer, concentration and scale — not contract bugs in the canonical token.** But "not a contract bug" is not the same as "not a contract risk," and the upgrade path is worth reading separately.
+
+**The upgrade path has no timelock, on every chain measured.** AUSD is an OpenZeppelin v5 transparent proxy, and on all **nine** chains checked — Ethereum, Arbitrum, Avalanche, Base, BNB, Fraxtal, Gnosis, Monad and Polygon — the ProxyAdmin is owned by a single externally-owned key with no delay anywhere in the path. Signing threshold on-chain is one, and there is no queued-action window: an upgrade can replace the token's logic immediately, with no notice a holder could act on.
+
+**Two limits belong with that, in both directions.** A key with no code is a statement about *the chain*, not about Agora — their off-chain key management is not visible from here, so the on-chain "1" should neither be softened on the strength of Agora's reputation nor presented as proof that one person can act alone. And Agora uses a **different key per chain**, which is genuine containment: a single compromise reaches one deployment rather than all nine. That containment is real and worth crediting, but it is *systemic* rather than *per-holder* — if you hold on Ethereum, the Polygon key being separate does nothing for you.
+
+**This finding is not priced into the 6.5 in this revision.** The score change here is a cohort recalibration of drags the report already named, and the upgrade-path read is new work that has not yet been through a scoring pass. It is published because it is material and verifiable, and it is a live candidate for the Issuer axis at the next revision rather than something already reflected in the number above.
 
 ## Score breakdown
 
@@ -98,8 +104,8 @@ AUSD's canonical token has been audited by top-tier firms — Cantina/Spearbit, 
 | Peg Mechanism | 8.5 | Direct 1:1 institutional fiat redemption plus a zero-fee, atomic AUSD↔USDC/USDT instant swap open to everyone — a very strong arbitrage leash. AUSD's peg does not depend on the AUSD0 bridge. |
 | Backing | 8.0 | Cash + reverse repo + short-term Treasuries only; VanEck-managed, State Street-custodied, bankruptcy-remote; monthly PwC attestations plus real-time on-chain PoR (Chaos Labs). Top-tier transparency for its size; docked for single-manager / single-custodian concentration and Bermuda jurisdiction. |
 | Liquidity | 6.5 | ~$181M cap; CEX presence (Kraken/Bybit/MEXC) but not Coinbase/Binance; DEX depth moderate on Ethereum, thin elsewhere. The zero-fee instant swap backfills materially, but observed secondary depth is limited and would strain under a stressed large exit. |
-| Issuer | 7.0 | Doxxed, well-capitalized (Paradigm Series A; VanEck/State Street partners), ~26-month clean record. Below NYDFS-regulated Paxos/Ripple: Bermuda-SAC regulation, short track record, single-manager / single-custodian concentration (Anchorage delisted over it), and AUSD0 documentation opacity. |
-| **Overall** | **7.0** | Genuinely strong, transparent backing (on-chain PoR, cash + T-bills, VanEck/State Street) for a newcomer, with a clean record and a bridge-exploit class structurally avoided on canonical AUSD — offset by small scale, ~2-year history, Bermuda (non-US) regulation, reserve-manager concentration, and thin secondary liquidity. Reaches the same 7.0 as USDT from the opposite direction: strong backing transparency / thin liquidity, vs Tether's deep liquidity / weak issuer transparency. |
+| Issuer | 6.5 | Doxxed, well-capitalized (Paradigm Series A; VanEck/State Street partners), ~26-month clean record. Below the NYDFS-regulated cohort (Paxos/Ripple): Bermuda-SAC regulation, short track record, single-manager / single-custodian concentration (Anchorage delisted over it), and AUSD0 documentation opacity. |
+| **Overall** | **6.5** | Genuinely strong, transparent backing (on-chain PoR, cash + T-bills, VanEck/State Street) for a newcomer, with a clean record and a bridge-exploit class structurally avoided on canonical AUSD — offset by small scale, ~2-year history, Bermuda (non-US) regulation, reserve-manager concentration, and thin secondary liquidity. Lands just below USDT's 7.0, from the opposite direction: strong backing transparency / thin liquidity, vs Tether's deep liquidity / weak issuer transparency. |
 
 ## Who it's for
 
@@ -118,7 +124,10 @@ Holders who value backing transparency — on-chain PoR, clean cash + T-bills re
 - **Monad concentration.** A large, growing share of supply sits on a young chain.
 - **The first real stress test.** AUSD hasn't been through a banking-crisis-style event; how the instant swap and redemption hold up under one is the open question.
 - **Regulatory progress.** Agora pursuing US money-transmitter licenses would strengthen the issuer picture.
+- **A timelock appearing on the upgrade path.** Today the ProxyAdmin is owned by a plain key with no delay on all nine chains measured. Agora routing that through a timelock or a verifiable multisig would be visible on-chain, and it is the change that would most improve the admin picture described above.
 
 ---
 
-*This report is based on Agora's public documentation, PwC attestations, Chaos Labs on-chain proof-of-reserves, and on-chain data through 2026-07-08. AUSD is a smaller, younger, Bermuda-regulated, centralized and freezable issuer token with single-manager / single-custodian reserve concentration; its supply, chain distribution, and the AUSD0 bridge configuration all shift over time. Corrections or attestation links welcome at info@tidresearch.com.*
+*This report is based on Agora's public documentation, PwC attestations, Chaos Labs on-chain proof-of-reserves, and on-chain data through 2026-07-08, with the upgrade-path read taken 2026-08-23. AUSD is a smaller, younger, Bermuda-regulated, centralized and freezable issuer token with single-manager / single-custodian reserve concentration; its supply, chain distribution, and the AUSD0 bridge configuration all shift over time. Corrections or attestation links welcome at info@tidresearch.com.*
+
+*Revision history: 2026-08-23 — Issuer 7.0 → 6.5, overall 7.0 → 6.5. **This is a recalibration, not a new adverse finding: nothing about AUSD deteriorated.** The 2026-07-08 pass had already moved 7.5 → 7.0 to anchor AUSD against the NYDFS-regulated cohort (USDT, USDG, PYUSD, RLUSD, all 7.0); this continues that same anchoring, because tying that cohort outright was still too generous for a roughly two-year-old Bermuda-SAC issuer carrying single-manager and single-custodian concentration. The drags are exactly the ones this report already named — correctly identified, under-priced relative to the cohort. **Backing 8.0 and peg 8.5 are untouched**, and the reserve arrangement described here (on-chain proof-of-reserves, cash and short-dated Treasuries, VanEck as manager, State Street as custodian) remains AUSD's genuine edge and reads better than several assets scoring above it. The USDT comparison is retained rather than removed: it was always load-bearing on the *shape* rather than on the digit, and the shape is unchanged and measured — AUSD backing 8.0 against USDT's 6.0, USDT liquidity 9.5 against AUSD's 6.5. **Separately documented and explicitly not priced into this score:** on all nine chains measured, AUSD's OpenZeppelin v5 ProxyAdmin is owned by a single externally-owned key with no timelock anywhere in the upgrade path. That read is new and has not been through a scoring pass; it is a candidate for the Issuer axis at the next revision. `last_verified` is deliberately **not** bumped — the body still carries its 2026-07-08 figures. 2026-07-08 — Issuer and overall 7.5 → 7.0 on cohort anchoring. Initial production publish.*

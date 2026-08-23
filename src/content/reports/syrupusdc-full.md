@@ -29,7 +29,7 @@ score_weights:
   operational: 0.20
 
 multisig_configs:
-  governor: "OZ-style Timelock, 24h MIN_DELAY (0x2eFFf887...426b)"
+  governor: "Maple GovernorTimelock (custom, not OZ), 3d delay / 2d window, 24h MIN_DELAY floor (0x2eFFf887...426b)"
   operationalAdmin: "Safe v1.3.0, 3-of-5"
   securityAdmin: "Safe v1.3.0, 3-of-6"
   poolDelegate: "EOA (single-key)"
@@ -70,7 +70,7 @@ mint_paths:
     trust_size: null
     pausable: true
     timelock_seconds: 86400
-    notes: "Maple Globals governor is a custom Timelock with MIN_DELAY=86400s (24h). Upgrades via PoolManager factory require Timelock execution. Operational changes via 3-of-5 Operational Admin Safe. Emergency pause via 3-of-6 Security Admin Safe."
+    notes: "Maple Globals governor is Maple's own GovernorTimelock (not OpenZeppelin). Operative delay 259200s (3d) with a 172800s (2d) execution window; MIN_DELAY=86400s (24h) is a hard floor it cannot be set below. Upgrades via PoolManager factory require Timelock execution. Operational changes via 3-of-5 Operational Admin Safe. Emergency pause via 3-of-6 Security Admin Safe."
 
 supply_integrity_flags:
   - "pool-delegate-credit-discretion"
@@ -132,7 +132,7 @@ The "overcollateralized at all times" framing in Maple's marketing applies to th
 
 Five findings from the 2026-04-26 → 2026-05-01 verification cycle shape the institutional read:
 
-1. **24h timelock on protocol governance** (`MIN_DELAY = 86400`s on the governor Timelock) — materially stronger than peer products with no upgrade delay.
+1. **3-day timelock on protocol governance**, with a 24h floor it cannot be set below (`defaultTimelockParameters()` = 259200s delay / 172800s window; `MIN_DELAY` = 86400s) — materially stronger than peer products with no upgrade delay, and one of the few in this coverage with any floor at all.
 2. **Zero Pool Delegate first-loss cover required** (`Globals.minCoverAmount[PM] = 0`; PoolDelegateCover balance = 0) — depositors are first-loss; the v1-era MPL-bond model has been dropped for Syrup. No on-chain skin-in-game absorbs losses before depositors.
 3. **Pool deployment fluctuates** ~80–98% across deployment cycles — new deposits arrive faster than the delegate redeploys, so the free-USDC buffer swings materially day-to-day (live on the dashboard). Stress-case redemption depth is loan-repayment-bound past the free-USDC buffer.
 4. **Loan-buffer health is measured by distance to par (absolute collateralization), not drift off funding-time levels.** A loan can sit below its own init level and still be wildly overcollateralized — "below init" is a near-continuous, almost information-free feature of the book. What matters is how close a Set A loan's *current* collateral level sits to **par (100%)**, where collateral stops covering principal; a loan below 100% is the acute case (the delegate is holding an undercollateralized position by choice). On-chain status flags read "healthy" regardless because the contract doesn't auto-trigger — the binding control is the Pool Delegate's right, but not obligation, to call (24h notice + 48h grace = 72h max default lag). The two signals to monitor — the tightest Set A loan approaching par, and many Set A loans compressing into the par-proximity band together (correlated-drawdown early warning) — are point-in-time figures the dashboard surfaces live.
@@ -201,7 +201,7 @@ Two of the four registered strategies are **DeFi-yield wrappers** that the Pool 
 
 | Role | Address | Type | Authority |
 |---|---|---|---|
-| **governor** | `0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b` | **OZ-style Timelock** with `MIN_DELAY = 86400` (24h) | Highest authority. Owns MapleGlobals; can upgrade implementations through the factory; can change Globals parameters. Has standard `PROPOSER_ROLE` / `EXECUTOR_ROLE` / `CANCELLER_ROLE` constants. |
+| **governor** | `0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b` | **Maple `GovernorTimelock`** — Maple's own contract, *not* OpenZeppelin. Operative delay **3 days** (`defaultTimelockParameters()` = 259200s delay / 172800s execution window); **`MIN_DELAY()` = 86400s (24h) is a hard floor** | Highest authority. Owns MapleGlobals; can upgrade implementations through the factory; can change Globals parameters. Role accessor is `hasRole(address, bytes32)` — arguments reversed from the OZ signature — so OZ-shaped probes revert rather than return. |
 | **operationalAdmin** | `0xCe1cE7c7F436DCc4E28Bc8bf86115514d3DC34E8` | Safe v1.3.0, **3-of-5** | Operational parameter changes (delegate appointments, fee rates, etc.). Signers: `0x57d1...c7c`, `0x8be3...736`, `0x4024...07b`, `0xF570...827`, `0x7371...7AF`. |
 | **securityAdmin** | `0x6b1A78C1943b03086F7Ee53360f9b0672bD60818` | Safe v1.3.0, **3-of-6** | Emergency pause/unpause across protocol functions. Signers: `0x4E10...E4b`, `0x8Ce4...624`, `0x4109...ED1`, `0x54cC...B74`, `0x44A6...3CA`, `0x0630...4FF8`. |
 | mapleTreasury | `0xa9466EaBd096449d650D5AEB0dD3dA6F52FD0B19` | Contract (not a standard Safe) | Receives protocol fees; identity TBD verify via Etherscan. |
@@ -209,7 +209,7 @@ Two of the four registered strategies are **DeFi-yield wrappers** that the Pool 
 
 **Three observations that materially shape the governance read:**
 
-1. **24h timelock on governance is a meaningful protection.** The Maple governor is an OZ-style TimelockController with a 24-hour minimum delay, meaning any upgrade to Pool / PoolManager / WithdrawalManager / LoanManager implementations has a one-day on-chain visibility window before execution. This is materially stronger than peer products with no timelock (thBILL is explicitly "no timelock disclosed" in its v1 audit). The role-membership of the Timelock (who can `schedule()` proposals) is not directly readable via standard `hasRole()` calls — Maple's variant appears to use a custom storage pattern. Verify proposers via Etherscan AccessControl event logs before institutional sizing.
+1. **The governance timelock is a meaningful protection, and stronger than this report previously stated.** The Maple governor is not an OpenZeppelin TimelockController but Maple's own `GovernorTimelock`. Its operative delay is **3 days**, not the 24 hours reported here through 2026-08-22 — `MIN_DELAY` (86400s) is the *floor* the delay cannot be set below, and an earlier pass read the floor as the setting. Any upgrade to Pool / PoolManager / WithdrawalManager / LoanManager implementations therefore carries a three-day on-chain visibility window before execution, followed by a two-day window in which it can be executed. **That floor is itself unusual and counts in Maple's favour:** of five governance timelocks measured across this coverage in August 2026, Maple's is the only one with a minimum at all — the others can be set toward zero through their own delay. This is materially stronger than peer products with no timelock (thBILL is explicitly "no timelock disclosed" in its v1 audit). The role-membership of the Timelock (who can `schedule()` proposals) is not directly readable via standard `hasRole()` calls — Maple's variant appears to use a custom storage pattern. Verify proposers via Etherscan AccessControl event logs before institutional sizing.
 
 2. **Role separation is real, not nominal.** The Operational Admin (3-of-5) and Security Admin (3-of-6) are *separate* Safes with *non-overlapping* signer sets — confirmed via on-chain `getOwners()`. This means a compromise of one Safe does not automatically compromise the other, and the emergency-pause path is structurally separate from the parameter-change path. Above-average governance hygiene.
 
@@ -273,7 +273,7 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 - **Asymmetry:** *Stress-case asymmetry covered in §III — Liquidity & Redemption.* Queue empty in steady state (live queue state on the dashboard).
 
 #### admin_upgrade — admin-mint (Ethereum)
-- **Trust assumption:** Governor Timelock (MIN_DELAY 24h) → upgrade execution
+- **Trust assumption:** Governor Timelock (3d delay, 2d execution window, 24h floor) → upgrade execution
 - **Capture cost estimate:** Compromise of the Timelock proposer set (TBD verify membership), then wait 24h for execution.
 - **Value secured:** Entire syrupUSDC architecture (Pool implementation, PoolManager implementation, LoanManager implementation, etc.).
 - **Controls:** **24h timelock** ✓; on-chain visibility of scheduled proposals; Security Admin pause capability during the window; community ability to exit during the 24h window if a malicious upgrade is scheduled.
@@ -402,6 +402,8 @@ For Set B specifically, the depositor's effective overcollateralization buffer i
 ### Cross-pool concentration with sibling syrupUSDT pool (verified 2026-05-02)
 
 syrupUSDC is part of a "Syrup family" with sibling pool **syrupUSDT** (`0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d`, materially smaller — live size/counts on its dashboard). Both pools run under the same Maple Labs legal entity, the same MapleGlobals governance contract (governor / ops Safe / security Safe), and the same Pool Delegate firm — though with different operational EOAs per pool (`0xC1e1...49f` for syrupUSDC vs `0x93aA...501A` for syrupUSDT).
+
+**Verified on-chain 2026-08-23, and the shared-governance point is stronger than "same contract family" suggests.** The two pools resolve to *distinct* pool managers — `0x7ad5ffa5…158f` for syrupUSDC, `0x0cda32e0…e21a` for syrupUSDT — but calling `governor()` on each returns **the same address**, `0x2eFFf887…426b`. The pool tokens are byte-identical: 11,660 bytes, codehash `366717596a09` on both. So governance here is not merely similar between the siblings, it is **the same contract**, while operations are genuinely separate. **That is the precise asymmetry for an allocator: holding both pools diversifies operator risk and does not diversify governance risk at all.** A governance action reaches both simultaneously; a Pool Delegate error need not.
 
 **Cross-pool borrower overlap is significant.** A handful of borrowers carry positions in BOTH pools — including `0x1fcc47ee...`, `0x8669f3...f1e9`, and `0xb62446...d505` — so the same credit event damages both pools simultaneously. On a Loans-only basis the top-3 cross-pool borrowers persistently run well above the 10%-per-counterparty institutional norm, with the single largest near ~1/5 of the family loan book. Exact per-borrower exposures drift as loans mature and originate and are live on the dashboard. **An allocator holding syrupUSDC AND syrupUSDT is NOT diversified at the borrower level** for these positions — a structural fact invisible from either pool's standalone view but material for combined sizing decisions.
 
@@ -559,7 +561,7 @@ This axis covers what *operates* and *governs* the protocol — multisig hygiene
 
 | Role | Address | Type | Signer set |
 |---|---|---|---|
-| **Governor (Timelock)** | `0x2eFFf887...426b` | OZ-style Timelock, **24h MIN_DELAY** | Custom variant — proposer membership not directly readable via `hasRole()`. Verify via Etherscan AccessControl events. |
+| **Governor (Timelock)** | `0x2eFFf887...426b` | Maple `GovernorTimelock` (not OZ), **3d delay / 2d window**, **24h `MIN_DELAY` floor** | Role accessor is `hasRole(address, bytes32)`, arguments reversed from OZ — an OZ-shaped `hasRole` call reverts, so a probe returns nothing rather than an empty role set. Enumerate via AccessControl event logs, not by direct call. |
 | **Operational Admin** | `0xCe1cE7c7...4E8` | Safe v1.3.0, **3-of-5** | `0x57d1...c7c`, `0x8be3...736`, `0x4024...07b`, `0xF570...827`, `0x7371...7AF` |
 | **Security Admin** | `0x6b1A78C1...818` | Safe v1.3.0, **3-of-6** | `0x4E10...E4b`, `0x8Ce4...624`, `0x4109...ED1`, `0x54cC...B74`, `0x44A6...3CA`, `0x0630...4FF8` |
 | **PoolDelegate** | `0xC1e1...49f` | **EOA (single-key)** | n/a — single signing key |
@@ -567,7 +569,7 @@ This axis covers what *operates* and *governs* the protocol — multisig hygiene
 
 **Three structural observations:**
 
-1. **24h timelock provides a meaningful upgrade-visibility window** — significantly above peer protocols that have no upgrade delay (e.g., thBILL's "no timelock disclosed"). Institutional readers should monitor `ScheduledOperation` events on the Governor as a leading indicator of upgrade activity.
+1. **A 3-day timelock with a 24h floor provides a meaningful upgrade-visibility window** — significantly above peer protocols that have no upgrade delay (e.g., thBILL's "no timelock disclosed"), and above peers whose delay exists but can be set to zero through itself. Institutional readers should monitor `ScheduledOperation` events on the Governor as a leading indicator of upgrade activity.
 2. **Role separation is real, not nominal** — Operational Admin (3-of-5) and Security Admin (3-of-6) are *separate* Safes with *non-overlapping* signer sets. Compromise of one Safe does not automatically compromise the other; emergency-pause path is structurally separate from the parameter-change path. Above-average governance hygiene.
 3. **Pool Delegate is a single-key EOA** — operational layer for loan funding. Off-chain custody practices for that key are the binding security; not publicly attested. Operational risk covered in §II Credit (the same EOA is the credit-judgment binding).
 
@@ -648,7 +650,7 @@ Weighted composite over four primary axes (Supply Integrity reported as separate
 
 6. **Per-chain due diligence for non-Ethereum deployments.** Cross-chain via Chainlink CCIP/CCT — burn-and-mint native deployments. Materially different attack class from LayerZero OFT exploits (rsETH/Drift/Volo). Still warrants per-chain checks: verify CCT pool addresses on Chainlink's CCIP directory, check per-chain rate limits, verify pool depth on each chain (non-Ethereum venues have shallower secondary liquidity).
 
-7. **Monitor Governor Timelock `ScheduledOperation` events** as a leading indicator of upgrade activity. The 24h delay provides an exit window if a malicious or contentious upgrade is scheduled.
+7. **Monitor Governor Timelock `ScheduledOperation` events** as a leading indicator of upgrade activity. The 3-day delay provides an exit window if a malicious or contentious upgrade is scheduled, and it cannot be shortened below 24 hours.
 
 8. **Treat zero-losses-to-date as a feature, not a guarantee.** Syrup product has clean credit performance over ~21 months but has not been stress-tested through a multi-cycle bear market under the v2 model. Credit-cycle-correlation tail risk is real.
 
@@ -701,7 +703,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 **What this report can directly verify:**
 - All Ethereum core contract addresses, storage state, and verified topology (§I)
 - Multisig threshold and signer composition for Operational Admin and Security Admin Safes
-- Governor Timelock MIN_DELAY (24h) and OZ-style role-ID layout
+- Governor Timelock parameters (3d delay, 2d window, 24h MIN_DELAY floor) and Maple's own role-ID layout
 - Pool state (totalAssets, totalSupply, NAV, deployment ratio, free USDC, queue state)
 - Strategy contract identification and AUM per strategy
 - Loss waterfall configuration (zero pool delegate first-loss cover required and posted)
@@ -720,7 +722,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - **Off-chain custodian arrangements** — borrower collateral is held off-chain. The custodian (which firm holds the BTC/PYUSD/etc.) is not disclosed in any public Maple channel. Counterparty risk on the custody arrangement is a separate failure mode from borrower default.
 - **Borrower whitelist enforcement** — whether PoolManager enforces a hard-coded list of acceptable borrower addresses. **[Open verification item — cast-readable on PoolManager.]**
 - **Maple Labs protocol-level cover** — whether the protocol holds shared insurance / reserve capital at the Globals layer (off-chain disclosure required).
-- **Governor Timelock proposer set** — `hasRole()` calls revert against the custom Timelock variant. Resolve via Etherscan AccessControl event logs.
+- **Governor Timelock proposer set** — the accessor is `hasRole(address, bytes32)`, with the arguments reversed relative to OpenZeppelin, so an OZ-shaped call hits a different selector and reverts. **This is a trap for anyone verifying independently: the probe returns nothing, which reads like "no roles are set" rather than like "wrong signature."** Resolve via AccessControl event logs instead of by direct call.
 - **Per-Strategy audit attestation** — the four strategy contracts may post-date some of the audit work; per-contract verification recommended before treating individual strategies as audited.
 - **Comparison vs peers** — deferred from this v1 report due to limited current peer set in syrupUSDC's specific category (mixed crypto-overcollateralized + at-par stablecoin/RWA institutional credit lending vault). Worth adding when the peer set grows (Centrifuge, future Sky/Maker delegated-credit products, etc.).
 
@@ -759,3 +761,7 @@ This report is based on direct on-chain reads against Ethereum mainnet (RPC: Alc
 - [syrupUSDC — Retail Risk Report](/reports/syrupusdc) — companion retail-audience version
 - [Live syrupUSDC Risk Dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) — refreshed hourly from on-chain reads + Maple GraphQL; surfaces Set A/B mix, buffer-health, named-issuer roster, deployment ratio, exit-liquidity tiers, governance topology
 - PegTracker live monitoring data: `data/syrupusdc_backing.json` and `data/syrupusdc_backing_history.json`
+
+---
+
+*Correction 2026-08-23 — governance timelock restated, no score change. This report described the Maple governor as an "OZ-style Timelock" with a 24-hour delay. Both halves were wrong. It is Maple's own `GovernorTimelock`, not an OpenZeppelin one, and its operative delay is **3 days** (259,200s) with a 2-day execution window; the 86,400s `MIN_DELAY` an earlier pass reported as the delay is in fact the **floor** below which it cannot be set. Re-read on-chain 2026-08-23 with a positive control. **Both corrections favour the protocol**: the visibility window is three times longer than stated, and of five governance timelocks measured across this coverage in August 2026 Maple's is the only one with any floor at all. Also recorded: the role accessor is `hasRole(address, bytes32)` with arguments reversed from OZ, so an OZ-shaped probe reverts and returns nothing — which reads to an independent verifier like an empty role set rather than a wrong signature. And the shared-governance finding is now direct rather than inferred: the two Syrup pools have distinct managers but `governor()` on each returns the same address, and the pool tokens are byte-identical, so holding both diversifies operator risk and not governance risk. No axis moved — the governor correction sharpens a protection already scored as delegate-discretionary. `last_verified` is not bumped; the pool figures in this body still date from the 2026-07-02 pass.*

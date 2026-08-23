@@ -29,7 +29,7 @@ score_weights:
   operational: 0.20
 
 multisig_configs:
-  governor: "OZ-style Timelock, 24h MIN_DELAY (0x2eFFf887...426b — same as syrupUSDC)"
+  governor: "Maple GovernorTimelock (custom, not OZ), 3d delay / 2d window, 24h MIN_DELAY floor (0x2eFFf887...426b — same contract as syrupUSDC)"
   operationalAdmin: "Safe v1.3.0, 3-of-5 (same as syrupUSDC)"
   securityAdmin: "Safe v1.3.0, 3-of-6 (same as syrupUSDC)"
   poolDelegate: "EOA, single-key (0x93aA06F8...501A — distinct from syrupUSDC's 0xC1e1...49f)"
@@ -107,7 +107,7 @@ PoolDelegateCover:     0x610d99d86d48b385b2ed17a0063e53B5c98E15A1  (balance: $0)
 Underlying USDT:       0xdAC17F958D2ee523a2206206994597C13D831ec7  (Tether)
 ```
 
-Shared with syrupUSDC (Maple-protocol-level): MapleGlobals, Governor (24h timelock), Operational Admin Safe (3-of-5), Security Admin Safe (3-of-6), OpenTermLoanFactory.
+Shared with syrupUSDC (Maple-protocol-level): MapleGlobals, Governor (Maple `GovernorTimelock`, 3d delay / 2d window, 24h floor — the *same contract* at `0x2eFFf887…426b`, verified 2026-08-23), Operational Admin Safe (3-of-5), Security Admin Safe (3-of-6), OpenTermLoanFactory.
 
 ---
 
@@ -227,7 +227,7 @@ For institutional sizing above ~$50M, expect queue latency of weeks rather than 
 
 ## IV. Operational & Governance — 6.5/10 (slightly lower than syrupUSDC's 7.0)
 
-Same governance topology as syrupUSDC: 24h Timelock governor, 3-of-5 Operational Admin Safe, 3-of-6 Security Admin Safe — all shared at the MapleGlobals layer. The only governance difference is the **Pool Delegate EOA: `0x93aA06F8a7bB4da3Eb0DD5A5a38C01A7EB35501A` (single-key)** — a different operational key than syrupUSDC's `0xC1e1...49f`, but the same Pool Delegate firm operates both.
+Same governance topology as syrupUSDC — and "same" is literal, not analogous. Verified on-chain 2026-08-23: this pool's manager (`0x0cda32e0…e21a`) is distinct from syrupUSDC's (`0x7ad5ffa5…158f`), but `governor()` on both returns the same address, `0x2eFFf887…426b`, and the two pool tokens are byte-identical (11,660 bytes, codehash `366717596a09`). That governor is Maple's own `GovernorTimelock`, not an OpenZeppelin one: operative delay **3 days** with a 2-day execution window, and a **24-hour `MIN_DELAY` floor** it cannot be set below. Alongside it sit the 3-of-5 Operational Admin Safe and 3-of-6 Security Admin Safe, all shared at the MapleGlobals layer. **The practical consequence for an allocator: holding both Syrup pools diversifies operator risk and not governance risk** — one governance action reaches both at once. The only governance difference is the **Pool Delegate EOA: `0x93aA06F8a7bB4da3Eb0DD5A5a38C01A7EB35501A` (single-key)** — a different operational key than syrupUSDC's `0xC1e1...49f`, but the same Pool Delegate firm operates both.
 
 **Implication for combined-pool risk:**
 - Compromise of the syrupUSDT delegate key does NOT automatically compromise syrupUSDC (good — separation of operational keys)
@@ -302,3 +302,7 @@ The 6.0/10 score reflects the inherited Maple-family risks (Pool Delegate discre
 **Live dashboard:** [tidresearch.com/dashboards/?asset=syrupusdt](https://tidresearch.com/dashboards/?asset=syrupusdt) — refreshed hourly. Headline metric above the fold is **Pool Collateral Ratio (Loans-only)** (recently in the mid-140s% range, live on the dashboard — structurally below syrupUSDC's mid-160s% because syrupUSDT's loan book is more BTC-concentrated at lower init levels, 125–138%) with PCR demoted to a small status pill. Dashboard now splits into two distinct sections: **Loan Book** (a handful of third-party loans, BTC/XRP-collateralized) and **Liquidity Layer** (a handful of pool-owned positions, with custody addresses + EOA badges + issuer labels); loan counts and dollar figures shift with the book and are surfaced live rather than pinned here. Borrower Concentration computed Loans-only basis. **Trust Stack panel** surfaces all custody addresses (per-pool: 3 addresses touching syrupUSDT — own Pool Delegate + shared PYUSD custody + shared AMM operator; per Maple all are MPC + policy controls). Pool Coverage 7d chart at top. Cross-Pool Family panel reconciles concentration with syrupUSDC on a Loans-only basis. Treat PCR as a binary loss-recognition alarm rather than a metric.
 
 **Companion report:** [syrupUSDC institutional report](/reports/syrupusdc-full/) — covers shared contract architecture, audit profile, supply integrity (CCIP+CCT bridge), governance topology, and v1 bad-debt history. Treat this report and the syrupUSDC report as complementary rather than independent.
+
+---
+
+*Correction 2026-08-23 — governance timelock restated, no score change. This report described the shared Maple governor as a "24h Timelock." It is Maple's own `GovernorTimelock` (not OpenZeppelin) with an operative delay of **3 days** (259,200s) and a 2-day execution window; the 86,400s value previously reported as the delay is the **`MIN_DELAY` floor** it cannot be set below. Re-read on-chain 2026-08-23 with a positive control. Both corrections favour the protocol — a longer window than stated, and the only governance timelock with a floor among five measured across this coverage in August 2026. The shared-governance claim is now verified directly rather than inferred from a common permission manager: this pool's manager (`0x0cda32e0…e21a`) differs from syrupUSDC's (`0x7ad5ffa5…158f`), but `governor()` on both returns `0x2eFFf887…426b` and the two pool tokens are byte-identical. The practical reading is that holding both Syrup pools diversifies operator risk and not governance risk. No axis moved. `last_verified` is not bumped; this body still carries its 2026-07-02 pool figures.*
