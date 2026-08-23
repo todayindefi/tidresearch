@@ -34,7 +34,22 @@ overall_score: 7.0
 
 USDG is a US-dollar stablecoin issued by **Paxos Digital Singapore Pte. Ltd.**, a MAS-supervised entity within the Paxos group. It is fully redeemable 1:1 from Paxos, backed by cash, cash-equivalents, and short-duration US government securities held in segregated, bankruptcy-remote accounts — custody split between DBS Bank and Standard Chartered — with **monthly Paxos reserve reports and attestations**.
 
-It launched in November 2024 and has grown quickly to become a top-30 asset (currently around $3B-plus; check a live source such as [CoinGecko](https://www.coingecko.com/en/coins/global-dollar) for the up-to-date figure). **That is a cross-chain aggregate, and USDG is unusually concentrated away from Ethereum** — the Ethereum leg read 447,300,985 on 2026-08-23, only about 15% of the asset. An Ethereum-only figure is not a usable proxy for USDG's size, and we do not currently run an independent read of USDG's non-Ethereum deployments, so the headline rests on aggregator and issuer disclosure rather than on our own measurement. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
+It launched in November 2024 and has grown quickly to become a top-30 asset (currently around $3B-plus; check a live source such as [CoinGecko](https://www.coingecko.com/en/coins/global-dollar) for the up-to-date figure). **That is a cross-chain aggregate, and USDG is unusually concentrated away from Ethereum** — the Ethereum leg read 447,300,985 on 2026-08-23, only about 15% of the asset. An Ethereum-only figure is not a usable proxy for USDG's size — **Ethereum is 15% of it.**
+
+**Measured across the deployment set 2026-08-23.** Paxos publishes the complete list of USDG mainnet deployments, which is what makes this measurable rather than estimable. Every row below returned `symbol() = "USDG"` and `decimals() = 6`, so these are the right tokens rather than addresses that merely answered, with USDC controls passing on Ethereum and Arbitrum in the same batch:
+
+| chain | supply | share |
+|---|---:|---:|
+| **X Layer** | **1,868,197,490.62** | **62.5%** |
+| Solana | 608,899,270.33 | 20.4% |
+| Ethereum | 447,158,857.86 | 15.0% |
+| Ink | 63,548,230.10 | 2.1% |
+| Arbitrum | 601,207.02 | 0.02% |
+| **measured total** | **2,988,405,055.94** | |
+
+⚠️ **This is five of the six deployments. Robinhood Chain was not read** — no public RPC was found for it — so the total remains a floor in the strict sense, though a tight one: $2.99B against a published "around $3B-plus" leaves little unaccounted. **Read it as corroboration of the headline figure, with the bonus of knowing where the supply actually lives.**
+
+**The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries 62.5% of USDG.** The structural discussion in this report is written as though Ethereum were USDG's centre of gravity, and it is not; Ethereum holds 15%. A regulated, Paxos-issued dollar with nearly two-thirds of its supply on a single non-Ethereum chain means the majority of holders carry that chain's liveness, sequencer and bridge risk rather than Ethereum's. That is a factual property of where the token sits, not evidence of a problem with it — but it is a materially different picture from the one this report previously implied. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
 
 The 7.0 reflects top-tier regulated backing and issuer quality with an adoption/liquidity discount. It's a useful contrast with USDT, which lands at the same headline score for the opposite reasons — USDG has stronger issuer transparency and backing disclosure, but thinner liquidity. Read that way, a 7.0 isn't a single quality of "good enough"; it's a balance of strengths and weaknesses, and USDG's are almost the exact inverse of Tether's. If your priority is knowing precisely what backs your dollar and who is regulated to hold it, USDG scores better than its market-cap rank might suggest. If your priority is being able to move size at the peg on any venue at any hour, it scores worse.
 
@@ -107,5 +122,7 @@ Holders who want a regulated, high-quality-reserve dollar from an established is
 - **Regulatory status** under the evolving US and Singapore stablecoin frameworks.
 
 ---
+
+*Revision history: 2026-08-23 — supply measured across the deployment set; no score change. Paxos publishes the complete USDG mainnet deployment list, which is what made this measurable rather than estimable — the denominator was never unknowable, it had not been looked for. Five of six deployments read on 2026-08-23 with USDC controls passing and every row confirming `symbol()`/`decimals()`: **X Layer 1,868,197,490.62 (62.5%), Solana 608,899,270.33 (20.4%), Ethereum 447,158,857.86 (15.0%), Ink 63,548,230.10 (2.1%), Arbitrum 601,207.02** — **$2,988,405,055.94 measured** against a published "around $3B-plus". **Robinhood Chain was not read** (no public RPC located), so this is a tight floor rather than a complete total. **This corroborates the headline figure rather than challenging it**, and replaces a hedge pointing readers at a third-party aggregator with an answer. **The finding is the distribution:** X Layer — OKX's chain — carries 62.5% of supply and Ethereum 15%, where this report's structural discussion assumed Ethereum was the centre of gravity. Stated as a factual property of where the token sits, not as an adverse finding. `last_verified` is **not** bumped; only supply was read. *
 
 *This report is based on Paxos's public documentation, monthly attestations, and market data through 2026-07-08. USDG is a centralized, freezable issuer token, and its liquidity depends on Global Dollar Network adoption, which shifts over time. Corrections or attestation links welcome at info@tidresearch.com.*
