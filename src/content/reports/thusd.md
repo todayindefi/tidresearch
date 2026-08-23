@@ -8,15 +8,15 @@ peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
 audience: "retail"
 date: "2026-07-13"
-last_verified: "2026-08-18"
+last_verified: "2026-08-23"
 production: true
 issuer: "Theo Network (Panama)"
 peg_mechanism_score: 4.0
-backing_score: 3.0
+backing_score: 2.5
 underlying_score: 3.0
 liquidity_score: 3.5
 issuer_score: 5.5
-overall_score: 4.0
+overall_score: 3.5
 # audited: withheld — a boolean cannot carry this claim and gets it backwards.
 # §I: the Zenith audit covers exactly one file (the sthUSD vault); the token, the
 # Minter, the OFT adapters and the strategy adapter are "not in any public audit";
@@ -29,7 +29,7 @@ overall_score: 4.0
 
 # thUSD — Retail Risk Report
 
-**Elevated risk · 4.0/10**
+**Elevated risk · 3.5/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -37,7 +37,7 @@ overall_score: 4.0
 
 > **2026-08-18 update — Backing 3.5 → 3.0. Overall holds at 4.0.** Two developments pull in opposite directions and this update explains both, because the headline number moved the *helpful* way while the thing underneath it got worse.
 >
-> **The coverage slide stopped.** On-chain coverage was 59.5% when this report last ran, fell to a **53.21%** trough in early August, and has recovered to **62.30%**. The open question the last revision left unresolved — designed scaling, or the off-chain strategy outgrowing its buffer? — resolves toward **designed scaling**.
+> ⚠️ **Superseded on 2026-08-23 — the slide did not stop, and the answer it produced was wrong.** This report said coverage had stabilised at 62.30% and that the open question resolved toward *designed scaling*. **Three days later, on 2026-08-21, on-chain coverage fell from 61.22% to 42.86% in a single day** — $24.99M of reserves left the safe with thUSD supply unchanged **to the dollar**. That is the exact inverse of the matched-mint evidence the designed-scaling conclusion rested on, and **42.86% is well below the 53.21% this report called the trough**, so the bottom identified here is no longer the bottom. See "Where the backing actually sits" below. Backing is cut 3.0 → 2.5.
 >
 > **But a rising coverage percentage is not by itself good news, and it is worth understanding why.** Coverage is on-chain reserves divided by supply. When that ratio sits below 100%, *adding equal dollars to the top and bottom pushes the percentage up* — $10M of new supply matched by $10M of new reserves raises a 60% ratio even though nothing about the shortfall improved. So the percentage alone tells you very little. What matters is whether the new dollars arrived matched. **Here they did:** between 2026-08-12 and 08-13, supply rose $109.89M → $136.18M (+$26.29M) while on-chain reserves rose $58.50M → $84.82M (+$26.32M) — matched to within about $30,000. That is issuance arriving *with* its reserves, the inverse of the May–July pattern, and it is genuine issuance discipline. The improvement is real; the metric that reports it is just a poor witness.
 >
@@ -63,7 +63,7 @@ The yield comes from a **delta-neutral gold strategy** plus a T-Bill float: phys
 
 The institutional pieces are genuinely strong. Wellington Management, Standard Chartered's Libeara, FundBridge, SIG, Flowdesk, Amber, and Concrete (which ran the $100M Genesis pre-deposit vault) are all real names. The founders are ex-Optiver and IMC quant traders — directly relevant experience for the gold-futures basis trade. Theo's prior product, thBILL, has run since July 2025 without a public incident.
 
-**The headline: on-chain coverage has stabilised at about 62%, and the composition of what remains on-chain has got worse.** Coverage fell from about 92% in mid-May to 59.5% in mid-July as the off-chain gold-carry leg scaled, troughed near 53% in early August, and has since recovered to **62.30%**. Read the level correctly. For this product, on-chain coverage below 100% is the **expected operating state** as the strategy deploys capital off-chain — it is **not** a depeg or an undercollateralization alarm on its own, and thUSD has held about $1.00 throughout. The fast-deterioration framing this report carried in July no longer describes the present state.
+⚠️ **The headline, restated 2026-08-23: on-chain coverage collapsed to 42.86% on 08-21 and the composition of what remains on-chain has got worse.** Coverage fell from about 92% in mid-May to 59.5% in mid-July as the off-chain gold-carry leg scaled, dropped to about 53% in early August, recovered to 62.30% on a matched mint — and then **fell to 42.86% in a single day on 2026-08-21, a new low, with supply unchanged.** Read the level correctly. For this product, on-chain coverage below 100% is the **expected operating state** as the strategy deploys capital off-chain — it is **not** a depeg or an undercollateralization alarm on its own, and thUSD has held about $1.00 throughout. The fast-deterioration framing this report carried in July no longer describes the present state.
 
 Two things nevertheless remain true and one is new. Still true: about **38% of backing sits in an off-chain book with no proof-of-reserves**, no disclosed gold custody address, and no third-party attestation, and coverage remains below our backing monitor's 70% floor. Note also that although the off-chain *share* fell, the **absolute** unattested book still grew, from roughly $43M to about **$51M** — supply outgrew it, which is not the same as the exposure shrinking. New: the on-chain leg is now **100% thBILL**, with the USDT and USDC buffers drained to zero, so there is no on-chain cash and the reserve is entirely one asset that Theo itself issues.
 
@@ -79,6 +79,10 @@ Appropriate for: DeFi-comfortable users who already understand Ethena-style synt
 
 **Admin chain has been hardened over the last two weeks.** Through 2026-05-14 to 2026-05-17, Theo migrated ownership of thUSD, sthUSD, and the thUSD OFT adapter on all three chains (Ethereum + Arbitrum + Stable) to a **new OpenZeppelin TimelockController at `0x2bb4b7e6e83fa6b77d0143dad631843cb73dca02`**. On-chain reads confirm `getMinDelay() = 172,800 seconds = 48 hours`. PROPOSER_ROLE and EXECUTOR_ROLE on the new Timelock are held by the disclosed Safe `0x94877640dd9e6f1e3cb56bf7b5665b7152601295`, which is now **4-of-6** (one additional signer and threshold bump versus the originally-disclosed 3-of-5). This is the right shape for an institutional product — and 48 hours is a real exit window, not a checkbox.
 
+⚠️ **thUSD's own admin posture is genuinely good, and it is not the posture of the reserve beneath it.** At the product layer the Safe runs at **threshold 4** on v1.4.1, and the token owner is a **48-hour TimelockController** (`min_delay` 172,800) — the same shape this coverage credits on [USDS](/reports/usds/), and the reason it is not docked there. **But the reserve asset underneath, thBILL's ULTRA leg, has no multisig at any position**: a single plain key holds sole admin over the token and has replaced its logic twice this year (see the [thBILL report](/reports/thbill/)). **Same issuer, two very different postures, and a reader should not infer either from the other** — a 48-hour timelock over thUSD's contracts does not reach the thing the reserve is made of.
+
+Flagged and not asserted: the sthUSD OFT owner is `0xf5b0bf09…`, **not** the timelock that owns the other three contracts. This report does not characterise it.
+
 **Cross-chain layer is now under the same admin chain as the token contracts.** As of 2026-05-17 the thUSD OFT adapter on all three chains is owned by the same 48-hour TimelockController described above. A malicious peer-config change can no longer ship in a single transaction — proposals are scheduled on the Timelock, surface on-chain for 48 hours, and require the 4-of-6 Safe to execute. This closes what was previously the highest concentrated-key risk in the system.
 
 **The one remaining EOA-owned contract is the sthUSD OFT adapter** (`0xc2D07082120Cbd0E75B5F12D6c5d41fC2600dd39`), still owned by the original signer `0xf5b0bf09acc504f0d470134f05fe776d1f90cae0`. The stakes are materially lower — bridged sthUSD supply is essentially zero today (sub-$1 across Arbitrum + Stable) — so the worst-case attack is a future-state concern rather than a current-balance risk. Watch-item: completion of this last migration would close out the OFT-EOA story entirely.
@@ -91,11 +95,29 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 
 ## II. Economic / Backing Risk
 
-**Where the backing actually sits, as at 2026-08-17.** On-chain visible coverage is **62.30%** of thUSD supply — $84.82M of on-chain reserves against $136.14M outstanding, at the reserve safe `0xec417ccb…3c2f`. The implied off-chain backing is about **$51.3M (37.70% of supply)**, inferred from the coverage gap rather than from any attestation.
+⚠️ **Where the backing actually sits, as at 2026-08-23 — restated after a single-day collapse.** On-chain visible coverage is **42.86%** of thUSD supply: **$58.35M of on-chain reserves against $136.14M outstanding**, at the reserve safe `0xec417ccb…3c2f`. The implied off-chain backing is about **$77.8M (57.14% of supply)**, inferred from the coverage gap rather than from any attestation.
+
+**What happened, from our own hourly series:**
+
+| date | on-chain coverage | on-chain reserves | thUSD supply |
+|---|---:|---:|---:|
+| 2026-08-18 | 62.30% | $84,821,887 | $136,140,058 |
+| 2026-08-19 | 61.21% | $83,331,581 | $136,140,058 |
+| 2026-08-20 | 61.22% | $83,340,674 | $136,140,058 |
+| **2026-08-21** | **42.86%** | **$58,353,235** | **$136,140,058** |
+| 2026-08-23 | 42.86% | $58,353,235 | $136,140,058 |
+
+**$24.99M of reserves left the safe in one day, and supply did not move by a dollar.**
+
+⚠️ **The threshold crossed here matters more than the percentage.** Implied off-chain backing went **37.70% → 57.14%**. This report has always been explicit that the off-chain leg is *inferred from the coverage gap and is not direct proof-of-reserves* — so **the majority of thUSD's backing is now a residual derived by subtraction rather than anything anyone has observed.** Until 08-21 the observable share was the larger one. That is a change in kind, not only in degree.
+
+**And the paragraph below is what makes this unambiguous.** This report already teaches that a *rising* coverage ratio can be an artifact — matched dollars added to both sides lift a sub-100% ratio without improving the shortfall. **The inverse has no such escape route:** reserves fell alone. There is no arithmetic reading under which $25M leaving one side of the ratio is a presentational effect.
+
+**Where it went is established as to mechanism, and not as to destination.** The same day, thBILL's supply fell by 24,131,274 tokens; at a NAV of 1.035792 that is **$24,994,981**, against thUSD's **$24,987,439** reserve decline — a match within **about $7,500 on $25M**. **thBILL was burned out of the thUSD reserve safe**, which is why no user-facing redemption appears anywhere in the record. That answers the mechanism question the [thBILL reports](/reports/thbill/) had left open. **It does not establish where the $25M of value went, or what — if anything — now stands behind that share of thUSD instead**, and this report does not claim to know either.
 
 | | 2026-07-13 | 2026-08-17 |
 |---|---|---|
-| On-chain coverage | about 59.5% | **62.30%** |
+| On-chain coverage | about 59.5% | **42.86%** (2026-08-23; was 62.30% on 08-18, before the 08-21 collapse) |
 | Supply | about $106.7M | **$136.14M** (+27.6%) |
 | On-chain reserves | about $63.5M | **$84.82M** |
 | — of which thBILL | about $61.1M | **$84.82M (100%)** |
@@ -103,7 +125,7 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 | — of which USDC | about $0.4M | **about $22** |
 | Implied off-chain (unattested) | about $43.2M | **about $51.3M** |
 
-**The slide stopped, and the recovery is a single matched mint.** Coverage troughed at **53.21%** in early August. Between 2026-08-12 and 08-13, supply rose $109.89M → $136.18M and on-chain reserves rose $58.50M → $84.82M — **+$26.29M against +$26.32M, matched within about $30,000.** That is the inverse of the May–July pattern, where supply grew and reserves lagged. It answers the judgment call the last revision left open — designed scaling versus the strategy outgrowing its buffer — in favour of **designed scaling**.
+⚠️ **Superseded — see the update below this paragraph.** The reasoning here was sound on the evidence available at 2026-08-18 and is retained because the framework it sets out is what makes the 08-21 move unambiguous. **The slide stopped, and the recovery is a single matched mint.** Coverage troughed at **53.21%** in early August. Between 2026-08-12 and 08-13, supply rose $109.89M → $136.18M and on-chain reserves rose $58.50M → $84.82M — **+$26.29M against +$26.32M, matched within about $30,000.** That is the inverse of the May–July pattern, where supply grew and reserves lagged. It answers the judgment call the last revision left open — designed scaling versus the strategy outgrowing its buffer — in favour of **designed scaling**.
 
 **But be careful how you read the percentage, because it flatters this kind of event.** Coverage is reserves ÷ supply. Below 100%, adding *equal* dollars to both sides mechanically pushes the ratio up: put $26M on top of $58.5M of reserves and $26M on top of $109.9M of supply, and 53% becomes 62% without a cent of the pre-existing shortfall being filled. The gap in absolute terms barely moved. So the rising percentage is not itself the good news — the good news is narrower and more specific: **the new dollars arrived with their reserves attached.** That is a statement about issuance discipline, not about the shortfall closing.
 
@@ -112,7 +134,7 @@ The single biggest watch-item used to be whether OFT Adapter ownership would get
 - **No on-chain cash to meet a redemption.** Any on-chain redemption pressure now has to be met by unwinding thBILL through the Libeara T+1→T+7 settlement rail. There is no liquid dollar sitting at the safe to absorb the first wave.
 - **The collateral is no longer independent of the issuer.** thBILL is Theo's own product. A reserve composed entirely of it means thUSD's backing and thUSD's issuer fail together, not separately — the recursive dependency described below is now the *whole* on-chain story rather than most of it.
 
-Coverage also remains below our PegTracker monitor's **70% floor**, which it first breached in July. And while the off-chain share fell from about 40% to 37.7%, the **absolute** unattested book grew from about $43.2M to about $51.3M. Supply outran it; the exposure did not shrink.
+Coverage also remains below our monitor's **70% floor**, which it first breached in July and is now roughly 27 points beneath. ⚠️ **And the off-chain share has inverted: it is now 57.14%, up from 37.70%, with the absolute unattested book at about $77.8M against $51.3M before.** The exposure did not merely fail to shrink — it grew by half in a day, and it is now the majority of the backing.
 
 **The strategy itself is principled.** Long physical gold (custodied at FundBridge, lent to retail/wholesale gold borrowers including Mustafa Gold for interest) hedged short on CME gold futures (capturing the contango/roll-yield basis), with a thBILL reserve. A 20% first-loss buffer sits over the gold inventory. None of this is novel in TradFi — it's the same kind of basis trade prop desks have run for decades. The novel part is running it as backing for an onchain stablecoin with a 7-day track record.
 
@@ -130,7 +152,7 @@ Coverage also remains below our PegTracker monitor's **70% floor**, which it fir
 
 One measurement note worth carrying, because it is an easy error: the reserve figure is reported in **thBILL shares, not dollars** — you have to multiply by the thBILL NAV per share to get a dollar value. Reading it as dollars understates the reserve by about 3.5% and makes the composition look like it has a non-thBILL remainder when it does not.
 
-On-chain coverage has stepped down through 2026 — low-90s% in mid-May, 59.5% in mid-July, a 53.21% trough in early August — and has now stabilised at **62.30%**. **On-chain coverage below 100% is expected operating state here, not a solvency signal**, as long as the off-chain gold/futures backing is intact. What deserves attention is not the level but the composition: at 100% thBILL there is no liquid on-chain asset, and the reserve's credit quality is now a single look-through to [thBILL](/reports/thbill), which was itself re-rated down to 4.0 overall in August. Live coverage on [the dashboard](/dashboards/?asset=thusd) and `app.theo.xyz/transparency`. The reserve's sole component has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington and Fidelity.
+On-chain coverage has stepped down through 2026 — low-90s% in mid-May, 59.5% in mid-July, about 53% in early August, a recovery to 62.30% on a matched mint, and then **a fall to 42.86% on 2026-08-21**, a new low reached in a single day with supply unchanged. **On-chain coverage below 100% is expected operating state here, not a solvency signal**, as long as the off-chain gold/futures backing is intact. What deserves attention is not the level but the composition: at 100% thBILL there is no liquid on-chain asset, and the reserve's credit quality is now a single look-through to [thBILL](/reports/thbill), which was itself re-rated down to 4.0 overall in August. Live coverage on [the dashboard](/dashboards/?asset=thusd) and `app.theo.xyz/transparency`. The reserve's sole component has its own [retail risk report](/reports/thbill) covering the recursive backing chain from this layer down to Libeara/Wellington and Fidelity.
 
 **The thBILL-anchored reserve creates a recursive trust chain.** thBILL itself has its own backing structure (off-chain T-Bills via Libeara, with synthetic intermediate wrappers — see `tidresearch.com/reports/thbill`), and its on-chain backing ratio fluctuates within a Libeara settlement window (T+1 to T+7) — periodic dips during Stage A windows when Theo has minted new thBILL but the corresponding ULTRA hasn't yet arrived from Libeara. **During those windows, thUSD's thBILL reserves are technically backed by Theo's promise to Libeara, not by ULTRA-equivalent collateral.** Theo's "100% backed" attestation remains formally correct (thUSD-supply ÷ thBILL-at-NAV-plus-stables ≥ 100%) but the next layer down is where the periodic gap lives. Practically — the gap closes within the historical T+1 to T+7 envelope and the chain works as designed; the structural point is just that "100% backed" rests on attestations at multiple layers.
 
@@ -168,9 +190,9 @@ Strong partner stack and a credentialed team, undermined by a young, unlicensed,
 
 | | |
 |---|---|
-| **Overall Risk** | **4.0/10 — Elevated** | held |
+| **Overall Risk** | **3.5/10 — Elevated** | was 4.0 |
 | Peg Mechanism | 4.0/10 | held |
-| Backing | **3.0/10** | was 3.5 |
+| Backing | **2.5/10** | was 3.0 |
 | Underlying | 3.0/10 | held |
 | Liquidity | 3.5/10 | held |
 | Issuer | 5.5/10 | held |
@@ -193,6 +215,7 @@ The Backing axis then marks that down for everything about *how the backing is h
 
 ## Revision history
 
+- **2026-08-23 — ⚠️ on-chain coverage collapsed 61.22% → 42.86% in one day; Backing 3.0 → 2.5, Overall 4.0 → 3.5.** On 2026-08-21, three days after the previous pass, **$24.99M of reserves left the safe with thUSD supply unchanged to the dollar** ($84.82M → $58.35M against a flat $136.14M). **Three claims published on 08-18 are falsified:** that the coverage slide had stopped — it resumed on 08-19; that coverage troughed near 53.21% — **42.86% is a new low**; and that the open designed-scaling-versus-outgrowing-the-buffer question resolved toward designed scaling, which rested specifically on supply and reserves rising matched within about $30,000 on 08-12/13. **This move is the exact inverse: reserves fell alone.** The report's own analysis of why a *rising* ratio can be an artifact is retained and leaned on rather than replaced — matched dollars flatter a sub-100% ratio, but **the inverse has no such escape**, so this is real. ⚠️ **The threshold crossed ranks above the percentage: implied off-chain backing went 37.70% → 57.14%**, so the majority of thUSD's backing is now a residual derived by subtraction rather than anything observed, where until 08-21 the observable share was larger. A change in kind, not degree. **Mechanism established, destination not.** The same day thBILL's supply fell 24,131,274 tokens; at NAV 1.035792 that is $24,994,981 against thUSD's $24,987,439 decline — **a match within about $7,500 on $25M**. **thBILL was burned out of the thUSD reserve safe**, which answers the mechanism question the thBILL reports had left open and explains why no user-facing redemption appears. **It does not establish where the $25M went or what now stands behind that share of thUSD, and this report claims neither.** **A finding, not a recalibration** — the prior rationale described about 62% coverage and a stabilising trend, and neither is true. **Held at 2.5 rather than lower** because sub-100% is this product's expected operating state, the peg is intact (−16bp, $0.9984) and supply is stable rather than fleeing: this is deterioration in the *verifiable share*, not a demonstrated shortfall. **Overall follows to 3.5** because Backing is the axis this product's thesis rests on and the off-chain majority crossing is structural rather than a figure refresh. Also recorded: thUSD's own admin posture (Safe threshold 4, 48-hour timelock) is materially stronger than the reserve layer beneath it, and the two should not be inferred from each other. `last_verified` **is** bumped to 2026-08-23 — the coverage series, supply and reserve balances were all re-read.
 - **2026-08-18 — coverage stabilised, cash buffer drained, look-through re-rated. Backing 3.5 → 3.0; Overall holds at 4.0.** The July framing — coverage falling fast, designed-scaling-versus-outgrowing-the-buffer unresolved — no longer describes the present state. Coverage troughed at **53.21%** in early August and recovered to **62.30%**, and the recovery is a single **matched mint**: supply $109.89M → $136.18M against on-chain reserves $58.50M → $84.82M between 08-12 and 08-13, within about $30K. That resolves the open question toward designed scaling. Three things offset it. **(1)** The on-chain cash buffer went to zero — USDT about $2.0M → **$0**, USDC about $0.4M → **about $22** — leaving reserves **100% thBILL**, with no liquid on-chain asset to meet redemption pressure and a reserve that is no longer independent of the issuer. **(2)** [thBILL](/reports/thbill) was cut to **4.0 overall** the same day, and it is now the entire on-chain reserve. **(3)** The absolute unattested off-chain book still **grew**, about $43.2M → **$51.3M**, even as its share fell to 37.7% — supply outran it. Backing lands at 3.0. **Underlying holds at 3.0**: thBILL's downgrade was on its Redemption and Liquidity axes, while its Underlying axis held at 5.0, and this axis scores quality rather than exit. **Liquidity holds at 3.5** — the roughly $4.75M Ethereum venue did not grow while supply rose 27.6%, so depth-per-dollar is thinner, but the absolute depth and the absent retail primary path that set the score are unchanged. Also corrected: the reserve field is denominated in **thBILL shares, not dollars**, and must be multiplied by NAV per share.
 - **2026-07-13 — coverage escalation + liquidity correction + score refresh.** On-chain coverage 91.9% (May) → **≈59.5%** (−16.8pp in the week to 07-13, first breach of the backing monitor's 70% floor); off-chain, un-attested gold-carry leg **≈8% → ≈40%** of backing (≈$7.5M → ≈$43M) as thUSD supply grew ≈$92.9M → ≈$106.7M. Framing held to "expected-by-design as the strategy deploys off-chain, **not** a depeg" — thUSD held ≈$1.00 — while stating plainly that the unverifiable share is now large and growing fast. §III liquidity **corrected**: the real venue is a ≈$4.75M Uniswap V4 thUSD/USDC pool on **Ethereum** (≈$110K/day, ≈$1.001), not the Arbitrum dust the prior report centered. Scores: Backing 4.0 → **3.5**, Underlying 3.5 → **3.0**, Overall 4.1 → **4.0** (peg 4.0, liquidity 3.5, issuer 5.5 unchanged; band stays "Elevated"). Admin-chain hardening (48h Timelock, 4-of-6 Safe) unchanged from the prior revision.
 
