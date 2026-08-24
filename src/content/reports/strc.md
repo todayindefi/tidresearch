@@ -10,6 +10,7 @@ date: "2026-08-24"
 last_verified: "2026-08-24"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
+production: true
 issuer: "Strategy Inc."
 yield_bearing: true
 underlying_assets: ["mstr"]
@@ -96,11 +97,23 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 
 **The bid is losing efficacy per dollar.** $25M moved STRC from about $86.50 toward $88.90. $132.2M — five times the spend — moved it barely at all, and the price has since printed back below the $95 line. **Escalating spend against a flat-to-slipping price says the natural bid is weakening faster than the programme is buying.**
 
-**The runway is short and shortening.** At the most recent week's pace, $653.0M is roughly **five weeks** of authorisation. The programme is finite by construction and the burn rate is rising. **A price recovery riding an expiring issuer bid is not a re-rating** — and this is the fact that gates the downstream assets, because apxUSD, apyUSD and sUSDat all mark STRC to market.
+**The runway is short and shortening, and how short depends on which pace you use.** At the **most recent week's** $132.2M the remaining $653.0M is about **five weeks** — late September. At the **four-week average** of $86.8M it is about **seven and a half** — early-to-mid October. The burn rate is rising, so the first is the more conservative read and the second is the more representative one; **the choice of basis moves the date by three weeks, which is why both are given here rather than one.** The programme is finite by construction either way. **A price recovery riding an expiring issuer bid is not a re-rating.**
 
 ⚠️ **And the funding source changed.** Through early August the buybacks were funded by **selling Bitcoin** — the 2026-08-10 filing earmarked the entire net proceeds of a $108.6M BTC sale for STRC repurchases. In the week to 2026-08-16, **no Bitcoin was sold at all**; the $132.2M of buybacks and $52.4M of dividends came from about **$333.7M of common-stock issuance**. Holdings stand at **840,447 BTC**.
 
-**That is an improvement and a substitution at the same time.** It stops the floor consuming the collateral — but it makes the floor depend on Strategy's ability and willingness to issue *common equity* to defend the *preferred*, which is a transfer of value between classes and only works while equity issuance stays viable.
+**That is an improvement and a substitution at the same time.** It stops the floor consuming the collateral — but it makes the floor depend on Strategy's ability and willingness to issue *common equity* to defend the *preferred*, which is a transfer of value between classes.
+
+⚠️ **And it swapped which constraint binds, which matters more than the improvement.** These are two different gates:
+
+| | the old gate | the new gate |
+|---|---|---|
+| what runs out | Bitcoin available to sell | the market's appetite to absorb common issuance |
+| what you watch | the BTC stack shrinking | **mNAV**, and whether ATM issuance stays accretive |
+| how it arrives | gradually, and visibly on the balance sheet | can close quickly, and is a market condition rather than a company one |
+
+**A downstream holder who was watching the Bitcoin stack for early warning is now watching the wrong thing.** The stack is flat at 840,447 BTC and has been for a week — which under the old framing read as reassurance, and under the new one carries no information about the floor at all. The signal that matters is **mNAV**: at 0.9952 on 2026-08-24 it sits at parity, where equity issuance is roughly neutral rather than accretive. Read that as a level, not a trend — it has oscillated within about 2% of 1.0 for weeks, and the week-to-week direction is noise.
+
+**This is the fact that gates the downstream assets**, because apxUSD, apyUSD and sUSDat all mark STRC to market — but the gate is now equity absorption, not collateral depletion.
 
 ## Ability to pay, and what it rests on
 
@@ -150,8 +163,9 @@ Preferred dividends rank behind debt service. Strategy's convertible notes there
 
 ## What to watch
 
-- ⚠️ **The buyback authorisation running out.** $653.0M remaining as at 2026-08-17, at a recent pace near $132M a week. **What STRC does after the bid stops is the real test**, and it is the single event most likely to move the downstream assets.
-- **Whether the funding stays on common equity or returns to Bitcoin sales.** The first preserves the collateral; the second consumes it. The week to 2026-08-16 was the first on common.
+- ⚠️ **The buyback authorisation running out.** $653.0M remaining as at 2026-08-17 — about five weeks at the latest week's pace, seven and a half at the four-week average. **What STRC does after the bid stops is the real test**, and it is the single event most likely to move the downstream assets.
+- **⚠️ mNAV, which is now the floor's binding constraint.** With the buyback funded by common issuance rather than Bitcoin sales, the gate is whether the market keeps absorbing that issuance — not whether Bitcoin remains to sell. At 0.9952 (2026-08-24) mNAV sits at parity, where issuance is roughly neutral. **Watching the Bitcoin stack for early warning now watches the wrong thing.**
+- **Whether the funding stays on common equity or returns to Bitcoin sales.** The first preserves the collateral but spends dilution capacity; the second does the reverse. The week to 2026-08-16 was the first on common.
 - **The dividend rate.** Held at 12.00% and forward-disclaimed until sustained trading near $100. A rise signals the discretion being spent; a suspension is the tail.
 - **STRC's discount to par.** About 3.8% at 2026-08-24, against roughly 24% at the June low.
 - **The reserve direction.** Six consecutive weekly builds to about $4.80B. A sustained drawdown alongside sub-par trading is the combination that matters, not either alone.
@@ -176,4 +190,6 @@ Instrument price, dividend-rate history, the cash-service waterfall, and the dow
 
 ⚠️ **Noted in the body because it is easy to miss: the ~75% that is raw STRC and the ~75% that is unmeasured are the same 75%.** Raw STRC is exactly what both issuers derive residually, because it is the leg held off-chain — so the wrapper-versus-instrument split and the measured-versus-inferred split are one fact, not two.
 
-**Figures are dated individually rather than to a single stamp, because the source feed mixes vintages:** instrument price, mNAV and the downstream reconciliation are live at 2026-08-24, while the buyback and reserve figures come from the 2026-08-17 filing and the cash-runway watermarks from the 2026-08-10 one. **The buyback figures used are $347.0M executed and $653.0M remaining per the 2026-08-17 8-K, not the $214.8M / $785.2M carried in the monitoring feed, which is anchored a week earlier.** The convert exposure is stated on the holder-put schedule rather than the 2030 stated maturity, for the reason given in the [MSTR report](/reports/mstr/) — the feed's own $2.7B 2030 figure understates it and is not used here.*
+**Figures are dated individually rather than to a single stamp, because the source feed mixes vintages:** instrument price, mNAV and the downstream reconciliation are live at 2026-08-24, while the buyback and reserve figures come from the 2026-08-17 filing and the cash-runway watermarks from the 2026-08-10 one. **The buyback figures used are $347.0M executed and $653.0M remaining per the 2026-08-17 8-K, not the $214.8M / $785.2M carried in the monitoring feed, which is anchored a week earlier.** The convert exposure is stated on the holder-put schedule rather than the 2030 stated maturity, for the reason given in the [MSTR report](/reports/mstr/) — the feed's own $2.7B 2030 figure understates it and is not used here.
+
+**Corrected before publication, twice, on the same section.** The source handoff described the buyback as Bitcoin-funded and exhausting in late September, and named that the most load-bearing forward-looking fact here. **The funding had already flipped to common equity a week earlier**, in the 2026-08-17 filing — so the report states the flip, and states that the binding constraint moved with it, from Bitcoin available to sell to the market's appetite for common issuance. Those are different gates with different warning signs, and a reader watching the Bitcoin stack is now watching the wrong one. **The runway is given on two bases rather than one**, because the latest-week pace and the four-week average put the exhaustion three weeks apart and the burn rate is rising.*
