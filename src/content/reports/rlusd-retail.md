@@ -8,7 +8,7 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 audience: "retail"
 date: "2026-07-08"
-last_verified: "2026-07-08"
+last_verified: "2026-08-24"
 featured: false
 production: true
 issuer: "Standard Custody & Trust Company (Ripple)"
@@ -24,7 +24,7 @@ overall_score: 7.0
 
 **Moderate risk · 7.0/10**
 
-> **Ripple's regulated dollar, scaling into the banks.** RLUSD is issued under a New York (NYDFS) trust charter, backed 1:1 by cash, US Treasuries and cash equivalents held in segregated accounts at BNY Mellon, with monthly attestations. In its first roughly 18 months it scaled about 4x to a multi-billion-dollar supply while holding its peg cleanly, picked up a Binance listing, went live in Japan under JFSA approval, and started landing serious institutional integrations — Deutsche Bank, a Mastercard pilot. What keeps it at 7.0 rather than higher: it's still young. It hasn't been through a severe redemption run or a multi-cycle stress, and like its regulated peers it publishes monthly attestations rather than real-time proof-of-reserves.
+> **Ripple's regulated dollar, scaling into the banks.** RLUSD is issued under a New York (NYDFS) trust charter, backed by cash, US Treasuries and cash equivalents held in segregated accounts at BNY Mellon, with monthly attestations. In its first roughly 18 months it scaled about 4x to a multi-billion-dollar supply while holding its peg cleanly, picked up a Binance listing, went live in Japan under JFSA approval, and started landing serious institutional integrations — Deutsche Bank, a Mastercard pilot. What keeps it at 7.0 rather than higher: it's still young. It hasn't been through a severe redemption run or a multi-cycle stress, and like its regulated peers it publishes monthly attestations rather than real-time proof-of-reserves.
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -32,7 +32,7 @@ overall_score: 7.0
 
 ## Summary
 
-RLUSD is Ripple's fiat-backed stablecoin, issued through **Standard Custody & Trust Company**, an **NYDFS-regulated** trust entity. It is backed 1:1 by USD deposits, US Treasuries and cash equivalents held in segregated accounts at **BNY Mellon**, with monthly third-party attestations on the reserve.
+RLUSD is Ripple's fiat-backed stablecoin, issued through **Standard Custody & Trust Company**, an **NYDFS-regulated** trust entity. It is backed by USD deposits, US Treasuries and cash equivalents held in segregated accounts at **BNY Mellon**, with monthly third-party attestations on the reserve — **at about 107% of liabilities on Ripple's own attestation, not 1:1.** This report previously said 1:1, which understated it.
 
 Launched in December 2024, RLUSD has scaled to the multi-billion tier while holding its peg, and it now sits inside the regulated dollar cluster alongside PYUSD and GUSD. Along the way it picked up a Binance listing and began expanding institutionally: a JFSA-approved Japan launch via SBI, Deutsche Bank adopting Ripple's payment infrastructure, and a Mastercard/Gemini card pilot.
 
@@ -52,7 +52,9 @@ The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC a
 
 ## What backs it
 
-1:1 USD cash + US Treasuries + cash equivalents, held in **segregated accounts at BNY Mellon** under NYDFS oversight, with **monthly attestations**. This is a conservative, high-quality composition — the same regulatory regime that governs PYUSD and GUSD, and a genuine strength of the asset.
+⚠️ **Corrected 2026-08-24: the reserve is over-collateralised, not 1:1.** Ripple's attestation reports roughly **107%** of liabilities in USD cash, US Treasuries and cash equivalents, held in **segregated accounts at BNY Mellon** under NYDFS oversight, with **monthly attestations**. This report previously described the backing as 1:1 — which was wrong in the issuer's favour by understating it.
+
+**That surplus does not lift the Backing axis, and the reason is worth stating.** 7% of headroom is real, but **Ripple publishes no asset-composition breakdown** — the attestation gives a total, not a split between cash, bills and equivalents by maturity. **A larger number you cannot decompose is not the same evidence as a smaller number you can**, which is why this axis holds at 7.0 rather than rising toward the fully-disclosed cohort. Note also that "backed 107%" and "redeemable 1:1" are different claims: the redemption terms below are unchanged and correct. This is a conservative, high-quality composition — the same regulatory regime that governs PYUSD and GUSD, and a genuine strength of the asset.
 
 The knock relative to USDC is twofold and modest: attestations are **monthly and point-in-time** rather than continuous real-time proof-of-reserves, and RLUSD has a **shorter operating history** than the incumbents. Neither is a red flag on reserve quality — the composition itself is exactly what you want in a fiat-backed dollar — but both are reasons the backing score is 7.0 rather than higher.
 
@@ -78,7 +80,20 @@ As with any bridged stablecoin, the deepest and canonical form of RLUSD lives on
 
 RLUSD sits under NYDFS oversight with monthly attestations on reserves and BNY Mellon custody. There has been **no depeg and no exploit** since the December 2024 launch.
 
-The residual risks are structural rather than reserve-quality problems: the short multi-cycle history, attestation-versus-real-time transparency, the cross-chain expansion surface, and the standard centralized-issuer control set (freeze/mint/burn). None of these is reserve opacity — this is a transparent, well-regulated reserve. They're the reasons a well-run young regulated dollar lands at 7.0 rather than at the top of the band.
+⚠️ **The issuer control set is stronger than "freeze/mint/burn" conveys, and the thresholds are the part this report has never carried.** Measured 2026-08-20, `CLAWBACKER_ROLE` and `PAUSER_ROLE` are both held by a MultiSign at `0x83f7f1c6…1fa9`, and the signature counts are not uniform:
+
+| action | signatures required |
+|---|---:|
+| Upgrade the contract | **7** |
+| **Claw back a holder's balance** | **2** |
+| Mint | 2 |
+| Burn | 2 |
+
+⚠️ **Every power that acts on a holder's money is cheaper to exercise than the power that acts on the contract.** Changing what RLUSD *is* takes seven signatures; taking tokens out of a specific wallet takes two.
+
+**And clawback is a stronger power than freeze, which is the one most readers will have in mind.** A freeze immobilises a balance in place — the tokens stay yours and stop moving. **A clawback moves them.** For a regulated dollar this is an expected compliance capability rather than a defect, and the seven-signature upgrade path is genuinely conservative by comparison. But a holder is entitled to know that the balance-affecting powers sit behind the *lowest* threshold in the contract, not the highest, and this report has not said so until now.
+
+The other residual risks are structural rather than reserve-quality problems: the short multi-cycle history, attestation-versus-real-time transparency, and the cross-chain expansion surface. None of these is reserve opacity — this is a transparent, well-regulated reserve. They're the reasons a well-run young regulated dollar lands at 7.0 rather than at the top of the band.
 
 ## Score breakdown
 
@@ -110,3 +125,9 @@ Holders who want a **regulated (NYDFS) dollar** from a well-capitalized institut
 ---
 
 *This report is based on Ripple's public documentation, NYDFS disclosures, monthly attestations (BNY Mellon custody), and market data through 2026-07-08. RLUSD is a young, centralized, freezable issuer token; its supply and multichain footprint shift over time, and it has not yet been tested through a severe redemption run. Corrections or attestation links welcome at info@tidresearch.com.*
+
+*Revision history: 2026-08-24 — **a holder-facing omission closed and a backing figure corrected; no score change.** "Clawback" had appeared **zero times** on this page. Measured 2026-08-20, `CLAWBACKER_ROLE` and `PAUSER_ROLE` are both held by a MultiSign at `0x83f7f1c6…1fa9`, and **the signature thresholds are not uniform: upgrading the contract takes 7, while clawing back a holder's balance takes 2 — as do mint and burn.** ⚠️ **Every power that acts on a holder's money is cheaper to exercise than the power that acts on the contract**, and clawback is a stronger capability than the freeze most readers have in mind: a freeze immobilises a balance, a clawback moves it. Expected for a regulated dollar, and the 7-signature upgrade path is genuinely conservative — but a holder is entitled to know the balance-affecting powers sit behind the lowest threshold in the contract rather than the highest.
+
+**Also corrected: this report described the reserve as "backed 1:1", which understated it.** Ripple's attestation reports roughly **107%** of liabilities. ⚠️ **The correction was applied to the three *backing* claims only.** This page uses "1:1" seven times and they are not the same claim — the four describing **mint and redemption at 1:1 are correct and unchanged**, because "backed 107%" and "redeemable 1:1" are different statements and only the first was wrong. **Backing holds at 7.0 despite the surplus**, because Ripple publishes no asset-composition breakdown: a larger number you cannot decompose is not the same evidence as a smaller number you can.
+
+`last_verified` moves to 2026-08-24 for the admin topology and the attestation figure, which were re-read. **The liquidity, venue-depth and multi-chain material on this page still dates from the 2026-07-08 pass**, as does the supply framing corrected separately earlier today.*
