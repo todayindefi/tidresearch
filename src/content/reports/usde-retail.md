@@ -8,7 +8,7 @@ peg_mechanism: "Hybrid (institutional credit + RWA + 11% residual basis trade)"
 assessment_type: "full"
 audience: "retail"
 date: "2026-06-10"
-last_verified: "2026-07-15"
+last_verified: "2026-08-25"
 featured: false
 production: true
 issuer: "Ethena Labs"
@@ -176,4 +176,4 @@ If you're reading this and considering the staked sibling sUSDe: it's the yield-
 
 *This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-07-14. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
 
-*Revision history: 2026-07-15 — updated the sUSDe cross-references for Ethena's shipped dynamic cooldown (1–7-day coverage-tiered, 1 day on-chain); USDe scores unchanged. 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
+*Revision history: 2026-08-25 — **re-verified; nothing moved; scores held at 6.5.** Recorded as a result rather than a date move: a re-read that finds the thesis intact is information, and bumping a stamp without one converts an honest staleness signal into a false freshness signal. USDe's coverage reproduces exactly at **103.27%**. ⚠️ **Also carried, because the flag names invite the wrong reading:** our monitoring records two Ethena reserve-account gaps — one attested account on **Solana** outside our tracking, and an on-chain wallet read covering **6 of 7** disclosed accounts. **These are record gaps, not exposure gaps** — nothing is missing from Ethena's backing; something is missing from our view of it. Conflating the two once overstated the apparent shortfall by about seventeen times. `last_verified` bumped to 2026-08-25 for the coverage and reserve-account material. *Revision history: 2026-07-15 — updated the sUSDe cross-references for Ethena's shipped dynamic cooldown (1–7-day coverage-tiered, 1 day on-chain); USDe scores unchanged. 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
