@@ -11,6 +11,7 @@ audience: "retail"
 companion_report: "syrupusdt-full"
 date: "2026-05-03"
 last_verified: "2026-08-18"
+last_revised: "2026-08-23"
 featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"

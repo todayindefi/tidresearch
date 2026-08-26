@@ -9,6 +9,7 @@ audience: "institutional"
 companion_report: "thbill"
 date: "2026-04-28"
 last_verified: "2026-08-18"
+last_revised: "2026-08-23"
 live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"

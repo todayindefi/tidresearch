@@ -307,6 +307,12 @@ const categoryLabel = (c: string) =>
       <div class="eyebrow mb-1">Last Verified</div>
       <div class="font-mono">{fmtDate(data.last_verified)}</div>
     </div>
+    {data.last_revised && +new Date(data.last_revised) > +new Date(data.last_verified) && (
+      <div>
+        <div class="eyebrow mb-1">Last Revised</div>
+        <div class="font-mono">{fmtDate(data.last_revised)}</div>
+      </div>
+    )}
   </div>
 
   {

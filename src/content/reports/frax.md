@@ -10,6 +10,7 @@ audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=frax"
 date: "2026-06-01"
 last_verified: "2026-06-01"
+last_revised: "2026-08-23"
 peg_mechanism_score: 4.0
 backing_score: 2.0
 liquidity_score: 3.0

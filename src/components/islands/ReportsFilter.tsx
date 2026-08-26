@@ -10,6 +10,7 @@ export interface ReportRow {
   chain_labels: string[];
   overall_score: number;
   last_verified: string;
+  last_revised?: string;
   featured?: boolean;
 }
 
@@ -183,6 +184,9 @@ export default function ReportsFilter({
               </div>
               <p className="text-xs text-muted-foreground font-mono">
                 Last verified {r.last_verified}
+                {r.last_revised && r.last_revised > r.last_verified && (
+                  <> · revised {r.last_revised}</>
+                )}
               </p>
             </a>
             );

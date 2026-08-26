@@ -51,6 +51,11 @@ const common = {
   companion_report: z.string().optional(),
   date: z.coerce.date(),
   last_verified: z.coerce.date(),
+  // Date of the most recent substantive pass, when only PART of the body was
+  // re-read. last_verified stays the date the WHOLE body was verified through,
+  // so a scope-limited refresh no longer has to choose between a false-fresh
+  // stamp and a card that looks 46 days stale.
+  last_revised: z.coerce.date().optional(),
   overall_score: score,
   // Every asset has an issuer, whatever its category. This lives in `common` on
   // purpose: it used to be declared per-category, and the categories that forgot

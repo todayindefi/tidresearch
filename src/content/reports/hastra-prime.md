@@ -10,6 +10,7 @@ audience: "retail"
 companion_report: "wylds"
 date: "2026-07-25"
 last_verified: "2026-07-31"
+last_revised: "2026-08-23"
 featured: false
 production: true
 # issuer: withheld pending review — "Provenance" is the blockchain the token

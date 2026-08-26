@@ -9,6 +9,7 @@ assessment_type: "full"
 audience: "retail"
 date: "2026-07-08"
 last_verified: "2026-08-24"
+last_revised: "2026-08-25"
 featured: false
 production: true
 issuer: "Agora Finance (Agora Bermuda Limited)"

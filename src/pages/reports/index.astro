@@ -20,12 +20,21 @@ const rows = all
     chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
     overall_score: r.data.overall_score,
     last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
+    last_revised: r.data.last_revised
+      ? new Date(r.data.last_revised).toISOString().slice(0, 10)
+      : undefined,
     featured: Boolean(r.data.featured),
   }))
   .sort((a, b) => {
-    // Featured first, then most-recently verified.
+    // Featured first, then most-recently touched. A scope-limited refresh bumps
+    // last_revised only, so sort on the newer of the two or a substantive pass
+    // sorts as though it never happened.
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    return b.last_verified.localeCompare(a.last_verified);
+    const touched = (r: { last_verified: string; last_revised?: string }) =>
+      r.last_revised && r.last_revised > r.last_verified
+        ? r.last_revised
+        : r.last_verified;
+    return touched(b).localeCompare(touched(a));
   });
 ---
 
