@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Card from "@/components/ui/Card.astro";
+import Button from "@/components/ui/Button.astro";
+import { services } from "@/lib/services";
+---
+
+<BaseLayout
+  title="Services | TID Research"
+  description="Independent DeFi research services — asset and protocol risk analysis, continuous on-chain monitoring, DAO governance support, investment analysis, and portfolio tracking."
+>
+  <section class="container-page py-20">
+    <div class="max-w-3xl">
+      <p class="eyebrow mb-3">Services</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">What we do for clients</h1>
+      <p class="text-xl text-muted-foreground">
+        Five service lines, built on the same on-chain research that produces our public
+        reports and backing dashboards. Every engagement draws on work we already
+        maintain continuously, rather than starting from a blank page.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
+      {
+        services.map(({ slug, title, blurb, Icon }) => (
+          <Card href={`/services/${slug}`} hoverable>
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                <Icon className="h-6 w-6 text-primary" />
+              </div>
+              <div class="flex-1">
+                <h2 class="text-lg font-bold uppercase tracking-wide group-hover:text-primary transition-colors mb-2">
+                  {title}
+                </h2>
+                <p class="text-muted-foreground text-sm leading-relaxed">{blurb}</p>
+              </div>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+
+    <div class="mt-14 flex flex-wrap gap-4">
+      <Button href="/contact" size="lg">Get in touch</Button>
+      <Button href="/reports" variant="outline" size="lg">See sample work</Button>
+    </div>
+  </section>
+</BaseLayout>
