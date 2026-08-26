@@ -46,7 +46,7 @@ export const services: Service[] = [
       "Two standardized frameworks — asset risk (volatility, liquidity, structural, redemption, issuer) and protocol risk (smart contract, economic design, project counterparty).",
       "A scored universe of 130+ assets and 60+ protocols, maintained continuously rather than rebuilt per engagement.",
       "Per-chain risk overrides where deployment context materially changes exposure.",
-      "Live backing dashboards paired with each full assessment so risk can be re-verified continuously.",
+      "Live backing dashboards on the assets under continuous monitoring, so those assessments can be re-verified against current data rather than taken on trust.",
       "Diligence reports for protocols evaluating which assets to list, integrate, or accept as collateral.",
       "Scores maintained as a machine-readable feed, available to partners integrating risk data directly into their own systems.",
     ],
