@@ -67,6 +67,8 @@ export const services: Service[] = [
       "Governance and permission surveillance: timelock changes, admin actions, and protocol topology shifts.",
       "Position-level exit triggers, so a thesis that breaks reaches you before the exit window closes.",
       "Off-chain source monitoring where it matters — including SEC filing watches on public-company issuers.",
+      "Every alert carries its own evidence: severity and reason, previous and current values, when the condition was first observed and last seen, the source and freshness of the data behind it, and the condition that resolves it.",
+      "Observed facts are kept separate from inference and from suggested action, so you can act on the measurement without inheriting our interpretation of it.",
       "Alerts delivered to Telegram, email, or your own systems; underlying data available as JSON.",
     ],
     cta: "Set up monitoring",
