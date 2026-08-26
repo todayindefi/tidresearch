@@ -182,10 +182,22 @@ export default function ReportsFilter({
                   </span>
                 ))}
               </div>
+              {/* Lead with the most recent activity. A scope-limited refresh
+                  leaves last_verified old, and a card that opens with the older
+                  date reads as stale to anyone skimming — which suppresses the
+                  reports that were most recently worked on. Both dates stay
+                  visible so the narrower scope is never hidden. */}
               <p className="text-xs text-muted-foreground font-mono">
-                Last verified {r.last_verified}
-                {r.last_revised && r.last_revised > r.last_verified && (
-                  <> · revised {r.last_revised}</>
+                {r.last_revised && r.last_revised > r.last_verified ? (
+                  <>
+                    Last revised {r.last_revised}
+                    <span className="opacity-70">
+                      {" "}
+                      · verified through {r.last_verified}
+                    </span>
+                  </>
+                ) : (
+                  <>Last verified {r.last_verified}</>
                 )}
               </p>
             </a>
