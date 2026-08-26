@@ -1,5 +1,6 @@
 ---
 import { sectionEnabled } from "@/lib/stage";
+import { services } from "@/lib/services";
 
 const year = new Date().getFullYear();
 ---
@@ -28,10 +29,15 @@ const year = new Date().getFullYear();
     <div>
       <div class="eyebrow mb-3">Services</div>
       <ul class="space-y-2 text-sm">
-        <li><a href="/services/risk" class="hover:text-primary">Risk Analysis</a></li>
-        <li><a href="/services/governance" class="hover:text-primary">Governance</a></li>
-        <li><a href="/services/investment" class="hover:text-primary">Investment</a></li>
-        <li><a href="/services/portfolio" class="hover:text-primary">Portfolio</a></li>
+        {
+          services.map((s) => (
+            <li>
+              <a href={`/services/${s.slug}`} class="hover:text-primary">
+                {s.footerLabel}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </div>

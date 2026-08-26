@@ -7,45 +7,8 @@ import RiskBadge from "@/components/report/RiskBadge.astro";
 import { getCollection } from "astro:content";
 import { chainLabel } from "@/lib/chains";
 import { visibleAtCurrentStage, isProductionStage } from "@/lib/stage";
-import { ShieldCheck, Activity, Scale, TrendingUp, LayoutDashboard, ArrowRight } from "lucide-react";
-
-const services = [
-  {
-    href: "/services/risk",
-    title: "Risk Analysis",
-    description:
-      "Asset and protocol risk assessment and due diligence to support DeFi projects and institutions.",
-    Icon: ShieldCheck,
-  },
-  {
-    href: "/services/monitoring",
-    title: "Continuous Monitoring",
-    description:
-      "Hourly on-chain surveillance of backing, peg, and governance surface — with alerts when the risk picture changes.",
-    Icon: Activity,
-  },
-  {
-    href: "/services/governance",
-    title: "Governance Services",
-    description:
-      "Arbitrum DAO delegates since 2024 — proposal tracking, analysis, and voting recommendations.",
-    Icon: Scale,
-  },
-  {
-    href: "/services/investment",
-    title: "Investment Analysis",
-    description:
-      "Token economics and yield-market analysis grounded in on-chain supply, demand, and rate data.",
-    Icon: TrendingUp,
-  },
-  {
-    href: "/services/portfolio",
-    title: "Portfolio Tracking",
-    description:
-      "Daily position reconciliation, yield attribution, and reporting for on-chain portfolios.",
-    Icon: LayoutDashboard,
-  },
-];
+import { ArrowRight } from "lucide-react";
+import { services } from "@/lib/services";
 
 const reports = (await getCollection("reports"))
   .filter((r) => visibleAtCurrentStage(r.data) && r.data.audience !== "institutional")
@@ -195,8 +158,8 @@ const dashboards = isProductionStage
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
-          services.map(({ href, title, description, Icon }) => (
-            <Card href={href} hoverable>
+          services.map(({ slug, title, blurb, Icon }) => (
+            <Card href={`/services/${slug}`} hoverable>
               <div class="flex items-start gap-4">
                 <div class="p-3 bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-colors">
                   <Icon className="h-6 w-6 text-primary" />
@@ -205,7 +168,7 @@ const dashboards = isProductionStage
                   <h3 class="text-lg font-bold uppercase tracking-wide group-hover:text-primary transition-colors mb-2">
                     {title}
                   </h3>
-                  <p class="text-muted-foreground text-sm leading-relaxed">{description}</p>
+                  <p class="text-muted-foreground text-sm leading-relaxed">{blurb}</p>
                 </div>
               </div>
             </Card>
