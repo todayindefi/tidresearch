@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "tsx scripts/build-gated-slugs.ts && tsx scripts/check-frontmatter-keys.ts",
+    "prebuild": "tsx scripts/build-gated-slugs.ts && tsx scripts/check-frontmatter-keys.ts && tsx scripts/check-entity-contradictions.ts --errors-only",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "sync-reports": "tsx scripts/sync-reports.ts",
     "gated-slugs": "tsx scripts/build-gated-slugs.ts",
-    "check-frontmatter": "tsx scripts/check-frontmatter-keys.ts"
+    "check-frontmatter": "tsx scripts/check-frontmatter-keys.ts",
+    "check-entities": "tsx scripts/check-entity-contradictions.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
