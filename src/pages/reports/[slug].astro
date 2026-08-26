@@ -20,6 +20,16 @@ const { Content, headings } = await render(entry);
 // thBILL has its own standalone dashboard repo referenced via the
 // report's live_dashboard_url frontmatter field. Only the institutional
 // thBILL page shows the dashboard; the retail summary stays clean.
+// DELIBERATE OMISSION — "strc" is not in this set, and must not be added.
+// It is listed in allDashboards (dashboards/index.astro) and has a live
+// renderer, so the two allowlists disagree on purpose. This set gates the
+// in-page dashboard EMBED; live_dashboard_url gates the link, and strc.md
+// sets that explicitly, so the STRC report still links through.
+// The STRC report covers the preferred stock, where only about a quarter of
+// the exposure is measurable on-chain. Embedding an on-chain backing
+// dashboard there would imply coverage the report explicitly says it does
+// not have. Its STRCx sibling embeds because its subject IS the on-chain
+// token. Confirmed by the site owner 2026-08-26: keep STRC link-only.
 const DASHBOARD_SLUGS = new Set([
   "crvusd",
   "usdd",
