@@ -7,87 +7,120 @@ category: "stablecoin"
 peg_mechanism: "hybrid"
 assessment_type: "light"
 audience: "retail"
-live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usg"
-date: "2026-06-10"
-last_verified: "2026-06-10"
+date: "2026-08-27"
+last_verified: "2026-08-27"
 peg_mechanism_score: 5.0
 backing_score: 5.0
 liquidity_score: 3.5
 issuer_score: 4.0
 overall_score: 4.0
 issuer: "Tangent Finance"
-market_cap_approx: 3210000
-featured: false
+audited_reserves: false
+market_cap_approx: 4340566
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usg"
+production: false
 ---
 
-# Tangent USG — Risk Report
+# USG — Asset Risk Assessment (Light)
 
-**Higher risk · 4.0/10 · Early-stage crvUSD fork — genuinely backed, but tiny, thinly traded, and weakly governed**
+**Category:** Stablecoin | **Peg Mechanism:** Hybrid (CDP + PegKeepers) | **Issuer:** Tangent Finance
 
-> **Early-stage asset.** USG launched around May 14, 2026 and is roughly 4 weeks old, with about $3.2M of real supply. It is genuinely collateral-backed, but it has almost no track record. Size your exposure to that reality. Live, hourly on-chain figures are on the [USG backing dashboard](https://tidresearch.com/dashboards/?asset=usg).
+**Live data:** [USG Backing Dashboard](https://tidresearch.com/dashboards/?asset=usg) — hourly per-market collateral, liquidation headroom, oracle divergence, and PegKeeper state.
 
-USG is Tangent Finance's decentralized stablecoin — a from-scratch Solidity reimplementation of Curve's **crvUSD** design (LLAMMA-style CDP markets, PegKeeper pools, and dynamic interest rates). Borrowers mint USG against **productive stablecoin LP collateral** (Curve LPs wrapped through StakeDAO, Convex-FXN, or Curve gauges), and the peg is supported by two PegKeeper pools (USG/USDC and USG/frxUSD) plus rate adjustments. It is a sound, well-audited *architecture* running as a very small, very young *instance*.
+USG is a crvUSD fork issued by Tangent Finance on Ethereum. Users mint it against collateral in isolated lending markets, and a pair of PegKeepers defends the dollar in Curve pools. Every unit is collateralised on-chain, there is no off-chain reserve, and no attestation is required to verify it — the entire book can be read from contracts. That is the strongest thing about this asset, and it is why this report can be specific where reports on custodial stablecoins cannot.
 
-| Peg | Yield | Exit | Status | Chain |
-|---|---|---|---|---|
-| $1.00 (trades ≈$0.9977, −0.23%) | Stake to sUSG | PegKeeper Curve pools (≈$1.28M stable depth); no CEX | Live, early-stage (~4 weeks) | Ethereum |
+**The headline is healthy and the distribution is not.** At 2026-08-27 the aggregate collateral ratio is **131.56% conservative / 155.48% inclusive**, with **zero bad debt in any of the sixteen markets**. Read alone, that describes a comfortable book.
 
-## Backing & collateral
+## The aggregate is a debt-weighted mean, and two markets carry it
 
-**As of June 10, 2026, USG is essentially 100% backed by over-collateralized borrower debt — a genuine improvement over a month ago.**
+Recomputing the aggregate from the per-market data returns **131.56%** — it *is* the debt-weighted mean of the individual markets, which is exactly why it conceals their spread.
 
-When we first assessed USG in late May, roughly **half** its backing was "protocol-owned liquidity" (POL) — USG that the protocol itself minted into the PegKeeper pools, backed only by the USDC/frxUSD sitting on the other side. That crutch has now **fully unwound to zero**: the PegKeepers currently have no USG minted into them, and **100% of circulating USG is backed by real borrower CDP positions** at about a **121% collateral ratio**. Borrower debt roughly doubled over the fortnight (from ≈$1.6M to ≈$3.2M) while total supply held flat — genuine borrowing replaced the protocol-minted POL. Bad debt is $0, and the collateral oracles are reading cleanly (no markets over-valuing collateral).
+| market | debt | CR | headroom to liquidation |
+|---|---:|---:|---:|
+| StakeDao — reUSD/sDOLA | $248,410 | 119.5% | **1.55%** |
+| StakeDao — frxUSD/OUSD | $65,542 | 114.9% | **1.95%** |
+| StakeDao — frxUSD/sDOLA | $351,293 | 120.0% | **2.27%** |
+| Convex FXN — reUSD/fxUSD | $230,947 | 121.0% | **2.73%** |
+| Curve — RLUSD/USDC | $473,015 | 114.7% | 4.68% |
+| StakeDao — BOLD/USDC | $499,496 | 115.4% | 5.05% |
+| Convex FXN — fxUSD/USDC | $699,999 | 116.1% | 5.64% |
+| StakeDao — USDT/crvUSD | $181,373 | 127.1% | 7.72% |
+| StakeDao — frxUSD/sUSDS | $500,690 | 120.3% | 8.89% |
+| StakeDao — reUSD/scrvUSD | $247,806 | 144.1% | 18.37% |
+| Curve — PYUSD/USDC | $500,490 | 134.6% | 18.82% |
+| StakeDao — cbBTC/WBTC | $65,386 | 180.5% | 33.85% |
+| StakeDao — msETH/WETH | $276,112 | 261.6% | 49.87% |
 
-| Metric (June 10, 2026) | Value |
-|---|---|
-| Real circulating supply | ≈$3.21M |
-| Collateral ratio (CDP only, conservative) | ≈121% |
-| Collateral ratio (inclusive of standby keeper stables) | ≈161% |
-| PegKeeper POL (protocol-minted USG) | **$0 (fully unwound)** |
-| Bad debt | $0 |
-| Live CDP markets | 12 |
+**$3,250,770 — 74.9% of the $4.34M book — sits within 10% of its liquidation threshold. $1,369,209, or 31.5%, sits within 5%.**
 
-**A backing caveat worth knowing:** USG's on-chain `totalSupply()` reads about **43 million**, but that is a pre-minted PegKeeper *ceiling buffer*, not real circulating supply — the same quirk crvUSD has. The real number is ≈$3.2M. Never size USG off `totalSupply()`.
+The two markets at the bottom of the table are the reason the average clears 130%. **msETH/WETH and cbBTC/WBTC together are $341,498 — 7.9% of debt.** Strip them and the remaining 92% of the book averages **121.74%**, against a debt-weighted liquidation floor of **113.15%**. A single aggregate ratio of 131.56% describes a portfolio in which almost no individual position is that comfortable.
 
-**The collateral has a recursive, exotic tail.** USG is backed by Curve LPs, and some of those LPs themselves contain other CDP or exotic stablecoins. The 12 markets are now fairly evenly sized (the top six are each ≈$370K). The most reputable legs — RLUSD/USDC, frxUSD/sUSDS, PYUSD/USDC, fxUSD/USDC, USDT/crvUSD — carry most of the debt, but a roughly-quarter tail includes **Resupply's reUSD** (a recursive-CDP token we rate 3.5/10, ≈$250K across two markets), plus eUSD, OUSD, BOLD and sDOLA/scrvUSD legs. Tangent deliberately tiers these exotic legs to the lowest 84% borrow limit while reputable legs get 90%. All of them trade within about 0.18% of par today. The cascade risk — a stablecoin backed by LPs of other stablecoins — is concretely present but small.
+One qualification that runs against the borrower: these are **market-wide aggregates**, verified against the contracts — `totalCollateral()` and `totalDebtShares()` reproduce the published figures exactly. Each row is the distance to that market's *average* LTV reaching its threshold. Individual borrowers above the market average are closer, and some may already be liquidatable. **The table understates how soon the first liquidation lands, not how late.**
 
-## Peg performance
+## reUSD is the concentration, and there are two tokens with that ticker
 
-USG trades at about **$0.9977 (−0.23%)**. That's a touch softer than the near-perfect peg it held at launch (≈$0.9996), but notably it held near par *through* the full POL withdrawal — the keepers and rates defended the peg without needing protocol-minted liquidity, which is mildly reassuring for the mechanism. Still, this is ≈4 weeks of history on a ≈$3.2M asset; the peg has not been tested by a real stress event or a large exit.
+Three markets are collateralised by pools containing **reUSD** — reUSD/sDOLA, reUSD/scrvUSD, and reUSD/fxUSD, totalling **$727,162, or 16.8% of the book**. Two of them are among the four thinnest positions USG holds, and **the single thinnest market in the entire book, at 1.55% headroom, is reUSD/sDOLA.**
 
-## Exit liquidity
+The protocol's own monitoring flags this: *"reUSD depeg −1.02% — USG collateral cascade leading indicator."* That is the correct reading. USG's collateral is not the stablecoins themselves but **Curve LP tokens containing them**, and an LP position holding a depegging asset does not lose half its value — arbitrageurs sell the broken leg into the pool, so the pool accumulates it and the loss approaches the full position.
 
-**This is the thinnest part of the picture, and it got slightly thinner as POL unwound.** USG's exit liquidity is essentially the two PegKeeper Curve pools, which now hold about **$1.28M** of USDC + frxUSD counter-side stables (down from ≈$2.6M a month ago). There is no meaningful CEX listing and no aggregator depth for USG itself. The peg has held near par so far, but **exit capacity is small and untested in stress** — a sized holder trying to leave quickly would move the price. Treat USG as a position you can only exit in small increments.
+**The reUSD in question is Resupply's, at `0x57aB1E0003F623289CD798B1824Be09a793e4Bec`.** It is not Re Protocol's reUSD, a structurally unrelated NAV-accruing reinsurance token that shares the ticker. Anyone assessing this exposure by symbol will reach the wrong asset. Resupply's reUSD is itself a CDP stablecoin, so USG's collateral here is another protocol's debt token — a second layer of the same risk shape.
 
-## Governance & contracts
+Aggregating all thirteen active markets by underlying asset, **USDC touches 50.1% of the book**, fxUSD 21.4%, frxUSD 21.1%, reUSD 16.8%, sDOLA 13.8%. Seventeen distinct assets in total. These sum past 100% because each market has two legs and either can impair it.
 
-**Strong audit posture, weak live governance.** USG has four independent audits — Egis, a Sherlock contest (#1073, which surfaced 2 High / 14 Medium valid findings), and two Pashov reviews plus Zerocool — which is above the median for a protocol this young. That's the main positive on the issuer axis.
+## The peg is defended by pools that are already skewed, with no keeper capacity
 
-The offsets are real:
-- **A 3-of-4 multisig with no timelock** controls mint authority, market creation, and the fee treasury (`0x461B…27Ca`; re-verified on-chain June 10, 2026 — threshold 3, 4 owners, unchanged). All four signers are plain EOAs, and one is the protocol deployer, which reduces signer independence. Changes can be made with no delay.
-- **The documented 40M mint cap is not enforced at the contract level** — it's a stated policy, not a coded constraint.
-- **No live DAO yet** — vsTAN governance is not operational.
-- **A latent oracle weakness:** the Sherlock findings clustered on Pendle PT collateral oracle mispricing. No Pendle PT market is live today (all 12 collaterals are Curve LPs), so this risk is dormant — but it's a documented weak spot to watch if PT collateral is ever added.
+USG trades at **$0.99534, a −0.466% discount**. The mechanism meant to close that is the PegKeeper pair, and **its deployable defence capacity is currently $0** — both keepers report `debt() = 0`, meaning no POL-minted USG is outstanding to burn.
 
-## Who it's for · Who should avoid
+Meanwhile the Curve pools they operate in are **73.56% USG on the worst side**, against 50% at balance. A pool that heavy on one asset is one where sellers have already moved through, and the counter-side inventory — **$1,038,555 of USDC and frxUSD** — is LP-owned, not protocol-deployable. It is exit liquidity for USG holders, which matters, but it is not peg defence and should not be counted as such.
 
-**Reasonable for:**
-- DeFi users who want exposure to a crvUSD-style CDP stablecoin and are comfortable with a tiny, early-stage protocol — sized accordingly (small position, exit-in-increments mindset).
-- Borrowers who want to mint a stablecoin against productive stablecoin-LP collateral and understand the 84–90% borrow limits and 20% liquidation fee.
+**No executable depth ladder is quoted for USG at any venue.** Pool TVL is $3.9M, but TVL is not depth, and this report does not treat it as such. The liquidity score of 3.5 reflects observed exit capacity — a single-venue, skewed pool with roughly $1.0M of counter-side inventory — not the headline TVL.
 
-**Avoid / size down if:**
-- You need deep, reliable exit liquidity — the ≈$1.28M keeper-pool depth is the binding constraint, and there's no CEX backstop.
-- You weight governance heavily — a 3-of-4 no-timelock multisig of EOAs with no live DAO and a non-enforced mint cap is a meaningful trust assumption.
-- You want a battle-tested stablecoin — USG is ≈4 weeks old with ≈$3.2M supply and no stress history.
+## Supply reads ten times larger than it is
 
-## What to watch
+`totalSupply()` returns **$44,340,302**. Real circulating supply is **$4,340,566**. The difference is the pre-minted PegKeeper ceiling buffer — a crvUSD inheritance in which the contract mints its own ceiling up front and holds it. Any tool that reads `totalSupply()` on a crvUSD fork and divides will understate the collateral ratio by an order of magnitude. Real supply equals CDP debt exactly; with POL deployment at zero, **100% of circulating USG is CDP-backed**. Staked USG (sUSG) holds $1,064,103, a subset of circulating supply rather than an addition to it.
 
-- **Supply growth and peg.** A move above ≈$5M supply with continued near-par peg over more weeks would be the clearest re-rate signal. Watch the peg on the [live dashboard](https://tidresearch.com/dashboards/?asset=usg) — a sustained drop below ≈$0.995 on this thin liquidity would matter.
-- **Governance upgrade.** Migration to a timelock-gated, higher-quorum multisig (e.g. 4-of-6 + 48h) or a live vsTAN DAO would directly lift the issuer score.
-- **Exotic collateral tail.** The Resupply reUSD legs especially — any depeg there could test the thin liquidation buffers (liquidation thresholds sit only ~1.2–1.5% above the borrow limit). Bad debt is $0 today; watch it.
-- **Oracle integrity.** The dashboard runs an independent NAV cross-check against each market's oracle. Watch for any market flagged as over-valuing its collateral, and for any addition of Pendle PT collateral (the latent oracle weakness).
-- **Keeper-pool depth.** Now ≈$1.28M of counter-side stables. If it shrinks further, exit liquidity degrades.
+## Oracles and paused markets
 
----
+USG prices collateral through per-market oracles, and the dashboard independently recomputes each pool's NAV from its underlying balances to compare against them. **At this reading no market exceeds the 1% divergence threshold: zero divergent markets, with a maximum observed overvaluation of 0.57%.**
 
-*This report describes Tangent USG as of June 10, 2026, based on public Tangent documentation, the project's audits, and on-chain reads (admin Safe and backing composition re-verified June 10, 2026). Tangent Finance has not engaged on this report. USG is an early-stage, small protocol; figures move quickly — the [live dashboard](https://tidresearch.com/dashboards/?asset=usg) carries current values. Corrections welcome at info@tidresearch.com.*
+That is a genuine improvement rather than a quiet one — earlier the same day, two markets were divergent with a maximum overvaluation of 1.11%, the largest in StakeDao's msETH/WETH pool. Divergence at that scale is not alarming in a market carrying 49.87% headroom. It matters because **the same oracle design serves markets with under 2% headroom**, where a 1% overvaluation is most of the remaining buffer. The check is worth watching precisely when it reads clean, because that is when the thin markets are being priced on the same basis as the comfortable ones.
+
+Two of the sixteen markets are paused. Tangent's paused-settings semantics let existing positions persist while new borrowing stops, so **a pause is a freeze rather than a wind-down** — the collateral stays, the exposure stays, and the market can be reopened. Neither paused market carries debt today.
+
+## Issuer
+
+Tangent Finance is a small, pseudonymous-adjacent team with no published reserve attestation — none is needed, since backing is fully on-chain, but there is also no third-party review of the market parameters that decide when liquidations trigger. Admin control over market creation, liquidation thresholds, and oracle assignment is the binding governance surface. The issuer score of 4.0 reflects a protocol whose *data* is unusually transparent and whose *governance* is not.
+
+## How this compares to its parent
+
+USG inherits crvUSD's architecture, and the differences are mostly ones of scale and collateral quality. crvUSD's collateral is majority blue-chip — ETH, WBTC, staked ETH derivatives — priced by an AMM designed to liquidate continuously rather than at a cliff. **USG's collateral is almost entirely other protocols' stablecoin LP tokens.** That trades one risk for another: USG's book is far less exposed to crypto beta, and much more exposed to a single peer stablecoin breaking.
+
+The practical consequence is that USG's failure mode is not a market crash. It is one upstream issuer having a bad week. A 20% ETH drawdown would barely touch this book; a 3% reUSD depeg would put three markets at their thresholds at once.
+
+The second inherited difference is defensive capacity. crvUSD's PegKeepers currently carry substantial debt and therefore substantial burn capacity. **USG's carry none**, which means the peg is being held by market-making and redemption arbitrage rather than by the mechanism the design nominates for it. At a −0.47% discount that is working. It is untested at a wider one.
+
+## What holding USG involves
+
+USG is small — **$4.34M of real supply** — and concentrated in a single Curve venue. That combination sets the practical position size well below what the collateral ratio alone would suggest. A holder large enough to matter to the pool is a holder who cannot exit it quickly, and at 73.56% USG on the worst side, some of that exit has already happened.
+
+The staking wrapper, sUSG, holds $1,064,103 — about 24.5% of supply. Staking does not change the underlying collateral risk; it adds a wrapper layer and a yield source on top of the same book.
+
+## Scores
+
+| axis | score | reasoning |
+|---|---:|---|
+| Peg mechanism | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
+| Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
+| Liquidity | 3.5 | One venue, no quoted depth, ~$1.0M counter-side inventory against $4.34M supply |
+| Issuer | 4.0 | Transparent data, unreviewed parameters, concentrated admin control |
+| **Overall** | **4.0** | |
+
+## What would change this view
+
+**Upward:** liquidation headroom widening across the thin markets rather than through new comfortable ones; PegKeeper debt becoming non-zero, giving real burn capacity; a second liquidity venue; independent review of market parameters.
+
+**Downward:** a reUSD depeg deepening past ~2%, which would put the three reUSD markets at their thresholds simultaneously; pool skew above ~85%; any market entering bad debt, which would show that liquidations are not clearing at these headroom levels.
+
+**The thing to watch is not the collateral ratio.** It is the gap between the aggregate and the thinnest markets. That gap has been widening while the headline stayed flat, and the headline is where most monitoring stops.
+
+*Figures measured 2026-08-27 from on-chain contract reads. Zero bad debt confirmed across all sixteen markets. Live figures on the dashboard linked above.*

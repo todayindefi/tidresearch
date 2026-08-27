@@ -9,20 +9,20 @@ peg_mechanism: "Reserve-backed (fiat-stable basket)"
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-29"
-last_verified: "2026-07-23"
+last_verified: "2026-08-27"
 featured: false
 issuer: "Mento Labs (Germany)"
-market_cap_approx: 15820000
+market_cap_approx: 16575377
 peg_mechanism_score: 7.0
-backing_score: 4.5
+backing_score: 4.0
 liquidity_score: 5.0
 issuer_score: 6.5
-overall_score: 5.0
+overall_score: 4.5
 chain_overrides:
   monad:
     backing_score: 3.0
     liquidity_score: 4.5
-    overall_score: 4.5
+    overall_score: 4.0
   celo:
     backing_score: 6.0
     liquidity_score: 5.5
@@ -31,7 +31,7 @@ chain_overrides:
 
 # USDm — Risk Report
 
-**Moderate-elevated risk · 5.0/10** (4.5/10 on Monad, 6.0/10 on Celo)
+**Moderate-elevated risk · 4.5/10** (4.0/10 on Monad, 6.0/10 on Celo)
 
 **Live data:** [USDm Backing Dashboard](https://tidresearch.com/dashboards/?asset=usdm) — hourly Monad on-chain reserve composition, Monad ReserveV2 coverage, aggregate stable-only coverage, API↔RPC drift, and Celo vs Monad side-by-side. The dashboard now shows on-chain-verified reserve composition and corrected gross/stable-only coverage as primary, cross-checked against Mento's analytics API.
 
@@ -47,7 +47,16 @@ USDm is one of only two Reserve-backed stables in Mento V3 (alongside EURm); eve
 
 Total USDm circulation is now roughly mid-$15M aggregate — about $2M on Monad plus the larger Celo balance (the Celo balance is the rebranded cUSD supply; Mento's Nov 2025 governance proposal changed the cUSD contract's `symbol()` getter to "USDm" without touching the address, supply, or authority chain, so the historical cUSD circulation now sits under the USDm ticker). The asset has no CEX listings and no external DEX depth — it lives almost entirely inside Mento's own oracle-priced FPMM pools.
 
-**The 5.0/10 score reflects a sound design whose backing cushion has weakened:** USDm-on-Monad now sits in the ~40% gross / ~65% ex-POL Reserve-coverage range, so the Monad Reserve no longer fully covers even user-held USDm. USDm-on-Celo draws against the **joint Mento Reserve** that backs every Mento stablecoin; aggregate stable-only coverage has recently slipped just below par into the low-0.90s× range, while gross coverage remains above par because the Reserve includes a volatile CELO + stETH bucket. Users cannot directly redeem USDm to the Reserve, peg defense depends entirely on Chainlink oracles plus keeper-driven rebalancing, and the Monad deployment is governed by a 4-of-7 multisig with **no timelock** while the Celo deployment has a full 2-day Timelock plus Watchdog Veto.
+**The 4.5/10 score reflects a sound design whose backing cushion has weakened, and it was cut on 2026-08-27 by a trigger this coverage set in advance:**
+
+⚠️ **The trigger: this coverage had pre-committed to cutting Backing to 4.0 if stable-only coverage closed below 0.98× again. It did — 0.9122 on 2026-08-25 and 0.9091 on 2026-08-26, against 0.9860 at the last review.** The cut is that condition firing, not a fresh judgement, which is why it is recorded here as a rule being kept rather than an opinion changing.
+
+⚠️ **What moved was the numerator, and it was one chain.** Between the two reads, total backing fell **$20,012,989 → $18,884,604, a drop of $1,128,385 (−5.64%)**, while supply *rose* 0.54% to 16,591,318. **The Ethereum leg alone fell $1,200,803 — 100.9% of the total drop.** Monad's reserve went the other way and rose.
+
+⚠️ **It was stable collateral, not a mark-to-market swing.** Stable-only coverage excludes the CELO and stETH bucket, so a fall in volatile marks would have left this measure flat. It did not. **And the API-versus-on-chain delta held steady at about −$212K across the step, so both sources moved together — this is not a reconciliation artifact.**
+
+⚠️ **Where the $1.2M went is not established, and this report will not imply otherwise.** Redemption, a rebalance into the volatile bucket, and a custody move are all consistent with what can be observed, and the collateral split at the prior read is not in the history available to us. **The movement is measured; the cause is not.** Anyone reading this as confirmed redemptions is reading something the data does not say.
+ USDm-on-Monad now sits in the ~40% gross / ~65% ex-POL Reserve-coverage range, so the Monad Reserve no longer fully covers even user-held USDm. USDm-on-Celo draws against the **joint Mento Reserve** that backs every Mento stablecoin; aggregate stable-only coverage has recently slipped just below par into the low-0.90s× range, while gross coverage remains above par because the Reserve includes a volatile CELO + stETH bucket. Users cannot directly redeem USDm to the Reserve, peg defense depends entirely on Chainlink oracles plus keeper-driven rebalancing, and the Monad deployment is governed by a 4-of-7 multisig with **no timelock** while the Celo deployment has a full 2-day Timelock plus Watchdog Veto.
 
 ## What you actually earn
 
@@ -66,6 +75,8 @@ Backing splits cleanly **per chain**, and is not symmetric:
 
 - **USDm-on-Monad** has chain-local USD-stable Reserve backing — USDC + AUSD + USDT0, no volatile exposure. Its current issue is not crypto collateral, but too little local Reserve versus retail-circulating USDm and a reserve mix now anchored by AUSD rather than USDC (see Monad table below).
 - **USDm-on-Celo** draws against the **aggregate Mento Reserve** that backs every Mento stablecoin. That Reserve currently holds fiat-stable assets (USD + EUR stables) **plus a volatile CELO + stETH bucket** that is now roughly one-fifth of the Reserve. The fiat-stable portion alone has recently slipped just below full coverage of user-circulating Mento stablecoin debt; including the volatile collateral, gross coverage remains above par. Volatile-bucket value moves with crypto markets, so the **stable-only** read is the conservative one and is what the live dashboard surfaces.
+
+⚠️ **And the Celo leg carries a chain override of 6.0 on Backing that this pass did not re-derive, which is worth stating rather than leaving implied.** Celo USDm draws on the **joint Mento Reserve — the same reserve that lost $1,128,385 on 2026-08-27.** **Whatever weakened the aggregate weakened the pool Celo depends on**, so the case for Celo's Backing sitting two full points above the headline is weaker today than when that override was set. **It is carried unchanged because re-scoring Celo was not the decision this pass, not because it survived scrutiny** — treat 6.0 as the least-supported number on this page and expect it to be re-derived.
 
 A note on Celo-side contract continuity: USDm-on-Celo lives at the same address that previously issued cUSD; Mento's Nov 2025 governance proposal changed only the token's `symbol()` getter from "cUSD" to "USDm", leaving the supply, authority, and Reserve registration unchanged. For backing purposes, USDm-on-Celo and the historical cUSD supply are the same liability against the same Reserve.
 
@@ -180,10 +191,10 @@ Six structural weaknesses combine to put USDm meaningfully below USDC/AUSD/USDT 
 | Category | Score | Notes |
 |---|---|---|
 | Peg Mechanism | 7.0 | Reserve-backed fiat-stable basket is sound; oracle-priced FPMM holds peg at oracle rate; but no atomic user redemption, single-source Chainlink dependence. |
-| Backing | 4.5 (Monad: 3.0, Celo: 6.0) | **Aggregate Mento Reserve covers all Mento stablecoins** (USDm + EURm + FX synthetics) at roughly **~1.16× gross / low-0.90s× stable-only** against debt, with the exact current value on the live dashboard. Stable-only coverage is the load-bearing fiat-comparable measure and has recently slipped below par; gross coverage remains above par because it includes a volatile CELO + stETH bucket now around one-fifth of the Reserve. **Monad:** coverage is now in the ~40% gross / ~65% ex-POL range, and retail-held USDm exceeds the Monad Reserve. Monad reserve composition also inverted to majority Tier-2 AUSD, with roughly one-fifth Circle USDC and one-fifth USDT0. On-chain audit confirms the V3 CDP infrastructure is not yet deployed on Monad; Wormhole NTT also not yet operational. |
+| Backing | 4.0 (Monad: 3.0, Celo: 6.0) | **Aggregate Mento Reserve covers all Mento stablecoins** (USDm + EURm + FX synthetics) at **1.1382× gross against USDm supply / about 0.91× stable-only**, measured 2026-08-27. ⚠️ **Watch the denominator: the dashboard's headline `collateral_ratio` of 1.2237 divides the reserve by *all* Mento stablecoin debt ($15.43M), not by USDm supply ($16.58M).** Reserve-to-USDm-supply is **1.1388×** — the two differ by about 8.5pp and are not interchangeable. Figures below are against USDm supply unless stated, with the exact current value on the live dashboard. Stable-only coverage is the load-bearing fiat-comparable measure and has recently slipped below par; gross coverage remains above par because it includes a volatile CELO + stETH bucket now around one-fifth of the Reserve. **Monad:** coverage is now in the ~40% gross / ~65% ex-POL range, and retail-held USDm exceeds the Monad Reserve. Monad reserve composition also inverted to majority Tier-2 AUSD, with roughly one-fifth Circle USDC and one-fifth USDT0. On-chain audit confirms the V3 CDP infrastructure is not yet deployed on Monad; Wormhole NTT also not yet operational. |
 | Liquidity | 5.0 (Monad: 4.5, Celo: 5.5) | FPMM-only exit, no CEX, no external DEX. Monad pools thinnest; USDC/USDm TVL is roughly $0.5M, incentivized, and currently lightly traded despite near-par quotes. |
 | Issuer | 6.5 | Doxxed Mento Labs + cLabs lineage + 6-year clean V1/V2 track record. Strong audit roster (ChainSecurity, Macro, Sherlock, Hats). Docked for Monad bare 4-of-7 Safe admin model. |
-| **Overall** | **5.0** (Monad: 4.5, Celo: 6.0) | **Above-average risk for a fiat-backed stablecoin** — meaningfully below USDC (9.0), AUSD (7.5), USDT (7.5). The fundamental design is sound and the on-chain peg remains at par, but backing has deteriorated: aggregate stable-only coverage is below par, Monad coverage no longer covers retail-held USDm, and Monad's reserve quality is now majority Tier-2 AUSD rather than Circle USDC. Those factors sit on top of the existing structural weaknesses: no user-direct redemption, oracle-driven peg with single-source dependence, seed/bootstrap-stage Monad deployment, Wormhole NTT announced-not-operational, and bare 4-of-7 Safe admin without timelock. Usable for small positions during the bootstrap phase but not a USDC-substitute. |
+| **Overall** | **4.5** (Monad: 4.0, Celo: 6.0) | **Above-average risk for a fiat-backed stablecoin** — meaningfully below USDC (9.0), AUSD (7.5), USDT (7.5). The fundamental design is sound and the on-chain peg remains at par, but backing has deteriorated: aggregate stable-only coverage is below par, Monad coverage no longer covers retail-held USDm, and Monad's reserve quality is now majority Tier-2 AUSD rather than Circle USDC. Those factors sit on top of the existing structural weaknesses: no user-direct redemption, oracle-driven peg with single-source dependence, seed/bootstrap-stage Monad deployment, Wormhole NTT announced-not-operational, and bare 4-of-7 Safe admin without timelock. Usable for small positions during the bootstrap phase but not a USDC-substitute. |
 
 ## Bottom line
 
@@ -203,6 +214,8 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 *Updated 2026-05-18: corrections applied per a full on-chain authority and supply audit. The V3 CDP system and Wormhole NTT cross-chain backing are both announced-not-operational on Monad as of report date. Scores adjusted accordingly (overall 6.0 → 5.5; Monad 5.5 → 5.0).*
 
 *Updated 2026-05-19: POL-aware coverage. The 18.5% Monad gross "gap" is Protocol-Owned Liquidity in Mento-controlled FPMM pools, not operational under-collateralization. Ex-POL coverage is ~272% on Monad / ~1.35× aggregate. Scores unchanged — the 5.0 backing score is binding on structural factors (no atomic redemption, single-oracle, seed-stage, third-party credit pass-through), not on coverage shortfall.*
+
+*Updated 2026-08-27: **Backing 4.5 → 4.0, Overall 5.0 → 4.5, Monad Overall 4.5 → 4.0. A pre-committed trigger firing, not a re-judgement** — this coverage had stated it would cut to 4.0 if stable-only coverage closed below 0.98× again, and it closed 0.9122 and 0.9091 on 08-25 and 08-26 against 0.9860 at the last review. ⚠️ **Total backing fell $1,128,385 (−5.64%) while supply rose 0.54%, and the Ethereum leg alone accounts for 100.9% of the drop.** It was stable collateral rather than a mark-to-market swing — stable-only excludes the volatile bucket — and the API-versus-on-chain delta held steady at about −$212K across the step, so both sources moved together and it is not a reconciliation artifact. ⚠️ **Where the money went is NOT established: redemption, rebalance into the volatile bucket and a custody move are all consistent with what is observable, and the prior collateral split is not in the available history. The movement is measured; the cause is not.** ⚠️ **Also corrected, and it matters more than the prose: the dashboard's headline `collateral_ratio` of 1.2237 is not USDm's ratio** — it divides the reserve by *all* Mento stablecoin debt ($15.43M) rather than USDm supply ($16.58M). **Reserve-to-USDm-supply is 1.1388×, about 8.5pp lower**, and the report previously carried ~1.16× without saying which denominator it used. Both figures are published by the dashboard; only one answers "how well is USDm covered". **Monad's Backing is deliberately held at 3.0:** its own coverage improved across the step (0.6064 → 0.6157) and its reserve rose, so cutting it would attribute Ethereum's deterioration to the wrong chain. Its Overall moves because the aggregate it partly depends on weakened. **Celo's Backing override of 6.0 is carried unchanged and flagged as the least-supported number on the page** — Celo draws on the joint Reserve that lost the $1.2M, so the case for it sitting two points above the headline is weaker than when it was set. It was not re-derived this pass.*
 
 *Updated 2026-05-29: Reserve composition re-verified on-chain via direct RPC reads (Celo + Ethereum + Monad). **Stable-only coverage framing added alongside gross coverage** to reflect the volatile-bucket question raised by readers — the joint Mento Reserve covers all-stablecoin debt at ~1.21× gross / ~1.01× stable-only / ~0.80× against gross supply ($14.36M USD-stable + $3.05M EUR-stable + $3.40M Volatile + $0 Other against ~$17.2M aggregate stablecoin debt / ~$26M gross supply). **Corrected** the prior "USDm insulated from CELO volatility" framing — that applies to USDm-on-Monad only; USDm-on-Celo shares the joint Reserve which includes ~$3.4M of CELO + stETH (~16% of Reserve). **Also corrected** the V1/V3-mechanism framing in Track Record: USDm-on-Celo IS the rebranded cUSD contract (Nov 2025 `symbol()` change), so the 6-year cUSD V1/V2 track record at the same address generalizes directly. **Supply figures also corrected** as a downstream consequence of the cUSD-rebrand finding: the prior published USDm-on-Celo figure (~$0.8M) was the small fresh V3-USDm contract from before the rebrand; post-rebrand the Celo USDm balance is the rebranded cUSD supply (~$16.0M), making aggregate USDm circulation ~$17.65M rather than ~$2.5M. Scores unchanged — the 5.0 backing remains binding on structural factors, and the corrected coverage framing is tighter than the prior "1.35× ex-POL" claim but doesn't change the structural read.*
 
