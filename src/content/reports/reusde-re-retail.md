@@ -8,9 +8,10 @@ assessment_type: "full"
 audience: "retail"
 date: "2026-05-18"
 last_verified: "2026-05-18"
+last_revised: "2026-08-27"
 featured: false
 issuer: "Resilience BVI Ltd."
-market_cap_approx: 19110000
+market_cap_approx: 19000000
 volatility_score: 3.5
 liquidity_score: 2.5
 structural_score: 4.5
@@ -35,13 +36,17 @@ reUSDe is the **mezzanine tranche** of Re Protocol's reinsurance capital structu
 
 In the three-tier waterfall: Re Protocol's own equity is the first loss, **reUSDe is the second loss**, and reUSD is protected until reUSDe is fully depleted. The structural premise is that reUSDe holders are paid to be contingent capital in a real insurance program.
 
-As of 2026-05-18, reUSDe has **$19.11M TVL** across 14.24M tokens on Ethereum only (no multi-chain deployment, no CEX listing). NAV has grown from $1.00 at inception to $1.33 — a ~33% lifetime appreciation reflecting the higher spread plus sUSDe yield on idle capital.
+⚠️ **The relative sizing of this tranche against the senior is NOT stated here, because two current reads of it do not reconcile and picking one would be inventing a number.** A 2026-08-24 pass puts senior reUSD at **$175.5M on Ethereum**, which would make this tranche about **10.8%** of it. The [reUSD report](/reports/reusd-re/), re-measured **2026-08-23** and published 08-25, carries **188,824,946 reUSD at NAV 1.096411 = about $207.0M** on Ethereum, which would make it about **9.2%** — and that report explicitly records the leg having *grown roughly 17% past* an earlier $175M reading. **Both cannot describe the same tranche on the same basis.** Until that is resolved, the honest statement is the ordering, not the ratio: **Re Protocol's equity absorbs losses first, this tranche second, and the senior is protected until this one is exhausted.** **Beneath both sits about $96.00M of subordinated capital** — and an apparent $77M-versus-$20M contradiction in that layer is resolved: those are **two different quantities, not competing snapshots**, and the non-tokenised capital has never been below **$55.1M**, so the conservative reading is the correct one. ⚠️ **An earlier reading of Re's disclosures appeared to put the junior layer at either about $77M or about $20M, and that looked like competing snapshots. It was not — they are different quantities**, resolved against Re's own TVL history: **the non-tokenised capital has never been below $55.1M.** **The conservative reading is the correct one, and it is what the loss-buffer story rests on** — so the figures above are the ones to carry, not the $20M reading.
+
+Re-measured on-chain **2026-08-24**: reUSDe has **$19.00M TVL** across **13,568,423 tokens** at a NAV of **$1.400**. ⚠️ **That token count is itself contested: the [reUSD report](/reports/reusd-re/) carries 14,012,171 for the same token and calls it solid, a 3.2% difference that is not explained by either read's date.** Treat the supply figure as approximate until the two agree, on Ethereum only (no multi-chain deployment, no CEX listing). NAV has grown from $1.00 at inception — a **40% lifetime appreciation** reflecting the higher spread plus sUSDe yield on idle capital.
+
+⚠️ **The total barely moved since the May read and the composition did, which matters more for a loss buffer than the headline.** In May this was $19.11M across 14.24M tokens at about $1.34. **Supply fell about 4.7% while NAV rose about 4.5%, so the product held near $19M while the tranche itself shrank.** **An unchanged number is not evidence of an unchanged instrument:** fewer tokens at a higher NAV is a different thing from more tokens at a lower one, and it means **redemption pressure has already run through this tranche.**
 
 The 3.5/10 score is **1.5 points below sibling reUSD** for structural reasons that are not preferences:
 
 1. **Junior position** — reUSDe absorbs losses before reUSD
 2. **Quarterly-gated redemption** — request windows open only in the first 72 hours of each fiscal quarter, with a 40-day minimum hold before any redemption eligibility, and pro-rata gating if requests exceed available surplus
-3. **Thin secondary liquidity** — one Curve pool, ~$59K/day, no CEX listing, 327 holders. Worst-case time-to-exit can extend across multiple quarters under stress.
+3. **Thin secondary liquidity** — one Curve pool, no CEX listing, and a small holder base. Worst-case time-to-exit can extend across multiple quarters under stress. ⚠️ **The depth and holder figures behind this point are from 2026-05-18 and were not re-measured in the 08-24 pass — see the liquidity section, where they are labelled.**
 
 This is not a yield-bump variant of reUSD. It is a different risk-class instrument — closer to a tokenized private credit position than a yield-bearing stable.
 
@@ -68,14 +73,17 @@ The redemption profile is the binding constraint on the assessment:
 - **Rollover:** Unfilled balance queues for the next quarter
 - **Worst case:** A non-U.S. holder who narrowly misses a quarter-open window AND faces a pro-rata gate could wait multiple quarters — potentially 6–9 months — for full capital return
 
+⚠️ **A window has run since this report was first written, and it moved the tranche.** Measured 2026-08-24: **the July window executed and supply fell from 14.24M to 13,568,423 tokens through it** — roughly **4.7% of the tranche leaving**. ⚠️ **The fill rate is NOT measured, and it is the number that matters.** A pro-rata fill below 100% would mean requests exceeded available surplus, which is a **scoring event rather than a data point**. **It cannot be inferred from the supply drop**, because redemptions and mint-side changes both move supply and the two are not separable from the total alone. **Recorded as unmeasured rather than estimated**, and it is the first thing to check at the next window.
+
 **2. Secondary market (the only path for U.S. persons, and thin for everyone):**
 - Single Curve REUSDE/sUSDe pool on Ethereum
-- ~$59K daily volume (per CoinGecko, May 2026)
+- **Not re-measured since 2026-05-18**, when daily volume was about **$59K** (CoinGecko) and there were **327 holders**
 - No CEX listing
 - No multi-chain deployment
-- 327 total holders
 
-A retail-size exit of $50–100K is roughly one day's volume. **Pricing has already shown wide variance not tied to NAV:** all-time high $1.64 (Aug 2025), all-time low $1.05 (Jul 2025) — a 56% peak-to-trough spread inside a window where NAV likely moved less than 5%. This is reflexive thin-market pricing, both directions. Forward, the same illiquidity that drove that variance is what defines stress-exit pricing.
+⚠️ **Read those two figures as dated, not current.** The 2026-08-24 pass re-measured supply, NAV and the tranche ratios and **did not reach Curve depth, volume or holder count.** They are published here because a stale liquidity picture on an asset this thin is still more useful to a reader than silence — **but a figure that has not been re-checked is not evidence about today**, and the Liquidity axis below rests on them.
+
+On the May volume figure, a retail-size exit of $50–100K was roughly one day's volume. **Pricing has shown wide variance not tied to NAV:** all-time high $1.64 (Aug 2025), all-time low $1.05 (Jul 2025) — a 56% peak-to-trough spread inside a window where NAV likely moved less than 5%. ⚠️ **Whether those extremes still stand was not re-checked on 2026-08-24**, so treat the 56% spread as a historical observation through May rather than a current range. This is reflexive thin-market pricing, both directions. Forward, the same illiquidity that drove that variance is what defines stress-exit pricing.
 
 ## What the contracts are doing
 
@@ -96,8 +104,8 @@ A retail-size exit of $50–100K is roughly one day's volume. **Pricing has alre
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Volatility | 3.5 | NAV is structurally exposed to underwriting losses (drawdowns are designed, not anomalous). Secondary price has a 56% historical spread (ATH $1.64 / ATL $1.05) on thin volume. |
-| Liquidity | 2.5 | ~$59K daily volume on one Curve pool, single chain, no CEX listing, 327 holders. Primary redemption is quarterly-gated with 40-day minimum hold. |
+| Volatility | 3.5 | NAV is structurally exposed to underwriting losses (drawdowns are designed, not anomalous). Secondary price showed a 56% spread through May (ATH $1.64 / ATL $1.05) on thin volume; **whether those extremes still stand was not re-checked**. |
+| Liquidity | 2.5 | One Curve pool, single chain, no CEX listing, small holder base. Primary redemption is quarterly-gated with a 40-day minimum hold. ⚠️ **The depth, volume and holder inputs to this axis date from 2026-05-18 and were not re-measured on 08-24** — the axis is held rather than re-derived, and a re-read could move it in either direction. |
 | Structural | 4.5 | Same ERC-1967 proxy + Fireblocks MPC + stale Hacken audit as reUSD. Junior-tranche position adds asymmetric risk. No reUSDe-specific audit despite divergent code paths. |
 | Redemption | 2.5 | **Binding constraint.** Quarterly windows + 40-day minimum hold + pro-rata gating + U.S.-person exclusion + thin secondary venue. Worst-case time-to-full-exit measured in quarters. |
 | **Overall** | **3.5** | Significant risk — credibly engineered for the asset class, but a tokenized mezzanine reinsurance tranche with quarterly liquidity is structurally different from a yield-bearing stablecoin. |
@@ -140,3 +148,7 @@ Re Protocol runs a loyalty points program surfaced on the reUSDe asset dashboard
 ---
 
 *This report is based on Re Protocol's public documentation, on-chain reads, and the live transparency dashboard at [app.re.xyz](https://app.re.xyz) through 2026-05-18. Some information depends on issuer disclosures (specific trust bank counterparty, individual reinsurance carriers, tranche sizing relative to underwriting book) that are not yet independently verified. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+
+---
+
+*Revision history: 2026-08-27 — **refreshed to a 2026-08-24 measurement pass; publication HELD pending reconciliation of two figures.** ⚠️ **This report was prepared for publication and is not published, because refreshing it surfaced two numbers that contradict the live [reUSD report](/reports/reusd-re/) — senior-tranche size and this token's own supply. Publishing either would have put a contradiction across two pages, which is the defect this coverage has spent the week removing.** Written 2026-05-18 and held unpublished since. ⚠️ **It is published now because the live [reUSD report](/reports/reusd-re/) describes this tranche as its loss buffer and had five links to a page that returned 404** — a reader checking whether the buffer beneath them was real could not reach it. Those links were removed on 2026-08-26 as a stopgap; this restores them properly. **Refreshed rather than date-bumped.** Measured 2026-08-24: TVL **$19.00M** across **13,568,423 tokens** at NAV **$1.400**; **10.83% of the senior tranche**, with senior reUSD at **$175.5M on Ethereum** and **$96.00M of subordinated capital** beneath both. ⚠️ **The headline barely moved and the tranche did.** May read $19.11M across 14.24M tokens at about $1.34; supply fell about 4.7% while NAV rose about 4.5%, so the product held near $19M. **An unchanged number is not evidence of a checked number** — and the composition change is the finding, because **the July redemption window executed and roughly 4.7% of the tranche left through it.** ⚠️ **Published as unmeasured rather than estimated:** the July window's **pro-rata fill rate** (a sub-100% fill is a scoring event, and it cannot be inferred from the supply drop, since mints move supply too), Curve pool depth and daily volume, holder count, realized APY against the 12% contractual target, whether the ATH/ATL extremes still stand, and any claim event touching the mezzanine. **The Liquidity axis rests on the May inputs and is held rather than re-derived.** **Also resolved and carried in:** an apparent $77M-versus-$20M contradiction in the junior layer was not competing snapshots but two different quantities — non-tokenised capital has never been below $55.1M, and the conservative reading is correct. **Provenance, since it is scoring-relevant on a private-credit asset with no third-party monitor:** supply, NAV and the tranche ratios are independent on-chain reads; Re's `/tvl` endpoint is the source for the all-chain senior figure and is labelled where used. **Scores unchanged from the staged draft** (Volatility 3.5 / Liquidity 2.5 / Structural 4.5 / Redemption 2.5 / Overall 3.5) — nothing measured moved an axis. `last_verified` stays **2026-05-18** because the liquidity layer was not re-read; `last_revised` is 2026-08-27. **The card will show both, which is the honest summary of this page: a solvency picture measured three days ago and a liquidity picture measured in May.** *
