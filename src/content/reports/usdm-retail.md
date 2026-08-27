@@ -11,6 +11,7 @@ audience: "retail"
 date: "2026-05-29"
 last_verified: "2026-08-27"
 featured: false
+production: true
 issuer: "Mento Labs (Germany)"
 market_cap_approx: 16575377
 peg_mechanism_score: 7.0

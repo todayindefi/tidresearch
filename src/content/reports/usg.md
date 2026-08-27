@@ -18,7 +18,7 @@ issuer: "Tangent Finance"
 audited_reserves: false
 market_cap_approx: 4340566
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usg"
-production: false
+production: true
 ---
 
 # USG — Asset Risk Assessment (Light)
