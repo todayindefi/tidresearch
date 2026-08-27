@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReportsFilter from "@/components/islands/ReportsFilter.tsx";
 import { getCollection } from "astro:content";
 import { chainLabel } from "@/lib/chains";
+import { assetHasDashboard, isDependency } from "@/lib/dashboards";
 import { sectionEnabled, visibleAtCurrentStage } from "@/lib/stage";
 
 const all = await getCollection("reports");
@@ -19,6 +20,8 @@ const rows = all
     chains: r.data.chains,
     chain_labels: Array.from(new Set(r.data.chains.map(chainLabel))),
     overall_score: r.data.overall_score,
+    has_dashboard: assetHasDashboard(r.data),
+    is_dependency: isDependency(r.data),
     last_verified: new Date(r.data.last_verified).toISOString().slice(0, 10),
     last_revised: r.data.last_revised
       ? new Date(r.data.last_revised).toISOString().slice(0, 10)

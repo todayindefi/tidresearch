@@ -12,6 +12,10 @@ export interface ReportRow {
   last_verified: string;
   last_revised?: string;
   featured?: boolean;
+  /** a live backing dashboard exists for this ASSET (see src/lib/dashboards.ts) */
+  has_dashboard?: boolean;
+  /** covers a company or security an asset depends on, not a holdable token */
+  is_dependency?: boolean;
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -54,6 +58,7 @@ export default function ReportsFilter({
   const [chain, setChain] = useState<string>("all");
   const [band, setBand] = useState<string>("any");
   const [q, setQ] = useState<string>("");
+  const [monitoredOnly, setMonitoredOnly] = useState<boolean>(false);
 
   const allCategories = useMemo(
     () => Array.from(new Set(reports.map((r) => r.category))).sort(),
@@ -71,10 +76,11 @@ export default function ReportsFilter({
       if (category !== "all" && r.category !== category) return false;
       if (chain !== "all" && !r.chain_labels.includes(chain)) return false;
       if (!bandFn(r.overall_score)) return false;
+      if (monitoredOnly && !r.has_dashboard) return false;
       if (qq && !r.asset.toLowerCase().includes(qq)) return false;
       return true;
     });
-  }, [reports, category, chain, band, q]);
+  }, [reports, category, chain, band, q, monitoredOnly]);
 
   const selectClass =
     "bg-card border border-border focus:border-primary px-3 py-2 outline-none text-sm font-mono";
@@ -117,6 +123,18 @@ export default function ReportsFilter({
           ))}
         </select>
       </div>
+      <label className="flex items-center gap-2 mb-5 text-xs font-mono text-muted-foreground cursor-pointer select-none">
+        <input
+          type="checkbox"
+          checked={monitoredOnly}
+          onChange={(e) => setMonitoredOnly(e.target.checked)}
+          className="accent-primary"
+        />
+        Only assets with a live dashboard
+        <span className="opacity-60">
+          ({reports.filter((r) => r.has_dashboard).length} of {reports.length})
+        </span>
+      </label>
 
       <p className="text-xs text-muted-foreground font-mono mb-6">
         {filtered.length} of {reports.length} report{reports.length === 1 ? "" : "s"} · score 1–10 (higher = safer)
@@ -173,6 +191,22 @@ export default function ReportsFilter({
                 </span>
               </div>
               <div className="flex flex-wrap gap-1 mb-3">
+                {r.is_dependency && (
+                  <span
+                    title="Covers a company or security an asset depends on — not a token you can hold"
+                    className="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border border-amber-500/45 text-amber-400"
+                  >
+                    Dependency
+                  </span>
+                )}
+                {r.has_dashboard && (
+                  <span
+                    title="A live backing dashboard exists for this asset"
+                    className="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border border-primary/45 text-primary"
+                  >
+                    Live dashboard
+                  </span>
+                )}
                 {r.chain_labels.map((c) => (
                   <span
                     key={c}

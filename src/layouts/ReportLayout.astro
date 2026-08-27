@@ -1,4 +1,5 @@
 ---
+import { isDependency, DEPENDENCY_NOTE } from "@/lib/dashboards";
 import BaseLayout from "./BaseLayout.astro";
 import RiskSidebar from "@/components/report/RiskSidebar.astro";
 import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
@@ -23,6 +24,10 @@ interface Props {
 }
 
 const { data, hasDashboard = false, headings = [], dashboardUrl } = Astro.props;
+// Rendered in BOTH layout branches: retail reports do not render ScoreHero at
+// all (only institutional and protocol do), so putting it there would show the
+// badge on some reports and silently omit it on others.
+const dependency = isDependency(data);
 const reportName = data.protocol ?? data.asset;
 const isProtocol = data.category === "protocol";
 const collectionPath = isProtocol ? "/protocols" : "/reports";
@@ -71,6 +76,14 @@ const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
           {showTrustDisclaimer && (
             <TrustDisclaimer dashboardUrl={dashboardUrl} />
           )}
+          {dependency && (
+            <div class="mb-8 border-l-2 border-amber-500/60 pl-4">
+              <span class="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border border-amber-500/45 text-amber-400">
+                Dependency
+              </span>
+              <p class="text-muted-foreground text-sm mt-2 max-w-2xl">{DEPENDENCY_NOTE}</p>
+            </div>
+          )}
           <ScoreHero data={data} />
           <div class="prose-report prose-institutional" data-collapsible-root>
             <slot />
@@ -106,6 +119,14 @@ const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
         <div class="min-w-0">
           {showTrustDisclaimer && (
             <TrustDisclaimer dashboardUrl={dashboardUrl} />
+          )}
+          {dependency && (
+            <div class="mb-8 border-l-2 border-amber-500/60 pl-4">
+              <span class="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border border-amber-500/45 text-amber-400">
+                Dependency
+              </span>
+              <p class="text-muted-foreground text-sm mt-2 max-w-2xl">{DEPENDENCY_NOTE}</p>
+            </div>
           )}
           {isProtocol && <ScoreHero data={data} />}
           <div class="prose-report">

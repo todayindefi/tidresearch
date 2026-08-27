@@ -20,47 +20,16 @@ const { Content, headings } = await render(entry);
 // thBILL has its own standalone dashboard repo referenced via the
 // report's live_dashboard_url frontmatter field. Only the institutional
 // thBILL page shows the dashboard; the retail summary stays clean.
-// DELIBERATE OMISSION — "strc" is not in this set, and must not be added.
-// It is listed in allDashboards (dashboards/index.astro) and has a live
-// renderer, so the two allowlists disagree on purpose. This set gates the
-// in-page dashboard EMBED; live_dashboard_url gates the link, and strc.md
-// sets that explicitly, so the STRC report still links through.
-// The STRC report covers the preferred stock, where only about a quarter of
-// the exposure is measurable on-chain. Embedding an on-chain backing
-// dashboard there would imply coverage the report explicitly says it does
-// not have. Its STRCx sibling embeds because its subject IS the on-chain
-// token. Confirmed by the site owner 2026-08-26: keep STRC link-only.
-const DASHBOARD_SLUGS = new Set([
-  "crvusd",
-  "usdd",
-  "ousd",
-  "thusd",
-  "thbill-full",
-  "syrupusdc",
-  "syrupusdt",
-  "hastra-prime",
-  "apxusd",
-  "apyusd",
-  "usdat",
-  "susdat",
-  "strcx",
-  "mstr",
-  "bmnr",
-  "usde",
-  "susde",
-  "usdai",
-  "susdai",
-]);
-const hasDashboard = DASHBOARD_SLUGS.has(entry.data.slug);
+import {
+  hasDashboardEmbed,
+  dashboardUrlFor,
+} from "@/lib/dashboards";
 
-// Single source of truth for the dashboard *link* surfaces (sidebar button, bottom CTA,
-// trust disclaimer): an explicit live_dashboard_url wins (e.g. thBILL's standalone
-// dashboard); otherwise any slug in DASHBOARD_SLUGS falls back to its internal
-// backing-monitor view. This keeps the link present on every dashboard-enabled report —
-// including syrup, which is in DASHBOARD_SLUGS but has no live_dashboard_url frontmatter.
-const dashboardUrl =
-  entry.data.live_dashboard_url ??
-  (hasDashboard ? `/dashboards/?asset=${entry.data.slug}` : undefined);
+// Dashboard membership and URL derivation now live in src/lib/dashboards.ts,
+// so the reports index can answer "which assets do we monitor" from the same
+// definition. The retail/-full asymmetries there are deliberate; see that file.
+const hasDashboard = hasDashboardEmbed(entry.data.slug);
+const dashboardUrl = dashboardUrlFor(entry.data);
 ---
 
 <ReportLayout data={entry.data} hasDashboard={hasDashboard} headings={headings} dashboardUrl={dashboardUrl}>
