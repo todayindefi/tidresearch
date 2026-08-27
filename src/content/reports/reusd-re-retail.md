@@ -8,6 +8,7 @@ assessment_type: "full"
 audience: "retail"
 date: "2026-05-19"
 last_verified: "2026-08-25"
+last_revised: "2026-08-27"
 featured: false
 production: true
 issuer: "Resilience BVI Ltd."
