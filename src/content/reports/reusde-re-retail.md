@@ -25,6 +25,8 @@ live_dashboard_url: "https://app.re.xyz/reusde"
 
 **Significant risk · 3.5/10**
 
+> ⚠️ **What is current and what is not, because this page carries two dates.** Everything numeric was measured on **2026-08-27**: supply, NAV, TVL, chain footprint, Curve depth and volume, the exit ladder, price-versus-NAV, APY, holder count, and the July redemption window. **The structural material — contract architecture, audit posture, custody, and the redemption mechanics themselves — still dates from 2026-05-18 and was not re-read.** That is why the card shows *revised 2026-08-27, verified through 2026-05-18*: **the figures are today's; the description of how the thing works is May's.**
+
 > **Issuer-published dashboard:** [app.re.xyz/reusde](https://app.re.xyz/reusde) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, historical charts, capital tranching diagram, and Chainlink Proof of Reserves links. It is the canonical source for live metrics on this asset. tidresearch does not currently run an independent dashboard for reUSDe.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
