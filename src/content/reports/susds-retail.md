@@ -8,6 +8,7 @@ underlying_assets: ["USDS"]
 assessment_type: "full"
 audience: "retail"
 production: true
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susds"
 date: "2026-05-27"
 last_verified: "2026-08-25"
 featured: false
@@ -25,6 +26,8 @@ overall_score: 7.5
 # sUSDS — Risk Report
 
 **Moderate-low risk · 7.5/10**
+
+**Live data:** [sUSDS Backing Dashboard](https://tidresearch.com/dashboards/?asset=susds) — hourly peg, liquidity depth, NAV accrual, and sUSDS/USDS coverage from two independent reads, with the dependency chain through to [USDS](/reports/usds/) shown alongside. **The collateral look-through behind that USDS layer is on its dashboard** — this report covers the wrapper; what ultimately backs it sits one link upstream.
 
 > **The permissionless one.** Of the on-chain ways to earn a Treasury-style yield on dollars, sUSDS is the one with no KYC, no geographic gate, no minimum, and no lockup — anyone can hold, transfer, and redeem it instantly. That accessibility, deep liquidity, and a battle-tested codebase are what make it the most usable option in its category. Two caveats keep it from scoring higher: the USDS dollar it's built on is upgradeable (with a freeze function Sky could switch on by governance vote), and about a third of USDS's backing is USDC, so sUSDS carries real USDC depeg correlation. Its score is now set **equal to** the [USDS](/reports/usds/) dollar it wraps, not above it — see the note below.
 

@@ -8,6 +8,7 @@ peg_mechanism: "Hybrid (USDC PSM + DAI parity + crypto/RWA CDP)"
 assessment_type: "full"
 audience: "retail"
 production: true
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usds"
 date: "2026-05-27"
 last_verified: "2026-08-25"
 featured: false
@@ -23,6 +24,8 @@ overall_score: 7.5
 # USDS — Risk Report
 
 **Moderate-low risk · 7.5/10**
+
+**Live data:** [USDS Backing Dashboard](https://tidresearch.com/dashboards/?asset=usds) — hourly peg, liquidity depth, issuer and dependency reads, and **the collateral look-through behind the reserve** (USDC, JTRSY, BUIDL, cbBTC, wstETH, JAAA, PYUSD and the rest, each as a share). ⚠️ **That breakdown answers "what actually backs this" and exists nowhere else** — this report describes the mechanism; the dashboard shows the current composition.
 
 > **The DAI successor, with one asterisk.** USDS is Sky's flagship dollar — Sky is the rebranded MakerDAO, the team behind DAI — and it converts 1:1 with DAI in both directions. It's deeply liquid, overcollateralized, on-chain transparent, and built on a codebase that has run since 2017. Two things keep it below a top-tier score: about a third of its backing is USDC, so it carries genuine USDC depeg correlation; and unlike DAI, USDS is an *upgradeable* contract — Sky governance could add an address-freeze function by vote (it hasn't, and none is live today). If you want an unfreezable dollar, you can convert USDS to DAI 1:1 at any time.
 
