@@ -77,6 +77,16 @@ margin: 0 wei
 
 ⚠️ **The lockbox and the mirrors are equal to the wei — margin exactly zero, not merely close.** That is worth more than a comfortable surplus would be: it shows the lockbox backs **precisely** what is mirrored, **and it shows this chain list is complete, because a single missing satellite would break the equality.** **The legs above are rounded for reading; the equality is on the unrounded integers.**
 
+⚠️ **The exit constraint is getting out of syzUSD on Monad, and it is sharper than the underlying's.** Measured live on the Surge syzUSD/wnAUSD pool:
+
+```
+$1k      −2.52 bps
+$25k    −65.36 bps      <- already 23% of a $108K pool
+$50k   −528.49 bps
+```
+
+**The fee rises off-balance, so cost accelerates rather than scales.** ⚠️ **By contrast the Plasma leg of the underlying clears $250,000 inside 13 bps** — so the deep-exit bottleneck is **this wrapper on Monad, not [yzUSD](/reports/yzusd/) on Plasma**, which is the reverse of what the chain sizes suggest.
+
 ⚠️ **Where this asset actually lives is the finding: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply.** Neither has a CEX presence or mature tooling, and Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY. **A reader told "Plasma, Monad and Ethereum" would badly misjudge this.** The deployments are **not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing.
 
 ⚠️ **One thing to know before reading the live dashboard: its BACKING tile shows yzUSD's collateral ratio, not syzUSD's.** This vault has no coverage ratio of its own — what it publishes is share supply, NAV per share and yield — **so the percentage on that tile is the underlying's.** That is the right number to care about, since a syzUSD share is a claim on yzUSD, but **it is not a measure of this contract**, and the dashboard's own dependency note says the same: syzUSD's risk is yzUSD's risk plus the vault contract.

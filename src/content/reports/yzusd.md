@@ -112,7 +112,17 @@ Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. ⚠️ **A check for yz
 
 ## Liquidity and movement
 
-**The token barely moves: 2 Transfer events in 80,000 blocks.** For an asset where 99% of supply is locked inside a wrapper, that is coherent rather than surprising — but it means secondary depth is thin and the retail exit path is a DEX, since primary redemption is KYC-gated and best-effort.
+**The token barely moves: 2 Transfer events in 80,000 blocks**, which is coherent for an asset where 99% of supply is locked inside a wrapper. ⚠️ **But do not read low turnover as thin depth — measured, the Plasma exit is healthy.** The Curve yzUSD/USDT0 pool clears **$250,000 inside 13 basis points**:
+
+```
+$1k     −1.33 bps
+$10k    −1.56 bps
+$250k  −12.13 bps
+```
+
+**Turnover and depth are different quantities.** Low volume means nobody is trading it, not that you cannot get out — and on this leg you can, at retail size and well beyond it. Primary redemption remains KYC-gated and best-effort, so a DEX is the retail path, **but that path is not the constraint it looks like from the volume figure.**
+
+⚠️ **The constraint sits one layer up, on the wrapper.** See [syzUSD](/reports/syzusd/): exiting **syzUSD on Monad** degrades sharply with size, and that — not this Plasma leg — is where a large holder would find the wall.
 
 ## Who should avoid this
 
