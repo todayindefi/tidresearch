@@ -53,6 +53,29 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
 };
 
+
+// The consolidated five-axis frame, opted into per report via `axis_frame: five`.
+// Field names are the EXISTING schema keys deliberately — renaming them across
+// the corpus would touch every report and every chain override for a cosmetic
+// gain. What changes is which axes are shown and what they mean:
+//   Stability        peg vs its own reference — $1 for a stablecoin, NAV for a share
+//   Backing          reserve composition, coverage, attestation
+//   Liquidity & Exit BOTH legs, scored on the WORSE one (see content.config.ts)
+//   Contract & Admin upgrade authority, keys, timelock depth, pause surface
+//   Issuer           entity, jurisdiction, disclosure, related-party posture
+// ⚠️ `redemption_score` and `underlying_score` are intentionally ABSENT: the
+// first is folded into Liquidity & Exit, the second into Backing. A report on
+// this frame may still carry them in frontmatter without rendering them.
+const FIVE_AXES: Axis[] = [
+  { key: "peg_mechanism_score", label: "Stability" },
+  { key: "volatility_score", label: "Stability" },
+  { key: "backing_score", label: "Backing" },
+  { key: "underlying_score", label: "Backing" },
+  { key: "liquidity_score", label: "Liquidity & Exit" },
+  { key: "structural_score", label: "Contract & Admin" },
+  { key: "issuer_score", label: "Issuer" },
+];
+
 const isRwa = data.category === "tokenized-treasury";
 // Mirrors RiskSidebar: retail-framed RWA reports use a retail rubric (vault-share or
 // stablecoin) rather than the institutional contract/economic/project axes.
@@ -63,9 +86,15 @@ const rwaRetailAxes = !isRwa
     : typeof data.peg_mechanism_score === "number"
       ? AXES_BY_CATEGORY.stablecoin
       : null;
-const axes = (rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []).filter(
-  (a) => typeof data[a.key] === "number"
-);
+const axes = (data.axis_frame === "five"
+  ? FIVE_AXES
+  : rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []
+)
+  .filter((a) => typeof data[a.key] === "number")
+  // Two keys can carry the same five-axis label (peg_mechanism/volatility ->
+  // Stability, backing/underlying -> Backing). A report holding both would
+  // render the axis twice; keep the first and drop the duplicate.
+  .filter((a, i, all) => all.findIndex((b) => b.label === a.label) === i);
 const isLendingVault = data.category === "lending-vault";
 const isProtocol = data.category === "protocol";
 const weights: Record<string, number> | null = ((isRwa && !rwaRetailAxes) || isProtocol) && data.score_weights

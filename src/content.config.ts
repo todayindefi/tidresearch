@@ -37,8 +37,24 @@ const chainOverride = z
 // Before adding a display field to an institutional report, check which component
 // reads it — schema-legal is not the same as rendered.
 
+// Opt-in to the consolidated FIVE-AXIS frame:
+//   Stability · Backing · Liquidity & Exit · Contract & Admin · Issuer
+// Absent, a report renders on its category's historical rubric. This is a
+// per-report switch ON PURPOSE — the corpus ran six rubrics with a long dead
+// tail, and flipping AXES_BY_CATEGORY wholesale would re-frame 51 reports whose
+// scores were judged under the old axes without anyone re-judging them.
+// ⚠️ AXIS 3 CARRIES A RULE: "Liquidity & Exit" covers BOTH exit paths —
+// secondary venue depth AND primary redemption — and is scored on the WORSE
+// leg, never the average. Averaging hides which path failed, and the dangerous
+// case is a gated or KYC'd redemption sitting behind deep-looking venues,
+// because the gate is invisible on-chain. State both legs in prose, always.
+// ⚠️ Both ScoreHero AND RiskSidebar must honour this flag or a report renders
+// one rubric to institutional readers and another to retail ones.
+const AXIS_FRAME = z.enum(["five"]).optional();
+
 // Common across every report.
 const common = {
+  axis_frame: AXIS_FRAME,
   asset: z.string(),
   slug: z.string(),
   aliases: z.array(z.string()).default([]),
@@ -90,6 +106,11 @@ const stablecoin = z.object({
   liquidity_score: score,
   // Optional 5th axis: collateral quality (e.g. T-Bills) independent of wrapper-layer risk.
   underlying_score: score.optional(),
+  // Contract & Admin. Optional here and REQUIRED under `axis_frame: five` —
+  // the historical stablecoin rubric had no home for upgrade authority at all,
+  // which is why a token behind a 2-day timelock and one behind a bare EOA
+  // scored identically on this category.
+  structural_score: score.optional(),
   peg_mechanism: z.string().optional(),
   audited_reserves: z.boolean().optional(),
   market_cap_approx: z.number().optional(),

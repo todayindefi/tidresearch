@@ -72,6 +72,29 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
   ],
 };
 
+
+// The consolidated five-axis frame, opted into per report via `axis_frame: five`.
+// Field names are the EXISTING schema keys deliberately — renaming them across
+// the corpus would touch every report and every chain override for a cosmetic
+// gain. What changes is which axes are shown and what they mean:
+//   Stability        peg vs its own reference — $1 for a stablecoin, NAV for a share
+//   Backing          reserve composition, coverage, attestation
+//   Liquidity & Exit BOTH legs, scored on the WORSE one (see content.config.ts)
+//   Contract & Admin upgrade authority, keys, timelock depth, pause surface
+//   Issuer           entity, jurisdiction, disclosure, related-party posture
+// ⚠️ `redemption_score` and `underlying_score` are intentionally ABSENT: the
+// first is folded into Liquidity & Exit, the second into Backing. A report on
+// this frame may still carry them in frontmatter without rendering them.
+const FIVE_AXES: Axis[] = [
+  { key: "peg_mechanism_score", label: "Stability" },
+  { key: "volatility_score", label: "Stability" },
+  { key: "backing_score", label: "Backing" },
+  { key: "underlying_score", label: "Backing" },
+  { key: "liquidity_score", label: "Liquidity & Exit" },
+  { key: "structural_score", label: "Contract & Admin" },
+  { key: "issuer_score", label: "Issuer" },
+];
+
 const isStable = data.category === "stablecoin";
 const isRwa = data.category === "tokenized-treasury";
 const isLendingVault = data.category === "lending-vault";
@@ -90,8 +113,14 @@ const rwaRetailAxes = !isRwa
       ? AXES_BY_CATEGORY.stablecoin
       : null;
 
-const axes = rwaRetailAxes ?? (AXES_BY_CATEGORY[data.category as string] ?? []);
-const scoredAxes = axes.filter((a) => typeof data[a.key] === "number");
+const axes =
+  data.axis_frame === "five"
+    ? FIVE_AXES
+    : rwaRetailAxes ?? (AXES_BY_CATEGORY[data.category as string] ?? []);
+const scoredAxes = axes
+  .filter((a) => typeof data[a.key] === "number")
+  // See ScoreHero: two keys can share a five-axis label; render it once.
+  .filter((a, i, all) => all.findIndex((b) => b.label === a.label) === i);
 
 const weights: Record<string, number> | null =
   (isRwa && !rwaRetailAxes || isProtocol) && data.score_weights
