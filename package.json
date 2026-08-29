@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "tsx scripts/build-gated-slugs.ts && tsx scripts/check-frontmatter-keys.ts && tsx scripts/check-entity-contradictions.ts --errors-only",
+    "prebuild": "tsx scripts/build-gated-slugs.ts && tsx scripts/check-frontmatter-keys.ts && tsx scripts/check-entity-contradictions.ts --errors-only && tsx scripts/check-axis-frame.ts",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
