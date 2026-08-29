@@ -6,7 +6,6 @@ chains: ["sonic", "hyperevm", "avax", "eth", "base"]
 category: "vault-share"
 underlying_assets: ["usdp-parallel"]
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-17"
 last_verified: "2026-06-17"
 featured: false

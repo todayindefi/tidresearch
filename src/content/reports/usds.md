@@ -6,7 +6,6 @@ chains: ["eth", "solana", "base", "arb"]
 category: "stablecoin"
 peg_mechanism: "Hybrid (USDC PSM + DAI parity + crypto/RWA CDP)"
 assessment_type: "full"
-audience: "retail"
 production: true
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usds"
 date: "2026-05-27"

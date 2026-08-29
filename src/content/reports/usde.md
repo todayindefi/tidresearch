@@ -6,7 +6,6 @@ chains: ["eth", "arbitrum", "base", "optimism", "bsc", "mantle", "blast", "fraxt
 category: "stablecoin"
 peg_mechanism: "Hybrid (institutional credit + RWA + 11% residual basis trade)"
 assessment_type: "full"
-audience: "retail"
 date: "2026-06-10"
 last_revised: "2026-08-29"
 last_verified: "2026-08-25"

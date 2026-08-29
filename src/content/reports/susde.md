@@ -6,7 +6,6 @@ chains: ["eth", "arbitrum", "base", "optimism", "bsc", "mantle", "blast", "fraxt
 category: "vault-share"
 underlying_assets: ["USDe"]
 assessment_type: "full"
-audience: "retail"
 date: "2026-05-22"
 last_revised: "2026-08-29"
 last_verified: "2026-08-25"

@@ -5,7 +5,6 @@ aliases: ["Figure", "FIGR", "Figure Technology Solutions", "Figure Lending", "Fi
 chains: []
 category: "tradfi-equity"
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-31"
 last_verified: "2026-07-31"
 last_revised: "2026-08-23"

@@ -5,7 +5,6 @@ aliases: ["wYLDS", "Wrapped YLDS", "Hastra Wrapped YLDS"]
 chains: ["solana", "ethereum"]
 category: "wrapped-token"
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-24"
 last_verified: "2026-07-30"
 last_revised: "2026-08-23"

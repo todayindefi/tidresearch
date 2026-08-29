@@ -6,7 +6,6 @@ chains: ["eth", "base", "bnb"]
 category: "stablecoin"
 peg_mechanism: "rwa-synthetic"
 assessment_type: "light"
-audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"

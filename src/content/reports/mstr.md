@@ -5,7 +5,6 @@ aliases: ["MSTR", "Strategy", "Strategy Inc", "MicroStrategy"]
 chains: []
 category: "tradfi-equity"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-02"
 last_verified: "2026-08-17"
 last_revised: "2026-08-24"

@@ -5,7 +5,6 @@ aliases: ["USD3 3Jane", "3Jane USD3", "USD3 senior tranche", "3Jane senior"]
 chains: ["eth"]
 category: "vault-share"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-25"
 last_verified: "2026-06-25"
 featured: false

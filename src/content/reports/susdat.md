@@ -7,7 +7,6 @@ category: "vault-share"
 underlying_assets: ["USDat"]
 yield_bearing: true
 assessment_type: "light"
-audience: "retail"
 companion_report: "usdat"
 date: "2026-05-20"
 last_verified: "2026-08-24"

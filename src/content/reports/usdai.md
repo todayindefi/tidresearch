@@ -6,7 +6,6 @@ chains: ["arb", "plasma", "eth", "base"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed via PYUSD on M0's PYUSDx rails"
 assessment_type: "light"
-audience: "retail"
 companion_report: "susdai"
 date: "2026-05-28"
 last_verified: "2026-08-25"

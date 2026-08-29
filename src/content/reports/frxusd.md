@@ -6,7 +6,6 @@ chains: ["eth", "fraxtal", "sonic", "arbitrum", "optimism", "base", "bsc", "avax
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-10"
 last_verified: "2026-08-23"
 last_revised: "2026-08-29"

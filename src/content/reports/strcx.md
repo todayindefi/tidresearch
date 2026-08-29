@@ -5,7 +5,6 @@ aliases: ["STRCx", "STRC.x", "Backed STRC", "Strategy PP Variable xStock"]
 chains: ["eth", "solana", "arbitrum", "bnb", "mantle"]
 category: "wrapped-token"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-02"
 last_verified: "2026-08-18"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"

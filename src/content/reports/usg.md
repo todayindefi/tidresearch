@@ -6,7 +6,6 @@ chains: ["eth"]
 category: "stablecoin"
 peg_mechanism: "hybrid"
 assessment_type: "light"
-audience: "retail"
 date: "2026-08-27"
 last_verified: "2026-08-27"
 peg_mechanism_score: 5.0

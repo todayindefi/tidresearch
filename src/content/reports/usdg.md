@@ -6,7 +6,6 @@ chains: ["eth", "solana"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-08"
 last_verified: "2026-07-08"
 last_revised: "2026-08-23"

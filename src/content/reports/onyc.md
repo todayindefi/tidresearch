@@ -6,7 +6,6 @@ chains: ["solana"]
 category: "vault-share"
 underlying_assets: ["sUSDe", "reinsurance premium float"]
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-23"
 last_verified: "2026-07-23"
 last_revised: "2026-08-23"

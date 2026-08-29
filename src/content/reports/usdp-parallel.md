@@ -6,7 +6,6 @@ chains: ["sonic", "hyperevm", "avax", "eth", "base", "polygon", "arbitrum", "opt
 category: "stablecoin"
 peg_mechanism: "crypto-overcollateralized"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-17"
 last_verified: "2026-06-17"
 featured: false

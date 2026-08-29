@@ -11,7 +11,6 @@ backing_score: 4.5
 issuer_score: 4.0
 liquidity_score: 4.0
 overall_score: 4.5
-audience: "retail"
 companion_report: "savusd"
 date: "2026-07-04"
 last_verified: "2026-07-04"

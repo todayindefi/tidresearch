@@ -5,7 +5,6 @@ aliases: ["sGHO", "Savings GHO", "Aave Savings GHO"]
 chains: ["eth"]
 category: "vault-share"
 assessment_type: "full"
-audience: "retail"
 date: "2026-08-29"
 last_verified: "2026-08-29"
 featured: false

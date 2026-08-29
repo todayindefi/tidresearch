@@ -6,7 +6,6 @@ chains: ["eth", "base", "arb", "optimism", "bsc", "fantom"]
 category: "stablecoin"
 peg_mechanism: "Debt-backed CDP (FiRM) + Peg Stability Module"
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-01"
 last_verified: "2026-07-01"
 featured: false

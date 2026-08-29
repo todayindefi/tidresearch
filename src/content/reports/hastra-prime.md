@@ -6,7 +6,6 @@ chains: ["solana", "ethereum"]
 category: "vault-share"
 underlying_assets: ["wYLDS", "YLDS"]
 assessment_type: "light"
-audience: "retail"
 companion_report: "wylds"
 date: "2026-07-25"
 last_verified: "2026-07-31"

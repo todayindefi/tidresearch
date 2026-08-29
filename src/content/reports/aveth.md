@@ -7,7 +7,6 @@ category: "wrapped-token"
 underlying_assets: ["ETH"]
 yield_bearing: false
 assessment_type: "light"
-audience: "retail"
 companion_report: "saveth"
 date: "2026-06-14"
 last_verified: "2026-07-04"

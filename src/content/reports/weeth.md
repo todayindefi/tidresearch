@@ -6,7 +6,6 @@ chains: ["eth", "base", "arbitrum", "optimism"]
 category: "wrapped-token"
 underlying_assets: ["ETH"]
 assessment_type: "full"
-audience: "retail"
 date: "2026-08-13"
 last_revised: "2026-08-27"
 last_verified: "2026-08-23"

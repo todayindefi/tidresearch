@@ -5,7 +5,6 @@ aliases: ["JAAA", "Janus Henderson Anemoy AAA CLO Fund", "JAAAon"]
 chains: ["eth", "base", "arb", "avax", "bnb", "solana", "monad", "stellar"]
 category: "vault-share"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-30"
 last_verified: "2026-06-30"
 featured: false

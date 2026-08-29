@@ -6,7 +6,6 @@ chains: ["eth", "arb", "stable"]
 category: "stablecoin"
 peg_mechanism: "delta-neutral synthetic"
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-13"
 last_verified: "2026-08-23"
 production: true

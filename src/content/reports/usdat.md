@@ -6,7 +6,6 @@ chains: ["eth"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed via PYUSDx (PYUSD rails, MoonPay/M0)"
 assessment_type: "light"
-audience: "retail"
 companion_report: "susdat"
 date: "2026-05-20"
 last_verified: "2026-08-23"

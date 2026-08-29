@@ -5,7 +5,6 @@ aliases: ["reUSDe (Re Protocol)", "Resilience reUSDe", "REUSDE"]
 chains: ["eth"]
 category: "vault-share"
 assessment_type: "full"
-audience: "retail"
 date: "2026-05-18"
 last_verified: "2026-05-18"
 last_revised: "2026-08-27"

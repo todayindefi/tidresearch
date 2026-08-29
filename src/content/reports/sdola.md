@@ -6,7 +6,6 @@ chains: ["eth", "base", "arb", "optimism", "berachain"]
 category: "vault-share"
 underlying_assets: ["DOLA"]
 assessment_type: "light"
-audience: "retail"
 date: "2026-07-01"
 last_verified: "2026-07-01"
 featured: false

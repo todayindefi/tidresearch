@@ -6,7 +6,6 @@ chains: ["eth", "base", "arb", "optimism"]
 category: "vault-share"
 underlying_assets: ["USDS"]
 assessment_type: "full"
-audience: "retail"
 production: true
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susds"
 date: "2026-05-27"

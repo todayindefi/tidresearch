@@ -6,7 +6,6 @@ chains: ["eth", "fraxtal", "arbitrum", "optimism", "avax", "bsc", "polygon"]
 category: "stablecoin"
 peg_mechanism: "hybrid"
 assessment_type: "light"
-audience: "retail"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=frax"
 date: "2026-06-01"
 last_verified: "2026-06-01"

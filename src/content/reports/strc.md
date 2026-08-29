@@ -5,7 +5,6 @@ aliases: ["STRC", "Stretch", "Strategy Variable Rate Preferred", "Series A Perpe
 chains: []
 category: "tradfi-equity"
 assessment_type: "light"
-audience: "retail"
 date: "2026-08-24"
 last_verified: "2026-08-24"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"

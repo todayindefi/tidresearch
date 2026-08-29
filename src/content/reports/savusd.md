@@ -7,7 +7,6 @@ category: "vault-share"
 underlying_assets: ["avUSD"]
 yield_bearing: true
 assessment_type: "light"
-audience: "retail"
 companion_report: "avusd"
 date: "2026-07-04"
 last_verified: "2026-07-04"

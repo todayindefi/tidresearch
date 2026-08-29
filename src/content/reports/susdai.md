@@ -6,7 +6,6 @@ chains: ["arb", "plasma", "eth", "base"]
 category: "vault-share"
 underlying_assets: ["USDai", "PYUSD", "GPU-backed equipment loans"]
 assessment_type: "light"
-audience: "retail"
 companion_report: "usdai"
 date: "2026-05-28"
 last_verified: "2026-08-25"

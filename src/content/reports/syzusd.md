@@ -5,7 +5,6 @@ aliases: ["syzUSD", "Staked Yuzu USD", "Staked Yuzu Money", "sYuzu USD"]
 chains: ["eth", "plasma", "monad"]
 category: "vault-share"
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-08"
 last_verified: "2026-06-08"
 last_revised: "2026-08-29"

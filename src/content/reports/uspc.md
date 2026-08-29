@@ -6,7 +6,6 @@ chains: ["eth"]
 category: "vault-share"
 underlying_assets: ["iUSPC", "BlackRock ICS USD MMF", "Fidelity ILF USD MMF", "Apollo ACRED"]
 assessment_type: "light"
-audience: "retail"
 date: "2026-06-25"
 last_verified: "2026-06-25"
 featured: false

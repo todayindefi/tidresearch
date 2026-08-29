@@ -6,7 +6,6 @@ chains: ["eth", "arb", "base"]
 category: "stablecoin"
 peg_mechanism: "crypto-overcollateralized"
 assessment_type: "full"
-audience: "retail"
 date: "2026-06-07"
 last_verified: "2026-08-29"
 featured: false

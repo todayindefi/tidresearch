@@ -6,7 +6,6 @@ chains: ["eth", "gnosis", "optimism", "base", "polygon", "arb", "avax", "sonic"]
 category: "stablecoin"
 peg_mechanism: "crypto-overcollateralized, oracle-free"
 assessment_type: "light"
-audience: "retail"
 date: "2026-08-21"
 last_verified: "2026-08-21"
 peg_mechanism_score: 6.5
