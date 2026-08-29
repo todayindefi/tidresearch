@@ -107,6 +107,6 @@ Holders who want a top-tier regulated dollar with strong reserve transparency an
 
 ---
 
-*Revision history: 2026-08-23 — Solana leg read directly; no score change. This report's supply figure was cross-chain and not reproducible from an Ethereum read. The Solana leg now reads **688,176,370.75**, against the mint Paxos publishes at paxos.com/pyusd, bringing the two native chains to **2,657,295,563 — about 96% of the published ~$2.77B**. **That corroborates the headline rather than contradicting it**, with Arbitrum, Stellar and the LayerZero-reachable float making up the remainder. An earlier version of this note said this coverage had no non-EVM reader; that was wrong and has been corrected — Solana is read across several of our monitors, and PYUSD simply had not been wired to it. `last_verified` is **not** bumped; only supply was read. *
+## Revision history
 
-*This report is based on Paxos/PayPal public documentation, monthly Withum reserve attestations, on-chain reads, and market data through 2026-07-09. PYUSD's supply and multichain footprint shift over time. Both of its cross-chain LayerZero bridge layers were independently verified on-chain — each requires three independent verifiers with no single-point exposure, and the separate permissionless layer has no bridge path to the native reserve — though these configs are issuer-changeable and a few non-EVM legs could not be checked directly. Corrections or attestation links welcome at info@tidresearch.com.*
+- **2026-08-23 — Solana leg read directly; no score change.** Supply measured across deployments rather than inferred from a single chain.
