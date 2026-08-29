@@ -11,6 +11,11 @@ date: "2026-06-08"
 last_verified: "2026-06-08"
 last_revised: "2026-08-29"
 featured: false
+# HELD IN STAGING DELIBERATELY — do not promote on a freshness or
+# completeness sweep. The site owner's condition (2026-08-29) is that yzUSD
+# and syzUSD ship as a report+dashboard set, and the dashboard half does not
+# exist yet. Promote only once a working dashboard is reachable for this
+# asset; until then `production: false` is the correct state, not an oversight.
 production: false
 issuer: "Yuzu Money"
 audited_reserves: false
