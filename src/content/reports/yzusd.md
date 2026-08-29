@@ -23,14 +23,14 @@ market_cap_approx: 58497074
 peg_mechanism_score: 4.5
 backing_score: 4.5
 liquidity_score: 4.0
-issuer_score: 3.0
+issuer_score: 4.0
 overall_score: 4.0
 chain_overrides:
   monad:
     peg_mechanism_score: 3.5
     backing_score: 4.5
     liquidity_score: 2.5
-    issuer_score: 2.5
+    issuer_score: 3.5
     overall_score: 3.0
 ---
 
@@ -46,7 +46,7 @@ chain_overrides:
 
 ## What this actually is
 
-yzUSD is the base unit of Yuzu Money, a yield-bearing stablecoin protocol run by an anonymous team. **yzUSD does not itself pay yield.** It is the unit you hold; the yield accrues only when it sits inside the syzUSD wrapper. The peg is maintained by overcollateralization against an actively managed basket of curated DeFi yield strategies, with a junior tranche restricted to accredited investors and a Reserve Fund behind it.
+yzUSD is the base unit of Yuzu Money, a yield-bearing stablecoin protocol. **The issuer is a named legal entity — YUZU FINTECH LLC, a Virtual Asset Service Provider registered under the Kutaisi Free Industrial Zone rules in the Republic of Georgia**, named as contracting party in its own terms. ⚠️ **That is an accountability anchor rather than prudential supervision, and the operators are still unnamed:** there is no disclosed CEO or founder, and **the people running a roughly 70%-levered book day to day remain anonymous.** The seed round was $30M FDV with backers including Sam Kazemian (Frax), Michael Bentley (Euler), Wintermute and Hypernative — **backers are not operators.** **yzUSD does not itself pay yield.** It is the unit you hold; the yield accrues only when it sits inside the syzUSD wrapper. The peg is maintained by overcollateralization against an actively managed basket of curated DeFi yield strategies, with a junior tranche restricted to accredited investors and a Reserve Fund behind it.
 
 ⚠️ **The single most important thing measured on 2026-08-29 is that yzUSD is barely a circulating stablecoin at all.** Of 58,497,074 tokens on Plasma, **57,990,877 — 99.1% — sit inside one syzUSD vault.** Float outside the wrapper is roughly 506,000 tokens, under one percent.
 
@@ -80,7 +80,7 @@ Supply grew sharply over the measurement gap:
 
 ## The backing is located — and the composition is the problem
 
-**The backing is published and verifiable.** Accountable's feed at **`yuzu.accountable.capital`** carries a full look-through on a 15-minute verification interval. ⚠️ **Two other Accountable hostnames fail DNS, so a check that stops at those returns nothing** — the live host is the one above.
+**The backing is published.** Accountable's feed at **`yuzu.accountable.capital`** carries a full look-through on a 15-minute verification interval. ⚠️ **Read it as a disclosure channel, not as independent verification: Accountable's founder is an investor in Yuzu.** Every backing figure on this page — the ratio, the composition, the reserve fund, the chain split — comes from that one related-party source. **It does not make the numbers wrong**, and `totalSupply` reconciles exactly against chain while the satellite conservation is wei-exact. **But an attestation from a related party is a different object from an independent one, however good the cryptography**, and nothing here is a second pair of eyes. ⚠️ **Two other Accountable hostnames fail DNS, so a check that stops at those returns nothing** — the live host is the one above.
 
 ```
 backing    $62,546,859.02

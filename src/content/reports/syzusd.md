@@ -22,6 +22,7 @@ yield_bearing: true
 volatility_score: 3.0
 liquidity_score: 3.0
 structural_score: 2.0
+issuer_score: 4.0
 redemption_score: 2.5
 overall_score: 2.5
 chain_overrides:
@@ -86,7 +87,7 @@ margin: 0 wei
 
 **That matters for where the risk actually lives.** A syzUSD share is a claim on yzUSD, and **whatever risk attaches to yzUSD's own backing passes straight through** — it is not amplified here. **The leverage concern, if there is one, belongs one layer down**, in what backs yzUSD itself, and that is [covered separately](/reports/yzusd/).
 
-⚠️ **And the layer beneath is where the risk concentrates.** yzUSD's backing **is** published and verifiable — a first draft of this report said otherwise and was wrong, having tried two dead hostnames and missed the live one. On its own basis it runs **CR 106.92%**. ⚠️ **But roughly 70% of that reserve sits in levered loop positions, Ethena exposure is about five times the surplus, and 4.8% is the issuer's own `yzPRIME`.** **So a syzUSD share is a claim on yzUSD at a readable NAV, and yzUSD is a claim on a levered book with a thin cushion.** See the [yzUSD report](/reports/yzusd/).
+⚠️ **One sourcing note that applies to every backing figure here and on the underlying: Accountable's founder is an investor in Yuzu**, so that feed is a related-party disclosure channel rather than independent verification. On-chain reads — supply, NAV, the wei-exact conservation above — stand on their own. ⚠️ **And the layer beneath is where the risk concentrates.** yzUSD's backing **is** published and verifiable — a first draft of this report said otherwise and was wrong, having tried two dead hostnames and missed the live one. On its own basis it runs **CR 106.92%**. ⚠️ **But roughly 70% of that reserve sits in levered loop positions, Ethena exposure is about five times the surplus, and 4.8% is the issuer's own `yzPRIME`.** **So a syzUSD share is a claim on yzUSD at a readable NAV, and yzUSD is a claim on a levered book with a thin cushion.** See the [yzUSD report](/reports/yzusd/).
 
 ## Authority: a Safe over the vault, a single key over the bridge
 

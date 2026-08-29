@@ -7,6 +7,7 @@ category: "vault-share"
 assessment_type: "light"
 date: "2026-08-29"
 last_verified: "2026-08-29"
+last_revised: "2026-08-29"
 featured: false
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. yzPP belongs to the Yuzu set (yzUSD, syzUSD), which the
@@ -17,10 +18,7 @@ issuer: "Yuzu Money"
 underlying_assets: ["USDT0"]
 yield_bearing: true
 market_cap_approx: 4729857
-# issuer_score is DELIBERATELY ABSENT, not forgotten. The rest of the Yuzu
-# family (syzUSD) omits it, and consistency within the set a reader compares
-# matters more than matching the wider vault-share population, where 26 of 64
-# carry one and 38 do not. Issuer risk is covered in the body.
+issuer_score: 4.0
 volatility_score: 3.0
 liquidity_score: 2.0
 structural_score: 4.0
@@ -64,7 +62,7 @@ The senior tranche's protection is, in substance, **a liability to a different s
 
 ## The loss absorption has been observed once
 
-**Per Yuzu's published history**, drawn from Accountable's timeline:
+**Per Yuzu's published history**, drawn from Accountable's timeline — ⚠️ **a related-party source, since Accountable's founder is a Yuzu investor:**
 
 ```
 2026-04-23   NAV 1.137380   TVL 4,029,415      <- peak
@@ -96,7 +94,7 @@ recovery above the prior peak: early July 2026, roughly two months
 
 **The 29% is not underwritable.** It is syzUSD's base rate plus a **discretionary supplement set daily at 04:00 UTC** under an unpublished risk-premiums policy, part-funded by a Reserve Fund holding **$503,429 — 0.86% of yzUSD supply.**
 
-⚠️ **And the issuer is anonymous with no legal entity, which sits oddly against an accreditation gate.** **The gating implies a compliance posture the disclosure does not match** — a reader should notice that the instrument asks more of them than its issuer discloses about itself.
+**The issuer is a named entity: YUZU FINTECH LLC, a registered Virtual Asset Service Provider in the Republic of Georgia**, which makes an accreditation gate coherent rather than anomalous. ⚠️ **But registration is not prudential supervision, and the operators are not named** — no disclosed CEO or founders, so the accreditation gate is enforced by people a holder cannot identify.
 
 ## Who should avoid this
 
