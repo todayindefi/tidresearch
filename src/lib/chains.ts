@@ -26,11 +26,20 @@ const ALIASES: Record<string, string> = {
   mantle: "mantle",
   stable: "stable",
   plasma: "plasma",
+  monad: "monad",
+  sei: "sei",
+  seievm: "sei",
+  pharos: "pharos",
+  berachain: "berachain",
   gnosis: "gnosis",
   sonic: "sonic",
 };
 
 const LABELS: Record<string, string> = {
+  monad: "Monad",
+  sei: "Sei",
+  pharos: "Pharos",
+  berachain: "Berachain",
   ethereum: "Ethereum",
   arbitrum: "Arbitrum",
   optimism: "Optimism",

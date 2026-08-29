@@ -2,7 +2,7 @@
 asset: "syzUSD"
 slug: "syzusd"
 aliases: ["syzUSD", "Staked Yuzu USD", "Staked Yuzu Money", "sYuzu USD"]
-chains: ["eth", "plasma", "monad"]
+chains: ["plasma", "monad", "sei", "pharos", "eth", "berachain", "hyperevm"]
 category: "vault-share"
 assessment_type: "light"
 date: "2026-06-08"
@@ -59,7 +59,21 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 
 ⚠️ **They are not. The Monad deployment is an OFT mirror, and a mirror is expected to have no `asset()`.** Its `token()` returns its own address, which is the signature of an OFT rather than an OFTAdapter: **mint-and-burn on each chain, not lock-and-mirror against a home lockbox.** The reverts were a correct reading of the wrong contract.
 
-**So the structure is: a real ERC-4626 vault on Plasma holding yzUSD, with 10,210,297 shares — 19.0% of the total — bridged out to Monad as a mirrored OFT.**
+**So the structure is: a real ERC-4626 vault on Plasma holding yzUSD, with shares mirrored outward as an OFT.**
+
+⚠️ **And the footprint is wider than the vault suggests — seven chains, not three.** Mirrored balances, read live:
+
+```
+Monad      10,210,297.16      Ethereum      698,725.76
+Sei         9,190,234.55      Berachain     129,781.69
+Pharos      2,861,652.65      HyperEVM            0.21
+----------------------------------------------------
+satellites 23,090,692.02   ·   locked 23,090,692.03
+```
+
+⚠️ **The lockbox and the mirrors match to the cent, and that equality is worth more than a comfortable margin would be.** It shows the lockbox backs precisely what is mirrored — **and it shows the chain list is complete, because a missing satellite would break it.**
+
+⚠️ **Where this asset actually lives is the finding: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply.** Neither has a CEX presence or mature tooling, and Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY. **A reader told "Plasma, Monad and Ethereum" would badly misjudge this.** The deployments are **not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing.
 
 ⚠️ **One thing to know before reading the live dashboard: its BACKING tile shows yzUSD's collateral ratio, not syzUSD's.** This vault has no coverage ratio of its own — what it publishes is share supply, NAV per share and yield — **so the percentage on that tile is the underlying's.** That is the right number to care about, since a syzUSD share is a claim on yzUSD, but **it is not a measure of this contract**, and the dashboard's own dependency note says the same: syzUSD's risk is yzUSD's risk plus the vault contract.
 

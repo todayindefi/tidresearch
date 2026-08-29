@@ -2,7 +2,7 @@
 asset: "yzUSD"
 slug: "yzusd"
 aliases: ["yzUSD", "Yuzu USD", "Yuzu Money USD"]
-chains: ["eth", "plasma", "monad"]
+chains: ["plasma"]
 category: "stablecoin"
 peg_mechanism: "active-strategy"
 assessment_type: "light"
@@ -51,6 +51,8 @@ yzUSD is the base unit of Yuzu Money, a yield-bearing stablecoin protocol run by
 ⚠️ **The single most important thing measured on 2026-08-29 is that yzUSD is barely a circulating stablecoin at all.** Of 58,497,074 tokens on Plasma, **57,990,877 — 99.1% — sit inside one syzUSD vault.** Float outside the wrapper is roughly 506,000 tokens, under one percent.
 
 **That changes what "supply" means for every ratio computed against it.** yzUSD is best read as a **wrapper input**, not as a dollar in circulation, and any depth or coverage figure quoted against total supply is describing a quantity that is almost entirely locked in a single contract.
+
+⚠️ **yzUSD is a Plasma asset, not a multi-chain one.** Yuzu's own key-addresses documentation records *"Not deployed"* on every chain but Plasma; the balances that appear elsewhere — **23.77 tokens on Monad, 0.10 on Ethereum** — are stubs the issuer does not list as deployments. **What travels is the [syzUSD](/reports/syzusd/) wrapper, not this token.**
 
 Supply grew sharply over the measurement gap:
 
