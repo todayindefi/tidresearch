@@ -1,0 +1,109 @@
+---
+asset: "GHO"
+slug: "gho"
+aliases: ["GHO", "Aave GHO"]
+chains: ["eth", "arb", "base"]
+category: "stablecoin"
+peg_mechanism: "crypto-overcollateralized"
+assessment_type: "full"
+audience: "retail"
+date: "2026-06-07"
+last_verified: "2026-08-29"
+featured: false
+production: false
+issuer: "Aave DAO"
+audited_reserves: false
+market_cap_approx: 699000000
+peg_mechanism_score: 5.5
+backing_score: 6.0
+liquidity_score: 6.0
+issuer_score: 6.5
+overall_score: 5.5
+---
+
+# GHO — Risk Report
+
+**Moderate risk · 5.5/10**
+
+GHO is Aave DAO's overcollateralized stablecoin. It is minted by a set of authorised **facilitators**, each with a governance-set cap — a "bucket" — that bounds how much GHO it may issue. Supply is **699,000,000.00** across eight facilitator levels.
+
+## The largest facilitator is not what its label says
+
+⚠️ **This corrects how this coverage described GHO, not only how the market does.**
+
+The single largest facilitator holds **310,000,000 GHO — 44.3% of all supply** — and is labelled **"GhoDirectFacilitator GSMs Mainnet"**. That name implies a GHO Stability Module: fiat-stable collateral swapped at a fixed price, the arrangement that makes a large minting bucket comfortable to reason about.
+
+**Its bytecode implements no such thing.** Selectors enumerated from the deployed contract at `0xE9ac5231…27d2` rather than inferred from the name:
+
+```
+PRESENT   GHO_TOKEN() · mint(address,uint256) · burn(uint256) · AccessControl roles
+ABSENT    GSM() · gsm() · getGsmList() · UNDERLYING_ASSET() · POOL() · VAULT()
+ABSENT    getRoleMember() · getRoleMemberCount()
+```
+
+**Every GSM accessor is missing.** ⚠️ **And the last line is the one that matters most: without `getRoleMember()` or `getRoleMemberCount()`, the addresses holding the mint role cannot be listed from chain state at all.**
+
+**So the accurate description is this: 44.3% of GHO is minted by a role-gated contract whose authorised callers cannot be enumerated on-chain.** Previous coverage on this site described GSM-minted GHO as backed by fiat-stables swapped at a fixed price. **That describes an architecture this contract does not implement, and it is withdrawn.**
+
+### The cap is the mitigation, and omitting it would overstate the finding
+
+⚠️ **The bucket is at its ceiling: 310,000,000 minted against a 310,000,000 cap. Zero headroom.**
+
+**It cannot mint one more GHO without a governance action raising the capacity.** That is a real constraint, publicly visible, and it bounds the exposure the authority gap creates. **A page that states the enumeration problem without stating the cap would be describing a larger risk than exists.**
+
+### What is not established — and that is different from unknowable
+
+⚠️ **Two things are unresolved and this report says so plainly rather than filling them in.**
+
+- **Where the 310M was minted to.** Not traced.
+- **Who holds the mint role.** Not enumerable through the standard accessors, which is why it has not been listed.
+
+**The contract was deployed by an address holding zero bytes of code — an EOA — at `0x3765a685…3a91`, checked rather than assumed to be an Aave executor.** ⚠️ **But deployment does not establish who holds a role afterwards, and this report does not claim it does.** *"The authorised callers cannot be enumerated"* is supported. *"It is controlled by an EOA"* is not, and would be an accusation the evidence does not carry.
+
+**Both have resolution paths** — role-grant events and mint destinations are traceable with the right log queries. **They are unestablished, not unknowable**, and the distinction is the difference between a gap in this coverage and a property of the system.
+
+## Supply is frozen, not merely slow
+
+Eight facilitator levels sum to **699,000,000.00** against a `totalSupply` of **699,000,000.00** — **zero delta**, which is the reconciliation working.
+
+⚠️ **More striking: every level is identical to the 2026-08-13 read. Not approximately — exactly.**
+
+```
+2026-08-13   699,000,000.00   (prior pass recorded +7.7% growth over the preceding week)
+2026-08-29   699,000,000.00   +0.0% over 16 days
+```
+
+**A growth rate that went from +7.7% in a week to exactly zero over sixteen days is a state change, not a slowdown.** **65.8% of supply sits at hard caps**, so a substantial part of the float is structurally unable to expand without governance raising ceilings.
+
+**That cuts both ways for a holder**, which is why it does not move a score on its own: caps that bind are a constraint on uncontrolled issuance, and they are equally a constraint on the asset's ability to meet demand.
+
+## Scores
+
+| Axis | Score |
+|---|---|
+| Peg mechanism | 5.5 |
+| Backing | 6.0 |
+| Liquidity | 6.0 |
+| Issuer | 6.5 |
+| **Overall** | **5.5** |
+
+⚠️ **Held unchanged, deliberately, because the new facts point in both directions.** An unenumerable mint role over 44.3% of supply is worse than the previous framing implied. A bucket pinned at its cap with zero headroom constrains exactly that risk. **Neither is measured well enough to move a number, and moving one on a direction rather than a measurement is how a score stops meaning anything.**
+
+**Re-score trigger, written so it is checkable rather than a matter of judgement: any governance action raising the `0xE9ac5231…27d2` bucket above 310M.** That would remove the constraint currently bounding the authority gap, and this report should move when it happens.
+
+## Who should avoid this
+
+- **Anyone who needs to know who can mint.** For 44.3% of supply, that list is not readable from chain.
+- **Anyone treating the "GSM" label as a description of backing.** It is a name, not an implementation.
+- **Anyone sizing on growth.** Supply has not moved in sixteen days and most of it is at ceilings.
+
+## What to watch
+
+- ⚠️ **Any capacity raise on the 310M bucket.** This is the re-score trigger and the single most consequential thing that could change here.
+- **Whether the mint role is ever made enumerable**, by a facilitator upgrade or by governance publishing the holders.
+- **Whether supply moves at all.** Sixteen days of exactly zero is unusual enough that a resumption is itself information.
+- **Mint destinations for the 310M**, if traced — the open question with the clearest resolution path.
+
+---
+
+*Revision history: 2026-08-29 — **first publication of GHO on this site, staged pending a publication decision.** ⚠️ **The central finding corrects this coverage's own prior framing:** the largest facilitator, holding **310,000,000 GHO or 44.3% of supply**, is labelled *"GhoDirectFacilitator GSMs Mainnet"* and **implements no GSM machinery at all** — every GSM accessor is absent from its bytecode, enumerated rather than inferred. **Previous descriptions of GSM-minted GHO as fiat-stable-backed at a fixed price describe an architecture this contract does not have, and are withdrawn.** ⚠️ **`getRoleMember()` and `getRoleMemberCount()` are also absent, so the addresses authorised to mint cannot be listed from chain state** — the accurate statement is that 44.3% of GHO is minted by a role-gated contract whose callers are not enumerable. **The cap is carried with equal weight because omitting it would overstate the finding: the bucket is at 310M of 310M with zero headroom and cannot mint further without a governance capacity raise.** **Two items are recorded as not established rather than unknowable** — where the 310M was minted to, and who holds the role — and both have resolution paths; **the deploying address is a zero-byte EOA, but deployment does not establish role-holding and no such claim is made.** **Supply is frozen: eight facilitator levels sum to exactly 699,000,000.00 against the same `totalSupply`, every level identical to the 2026-08-13 read, against +7.7% growth in the preceding week — 0.0% over 16 days with 65.8% of supply at hard caps.** **Scores held at 5.5** because the new facts point both ways and neither is measured well enough to move a number; **re-score trigger is any governance action raising that bucket above 310M.***
