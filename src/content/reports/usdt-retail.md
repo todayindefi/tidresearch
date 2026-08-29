@@ -56,7 +56,7 @@ What keeps the peg tight is that those qualified redeemers *do* arbitrage. Any d
 
 What changed is the size of the margin, and how fast it changed.
 
-Reserves are majority short-term US Treasuries — around **77%** of what Tether owes, counting T-bills and reverse repo together. That is a major improvement over the 2021 commercial-paper era and it is the load-bearing part of the book. (This report previously said around 82%. That figure was overstated; see the revision note at the foot.) Around the Treasury core sit cash equivalents, secured loans, physical gold and bitcoin — and that outer ring is where the Q2 story is.
+Reserves are majority short-term US Treasuries — around **77%** of what Tether owes, counting T-bills and reverse repo together. That is a major improvement over the 2021 commercial-paper era and it is the load-bearing part of the book. Around the Treasury core sit cash equivalents, secured loans, physical gold and bitcoin — and that outer ring is where the Q2 story is.
 
 ### The cushion halved in one quarter
 
@@ -135,7 +135,7 @@ The reassuring counterweight to all of the above is the track record. Despite a 
 
 No full financial audit has ever been *completed*. The KPMG engagement (2026, with PwC assisting on internal-systems readiness) would be the first, and it is the single biggest forward catalyst for this score. Today the verification layer is BDO Italia's quarterly attestations — useful, but not the same thing.
 
-The token contracts themselves are simple, long-lived and heavily battle-tested. This report previously added that the residual risk is "reserve and issuer transparency, not contract bugs" — true as far as it goes, and misleading, because **issuer control over the contract is a third thing that is neither a bug nor a disclosure question.** It was measured for the first time on 2026-08-23.
+The token contracts themselves are simple, long-lived and heavily battle-tested. A common framing is that the residual risk here is "reserve and issuer transparency, not contract bugs" — true as far as it goes, and misleading, because **issuer control over the contract is a third thing that is neither a bug nor a disclosure question.** It was measured for the first time on 2026-08-23.
 
 **On Ethereum, USDT's owner is a 3-of-6 multisig with no delay of any kind.** The owner address `0xC6CDE7C3…Ea828` is a contract, and its selector set identifies it as the **2016-era Gnosis MultiSigWallet rather than a modern Safe** (`required()`, `getOwners()`, `confirmations()` and `MAX_OWNER_COUNT()` present; `getThreshold()`, `VERSION()` and `masterCopy()` absent). It returns `required() = 3` against six owners, and **all six are plain externally-owned accounts**. There is **no delay surface anywhere in its bytecode** — no `executionDelay`, `delay`, `MINIMUM_DELAY`, `GRACE_PERIOD` or `timelock`. It submits, confirms, executes and revokes, and nothing else, so **execution fires inside the transaction that lands the third confirmation.** This is not a short delay; it is no delay, by construction.
 

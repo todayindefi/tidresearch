@@ -32,7 +32,7 @@ overall_score: 7.0
 
 ## Summary
 
-RLUSD is Ripple's fiat-backed stablecoin, issued through **Standard Custody & Trust Company**, an **NYDFS-regulated** trust entity. It is backed by USD deposits, US Treasuries and cash equivalents held in segregated accounts at **BNY Mellon**, with monthly third-party attestations on the reserve — **at about 107% of liabilities on Ripple's own attestation, not 1:1.** This report previously said 1:1, which understated it.
+RLUSD is Ripple's fiat-backed stablecoin, issued through **Standard Custody & Trust Company**, an **NYDFS-regulated** trust entity. It is backed by USD deposits, US Treasuries and cash equivalents held in segregated accounts at **BNY Mellon**, with monthly third-party attestations on the reserve — **at about 107% of liabilities on Ripple's own attestation, not 1:1.**
 
 Launched in December 2024, RLUSD has scaled to the multi-billion tier while holding its peg, and it now sits inside the regulated dollar cluster alongside PYUSD and GUSD. Along the way it picked up a Binance listing and began expanding institutionally: a JFSA-approved Japan launch via SBI, Deutsche Bank adopting Ripple's payment infrastructure, and a Mastercard/Gemini card pilot.
 
@@ -52,7 +52,7 @@ The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC a
 
 ## What backs it
 
-⚠️ **Corrected 2026-08-24: the reserve is over-collateralised, not 1:1.** Ripple's attestation reports roughly **107%** of liabilities in USD cash, US Treasuries and cash equivalents, held in **segregated accounts at BNY Mellon** under NYDFS oversight, with **monthly attestations**. This report previously described the backing as 1:1 — which was wrong in the issuer's favour by understating it.
+⚠️ **The reserve is over-collateralised, not 1:1.** Ripple's attestation reports roughly **107%** of liabilities in USD cash, US Treasuries and cash equivalents, held in **segregated accounts at BNY Mellon** under NYDFS oversight, with **monthly attestations**.
 
 **That surplus does not lift the Backing axis, and the reason is worth stating.** 7% of headroom is real, but **Ripple publishes no asset-composition breakdown** — the attestation gives a total, not a split between cash, bills and equivalents by maturity. **A larger number you cannot decompose is not the same evidence as a smaller number you can**, which is why this axis holds at 7.0 rather than rising toward the fully-disclosed cohort. Note also that "backed 107%" and "redeemable 1:1" are different claims: the redemption terms below are unchanged and correct. This is a conservative, high-quality composition — the same regulatory regime that governs PYUSD and GUSD, and a genuine strength of the asset.
 

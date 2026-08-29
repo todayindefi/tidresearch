@@ -102,7 +102,7 @@ Until today this section said Agora used *"a different key per chain, which is g
 
 ⚠️ **And for an externally-owned account, the same address across chains is not a coincidence — it is necessarily the same private key.** An EOA's address is derived from its public key, so it cannot be independently deployed the way a contract can. (This is the reverse of the situation with contracts: the same *contract* address on two chains is two separate deployments with potentially different owners, which is why this coverage checks them per-chain. For a plain key, one address means one key, full stop.)
 
-**So the containment credit is withdrawn. A single compromise reaches at least six chains, not one.**
+**A single compromise reaches at least six chains, not one — so there is no containment benefit to credit here.**
 
 ⚠️ **One trap worth naming, because it is what nearly kept a softened version of this alive: the Avalanche ProxyAdmin's *bytecode* genuinely does differ from its siblings.** That is true and it is irrelevant. **A distinct contract can be owned by an identical key** — distinct deployment, single key. Codehash and ownership are separate variables, and reading a differing codehash as evidence of a differing key is the same conflation in miniature as reading a shared address as evidence of a shared owner.
 

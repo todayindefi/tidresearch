@@ -71,7 +71,7 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 
 ## Authority: a Safe over the vault, a single key over the bridge
 
-⚠️ **Correcting the headline claim of this report's first draft, which attributed the single key to the wrong contract.**
+
 
 | layer | owner | |
 |---|---|---|
@@ -79,15 +79,15 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 | **syzUSD bridge** (Monad) | `0x4ea00dc0…4a89ae` | **bare EOA**, no code, no delay |
 | **yzUSD token** (Plasma) | OZ `TimelockController` | **2-day delay** |
 
-**The first draft said the wrapper holding 99% of the value was controlled by a single key, and that an attacker takes the wrapper rather than the token. That was wrong.** The vault sits behind a 4-of-5 Safe; **the bare key owns the bridge.**
+**The vault sits behind a 4-of-5 Safe; the bare key owns the bridge.**
 
-⚠️ **The single-key exposure is still real, and it is now correctly sized: its blast radius is the roughly 10.9M mirrored shares, not the 53.7M in the vault.** That is a material risk on the Monad side and a much smaller one system-wide than previously stated.
+⚠️ **The single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 53.7M in the vault** — a material risk on the Monad side, and a smaller one system-wide.
 
 **The Structural axis stays at 2.0** — the corrected topology is better than the draft described, but the axis was set in June against the single-key finding *and* the unverifiable backing chain, and only the first of those has moved. **The Monad override remains lower because the mirror is precisely where the bare key sits.**
 
 ## Bridge topology
 
-⚠️ **A third correction: the first draft said this had not migrated to CCIP, on the grounds that `getCCIPAdmin()` reverts. It has.** `TokenAdminRegistry.getPool(syzUSD)` returns **live pools on all three chains**, verified directly. **The reverting accessor answered a different question than the registry does** — absence of one CCIP interface is not absence of CCIP.
+**CCIP is live: `TokenAdminRegistry.getPool(syzUSD)` returns pools on all three chains, verified directly.** ⚠️ **Note that `getCCIPAdmin()` reverts here, which is easily read as "no CCIP" — the registry answers the question, the accessor does not.**
 
 The LayerZero OFT surface remains live alongside it. Because an OFT mints and burns per chain rather than locking against a home deployment, **there is no lockbox whose balance bounds the mirrored supply**: whoever controls the peer set can mint on any chain where a peer is configured.
 

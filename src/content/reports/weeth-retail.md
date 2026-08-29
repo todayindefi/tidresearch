@@ -109,7 +109,7 @@ This is weETH's strongest feature, and it was re-verified directly on-chain for 
 | Proposer Safe | `0xcdd57d11476c22d265722F68390b036f3DA48c21` | **6 of 10** signers; holds `PROPOSER_ROLE` |
 | weETH (Base) | `0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A` | upgradeable proxy, bridged |
 
-What that means in plain terms: six of ten named signers must agree to propose any privileged change, and then **everyone gets ten days' notice before it can execute**. Ten days is a long exit window — long enough to unwrap, withdraw and leave if you dislike what has been queued. ⚠️ **That window covers upgrades. The bridge does not run through it — it has its own, and it is five times shorter.** Measured 2026-08-27, and this report previously flagged the gap as unchecked rather than asserting it.
+What that means in plain terms: six of ten named signers must agree to propose any privileged change, and then **everyone gets ten days' notice before it can execute**. Ten days is a long exit window — long enough to unwrap, withdraw and leave if you dislike what has been queued. ⚠️ **That window covers upgrades. The bridge does not run through it — it has its own, and it is five times shorter.** Measured 2026-08-27.
 
 weETH is a LayerZero OFT across **fifteen** deployments. On Ethereum the adapter is a **lockbox holding real weETH**, and its owner is a **separate `TimelockController` with a 172,800-second delay — two days, not ten.** The ten-day timelock this report describes is **a different contract entirely.** Gate-tested: `setPeer` **succeeds** from the two-day timelock and **reverts** from the 6-of-10 upgrade Safe. **The Safe a reader has been told to trust cannot touch the bridge; another one can.**
 

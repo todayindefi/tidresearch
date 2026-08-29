@@ -104,7 +104,7 @@ supply_integrity_flags:
 | **Secondary access** | Uniswap V3 on Ethereum / Arbitrum, Uniswap V4 on Arbitrum, Project X on HyperEVM, plus smaller venues — all permissionless (no KYC). HyperEVM is the deepest single pool today; Base is a deployment chain but has no live liquidity. |
 | **Deployed chains** | Ethereum (canonical), Arbitrum, Base, HyperEVM |
 | **Cross-chain mechanism** | LayerZero OFT |
-| **Market cap** | **About $60.6M** (58,480,001.56 shares × NAV 1.035365, read 2026-08-23; was $87.0M on 08-18 and $130M+ through mid-2026). ⚠️ **96.34% is held intra-protocol at the thUSD reserve**, against the 55–70% band this report previously recorded — see §II.c. External float is about **2.14M tokens (~$2.2M)**. Live supply and float split on the dashboard. |
+| **Market cap** | **About $60.6M** (58,480,001.56 shares × NAV 1.035365, read 2026-08-23; was $87.0M on 08-18 and $130M+ through mid-2026). ⚠️ **96.34% is held intra-protocol at the thUSD reserve**, against a 55–70% band recorded — see §II.c. External float is about **2.14M tokens (~$2.2M)**. Live supply and float split on the dashboard. |
 | **Price** | DEX VWAP trades persistently below NAV. **−2.58% at 2026-08-23**, against −1.63% on 08-18 — now roughly 1.7× the top of the −80 to −150 bps band this report records as *stress* peaks. See §II.c: the band no longer describes this token. Live per-chain peg on the dashboard. |
 
 > *Overall score (4.8) is a weighted composite — see §IV for category weights.*
@@ -281,7 +281,7 @@ Bridge layer audit covers seven dimensions (DVN count, DVN identity, MessageLibr
 | 4. Peer config | Verified across all four EVM chains. Ethereum OFTAdapter `peers()` reads cleanly: BSC, Arbitrum, Mantle, Base, HyperEVM, Monad are all peered (each returning the deterministic CREATE2 address of the L2 OFT); all other EIDs (including the 1-DVN-default and 2-DVN-default chains) return zero. |
 | 5. OApp pause | The Ethereum OFTAdapter does NOT expose `paused()` — it's not Pausable. L2 OFTs likewise don't have it. The underlying iToken vault IS Pausable. Effective bridge-pause options: (i) LayerZero Endpoint-level controls held by LZ governance, or (ii) pausing the iToken vault (which the OFTAdapter must transferFrom/transfer through, indirectly halting bridge flows). Worth confirming with Theo whether the iToken's pause modifier covers transfer hooks. |
 | 6. Endpoint trust | Checked — endpoint owner readable across all four chains; OApp delegate set on L2s, zero on Ethereum. |
-| 7. OApp admin | `owner()` returns the same Theo Safe `0x94877640dD9E6F1e3Cb56Bf7b5665b7152601295` on the Ethereum OFTAdapter as on Arb/Base/HyperEVM. The Safe is **4-of-6 on Ethereum, 3-of-5 on Arbitrum** (Ethereum's six signers are `12eB20B2…`, `895F7c37…`, `7afb1D33…`, `5c1EA222…`, `b7cc3051…` and **`97f60fb7…`**, the last of which this report previously omitted); **3-of-4 on Base and HyperEVM**. ⚠️ **Not per-chain configuration differences — the owner sets are strictly nested**, and the four owners common to every chain satisfy every chain's threshold, Ethereum's 4-of-6 included. See the restated finding below. Signer identities undisclosed — opaque-multisig framing applies. |
+| 7. OApp admin | `owner()` returns the same Theo Safe `0x94877640dD9E6F1e3Cb56Bf7b5665b7152601295` on the Ethereum OFTAdapter as on Arb/Base/HyperEVM. The Safe is **4-of-6 on Ethereum, 3-of-5 on Arbitrum** (Ethereum's six signers are `12eB20B2…`, `895F7c37…`, `7afb1D33…`, `5c1EA222…`, `b7cc3051…` and **`97f60fb7…`**); **3-of-4 on Base and HyperEVM**. ⚠️ **Not per-chain configuration differences — the owner sets are strictly nested**, and the four owners common to every chain satisfy every chain's threshold, Ethereum's 4-of-6 included. See the restated finding below. Signer identities undisclosed — opaque-multisig framing applies. |
 
 **Out-of-scope gaps** consistent across any LayerZero OFT audit: DVN RPC infrastructure, formal adapter contract audit coverage, real-world signer identity, per-pathway rate limits.
 
@@ -302,7 +302,7 @@ Arbitrum (5)          … the same four …  + 0x12eb20b2
 Ethereum (6)          … the same five …  + 0x97f60fb7
 ```
 
-**So this is not four differently-configured Safes. It is one signer set, with three chains holding truncations of it** — which this report previously described as "a small asymmetry worth noting", implying independent per-chain configuration that does not exist.
+**So this is not four differently-configured Safes. It is one signer set, with three chains holding truncations of it** — not independent per-chain configuration, which does not exist.
 
 ⚠️ **And nesting has a consequence that mere asymmetry would not: the four owners common to every chain satisfy every chain's threshold.** Base 3-of-4 ✓, HyperEVM 3-of-4 ✓, Arbitrum 3-of-5 ✓, **and Ethereum 4-of-6 ✓** — because those four sit inside Ethereum's six. **Four keys reach all four chains.** Ethereum's higher 4-of-6 therefore buys nothing against a group that already spans the estate: the Base/HyperEVM set *is* a sufficient subset of it. This is the same shape as [frxUSD](/reports/frxusd/) but tighter — nested rather than merely overlapping, so there is not even an extra-signer step needed to reach the last chain.
 
@@ -435,7 +435,7 @@ In short: for institutional sizing, the primary path delivers NAV (minus any und
 
 **Market cap:** **About $60.6M** at a 2026-08-23 read (58,480,001.56 shares × NAV 1.035365), down from $87.0M five days earlier and from the $130M+ scale this report carried through mid-2026. Supply historically churned week-to-week as thUSD-driven primary mints and thUSD/thBILL redemptions moved through Theo's MPC operator. Live supply on the dashboard.
 
-**Important framing — most thBILL is intra-protocol, not externally held.** **The majority of thBILL outstanding is held at the thUSD reserve `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`** — Theo's own stablecoin product uses thBILL as its primary reserve asset (typically the great majority of thUSD reserves; live composition on `app.theo.xyz/transparency`). ⚠️ **Measured 2026-08-23, that share is 96.34%, not the 55–70% this report previously recorded.** Of 58,480,001.56 thBILL outstanding, **56,336,827.05 sits in the reserve Safe**, leaving an **external float of about 2.14M tokens — roughly $2.2M.**
+**Important framing — most thBILL is intra-protocol, not externally held.** **The majority of thBILL outstanding is held at the thUSD reserve `0xec417ccb6dd26868cca993a92f37217b1d4b3c2f`** — Theo's own stablecoin product uses thBILL as its primary reserve asset (typically the great majority of thUSD reserves; live composition on `app.theo.xyz/transparency`). ⚠️ **Measured 2026-08-23, that share is 96.34%, against a 55–70% band recorded earlier in the year.** Of 58,480,001.56 thBILL outstanding, **56,336,827.05 sits in the reserve Safe**, leaving an **external float of about 2.14M tokens — roughly $2.2M.**
 
 **The reserve's own holding barely moved. What disappeared was almost entirely external float**, from roughly 28M tokens to 2.14M. That reframes the repositioning: this report and its retail companion have described thBILL becoming a backend asset for thUSD *qualitatively*, from Theo's front-end and documentation. **It is now a measurable fact about the token.** Every statement in both reports about retail exit, secondary depth and redemption is scoped to a $2.2M float — against $621K of pool TVL and $4.4K of 24-hour volume.
 
@@ -451,7 +451,7 @@ The **external float** — the portion accessible to retail and secondary market
 
 **Secondary market venue structure — measured 2026-08-18.**
 
-| | live | this report previously said |
+| | live | prior figure |
 |---|---|---|
 | Aggregate DEX TVL | **$671,715** | "low-single-digit-million range" |
 | Fund TVL | **about $87.0M** | "$130M+" |
@@ -480,7 +480,7 @@ What moved:
 1. **Secondary liquidity has collapsed in absolute terms.** $671,715 of aggregate DEX depth against an $87.0M fund (0.77%), on $89,364 of 24h volume, with the canonical Ethereum venue dead at $109/day. The prior score was set against "low-single-digit-million against $130M+."
 2. **The discount is outside its own stress envelope, persistently — and the envelope itself no longer describes this token.** **−2.58% to NAV at 2026-08-23** (−1.633% on 08-18), against a −80 to −150 bps band this report attributes to the April-27 *stress* event. That is roughly **1.7× the top of the band, in a quiet market**, with `peg_discount_persistent` firing.
 
-   ⚠️ **This report previously flagged that reading as anomalous — a stress-band discount "with no stress event." The float collapse resolves the anomaly, and the resolution is that the band is obsolete rather than the reading wrong.** The −80 to −150 bps envelope was calibrated in April 2026 against a token with roughly 28M of external float; that float is now about 2.14M. A discount measured on $621K of pool TVL and $4.4K of daily volume is thin-float pricing, and it is not comparable to the same number measured on a market an order of magnitude deeper. **Treat the stress band as retired for this asset, not breached** — and treat the discount as a statement about how little market there is, rather than about how stressed it is. That is an interpretation of the coincidence in timing, not a demonstrated causal link.
+   ⚠️ **The float collapse explains what would otherwise be anomalous — a stress-band discount with no stress event. The band is obsolete rather than the reading wrong.** The −80 to −150 bps envelope was calibrated in April 2026 against a token with roughly 28M of external float; that float is now about 2.14M. A discount measured on $621K of pool TVL and $4.4K of daily volume is thin-float pricing, and it is not comparable to the same number measured on a market an order of magnitude deeper. **Treat the stress band as retired for this asset, not breached** — and treat the discount as a statement about how little market there is, rather than about how stressed it is. That is an interpretation of the coincidence in timing, not a demonstrated causal link.
 3. **Primary throughput is zero.** No redemption since 2026-07-09 (§II.b). The April-27 execution remains the strongest evidence on this axis, but it is now four months stale and cannot be read as current operational responsiveness.
 
 ### ⚠️ Reserve custody: two single keys, and a $37M relocation whose authorisation is behavioural

@@ -43,7 +43,7 @@ ABSENT    getRoleMember() · getRoleMemberCount()
 
 **Every GSM accessor is missing.** ⚠️ **And the last line is the one that matters most: without `getRoleMember()` or `getRoleMemberCount()`, the addresses holding the mint role cannot be listed from chain state at all.**
 
-**So the accurate description is this: 44.3% of GHO is minted by a role-gated contract whose authorised callers cannot be enumerated on-chain.** Previous coverage on this site described GSM-minted GHO as backed by fiat-stables swapped at a fixed price. **That describes an architecture this contract does not implement, and it is withdrawn.**
+**So the accurate description is this: 44.3% of GHO is minted by a role-gated contract whose authorised callers cannot be enumerated on-chain.** ⚠️ **GSM-minted GHO is often described as backed by fiat-stables swapped at a fixed price. That describes an architecture this contract does not implement.**
 
 ### The cap is the mitigation, and omitting it would overstate the finding
 

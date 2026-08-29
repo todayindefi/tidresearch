@@ -64,7 +64,7 @@ Supply grew sharply over the measurement gap:
 
 ## The authority is split, and the weaker half holds the value
 
-⚠️ **This is the finding that most changes how the asset reads, and an earlier version of this coverage recorded only half of it.**
+⚠️ **This is the finding that most changes how the asset reads.**
 
 | layer | owner | delay |
 |---|---|---|
@@ -72,7 +72,7 @@ Supply grew sharply over the measurement gap:
 | **syzUSD vault + ProxyAdmin** (Plasma) | `0xa2a97004…` — a **4-of-5 Safe** | none stated |
 | **syzUSD bridge** (Monad) | `0x4ea00dc0…4a89ae` — a **bare EOA** | **none** |
 
-⚠️ **Correcting an earlier draft of this section, which attributed the single key to the wrong contract.** The syzUSD **vault** and its ProxyAdmin are both owned by `0xa2a97004…`, verified live as a **4-of-5 Safe** — not a bare key. The bare EOA `0x4ea00dc0…` owns the **bridge**. **So the single-key exposure is real but its blast radius is the roughly 10.9M mirrored shares, not the 99.1% of value sitting in the vault.** The earlier framing — *an attacker takes the wrapper, not the token* — pointed at the wrong layer and is withdrawn.
+**The syzUSD vault and its ProxyAdmin are both owned by `0xa2a97004…`, verified live as a 4-of-5 Safe — not a bare key. The bare EOA `0x4ea00dc0…` owns the bridge.** ⚠️ **So the single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 99.1% of value sitting in the vault.**
 
 **The two-day delay is real and worth stating plainly**, and it is not the protection a holder needs, because it guards the layer where almost none of the value sits. Whether that delay has a floor, and who can propose through it, is **not established** — two days is a setting until the proposer set and any `MINIMUM_DELAY` are read.
 
@@ -91,7 +91,7 @@ ethereum   code 0 bytes (EOA)   native ETH 0.0176
 
 ## The backing is located — and the composition is the problem
 
-⚠️ **Correcting this report before publication: an earlier draft said the collateral could not be located on-chain. That was wrong, and it was wrong because of a wrong hostname.** Two Accountable endpoints were tried and failed DNS; the live one, **`yuzu.accountable.capital`**, was never tried. It resolves, and it carries a full look-through on a 15-minute verification interval.
+**The backing is published and verifiable.** Accountable's feed at **`yuzu.accountable.capital`** carries a full look-through on a 15-minute verification interval. ⚠️ **Two other Accountable hostnames fail DNS, so a check that stops at those returns nothing** — the live host is the one above.
 
 ```
 backing    $62,546,859.02
@@ -99,7 +99,7 @@ supply     $58,497,074.10
 CR            106.92%
 ```
 
-**So the asset is overcollateralized on its own published basis, and this report's earlier "unlocated" framing is withdrawn.**
+**So the asset is overcollateralized on its own published basis.**
 
 ⚠️ **The defensible criticism is not that the backing is missing. It is what the backing consists of.**
 
@@ -113,11 +113,11 @@ CR            106.92%
 
 ## The reserve is thin, not empty
 
-⚠️ **A second correction: an earlier draft of this report said the Reserve Fund holds nothing. It holds $503,428.89.**
+⚠️ **The Reserve Fund holds $503,428.89 — thin, but not empty.**
 
-Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. Earlier passes checked for yzUSD on Plasma and ETH on Ethereum, found zero, and concluded "empty" — **the balance was on a chain and in a token nobody looked for.** Enumerating the address's actual transfer history is what found it; guessing token contracts did not.
+Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. ⚠️ **A check for yzUSD on Plasma or ETH on Ethereum returns zero and looks like an empty reserve** — the balance sits on a different chain in a different token. Enumerating the address's transfer history finds it; guessing token contracts does not.
 
-**Thin is the supportable criticism: $503K is 0.86% of supply.** ⚠️ **Empty was not supportable, and the difference matters — one is a small buffer, the other would have been a governance failure.**
+**Thin is the supportable criticism: $503K is 0.86% of supply against a reserve that has not grown with issuance.**
 
 ## Liquidity and movement
 
