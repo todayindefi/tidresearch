@@ -12,15 +12,45 @@ featured: false
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=syzusd"
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. The site owner's condition (2026-08-29) is that yzUSD
-# and syzUSD ship as a report+dashboard set, and the dashboard half does not
-# exist yet. Promote only once a working dashboard is reachable for this
-# asset; until then `production: false` is the correct state, not an oversight.
+# and syzUSD ship as a report+dashboard set. ⚠️ THE DASHBOARD HALF NOW EXISTS
+# AND RENDERS — syzUSD's missing peg chart was a null `peg.history_ref` in
+# backing-monitor's feed and was fixed 2026-08-29 — so the ORIGINAL hold reason
+# is spent. The owner raised the bar the same day and that is the live gate:
+# EVERY TILE MUST BE FILLED before production. Unfilled as of 2026-08-29 —
+# syzUSD: liquidity axis "Not rated", 2% depth / max-≤25bps / exit ladder all
+# n/a, no collateral-ratio history block (no syzusd_backing_history.json).
+# Both: max-≤25bps n/a, redemption reachability unprobed ("not probed in v1"),
+# downstream not tracked, and 48.3% of yzUSD's upstream deps render "No
+# dashboard" while we run live monitors for them (usde, susde, syrupusdc,
+# syrupusdt). Filling these is backing-monitor / PegTracker / DexTracker work,
+# NOT ours. "No report linked" clears on publication and is not a blocker.
+# ⚠️ Re-verify the RENDERED dashboard in a browser before proposing promotion;
+# feed properties are not evidence that a renderer drew anything.
 production: false
 issuer: "Yuzu Money"
 underlying_assets: ["yzUSD"]
 yield_bearing: true
+# FIVE-AXIS FRAME — Stability · Backing · Liquidity & Exit · Contract & Admin · Issuer.
+# ⚠️ What moved, and what only changed name:
+#   underlying_score 4.5 is NEW and renders as BACKING. This report had no backing
+#     axis at all, which was a real hole: a syzUSD share is a claim on yzUSD, so
+#     the reserve IS the risk. Inherited from yzUSD's `backing_score` because the
+#     vault is pass-through — it holds yzUSD directly and does not lever it.
+#     ⚠️ Inherited, NOT independently judged: if yzUSD's backing moves, this must.
+#   liquidity_score 3.0 -> 2.5. Axis 3 is scored on the WORSE exit leg. The venue
+#     leg is better than this coverage once said (a routed $100k clears inside
+#     10 bps on Monad); the redemption leg is KYC-gated and best-effort THROUGH
+#     yzUSD, so it binds, and 2.5 is the old `redemption_score` carried onto the
+#     merged axis unchanged.
+#   structural_score 2.0 is Contract & Admin already — no change, no re-judging.
+#   volatility_score is the Stability key for a NAV-referenced share.
+# ⚠️ `redemption_score` is RETAINED in frontmatter but no longer rendered: it is
+# the input to the worse-leg rule above, and deleting it would erase the evidence
+# for why Liquidity & Exit is 2.5 rather than 3.0.
+axis_frame: five
 volatility_score: 3.0
-liquidity_score: 3.0
+underlying_score: 4.5
+liquidity_score: 2.5
 structural_score: 2.0
 issuer_score: 4.0
 redemption_score: 2.5
@@ -28,7 +58,7 @@ overall_score: 2.5
 chain_overrides:
   monad:
     volatility_score: 3.0
-    liquidity_score: 3.0
+    liquidity_score: 2.0
     structural_score: 1.5
     redemption_score: 2.0
     overall_score: 2.0
@@ -77,11 +107,24 @@ margin: 0 wei
 
 ⚠️ **The lockbox and the mirrors are equal to the wei — margin exactly zero, not merely close.** That is worth more than a comfortable surplus would be: it shows the lockbox backs **precisely** what is mirrored, **and it shows this chain list is complete, because a single missing satellite would break the equality.** **The legs above are rounded for reading; the equality is on the unrounded integers.**
 
-⚠️ **The exit constraint on Monad is the ratio of claims to venues, not a measured cliff.** **$11.0M of issuer vault sits on Monad against $483K of swap TVL across both pools** — roughly twenty-three times more claim than venue. **That asymmetry is the finding**, and it holds however the depth is distributed.
+**Monad's exit is deeper than its pool list suggests.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, and the 2% crossing falls between $100k and $250k:
 
-**A ladder on one of those pools shows steep degradation** — the Surge syzUSD/wnAUSD pool at $108,146 costs about 65 bps at $25k and 528 bps at $50k, with the fee rising off-balance so cost accelerates rather than scales. ⚠️ **But that pool is only 22% of Monad's swap TVL**, and the larger SYZUSD-CSUSDC pool at $374,780 has not been laddered — **so treat it as one venue's behaviour, not as Monad's exit.**
+| Size sold | Total execution cost |
+| --- | --- |
+| $10,000 | −0.8 bps |
+| $25,000 | −2.4 bps |
+| $50,000 | −4.3 bps |
+| $100,000 | −9.6 bps |
+| $250,000 | −334 bps |
+| $500,000 | −4,924 bps |
 
-⚠️ **By contrast the Plasma leg of the underlying clears $250,000 inside 13 bps**, so the constraint is not where the chain sizes suggest: it sits with **this wrapper**, not with [yzUSD](/reports/yzusd/).
+*syzUSD → csUSDC on Monad, best available route, measured 2026-08-29. Cost is total, not marginal: what leaves the wallet against what arrives. Sizes below $10k are omitted because at that scale the figure is dominated by the pricing marks on each side rather than by depth.*
+
+⚠️ **A single-pool ladder is not the asset's exit, and reading one as the other is the error this table replaces.** The route filled from four venue types — two Balancer pools, a Kuru order book and Uniswap v4 — so **the $483K of swap TVL enumerated across two pools is a floor on the venue set, not a census of it.** Any ratio built on that denominator overstates the crowding.
+
+**What survives is where the claims sit relative to the venues, and it deserves stating without severity attached:** $11.0M of issuer vault sits on Monad, while **Sei ($9.9M) and Ethereum ($753K) hold vault TVL with no local swap venue at all.** ⚠️ **That is a distance between a claim and a place to sell it — not a bottleneck.** Retail and mid-size exits clear in single-digit bps; the cost is a large-holder problem that begins past $100k and becomes severe past $250k.
+
+⚠️ **The Plasma leg of the underlying still clears $250,000 inside 13 bps**, so beyond about $100k the constraint does sit with **this wrapper** rather than with [yzUSD](/reports/yzusd/) — but below that size neither leg is binding.
 
 ⚠️ **Where this asset actually lives is the finding: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply.** Neither has a CEX presence or mature tooling, and Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY. **A reader told "Plasma, Monad and Ethereum" would badly misjudge this.** The deployments are **not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing.
 

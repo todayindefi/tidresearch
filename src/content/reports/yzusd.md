@@ -13,16 +13,44 @@ featured: false
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=yzusd"
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. The site owner's condition (2026-08-29) is that yzUSD
-# and syzUSD ship as a report+dashboard set, and the dashboard half does not
-# exist yet. Promote only once a working dashboard is reachable for this
-# asset; until then `production: false` is the correct state, not an oversight.
+# and syzUSD ship as a report+dashboard set. ⚠️ THE DASHBOARD HALF NOW EXISTS
+# AND RENDERS — syzUSD's missing peg chart was a null `peg.history_ref` in
+# backing-monitor's feed and was fixed 2026-08-29 — so the ORIGINAL hold reason
+# is spent. The owner raised the bar the same day and that is the live gate:
+# EVERY TILE MUST BE FILLED before production. Unfilled as of 2026-08-29 —
+# syzUSD: liquidity axis "Not rated", 2% depth / max-≤25bps / exit ladder all
+# n/a, no collateral-ratio history block (no syzusd_backing_history.json).
+# Both: max-≤25bps n/a, redemption reachability unprobed ("not probed in v1"),
+# downstream not tracked, and 48.3% of yzUSD's upstream deps render "No
+# dashboard" while we run live monitors for them (usde, susde, syrupusdc,
+# syrupusdt). Filling these is backing-monitor / PegTracker / DexTracker work,
+# NOT ours. "No report linked" clears on publication and is not a blocker.
+# ⚠️ Re-verify the RENDERED dashboard in a browser before proposing promotion;
+# feed properties are not evidence that a renderer drew anything.
 production: false
 issuer: "Yuzu Money"
 audited_reserves: false
 market_cap_approx: 58497074
+# FIVE-AXIS FRAME — Stability · Backing · Liquidity & Exit · Contract & Admin · Issuer.
+# ⚠️ Two of these five numbers MOVED when the frame was applied; they are not a
+# relabelling of the old four:
+#   liquidity_score 4.0 -> 3.0. Axis 3 is scored on the WORSE exit leg, never the
+#     average. The venue leg is strong — Plasma clears $250k inside 13 bps — but
+#     primary redemption is KYC-gated and best-effort, and that is the leg that
+#     binds. 3.0 sits just above syzUSD's 2.5 because this is the same gate
+#     WITHOUT the wrapper hop, not a different gate.
+#   structural_score 5.0 is NEW. The old stablecoin rubric had no Contract & Admin
+#     axis, so yzUSD's 2-day OZ TimelockController on the token owner was scored
+#     nowhere. It is the better half of a split authority and rates above every
+#     other axis here — held to 5.0, not higher, because the timelock's proposer
+#     and executor set is NOT established in this coverage.
+# Stability, Backing and Issuer carry over unchanged; `peg_mechanism_score` is the
+# Stability key for a $1-referenced asset. See content.config.ts for the frame.
+axis_frame: five
 peg_mechanism_score: 4.5
 backing_score: 4.5
-liquidity_score: 4.0
+liquidity_score: 3.0
+structural_score: 5.0
 issuer_score: 4.0
 overall_score: 4.0
 chain_overrides:
@@ -30,6 +58,9 @@ chain_overrides:
     peg_mechanism_score: 3.5
     backing_score: 4.5
     liquidity_score: 2.5
+    # The mirror's authority is the bare EOA bridge with no delay — the opposite
+    # half of the split from the timelocked token owner above.
+    structural_score: 2.0
     issuer_score: 3.5
     overall_score: 3.0
 ---
@@ -122,7 +153,7 @@ $250k  −12.13 bps
 
 **Turnover and depth are different quantities.** Low volume means nobody is trading it, not that you cannot get out — and on this leg you can, at retail size and well beyond it. Primary redemption remains KYC-gated and best-effort, so a DEX is the retail path, **but that path is not the constraint it looks like from the volume figure.**
 
-⚠️ **The constraint sits one layer up, on the wrapper.** See [syzUSD](/reports/syzusd/): **$11.0M of issuer vault on Monad stands against $483K of swap TVL**, and that ratio — not this Plasma leg — is where a large holder would meet the limit.
+⚠️ **The constraint sits one layer up, on the wrapper — and further out than the chain sizes suggest.** See [syzUSD](/reports/syzusd/): **$11.0M of issuer vault stands on Monad against an enumerated $483K of swap TVL**, but **a routed $100k exit there still clears inside 10 bps**, and the enumeration misses venues the router actually uses. The gap is real and it is a large-holder problem past $100k, **not a retail one.**
 
 ## Who should avoid this
 

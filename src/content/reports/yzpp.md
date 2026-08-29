@@ -11,8 +11,13 @@ last_revised: "2026-08-29"
 featured: false
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. yzPP belongs to the Yuzu set (yzUSD, syzUSD), which the
-# site owner has held pending a working dashboard. Promotion of this page is an
-# open question referred to the owner, not an oversight.
+# site owner has held until every dashboard tile is filled (ruled 2026-08-29;
+# the earlier "pending a working dashboard" reason is spent — the dashboards
+# render, they are incomplete). yzPP has no dashboard of its own and, on
+# riskAnalyst's own assessment, probably does not warrant one at $4.73M / 133
+# holders — so a strict reading of the set condition holds this page
+# indefinitely. ⚠️ That is an OPEN QUESTION referred to the owner and still
+# unanswered, not an oversight and not a decision anyone else may take.
 production: false
 issuer: "Yuzu Money"
 underlying_assets: ["USDT0"]
