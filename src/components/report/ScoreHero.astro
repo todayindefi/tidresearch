@@ -54,24 +54,33 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
 };
 
 
-// The consolidated five-axis frame, opted into per report via `axis_frame: five`.
-// Field names are the EXISTING schema keys deliberately — renaming them across
-// the corpus would touch every report and every chain override for a cosmetic
-// gain. What changes is which axes are shown and what they mean:
-//   Stability        peg vs its own reference — $1 for a stablecoin, NAV for a share
-//   Backing          reserve composition, coverage, attestation
-//   Liquidity & Exit BOTH legs, scored on the WORSE one (see content.config.ts)
-//   Contract & Admin upgrade authority, keys, timelock depth, pause surface
-//   Issuer           entity, jurisdiction, disclosure, related-party posture
-// ⚠️ `redemption_score` and `underlying_score` are intentionally ABSENT: the
-// first is folded into Liquidity & Exit, the second into Backing. A report on
-// this frame may still carry them in frontmatter without rendering them.
-const FIVE_AXES: Axis[] = [
+
+
+// The consolidated SIX-AXIS core, opted into per report via `axis_frame: six`.
+// Order is load-bearing and matches the dashboards exactly (backinmonitor
+// `c0a5ec270`, all 19 axis-mode assets):
+//   1 Stability        deviation from its own reference — $1 for a coin, NAV for a share
+//   2 Backing          reserve composition, coverage, attestation
+//   3 Liquidity & Exit BOTH legs, scored on the WORSE one (see content.config.ts)
+//   4 Dependencies     what this asset's value passes through to
+//   5 Contract & Admin upgrade authority, keys, timelock depth, pause surface — MEASURED
+//   6 Issuer           entity, jurisdiction, disclosure, related-party posture — EDITORIAL
+// ⚠️ THE ORDER IS NOT COSMETIC. The dashboard frame that preceded this ran
+// `Peg · Liquidity · Backing · Dependencies · Issuer` — Backing and Liquidity
+// swapped relative to the report spec, so three of five positions disagreed
+// while everyone argued about the label at position 5. Do not reorder either
+// side alone.
+// ⚠️ 5 AND 6 ARE DELIBERATELY SPLIT, and the earlier "Issuer & control" merge
+// is withdrawn on both sides. A reputable issuer can hold a bare EOA upgrade
+// key — yzUSD is the proof, since its timelocked token owner and its no-delay
+// bridge EOA belong to the same issuer. One score cannot span a checkable axis
+// and a subjective one.
+const SIX_AXES: Axis[] = [
   { key: "peg_mechanism_score", label: "Stability" },
   { key: "volatility_score", label: "Stability" },
   { key: "backing_score", label: "Backing" },
-  { key: "underlying_score", label: "Backing" },
   { key: "liquidity_score", label: "Liquidity & Exit" },
+  { key: "underlying_score", label: "Dependencies" },
   { key: "structural_score", label: "Contract & Admin" },
   { key: "issuer_score", label: "Issuer" },
 ];
@@ -86,8 +95,8 @@ const rwaRetailAxes = !isRwa
     : typeof data.peg_mechanism_score === "number"
       ? AXES_BY_CATEGORY.stablecoin
       : null;
-const axes = (data.axis_frame === "five"
-  ? FIVE_AXES
+const axes = (data.axis_frame === "six"
+  ? SIX_AXES
   : rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []
 )
   .filter((a) => typeof data[a.key] === "number")

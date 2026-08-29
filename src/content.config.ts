@@ -37,8 +37,8 @@ const chainOverride = z
 // Before adding a display field to an institutional report, check which component
 // reads it — schema-legal is not the same as rendered.
 
-// Opt-in to the consolidated FIVE-AXIS frame:
-//   Stability · Backing · Liquidity & Exit · Contract & Admin · Issuer
+// Opt-in to the consolidated SIX-AXIS core:
+//   Stability · Backing · Liquidity & Exit · Dependencies · Contract & Admin · Issuer
 // Absent, a report renders on its category's historical rubric. This is a
 // per-report switch ON PURPOSE — the corpus ran six rubrics with a long dead
 // tail, and flipping AXES_BY_CATEGORY wholesale would re-frame 51 reports whose
@@ -50,7 +50,17 @@ const chainOverride = z
 // because the gate is invisible on-chain. State both legs in prose, always.
 // ⚠️ Both ScoreHero AND RiskSidebar must honour this flag or a report renders
 // one rubric to institutional readers and another to retail ones.
-const AXIS_FRAME = z.enum(["five"]).optional();
+// ⚠️ AXIS 4 (Dependencies) READS `underlying_score`, AND THAT CHANGES WHAT THE
+// FIELD MEANS. Off the frame it is "collateral quality of the underlying" per
+// the rule above. On the frame it is "what this asset's value passes through
+// to". For a vault share those coincide — syzUSD's underlying IS its whole
+// dependency — which is why ~26 reports can SEED axis 4 instead of authoring
+// it. ⚠️ Seeded is not the same as judged: a carried-over number still has to
+// be re-read against concentration and circularity before it is trusted.
+// The earlier five-axis draft merged `underlying_score` INTO Backing, which
+// would have deleted the dependency axis exactly where the dependency IS the
+// risk (syzUSD -> yzUSD, sUSDe -> USDe, apyUSD -> apxUSD). That is why six.
+const AXIS_FRAME = z.enum(["six"]).optional();
 
 // Common across every report.
 const common = {
@@ -106,7 +116,7 @@ const stablecoin = z.object({
   liquidity_score: score,
   // Optional 5th axis: collateral quality (e.g. T-Bills) independent of wrapper-layer risk.
   underlying_score: score.optional(),
-  // Contract & Admin. Optional here and REQUIRED under `axis_frame: five` —
+  // Contract & Admin. Optional here and REQUIRED under `axis_frame: six` —
   // the historical stablecoin rubric had no home for upgrade authority at all,
   // which is why a token behind a 2-day timelock and one behind a bare EOA
   // scored identically on this category.
@@ -118,6 +128,11 @@ const stablecoin = z.object({
 
 const wrappedAxes = {
   volatility_score: score,
+  // Backing (axis 2) under `axis_frame: six`. Optional because the historical
+  // wrapped/vault rubric had no reserve axis at all — a share whose entire
+  // risk is a claim on someone else's reserve was scored on everything except
+  // that reserve.
+  backing_score: score.optional(),
   structural_score: score,
   redemption_score: score,
   liquidity_score: score,

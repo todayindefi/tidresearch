@@ -30,13 +30,19 @@ production: false
 issuer: "Yuzu Money"
 underlying_assets: ["yzUSD"]
 yield_bearing: true
-# FIVE-AXIS FRAME — Stability · Backing · Liquidity & Exit · Contract & Admin · Issuer.
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Order matches the dashboards exactly.
 # ⚠️ What moved, and what only changed name:
-#   underlying_score 4.5 is NEW and renders as BACKING. This report had no backing
-#     axis at all, which was a real hole: a syzUSD share is a claim on yzUSD, so
-#     the reserve IS the risk. Inherited from yzUSD's `backing_score` because the
-#     vault is pass-through — it holds yzUSD directly and does not lever it.
-#     ⚠️ Inherited, NOT independently judged: if yzUSD's backing moves, this must.
+#   backing_score 4.5 is NEW. This report had no backing axis at all, which was a
+#     real hole: a syzUSD share is a claim on yzUSD, so the reserve IS the risk.
+#     Inherited from yzUSD because the vault is pass-through — it holds yzUSD
+#     directly and does not lever it. ⚠️ Inherited, NOT independently judged: if
+#     yzUSD's backing moves, this must.
+#   underlying_score 2.5 is NEW and renders as DEPENDENCIES. ⚠️ It is WORSE than
+#     yzUSD's 3.0 and that is the point of the axis: this vault carries yzUSD's
+#     entire dependency book — Ethena, the levered loops, the recursive yzPRIME —
+#     AND adds a single point of failure of its own, since 100% of its value
+#     passes through one asset. Concentration on top of concentration.
 #   liquidity_score 3.0 -> 2.5. Axis 3 is scored on the WORSE exit leg. The venue
 #     leg is better than this coverage once said (a routed $100k clears inside
 #     10 bps on Monad); the redemption leg is KYC-gated and best-effort THROUGH
@@ -47,10 +53,11 @@ yield_bearing: true
 # ⚠️ `redemption_score` is RETAINED in frontmatter but no longer rendered: it is
 # the input to the worse-leg rule above, and deleting it would erase the evidence
 # for why Liquidity & Exit is 2.5 rather than 3.0.
-axis_frame: five
+axis_frame: six
 volatility_score: 3.0
-underlying_score: 4.5
+backing_score: 4.5
 liquidity_score: 2.5
+underlying_score: 2.5
 structural_score: 2.0
 issuer_score: 4.0
 redemption_score: 2.5
@@ -74,9 +81,15 @@ chain_overrides:
 |---|---|---|---|---|
 | Accrues in NAV — 1.078123 per share, measured 2026-08-29 | Secondary only for retail | KYC-gated, best-effort, via [yzUSD](/reports/yzusd/) | ~12 months | Plasma (canonical vault), Monad (OFT mirror) |
 
-## The vault exists, and this coverage did not have it
+## What this actually is
 
-⚠️ **The most important correction in this pass is that syzUSD's canonical vault was located, and earlier coverage had been querying a mirror.**
+**A real ERC-4626 vault on Plasma holding yzUSD, with its shares mirrored outward as a LayerZero OFT.** It holds **99.1% of all yzUSD**, so it is where nearly the whole system's value sits — and it is the layer that travels, while [yzUSD](/reports/yzusd/) itself stays on Plasma.
+
+⚠️ **Its risk is yzUSD's risk plus this contract, and almost nothing else.** The vault does not lever, does not allocate, and holds no reserve of its own. **Read this page for the wrapper and the exit; read the underlying for what actually backs a share.**
+
+## 1 · Stability
+
+**Reference: NAV, not a dollar.** syzUSD is an ERC-4626 share and accrues; it has no peg to break. What it can do is trade away from what it can be redeemed for.
 
 ```
 syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, ERC-4626
@@ -86,28 +99,29 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
   holds                  57,990,876.97 yzUSD = 99.1% of ALL yzUSD supply
 ```
 
-**Until now there was no readable NAV for this asset, and the reason was a wrong target.** Earlier work queried the **Monad proxy** `0x484be054…`, where `asset()` and `convertToAssets()` both revert — and read those reverts as evidence that syzUSD was not a vault at all.
+⚠️ **Until this pass there was no readable NAV for this asset, and the reason was a wrong target.** Earlier work queried the **Monad proxy** `0x484be054…`, where `asset()` and `convertToAssets()` both revert — and read those reverts as evidence that syzUSD was not a vault at all. **They are not.** The Monad deployment is an **OFT mirror**, and a mirror is expected to have no `asset()`; its `token()` returns its own address, the signature of an OFT rather than an OFTAdapter. **The reverts were a correct reading of the wrong contract.**
 
-⚠️ **They are not. The Monad deployment is an OFT mirror, and a mirror is expected to have no `asset()`.** Its `token()` returns its own address, which is the signature of an OFT rather than an OFTAdapter: **mint-and-burn on each chain, not lock-and-mirror against a home lockbox.** The reverts were a correct reading of the wrong contract.
+**Live deviation is small and measured against the right thing:** market **1.0756** against NAV **1.0782**, a **−0.247% discount**. ⚠️ **That is a discount to a redemption value, not a stablecoin off its peg** — a distinction a tile on this asset previously got wrong by dividing a 30-hour-old price into a live accruing NAV and reporting −2.84%.
 
-**So the structure is: a real ERC-4626 vault on Plasma holding yzUSD, with shares mirrored outward as an OFT.**
+⚠️ **And the deviation is struck on almost no turnover** — 24h volume of **$995** — so it is weak evidence about fair value and strong evidence about exit cost. Both readings belong; see axis 3.
 
-⚠️ **And the footprint is wider than the vault suggests — seven chains, not three.** Mirrored balances, read live:
+## 2 · Backing
 
-```
-Monad      10,210,297.16      Ethereum      698,725.76
-Sei         9,190,234.55      Berachain     129,781.69
-Pharos      2,861,652.65      HyperEVM            0.21
-                    (legs shown rounded to 2dp)
-----------------------------------------------------
-satellites   23,090,692.029661   =   locked   23,090,692.029661
-at wei precision:   23,090,692,029,660,641,890,153,643  both sides
-margin: 0 wei
-```
+⚠️ **This vault has no reserve of its own, and that is the whole finding.** `totalAssets` is yzUSD held directly, one-for-one, not borrowed against. **The vault is not looping.** So whatever risk attaches to yzUSD's backing passes straight through — it is neither amplified nor buffered here.
 
-⚠️ **The lockbox and the mirrors are equal to the wei — margin exactly zero, not merely close.** That is worth more than a comfortable surplus would be: it shows the lockbox backs **precisely** what is mirrored, **and it shows this chain list is complete, because a single missing satellite would break the equality.** **The legs above are rounded for reading; the equality is on the unrounded integers.**
+**On its own basis the underlying runs CR 106.92%.** ⚠️ **But roughly 70% of that reserve sits in levered loop positions, Ethena exposure is about five times the surplus, and 4.8% is the issuer's own `yzPRIME`.** **So a syzUSD share is a claim on yzUSD at a readable NAV, and yzUSD is a claim on a levered book with a thin cushion.** The composition itself is axis 4; the coverage is here. Full treatment in the [yzUSD report](/reports/yzusd/).
 
-**Monad's exit is deeper than its pool list suggests.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, and the 2% crossing falls between $100k and $250k:
+⚠️ **Sourcing note that governs every backing figure on this page and on the underlying: Accountable's founder is an investor in Yuzu.** That feed is a related-party disclosure channel, not independent verification. The on-chain reads — supply, NAV, the wei-exact conservation under axis 5 — stand on their own.
+
+⚠️ **One thing to know before reading the live dashboard: its BACKING tile shows yzUSD's collateral ratio, not syzUSD's.** This vault publishes share supply, NAV per share and yield, and no coverage ratio. That is the right number to care about, since a share is a claim on yzUSD — **but it is not a measure of this contract.**
+
+## 3 · Liquidity & Exit
+
+**Both exit paths, and they do not agree. The axis takes the worse one.**
+
+**Primary redemption — the binding leg.** KYC-gated and best-effort, and it does not run here: a holder redeems **through [yzUSD](/reports/yzusd/)**, so this vault adds a hop to a gate it does not control. ⚠️ **Reachability has never been probed.** Unmeasured is not open.
+
+**Secondary — the better leg, and better than this coverage once said.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, with the 2% crossing between $100k and $250k:
 
 | Size sold | Total execution cost |
 | --- | --- |
@@ -122,25 +136,32 @@ margin: 0 wei
 
 ⚠️ **A single-pool ladder is not the asset's exit, and reading one as the other is the error this table replaces.** The route filled from four venue types — two Balancer pools, a Kuru order book and Uniswap v4 — so **the $483K of swap TVL enumerated across two pools is a floor on the venue set, not a census of it.** Any ratio built on that denominator overstates the crowding.
 
-**What survives is where the claims sit relative to the venues, and it deserves stating without severity attached:** $11.0M of issuer vault sits on Monad, while **Sei ($9.9M) and Ethereum ($753K) hold vault TVL with no local swap venue at all.** ⚠️ **That is a distance between a claim and a place to sell it — not a bottleneck.** Retail and mid-size exits clear in single-digit bps; the cost is a large-holder problem that begins past $100k and becomes severe past $250k.
+**What survives is where the claims sit relative to the venues, and it deserves stating without severity attached:** $11.0M of issuer vault sits on Monad, while **Sei ($9.9M) and Ethereum ($753K) hold vault TVL with no local swap venue at all.** ⚠️ **That is a distance between a claim and a place to sell it — not a bottleneck.** Retail and mid-size exits clear in single-digit bps; the cost is a large-holder problem past $100k and severe past $250k.
 
-⚠️ **The Plasma leg of the underlying still clears $250,000 inside 13 bps**, so beyond about $100k the constraint does sit with **this wrapper** rather than with [yzUSD](/reports/yzusd/) — but below that size neither leg is binding.
+⚠️ **The Plasma leg of the underlying still clears $250,000 inside 13 bps**, so beyond about $100k the constraint sits with **this wrapper** rather than with yzUSD — but below that size neither leg is binding.
 
-⚠️ **Where this asset actually lives is the finding: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply.** Neither has a CEX presence or mature tooling, and Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY. **A reader told "Plasma, Monad and Ethereum" would badly misjudge this.** The deployments are **not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing.
+⚠️ **Where this asset actually lives matters more than either ladder: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply**, and neither has a CEX presence or mature tooling. Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY — and **no local way out.** A reader told "Plasma, Monad and Ethereum" would badly misjudge this.
 
-⚠️ **One thing to know before reading the live dashboard: its BACKING tile shows yzUSD's collateral ratio, not syzUSD's.** This vault has no coverage ratio of its own — what it publishes is share supply, NAV per share and yield — **so the percentage on that tile is the underlying's.** That is the right number to care about, since a syzUSD share is a claim on yzUSD, but **it is not a measure of this contract**, and the dashboard's own dependency note says the same: syzUSD's risk is yzUSD's risk plus the vault contract.
+## 4 · Dependencies
 
-## The risk at this layer is pass-through, not leverage
+⚠️ **100% of this asset's value passes through one other asset.** There is no diversification at this layer and none is possible: the vault holds yzUSD and nothing else.
 
-⚠️ **The vault is not looping.** `totalAssets` is the yzUSD it directly holds, and it holds it one-for-one rather than borrowing against it.
+**So the dependency book is yzUSD's, inherited whole:**
 
-**That matters for where the risk actually lives.** A syzUSD share is a claim on yzUSD, and **whatever risk attaches to yzUSD's own backing passes straight through** — it is not amplified here. **The leverage concern, if there is one, belongs one layer down**, in what backs yzUSD itself, and that is [covered separately](/reports/yzusd/).
+| Exposure | Share of the underlying's backing | Why it is a dependency and not just an asset |
+|---|---|---|
+| **Ethena** (USDe + sUSDe loops) | ~34.6% | Roughly **4.2× the surplus** — the reserve cannot absorb a large move in one name |
+| **Levered loop positions** (all) | ~69.9% | A collateral ratio measured on a levered book is not that ratio on spot |
+| **`yzPRIME`** (Yuzu's own) | 4.8% | ⚠️ **Recursive** — the issuer's product inside the issuer's reserve |
+| **`yzPP`** (junior tranche) | ~90% of the surplus | ⚠️ **Circular** — first-loss capital whose own value is a claim on the book it cushions, and third-party money redeemable on a 30-day window |
 
-⚠️ **One sourcing note that applies to every backing figure here and on the underlying: Accountable's founder is an investor in Yuzu**, so that feed is a related-party disclosure channel rather than independent verification. On-chain reads — supply, NAV, the wei-exact conservation above — stand on their own. ⚠️ **And the layer beneath is where the risk concentrates.** yzUSD's backing **is** published and verifiable — a first draft of this report said otherwise and was wrong, having tried two dead hostnames and missed the live one. On its own basis it runs **CR 106.92%**. ⚠️ **But roughly 70% of that reserve sits in levered loop positions, Ethena exposure is about five times the surplus, and 4.8% is the issuer's own `yzPRIME`.** **So a syzUSD share is a claim on yzUSD at a readable NAV, and yzUSD is a claim on a levered book with a thin cushion.** See the [yzUSD report](/reports/yzusd/).
+⚠️ **The axis is scored WORSE than the underlying's, at 2.5 against yzUSD's 3.0, and that is deliberate.** This vault carries every dependency above **and adds a single point of failure of its own.** Concentration on top of concentration is not the same risk as concentration alone.
 
-## Authority: a Safe over the vault, a single key over the bridge
+**The deployments are not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing. ⚠️ **A failed lookup here reads as absence and is not.**
 
+## 5 · Contract & Admin
 
+**Three layers, three different owners. The weak one is not the one holding the value.**
 
 | layer | owner | |
 |---|---|---|
@@ -148,33 +169,53 @@ margin: 0 wei
 | **syzUSD bridge** (Monad) | `0x4ea00dc0…4a89ae` | **bare EOA**, no code, no delay |
 | **yzUSD token** (Plasma) | OZ `TimelockController` | **2-day delay** |
 
-**The vault sits behind a 4-of-5 Safe; the bare key owns the bridge.**
+⚠️ **The single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 53.7M in the vault** — material on the Monad side, smaller system-wide. **The axis stays at 2.0**: the corrected topology is better than an earlier draft described, but the score was set against the single-key finding *and* the unverifiable backing chain, and only the first has moved. **The Monad override is lower because the mirror is precisely where the bare key sits.**
 
-⚠️ **The single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 53.7M in the vault** — a material risk on the Monad side, and a smaller one system-wide.
+**Mirrored supply reconciles exactly.** Balances read live across seven chains:
 
-**The Structural axis stays at 2.0** — the corrected topology is better than the draft described, but the axis was set in June against the single-key finding *and* the unverifiable backing chain, and only the first of those has moved. **The Monad override remains lower because the mirror is precisely where the bare key sits.**
+```
+Monad      10,210,297.16      Ethereum      698,725.76
+Sei         9,190,234.55      Berachain     129,781.69
+Pharos      2,861,652.65      HyperEVM            0.21
+                    (legs shown rounded to 2dp)
+----------------------------------------------------
+satellites   23,090,692.029661   =   locked   23,090,692.029661
+at wei precision:   23,090,692,029,660,641,890,153,643  both sides
+margin: 0 wei
+```
 
-## Bridge topology
+⚠️ **Margin is exactly zero, not merely close** — worth more than a comfortable surplus would be, because it shows the lockbox backs **precisely** what is mirrored, **and that this chain list is complete: a single missing satellite would break the equality.** The legs are rounded for reading; the equality is on the unrounded integers.
 
-**CCIP is live: `TokenAdminRegistry.getPool(syzUSD)` returns pools on all three chains, verified directly.** ⚠️ **Note that `getCCIPAdmin()` reverts here, which is easily read as "no CCIP" — the registry answers the question, the accessor does not.**
+**Bridge: CCIP is live.** `TokenAdminRegistry.getPool(syzUSD)` returns pools on all three chains, verified directly. ⚠️ **`getCCIPAdmin()` reverts here, which is easily read as "no CCIP" — the registry answers the question, the accessor does not.**
 
-The LayerZero OFT surface remains live alongside it. Because an OFT mints and burns per chain rather than locking against a home deployment, **there is no lockbox whose balance bounds the mirrored supply**: whoever controls the peer set can mint on any chain where a peer is configured.
+The LayerZero OFT surface runs alongside it. Because an OFT mints and burns per chain rather than locking against a home deployment, **there is no lockbox whose balance bounds mirrored supply**: whoever controls the peer set can mint on any chain where a peer is configured. ⚠️ **The peer set is not established and this report will not imply it is.** A scan returned zero peers for four endpoint IDs (30101 / 30110 / 30184, plus a guess), **but Plasma's LayerZero eid was not among them because it is not known to us.** *"No peers on four eids we chose"* is not *"the peer set is empty."*
 
-⚠️ **The peer set itself is not established, and this report will not imply it is.** A scan returned zero peers for four endpoint IDs (30101 / 30110 / 30184, plus a guess), **but Plasma's LayerZero eid was not among them because it is not known to us.** *"No peers on four eids we chose"* is not *"the peer set is empty"* — establishing it needs the eid list, which is the next measurement.
+## 6 · Issuer
+
+**Yuzu Money.** ⚠️ **This axis is editorial and subjective** — it is not a measurement, and it is kept separate from axis 5 for that reason. A reputable issuer can hold a bare key; a weak one can run a clean timelock.
+
+**What the issuer discloses, and what it does not:**
+
+- **Reserve look-through is published and reproducible** — a full composition by strategy and chain, refreshed continuously. That is more than most issuers at this size publish, and it is why axis 2 is not lower.
+- ⚠️ **The attestation channel is related-party.** Accountable's founder is an investor in Yuzu.
+- ⚠️ **Governance is disclosed with its denominator missing.** The published policy states a quorum of **4 of an unstated total** — 4-of-5 and 4-of-25 are indistinguishable from what is published — alongside a default action of `block` that does not say what is blocked, and a verifiability figure carrying no declared scale. **Establishing the denominator needs the signer set, which the disclosure does not carry.**
+- **No attachment or detachment point is published for `yzPP`**, the junior tranche the surplus depends on.
 
 ## Who should avoid this
 
-- **Anyone reading the underlying's 106.92% CR as a spot cushion.** About 70% of that reserve is levered.
-- **Holders who assume one authority governs the whole stack.** Three layers, three different owners: a Safe over the vault, a bare key over the bridge, a timelock over the token.
-- **Holders on Monad specifically.** The mirror adds bridge risk with no lockbox bounding supply, on top of the same single upgrade key.
+- **Anyone reading the underlying's 106.92% CR as a spot cushion.** About 70% of that reserve is levered (axes 2 and 4).
+- **Anyone who needs a primary exit.** Redemption is KYC-gated, best-effort, and runs through a second asset (axis 3).
+- **Holders who assume one authority governs the stack.** Three layers, three owners (axis 5).
+- **Holders on Sei or Pharos.** Together 52% of mirrored supply, with no local venue to sell into (axis 3).
+- **Holders on Monad specifically.** The mirror adds bridge risk with no lockbox bounding supply, on top of the bare upgrade key (axes 4 and 5).
 
 ## What to watch
 
-- **Whether the proxy owner is ever replaced by a multisig or timelock.** Unchanged for 82 days and the single highest-leverage improvement available.
-- **NAV continuity across the bridge** — whether Monad-held shares track the Plasma vault's 1.078123.
-- **The real peer set**, once Plasma's eid is known.
-- **Anything that locates yzUSD's collateral**, since this vault's value is a claim on it.
-
+- **Whether the bridge's bare key is ever replaced by a multisig or timelock.** Unchanged for 82 days and the single highest-leverage improvement available (axis 5).
+- **The real peer set**, once Plasma's eid is known (axis 5).
+- **NAV continuity across the bridge** — whether Monad-held shares track the Plasma vault's 1.078123 (axis 1).
+- **Ethena's share of the underlying reserve against the surplus.** It is the concentration most able to move the whole stack (axis 4).
+- **Whether an attachment or detachment point is ever published for `yzPP`** (axes 4 and 6).
 ---
 
 *Revision history: 2026-08-29 (second pass, pre-publication) — ⚠️ **Three claims from the first draft are withdrawn, all of them harsher than reality. Scores unchanged; this report remains staged.** **(1) The single-key finding was attributed to the wrong contract.** The vault and its ProxyAdmin are owned by `0xa2a97004…`, verified live as a **4-of-5 Safe**; the bare EOA `0x4ea00dc0…` owns the **bridge**. **The draft's headline — that an attacker takes the wrapper holding 99% of the value — pointed at the wrong layer.** The exposure is real and its blast radius is the ~10.9M mirrored shares, not the 53.7M in the vault. **(2) "Not migrated to CCIP" was false.** `TokenAdminRegistry.getPool()` returns live pools on all three chains. `getCCIPAdmin()` reverting answered a different question than the registry does — **absence of one interface is not absence of the system.** **(3) The underlying's backing is not unlocated.** A first draft said it could not be found; the cause was a wrong hostname, and the live Accountable feed publishes a full look-through at **CR 106.92%**. ⚠️ **What replaces them is a better criticism: about 70% of that reserve is in levered loop positions, Ethena is roughly five times the surplus, and 4.8% is the issuer's own yzPRIME.** **A syzUSD share is a claim on yzUSD at a readable NAV, and yzUSD is a claim on a levered book with a thin cushion.** **Structural is held at 2.0 rather than raised:** the corrected topology is better than the draft described, but the axis was set against the single-key finding *and* the backing chain, and only one of those has moved. **first measurement pass since 2026-06-08; no score change.** ⚠️ **The canonical vault was located and this coverage did not have it:** an ERC-4626 at `0xC8A8DF9B…` on Plasma, `totalAssets` 57,919,342 against `totalSupply` 53,722,377, giving a **NAV of 1.078123 — never previously recorded.** ⚠️ **Earlier work read `asset()` and `convertToAssets()` reverting on the Monad proxy as evidence syzUSD was not a vault. It was querying the OFT mirror**, where those reverts are expected; `token()` returning its own address confirms an OFT rather than an OFTAdapter, so **there is no lockbox bounding mirrored supply.** **The vault is not looping** — `totalAssets` is yzUSD held directly, so risk at this layer is pass-through and the leverage question belongs one layer down. ⚠️ **Authority is split and the weak half holds the value:** this wrapper's proxy owner is a bare EOA with no delay and is both implementation owner and ProxyAdmin owner, while yzUSD's token owner is a 2-day `TimelockController` — **the timelocked layer is not the one where 99% of the value sits.** The peer set is recorded as **not established**: zero peers returned for four eids we chose, which is not evidence of an empty set, since Plasma's eid is unknown to us. **Scores held**, because the backing basis one layer down remains unreadable and a re-score needs it. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured.*
