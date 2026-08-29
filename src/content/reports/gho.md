@@ -10,7 +10,7 @@ audience: "retail"
 date: "2026-06-07"
 last_verified: "2026-08-29"
 featured: false
-production: false
+production: true
 issuer: "Aave DAO"
 audited_reserves: false
 market_cap_approx: 699000000
