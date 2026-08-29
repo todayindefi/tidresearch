@@ -76,19 +76,6 @@ Supply grew sharply over the measurement gap:
 
 **The two-day delay is real and worth stating plainly**, and it is not the protection a holder needs, because it guards the layer where almost none of the value sits. Whether that delay has a floor, and who can propose through it, is **not established** — two days is a setting until the proposer set and any `MINIMUM_DELAY` are read.
 
-## The reserve does not grow with issuance
-
-The Reserve Fund address cited by the protocol, `0xdaef005a…684f68`, was recorded in June as holding nothing. Re-measured 2026-08-29:
-
-```
-plasma     code 0 bytes (EOA)   native XPL 262.32   yzUSD balance 0.00
-ethereum   code 0 bytes (EOA)   native ETH 0.0176
-```
-
-⚠️ **It holds zero yzUSD, against a supply that grew by roughly $16.4M over the same window.** It is an ordinary account, not a contract, and it has gone from holding nothing to holding a few hundred dollars of gas.
-
-**A reserve that does not grow with issuance is not functioning as a reserve.** `audited_reserves: false` remains correct.
-
 ## The backing is located — and the composition is the problem
 
 **The backing is published and verifiable.** Accountable's feed at **`yuzu.accountable.capital`** carries a full look-through on a 15-minute verification interval. ⚠️ **Two other Accountable hostnames fail DNS, so a check that stops at those returns nothing** — the live host is the one above.
@@ -117,7 +104,7 @@ CR            106.92%
 
 Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. ⚠️ **A check for yzUSD on Plasma or ETH on Ethereum returns zero and looks like an empty reserve** — the balance sits on a different chain in a different token. Enumerating the address's transfer history finds it; guessing token contracts does not.
 
-**Thin is the supportable criticism: $503K is 0.86% of supply against a reserve that has not grown with issuance.**
+**Thin is the supportable criticism: $503K is 0.86% of supply.** The address is an ordinary account rather than a contract, holding a few hundred dollars of gas alongside the balance, and **it has not grown with issuance** — supply added roughly $16.4M over the same window. ⚠️ **A reserve that does not scale with what it is meant to protect is not functioning as one**, which is why `audited_reserves: false` remains correct.
 
 ## Liquidity and movement
 
@@ -139,4 +126,4 @@ Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. ⚠️ **A check for yz
 
 ---
 
-*Revision history: 2026-08-29 (second pass, pre-publication) — ⚠️ **Three claims from the first draft are withdrawn, and all three were harsher than reality. Scores unchanged; this report remains staged.** **(1) "Backing unlocated" was false, and the cause was a wrong hostname** — two Accountable endpoints failed DNS and the live one, `yuzu.accountable.capital`, was never tried. It carries a full look-through at a 15-minute interval: **backing $62,546,859.02 against supply $58,497,074.10, CR 106.92%.** **(2) "The reserve is empty" was false** — it holds **$503,428.89**, almost all `aMonUSDT0` on Monad. Earlier passes checked yzUSD on Plasma and ETH on Ethereum, found zero, and concluded empty; **the balance was on a chain and in a token nobody looked for.** Thin at 0.86% of supply is the supportable criticism; empty was not. **(3) The single-key finding was attributed to the wrong contract** — the syzUSD vault and its ProxyAdmin are owned by a **4-of-5 Safe**, while the bare EOA owns the **bridge**, so the blast radius is the mirrored shares rather than the 99.1% of value in the vault. ⚠️ **What replaces them is stronger and defensible: about 70% of the reserve sits in levered loop positions, Ethena is 34.7% — roughly five times the $4.05M surplus — and 4.8% is yzPRIME, the issuer's own product, whose own book runs a $4,557 surplus on $7.58M.** **A 106.92% CR over a 70%-levered book is not 106.92% in spot terms.** **Composition is quoted as shares and no CR is re-derived from it**, because that table is about 26 hours staler than the headline and sums to $63.61M against $62.55M — mixing the bases would produce a number neither source published. **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%**, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. ⚠️ **The authority is split and this coverage previously recorded only the weak half:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, while the syzUSD wrapper's owner is a bare EOA with none — **the timelock guards the layer where almost none of the value sits.** ⚠️ **The Reserve Fund address holds zero yzUSD against $16.4M of new issuance** and is an ordinary account holding gas dust. **Backing is recorded as unlocated, not as absent** — the PoR endpoints do not resolve, the named addresses hold nothing, and log-based mint tracing is capped by the public RPC. That distinction is deliberate: one is a gap in our coverage, the other would be a solvency claim, and only the first is measured. **Scores held**, because the observations point one way and a re-score needs the backing basis that is precisely what cannot be read. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
+*Revision history: 2026-08-29 — **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%** over the gap, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. **Backing is published and verifiable at CR 106.92%** — $62,546,859.02 against $58,497,074.10 — with **about 70% of the reserve in levered loop positions, Ethena at 34.7% (roughly five times the $4.05M surplus), and 4.8% in the issuer's own yzPRIME**, whose book runs a $4,557 surplus on $7.58M. **The Reserve Fund holds $503,428.89, 0.86% of supply**, almost all `aMonUSDT0` on Monad. **Authority is split across three layers:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, the syzUSD vault and its ProxyAdmin are a 4-of-5 Safe, and the bridge is a bare EOA with no delay. **Scores held at 4.0**, because the observations point in both directions and a re-score needs a basis the composition figures do not settle. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
