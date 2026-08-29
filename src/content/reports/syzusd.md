@@ -77,15 +77,11 @@ margin: 0 wei
 
 ⚠️ **The lockbox and the mirrors are equal to the wei — margin exactly zero, not merely close.** That is worth more than a comfortable surplus would be: it shows the lockbox backs **precisely** what is mirrored, **and it shows this chain list is complete, because a single missing satellite would break the equality.** **The legs above are rounded for reading; the equality is on the unrounded integers.**
 
-⚠️ **The exit constraint is getting out of syzUSD on Monad, and it is sharper than the underlying's.** Measured live on the Surge syzUSD/wnAUSD pool:
+⚠️ **The exit constraint on Monad is the ratio of claims to venues, not a measured cliff.** **$11.0M of issuer vault sits on Monad against $483K of swap TVL across both pools** — roughly twenty-three times more claim than venue. **That asymmetry is the finding**, and it holds however the depth is distributed.
 
-```
-$1k      −2.52 bps
-$25k    −65.36 bps      <- already 23% of a $108K pool
-$50k   −528.49 bps
-```
+**A ladder on one of those pools shows steep degradation** — the Surge syzUSD/wnAUSD pool at $108,146 costs about 65 bps at $25k and 528 bps at $50k, with the fee rising off-balance so cost accelerates rather than scales. ⚠️ **But that pool is only 22% of Monad's swap TVL**, and the larger SYZUSD-CSUSDC pool at $374,780 has not been laddered — **so treat it as one venue's behaviour, not as Monad's exit.**
 
-**The fee rises off-balance, so cost accelerates rather than scales.** ⚠️ **By contrast the Plasma leg of the underlying clears $250,000 inside 13 bps** — so the deep-exit bottleneck is **this wrapper on Monad, not [yzUSD](/reports/yzusd/) on Plasma**, which is the reverse of what the chain sizes suggest.
+⚠️ **By contrast the Plasma leg of the underlying clears $250,000 inside 13 bps**, so the constraint is not where the chain sizes suggest: it sits with **this wrapper**, not with [yzUSD](/reports/yzusd/).
 
 ⚠️ **Where this asset actually lives is the finding: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply.** Neither has a CEX presence or mature tooling, and Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY. **A reader told "Plasma, Monad and Ethereum" would badly misjudge this.** The deployments are **not deterministic across chains** — Sei's syzUSD is `0xB98b14d3…`, unrelated to the Monad or Plasma addresses — so probing with a known address finds nothing and proves nothing.
 

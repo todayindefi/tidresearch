@@ -122,7 +122,7 @@ $250k  −12.13 bps
 
 **Turnover and depth are different quantities.** Low volume means nobody is trading it, not that you cannot get out — and on this leg you can, at retail size and well beyond it. Primary redemption remains KYC-gated and best-effort, so a DEX is the retail path, **but that path is not the constraint it looks like from the volume figure.**
 
-⚠️ **The constraint sits one layer up, on the wrapper.** See [syzUSD](/reports/syzusd/): exiting **syzUSD on Monad** degrades sharply with size, and that — not this Plasma leg — is where a large holder would find the wall.
+⚠️ **The constraint sits one layer up, on the wrapper.** See [syzUSD](/reports/syzusd/): **$11.0M of issuer vault on Monad stands against $483K of swap TVL**, and that ratio — not this Plasma leg — is where a large holder would meet the limit.
 
 ## Who should avoid this
 
