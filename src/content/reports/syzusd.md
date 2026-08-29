@@ -9,6 +9,7 @@ date: "2026-06-08"
 last_verified: "2026-06-08"
 last_revised: "2026-08-29"
 featured: false
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=syzusd"
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. The site owner's condition (2026-08-29) is that yzUSD
 # and syzUSD ship as a report+dashboard set, and the dashboard half does not
@@ -59,6 +60,8 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 ⚠️ **They are not. The Monad deployment is an OFT mirror, and a mirror is expected to have no `asset()`.** Its `token()` returns its own address, which is the signature of an OFT rather than an OFTAdapter: **mint-and-burn on each chain, not lock-and-mirror against a home lockbox.** The reverts were a correct reading of the wrong contract.
 
 **So the structure is: a real ERC-4626 vault on Plasma holding yzUSD, with 10,210,297 shares — 19.0% of the total — bridged out to Monad as a mirrored OFT.**
+
+⚠️ **One thing to know before reading the live dashboard: its BACKING tile shows yzUSD's collateral ratio, not syzUSD's.** This vault has no coverage ratio of its own — what it publishes is share supply, NAV per share and yield — **so the percentage on that tile is the underlying's.** That is the right number to care about, since a syzUSD share is a claim on yzUSD, but **it is not a measure of this contract**, and the dashboard's own dependency note says the same: syzUSD's risk is yzUSD's risk plus the vault contract.
 
 ## The risk at this layer is pass-through, not leverage
 

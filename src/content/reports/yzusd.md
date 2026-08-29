@@ -10,6 +10,7 @@ date: "2026-06-08"
 last_verified: "2026-06-08"
 last_revised: "2026-08-29"
 featured: false
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=yzusd"
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
 # completeness sweep. The site owner's condition (2026-08-29) is that yzUSD
 # and syzUSD ship as a report+dashboard set, and the dashboard half does not
@@ -94,6 +95,8 @@ CR            106.92%
 - **4.8% of the reserve is `yzPRIME`, Yuzu's own product.** ⚠️ **The reserve is partly backed by the issuer's other liability** — and that product's own book runs a collateralization of **1.000601**, a **$4,557 surplus on $7,577,108**. It has no cushion of its own to lend.
 
 ⚠️ **A 106.92% CR computed over a book that is roughly 70% levered is not a 106.92% cushion in spot terms.** The ratio is real; what it is a ratio *of* is the thing to read.
+
+⚠️ **And expect the live dashboard to show a different number from the one above.** The reserve moves in **steps rather than drifts** — five discrete steps in the last thirty days — so a page figure and a tile figure taken hours apart can differ by around **two percentage points against a 30-day range of under four.** **Neither is stale; they are separate moments in a series that jumps.** Read the tile for the current value and this page for the composition behind it.
 
 **One measurement caution, and this report follows it: the composition table carries its own timestamp, roughly 26 hours staler than the headline, and sums to about $63.61M against the $62.55M headline.** ⚠️ **So the shares above are quoted as shares and no CR is re-derived from them** — mixing the two bases would produce a number neither source published.
 
