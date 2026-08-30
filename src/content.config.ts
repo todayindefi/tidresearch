@@ -43,6 +43,13 @@ const chainOverride = z
 // per-report switch ON PURPOSE — the corpus ran six rubrics with a long dead
 // tail, and flipping AXES_BY_CATEGORY wholesale would re-frame 51 reports whose
 // scores were judged under the old axes without anyone re-judging them.
+// ⚠️ AXIS 3 ALSO CARRIES A REPORTING OBLIGATION, learned the expensive way:
+// NAME THE BINDING LEG IN THE PROSE. A merged axis hides which half set the
+// number, so a wrong input silently sets the whole axis and nothing in the
+// output shows it. syzUSD was scored 2.5 on the belief that its redemption was
+// gated; the ERC-4626 unwrap is permissionless (maxRedeem == balanceOf on an
+// arbitrary address), the worse leg was actually venue depth at 3.0, and the
+// page told readers the opposite of the truth about getting out.
 // ⚠️ AXIS 3 CARRIES A RULE: "Liquidity & Exit" covers BOTH exit paths —
 // secondary venue depth AND primary redemption — and is scored on the WORSE
 // leg, never the average. Averaging hides which path failed, and the dangerous

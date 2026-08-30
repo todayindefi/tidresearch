@@ -43,11 +43,15 @@ yield_bearing: true
 #     entire dependency book — Ethena, the levered loops, the recursive yzPRIME —
 #     AND adds a single point of failure of its own, since 100% of its value
 #     passes through one asset. Concentration on top of concentration.
-#   liquidity_score 3.0 -> 2.5. Axis 3 is scored on the WORSE exit leg. The venue
-#     leg is better than this coverage once said (a routed $100k clears inside
-#     10 bps on Monad); the redemption leg is KYC-gated and best-effort THROUGH
-#     yzUSD, so it binds, and 2.5 is the old `redemption_score` carried onto the
-#     merged axis unchanged.
+#   liquidity_score 3.0. ⚠️ CORRECTED 2026-08-30 — an earlier merge took 2.5 as
+#     the worse leg on the belief that redemption was gated at THIS layer. It is
+#     not: the ERC-4626 unwrap is permissionless (maxRedeem == balanceOf on every
+#     address tested, including 0x…dEaD, which nobody allowlists; paused() false;
+#     previewRedeem NAV-consistent). With redemption at 4.0 the worse leg is the
+#     VENUE leg at 3.0. ⚠️ THE BINDING LEG IS NAMED IN THE AXIS PROSE: a merged
+#     axis otherwise hides which half set the number, and a wrong leg then sets
+#     the whole axis silently. That is the cost of the worse-leg rule and this
+#     is the mitigation.
 #   structural_score 2.0 is Contract & Admin already — no change, no re-judging.
 #   volatility_score is the Stability key for a NAV-referenced share.
 # ⚠️ `redemption_score` is RETAINED in frontmatter but no longer rendered: it is
@@ -56,24 +60,28 @@ yield_bearing: true
 axis_frame: six
 volatility_score: 3.0
 backing_score: 4.5
-liquidity_score: 2.5
+liquidity_score: 3.0
 underlying_score: 2.5
 structural_score: 2.0
 issuer_score: 4.0
-redemption_score: 2.5
-overall_score: 2.5
+# 4.0, not higher: the exit terminates in yzUSD rather than cash.
+redemption_score: 4.0
+overall_score: 3.0
 chain_overrides:
   monad:
     volatility_score: 3.0
+    # Unchanged by the 2026-08-30 redemption correction: there is no Monad-side
+    # yzUSD to redeem into, so the open Plasma unwrap does not reach this leg.
     liquidity_score: 2.0
     structural_score: 1.5
     redemption_score: 2.0
+    # Stays 2.0 — Structural 1.5 binds here, not the exit.
     overall_score: 2.0
 ---
 
 # syzUSD — Risk Report
 
-**High risk · 2.5/10** (2.0/10 on Monad)
+**High risk · 3.0/10** (2.0/10 on Monad)
 
 > ⚠️ **What is current and what is not.** The vault identification, NAV, supply and authority findings below were measured **2026-08-29**. The rest of the body dates from **2026-06-08** and has not been re-read. The card shows both dates.
 
@@ -117,9 +125,27 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 
 ## 3 · Liquidity & Exit
 
-**Both exit paths, and they do not agree. The axis takes the worse one.**
+**Both exit paths, and the axis takes the worse one.** ⚠️ **The binding leg here is SECONDARY VENUE DEPTH, not redemption** — stated explicitly, because a merged axis otherwise hides which half set the number.
 
-**Primary redemption — the binding leg.** KYC-gated and best-effort, and it does not run here: a holder redeems **through [yzUSD](/reports/yzusd/)**, so this vault adds a hop to a gate it does not control. ⚠️ **Reachability has never been probed.** Unmeasured is not open.
+⚠️ **The unwrap is open, and this is three legs rather than one.** Reading them as a single gated path is the error to avoid:
+
+| Leg | State |
+|---|---|
+| **syzUSD → yzUSD** (Plasma vault) | ✅ **Permissionless, instant, no cooldown** |
+| **yzUSD → dollars** (primary) | ⚠️ KYC-gated, accredited, best-effort — **the real gate** |
+| **syzUSD on Monad → anything** | ⚠️ No redeem path; bridge via the bare-EOA adapter, or sell |
+
+**Only the second and third are gated.** Verified on the canonical vault `0xC8A8DF9B…`, 2026-08-30:
+
+```
+asset()               0x6695c0f8…  = yzUSD
+paused()              false
+previewRedeem(1e18)   1.078340 yzUSD        NAV-consistent
+maxRedeem(holder)  == balanceOf(holder)     exactly, for every address tested
+                                            including 0x…dEaD, which nobody allowlists
+```
+
+⚠️ **`maxRedeem` equalling `balanceOf` on an arbitrary address is the proof there is no whitelist and no per-user cap.** **So the wrapper unwraps freely. What it unwraps INTO is yzUSD, not cash** — which is why this axis is 3.0 rather than higher, and why the gate belongs to the [underlying](/reports/yzusd/) rather than to this contract.
 
 **Secondary — the better leg, and stronger than the pool list suggests.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, with the 2% crossing between $100k and $250k:
 
@@ -204,7 +230,7 @@ The LayerZero OFT surface runs alongside it. Because an OFT mints and burns per 
 ## Who should avoid this
 
 - **Anyone reading the underlying's 108.98% CR as a spot cushion.** About 70% of that reserve is levered (axes 2 and 4).
-- **Anyone who needs a primary exit.** Redemption is KYC-gated, best-effort, and runs through a second asset (axis 3).
+- **Anyone who needs to exit to dollars rather than to yzUSD.** ⚠️ **The unwrap itself is open** — the gate is one layer down, where yzUSD's primary redemption is KYC-gated and best-effort (axis 3).
 - **Holders who assume one authority governs the stack.** Three layers, three owners (axis 5).
 - **Holders on Sei or Pharos.** Together 52% of mirrored supply, with no local venue to sell into (axis 3).
 - **Holders on Monad specifically.** The mirror adds bridge risk with no lockbox bounding supply, on top of the bare upgrade key (axes 4 and 5).
