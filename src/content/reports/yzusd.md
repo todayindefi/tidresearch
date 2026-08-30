@@ -118,14 +118,15 @@ yzUSD is the base unit of Yuzu Money, a yield-bearing stablecoin protocol. **yzU
 **The backing is published, and it reconciles.** Accountable's feed at **`yuzu.accountable.capital`** carries a full look-through on a 15-minute verification interval. `totalSupply` reconciles exactly against chain, and the satellite conservation is wei-exact.
 
 ```
-backing    $62,546,859.02
+backing    $63,747,863.77
 supply     $58,497,074.10
-CR            106.92%
+CR            108.98%          <- read 2026-08-30 01:51 UTC
+surplus     $5,250,789.67
 ```
 
 **So the asset is overcollateralized on its own published basis.** ⚠️ **The defensible criticism is not that the backing is missing — it is what the backing consists of**, and that belongs to axis 4.
 
-⚠️ **A 106.92% CR computed over a book that is roughly 70% levered is not a 106.92% cushion in spot terms.** The ratio is real; what it is a ratio *of* is the thing to read.
+⚠️ **A 108.98% CR computed over a book that is roughly 70% levered is not an 8.98% cushion in spot terms.** The ratio is real; what it is a ratio *of* is the thing to read.
 
 **The Reserve Fund is thin, not empty: $503,428.89, or 0.86% of supply.** Almost all of it is **502,675.95 `aMonUSDT0` on Monad**. ⚠️ **A check for yzUSD on Plasma or ETH on Ethereum returns zero and looks like an empty reserve** — the balance sits on a different chain in a different token, and enumerating the address's transfer history finds it where guessing token contracts does not. **The supportable criticism is that it has not grown with issuance:** supply added roughly $16.4M over the same window. ⚠️ **A reserve that does not scale with what it protects is not functioning as one**, which is why `audited_reserves: false` remains correct.
 
@@ -158,11 +159,11 @@ $250k  −12.13 bps
 | Exposure | Share of backing | Why it is a dependency and not just an asset |
 |---|---|---|
 | **Levered loop positions** | ~70% — about **$44.5M across 12 `_Loop` strategies** | A ratio measured on a levered book is not that ratio on spot |
-| **Ethena** (USDe + sUSDe) | **34.7%** | ⚠️ Roughly **five times the entire $4.05M surplus** — a move impairing Ethena by a fifth erases the cushion |
+| **Ethena** (USDe + sUSDe) | **34.6%** — $22,046,996 | ⚠️ Roughly **4.2× the entire $5,250,790 surplus** — a move impairing Ethena by a quarter erases the cushion |
 | **`yzPRIME`** (Yuzu's own) | **4.8%** | ⚠️ **Recursive** — the reserve is partly backed by the issuer's other liability, and that product runs a **$4,557 surplus on $7,577,108**. It has no cushion of its own to lend |
 | **`yzPP`** (junior tranche) | ~90% of the surplus | ⚠️ **Circular** — first-loss capital whose value is a claim on the book it cushions, and third-party money redeemable on a 30-day window |
 
-**Read the last two rows together and the cushion looks different from 6.92%.** ⚠️ **Ex-junior the ratio is 100.87%, not 108.96%** on the underlying's own published alternative basis — because the surplus is largely capital that can ask to leave.
+**Read the last two rows together and the cushion looks different from 8.98%.** ⚠️ **Ex-junior the ratio is 100.89%, not 108.98%** on the underlying's own published alternative basis — because the surplus is largely capital that can ask to leave.
 
 **Diversification is real but shallow:** roughly a dozen strategies across nine chains, with the top name at more than a third. **A reserve spread across many venues that all lend against the same few assets is one exposure wearing several names.**
 
@@ -192,7 +193,7 @@ $250k  −12.13 bps
 
 ## Who should avoid this
 
-- **Anyone who reads a 106.92% CR as a 6.92% cushion.** About 70% of the reserve is levered, Ethena alone is roughly five times the surplus, and ex-junior the ratio is 100.87% (axes 2 and 4).
+- **Anyone who reads a 108.98% CR as an 8.98% cushion.** About 70% of the reserve is levered, Ethena alone is roughly 4.2× the surplus, and ex-junior the ratio is 100.89% (axes 2 and 4).
 - **Anyone uncomfortable with an issuer's reserve holding the issuer's own product.** 4.8% is `yzPRIME`, which runs a $4,557 surplus on $7.58M of its own liabilities (axis 4).
 - **Anyone treating the two-day timelock as protection.** It governs the token, not the wrapper where the value sits (axis 5).
 - **Anyone who needs a primary exit.** Redemption is KYC-gated and best-effort, and has never been probed (axis 3).
@@ -207,4 +208,4 @@ $250k  −12.13 bps
 - **Whether the operators are ever named** (axis 6).
 ---
 
-*Revision history: 2026-08-29 — **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%** over the gap, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. **Backing is published and verifiable at CR 106.92%** — $62,546,859.02 against $58,497,074.10 — with **about 70% of the reserve in levered loop positions, Ethena at 34.7% (roughly five times the $4.05M surplus), and 4.8% in the issuer's own yzPRIME**, whose book runs a $4,557 surplus on $7.58M. **The Reserve Fund holds $503,428.89, 0.86% of supply**, almost all `aMonUSDT0` on Monad. **Authority is split across three layers:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, the syzUSD vault and its ProxyAdmin are a 4-of-5 Safe, and the bridge is a bare EOA with no delay. **Scores held at 4.0**, because the observations point in both directions and a re-score needs a basis the composition figures do not settle. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
+*Revision history: 2026-08-29 — **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%** over the gap, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. **Backing is published and verifiable — CR 106.92% as measured 2026-08-29**, $62,546,859.02 against $58,497,074.10 (⚠️ **the reserve moves in steps; the body carries the current read**) — with **about 70% of the reserve in levered loop positions, Ethena at 34.7% of backing, then roughly five times a $4.05M surplus, and 4.8% in the issuer's own yzPRIME**, whose book runs a $4,557 surplus on $7.58M. **The Reserve Fund holds $503,428.89, 0.86% of supply**, almost all `aMonUSDT0` on Monad. **Authority is split across three layers:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, the syzUSD vault and its ProxyAdmin are a 4-of-5 Safe, and the bridge is a bare EOA with no delay. **Scores held at 4.0**, because the observations point in both directions and a re-score needs a basis the composition figures do not settle. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
