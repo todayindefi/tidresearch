@@ -253,6 +253,22 @@ scheduleBatch((address,uint256,bytes)[],bytes32,bytes32,uint256)   0xa944142d
 
 **The bypass path takes the calls array and nothing else — no delay, no predecessor, no salt.** ⚠️ **So it cannot be delayed by configuration, because there is no parameter to set.** Raising `getMinDelay()` hardens the scheduled path and does **nothing** to this one. **That makes it a structural property of the deployed contract rather than a misconfiguration** — more durable than a settings finding, and **not fixable by a governance action short of revoking the role.**
 
+**For sizing, the signature counts on the Monad MCMS set, measured 2026-08-30:**
+
+| Action | Signatures required |
+|---|---|
+| **Propose** a scheduled action | **4** (of a 42-key set) |
+| **Cancel** a scheduled action | **2** (of a 69-key set) |
+| **Bypass** the delay entirely | **8** (of a 69-key set) |
+
+`CANCELLER_ROLE` is held by all five MCMS contracts, including both that hold `PROPOSER_ROLE` — so **the delay is notice rather than interruption**, in the sense that the parties who schedule an action are also the ones able to cancel it. **This is the norm rather than an outlier:** Sky's 48-hour GSM behaves the same way, and an independently-held cancel is rare across the category. **Noted for what the window actually gives a holder — visibility — rather than flagged as a defect.**
+
+**Method note, because the numbers are easy to get wrong:** the minimums are solved by recursively costing each group in the decoded configuration tree, not by reading the top-level quorum. For one bypasser the tree is `3 of [g1=3, g18=1, g19=4]`, which costs **8** — **a root quorum of 3 does not mean three signatures.**
+
+**Two things this does not establish:** off-chain signer identity — the 69-key and 42-key sets are byte-identical across Ethereum, Monad and Plasma and intersect in exactly 40 keys, but **that is an address-overlap measurement, not a custody one** — and any dollar figure of exposure, which the verification did not cover.
+
+**Sourcing:** measured by our security analysis with a discriminating control and a negative control. The role assignments on the five MCMS contracts are their reads; what was re-checked here is the deployed bytecode and the control behaviour.
+
 **Two limits, because both halves of this are easy to over-read:**
 
 - ⚠️ **The number of signatures behind those MCMS contracts is an undisclosed multisig threshold and is deliberately not quoted here.** A figure exists upstream; it has not been independently derived, and this report does not print unverified counts.
