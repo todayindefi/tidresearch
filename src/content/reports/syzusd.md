@@ -99,7 +99,7 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
   holds                  57,990,876.97 yzUSD = 99.1% of ALL yzUSD supply
 ```
 
-⚠️ **Until this pass there was no readable NAV for this asset, and the reason was a wrong target.** Earlier work queried the **Monad proxy** `0x484be054…`, where `asset()` and `convertToAssets()` both revert — and read those reverts as evidence that syzUSD was not a vault at all. **They are not.** The Monad deployment is an **OFT mirror**, and a mirror is expected to have no `asset()`; its `token()` returns its own address, the signature of an OFT rather than an OFTAdapter. **The reverts were a correct reading of the wrong contract.**
+⚠️ **NAV is readable on the canonical vault and not on the Monad deployment, and reading the wrong one gives a wrong answer that looks like a right one.** On the Monad proxy `0x484be054…`, `asset()` and `convertToAssets()` both **revert** — because that contract is an **OFT mirror**, and a mirror has no underlying to report. Its `token()` returns its own address, which is the signature of an OFT rather than an OFTAdapter. ⚠️ **A revert on the mirror is not evidence that syzUSD is not a vault.** It is the expected behaviour of the wrong contract, and the canonical ERC-4626 above is where the question is answered.
 
 **Live deviation is small and measured against the right thing:** market **1.0756** against NAV **1.0782**, a **−0.247% discount**. ⚠️ **That is a discount to a redemption value, not a stablecoin off its peg** — a distinction a tile on this asset previously got wrong by dividing a 30-hour-old price into a live accruing NAV and reporting −2.84%.
 
@@ -121,7 +121,7 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 
 **Primary redemption — the binding leg.** KYC-gated and best-effort, and it does not run here: a holder redeems **through [yzUSD](/reports/yzusd/)**, so this vault adds a hop to a gate it does not control. ⚠️ **Reachability has never been probed.** Unmeasured is not open.
 
-**Secondary — the better leg, and better than this coverage once said.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, with the 2% crossing between $100k and $250k:
+**Secondary — the better leg, and stronger than the pool list suggests.** Routed across every venue an aggregator can reach, **$100,000 of syzUSD sells into csUSDC inside 10 bps**, with the 2% crossing between $100k and $250k:
 
 | Size sold | Total execution cost |
 | --- | --- |
@@ -169,7 +169,7 @@ syzUSD vault (Plasma)   0xC8A8DF9B210243c55D31c73090F06787aD0A1Bf6   793 bytes, 
 | **syzUSD bridge** (Monad) | `0x4ea00dc0…4a89ae` | **bare EOA**, no code, no delay |
 | **yzUSD token** (Plasma) | OZ `TimelockController` | **2-day delay** |
 
-⚠️ **The single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 53.7M in the vault** — material on the Monad side, smaller system-wide. **The axis stays at 2.0**: the corrected topology is better than an earlier draft described, but the score was set against the single-key finding *and* the unverifiable backing chain, and only the first has moved. **The Monad override is lower because the mirror is precisely where the bare key sits.**
+⚠️ **The single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 53.7M in the vault** — material on the Monad side, smaller system-wide. **The axis is 2.0**, and it reflects two things rather than one: the single-key exposure above **and** the backing chain one layer down, which cannot be verified independently because the attestation channel is related-party. **The Monad override is lower because the mirror is precisely where the bare key sits.**
 
 **Mirrored supply reconciles exactly.** Balances read live across seven chains:
 
