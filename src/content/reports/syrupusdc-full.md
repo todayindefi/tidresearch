@@ -203,8 +203,8 @@ Two of the four registered strategies are **DeFi-yield wrappers** that the Pool 
 | Role | Address | Type | Authority |
 |---|---|---|---|
 | **governor** | `0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b` | **Maple `GovernorTimelock`** — Maple's own contract, *not* OpenZeppelin. Operative delay **3 days** (`defaultTimelockParameters()` = 259200s delay / 172800s execution window); **`MIN_DELAY()` = 86400s (24h) is a hard floor** | Highest authority. Owns MapleGlobals; can upgrade implementations through the factory; can change Globals parameters. Role accessor is `hasRole(address, bytes32)` — arguments reversed from the OZ signature — so OZ-shaped probes revert rather than return. |
-| **operationalAdmin** | `0xCe1cE7c7F436DCc4E28Bc8bf86115514d3DC34E8` | Safe v1.3.0, **3-of-5** | Operational parameter changes (delegate appointments, fee rates, etc.). Signers: `0x57d1...c7c`, `0x8be3...736`, `0x4024...07b`, `0xF570...827`, `0x7371...7AF`. |
-| **securityAdmin** | `0x6b1A78C1943b03086F7Ee53360f9b0672bD60818` | Safe v1.3.0, **3-of-6** | Emergency pause/unpause across protocol functions. Signers: `0x4E10...E4b`, `0x8Ce4...624`, `0x4109...ED1`, `0x54cC...B74`, `0x44A6...3CA`, `0x0630...4FF8`. |
+| **operationalAdmin** | `0xCe1cE7c7F436DCc4E28Bc8bf86115514d3DC34E8` | Safe v1.3.0, **3-of-5** | Operational parameter changes (delegate appointments, fee rates, etc.). **Five signers; identities not published here — see the live dashboard.** |
+| **securityAdmin** | `0x6b1A78C1943b03086F7Ee53360f9b0672bD60818` | Safe v1.3.0, **3-of-6** | Emergency pause/unpause across protocol functions. **Six signers; identities not published here — see the live dashboard.** |
 | mapleTreasury | `0xa9466EaBd096449d650D5AEB0dD3dA6F52FD0B19` | Contract (not a standard Safe) | Receives protocol fees; identity TBD verify via Etherscan. |
 | poolDelegate | `0xC1e18FFD8825FfB286D177DDEbeba345EC70B49f` | **EOA (single-key)** | Operational role for loan funding within Globals/PoolManager-set constraints. |
 
@@ -586,6 +586,8 @@ This axis covers what *operates* and *governs* the protocol — multisig hygiene
 
 ### Governance topology (on-chain verified 2026-04-26)
 
+⚠️ **Signer identities are not published in reports** — the threshold is the risk-relevant fact and it is stated here; the enumerated set is carried on the live dashboard instead. **Separation between signer sets is still asserted and still verified** — the Operational and Security Admin sets are non-overlapping, confirmed via `getOwners()` — the individual keys simply are not listed.
+
 | Role | Address | Type | Signer set |
 |---|---|---|---|
 | **Governor (Timelock)** | `0x2eFFf887...426b` | Maple `GovernorTimelock` (not OZ), **3d delay / 2d window**, **24h `MIN_DELAY` floor** | Role holders enumerated 2026-08-23 — see the role table below. Not readable by conventional tooling; the accessor takes `hasRole(address, bytes32)` with arguments reversed from OZ, and the grant event is `RoleUpdated` rather than `RoleGranted`. |
@@ -610,8 +612,8 @@ Both EOAs return empty code, and both return `1` from `hasRole` in Maple's argum
 **What this does and does not establish.** `ROLE_ADMIN` can grant roles, so a single key holding it can schedule a role grant — and would have to wait the full three days in the open before it could execute. **That makes three days a *detection* window on this path.** Whether it is also a *veto-backed* one depends on whether a `CANCELLER` can cancel a role update, which this assessment has **not** verified: Maple's timelock carries an `isUnschedulable` concept, and the natural empirical test (reading a real role-update proposal for the flag) is closed off because all thirteen historical proposals return zeroed structs once executed. We are not asserting that role updates are exempt from cancellation, and we are not asserting that no bypass path exists. Neither is established, and the difference between them is the difference between "two bare keys can schedule a role grant and be seen doing it" — which *is* established — and "two bare keys can schedule a role grant and nobody can stop it," which is not.
 
 **Why no one has flagged this before, and the verifiability caveat that follows.** `RoleGranted` — OpenZeppelin's event — returns **zero** events on this contract. Maple's `RoleUpdated` returns six. So an OZ-shaped enumeration does not error here; it **succeeds and reports an empty role set.** Combined with `hasRole`'s reversed arguments, conventional tooling reports "no roles configured" on a timelock that has four populated ones. **This governance surface is effectively invisible to standard tools** — which is worth knowing both for readers verifying independently and as context for why an audit or dashboard showing a clean role set should not be taken as confirmation.
-| **Operational Admin** | `0xCe1cE7c7...4E8` | Safe v1.3.0, **3-of-5** | `0x57d1...c7c`, `0x8be3...736`, `0x4024...07b`, `0xF570...827`, `0x7371...7AF` |
-| **Security Admin** | `0x6b1A78C1...818` | Safe v1.3.0, **3-of-6** | `0x4E10...E4b`, `0x8Ce4...624`, `0x4109...ED1`, `0x54cC...B74`, `0x44A6...3CA`, `0x0630...4FF8` |
+| **Operational Admin** | `0xCe1cE7c7...4E8` | Safe v1.3.0, **3-of-5** | Five signers, enumerated on-chain 2026-04-26; **not published here — see the live dashboard** |
+| **Security Admin** | `0x6b1A78C1...818` | Safe v1.3.0, **3-of-6** | Six signers, enumerated on-chain 2026-04-26; **not published here — see the live dashboard** |
 | **PoolDelegate** | `0xC1e1...49f` | **EOA (single-key)** | n/a — single signing key |
 | mapleTreasury | `0xa9466EaB...19` | Contract (not standard Safe) | Receives protocol fees; identity TBD verify via Etherscan |
 
