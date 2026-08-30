@@ -38,10 +38,46 @@ type Exemption = { axis: string; reason: string };
 
 const errors: string[] = [];
 
+/**
+ * MIGRATION POLICY (owner, 2026-08-30). The six-axis core is NOT a corpus-wide
+ * rewrite, because doing it as its own pass means editing every report twice:
+ *
+ *   NEW assets      -> must be born on the frame. Enforced below.
+ *   EXISTING assets -> migrate at their NEXT REFRESH, not before. A report that
+ *                      is complete and current does not get reopened just to
+ *                      change its rubric; folding the migration into the pass
+ *                      that was happening anyway is one edit instead of two.
+ *
+ * The tail is short enough for this to converge on its own: at the time the
+ * policy was set, 24 of 32 unmigrated production reports had been verified
+ * within 30 days and the oldest was 104. Mixed rubrics are the transition cost,
+ * accepted deliberately.
+ */
+const FRAME_REQUIRED_FROM = "2026-08-30";
+
 for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   const raw = readFileSync(join(DIR, file), "utf8");
   const fm = raw.split(/^---$/m)[1];
-  if (!fm || !/^axis_frame:\s*six\s*$/m.test(fm)) continue;
+  if (!fm) continue;
+
+  // A report first written on or after the policy date is a NEW asset and must
+  // carry the frame. Existing reports are exempt until their next refresh —
+  // `date` is first-publication and does not move, so a refresh cannot
+  // accidentally pull an old report into this rule.
+  const created = fm.match(/^date:\s*"?(\d{4}-\d{2}-\d{2})/m)?.[1];
+  if (
+    created &&
+    created >= FRAME_REQUIRED_FROM &&
+    !/^axis_frame:\s*six\s*$/m.test(fm)
+  ) {
+    errors.push(
+      `${file}: new asset (date ${created}) must carry \`axis_frame: six\`. ` +
+        `Reports created from ${FRAME_REQUIRED_FROM} are born on the six-axis ` +
+        `core; only reports predating it wait for their next refresh.`
+    );
+  }
+
+  if (!/^axis_frame:\s*six\s*$/m.test(fm)) continue;
 
   // Cheap frontmatter reads — no YAML dep in prebuild, and the shapes here are flat.
   const has = (k: string) => new RegExp(`^${k}:\\s*[0-9]`, "m").test(fm);
@@ -68,4 +104,20 @@ if (errors.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ axis-frame check: all six-axis reports carry six axes");
+// Migration progress, as a quiet status line rather than a warning. These
+// reports are deliberately unmigrated under the policy above, so flagging them
+// every build would train everyone to ignore the check that DOES matter.
+const all = readdirSync(DIR).filter((f) => f.endsWith(".md"));
+let prod = 0;
+let onFrame = 0;
+for (const file of all) {
+  const fm = readFileSync(join(DIR, file), "utf8").split(/^---$/m)[1] ?? "";
+  if (!/^production:\s*true/m.test(fm)) continue;
+  if (/^category:\s*"?tradfi-equity/m.test(fm)) continue; // exempt by design
+  prod++;
+  if (/^axis_frame:\s*six\s*$/m.test(fm)) onFrame++;
+}
+console.log(
+  `✓ axis-frame check: all six-axis reports carry six axes ` +
+    `(${onFrame}/${prod} production reports migrated; the rest move at their next refresh)`
+);
