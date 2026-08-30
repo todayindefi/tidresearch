@@ -9,7 +9,20 @@ date: "2026-05-18"
 last_verified: "2026-05-18"
 last_revised: "2026-08-27"
 featured: false
-production: true
+# MOVED BACK TO STAGING 2026-08-31, deliberately — do not re-promote on a
+# freshness or completeness sweep. ⚠️ The site owner's rule is that THIS REPORT
+# AND ITS DASHBOARD PROMOTE TOGETHER, gated on a puppeteer verification pass.
+# backing-monitor's page is staged and unfinished — `?asset=reusd-re` renders
+# with axis 5 (Contract & Admin) UNRATED because no topology walk has been
+# emitted, and no collateral ratio at all, because Re publishes combined
+# reUSD + reUSDe reserves with no asset-attributed denominator, so no CR can
+# honestly be derived. `?asset=reusde-re` is registered but still awaiting its
+# producer feed. ⚠️ A published report pointing at an unfinished monitor is the
+# pairing this rule exists to prevent.
+# TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
+# both reports together. Checked before demoting: no `production: true` report
+# links here, so nothing 404s on prod (only frax.md links in, and it is staged).
+production: false
 issuer: "Resilience BVI Ltd."
 market_cap_approx: 19852000
 volatility_score: 3.5
@@ -26,7 +39,9 @@ live_dashboard_url: "https://app.re.xyz/reusde"
 
 > ⚠️ **What is current and what is not, because this page carries two dates.** Everything numeric was measured on **2026-08-27**: supply, NAV, TVL, chain footprint, Curve depth and volume, the exit ladder, price-versus-NAV, APY, holder count, and the July redemption window. **The structural material — contract architecture, audit posture, custody, and the redemption mechanics themselves — still dates from 2026-05-18 and was not re-read.** That is why the card shows *revised 2026-08-27, verified through 2026-05-18*: **the figures are today's; the description of how the thing works is May's.**
 
-> **Issuer-published dashboard:** [app.re.xyz/reusde](https://app.re.xyz/reusde) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, historical charts, capital tranching diagram, and Chainlink Proof of Reserves links. It is the canonical source for live metrics on this asset. tidresearch does not currently run an independent dashboard for reUSDe.
+> **Issuer-published dashboard:** [app.re.xyz/reusde](https://app.re.xyz/reusde) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, historical charts, capital tranching diagram, and Chainlink Proof of Reserves links. It is the canonical source for live metrics on this asset.
+>
+> **Independent monitor (staged, no data yet):** [tidresearch backing monitor — reUSDe](https://todayindefi.github.io/backing-monitor/?asset=reusde-re) — the page is registered and reachable but is **awaiting its producer feed**, so it currently renders a staged placeholder rather than figures. ⚠️ **There is nothing to read there yet.** It is linked because this report and that monitor promote together, and the link is the thing that makes the pairing checkable while both are unfinished. The sibling [reUSD monitor](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) does carry data, with its own stated gaps.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|

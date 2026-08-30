@@ -9,7 +9,20 @@ date: "2026-05-19"
 last_verified: "2026-08-25"
 last_revised: "2026-08-27"
 featured: false
-production: true
+# MOVED BACK TO STAGING 2026-08-31, deliberately — do not re-promote on a
+# freshness or completeness sweep. ⚠️ The site owner's rule is that THIS REPORT
+# AND ITS DASHBOARD PROMOTE TOGETHER, gated on a puppeteer verification pass.
+# backing-monitor's page is staged and unfinished — `?asset=reusd-re` renders
+# with axis 5 (Contract & Admin) UNRATED because no topology walk has been
+# emitted, and no collateral ratio at all, because Re publishes combined
+# reUSD + reUSDe reserves with no asset-attributed denominator, so no CR can
+# honestly be derived. `?asset=reusde-re` is registered but still awaiting its
+# producer feed. ⚠️ A published report pointing at an unfinished monitor is the
+# pairing this rule exists to prevent.
+# TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
+# both reports together. Checked before demoting: no `production: true` report
+# links here, so nothing 404s on prod (only frax.md links in, and it is staged).
+production: false
 issuer: "Resilience BVI Ltd."
 market_cap_approx: 181000000
 volatility_score: 7.0
@@ -26,7 +39,9 @@ live_dashboard_url: "https://app.re.xyz/reusd"
 
 > **2026-08-18 update — Overall 5.5 → 6.0, Structural 5.5 → 6.0.** Three open gaps have closed, and the upgrade is those three answers rather than a change in the underlying business. (1) **The layers beneath reUSD are now sized.** Re publishes them: the mezzanine reUSDe tranche at about $19M and Re's own junior capital at about $77M as of June 2026 — against a senior tranche of roughly $181M across chains. ⚠️ **On a current read the Ethereum leg alone is about $207.0M at 2026-08-23; see the subordination note below.** The "not publicly disclosed in granular form" caveat this report ran since May is retired, with an important asterisk covered in *A note on the tranche structure* below. (2) **The audit gap is closed.** Re now publishes a **Sherlock** collaborative audit (July 2026) and a **Certora** formal verification (Sept 2025) alongside the three Hacken engagements — the "current implementation is effectively unaudited" finding no longer stands. (3) **A real 48-hour timelock is verified on-chain**. Redemption stays 4.5 and Liquidity stays 5.0: nothing here changes the U.S.-person exit asymmetry or the sUSDe payout asset, which remain the binding constraints.
 
-> **Issuer-published dashboard:** [app.re.xyz/reusd](https://app.re.xyz/reusd) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, yield/price/TVL history charts, capital tranching diagram, and links to Chainlink Proof of Reserves. It is the canonical source for live metrics on this asset. tidresearch does not currently run an independent dashboard for reUSD.
+> **Issuer-published dashboard:** [app.re.xyz/reusd](https://app.re.xyz/reusd) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, yield/price/TVL history charts, capital tranching diagram, and links to Chainlink Proof of Reserves. It is the canonical source for live metrics on this asset.
+>
+> **Independent monitor (staged, unfinished):** [tidresearch backing monitor — reUSD](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) — our own read of the same asset, on the six-axis frame, built to sit **beside** the issuer's page rather than replace it. ⚠️ **It is not finished and should not be cited.** Two gaps are deliberate and worth knowing before you open it: **axis 5 (Contract & Admin) renders UNRATED** because no topology walk has been emitted for this asset, and **there is no collateral ratio at all** — Re publishes combined reUSD + reUSDe reserves with **no asset-attributed denominator**, so no CR can honestly be derived for reUSD alone. ⚠️ **A blank there is an honest blank, not a missing number.**
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
