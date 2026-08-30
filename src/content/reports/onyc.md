@@ -13,12 +13,33 @@ featured: false
 production: true
 issuer: "OnRe (Bermuda SAC)"
 yield_bearing: true
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Order matches the dashboards exactly.
+#   backing_score 4.0 is NEW. This report had no backing axis, which was a real
+#     hole on an asset whose reserve is an underwriting book. It prices a
+#     genuine institutional wrapper — Bermuda SAC, Class IIGB/F licensing,
+#     Coinbase Prime custody, Guy Carpenter and Howden — against the fact that
+#     ⚠️ NOTHING here is independently verified: NAV is operator-posted and
+#     every figure is OnRe's disclosure. Below Dependencies at 4.5 on purpose:
+#     the yield source is real, the look-through is not available.
+#   underlying_score 4.5 is RETAINED and now renders as DEPENDENCIES — the
+#     stacking is the finding. First-loss reinsurance AND sUSDe underneath it,
+#     which are two independent ways to lose rather than one.
+#   liquidity_score 3.5 unchanged; worse-leg scoring does not bite because both
+#     legs are equally constrained — a 2.5%/period KYC-gated queue bounded by
+#     94.65% utilisation, against ~1.1% of the book in secondary depth.
+#   structural_score 4.0 is Contract & Admin already. volatility_score is the
+#     Stability key. issuer_score unchanged at 5.0.
+# ⚠️ `redemption_score: 3.5` is RETAINED but no longer rendered: it is the
+# evidence for axis 3, and both legs are stated in prose under that heading.
+axis_frame: six
 volatility_score: 5.0
-structural_score: 4.0
-redemption_score: 3.5
-underlying_score: 4.5
+backing_score: 4.0
 liquidity_score: 3.5
+underlying_score: 4.5
+structural_score: 4.0
 issuer_score: 5.0
+redemption_score: 3.5
 overall_score: 4.0
 ---
 
@@ -26,70 +47,88 @@ overall_score: 4.0
 
 **High risk · 4.0/10**
 
-ONyc is OnRe's tokenized reinsurance yield coin on Solana. It represents a proportional claim on a Bermuda-regulated segregated account that underwrites short-duration insurance and reinsurance contracts. The reported yield — 11.64% APY in OnRe's July 2026 review, previously described here as "around 11%" — comes from real reinsurance premium income plus collateral yield on an sUSDe float. That makes the return source genuinely less correlated to crypto than most DeFi yield products.
+## What this actually is
 
-The catch is equally important: **ONyc holders are the first-loss insurance capital.** If catastrophe claims or underwriting losses exceed premiums and reserves, ONyc's NAV falls directly. There is no senior tranche sitting above holders. The book is roughly one year old, has not been tested through a major loss year, and the collateral float is **sUSDe from Ethena**, so ONyc stacks Ethena basis / peg risk underneath the insurance risk.
+ONyc is OnRe's tokenized reinsurance yield coin on Solana — a proportional claim on a **Bermuda-regulated segregated account** that underwrites short-duration insurance and reinsurance contracts. The reported yield, **11.64% APY (OnRe, July 2026 review)**, comes from real reinsurance premium income plus collateral yield on an sUSDe float. **That makes the return source genuinely less correlated to crypto than most DeFi yield products.**
 
-One more issue belongs at the top: **on-chain control is single-key.** Solana reads from 2026-07-22 show the program upgrade authority and freeze authority are each a single plain wallet, with no multisig and no timelock. One key can redeploy the mint / redemption logic or freeze holder tokens. The Bermuda regulated wrapper is a real legal backstop, but it is off-chain; it does not remove the on-chain key risk.
+⚠️ **The catch is equally important: ONyc holders are the first-loss insurance capital.** If catastrophe claims or underwriting losses exceed premiums and reserves, **NAV falls directly. There is no senior tranche sitting above holders.** The book is roughly one year old and **has not been tested through a major loss year.**
 
-## Disambiguation
+**Disambiguation.** "Onyx" is spelled **ONyc** and reads like "onyx." The OnRe sibling token **ONe** is a legacy structured-LP product and is not covered here — if you hold something labelled "ONe," confirm its current status directly with OnRe.
 
-"Onyx" is spelled **ONyc** and reads like "onyx." The OnRe sibling token **ONe** is a legacy structured-LP product and is not being published as a separate tidresearch report here. If you hold something labeled "ONe," confirm its current status directly with OnRe. This report covers **ONyc**.
+⚠️ **A scope note that governs every figure below: ONyc is Solana-only and this coverage does not currently run an independent read of it.** Every number here is **OnRe's own disclosure**, not a measurement of ours. That is a gap in what we monitor for this asset specifically, **not an absence of Solana-reading capability** — our tooling reads Solana for other assets.
 
-## What you're actually holding
+## 1 · Stability
 
-ONyc is not a stablecoin and should not be evaluated as a fixed $1 peg. It is a NAV-tracking vault share over a regulated reinsurance account. NAV has moved from about $1.00 to about $1.13, and the token has recently traded close to NAV, but that smooth history reflects a young, calm period rather than a tested loss cycle.
+**Reference: NAV.** ONyc is not a stablecoin and should not be evaluated as a fixed $1 peg. It is a NAV-tracking vault share, and **NAV has moved from about $1.00 to about $1.13**, with the token recently trading close to it.
 
-The economic exposure has two layers:
+⚠️ **That smooth history reflects a young, calm period rather than a tested loss cycle.** Holders are first-loss underwriting capital: the mechanism by which NAV falls is a claims year, and there has not been one yet. **A flat line on a one-year-old first-loss instrument is an absence of evidence, not evidence of stability.**
 
-- **Reinsurance underwriting:** premiums are earned up front, but large claims can hit NAV. That is the core risk and the source of the yield.
-- **Collateral float:** idle or reserve capital earns through sUSDe, which adds Ethena's basis-trade, funding, and peg risks beneath the insurance book.
+⚠️ **NAV is operator-posted**, which is a further reason not to read the smoothness as independently confirmed.
 
-The positive case is real: reinsurance is a large, established market, OnRe uses a Bermuda segregated-account structure, Coinbase Prime custody, and major reinsurance brokers including Guy Carpenter and Howden. The negative case is also direct: retail holders sit in a first-loss, operator-marked, gated-exit position.
+## 2 · Backing
 
-## How you actually exit
+**What stands behind a share is a reinsurance book plus a collateral float**, held inside a Bermuda Segregated Accounts Company. OnRe cites **Class IIGB insurance and Class F digital-asset business licensing**, **Coinbase Prime custody**, and top-tier reinsurance brokers including **Guy Carpenter and Howden**. **That institutional wrapper is real and it is the strongest thing about this asset.**
 
-Primary redemption is constrained. OnRe documents a redemption queue that requires KYC and accredited-investor status, processes only about 2.5% of NAV per period, settles in USDC or USDG when liquidity is available, and fills at the prevailing NAV at fulfilment. If NAV moves while you are pending, you still bear that movement. The protocol does not force-unwind live reinsurance contracts to meet withdrawals.
+⚠️ **What is missing is verification.** NAV is **operator-posted**, the reserves are not independently attested here, and **capital managed on-chain — $245.81M (OnRe, 2026-07-31) — is a disclosure rather than a read.** A regulated wrapper constrains behaviour; it does not substitute for a look-through.
 
-**That last sentence is what makes capital utilization the binding constraint, and it is the number to watch.** OnRe's own July review reports **ONyc utilization at 94.65% as of 2026-07-31** — meaning roughly **5% of the book is uncommitted capital**. Put those two facts together and the shape of the exit becomes clear: redemptions are served from whatever is *not* already committed to live contracts, because the protocol has told you it will not break those contracts to pay you. The 2.5%-per-period gate is therefore not an arbitrary throttle. It is calibrated to sit inside the free slice, and the free slice is thin.
+⚠️ **One figure from the same source is deliberately omitted.** The July review's **"$357.21M across OnRe DeFi Markets"** against $245.81M managed on-chain **cannot be reconciled from public disclosure** — gross-of-recycled, cumulative-deployed and notional readings are all consistent with it — and **a number that large reads as scale when it may be a measure of leverage.** It will not appear here until it can be explained.
 
-**The practical reading for a holder.** In normal conditions this works — 5% free against a 2.5% period draw is roughly two periods of cover, and the queue clears. Under stress the arithmetic tightens from both ends at once: redemption demand rises exactly when utilization is highest, and new premium income is the main thing that replenishes the free slice. **A rise in utilization is an early-warning signal on exit, and it moves before the queue visibly slows.** It is also, unlike the queue itself, something OnRe publishes.
+## 3 · Liquidity & Exit
 
-This is the evidence behind the Redemption axis rather than a reason to change it — 3.5 already prices a gated, capacity-limited exit, and knowing *why* the gate is set where it is does not make the gate worse. It does make it more predictable, which is worth more to a holder than a lower number would be.
+**Both exit paths, and here both are constrained. The axis takes the worse one, and they are close.**
 
-The permissionless alternative is secondary-market liquidity on Solana DEXs. That liquidity is thin: roughly $2.7M across Kamino, Orca, Raydium, and Loopscale against **$245.81M** of capital managed on-chain (OnRe, 2026-07-31), with no centralized-exchange listing — a secondary market a shade over 1% of the book. Under stress, the primary queue and secondary depth can both tighten at the same time.
+**Primary — gated, and bounded by something you can watch.** KYC and accredited-investor status required, **about 2.5% of NAV per period** into a pending queue, settling in USDC or USDG when liquidity allows, **filled at the prevailing NAV at fulfilment** — so if NAV moves while you are pending, you bear it. **The protocol does not force-unwind live reinsurance contracts to meet withdrawals.**
 
-This is severe exit asymmetry. Treat ONyc as an illiquid, long-hold credit / insurance position, not a cash-equivalent yield token.
+⚠️ **That last point is what makes capital utilisation the binding constraint.** OnRe reports **utilisation at 94.65% (2026-07-31)** — roughly **5% of the book is uncommitted capital**, and redemptions are served from that free slice. **The 2.5% gate is not an arbitrary throttle; it is calibrated to sit inside a thin slice.**
 
-## Governance & transparency
+**In normal conditions this works** — 5% free against a 2.5% period draw is roughly two periods of cover, and the queue clears. ⚠️ **Under stress the arithmetic tightens from both ends at once:** redemption demand rises exactly when utilisation is highest, and new premium income is the main thing that replenishes the free slice. **A rise in utilisation is an early-warning signal on exit, and it moves before the queue visibly slows** — and unlike the queue, OnRe publishes it.
 
-The legal and institutional wrapper is stronger than typical early DeFi credit products: OnRe operates through a Bermuda Segregated Accounts Company, cites Class IIGB insurance and Class F digital-asset business licensing, uses Coinbase Prime custody, and works with top-tier reinsurance brokers. A Quantstamp audit also exists for the OnRe Solana implementation.
+**Secondary — thin.** Roughly **$2.7M across Kamino, Orca, Raydium and Loopscale against $245.81M** managed on-chain — **about 1.1% of the book** — with **no centralized-exchange listing.**
 
-The on-chain side is weaker. The token is a classic Solana SPL mint with 9 decimals and roughly 213.5M supply as of the July verification. Minting is mediated by an OnRe program PDA, but the program itself is upgradeable by a single wallet. Freeze authority is also a single wallet. There is no on-chain multisig, no timelock, and NAV is operator-posted.
+⚠️ **This is severe exit asymmetry, and under stress the primary queue and secondary depth can tighten at the same time.** **Treat ONyc as an illiquid, long-hold credit / insurance position, not a cash-equivalent yield token.**
 
-That combination explains the score: institutional legal wrapper, but centralized on-chain trust.
+## 4 · Dependencies
 
-## Who Should Avoid
+⚠️ **Two risks are stacked here, and the stacking is the finding — neither one is the whole story.**
 
-Avoid ONyc if you need redeemable-at-par liquidity, a permissionless primary exit, or deep secondary markets. The practical retail exit is thin DEX liquidity unless you can satisfy OnRe's KYC and accreditation requirements.
+**1. Reinsurance underwriting — the core exposure and the source of the yield.** Premiums are earned up front, but large claims hit NAV, and **holders absorb them first.** Reinsurance is a large, established market and the exposure is genuinely uncorrelated to crypto. **That is the good half.**
 
-Avoid it if you require multisig or timelock governance before taking token risk. The current on-chain upgrade and freeze authorities are single-key controls.
+**2. ⚠️ The collateral float is sUSDe, so Ethena sits underneath the insurance book.** Idle and reserve capital earns through sUSDe, which brings **Ethena's basis-trade, funding and peg risks** beneath everything above. **A holder is exposed to a bad claims year and to a funding-rate regime change, and those two have nothing to do with each other** — which means diversification between them, but two independent ways to lose rather than one.
 
-Avoid it if you do not want first-loss insurance exposure or stacked Ethena exposure. The yield is compensation for catastrophe / underwriting risk, sUSDe collateral risk, a redemption gate, and single-key trust. It is not a savings rate.
+**Add the operational dependency:** the whole position runs through **a single Solana program** and OnRe's own marking of NAV.
 
-ONyc is best sized, if at all, as a small long-hold sleeve for investors who explicitly want reinsurance-premium exposure and can tolerate delayed or impaired exit.
+## 5 · Contract & Admin
 
-## Score rationale
+⚠️ **On-chain control is single-key, and this is the sharpest gap between the legal wrapper and the code.**
 
-| Axis | Score | Why |
-|---|---:|---|
-| Volatility | 5.0 | NAV has been smooth and the token recently tracked NAV, but holders are first-loss underwriting capital and the book is untested through a major claims year. |
-| Structural | 4.0 | Strong Bermuda legal wrapper, Coinbase Prime custody, major brokers, and Quantstamp audit; offset by single-EOA upgrade and freeze authorities, operator-posted NAV, and Solana single-program dependence. |
-| Redemption | 3.5 | KYC and accredited-investor gated, about 2.5% of NAV per period into a pending queue, no forced unwind, and settlement at prevailing NAV. The gate is bounded by capital utilization, reported by OnRe at 94.65% on 2026-07-31 — roughly 5% of the book is free capital, and redemptions are served from that slice. |
-| Underlying | 4.5 | Reinsurance premium income is a real uncorrelated yield source, but holders bear first-loss claims and the collateral stack includes sUSDe. |
-| Liquidity | 3.5 | Roughly $2.7M secondary liquidity against $245.81M managed on-chain (OnRe, 2026-07-31) — about 1.1% of the book — no CEX, and primary exit is gated. |
-| Issuer | 5.0 | Institutional wrapper and partners are meaningful positives, but single-key on-chain control materially weakens the issuer/trust profile. |
+Solana reads from **2026-07-22** show the **program upgrade authority and freeze authority are each a single plain wallet** — **no multisig, no timelock.** **One key can redeploy the mint and redemption logic, or freeze holder tokens.**
 
+The token is a classic Solana SPL mint, 9 decimals, roughly **213.5M supply** as of that verification. Minting is mediated by an OnRe program PDA, **but the program itself is upgradeable by that single wallet.** A **Quantstamp audit** exists for the OnRe Solana implementation.
+
+⚠️ **The Bermuda regulated wrapper is a real legal backstop, but it is off-chain. It does not remove the on-chain key risk**, and an audit describes the code as written rather than who may replace it.
+
+## 6 · Issuer
+
+**OnRe, a Bermuda Segregated Accounts Company.** ⚠️ **The institutional wrapper and partners are meaningful positives** — Class IIGB and Class F licensing, Coinbase Prime custody, Guy Carpenter and Howden as brokers, and a segregated-account structure that legally ring-fences the book.
+
+⚠️ **What holds this axis at 5.0 rather than higher is that the on-chain reality does not match the off-chain one.** Single-key upgrade and freeze authority, operator-posted NAV, and **a disclosure set that this coverage cannot independently verify.** **Institutional legal wrapper, centralized on-chain trust** — the two halves point in opposite directions and the score sits between them.
+
+## Who should avoid
+
+- **Anyone who needs redeemable-at-par liquidity, a permissionless primary exit, or deep secondary markets.** The practical retail exit is thin DEX liquidity unless you can satisfy KYC and accreditation (axis 3).
+- **Anyone who requires multisig or timelock governance before taking token risk.** Upgrade and freeze are single-key (axis 5).
+- **Anyone who does not want first-loss insurance exposure, or stacked Ethena exposure** (axis 4).
+- **Anyone reading the yield as a savings rate.** It is compensation for catastrophe risk, sUSDe collateral risk, a redemption gate and single-key trust (axes 1 and 4).
+
+**ONyc is best sized, if at all, as a small long-hold sleeve for investors who explicitly want reinsurance-premium exposure and can tolerate delayed or impaired exit.**
+
+## What to watch
+
+- **Capital utilisation.** 94.65% at 2026-07-31, and **it moves before the queue visibly slows** — the single best early warning on exit (axis 3).
+- **Whether upgrade and freeze authority ever move to a multisig or timelock.** The largest available improvement (axis 5).
+- **A first real claims year.** The book is untested, and that is what the yield is paid for (axes 1 and 4).
+- **Whether the $357.21M figure is ever reconciled against the $245.81M managed on-chain** (axis 2).
+- **Ethena's funding regime**, which sits underneath the collateral float (axis 4).
 ---
 
 *This report is built from publicly available documentation, third-party market data, and independent Solana RPC reads dated 2026-07-22. We hold no privileged information about OnRe, its contracts, or its insurance book. Corrections welcome to info@tidresearch.com.*
