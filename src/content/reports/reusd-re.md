@@ -30,7 +30,15 @@ liquidity_score: 5.0
 structural_score: 6.0
 redemption_score: 4.5
 overall_score: 6.0
-live_dashboard_url: "https://app.re.xyz/reusd"
+# ⚠️ POINTS AT OUR OWN MONITOR, not the issuer's. This field drives the
+# "Open dashboard" CTA, and the CTA should send a reader to the independent
+# read rather than to Re's page — Re's dashboard is still cited in the body as
+# the canonical source for live metrics, which is the right place for it.
+# ⚠️ The target is STAGED and unfinished (axis 5 unrated, no collateral ratio
+# by design). That is acceptable only because THIS REPORT IS ALSO STAGED and
+# the two promote together; if this report is ever promoted while the monitor
+# is not, this field must go back to the issuer URL or be removed.
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusd-re"
 ---
 
 # reUSD (Re Protocol) — Retail Risk Report

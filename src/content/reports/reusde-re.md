@@ -30,7 +30,12 @@ liquidity_score: 2.5
 structural_score: 4.5
 redemption_score: 2.5
 overall_score: 3.5
-live_dashboard_url: "https://app.re.xyz/reusde"
+# ⚠️ POINTS AT OUR OWN MONITOR, not the issuer's — see reusd-re.md for the
+# reasoning. ⚠️ This target is not merely unfinished, it is EMPTY: registered
+# and reachable but awaiting its producer feed, so it renders a staged
+# placeholder. The body says so plainly. Acceptable only while this report is
+# staged alongside it; the two promote together.
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusde-re"
 ---
 
 # reUSDe (Re Protocol) — Retail Risk Report
