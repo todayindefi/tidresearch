@@ -26,8 +26,11 @@ market_cap_approx: 4729857
 # SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
 # Contract & Admin · Issuer. Order matches the dashboards exactly.
 # ⚠️ What moved, and what only changed name:
-#   backing_score 4.5 is NEW. yzPP had no backing axis. Its claim is on the SAME
-#     Yuzu strategy book as yzUSD, so the composition is inherited unchanged.
+#   backing_score 4.5 — ✅ DERIVED (riskAnalyst, 2026-08-30). Authored here
+#     first and adopted on trust; since independently derived rather than
+#     borrowed, so it is no longer provisional. yzPP had no backing axis. Its
+#     claim is on the SAME Yuzu strategy book as yzUSD, so the composition is
+#     inherited unchanged and the backing QUALITY is yzUSD's 4.5.
 #     ⚠️ The subordination is deliberately NOT scored here — being first in the
 #     waterfall is a fact about position, not about what the reserve holds, and
 #     it is scored on axis 4 where the circularity already lives. Scoring it in

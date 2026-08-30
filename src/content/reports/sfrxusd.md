@@ -19,7 +19,14 @@ market_cap_approx: 36232343
 #   backing_score 6.5   inherited from frxUSD. This vault holds frxUSD and
 #     nothing else, so it is the same reserve. ⚠️ Inherited, not judged: if
 #     frxUSD's backing moves, this must.
-#   underlying_score 4.5 renders as DEPENDENCIES, and it is the lowest axis
+#   underlying_score 4.5 — ⚠️ OPEN. Authored at this desk and NOT derived, and
+#     it cannot be shortcut the way backing 6.5 and issuer 5.0 were: those were
+#     checked against `frxusd.md` before adoption, but ⚠️ FRXUSD CARRIES NO
+#     DEPENDENCIES AXIS, so there is no parent value to inherit or verify
+#     against. Deriving this means first establishing frxUSD's OWN dependency
+#     set, which has never been done. ⚠️ IF YOU ARE REFRESHING EITHER ASSET,
+#     THAT IS THE PREREQUISITE — this axis has no other scheduled moment.
+#     It renders as DEPENDENCIES and is the lowest axis
 #     here on purpose. 100% through frxUSD, and the concentration runs BOTH
 #     ways — this vault holds 35.58% of all frxUSD, so the two are one
 #     exposure, not two. On top of that, FIP-450 (Gearbox, $5M) and FIP-451

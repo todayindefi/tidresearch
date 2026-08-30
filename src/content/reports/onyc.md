@@ -15,7 +15,14 @@ issuer: "OnRe (Bermuda SAC)"
 yield_bearing: true
 # SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
 # Contract & Admin · Issuer. Order matches the dashboards exactly.
-#   backing_score 4.0 is NEW. This report had no backing axis, which was a real
+#   backing_score 4.0 — ⚠️ CHECKED, NOT DERIVED. Authored at this desk;
+#     riskAnalyst read it against the report's content and found it CONSISTENT,
+#     which is a weaker statement than agreeing with it. ⚠️ THE DISTINCTION
+#     MATTERS AND SHOULD SURVIVE: a rationale can be constructed for 3.5 or 4.5
+#     just as easily, so consistency is not derivation. ⚠️ IF YOU ARE
+#     REFRESHING THIS ASSET, DERIVE THIS AXIS PROPERLY — it is the open item
+#     that has no other scheduled moment.
+#     This report had no backing axis, which was a real
 #     hole on an asset whose reserve is an underwriting book. It prices a
 #     genuine institutional wrapper — Bermuda SAC, Class IIGB/F licensing,
 #     Coinbase Prime custody, Guy Carpenter and Howden — against the fact that
