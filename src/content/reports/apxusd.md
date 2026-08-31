@@ -10,6 +10,10 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apxusd"
 trust_disclaimer: true
 date: "2026-04-10"
 last_verified: "2026-08-25"
+# Scope-limited pass on the 2026-08-31 Strategy 8-K. ⚠️ `last_verified` is
+# deliberately NOT bumped — it stamps a whole-body re-read and this was the
+# buyback/runway material only.
+last_revised: "2026-08-31"
 featured: false
 production: true
 # issuer: withheld pending review — this report states the issuing entity is

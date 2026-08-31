@@ -7,6 +7,10 @@ category: "tradfi-equity"
 assessment_type: "light"
 date: "2026-08-24"
 last_verified: "2026-08-24"
+# Scope-limited pass on the 2026-08-31 Strategy 8-K. ⚠️ `last_verified` is
+# deliberately NOT bumped — it stamps a whole-body re-read and this was the
+# buyback/runway material only.
+last_revised: "2026-08-31"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
