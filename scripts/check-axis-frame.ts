@@ -64,10 +64,18 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   // carry the frame. Existing reports are exempt until their next refresh —
   // `date` is first-publication and does not move, so a refresh cannot
   // accidentally pull an old report into this rule.
+  // ⚠️ tradfi-equity is exempt from the frame ENTIRELY (owner policy), and the
+  // progress counter below has always known that. This gate did not, so the
+  // first tradfi-equity report created on or after the policy date would have
+  // been rejected by a rule it is supposed to sit outside — an issuer-entity
+  // analysis has no peg, no reserve and no contract to score. Caught when
+  // tsm-adr became that first report (2026-09-06).
+  const isTradfiEquity = /^category:\s*"?tradfi-equity/m.test(fm);
   const created = fm.match(/^date:\s*"?(\d{4}-\d{2}-\d{2})/m)?.[1];
   if (
     created &&
     created >= FRAME_REQUIRED_FROM &&
+    !isTradfiEquity &&
     !/^axis_frame:\s*six\s*$/m.test(fm)
   ) {
     errors.push(

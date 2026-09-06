@@ -28,17 +28,20 @@ axis_frame: six
 peg_mechanism_score: 5.0
 backing_score: 5.0
 liquidity_score: 3.5
+# Axis 4 DEPENDENCIES. Debt-weighted lookthrough across all 12 live markets,
+# each collateral LP scored at its WORSE LEG — ⚠️ that rule is not a convention
+# we picked, it is USG's own oracle arithmetic (`virtual_price × MIN(coin
+# price)`), so the weaker constituent sets the mark and therefore sets
+# liquidation. Weighted result 5.44.
+# ⚠️ SCORED BELOW THE LOOKTHROUGH, DELIBERATELY: constituent quality is not the
+# binding constraint, the structure is. 3-4 layers deep across 12+ external
+# protocols, and the MIN() oracle removes the diversification a pair would
+# otherwise give — you take the worse leg's risk without the benefit of holding
+# two assets.
+underlying_score: 4.0
 structural_score: 3.5
 issuer_score: 4.0
 overall_score: 4.0
-# ⚠️ Axis 4 is deliberately absent, not forgotten. USG's upstream exposure is
-# real and is described at length in the body — the book is almost entirely
-# other protocols' stablecoin LP tokens — but no Dependencies score has been
-# authored for it, and inventing one here would publish a number nobody
-# derived. Score it at the next refresh.
-axis_exemptions:
-  - axis: "4 Dependencies"
-    reason: "upstream-issuer exposure is described in the body but no dependencies score has been authored; scoring it here would publish an underived number"
 
 issuer: "Tangent Finance"
 audited_reserves: false
@@ -113,6 +116,14 @@ That is a genuine improvement rather than a quiet one — earlier the same day, 
 
 Two of the sixteen markets are paused. Tangent's paused-settings semantics let existing positions persist while new borrowing stops, so **a pause is a freeze rather than a wind-down** — the collateral stays, the exposure stays, and the market can be reopened. Neither paused market carries debt today.
 
+## What the collateral actually depends on
+
+Scoring the upstream exposure is a lookthrough rather than a judgement. Across the 12 live markets, debt-weighted, with **each collateral LP taken at its worse leg**, the constituents score **5.44**. Sixteen of the eighteen constituents already carry their own assessments; the weakest named one is **Resupply reUSD at 3.5**, which is **9.1% of debt** and sits in two of the four thinnest markets.
+
+⚠️ **The worse-leg rule is not a convention imposed from outside — it is USG's own oracle arithmetic.** The market oracle is `virtual_price × MIN(coin price)`, so the weaker constituent of a pair sets the mark, and the mark is what sets liquidation. **You take the worse leg's risk without the benefit of holding two assets**, which is the opposite of what holding an LP position normally buys you.
+
+**The axis scores 4.0, below the 5.44 lookthrough, and the gap is deliberate: constituent quality is not the binding constraint here, structure is.** Every position is **3–4 layers deep** — USG, then a StakeDAO/Convex/Curve wrapper, then a Curve pool, then two stablecoins, then their own backing — across **12+ external protocols**. Set that against the distribution above, where 74.9% of the book sits within 10% of liquidation, and the depth of the stack is what decides how far a single upstream problem travels.
+
 ## Admin authority, and the layer that matters is the parameter, not the price
 
 The oracle question a reader usually asks is *where does the price come from*. On USG the sharper question is **who can change which feed a market reads** — the `parameter` layer rather than the price feed. **A sound oracle behind a swappable pointer is not a sound price.**
@@ -150,7 +161,7 @@ The staking wrapper, sUSG, holds $1,064,103 — about 24.5% of supply. Staking d
 | Stability | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
 | Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
 | Liquidity & Exit | 3.5 | One venue, no quoted depth, about $1.0M counter-side inventory against $4.34M supply |
-| Dependencies | — | Not scored. The book is almost entirely other protocols' stablecoin LP tokens and that exposure is described above, but no dependencies score has been authored; an unexplained blank would read as an oversight, so it is stated here instead |
+| Dependencies | 4.0 | Debt-weighted lookthrough across the 12 live markets scores **5.44**, each LP taken at its worse leg. Scored below that on purpose: every position is 3–4 layers deep across 12+ external protocols, and `MIN(coin price)` removes the diversification a pair would otherwise give. Weakest named constituent is Resupply reUSD at 3.5 — 9.1% of debt, and in two of the four thinnest markets |
 | Contract & Admin | 3.5 | Asset permissioning, parameter setting and governance all terminate at one 3-of-5 Safe with no execution delay; repointing `collatOracle` moves every position's health in one transaction, against a book where 74.9% sits within 10% of liquidation. The only 3-day delay covers replacing the PegKeeper admin, not the risk setters |
 | Issuer | 4.0 | Transparent data, unreviewed parameters, young sub-$5M protocol |
 | **Overall** | **4.0** | Unchanged. Axis 5 makes an authority surface explicit that was previously priced inside the Issuer row — it is a re-scoping of where the fact sits, not a new adverse read of the asset |
