@@ -7,49 +7,76 @@ category: "vault-share"
 assessment_type: "full"
 date: "2026-05-19"
 last_verified: "2026-08-25"
-last_revised: "2026-08-27"
+# Scope-limited pass 2026-09-06: sleeve composition re-measured from Re's
+# metrics endpoint and the report re-framed onto the six-axis core. The
+# structural material was re-scoped, not re-read, so `last_verified` HOLDS at
+# 2026-08-25 deliberately — do not bump it on a sweep.
+last_revised: "2026-09-06"
 featured: false
 # MOVED BACK TO STAGING 2026-08-31, deliberately — do not re-promote on a
 # freshness or completeness sweep. ⚠️ The site owner's rule is that THIS REPORT
 # AND ITS DASHBOARD PROMOTE TOGETHER, gated on a puppeteer verification pass.
-# backing-monitor's page is staged and unfinished — `?asset=reusd-re` renders
-# with axis 5 (Contract & Admin) UNRATED because no topology walk has been
-# emitted, and no collateral ratio at all, because Re publishes combined
-# reUSD + reUSDe reserves with no asset-attributed denominator, so no CR can
-# honestly be derived. `?asset=reusde-re` is registered but still awaiting its
-# producer feed. ⚠️ A published report pointing at an unfinished monitor is the
-# pairing this rule exists to prevent.
+# Status 2026-09-06: one blocker CLEARED — axis 5 (Contract & Admin) now
+# renders on backing-monitor for `?asset=reusd-re`. The other has not and
+# largely CANNOT: Re publishes combined reUSD + reUSDe reserves with no
+# asset-attributed denominator, so no collateral ratio is derivable for reUSD
+# alone. ⚠️ That is an honest PERMANENT blank, not a pending measurement, so
+# the gate stays shut and this report stays staged.
+# `?asset=reusde-re` is registered but still awaiting its producer feed.
 # TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
 # both reports together. Checked before demoting: no `production: true` report
 # links here, so nothing 404s on prod (only frax.md links in, and it is staged).
 production: false
 issuer: "Resilience BVI Ltd."
 market_cap_approx: 181000000
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Order matches the dashboards exactly.
+#   ⚠️ `structural_score` 6.0 -> 4.0 and `overall_score` 6.0 -> 5.0 are a
+#     RE-SCOPING, NOT A DETERIORATION. No adverse evidence arrived. The old
+#     "Structural 6.0" was silently pricing THREE of the six axes — legal
+#     structure (now Issuer 5.5) and the off-chain dependency stack (now
+#     Dependencies 5.0) alongside contract and authority. Axis 5 is Contract &
+#     Admin ONLY, and what remains there scores 4.0. The overall was set
+#     against four axes and the report now has six.
+#   ⚠️ NOT recorded in the revision history, deliberately: a re-scoping of
+#     which axis carries a fact is a change to US, not to the asset. The body
+#     states the six axes as current method; it does not diff itself.
+#   backing_score 5.5 is NEW. Collateral is good in QUALITY and NOT
+#     diversified — measured 99.05% sUSDe, T-Bills $0. The concentration is
+#     priced on axis 4, not here, or it would be double-counted.
+#   underlying_score 5.0 is NEW and renders as DEPENDENCIES: three-channel
+#     Ethena exposure plus the off-chain stack.
+#   issuer_score 5.5 is NEW and is SHARED WITH reusde-re — same entity, so two
+#     pages showing 5.5 is correct, not duplication.
+# ⚠️ `redemption_score: 4.5` is RETAINED but no longer rendered: it is the
+# evidence for axis 3, and both exit legs are stated in prose under that heading.
+axis_frame: six
 volatility_score: 7.0
+backing_score: 5.5
 liquidity_score: 5.0
-structural_score: 6.0
+underlying_score: 5.0
+structural_score: 4.0
+issuer_score: 5.5
 redemption_score: 4.5
-overall_score: 6.0
+overall_score: 5.0
 # ⚠️ POINTS AT OUR OWN MONITOR, not the issuer's. This field drives the
 # "Open dashboard" CTA, and the CTA should send a reader to the independent
 # read rather than to Re's page — Re's dashboard is still cited in the body as
 # the canonical source for live metrics, which is the right place for it.
-# ⚠️ The target is STAGED and unfinished (axis 5 unrated, no collateral ratio
-# by design). That is acceptable only because THIS REPORT IS ALSO STAGED and
-# the two promote together; if this report is ever promoted while the monitor
-# is not, this field must go back to the issuer URL or be removed.
+# ⚠️ The target is STAGED and has no collateral ratio by design. That is
+# acceptable only because THIS REPORT IS ALSO STAGED and the two promote
+# together; if this report is ever promoted while the monitor is not, this
+# field must go back to the issuer URL or be removed.
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusd-re"
 ---
 
 # reUSD (Re Protocol) — Retail Risk Report
 
-**Moderate risk · 6.0/10**
-
-> **2026-08-18 update — Overall 5.5 → 6.0, Structural 5.5 → 6.0.** Three open gaps have closed, and the upgrade is those three answers rather than a change in the underlying business. (1) **The layers beneath reUSD are now sized.** Re publishes them: the mezzanine reUSDe tranche at about $19M and Re's own junior capital at about $77M as of June 2026 — against a senior tranche of roughly $181M across chains. ⚠️ **On a current read the Ethereum leg alone is about $207.0M at 2026-08-23; see the subordination note below.** The "not publicly disclosed in granular form" caveat this report ran since May is retired, with an important asterisk covered in *A note on the tranche structure* below. (2) **The audit gap is closed.** Re now publishes a **Sherlock** collaborative audit (July 2026) and a **Certora** formal verification (Sept 2025) alongside the three Hacken engagements — the "current implementation is effectively unaudited" finding no longer stands. (3) **A real 48-hour timelock is verified on-chain**. Redemption stays 4.5 and Liquidity stays 5.0: nothing here changes the U.S.-person exit asymmetry or the sUSDe payout asset, which remain the binding constraints.
+**Moderate risk · 5.0/10**
 
 > **Issuer-published dashboard:** [app.re.xyz/reusd](https://app.re.xyz/reusd) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, yield/price/TVL history charts, capital tranching diagram, and links to Chainlink Proof of Reserves. It is the canonical source for live metrics on this asset.
 >
-> **Independent monitor (staged, unfinished):** [tidresearch backing monitor — reUSD](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) — our own read of the same asset, on the six-axis frame, built to sit **beside** the issuer's page rather than replace it. ⚠️ **It is not finished and should not be cited.** Two gaps are deliberate and worth knowing before you open it: **axis 5 (Contract & Admin) renders UNRATED** because no topology walk has been emitted for this asset, and **there is no collateral ratio at all** — Re publishes combined reUSD + reUSDe reserves with **no asset-attributed denominator**, so no CR can honestly be derived for reUSD alone. ⚠️ **A blank there is an honest blank, not a missing number.**
+> **Independent monitor (staged, unfinished):** [tidresearch backing monitor — reUSD](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) — our own read of the same asset, on the six-axis frame, built to sit **beside** the issuer's page rather than replace it. ⚠️ **It is not finished and should not be cited.** One gap is worth knowing before you open it, and it is permanent rather than pending: **there is no collateral ratio at all** — Re publishes combined reUSD + reUSDe reserves with **no asset-attributed denominator**, so no CR can honestly be derived for reUSD alone. ⚠️ **A blank there is an honest blank, not a missing number.**
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -57,157 +84,136 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusd-
 
 ## Summary
 
-reUSD is the **senior tranche** of Re Protocol's reinsurance capital structure. Capital is deployed into fully-collateralized reinsurance contracts via licensed insurers, with funds held in a U.S. §114 Reinsurance Trust Account. The on-chain liquid sleeve runs an Ethena sUSDe basis trade or T-Bill strategy.
+reUSD is the **senior tranche** of Re Protocol's reinsurance capital structure. Capital is deployed into fully-collateralised reinsurance contracts via licensed insurers, with funds held in a U.S. §114 Reinsurance Trust Account. The senior tranche earns the risk-free rate plus a **250bps spread** — currently around 6.1% APY. Below it sits its junior sibling [reUSDe](/reports/reusde-re/) (mezzanine), and below that Re Protocol's own equity capital. Losses are absorbed bottom-up, so reUSD is impaired only if an underwriting event exhausts both junior layers.
 
-The senior tranche earns the risk-free rate plus a **2.5% (250 bps) spread** — currently around 6.1% APY. Below reUSD sits its junior sibling [reUSDe](/reports/reusde-re/) (Mezzanine) and below that Re Protocol's own equity capital. Losses are absorbed bottom-up, so reUSD only takes a hit if a catastrophic underwriting event exhausts both junior layers.
+**Sized on-chain 2026-08-27:** the Ethereum leg alone is **$217.2M** — 198,103,604 reUSD at a NAV of 1.096411, both measured on-chain ([`0x5086bf35…0c72`](https://etherscan.io/address/0x5086bf358635b81d8c47c66d1c8b9e567db70c72)). Re's `/tvl` endpoint reports **$233.7M all-chain**, which is issuer-reported and labelled as such. The tranche dipped to about $162M in mid-July, when capital rotated into the higher-yield mezzanine after the June 2026 $RE launch, and has grown since. Deployments cover Ethereum, Arbitrum, Base and Avalanche; tradable liquidity is Ethereum-concentrated.
 
-⚠️ **Updated 2026-08-27: the Ethereum leg alone is about $217.2M** — 198,103,604 reUSD at a NAV of 1.096411, both re-measured on-chain ([`0x5086bf35…0c72`](https://etherscan.io/address/0x5086bf358635b81d8c47c66d1c8b9e567db70c72)). Re's `/tvl` endpoint reports **$233.7M all-chain**, which is issuer-reported and labelled as such. **The 08-25 read of $207.0M across 188.8M tokens is superseded**, and the leg has kept growing. Roughly **$181M across all chains** with about $175M on Ethereum was the mid-August position; the Ethereum leg has grown roughly 17% past that figure. Deployments run on Ethereum, Arbitrum, Base, and Avalanche. NAV is about **$1.096**, up roughly 9% from the June 2025 inception, and cross-checks two ways: the on-chain Fluid oracle and CoinGecko agree to the third decimal. The senior tranche has been *growing* again since the mid-July dip to about $162M — the earlier shrinkage was rotation into the higher-yield reUSDe mezzanine tranche after the June 2026 $RE token launch, not distress.
+One number to treat carefully: Re's headline protocol TVL (about $591M) is **not** a capital base. It adds roughly $319M of *premium receivables* — the reinsurance book itself — on top of about $272M of actual capital. The capital figure is the one that matters for solvency, and it is what DefiLlama reports. **Do not read the headline as investor capital standing behind the tranches.**
 
-One number worth treating carefully: Re's headline protocol TVL (about $591M) is **not** a capital base. It adds roughly $319M of *premium receivables* — the reinsurance book itself — on top of about $272M of actual capital. The capital figure is the one that matters for solvency, and it is what DefiLlama reports. Do not read the headline as investor capital standing behind the tranches.
+**This report scores on six axes** — Stability, Backing, Liquidity & Exit, Dependencies, Contract & Admin, Issuer. Contract & Admin covers upgrade authority, key custody and the NAV write path *only*. The legal and entity questions sit on Issuer, and the off-chain and Ethena stack on Dependencies.
 
-The 6.0/10 score reflects a credibly-engineered RWA exposure offset by two structural realities that have not changed: (1) **U.S. persons cannot use primary redemption** under the BVI securities exemption, leaving DEX-only exit for U.S. holders, and (2) **Mainnet primary redemption pays out in sUSDe, not USDC** — so even non-U.S. Mainnet holders inherit Ethena impairment at exit. Across 14 months of trading, secondary price has tracked the smooth NAV curve closely — early-launch dips (Jul–Aug 2025) imply roughly 1–3% discount-to-NAV at the worst, with near-zero deviation from late 2025 onward. The structural exit-asymmetry that has produced -5% to -15% detachments on other tokenized RWAs has **not** materialized for reUSD to date, but the setup that produces it (gated cohort + DEX-only exit + about $28M/month of DEX depth against a $181M cap) is unchanged.
+**What sets the overall is that the two weakest axes compound rather than sit side by side.** You exit through a queue — secondary-only if you are a U.S. person, because the BVI securities exemption excludes U.S. residents from primary redemption — and the price you exit at is **a mark the issuer writes**, on a path that sits outside the 48-hour timelock. Slow or restricted exit, at a price set by a key. What holds the score up is broad rather than one strong axis: high-grade collateral, a regulated operator, a current audit stack on unchanged code, and a reinsurance book running a 92% combined ratio. **reUSD's problem is control over a good book, not the book.**
 
-**Frame check:** reUSD is a vault share — its target price grows with NAV, not a $1 peg. The right metric for stress is *discount-to-NAV* `(NAV − market price) / NAV`, not absolute price vs $1.00. NAV today is about $1.094; the absolute-price ATL on the rendered chart (about $0.99, early launch) implies a 1–3% discount-to-NAV given accrued NAV at that time.
+## 1 · Stability
 
-## What you actually earn
+reUSD is a **vault share**: its target price grows with NAV, not a $1 peg. The right metric for stress is **discount-to-NAV** — `(NAV − market price) / NAV` — not absolute price against $1.00.
 
-Senior-tranche reinsurance yield, calculated daily as a **deployment-weighted blend**:
+NAV has run from $1.00 at the June 2025 inception to about **$1.096**, consistent with the target rate, and it cross-checks two ways: the on-chain Fluid oracle and CoinGecko agree to the third decimal. Across 14 months of trading, secondary price has tracked that smooth curve closely. Early-launch dips in July–August 2025 imply roughly **1–3% discount-to-NAV at the worst**, with near-zero deviation from late 2025 onward.
 
-- **Deployed capital** earns the risk-free rate + 2.5% spread
-- **Undeployed capital** earns the trailing 7-day sUSDe basis trade + 2.5% spread
+**On the $0.8734 all-time-low print:** an aggregator text field shows it; the rendered chart does not. It is an early-launch thin-seed-pool artifact from July 2025, about a month after inception — not a redemption event. sUSDe, the Mainnet payout asset, has never sustained a sub-$1 price and stood above $1.13 on that date, so a redeem-then-dump could not have marked reUSD at $0.87.
 
-Each day at 00:00 UTC the protocol computes the current deployment mix and converts the blended rate into daily price appreciation (no rebasing). As of 2026-05-18 the dashboard shows ~6.1% APY. Effective rate moves with both the basis level and the deployment mix.
+**Held at 7.0**, and capped there rather than higher because 14 months is a short history, insurance losses are back-loaded, and the setup that has produced -5% to -15% detachments on other tokenised RWAs — a gated cohort with DEX-only exit — remains in place even though it has not fired here.
 
-Compared to its sibling reUSDe (~12% APY, mezzanine tranche): reUSD earns roughly half the yield in exchange for the protection of having reUSDe absorb losses first.
+## 2 · Backing
 
-## How exit works
+Two pools sit behind the token. The **off-chain leg** is fully-collateralised reinsurance contracts written through licensed insurers, with assets held in a U.S. §114 Reinsurance Trust Account at an independent trust bank. The **on-chain leg** is a liquid sleeve, sized to hold at least a 50% reserve buffer against redemptions.
 
-reUSD has a deeper Ethena dependency than the yield headline suggests. Re Protocol's docs confirm that on Ethereum, when you redeem reUSD, the protocol pays you back in **sUSDe — not USD**. To get clean dollars you need a second step: wait out Ethena's cooldown (sUSDe → USDe → USDC — the cooldown is now dynamic, 1 to 7 days, and currently sits at 1 day) or swap on a DEX, where stress conditions can mean meaningful slippage. On Avalanche, redemptions pay USDC directly and are exempt from this. The practical consequence: a Mainnet holder of reUSD inherits Ethena impairment risk on the *exit asset itself*, not just on the on-chain reserve buffer. A sUSDe depeg would propagate to reUSD via three channels at once — the yield formula (which references sUSDe basis), the on-chain reserve buffer (which holds sUSDe basis-trade positions), and the redemption payout itself — so even non-U.S. holders going through primary redemption are not insulated from Ethena on Mainnet.
+⚠️ **The sleeve's mandate and the sleeve's holdings are different things, and the difference is the whole point.** Re is *permitted* to run the sleeve as an Ethena sUSDe basis trade **or** a T-Bill strategy. **Measured from Re's own metrics endpoint on 2026-09-06, it is 99.05% sUSDe**, plus 0.87% reUSD/sUSDe LP, 0.06% USDe and 0.01% USDC — and **$0 of T-Bills.** That is **99.98% Ethena-derived.** The T-Bill leg is a permitted rotation that has not occurred, and it is the one allowed asset that would diversify *away* from Ethena. ⚠️ **The collateral is good in quality and it is not diversified: it is one synthetic dollar, not four assets.** That concentration is priced on axis 4, where the dependency lives, rather than twice.
 
-Two paths, very different profiles depending on whether you can KYC as a non-U.S. person:
+**What you actually earn** is a **deployment-weighted blend**, not the better of two rates. Off-chain (deployed) capital earns SOFR + 250bps; on-chain (idle sleeve) capital earns the trailing 7-day sUSDe rate + 250bps. Each day at 00:00 UTC the protocol computes the deployment mix and converts the blended rate into NAV appreciation — there is no rebasing. ⚠️ **A blend matters here in a way a maximum would not: a max-of formula would floor a holder at whichever leg was performing, and a blend passes an Ethena basis collapse straight through at the deployment weight.** Re annualises **simple** (× 365/7); quote that convention or none, because compounding the same data produces a visibly different headline. Compared with sibling reUSDe (about 12% APY), reUSD earns roughly half the yield in exchange for having the mezzanine absorb losses first.
 
-**1. Primary redemption (non-U.S. KYC only):** Tiered — an actuarially determined instant buffer (typically 50%+ of deposits) settles immediately at NAV. Requests beyond the buffer queue and settle as trust assets mature. Re disclosed **throughput caps** in August 2026: instant redemptions are limited to 20% of available redemption capacity per day, with a per-wallet cap of 10% of that daily pool — so a single wallet can pull at most about 2% of the pool per day, and if the buffer falls below 1% of total supply the contract switches to quarterly-window-only mode. Against the roughly $44M of on-chain redemption liquidity observed in August, that is ample at retail size and a real constraint at institutional size. 0.18% subscription / 0.18% redemption fees; minimum deposit **250 USDC** per the current dashboard. **Payout asset depends on chain:** on Mainnet (Ethereum), the instant redemption tier pays out in **sUSDe**, the staked-USDe yield-bearing token issued by Ethena. On Avalanche, redemptions pay out in USDC. A Mainnet redeemer wanting a clean dollar at exit must follow up with a sUSDe → USDC unwrap (Ethena's dynamic 1-to-7-day cooldown queue, currently 1 day, or a DEX swap), and any sUSDe price weakness propagates directly to the dollar value of that exit.
+**Verification of the off-chain leg is genuine but is attestation, not proof.** The Network Firm publishes daily reserve attestations; **Chainlink Proof of Funds** publishes hashed trust balances and premium/claim flow on-chain 24/7; Grant Thornton (Cayman) audits annually.
 
-**2. DEX secondary market (the only path for U.S. persons):** reUSD trades on Curve and Fluid pools across the four supported chains. There is **no CEX listing**: per CoinGecko Markets (May 2026), the four trading venues are Fluid REUSD/USDT (~63% of 24h DEX volume), Curve REUSD/sUSDe (~37%), Curve REUSD/USDC (<1%), and a stale Blackhole V2 pool. Aggregate DEX exit liquidity is **about $28M/month** (roughly $946K/24h across the four pools). The often-cited "$511M monthly volume" from RWA.xyz is *transfer* volume — it conflates mints, redemptions, wallet-to-wallet transfers, and DEX trades. Only the DEX share is realizable exit for a holder. Against a market cap of at least $205M (Ethereum alone, 2026-08-23), $28M/month of real DEX exit liquidity is functional for retail-size exits but thin for institutional-size.
+⚠️ **The subordination beneath the senior tranche has thinned, and the reason is growth rather than loss.** On the sizing basis this report recommends — the smaller of Re's two published junior-capital figures — the first-loss layer measured **9.66% of the senior tranche on 2026-08-24**, below the 10% level conventionally treated as the institutional norm. **No loss occurred and the junior layer did not shrink: senior deposits grew and the ratio thinned because the denominator rose.** ⚠️ **Treat it as indicative rather than measured** — the junior figure is Re's, dated June 2026, over an August on-chain senior read, so numerator and denominator are about two months apart. The direction is solid; the exact crossing is not precisely dated, and because the denominator is the operand that grew, the current figure is more likely below 9.66% than above it. **Held at 5.5** on that attachment point and on the NAV being issuer-written, against collateral that is otherwise high-grade.
 
-**For U.S. holders specifically:** the primary path is unavailable. Treat reUSD as a hold-the-NAV-trajectory position rather than a redeem-at-par stablecoin.
+## 3 · Liquidity & Exit
 
-**On the $0.8734 all-time-low aggregator print:** an aggregator text field shows an ATL of $0.8734, not visible on the rendered CoinGecko chart. This print is now **resolved as an early-launch (July 2025) thin-seed-pool artifact — not a sUSDe-redemption event.** The hypothesis that Mainnet's sUSDe redemption payout could have mechanically produced a ~$0.85 print is **disproven**: sUSDe has never sustained a sub-$1 price (its own all-time-low is about $1.01), and the $0.8734 reUSD print (dated July 17, 2025, roughly one month after inception) occurred when sUSDe's NAV was already ~$1.13+ — so a redeem-then-dump of a sUSDe payout could not have marked reUSD at $0.87. Across its full history reUSD's market price has tracked NAV to within a few basis points; the clean NAV-tracking record stands and no downward volatility revision fires.
+This axis covers **both** exit paths and is scored on the **worse** one. Which leg binds depends entirely on where you live.
 
-## What the contracts are doing
+**Primary redemption — non-U.S. KYC only.** Tiered: an actuarially determined instant buffer, typically 50%+ of deposits, settles immediately at NAV. Requests beyond it queue and settle as trust assets mature. Re disclosed throughput caps in August 2026: instant redemptions are limited to 20% of available redemption capacity per day, with a per-wallet cap of 10% of that daily pool — so a single wallet can pull at most about 2% of the pool per day — and if the buffer falls below 1% of total supply the contract switches to quarterly-window-only mode. Fees are 0.18% on subscription and 0.18% on redemption; the minimum deposit is 250 USDC. Against roughly $44M of on-chain redemption liquidity observed in August, that is ample at retail size and a real constraint at institutional size.
 
-- **Token contract:** ERC-1967 upgradeable proxy at `0x5086bf358635b81d8c47c66d1c8b9e567db70c72` (Ethereum). NAV is set via off-chain feed; this is not an ERC-4626 vault.
-- **Custody:** Crypto leg on **Fireblocks MPC** multisig; off-chain leg in an independent U.S. trust bank's §114 Reinsurance Trust Account
-- **Attestations:** Daily reserve attestations by The Network Firm; **Chainlink Proof of Funds** publishes 24/7 hashed trust balances + premium/claim flow on-chain
-- **Annual audit:** Grant Thornton (Cayman) — Big-6 accounting firm
-- **Upgrade authority:** Gated by AccessControl roles. **Verified on-chain (August 2026): the admin role on both the reUSD and reUSDe proxies is held by an OpenZeppelin `TimelockController` at [`0x69dDEa33…7FCA93`](https://etherscan.io/address/0x69dDEa332723cF5407151aAF68B9b076557FCA93) with a minimum delay of 172,800 seconds — a real 48-hour delay.** Read it accurately, though: a single Safe holds the proposer, executor, and canceller roles, so the 48 hours is a **public notice window, not an independent second approval** — nobody else has to agree, you just get two days' warning. Day-to-day operations run through four Fireblocks MPC controller wallets (3-of-5 for oracle config, redemptions config, and custodian manager; 5-of-8 for the access manager). **The NAV/share-price path is not covered by the timelock** — see the note on the oracle below
-- **Cross-chain bridge:** As of July 2026, reUSD's cross-chain distribution migrated from a **LayerZero OFT to Chainlink CCIP as the exclusive bridge**. For a holder this modestly reduces bridge-configuration attack surface but concentrates cross-chain liveness on a single provider. Supported chains are unchanged (Ethereum, Arbitrum, Base, Avalanche), and tradable liquidity remains Ethereum-concentrated.
+⚠️ **The payout asset depends on the chain.** On Mainnet the instant tier pays out in **sUSDe, not USD**. A clean dollar requires a second leg — Ethena's dynamic 1-to-7-day cooldown, currently 1 day, or a DEX swap with stress slippage. **On Avalanche, redemptions pay USDC and are exempt.** So even a non-U.S. holder redeeming on Mainnet inherits Ethena exposure at the moment of exit.
 
-**The NAV feed is the weak point in that admin story.** The price used to mark reUSD — including as collateral on Fluid — traces back to a **single admin-written share price** on Re's `SharePriceCalculator`, not to an on-chain redemption calculation (reUSD is a plain ERC-20, not an ERC-4626 vault, so there is no `convertToAssets` to check it against). There is also a `forceNAVUpdate` path held by a 3-of-5 Safe, which sits **outside** the 48-hour timelock described above.
+**Secondary market — the only path for U.S. persons.** reUSD trades on Curve and Fluid across the four supported chains with **no CEX listing**: Fluid REUSD/USDT carries about 63% of 24h DEX volume, Curve REUSD/sUSDe about 37%, Curve REUSD/USDC under 1%, plus a stale Blackhole V2 pool. Aggregate DEX exit liquidity is about **$28M/month** (roughly $946K/24h). ⚠️ **The often-cited "$511M monthly volume" is *transfer* volume** — it conflates mints, redemptions and wallet-to-wallet transfers with DEX trades, and only the DEX share is realisable exit. Against a market cap above $205M, $28M/month is functional at retail size and thin at institutional size.
 
-⚠️ **And the bypass is not a separate emergency lever sitting beside the writer — it is inside it.** The routine daily NAV write and the deviation-guard bypass are **the same undocumented 632-byte contract**, `0xe888DF32`. `forceNAVUpdate` skips the ±10% guard, and it lives in the thing performing the ordinary daily updates rather than in a distinct break-glass contract. **That changes what the guard is worth:** a bypass held elsewhere is a second decision by a second component, while a bypass in the same contract is a different argument to the same call, made by the same keys that write the price every day.
+⚠️ **The binding leg, named: for a U.S. person the secondary market is not the worse of two paths, it is the only path.** For a non-U.S. holder the primary path works at NAV and moots the depth question at retail size. **5.0 is the blend of a workable primary redemption for one cohort and a DEX-only exit for the other** — it is not a single number that describes both.
 
-⚠️ **The limit, carried verbatim from the measurement: selector presence in bytecode does not distinguish implements-from-calls, and no disassembly was done.** So the selectors are established to be *present*; whether that contract implements the logic or forwards to something else is not. **Do not read this as a full account of the write path.** And the feed's own behaviour under stress is worth knowing: a markdown larger than 10% submitted through the normal path *pauses* the feed rather than publishing the lower price. In other words, the single scenario in which the mark matters most is the one in which it stops updating. If you are using reUSD as leveraged collateral anywhere, this — not the tranche math — is the thing to underwrite.
+## 4 · Dependencies
 
-The thing to internalize: **the smart contract doesn't hold the reinsurance.** Reinsurance contracts and trust-account assets are off-chain instruments held by a U.S. trust bank for the BVI issuer. On-chain reads tell you the token supply and the Chainlink-attested NAV — the underlying credit exposure is a TradFi reinsurance program.
+**Ethena is the dependency a reader would not expect from a reinsurance product, and it enters through three channels at once:** the yield formula, which references the sUSDe rate on the idle leg; the on-chain sleeve, measured at 99.98% Ethena-derived; and the Mainnet redemption payout asset itself. ⚠️ **A sUSDe depeg therefore propagates to the yield, the reserve buffer and the exit asset simultaneously.** The redemption channel is the tightest of the three: sleeve composition *can* rotate to T-Bills, but the protocol must hold operational sUSDe to service the Mainnet instant-redemption queue regardless of strategy. Only Avalanche primary redeemers are outside it.
 
-## Audits & security
+**Cross-chain liveness runs through one provider.** As of July 2026 reUSD's cross-chain distribution moved from a LayerZero OFT to **Chainlink CCIP as the exclusive bridge**. That modestly reduces bridge-configuration attack surface and concentrates liveness on a single provider.
 
-**The audit position is current.** Re publishes an engagement stack covering the live implementation:
+**And the substance of the asset is off-chain.** The smart contract does not hold the reinsurance. On-chain reads tell you supply and the attested NAV; the credit exposure is a TradFi reinsurance programme, and the stack it depends on is a U.S. trust bank, the underwriting carriers, The Network Firm, Chainlink feed liveness, Fireblocks operational continuity and Grant Thornton. **None of that is verifiable from Ethereum state.**
 
-- **Sherlock collaborative audit, July 2026** — the current engagement against the live logic
-- **Certora formal verification, September 2025** — previously named in Re's docs but undated
-- **Hacken, three engagements:** NAV Oracle (Apr 2025), Core Contracts (Dec 2024), DeFi Contracts (Sept 2024 — 0 Critical, 0 High, 4 Medium, 7 Low, 18 Observations)
+## 5 · Contract & Admin
 
-The implementation itself is unchanged at `0xb5276c43…DEb4a21D4` (verified on-chain August 2026, and shared by reUSD and reUSDe), so the July 2026 Sherlock engagement covers the code you are actually holding. Together with the verified 48-hour timelock, this is the bulk of the August 2026 upgrade from 5.5 to 6.0.
+- **Token contract:** ERC-1967 upgradeable proxy at `0x5086bf358635b81d8c47c66d1c8b9e567db70c72` (Ethereum). NAV is set from an off-chain feed; this is **not** an ERC-4626 vault, so there is no `convertToAssets` to check the mark against.
+- **Upgrade authority:** gated by AccessControl roles. Verified on-chain: the admin role on both the reUSD and reUSDe proxies is held by an OpenZeppelin `TimelockController` at [`0x69dDEa33…7FCA93`](https://etherscan.io/address/0x69dDEa332723cF5407151aAF68B9b076557FCA93) with a minimum delay of 172,800 seconds — **a real 48-hour delay.** ⚠️ **Read it accurately: a single Safe holds the proposer, executor and canceller roles, so the 48 hours is a public notice window, not an independent second approval.** Nobody else has to agree; you get two days' warning.
+- **Day-to-day operations** run through four Fireblocks MPC controller wallets — 3-of-5 for oracle config, redemptions config and custodian manager; 5-of-8 for the access manager.
+- **Custody:** crypto leg on Fireblocks MPC; off-chain leg in the §114 trust account.
 
-- **Still no bug bounty disclosed publicly** — a gap relative to mature DeFi protocols. The off-chain auditing posture (Grant Thornton annual + Network Firm daily) compensates partially for the asset class, but not for the contract layer.
+⚠️ **The NAV write path is the weak point, and it is not covered by the timelock.** The price used to mark reUSD — including as collateral on Fluid — traces back to a **single admin-written share price** on Re's `SharePriceCalculator`. A `forceNAVUpdate` path held by a 3-of-5 Safe sits **outside** the 48-hour delay and **skips the ±10% deviation guard**.
 
-## Score breakdown
+⚠️ **And the bypass is not a separate emergency lever sitting beside the writer — it is inside it.** The routine daily NAV write and the deviation-guard bypass are the same undocumented 632-byte contract, `0xe888DF32`, which answers no standard interface and is absent from Re's published controller table. **That changes what the guard is worth:** a bypass held elsewhere is a second decision by a second component; a bypass in the same contract is a different argument to the same call, made by the same keys that write the price every day.
 
-| Dimension | Score | Notes |
-|---|---|---|
-| Volatility | 7.0 | NAV path smooth ($1.00 → about $1.094 over 14 months, consistent with the target rate). Vault-share peg (read as discount-to-NAV, not absolute price vs $1): early-launch dips imply 1–3% discount-to-NAV at the worst, near-zero deviation from late 2025 onward. Capped below "very tight" because (a) the 14-month history is short, (b) insurance loss patterns are back-loaded, and (c) the structural setup that could produce a deeper detachment remains in place. |
-| Liquidity | 5.0 | DEX-only (no CEX listing), Ethereum-concentrated — Fluid + Curve carry effectively all meaningful depth across the four supported chains. Real DEX exit liquidity is about $28M/month against a market cap of at least $205M (Ethereum alone, 2026-08-23; the $181M all-chain figure above is superseded) — functional for retail-size, thin for institutional-size. Primary redemption at NAV works for non-U.S. holders (moots the question for that cohort). |
-| Structural | 6.0 | **Raised from 5.5 (August 2026).** Two of the three findings that set 5.5 are resolved: the audit gap is closed (Sherlock July 2026 + Certora Sept 2025 on an unchanged implementation), and a **48-hour OpenZeppelin timelock is verified on-chain**. What keeps it from rising further: the timelock is a notice window with a single Safe as sole proposer rather than a second approval; the NAV/share-price path sits outside it and is a single admin-written figure; and the off-chain dependency stack (trust bank, insurance carriers, Network Firm, Chainlink, Fireblocks, Grant Thornton) is unchanged. |
-| Redemption | 4.5 | **Binding constraint for U.S. holders.** Non-U.S. persons get tiered NAV redemption (50%+ instant buffer), but on Mainnet the payout asset is **sUSDe, not USD** — a clean-dollar exit requires a second-leg sUSDe → USDC swap. U.S. persons get DEX exit only. Only Avalanche primary-redemption holders get a clean USDC payout. The §II.4 asymmetry remains structural and unmitigated; has not produced an observable detachment in 14 months of trading. |
-| **Overall** | **6.0** | **Raised from 5.5 (August 2026)** on evidence, not on a changed view of the business: the tranche layers beneath reUSD are now disclosed and sized, the audit gap on the live implementation is closed, and a 48-hour on-chain timelock is verified. Still moderate risk, and still capped by the two caveats that did *not* move — U.S.-cohort exit asymmetry and the Mainnet sUSDe payout asset — plus a NAV feed that is a single admin-written price outside the timelock. |
+⚠️ **The limit on that measurement, stated: selector presence in bytecode does not distinguish implements-from-calls, and no disassembly was done.** The selectors are established to be present; whether that contract implements the logic or forwards it is not. **Do not read this as a full account of the write path.** The feed's stress behaviour is also worth knowing: a markdown larger than 10% submitted through the normal path **pauses the feed rather than publishing the lower price** — the one scenario in which the mark matters most is the one in which it stops updating. If you are using reUSD as leveraged collateral anywhere, this is the thing to underwrite.
+
+**The audit position is current.** Re publishes a **Sherlock** collaborative audit (July 2026) against the live logic, a **Certora** formal verification (September 2025), and three **Hacken** engagements — NAV Oracle (April 2025), Core Contracts (December 2024) and DeFi Contracts (September 2024: 0 Critical, 0 High, 4 Medium, 7 Low, 18 Observations). The implementation is unchanged at `0xb5276c43…DEb4a21D4` and is shared with reUSDe, so the Sherlock engagement covers the code you are actually holding. **Still no publicly disclosed bug bounty** — a gap relative to mature DeFi protocols, and one the off-chain audit posture does not compensate for at the contract layer.
+
+**4.0 is the sum of those:** a real but single-key timelock, an issuer-written mark with an in-place guard bypass outside that timelock, and a current audit stack on unchanged code.
+
+## 6 · Issuer
+
+Resilience BVI Ltd. is a named, licensed entity operating under a **BVI securities exemption** — which is also the reason **U.S. persons are excluded from primary redemption**, the single most consequential fact on this page for a U.S. holder. The control quality is genuine: Grant Thornton (Cayman) as annual auditor, The Network Firm on daily attestations, Fireblocks MPC for custody, and a Chainlink Proof-of-Funds feed. **But the model is trust-the-operator rather than trust-the-code**, and the issuer writes the NAV its own holders are marked against.
+
+**Three disclosure gaps are worth carrying.** The **trust bank custodian is not publicly named**. The **reinsurance carrier and cedent counterparties are not disclosed** — industry-standard, and still a real gap, because a holder cannot know whose book they are backing. And ⚠️ **Re publishes two different junior-capital figures without saying which governs the attachment schedule** (see the tranche note below).
+
+**14 months in market with no solvency incident, no exploit and no material discount-to-NAV event** is a genuine positive. ⚠️ **It also carries less information here than it would in most categories, because insurance losses are back-loaded** — they surface quarters or years after the policies are written. **5.5** reflects a credible, named, regulated operator in an offshore regime, with disclosure gaps that a holder cannot close from outside.
 
 ## Who it's for
 
-- **Non-U.S. yield-seekers** comfortable with regulated RWA exposure who want tokenized senior reinsurance with on-chain composability. Treat as a 5-10% portfolio sleeve, not a stablecoin substitute.
-- DeFi users who specifically want **multi-chain availability** for an RWA position and are comfortable with DEX-only secondary exit (no CEX listing).
+- **Non-U.S. yield-seekers** comfortable with regulated RWA exposure who want tokenised senior reinsurance with on-chain composability. Treat as a 5-10% portfolio sleeve, not a stablecoin substitute.
+- DeFi users who specifically want **multi-chain availability** for an RWA position and are comfortable with DEX-only secondary exit.
 
 ## Who should avoid
 
-- **U.S. persons looking for a redeem-at-par stablecoin substitute.** Primary redemption is unavailable; exit is DEX-only. The structural exit-asymmetry that has produced -5% to -15% detachments on other tokenized RWAs has not yet materialized for reUSD, but the setup is unchanged and 14 months without a real stress event is not the same as resilience to one.
-- **Anyone leveraging on a venue using a market-priced oracle.** A secondary-market detachment would trigger liquidations even if Re Protocol's NAV is unimpaired. NAV-priced oracle is the only defensible configuration.
-- Anyone who needs a fully on-chain trustless instrument. reUSD has substantial off-chain dependencies (U.S. trust bank, reinsurance carriers, Chainlink feed liveness, Fireblocks operational continuity).
+- **U.S. persons looking for a redeem-at-par stablecoin substitute.** Primary redemption is unavailable and exit is DEX-only. The exit-asymmetry setup that has produced -5% to -15% detachments elsewhere has not fired here, but it is unchanged, and 14 months without a real stress event is not the same as resilience to one.
+- **Anyone leveraging on a venue that uses a market-priced oracle.** A secondary detachment would trigger liquidations even with Re's NAV unimpaired; a NAV-priced oracle is the only defensible configuration — and even then, the mark itself is issuer-written.
+- **Anyone who needs a fully on-chain trustless instrument.** The substantive dependencies are off-chain and unverifiable from Ethereum state.
 
 ## What to watch
 
-- **[Re Protocol's issuer dashboard](https://app.re.xyz/reusd)** is the primary source. Current APY, TVL, supply, and historical yield/price/TVL charts are all updated in real time by the issuer. Chainlink Proof of Reserves feed is linked from there.
-- **NAV vs market price spread.** Target <50bps in calm conditions; >200bps is a stress signal worth attention.
-- **Ethena sUSDe basis trade health.** reUSD's on-chain sleeve depends on this; an Ethena depeg or basis collapse hits the asset side directly.
-⚠️ **The senior tranche has grown past the figure this report publishes, and the subordination has thinned as a result.** Read on 2026-08-23, the **Ethereum leg alone** is 188,824,946 reUSD at a NAV of 1.096411 — about **$207.0M** — against the **$181M all-chain** figure in the update above. All-chain is therefore higher still; this is a floor, not a total.
-
-**Held against the junior sizes Re publishes, that moves the attachment point:**
-
-| junior basis | vs $181M published | vs $207.0M (Ethereum alone) |
-|---|---:|---:|
-| $77M — product pages | 42.5% | **37.19%** |
-| $20M — implied by the loss-scenario page | 11.0% | ⚠️ **9.66%** |
-
-**On the sizing basis this report itself recommends — the smaller number — junior capital now sits below 10% of the senior tranche**, the same threshold the page invokes elsewhere as the institutional norm.
-
-⚠️ **Read it as capacity outpacing subordination, not as deterioration.** No loss occurred and the junior layer did not shrink. **Deposits into the senior tranche grew — roughly 13% — and the ratio thinned because the denominator rose.** Re raising more senior money than junior is the ordinary consequence of selling the senior product well, and growth reads as demand and health, which is exactly why this would go unnoticed. It is the same arithmetic that appears in [Figure](/reports/figure/), where a growing denominator made a delinquency rate *improve*, and in [wYLDS](/reports/wylds/), where a shrinking one made a coverage ratio improve. **When a ratio moves, check which side moved.**
-
-⚠️ **And treat the 9.66% as indicative rather than measured, for a reason worth stating.** The junior figures are Re's, **as of June 2026**; the senior figure is an on-chain read from **2026-08-23**. That ratio therefore divides a two-month-old numerator by a current denominator — the same basis-mixing this coverage has been correcting elsewhere. Re's junior capital has not been re-measured here and there is no on-chain handle on it. **The direction is solid and the threshold crossing is not precisely dated.**
-
-**This sharpens the question below rather than replacing it.** At $20M it is now a sub-10% first-loss layer beneath a senior tranche of at least $205M — which makes reconciling the two junior figures more consequential, not less.
-
-**No score changes**, and the reason is specific: this report's 2026-08-18 upgrade was explicitly for **disclosure** — "the upgrade is those three answers, not a change in the underlying business" — and that basis is untouched, since Re still publishes the sizing. Checking the axis rationales directly: **Structural 6.0 rests on the closed audit gap, the verified 48-hour timelock, the NAV admin write path and the off-chain dependency stack — it does not cite depth of subordination at all**, and the only mention of tranches in any rationale is Overall's "disclosed and sized", which is the fact of disclosure rather than the ratio. **What would change that, so the hold is checkable:** junior-to-senior below 9% on the scenario basis, a confirmed contraction in the mezzanine layer, or Re confirming that $20M rather than $77M governs the attachment schedule.
-
-⚠️ **Measured 2026-08-27: 14,094,070 reUSDe at a NAV of 1.408519 = $19.85M** — and the NAV is corroborated two independent ways, Re's `/tvl` implying 1.408519 against measured supply and CoinGecko printing $1.41, 0.03% apart. **That is 9.14% of the senior tranche.** See the [reUSDe report](/reports/reusde-re/) for the full assessment.
-
-- **Whether Re reconciles its two junior-capital figures.** The product pages say about $77M; the loss-scenario page implies about $20M is actually subordinated. Until Re states which number governs the attachment schedule — ideally attested rather than asserted — size to the smaller one. This is the single most useful question to put to the issuer.
-- **Attestation of the junior layer.** The $77M is a docs figure dated June 2026. Grant Thornton confirmation, a Chainlink proof-of-funds line item, or a BVI filing would turn it from an assertion into evidence.
-- **reUSDe (sibling) capacity.** reUSDe is the mezzanine layer that protects reUSD from underwriting losses. If it contracts significantly relative to total underwriting, reUSD's loss buffer thins. reUSDe came through its **first-ever redemption window (July 9–22, 2026)** without incident — supply fell from about 14.4M to 13.57M while NAV rose from $1.33 to $1.40, so the mezzanine's *value* held roughly flat at about $19M as the senior tranche grew. That is an orderly first test of the second-loss layer's redemption machinery. Keep watching the mezzanine-to-senior ratio, currently about 10.8% and drifting slowly down.
+- **[Re Protocol's issuer dashboard](https://app.re.xyz/reusd)** — current APY, TVL, supply and historical charts, updated in real time by the issuer, with the Chainlink Proof of Reserves feed linked from there.
+- **NAV vs market price spread.** Target under 50bps in calm conditions; over 200bps is a stress signal.
+- **Sleeve composition.** ⚠️ **A rotation into T-Bills would be the single most meaningful de-risking event available to this asset**, because it is the only permitted holding that reduces Ethena concentration. It has not happened.
+- **Ethena sUSDe basis health.** It reaches the yield, the reserve and the Mainnet exit asset at once.
+- **Whether Re reconciles its two junior-capital figures**, and attests the junior layer. A Grant Thornton confirmation, a Chainlink proof-of-funds line item or a BVI filing would turn the $77M from an assertion into evidence. Until then, size to the smaller number. **This is the single most useful question to put to the issuer.**
+- **Mezzanine capacity.** [reUSDe](/reports/reusde-re/) stands at **$19.85M**, or **9.14% of the senior tranche** (14,094,070 tokens at NAV 1.408519, measured 2026-08-27). It came through its first-ever redemption window in July 2026 in an orderly way. If it contracts relative to the underwriting book, reUSD's loss buffer thins.
 
 ## A note on the tranche structure
 
-reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equity (Re calls this "junior tranche capital") absorbs losses first, then the [reUSDe mezzanine tranche](/reports/reusde-re/), and only then reUSD. How much protection that actually buys depends on how big those lower layers are relative to the insurance book — the question this report has flagged since May as the key open item, on the grounds that Re did not disclose it granularly.
-
-**Re now discloses it.** As of August 2026:
+reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equity absorbs losses first, then the [reUSDe mezzanine tranche](/reports/reusde-re/), and only then reUSD.
 
 | Layer | Size | Source |
 |---|---:|---|
 | Junior — Re's own equity (first loss) | about **$77M** | Re's product docs, "as of June 2026" |
-| Mezzanine — [reUSDe](/reports/reusde-re/) (second loss) | **$19.85M** | 14,094,070 × NAV 1.408519, both measured on-chain 2026-08-27 |
-| Senior — reUSD (last loss) | **at least $207.0M** (Ethereum alone, 2026-08-23; was about $181M all-chain per Re's TVL API) | on-chain read; all-chain is higher |
+| Mezzanine — [reUSDe](/reports/reusde-re/) (second loss) | **$19.85M** | 14,094,070 × NAV 1.408519, measured on-chain 2026-08-27 |
+| Senior — reUSD (last loss) | **$217.2M** on Ethereum | on-chain read 2026-08-27; all-chain is higher |
 
-Taken at face value that is roughly **$96M sitting beneath the senior tranche, or a little over half of it** — reUSD is not thinly protected. But there is a complication you should know about, because it changes how much of that cushion you can actually count on.
+Taken at face value that is roughly **$96M sitting beneath the senior tranche**. But **Re publishes two different junior-capital numbers.** The product pages say $77M; a page walking through loss scenarios says "about $20M of Re capital and $15M of reUSDe." **These are not competing snapshots** — Re's own published history rules that out, since its non-tokenised capital has never been below $55.1M and no date in the record pairs those two figures. The reading that fits is that **the $77M is Re's balance-sheet depth, while about $20M of it is contractually subordinated ahead of reUSDe in the attachment schedule.** Balance-sheet depth and waterfall thickness are not the same number.
 
-**Re publishes two different junior-capital numbers.** The product pages say $77M. A different page, walking through loss scenarios, says "about $20M of Re capital and $15M of reUSDe." These are not competing snapshots of the same thing — Re's own published history rules that out, since its non-tokenized capital has never been near $20M and no date in the record pairs those two figures. The reading that fits is that **the $77M is Re's balance-sheet depth, while only about $20M of it is contractually subordinated ahead of reUSDe in the attachment schedule.** Balance-sheet depth and waterfall thickness are not the same number, and Re publishes both without distinguishing them.
+**Size to the smaller one.** Loss absorption follows what the reinsurance treaties subordinate, not what the balance sheet happens to hold. Equity above the attachment point may well absorb losses — Re has every commercial incentive to protect its tokens — but nothing published *obliges* it to before reUSDe is impaired.
 
-**Size to the smaller number.** Loss absorption follows what the reinsurance treaties subordinate, not what the balance sheet happens to hold. Equity above the attachment point may well absorb losses — Re has every commercial incentive to protect its tokens — but nothing published *obliges* it to before reUSDe is impaired.
-
-Here is what that means in the unit reinsurance actually uses. A **combined ratio** is claims plus expenses as a percentage of premiums collected: below 100% the book is profitable, above 100% it is losing money. Re's book is about **$358M of premium**, and premiums plus buffer absorb claims up to a **105%** combined ratio before any capital layer is touched. From there:
+In the unit reinsurance actually uses: a **combined ratio** is claims plus expenses as a percentage of premiums collected, so below 100% the book is profitable. Re's book is about **$358M of premium**, and premiums plus buffer absorb claims up to a **105%** combined ratio before any capital layer is touched. From there:
 
 - **105–110%** — Re's own capital absorbs the loss
-- **110–115%** — reUSDe (the mezzanine) absorbs it
+- **110–115%** — reUSDe, the mezzanine, absorbs it
 - **above 115%** — reUSD, your layer, starts taking losses
 
-For context on how far away that is: Re's realized combined ratio is **92% to date**, it reports sub-100% in every underwriting year since inception, and no individual treaty has ever finished above 99%. Its own November 2025 stress model used a 135% environment as the extreme case. The book is all frequency lines — small-business commercial, commercial auto, workers' comp, homeowners — with **no property-catastrophe exposure**, which is the line most likely to produce a sudden, correlated, book-wide loss.
+For scale: Re's realised combined ratio is **92% to date**, it reports sub-100% in every underwriting year since inception, no individual treaty has ever finished above 99%, and its own November 2025 stress model used a 135% environment as the extreme case. The book is all frequency lines — small-business commercial, commercial auto, workers' comp, homeowners — with **no property-catastrophe exposure**, which is the line most likely to produce a sudden, correlated, book-wide loss.
 
-**Two things this still doesn't settle.** The $77M figure is a docs assertion dated June 2026, not an attested one — it has not been verified against Grant Thornton, the Chainlink proof-of-funds feed, or BVI filings, and equity is exactly the layer that moves after a bad year. And Re's structure has still never been stress-tested by a real underwriting loss; the protocol launched in June 2025, and insurance losses are back-loaded, surfacing quarters or years after the policies are written. A clean record on a book this young is encouraging, not conclusive.
+**Two things this does not settle.** The $77M is a docs assertion, not an attested figure, and equity is exactly the layer that moves after a bad year. And the structure has never been stress-tested by a real underwriting loss. **A clean record on a book this young is encouraging, not conclusive.**
 
 ## A note on Re Points and the $RE token
 
-Re Protocol runs a loyalty points program prominently surfaced on the asset dashboard. Current multipliers for reUSD strategies: Pendle YT 30x, Pendle LP 30x, Fluid 5x–20x. On **June 18, 2026 the program monetized: Re Protocol launched $RE**, a governance token (fixed 1B supply, no emissions) that governs the protocol's policy, upgrade, and transparency layer, with Season-1 points holders claiming at the token generation event. That resolves the earlier "points have no token" caveat — Season-1 accrual is now a realized, liquid asset rather than pure optionality. Forward multipliers (Season-2 terms and continued value) are still not guaranteed, so **treat ongoing points as marketing optionality, not yield** — net APY estimates should not include unrealized points absent a published valuation.
+Re Protocol runs a loyalty points program surfaced on the asset dashboard; current reUSD multipliers are Pendle YT 30x, Pendle LP 30x and Fluid 5x–20x. On **18 June 2026 the program monetised: Re launched $RE**, a governance token with a fixed 1B supply and no emissions, governing the protocol's policy, upgrade and transparency layer, with Season-1 points holders claiming at the token generation event. Season-1 accrual is therefore a realised, liquid asset rather than optionality. Season-2 terms are not guaranteed, so **treat ongoing points as marketing optionality, not yield** — net APY estimates should not include unrealised points absent a published valuation.
 
 ## Revision history
 
-- **2026-08-27 — senior and mezzanine re-measured; no score change.** The Ethereum leg reads **198,103,604 reUSD at NAV 1.096411, about $217.2M**; Re's `/tvl` reports **$233.7M all-chain**, issuer-reported. The mezzanine is **14,094,070 reUSDe at NAV 1.408519 = $19.85M, or 9.14% of the senior** — NAV corroborated by Re's endpoint and CoinGecko to 0.03%.
-- **2026-08-23 — subordination has thinned on both sides.**
-- **2026-08-18 — Overall 5.5 → 6.0, Structural 5.5 → 6.0.** Three gaps closed: the layers beneath reUSD are sized and published; the audit position is current (Sherlock July 2026, Certora September 2025, on an unchanged implementation); and a **48-hour OpenZeppelin `TimelockController`** at `0x69dDEa33…7FCA93` holds the admin role on both the reUSD and reUSDe proxies. **What keeps it from rising further:** the timelock is a notice window with a single Safe as sole proposer, and the NAV/share-price path sits outside it as a single admin-written figure.
+- **2026-09-06 — the on-chain sleeve is 99.05% sUSDe and holds no T-Bills.** Measured from Re's metrics endpoint: sUSDe 99.05%, reUSD/sUSDe LP 0.87%, USDe 0.06%, USDC 0.01%, T-Bills $0 — **99.98% Ethena-derived.** The T-Bill strategy is a permitted rotation that has not occurred, so the sleeve is one synthetic dollar rather than a diversified book.
+- **2026-08-27 — senior and mezzanine re-measured.** The Ethereum leg reads **198,103,604 reUSD at NAV 1.096411, about $217.2M**; Re's `/tvl` reports **$233.7M all-chain**, issuer-reported. The mezzanine is **14,094,070 reUSDe at NAV 1.408519 = $19.85M, or 9.14% of the senior** — NAV corroborated by Re's endpoint and CoinGecko to 0.03%.
+- **2026-08-24 — the first-loss attachment point measures 9.66%, below the 10% institutional norm.** ⚠️ **It thinned because the denominator rose, not because the junior layer shrank:** no loss occurred and senior deposits grew.
+- **2026-08-18 — three disclosure gaps closed.** Re published the sizing of the layers beneath reUSD; the audit position on the live implementation became current (**Sherlock** July 2026 and **Certora** September 2025, on an unchanged implementation); and a **48-hour OpenZeppelin `TimelockController`** at `0x69dDEa33…7FCA93` was verified on-chain holding the admin role on both the reUSD and reUSDe proxies.
+- **2026-07 — cross-chain distribution migrated** from a LayerZero OFT to **Chainlink CCIP as the exclusive bridge**. Supported chains unchanged.
+- **2026-06-18 — $RE launched**, monetising the Season-1 points program.
