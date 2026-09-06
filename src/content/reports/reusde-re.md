@@ -30,16 +30,25 @@ market_cap_approx: 19852000
 # SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
 # Contract & Admin · Issuer. Order matches the dashboards exactly.
 #   ⚠️ UNLIKE reusd-re, THE MOVE HERE IS A GENUINE DOWNGRADE AND READS AS ONE.
-#     `liquidity_score` 2.5 -> 1.5 and `overall_score` 3.5 -> 3.0 because the
-#     exit ladder was MEASURED rather than estimated: 2% depth $15,461 on the
-#     single Curve venue (executable `get_dy`, block 25894848, 2026-09-03)
-#     against a tranche near $19.85M. The 2.5 had been priced off about
-#     $59K/day of May volume. A measurement replaced an estimate and it was
-#     worse. This one DOES belong in the revision history.
-#   ⚠️ UNRECONCILED, and the body says so: a multi-venue aggregator route
-#     measured $100K to USDC at -0.677% on 2026-08-27, which is far better
-#     than a $15,461 2%-depth venue implies. Different dates, different
-#     methods, not reconciled. The axis is set on the conservative one.
+#     `overall_score` 3.5 -> 3.0, driven by exit. This one DOES belong in the
+#     revision history.
+#   ⚠️ `liquidity_score` 2.0, and the path there is worth knowing before
+#     editing this axis. It went 2.5 -> 1.5 on a Curve `get_dy` measurement
+#     ($15,461 of 2% depth), then 1.5 -> 2.0 when the tension the page had
+#     STATED RATHER THAN RESOLVED was reconciled: there is a DIRECT
+#     reUSDe/USDC market on Uniswap v4 that the original ladder never
+#     enumerated, and it carries 90.751% of a $100K exit against Curve's
+#     9.249%. ⚠️ THE 1.5 WAS WRONG-HARSH — it measured one venue and published
+#     it as the exit, and a wrong-harsh liquidity score argues for exiting into
+#     a thin market that is not the market.
+#   ⚠️ IT RISES ONLY TO 2.0 BECAUSE AXIS 3 IS THE WORSE LEG. Redemption is 2.0
+#     and did not move: quarterly window, 40-day minimum hold, pro-rata, no
+#     primary channel for U.S. persons. A BETTER SECONDARY MARKET DOES NOT
+#     SHORTEN A QUARTERLY QUEUE. That sentence is the finding.
+#   ⚠️ STATED LIMITS, do not smooth them: full-route 2% depth is UNMEASURED and
+#     bounded BELOW by about $100K, not established at it. And the historical
+#     per-hop split is UNRECOVERABLE — the 2026-08-27 script discarded the
+#     route summary, so any per-hop table asserted for it now would be invented.
 #   backing_score 5.5 is NEW and is the SAME capital pool as reUSD, hence the
 #     same score. ⚠️ Subordination is NOT priced here — it sits on axis 1 and
 #     axis 3, and scoring seniority again here would double-count it.
@@ -58,7 +67,7 @@ market_cap_approx: 19852000
 axis_frame: six
 volatility_score: 3.5
 backing_score: 5.5
-liquidity_score: 1.5
+liquidity_score: 2.0
 underlying_score: 4.0
 structural_score: 4.0
 issuer_score: 5.5
@@ -96,7 +105,7 @@ In the three-tier waterfall, Re Protocol's own equity is the first loss, **reUSD
 
 **This report scores on six axes** — Stability, Backing, Liquidity & Exit, Dependencies, Contract & Admin, Issuer. Contract & Admin covers upgrade authority, key custody and the shared implementation *only*; the legal and entity questions sit on Issuer, and the reinsurance and Ethena stack on Dependencies.
 
-⚠️ **The binding constraint is exit, and measured against an executable quote it is severe.** The single Curve venue absorbs **$15,461 before 2% price impact** — measured with an executable `get_dy` quote at Ethereum block 25894848 on 2026-09-03, against a tranche near $19.85M. **The pool is effectively exhausted by about $2M, and a $500K sale prices at roughly -39%.** The primary path is quarterly-gated and cleared **$1.5M in its first window, about 7.6% of the tranche.** **Neither leg is a route out at size, and for a U.S. person only the thin one exists at all.**
+⚠️ **The binding constraint is exit, and it is the primary channel rather than the market.** A $100,000 sale clears at **-0.677% against NAV** — most of it on a direct reUSDe/USDC market on Uniswap v4 rather than on the thin Curve pool, which carries under a tenth of an order that size. **The secondary market is workable at retail scale.** What is not workable is the primary path: **quarterly windows, a 40-day minimum hold, pro-rata gating, and no primary channel at all for U.S. persons.** The first window cleared **$1.5M, about 7.6% of the tranche.** ⚠️ **A better secondary market does not shorten a quarterly queue**, which is why this axis does not follow the venue up.
 
 ## 1 · Stability
 
@@ -124,15 +133,16 @@ reUSDe draws on **the same capital pool as reUSD**: fully-collateralised reinsur
 
 This axis covers **both** exit paths and is scored on the **worse** one. ⚠️ **For a U.S. holder there is only one leg, so 1.5 is the whole picture rather than the worse half of two.**
 
-**Secondary market — the binding leg, and now measured rather than estimated.** One **Curve REUSDE/sUSDe twocrypto pool** [`0x43b98EEA…3734`](https://etherscan.io/address/0x43b98EEA5C689F0036918f590a4B55f22D853734) on Ethereum, TVL **$559,165**. No CEX listing, and the single-chain footprint is measured rather than asserted — twelve chains were probed and code exists on Ethereum alone.
+**Secondary market — better than the Curve pool alone suggests, and the distinction matters.** There is a **direct reUSDe/USDC market on Uniswap v4** alongside the Curve pool, and at size it is where the exit actually happens: on a $100,000 order, **Uniswap v4 fills 90.751% and the Curve pool 9.249%.** **A $100,000 sale clears at -0.677% against NAV** (measured 2026-08-27, quoted directly in reUSDe against NAV $1.408519); $10K costs -0.161% and $50K -0.482%. ⚠️ **The route contains no ERC-4626 leg**, so it does not pass through a gated instrument — the failure mode that makes some wrappers unexitable under stress.
 
-- **2% depth is $15,461** — an executable `get_dy` quote at block 25894848, 2026-09-03. Against a tranche near $19.85M that is **about 0.08%.**
-- **The pool is effectively exhausted by about $2M, and a $500K sale prices at roughly -39%.**
-- **24h volume $21,767** on 2026-09-03; $7,209 on 2026-08-27; about $59K/day in May. **The venue is 2.82% of the tranche, and the reUSDe side alone is 0.99% of it.**
+⚠️ **The Curve pool is one leg of that route, not the exit, and its numbers should be read as such.** One **Curve REUSDE/sUSDe twocrypto pool** [`0x43b98EEA…3734`](https://etherscan.io/address/0x43b98EEA5C689F0036918f590a4B55f22D853734), TVL **$559,165**, carries **$15,461 of 2% depth** on an executable `get_dy` quote at block 25894848, 2026-09-03; it is effectively exhausted by about $2M, and a $500K sale *into that pool alone* prices at roughly **-39%**. **Those figures describe the pool. They do not describe getting out.**
+
+- **24h volume $21,767** on 2026-09-03; $7,209 on 2026-08-27; about $59K/day in May. **The Curve venue is 2.82% of the tranche, and the reUSDe side alone is 0.99% of it.**
+- **No CEX listing**, and the single-chain footprint is measured rather than asserted — twelve chains were probed and code exists on Ethereum alone.
 - The pool holds reUSDe **$197,234** against sUSDe **$362,438**. ⚠️ **Do not read the 35/65 split as imbalance** — this is a cross-currency twocrypto pool and the ratio is the FX rate, not skew.
 - **Holder count is roughly 520** (Ethplorer 517, Blockscout 519, both against a `totalSupply` matching the on-chain read). Quoted as a range because indexers count holders differently.
 
-⚠️ **One measurement points the other way and has not been reconciled.** Routed through an aggregator to USDC on **2026-08-27**, a **$10K exit cost -0.161%, $50K -0.482% and $100K -0.677%** — far better than a venue with $15,461 of 2% depth implies, and the route contained **no ERC-4626 leg**, so it did not pass through a gated instrument. **The two readings are six days apart and use different methods, and no reconciliation has been established.** ⚠️ **The axis is set on the conservative one**, because the figure that decides whether a position can be closed is the executable depth of the only venue that quotes this token, not a route measured on a quieter day.
+⚠️ **Two limits, stated rather than smoothed.** **Full-route 2% depth is unmeasured.** It is bounded *below* by about $100,000 — that size is established to clear at -0.677% — but no crossing point has been measured and none is extrapolated here. **And the per-hop split above is from a fresh control quote**; the original 2026-08-27 measurement did not retain its route breakdown, so **no per-hop table can honestly be reconstructed for that date.**
 
 **Primary redemption — non-U.S. KYC only, and quarterly.** The request window is the first **72 hours** of each fiscal quarter, after a **40-day minimum hold** from mint. Settlement follows an end-of-quarter actuarial review and regulator approval, up to 5 business days, **pro-rata** if requests exceed surplus, with unfilled balances queuing to the next quarter. **Worst case, a holder who narrowly misses a window and then faces a pro-rata gate can wait multiple quarters — 6 to 9 months — for full capital return.**
 
@@ -140,7 +150,7 @@ This axis covers **both** exit paths and is scored on the **worse** one. ⚠️ 
 
 ⚠️ **The number to carry is capacity, not fill rate: $1.5M against a $19.85M tranche is about 7.6% per quarter.** Held flat, **fully exiting this tranche through the primary channel would take about 3.3 years** — and the cap is set by surplus released under regulatory approval, so **it does not scale with demand.** Re's documentation anticipates "expected 100% fill" in a normal year; the first window, under benign conditions, cleared under 8% of the tranche.
 
-**1.5.** The primary path is materially better than the venue for size, and it is available only to non-U.S. persons who can wait quarters. **For everyone else the whole exit is a pool that absorbs $15,461 before moving 2%.**
+**2.0, and the reason it is not higher is the whole point of scoring the worse leg.** The secondary market improved on measurement; **redemption did not move, and redemption is the worse leg** — a quarterly window, a 40-day minimum hold, pro-rata gating, about 7.6% of the tranche per quarter, and no primary channel at all for a U.S. person. ⚠️ **A better secondary market does not shorten a quarterly queue.** Averaging the two would have let a workable venue conceal a gate that has not changed.
 
 ## 4 · Dependencies
 
@@ -182,8 +192,8 @@ Mezzanine-tranche reinsurance yield, calculated daily as a **deployment-weighted
 
 ## Who should avoid
 
-- **U.S. persons at any meaningful size.** No primary redemption, and a secondary venue that absorbs $15,461 before 2% impact. **Exploratory amounts only.**
-- **Anyone using this as collateral in a leveraged position.** For an asset whose entire secondary venue absorbs $15,461 before 2% impact, **market-priced oracles are structurally unsafe** — a liquidation of any size would be pricing itself. NAV-priced is the only defensible configuration.
+- **U.S. persons at any meaningful size.** No primary redemption at all, so the secondary market is the only channel — workable at retail scale, and **unmeasured above about $100,000.** Size to the channel you actually have.
+- **Anyone using this as collateral in a leveraged position.** ⚠️ **A market-priced oracle reading the Curve pool would be pricing a venue that carries under a tenth of an executable exit** — a liquidation of any size would be pricing itself. NAV-priced is the only defensible configuration.
 - **Anyone needing predictable quarterly liquidity.** Pro-rata gating, a 40-day minimum hold and rollover mean worst cases run multiple quarters.
 - **Anyone who wants senior reinsurance exposure with better liquidity.** [reUSD](/reports/reusd-re/) is the appropriate product.
 
@@ -191,7 +201,7 @@ Mezzanine-tranche reinsurance yield, calculated daily as a **deployment-weighted
 
 - **[Re Protocol's issuer dashboard](https://app.re.xyz/reusde)** for current APY, TVL and supply. The yield chart runs essentially flat at the contractual rate; **meaningful deviation would signal an underwriting event.**
 - **NAV trajectory.** A real claim event shows here first: a sudden drawdown is the signal that the equity buffer is exhausted and the mezzanine is absorbing losses.
-- **Curve pool depth and the executable exit ladder.** ⚠️ **Depth, not volume** — volume is what the token trades, depth is what a seller actually meets, and on this venue the two tell different stories.
+- **The executable exit ladder across the whole route, not one venue.** ⚠️ **Depth, not volume, and the route, not the pool** — volume is what the token trades, depth is what a seller actually meets, and the venue carrying most of an exit here is not the one an obvious search finds. **Full-route 2% depth is still unmeasured above about $100,000.**
 - **Primary redemption fills after each quarterly window.** The cap, not the fill rate, is the constraint: it is set by regulator-approved surplus and does not scale with demand.
 - **Carrier counterparty disclosures.** Specific reinsurance carriers are not publicly named. Any disclosure, or independent identification, is a material risk-information upgrade.
 
@@ -219,7 +229,8 @@ Re Protocol runs a loyalty points program surfaced on the reUSDe dashboard; curr
 
 ## Revision history
 
-- **2026-09-03 — Liquidity & Exit 2.5 → 1.5, overall 3.5 → 3.0, on a measured exit ladder.** The single Curve venue absorbs **$15,461 before 2% price impact** (executable `get_dy`, block 25894848) against a tranche near $19.85M — **about 0.08%.** The pool is effectively exhausted by about $2M and a $500K sale prices at roughly **-39%**; 24h volume $21,767. ⚠️ **Liquidity was scored 2.5 on May volume of about $59K/day until this date; measured depth is the harder constraint and it is worse.** ⚠️ **Unreconciled and stated on the page:** an aggregator route measured $100K to USDC at **-0.677%** on 2026-08-27, six days earlier by a different method.
+- **2026-09-06 — Liquidity & Exit 2.0. A direct reUSDe/USDC market on Uniswap v4 carries the exit, not the Curve pool.** On a $100,000 order **Uniswap v4 fills 90.751% and Curve 9.249%**, clearing at **-0.677% against NAV**. ⚠️ **Liquidity was scored 1.5 on the Curve pool's $15,461 of 2% depth until this date; that figure describes one leg and was published as though it described the exit.** Full-route 2% depth remains **unmeasured, bounded below by about $100,000.** ⚠️ **The axis rises only to 2.0 because redemption is the worse leg and did not move — a better secondary market does not shorten a quarterly queue.** Overall holds at 3.0.
+- **2026-09-03 — overall 3.5 → 3.0, driven by exit.** Curve 2% depth measured at **$15,461** (executable `get_dy`, block 25894848) against a tranche near $19.85M; the pool is effectively exhausted by about $2M and a $500K sale into it alone prices at roughly **-39%**; 24h volume $21,767. **Liquidity had been scored on May volume of about $59K/day until this date.**
 - **2026-08-27 — first publication.** TVL **$19.85M** across **14,094,070 tokens** at NAV **1.408519**, Ethereum only (twelve chains probed, code on one). The tranche is **9.14% of the senior**, which stands at **$217.2M on Ethereum**. Beneath both sits about **$96.00M of subordinated capital**, with non-tokenised capital never below **$55.1M**. Holders number roughly **520**; price sits **0.04% above NAV**.
 - **2026-08-05 — the first quarterly redemption window closed, capped and rationed.** It burned **1,077,727 reUSDe across 72 claims** from 07-23, **$1,500,074 at the window-close NAV against an announced $1.5M pool** — the ceiling to within 0.005%. That is **about 7.6% of the tranche per quarter, roughly 3.3 years for a full primary exit**, on a cap set by regulator-approved surplus that does not scale with demand.
 - **Yield: Re reports 12.27%**, a **simple** annualisation of a 7-day NAV move; compounding the same data gives 13.03%, against a 12% contractual target. The **mezzanine-to-senior spread is 5.85pp** (12.27% against 6.42%).
