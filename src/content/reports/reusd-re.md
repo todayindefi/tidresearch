@@ -41,19 +41,29 @@ market_cap_approx: 181000000
 #   ⚠️ NOT recorded in the revision history, deliberately: a re-scoping of
 #     which axis carries a fact is a change to US, not to the asset. The body
 #     states the six axes as current method; it does not diff itself.
-#   backing_score 5.5 is NEW. Collateral is good in QUALITY and NOT
+#   backing_score 5.0 is NEW. Collateral is good in QUALITY and NOT
 #     diversified — measured 99.05% sUSDe, T-Bills $0. The concentration is
 #     priced on axis 4, not here, or it would be double-counted.
+#     ⚠️ 5.0 rather than 5.5 on the attachment point, which is 7.94% measured
+#     2026-09-06 against 9.66% on 08-24. DILUTION BY GROWTH, NOT A WORSE BOOK:
+#     no claim event, combined ratio still 92%, and the junior layer is
+#     measurably FLAT (+0.4%) while the senior grew. It is now basis-
+#     INDEPENDENT — the point falls on the $20M waterfall basis AND on the
+#     $72.97M balance-sheet basis — which is why it moves a score where three
+#     earlier readings of the same finding did not.
 #   underlying_score 5.0 is NEW and renders as DEPENDENCIES: three-channel
 #     Ethena exposure plus the off-chain stack.
 #   issuer_score 5.5 is NEW and is SHARED WITH reusde-re — same entity, so two
 #     pages showing 5.5 is correct, not duplication.
-# ⚠️ `redemption_score: 4.5` is RETAINED but no longer rendered: it is the
-# evidence for axis 3, and both exit legs are stated in prose under that heading.
+# ⚠️ AXIS 3 IS THE WORSE OF THE TWO LEGS, NEVER THE AVERAGE. Venue depth is
+# 5.0 and primary redemption is 4.5, so the axis is 4.5 — redemption is the
+# worse leg because a U.S. person has no primary channel at all.
+# `redemption_score: 4.5` is RETAINED but no longer rendered; it is the
+# evidence for axis 3, and both legs are named in prose under that heading.
 axis_frame: six
 volatility_score: 7.0
-backing_score: 5.5
-liquidity_score: 5.0
+backing_score: 5.0
+liquidity_score: 4.5
 underlying_score: 5.0
 structural_score: 4.0
 issuer_score: 5.5
@@ -86,7 +96,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusd-
 
 reUSD is the **senior tranche** of Re Protocol's reinsurance capital structure. Capital is deployed into fully-collateralised reinsurance contracts via licensed insurers, with funds held in a U.S. §114 Reinsurance Trust Account. The senior tranche earns the risk-free rate plus a **250bps spread** — currently around 6.1% APY. Below it sits its junior sibling [reUSDe](/reports/reusde-re/) (mezzanine), and below that Re Protocol's own equity capital. Losses are absorbed bottom-up, so reUSD is impaired only if an underwriting event exhausts both junior layers.
 
-**Sized on-chain 2026-08-27:** the Ethereum leg alone is **$217.2M** — 198,103,604 reUSD at a NAV of 1.096411, both measured on-chain ([`0x5086bf35…0c72`](https://etherscan.io/address/0x5086bf358635b81d8c47c66d1c8b9e567db70c72)). Re's `/tvl` endpoint reports **$233.7M all-chain**, which is issuer-reported and labelled as such. The tranche dipped to about $162M in mid-July, when capital rotated into the higher-yield mezzanine after the June 2026 $RE launch, and has grown since. Deployments cover Ethereum, Arbitrum, Base and Avalanche; tradable liquidity is Ethereum-concentrated.
+**Sized on-chain 2026-08-27:** the Ethereum leg alone is **$217.2M** — 198,103,604 reUSD at a NAV of 1.096411, both measured on-chain ([`0x5086bf35…0c72`](https://etherscan.io/address/0x5086bf358635b81d8c47c66d1c8b9e567db70c72)). Re's `/tvl` endpoint reports **$233.7M all-chain**, which is issuer-reported and labelled as such. **Measured again 2026-09-06, the senior tranche stands at $251.8M** — it dipped to about $162M in mid-July, when capital rotated into the higher-yield mezzanine after the June 2026 $RE launch, and has grown hard since. ⚠️ **That growth is what has thinned the subordination beneath it**, which is the Backing axis below rather than anything that happened to the reinsurance book. Deployments cover Ethereum, Arbitrum, Base and Avalanche; tradable liquidity is Ethereum-concentrated.
 
 One number to treat carefully: Re's headline protocol TVL (about $591M) is **not** a capital base. It adds roughly $319M of *premium receivables* — the reinsurance book itself — on top of about $272M of actual capital. The capital figure is the one that matters for solvency, and it is what DefiLlama reports. **Do not read the headline as investor capital standing behind the tranches.**
 
@@ -114,7 +124,13 @@ Two pools sit behind the token. The **off-chain leg** is fully-collateralised re
 
 **Verification of the off-chain leg is genuine but is attestation, not proof.** The Network Firm publishes daily reserve attestations; **Chainlink Proof of Funds** publishes hashed trust balances and premium/claim flow on-chain 24/7; Grant Thornton (Cayman) audits annually.
 
-⚠️ **The subordination beneath the senior tranche has thinned, and the reason is growth rather than loss.** On the sizing basis this report recommends — the smaller of Re's two published junior-capital figures — the first-loss layer measured **9.66% of the senior tranche on 2026-08-24**, below the 10% level conventionally treated as the institutional norm. **No loss occurred and the junior layer did not shrink: senior deposits grew and the ratio thinned because the denominator rose.** ⚠️ **Treat it as indicative rather than measured** — the junior figure is Re's, dated June 2026, over an August on-chain senior read, so numerator and denominator are about two months apart. The direction is solid; the exact crossing is not precisely dated, and because the denominator is the operand that grew, the current figure is more likely below 9.66% than above it. **Held at 5.5** on that attachment point and on the NAV being issuer-written, against collateral that is otherwise high-grade.
+⚠️ **The subordination beneath the senior tranche has thinned, and the reason is growth rather than loss.** On the sizing basis this report recommends — the smaller of Re's two published junior-capital figures — **the first-loss layer is 7.94% of the senior tranche, measured 2026-09-06**, against the 10% level conventionally treated as the institutional norm. Both operands are measured the same day: the senior tranche at **$251.8M**, and a live junior proxy of **$72.97M** from Re's own reserve arithmetic.
+
+⚠️ **This is dilution by growth, and it is not a deterioration in the reinsurance book.** There has been no claim event; the combined ratio is still 92%, no treaty has finished above 99%, and collateral quality is unchanged. **The junior layer is measurably flat — about +0.4% — while the senior tranche grew.** What got thinner is the cushion relative to a tranche that outgrew it. **Re raising more senior money than junior is the ordinary consequence of selling the senior product well**, which is exactly why it goes unnoticed: growth reads as health. **When a ratio moves, check which side moved.**
+
+✅ **Two things make this worth acting on rather than watching.** It is now **basis-independent** — the attachment point falls on the conservative **$20M waterfall basis (7.94%)** *and* on the **$72.97M balance-sheet basis (28.98%)** — so it no longer depends on resolving Re's own $77M-versus-$20M ambiguity. And the junior layer is now **measured rather than assumed**: earlier readings of this finding divided a June junior figure by an August senior read and had to be flagged indicative.
+
+**5.0** on that attachment point and on the NAV being issuer-written, against collateral that is otherwise high-grade.
 
 ## 3 · Liquidity & Exit
 
@@ -126,7 +142,7 @@ This axis covers **both** exit paths and is scored on the **worse** one. Which l
 
 **Secondary market — the only path for U.S. persons.** reUSD trades on Curve and Fluid across the four supported chains with **no CEX listing**: Fluid REUSD/USDT carries about 63% of 24h DEX volume, Curve REUSD/sUSDe about 37%, Curve REUSD/USDC under 1%, plus a stale Blackhole V2 pool. Aggregate DEX exit liquidity is about **$28M/month** (roughly $946K/24h). ⚠️ **The often-cited "$511M monthly volume" is *transfer* volume** — it conflates mints, redemptions and wallet-to-wallet transfers with DEX trades, and only the DEX share is realisable exit. Against a market cap above $205M, $28M/month is functional at retail size and thin at institutional size.
 
-⚠️ **The binding leg, named: for a U.S. person the secondary market is not the worse of two paths, it is the only path.** For a non-U.S. holder the primary path works at NAV and moots the depth question at retail size. **5.0 is the blend of a workable primary redemption for one cohort and a DEX-only exit for the other** — it is not a single number that describes both.
+⚠️ **This axis is the worse of the two legs, never the average, and the binding leg is redemption.** Venue depth alone would score 5.0: for a non-U.S. holder the primary path works at NAV and moots the depth question at retail size. **Redemption scores 4.5, and it is the worse leg because for a U.S. person there is no primary channel at all** — the secondary market is not the worse of two paths, it is the only path. **4.5 is that leg, not a blend of the two.** ⚠️ **Averaging would hide it**, and a gated cohort sitting behind deep-looking venues is precisely the case where the gate is invisible on-chain.
 
 ## 4 · Dependencies
 
@@ -187,9 +203,9 @@ reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equit
 
 | Layer | Size | Source |
 |---|---:|---|
-| Junior — Re's own equity (first loss) | about **$77M** | Re's product docs, "as of June 2026" |
+| Junior — Re's own equity (first loss) | about **$73M** | live proxy from Re's reserve arithmetic, measured 2026-09-06; Re's product docs say about $77M "as of June 2026" |
 | Mezzanine — [reUSDe](/reports/reusde-re/) (second loss) | **$19.85M** | 14,094,070 × NAV 1.408519, measured on-chain 2026-08-27 |
-| Senior — reUSD (last loss) | **$217.2M** on Ethereum | on-chain read 2026-08-27; all-chain is higher |
+| Senior — reUSD (last loss) | **$251.8M** | measured 2026-09-06; the Ethereum leg alone read $217.2M on-chain at 2026-08-27 |
 
 Taken at face value that is roughly **$96M sitting beneath the senior tranche**. But **Re publishes two different junior-capital numbers.** The product pages say $77M; a page walking through loss scenarios says "about $20M of Re capital and $15M of reUSDe." **These are not competing snapshots** — Re's own published history rules that out, since its non-tokenised capital has never been below $55.1M and no date in the record pairs those two figures. The reading that fits is that **the $77M is Re's balance-sheet depth, while about $20M of it is contractually subordinated ahead of reUSDe in the attachment schedule.** Balance-sheet depth and waterfall thickness are not the same number.
 
@@ -211,9 +227,10 @@ Re Protocol runs a loyalty points program surfaced on the asset dashboard; curre
 
 ## Revision history
 
+- **2026-09-06 — Backing 5.5 → 5.0. The first-loss attachment point is 7.94% of the senior tranche**, against 9.66% on 08-24 and 11.06% on 08-11. Both operands measured the same day: senior **$251.8M**, junior proxy **$72.97M**. ⚠️ **Dilution by growth, not a worse book** — no claim event, combined ratio still 92%, and the junior layer is flat at about +0.4% while the senior grew 39.3% in 26 days. The finding is now **basis-independent**, falling below norm on the $20M waterfall basis and on the balance-sheet basis alike.
 - **2026-09-06 — the on-chain sleeve is 99.05% sUSDe and holds no T-Bills.** Measured from Re's metrics endpoint: sUSDe 99.05%, reUSD/sUSDe LP 0.87%, USDe 0.06%, USDC 0.01%, T-Bills $0 — **99.98% Ethena-derived.** The T-Bill strategy is a permitted rotation that has not occurred, so the sleeve is one synthetic dollar rather than a diversified book.
 - **2026-08-27 — senior and mezzanine re-measured.** The Ethereum leg reads **198,103,604 reUSD at NAV 1.096411, about $217.2M**; Re's `/tvl` reports **$233.7M all-chain**, issuer-reported. The mezzanine is **14,094,070 reUSDe at NAV 1.408519 = $19.85M, or 9.14% of the senior** — NAV corroborated by Re's endpoint and CoinGecko to 0.03%.
-- **2026-08-24 — the first-loss attachment point measures 9.66%, below the 10% institutional norm.** ⚠️ **It thinned because the denominator rose, not because the junior layer shrank:** no loss occurred and senior deposits grew.
+- **2026-08-24 — the first-loss attachment point measures 9.66%**, on a June junior figure over an August senior read.
 - **2026-08-18 — three disclosure gaps closed.** Re published the sizing of the layers beneath reUSD; the audit position on the live implementation became current (**Sherlock** July 2026 and **Certora** September 2025, on an unchanged implementation); and a **48-hour OpenZeppelin `TimelockController`** at `0x69dDEa33…7FCA93` was verified on-chain holding the admin role on both the reUSD and reUSDe proxies.
 - **2026-07 — cross-chain distribution migrated** from a LayerZero OFT to **Chainlink CCIP as the exclusive bridge**. Supported chains unchanged.
 - **2026-06-18 — $RE launched**, monetising the Season-1 points program.
