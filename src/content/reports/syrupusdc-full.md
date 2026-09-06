@@ -94,9 +94,13 @@ supply_integrity_flags:
 > unchanged.** Maple announced three new allocation types on September 2: lending against rated
 > securities, asset-backed securitizations, and a CME/prime-broker spot–futures basis trade. Maple
 > says rollout starts in syrupUSDT and each strategy begins capped at 5% of the overall deposit base.
-> Today’s syrupUSDC analyzer still shows the existing secured-loan book, **100.00% pool coverage,
-> zero unrealized losses, no impaired/called/defaulted loans, and no material funding of the dormant
-> Aave/Sky strategy slots**. Total assets are $970.97M and free liquidity is $12.21M (1.26%), so the
+> Today’s syrupUSDC analyzer shows the existing secured-loan book, **zero unrealized
+> losses, no impaired/called/defaulted loans, and no material funding of the dormant Aave/Sky
+> strategy slots**. ⚠️ **The "100.00% pool coverage" reading published here on 2026-09-06 came from
+> the loan-discovery step that was missing four active positions worth $88.5M; coverage read complete
+> while the enumeration was short.** The book now reconciles to the loan manager's own accounting
+> exactly — **35 loans, 16 borrowers, $958,757,773.84, zero residual** — see the concentration
+> correction below. Total assets are $970.97M and free liquidity is $12.21M (1.26%), so the
 > immediate watch remains queue-dependent exit capacity. The announcement widens future Pool
 > Delegate discretion but does not yet change syrupUSDC’s backing or scores. `last_verified` remains
 > 2026-07-02 because this was a scoped delta review, not a fresh verification of every structural
@@ -377,7 +381,7 @@ The defining cross-chain context: syrupUSDC bridges via **Chainlink CCIP with th
 | Pool Delegate fee | 3.33% | `delegateManagementFeeRate = 33,300 / 1e6` |
 | Pool-level collateralization | ≈150–170% (live) | Loans-only Pool CR via GraphQL `poolV2.collateralRatio`; live on dashboard |
 | Active loans | a few dozen | varies snapshot-to-snapshot as loans fund/repay — live count on dashboard |
-| Borrowers | small set | top-1 well above the 10%/counterparty norm; top-3 a majority of book — live on dashboard |
+| Borrowers | **16, across 35 loans** | top-1 **22.32%**, top-3 **53.61%**, HHI **1,354** (1,412 loans-only) — measured 2026-09-06, live on dashboard |
 | Weighted-avg interest rate | ≈5.5% | Across the active book |
 | Avg loan payment interval | ≈67 days | Open-Term cadence; varies per loan (30–180d range) |
 | **Collateral mix — Set A (crypto-overcollateralized)** | ≈70% of book | BTC (125–250%), XRP (150%), cbBTC (143%), HYPE (200%) — per-asset $ live on dashboard |
@@ -462,7 +466,7 @@ syrupUSDC is part of a "Syrup family" with sibling pool **syrupUSDT** (`0x356b8d
 
 **Verified on-chain 2026-08-23, and the shared-governance point is stronger than "same contract family" suggests.** The two pools resolve to *distinct* pool managers — `0x7ad5ffa5…158f` for syrupUSDC, `0x0cda32e0…e21a` for syrupUSDT — but calling `governor()` on each returns **the same address**, `0x2eFFf887…426b`. The pool tokens are byte-identical: 11,660 bytes, codehash `366717596a09` on both. So governance here is not merely similar between the siblings, it is **the same contract**, while operations are genuinely separate. **That is the precise asymmetry for an allocator: holding both pools diversifies operator risk and does not diversify governance risk at all.** A governance action reaches both simultaneously; a Pool Delegate error need not.
 
-**Cross-pool borrower overlap is significant.** A handful of borrowers carry positions in BOTH pools — including `0x1fcc47ee...`, `0x8669f3...f1e9`, and `0xb62446...d505` — so the same credit event damages both pools simultaneously. On a Loans-only basis the top-3 cross-pool borrowers persistently run well above the 10%-per-counterparty institutional norm, with the single largest near ≈1/5 of the family loan book. Exact per-borrower exposures drift as loans mature and originate and are live on the dashboard. **An allocator holding syrupUSDC AND syrupUSDT is NOT diversified at the borrower level** for these positions — a structural fact invisible from either pool's standalone view but material for combined sizing decisions.
+**Cross-pool borrower overlap is significant.** Measured 2026-09-06 on a family loan book of **$1,351,476,236.26** (both legs enumerated from their loan managers' payment events, zero residual on each), three borrowers carry positions in **both** pools: `0xb99a2c4C…bcF5` at **$195.0M combined (14.43%)**, `0x8669F318…f1e9` at **$151.8M (11.23%)**, and `0xB62446A8…D505` at **$77.5M (5.73%)**. The same credit event damages both pools simultaneously. ⚠️ **`0xb99a2c4C…bcF5` is the one to size against: it is syrupUSDT's single largest borrower at 24.19% of that pool and holds $100M here, tying for third at 10.43%** — an exposure that appears on neither pool's standalone view. Family top-3 overall is about **45%** of the loan book and the single largest is **15.83%**, both above the 10%-per-counterparty institutional norm. Exact per-borrower exposures drift as loans mature and originate and are live on the dashboard. **An allocator holding syrupUSDC AND syrupUSDT is NOT diversified at the borrower level** for these positions — a structural fact invisible from either pool's standalone view but material for combined sizing decisions.
 
 Note also that **Maple's own `syrupGlobals.loansValue` field returns the Loans-only total, which doesn't reconcile to the per-pool sum of Loans + Liquidity** — not a Maple bug but a field-scope difference. Family-aggregate analysis should compute from per-pool Loans data, not trust the global field. (Documented further in §VIII Methodology.)
 
@@ -744,7 +748,7 @@ Weighted composite over four primary axes (Supply Integrity reported as separate
 
 13. **Surface the centralized-Maple-controlled custody topology before institutional sizing.** Five EOA-shaped addresses control effectively all family-wide capital — 2 Pool Delegate addresses (loan-funding authority) + 3 Liquidity-layer custody addresses (direct asset custody / AMM operations). Per Maple's response 2026-05-04, all five are **MPC wallets with strict policy controls** (modern institutional treasury custody primitive, peer to Coinbase Prime / Fireblocks / Copper / Anchorage). The MPC + policy claim is off-chain attestation, not on-chain-verifiable — `eth_getCode == 0x` rules out smart-contract multi-sigs but cannot distinguish MPC from single-key. The binding axis is consolidated Maple-internal operational control, largely already priced via Pool Delegate discretion + Maple Labs entity risk. Questions for Maple before sizing: MPC provider, threshold structure, policy whitelist, insurance, audit scope of off-chain MPC setup.
 
-13. **For combined Syrup-family sizing, account for cross-pool borrower concentration explicitly.** syrupUSDC + syrupUSDT share borrowers: on a Loans-only basis the top-3 cross-pool borrowers persistently run well above standard 10% institutional single-counterparty limits, with the single largest (`0x1fcc47ee...`) near ≈1/5 of the family loan book (live figures on the dashboard). Holding both syrupUSDC and syrupUSDT does NOT diversify credit risk for these specific borrowers — it concentrates it. Anyone sizing across both pools should compute combined exposure to each borrower individually rather than treating the two pools as independent products.
+13. **For combined Syrup-family sizing, account for cross-pool borrower concentration explicitly.** syrupUSDC + syrupUSDT share borrowers: measured 2026-09-06, family top-3 is about **45%** of a **$1.35B** loan book and the single largest is **15.83%**, both above standard 10% institutional single-counterparty limits. ⚠️ **The largest genuinely cross-pool exposure is `0xb99a2c4C…bcF5` at 14.43% of the family book** — 24.19% of syrupUSDT and 10.43% of syrupUSDC, a figure neither pool's page shows (live figures on the dashboard). Holding both syrupUSDC and syrupUSDT does NOT diversify credit risk for these specific borrowers — it concentrates it. Anyone sizing across both pools should compute combined exposure to each borrower individually rather than treating the two pools as independent products.
 
 ---
 
