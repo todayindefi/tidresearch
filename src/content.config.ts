@@ -70,8 +70,21 @@ const chainOverride = z
 const AXIS_FRAME = z.enum(["six"]).optional();
 
 // Common across every report.
+// An axis under `axis_frame: six` may be deliberately absent, but it must SAY
+// SO with a reason — an unexplained blank is indistinguishable from an
+// oversight, which is what `scripts/check-axis-frame.ts` exists to stop.
+// ⚠️ That script has always documented this field and read it from the RAW
+// frontmatter text; it was never declared here, so Zod stripped it at parse
+// time and the escape hatch the check tells you to use could not survive into
+// the data. Declared now so the mechanism is real rather than described.
+const axisExemption = z.object({
+  axis: z.string(),
+  reason: z.string().min(1),
+});
+
 const common = {
   axis_frame: AXIS_FRAME,
+  axis_exemptions: z.array(axisExemption).optional(),
   asset: z.string(),
   slug: z.string(),
   aliases: z.array(z.string()).default([]),

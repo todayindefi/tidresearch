@@ -8,11 +8,38 @@ peg_mechanism: "hybrid"
 assessment_type: "light"
 date: "2026-08-27"
 last_verified: "2026-08-27"
+# Scope-limited pass 2026-09-06: an authority walk at block 25915396 added
+# axis 5. Nothing else was re-read, so `last_verified` HOLDS at 2026-08-27.
+last_revised: "2026-09-06"
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Order matches the dashboards exactly.
+#   ⚠️ NOT ONE PUBLISHED NUMBER MOVES. peg 5.0, backing 5.0, liquidity 3.5,
+#     issuer 4.0 and overall 4.0 all stay exactly where they were. The only
+#     addition is `structural_score: 3.5`.
+#   ⚠️ THE ISSUER ROW IS THE SUBTLE ONE. Its NUMBER does not change but its
+#     MEANING does. Under the four-axis schema it was carrying the
+#     contract-authority dock because there was no axis 5 to put it on. That
+#     content has been MOVED to Contract & Admin, not copied — leaving
+#     "concentrated admin control" in the Issuer prose would double-count the
+#     same fact across two axes. What remains on Issuer: a sub-$5M,
+#     roughly 4-month-old issuer, pre-TGE governance not live, and an
+#     unconfirmed Sherlock remediation.
+axis_frame: six
 peg_mechanism_score: 5.0
 backing_score: 5.0
 liquidity_score: 3.5
+structural_score: 3.5
 issuer_score: 4.0
 overall_score: 4.0
+# ⚠️ Axis 4 is deliberately absent, not forgotten. USG's upstream exposure is
+# real and is described at length in the body — the book is almost entirely
+# other protocols' stablecoin LP tokens — but no Dependencies score has been
+# authored for it, and inventing one here would publish a number nobody
+# derived. Score it at the next refresh.
+axis_exemptions:
+  - axis: "4 Dependencies"
+    reason: "upstream-issuer exposure is described in the body but no dependencies score has been authored; scoring it here would publish an underived number"
+
 issuer: "Tangent Finance"
 audited_reserves: false
 market_cap_approx: 4340566
@@ -86,9 +113,21 @@ That is a genuine improvement rather than a quiet one — earlier the same day, 
 
 Two of the sixteen markets are paused. Tangent's paused-settings semantics let existing positions persist while new borrowing stops, so **a pause is a freeze rather than a wind-down** — the collateral stays, the exposure stays, and the market can be reopened. Neither paused market carries debt today.
 
+## Admin authority, and the layer that matters is the parameter, not the price
+
+The oracle question a reader usually asks is *where does the price come from*. On USG the sharper question is **who can change which feed a market reads** — the `parameter` layer rather than the price feed. **A sound oracle behind a swappable pointer is not a sound price.**
+
+**Three distinct powers all terminate at the same 3-of-5 Safe, with no execution delay between a decision and its effect:** asset permissioning, parameter setting, and governance. Walked at block 25915396, `setMaxLTV`, `setLiquidationThreshold` and `setCollatOracle` on a live market **succeed when simulated from the Safe and revert `OnlyOwner` from a null address** — which establishes who is able to call them, not that anyone has.
+
+⚠️ **The consequence is specific to this book rather than generic.** The market oracle is `virtual_price × MIN(coin price)`, so **repointing `collatOracle` moves every position's health in a single transaction.** Set that against the distribution above: **74.9% of the book sits within 10% of its liquidation threshold and the thinnest markets have 1.55% to 2.27% of headroom.** A parameter change that would be an inconvenience in a comfortably collateralised book is, here, the same size as the buffer.
+
+**A delay does exist, and it protects the wrong thing.** The PegKeepers carry a 3-day `ADMIN_ACTIONS_DELAY` — but it covers **replacing the PegKeeper admin**, not the risk setters. The powers that move liquidation thresholds and oracle assignment have no delay at all.
+
+**None of this is evidence of misuse**, and every part of it is readable on-chain by anyone. It is the standing surface: **a fully verifiable book whose risk parameters are one multisig transaction away from changing, with no notice window in between.** For an asset whose whole strength is that the collateral can be read from contracts, this is the part that cannot be.
+
 ## Issuer
 
-Tangent Finance is a small, pseudonymous-adjacent team with no published reserve attestation — none is needed, since backing is fully on-chain, but there is also no third-party review of the market parameters that decide when liquidations trigger. Admin control over market creation, liquidation thresholds, and oracle assignment is the binding governance surface. The issuer score of 4.0 reflects a protocol whose *data* is unusually transparent and whose *governance* is not.
+Tangent Finance is a small, pseudonymous-adjacent team with no published reserve attestation — none is needed, since backing is fully on-chain, but there is also no third-party review of the market parameters that decide when liquidations trigger. The issuer score of 4.0 reflects a young, sub-$5M protocol whose *data* is unusually transparent and whose *oversight* is not: no external party checks the parameters, and no published process governs who sets them. **The authority those parameters sit behind is scored separately, on Contract & Admin above** — the two are different questions, and pricing the multisig on both would count it twice.
 
 ## How this compares to its parent
 
@@ -108,11 +147,13 @@ The staking wrapper, sUSG, holds $1,064,103 — about 24.5% of supply. Staking d
 
 | axis | score | reasoning |
 |---|---:|---|
-| Peg mechanism | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
+| Stability | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
 | Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
-| Liquidity | 3.5 | One venue, no quoted depth, ~$1.0M counter-side inventory against $4.34M supply |
-| Issuer | 4.0 | Transparent data, unreviewed parameters, concentrated admin control |
-| **Overall** | **4.0** | |
+| Liquidity & Exit | 3.5 | One venue, no quoted depth, about $1.0M counter-side inventory against $4.34M supply |
+| Dependencies | — | Not scored. The book is almost entirely other protocols' stablecoin LP tokens and that exposure is described above, but no dependencies score has been authored; an unexplained blank would read as an oversight, so it is stated here instead |
+| Contract & Admin | 3.5 | Asset permissioning, parameter setting and governance all terminate at one 3-of-5 Safe with no execution delay; repointing `collatOracle` moves every position's health in one transaction, against a book where 74.9% sits within 10% of liquidation. The only 3-day delay covers replacing the PegKeeper admin, not the risk setters |
+| Issuer | 4.0 | Transparent data, unreviewed parameters, young sub-$5M protocol |
+| **Overall** | **4.0** | Unchanged. Axis 5 makes an authority surface explicit that was previously priced inside the Issuer row — it is a re-scoping of where the fact sits, not a new adverse read of the asset |
 
 ## What would change this view
 
