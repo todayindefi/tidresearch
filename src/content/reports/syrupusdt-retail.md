@@ -9,6 +9,15 @@ yield_bearing: true
 assessment_type: "light"
 audience: "retail"
 date: "2026-05-03"
+# ⚠️ `last_verified` HOLDS at 2026-08-18 DELIBERATELY — do not bump on a sweep.
+# The 2026-09-06 pass re-measured the loan book, the concentration denominator
+# and the admin/authority topology; it did NOT re-read the NAV mechanism, yield,
+# the depth ladders, the audit corpus or the withdrawal-queue mechanics. The
+# body states that split at the top. ⚠️ riskAnalyst moved THEIR copy to
+# 2026-09-07 under their own rule (last_verified moves when SOMETHING was
+# re-measured). The conventions differ on purpose: their field ranks a refresh
+# queue, ours tells a reader how old a claim is, and our card already renders
+# BOTH dates so holding conceals nothing.
 last_verified: "2026-08-18"
 last_revised: "2026-09-06"
 featured: false
@@ -55,6 +64,8 @@ overall_score: 6.0
 **Moderate risk · 6.0/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
 
 *Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).*
+
+> ⚠️ **What is current and what is not, because this page carries two dates.** **Re-measured 2026-09-06:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **18 loans, 9 borrowers, $392,718,462.42** — every concentration figure computed on that denominator, and the **admin and authority topology**, hand-walked on-chain, which is what sets Contract & Admin. **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the older date deliberately** — the concentration and authority material is today's; the description of how the vault works is August's.
 
 > *What's pinned in this report is structural risk — architecture, the issuer menu, the risk axes, and the scores. Current magnitudes (pool split, per-issuer allocation, collateral ratio, concentration, exit tiers) drift weekly and are live on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt). This report is written to stay correct across that drift.*
 
