@@ -2,17 +2,17 @@
 asset: "syrupUSDC"
 slug: "syrupusdc-full"
 aliases: ["syrupUSDC", "SYRUPUSDC", "syrupUSD", "Syrup USDC", "Maple Syrup", "msyrupUSDp underlying"]
-chains: ["eth", "sol", "arb", "base", "plasma"]
+chains: ["eth", "sol", "arb", "base", "plasma", "monad"]
 category: "lending-vault"
 assessment_type: "full"
 audience: "institutional"
 companion_report: "syrupusdc"
 date: "2026-04-26"
-last_revised: "2026-08-27"
+last_revised: "2026-09-06"
 last_verified: "2026-07-02"
 production: true
 issuer: "Maple Labs (Cayman Islands)"
-market_cap_approx: 1073570000
+market_cap_approx: 970966261
 legal_jurisdiction: "Cayman Islands"
 bankruptcy_remote: false
 yield_bearing: true
@@ -89,6 +89,18 @@ supply_integrity_flags:
 ---
 
 # syrupUSDC — Risk Assessment Report
+
+> **2026-09-06 scoped update — mandate widening announced, not yet live in syrupUSDC; scores
+> unchanged.** Maple announced three new allocation types on September 2: lending against rated
+> securities, asset-backed securitizations, and a CME/prime-broker spot–futures basis trade. Maple
+> says rollout starts in syrupUSDT and each strategy begins capped at 5% of the overall deposit base.
+> Today’s syrupUSDC analyzer still shows the existing secured-loan book, **100.00% pool coverage,
+> zero unrealized losses, no impaired/called/defaulted loans, and no material funding of the dormant
+> Aave/Sky strategy slots**. Total assets are $970.97M and free liquidity is $12.21M (1.26%), so the
+> immediate watch remains queue-dependent exit capacity. The announcement widens future Pool
+> Delegate discretion but does not yet change syrupUSDC’s backing or scores. `last_verified` remains
+> 2026-07-02 because this was a scoped delta review, not a fresh verification of every structural
+> section.
 
 *Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc).*
 
