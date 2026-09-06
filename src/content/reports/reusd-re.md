@@ -45,7 +45,9 @@ market_cap_approx: 181000000
 #     diversified — measured 99.05% sUSDe, T-Bills $0. The concentration is
 #     priced on axis 4, not here, or it would be double-counted.
 #     ⚠️ 5.0 rather than 5.5 on the attachment point, which is 7.94% measured
-#     2026-09-06 against 9.66% on 08-24. DILUTION BY GROWTH, NOT A WORSE BOOK:
+#     2026-09-06 against 11.06% on 08-11, both all-chain. ⚠️ The 08-24 9.66%
+#     is NOT in that series: it divided by the ETHEREUM LEG alone, which
+#     overstates attachment. DILUTION BY GROWTH, NOT A WORSE BOOK:
 #     no claim event, combined ratio still 92%, and the junior layer is
 #     measurably FLAT (+0.4%) while the senior grew. It is now basis-
 #     INDEPENDENT — the point falls on the $20M waterfall basis AND on the
@@ -227,10 +229,10 @@ Re Protocol runs a loyalty points program surfaced on the asset dashboard; curre
 
 ## Revision history
 
-- **2026-09-06 — Backing 5.5 → 5.0. The first-loss attachment point is 7.94% of the senior tranche**, against 9.66% on 08-24 and 11.06% on 08-11. Both operands measured the same day: senior **$251.8M**, junior proxy **$72.97M**. ⚠️ **Dilution by growth, not a worse book** — no claim event, combined ratio still 92%, and the junior layer is flat at about +0.4% while the senior grew 39.3% in 26 days. The finding is now **basis-independent**, falling below norm on the $20M waterfall basis and on the balance-sheet basis alike.
+- **2026-09-06 — Backing 5.5 → 5.0. The first-loss attachment point is 7.94% of the senior tranche, against 11.06% on 08-11** — both readings on the same all-chain basis, and both with operands measured on their own date. Today's: senior **$251.8M**, junior proxy **$72.97M**. ⚠️ **Dilution by growth, not a worse book** — no claim event, combined ratio still 92%, and the junior layer is flat at about +0.4% while the senior grew 39.3% in 26 days. The finding is now **basis-independent**, falling below norm on the $20M waterfall basis and on the balance-sheet basis alike.
 - **2026-09-06 — the on-chain sleeve is 99.05% sUSDe and holds no T-Bills.** Measured from Re's metrics endpoint: sUSDe 99.05%, reUSD/sUSDe LP 0.87%, USDe 0.06%, USDC 0.01%, T-Bills $0 — **99.98% Ethena-derived.** The T-Bill strategy is a permitted rotation that has not occurred, so the sleeve is one synthetic dollar rather than a diversified book.
 - **2026-08-27 — senior and mezzanine re-measured.** The Ethereum leg reads **198,103,604 reUSD at NAV 1.096411, about $217.2M**; Re's `/tvl` reports **$233.7M all-chain**, issuer-reported. The mezzanine is **14,094,070 reUSDe at NAV 1.408519 = $19.85M, or 9.14% of the senior** — NAV corroborated by Re's endpoint and CoinGecko to 0.03%.
-- **2026-08-24 — the first-loss attachment point measures 9.66%**, on a June junior figure over an August senior read.
+- **2026-08-24 — a first-loss attachment reading of 9.66%**, on a June junior figure over the **Ethereum leg alone**. ⚠️ **Not comparable to the all-chain readings above and deliberately left out of that series:** the Ethereum leg is 93.6% of the all-chain total today and was 97.1% on 08-11, so an Ethereum-only denominator **overstates** attachment, and by a widening margin. On a clean basis this point was already below 9.66%.
 - **2026-08-18 — three disclosure gaps closed.** Re published the sizing of the layers beneath reUSD; the audit position on the live implementation became current (**Sherlock** July 2026 and **Certora** September 2025, on an unchanged implementation); and a **48-hour OpenZeppelin `TimelockController`** at `0x69dDEa33…7FCA93` was verified on-chain holding the admin role on both the reUSD and reUSDe proxies.
 - **2026-07 — cross-chain distribution migrated** from a LayerZero OFT to **Chainlink CCIP as the exclusive bridge**. Supported chains unchanged.
 - **2026-06-18 — $RE launched**, monetising the Season-1 points program.
