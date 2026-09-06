@@ -8,7 +8,6 @@ underlying_assets: ["USDC"]
 yield_bearing: true
 assessment_type: "light"
 audience: "retail"
-companion_report: "syrupusdc-full"
 date: "2026-04-25"
 last_verified: "2026-08-18"
 last_revised: "2026-09-06"
@@ -16,10 +15,36 @@ featured: false
 production: true
 issuer: "Maple Labs (Cayman Islands)"
 market_cap_approx: 1066000000
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Migrated at this refresh, per the refresh-driven
+# policy. ⚠️ backing_score was MISSING ENTIRELY and could not render on the old
+# vault-share rubric — adding it without the frame would have been schema-legal
+# and invisible.
+#   backing_score 6.5 is NEW. ⚠️ Capped by COLLATERAL VISIBILITY, not by the
+#     collateral ratio: per-loan collateral comes from Maple GraphQL, which
+#     returns nothing for the loans recovered in the 2026-09-06 reconciliation,
+#     and OpenTermLoan carries no on-chain collateral field. Existence and
+#     principal are fully verified; collateral is not.
+#   underlying_score 7.0 -> 5.5 renders as DEPENDENCIES.
+#   ⚠️ structural_score 6.5 -> 4.5 IS A RE-SCOPE, NOT A DETERIORATION.
+#     The old number spanned THREE axes — it also priced per-pool loan
+#     concentration (axis 4) and Maple Labs as an entity (axis 6), both already
+#     scored separately, so it was double-counting positives that live
+#     elsewhere. ⚠️ BOTH POOLS SCORE 4.5 BY MEASUREMENT, NOT ASSUMPTION: the
+#     authority walk returns the same six Ethereum paths with the same
+#     thresholds and the same delay flags on both. Do not split axis 5 per pool.
+# ⚠️ `redemption_score: 7.5` is RETAINED but no longer rendered: it is the
+# evidence for axis 3, scored on the WORSE leg. Both legs are named in prose.
+# ⚠️ OVERALL 6.75 IS HELD AND IS NOW ABOVE ITS OWN AXIS MEAN (6.33, +0.42),
+# contrary to the corpus at-or-below convention. That is deliberate and stated
+# on the page: the re-scope lowered the mean, no one has re-derived the overall,
+# and inventing a number here would publish something nobody computed.
+axis_frame: six
 volatility_score: 8.5
-structural_score: 6.5
+backing_score: 6.5
+structural_score: 4.5
 redemption_score: 7.5
-underlying_score: 7.0
+underlying_score: 5.5
 liquidity_score: 7.5
 issuer_score: 5.5
 overall_score: 6.75
@@ -109,18 +134,16 @@ Caveats:
 | Dimension | Score | Notes |
 |---|---|---|
 | Stability | 8.5 | NAV-accruing share, organic yield from loan interest, no rebase, and zero principal losses to date across the Syrup product line. The share price only climbs in normal operation; the path to a drawdown is a credit loss on the loan book, which is scored under Underlying. |
-| Contract & Admin | 6.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. Held back by the Pool Delegate model, which adds human discretion that purely algorithmic protocols do not carry, a non-trivial cross-contract surface (WithdrawalManager + LoanManager + PoolDelegate), a v2 architecture that is only about three years old, and custody consolidated under Maple Labs across the family's control addresses. |
-| Redemption | 7.5 | **Newly visible on this page — see the note below.** Two permissionless paths, no KYC on either: DEX aggregator routing at single-digit-to-low-double-digit bps in the base case, and a direct WithdrawalManager queue that Maple claims averages under five minutes in normal markets. That combination — permissionless on both paths, no minimum, multi-chain — is materially better than KYC-gated RWA peers. The score sits at 7.5 rather than higher because the queue is the binding path under stress, and queue speed depends on free USDC against outstanding loan principal. |
-| Underlying | 7.0 | The collateral is the loan book: roughly 75–80% Loans (institutional credit against BTC/XRP/cbBTC/HYPE at 125–333% funding-time collateralization) plus roughly 20–25% Liquidity layer (pool-owned PYUSD/USTB/AMM positions, at par with the underlying rather than overcollateralized). Loans-only collateral ratio typically runs 145–170% and was **above** that band at the August 2026 check. Two things hold this below an 8: the collateral is held **off-chain by custodians** — the contract neither holds nor prices it — and Maple's own public loan data has a documented reporting artifact on a material share of the book (see *Backing and how verifiable it is*). Pool Delegate discretion is real but is priced under Contract & Admin and Issuer, not here. |
-| Liquidity | 7.5 | $1B+ pool; aggregator route single-digit-to-low-double-digit bps in the base case (live tiers); **permissionless mint/redeem at the vault layer** (no KYC gating) is a meaningful advantage over RWA peers like KYC-gated thBILL — anyone retail or institutional can enter/exit at NAV without slippage on the primary path. Stress-case binds at pool depth (queue-bound), but the base case is excellent. |
+| Backing | 6.5 | The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — 35 loans, 16 borrowers, $958,757,773.84, zero residual — with zero impaired, called or defaulted. ⚠️ **The cap on this axis is collateral VISIBILITY, not the collateral ratio.** Per-loan collateral comes from Maple's GraphQL API, which returns nothing for the four loans recovered in the 2026-09-06 reconciliation, and the loan contracts carry no on-chain collateral field — **so collateral is priced over about 90.8% of the book and the headline ratio is computed on that subset.** Existence and principal are verified; collateral is not. Half a point above syrupUSDT on both the coverage share and a less crypto-concentrated visible book. |
+| Liquidity & Exit | 7.5 | **Scored on the worse of the two legs, and here they land together at 7.5.** Venue depth: a $1B+ pool with aggregator routes in the single-digit-to-low-double-digit bps range in the base case. Primary redemption: permissionless mint and redeem at the vault layer, no KYC, processed at NAV from free pool USDC. Neither leg is the constraint the other is; the binding risk on this pool is credit, not exit. |
+| Dependencies | 5.5 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: one borrower holds $100M here and is simultaneously syrupUSDT's largest at 24.19%, for 14.43% of the family loan book** — an exposure neither pool's standalone view shows. |
+| Contract & Admin | 4.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
 | Issuer | 5.5 | Maple Labs Cayman, doxxed team, 8+ audits, $1M bounty. ~3-year clean record on the Syrup product line. This axis scores the **entity**, so it is deliberately identical to [syrupUSDT](/reports/syrupusdt/) — Maple curates both. Per-pool differences belong under Contract & Admin. |
-| **Overall** | **6.75** | Moderate-to-low risk |
+| **Overall** | **6.75** | ⚠️ **Held, and under review.** The Contract & Admin re-scope lowered the axis mean to **6.33**, so this number now sits **+0.42 above its own axes** — contrary to the at-or-below convention applied elsewhere in this coverage. **It is held rather than adjusted because no one has re-derived it, and inventing a figure here would publish something nobody computed.** The axes above are current; this cell is the one to treat as pending |
 
-**A note on the axes, because they changed in August 2026.** This report used to score on the stablecoin rubric — peg mechanism and backing. That was the wrong rubric for what syrupUSDC actually is. It is not a pegged dollar; it is a **share in a lending vault** whose price tracks NAV, and it is now scored on the same six axes as every other vault-share report on this site.
+**A note on the axes.** This report scores on the six-axis core — **Stability · Backing · Liquidity & Exit · Dependencies · Contract & Admin · Issuer** — the same frame as every other vault-share report on this site.
 
-The specific cost of the old rubric was that **the stablecoin rubric has no redemption axis.** For a vault that runs roughly 97% deployed into loans, "can I get my money out, and how fast?" is not a secondary question — it is the whole question. The material was always in this report (the two exit paths, the sub-five-minute claim, the honest stress caveat about queue behaviour), but it never reached a score, so a reader skimming the table saw a peg-mechanism number where the most important number should have been. **Redemption 7.5 is not a new judgement — it is a number that existed internally and was never shown here.** Nothing was rescored to fit the new table: every axis that existed on both sides already agreed.
-
-The old **backing** axis has become **Underlying**, which is the axis that owns collateral quality. It also now carries the question backing used to answer — *is the collateral actually verifiable?* — because there is no longer a separate dial for it.
+⚠️ **Two things about that frame matter for reading the table.** **Backing is newly scored here**: the earlier rubric had no reserve axis at all, so the loan book that constitutes the entire asset was graded on everything except itself. And **Liquidity & Exit covers both exit paths and is scored on the worse one, never the average** — venue depth and primary redemption are stated separately in that row, because averaging them would hide which half set the number. `redemption_score` is retained as the evidence behind that axis rather than rendered as its own row.
 
 ## Who it's for
 
@@ -156,6 +179,20 @@ For context on the sibling: [syrupUSDT](/reports/syrupusdt/) runs an HHI of **1,
 
 - **Cross-pool concentration if you also hold syrupUSDT.** Maple's materially smaller sibling pool shares the same Pool Delegate firm and several of its largest loan-book borrowers. On a Loans-only basis the top-3 cross-pool borrowers run persistently well above the 10%-per-counterparty institutional norm, with the single largest near ~1/5 of the family loan book. Holding both syrupUSDC and syrupUSDT does **not** diversify credit risk for those borrowers — it concentrates it. If you allocate across both, compute combined exposure to each borrower rather than treating the pools as independent; live figures on the dashboard.
 
+## Contracts, and what a loss actually falls on
+
+**The addresses that matter, read on Ethereum:**
+
+```
+Pool (ERC-4626)      0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b
+PoolManager          0x7aD5fFa5fdF509E30186F4609c2f6269f4B6158F
+OpenTermLoanManager  0x6ACEb4cAbA81Fa6a8065059f3A944fb066A10fAc
+WithdrawalManager    0x1bc47a0Dd0FdaB96E9eF982fdf1F34DC6207cfE3
+Pool Delegate (EOA)  0xC1e18FFD8825FfB286D177DDEbeba345EC70B49f   ← the undelayed pause key
+```
+
+⚠️ **Depositors are first-loss, and the cover contract is empty.** Maple's `minCoverAmount` for this pool is **0** and `PoolDelegateCover` holds nothing — so there is no delegate capital standing between a borrower default and the pool's NAV. **A default writes down depositors directly.** That is the design rather than a lapse, and it is what makes per-borrower concentration a binding number rather than an abstract one.
+
 ## Live dashboard
 
 A live monitoring view is available at [tidresearch.com/dashboards/?asset=syrupusdc](https://tidresearch.com/dashboards/?asset=syrupusdc) — refreshed hourly from on-chain reads. It shows pool backing, separate **Loan Book** and **Liquidity Layer** health panels (status flags + distance to par / current collateralization + custody addresses), peg deviation, and exit-liquidity tiers. The signals worth watching listed above all map to specific panels there.
@@ -166,6 +203,7 @@ Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ 
 
 ## Revision history
 
+- **2026-09-06 — the authority topology is walked, and the 3-day governance delay is a detection window rather than a gate.** ⚠️ **The `pause` layer is the Pool Delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption, and it needs no compromise to bite: inaction is enough.** ⚠️ **The multisig path is the faster one:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. A role update is the one class the canceller may not cancel. ✅ Upgrades are capped to Maple-published implementations (`registerImplementation` is `onlyGovernor`), which with 8+ audits and a $1M+ bounty is what holds Contract & Admin at 4.5 rather than lower. **Both pools measure the same on this axis — same six paths, same thresholds, same delay flags.** Dependencies moves to 5.5 and Backing is scored for the first time at 6.5, capped by collateral visibility rather than by the collateral ratio.
 - **2026-09-06 — the loan book is reconciled and the concentration figures are corrected downward; no score change.** The loan-discovery step behind these figures had been enumerating from a cache that silently advanced its checkpoint across failed block ranges, so **four active syrupUSDC positions worth $88,500,000 were missing** and every ratio divided by a short denominator. Enumerating from the loan manager's `PaymentAdded` events reconciles the book exactly: **35 loans, 16 borrowers, $958,757,773.84, zero residual.** Largest borrower **22.32%** (was 24.59% on the short book), top-3 **53.61%** (was 59.06%), HHI **1,354** inclusive / **1,412** loans-only. ⚠️ **Three of the four recovered loans went to borrowers already on the list**, so the recovery raised their measured totals rather than only widening the denominator — `0xb99a2c4C…bcF5` moves from $50M to **$100M**, tying for third at 10.43%.
 - **2026-08-23 — borrower concentration measured; no score change.** ⚠️ Those figures were computed over an incomplete enumeration and were too high; see the entry above. **16 borrowers in syrupUSDC against 9 in syrupUSDT**, with shared names across both pools, so the sizing unit is the family loan book rather than the per-pool number.
 - **2026-08-18 — moved onto the correct scoring rubric; no score changed.**
