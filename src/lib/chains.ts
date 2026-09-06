@@ -33,6 +33,8 @@ const ALIASES: Record<string, string> = {
   berachain: "berachain",
   gnosis: "gnosis",
   sonic: "sonic",
+  robinhood: "robinhood",
+  hood: "robinhood",
 };
 
 const LABELS: Record<string, string> = {
@@ -59,6 +61,7 @@ const LABELS: Record<string, string> = {
   plasma: "Plasma",
   gnosis: "Gnosis",
   sonic: "Sonic",
+  robinhood: "Robinhood Chain",
 };
 
 export function normalizeChain(c: string): string {
