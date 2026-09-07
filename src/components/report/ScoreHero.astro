@@ -186,16 +186,21 @@ const reportName = data.protocol ?? data.asset;
   </div>
 
   <div class="flex flex-wrap gap-x-8 gap-y-3 pt-5 border-t border-border text-xs font-mono">
+    {/* ⚠️ ONE date, the LATER of the two, labelled "Last reviewed" — owner
+       decision 2026-09-07. A page saying "Verified" after a partial pass claims
+       a full re-check that did not happen. Both fields STAY IN THE DATA:
+       `last_verified` is what the 90-day staleness budget runs off, and if the
+       only surviving date were "last touched" a one-line fix would reset that
+       clock silently. ⚠️ Accepted tradeoff: a reader can no longer see how much
+       of a partially-refreshed page is old. */}
     <div>
-      <div class="eyebrow mb-1">Last Verified</div>
-      <div class="text-foreground text-sm">{fmtDate(data.last_verified)}</div>
+      <div class="eyebrow mb-1">Last Reviewed</div>
+      <div class="text-foreground text-sm">{fmtDate(
+        data.last_revised && +new Date(data.last_revised) > +new Date(data.last_verified)
+          ? data.last_revised
+          : data.last_verified
+      )}</div>
     </div>
-    {data.last_revised && +new Date(data.last_revised) > +new Date(data.last_verified) && (
-      <div>
-        <div class="eyebrow mb-1">Last Revised</div>
-        <div class="text-foreground text-sm">{fmtDate(data.last_revised)}</div>
-      </div>
-    )}
     {data.credit_rating_equiv && (
       <div>
         <div class="eyebrow mb-1">Credit Equiv</div>

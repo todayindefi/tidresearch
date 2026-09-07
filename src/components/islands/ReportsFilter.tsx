@@ -216,23 +216,25 @@ export default function ReportsFilter({
                   </span>
                 ))}
               </div>
-              {/* Lead with the most recent activity. A scope-limited refresh
-                  leaves last_verified old, and a card that opens with the older
-                  date reads as stale to anyone skimming — which suppresses the
-                  reports that were most recently worked on. Both dates stay
-                  visible so the narrower scope is never hidden. */}
+              {/* ⚠️ ONE date, the LATER of the two, labelled "Last reviewed" — owner
+                  decision 2026-09-07. The word is the point: a page saying
+                  "Verified" after a partial pass claims a full re-check that did
+                  not happen (usdm authored two axes today while its backing, peg
+                  and liquidity work stayed July). "Reviewed" is true of a
+                  partial pass in a way "verified" is not.
+                  ⚠️ BOTH FIELDS STAY IN THE DATA. `last_verified` is what the
+                  90-day staleness budget runs off — if the only surviving date
+                  were "last touched", a one-line fix would reset the clock and
+                  the refresh signal would switch itself off silently.
+                  ⚠️ Known tradeoff, accepted deliberately: a reader can no
+                  longer tell how much of a partially-refreshed page is old.
+                  Raised before the decision and overruled in favour of one
+                  unambiguous label. */}
               <p className="text-xs text-muted-foreground font-mono">
-                {r.last_revised && r.last_revised > r.last_verified ? (
-                  <>
-                    Last revised {r.last_revised}
-                    <span className="opacity-70">
-                      {" "}
-                      · verified through {r.last_verified}
-                    </span>
-                  </>
-                ) : (
-                  <>Last verified {r.last_verified}</>
-                )}
+                Last reviewed{" "}
+                {r.last_revised && r.last_revised > r.last_verified
+                  ? r.last_revised
+                  : r.last_verified}
               </p>
             </a>
             );
