@@ -25,7 +25,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdai"
 
 # USDai — Retail Risk Report
 
-**Moderate risk · 6.5/10**
+**Moderate risk · 5.5/10**
 
 | Backing | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdai"
 
 USDai is the synthetic-dollar peg leg of the USD.AI protocol by Permian Labs, issued on M0's PYUSDx platform. Every USDai is backed 1-for-1 by **PYUSD** — PayPal's regulated, Paxos-issued, T-bill-backed stablecoin — held directly in the USDai contract on Arbitrum. The yield-bearing, credit-risk-bearing leg is **sUSDai**, covered [separately](/reports/susdai/). If you are here for the headline yield on GPU loans, that is the other report. **USDai itself carries no GPU-loan exposure.**
 
-The 6.5/10 is driven by an unusually strong backing story set against an unusually weak exit story. On the strong side: reserves are not attested monthly, they are **visible on demand in two RPC reads**, and the protocol's own reported reserve figure agrees with the on-chain balance exactly. The underlying is a regulated, NYDFS-supervised, T-bill-backed instrument rather than something the issuer manufactured. On the weak side: **secondary depth is under $2M against a supply near $173M**, there is no centralized-exchange listing, and contract-level redemption is gated to onboarded market makers and institutions — so a retail holder's practical exit is the thin pool, not the redemption window.
+The 5.5/10 is driven by an unusually strong backing story set against an unusually weak exit story. On the strong side: reserves are not attested monthly, they are **visible on demand in two RPC reads**, and the protocol's own reported reserve figure agrees with the on-chain balance exactly. The underlying is a regulated, NYDFS-supervised, T-bill-backed instrument rather than something the issuer manufactured. On the weak side: **secondary depth is under $2M against a supply near $173M**, there is no centralized-exchange listing, and contract-level redemption is gated to onboarded market makers and institutions — so a retail holder's practical exit is the thin pool, not the redemption window.
 
 Supply has moved a lot and is worth reading correctly. It fell from about $283M in May to about $155M in late July as holders rotated into the staked sUSDai leg for yield, and has since **recovered to $172.63M**. Coverage held above par through all of it. This is capital moving between the two legs of one protocol, not redemption stress.
 
