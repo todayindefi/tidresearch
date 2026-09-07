@@ -12,8 +12,18 @@ const score = z.number().min(0).max(10);
 //     e.g. thBILL / usdat / thusd / apxUSD (RWA); sUSDS (USDS's T-bill + crypto + USDC pool).
 //   OMIT when the collateral IS the backing analysis and a separate score would
 //   double-count backing_score:
-//     - fiat-stable-basket stablecoins (usdm: USDC/AUSD/USDT0 — already graded in backing)
+//     - fiat-stable-basket stablecoins whose basket is already graded in backing
 //     - crypto-collateralized stablecoins (crvUSD / frax — collateral == backing)
+// ⚠️ THAT OMIT RULE IS THE OFF-FRAME MEANING ONLY, and usdm used to be listed
+// here as the canonical example of it. It carries `underlying_score` as of
+// 2026-09-07 and the entry was wrong to keep once the frame existed: under
+// `axis_frame: six` the field is DEPENDENCIES — what the asset's value passes
+// THROUGH to — not collateral quality. For usdm that is one shared Mento
+// reserve backing every Mento stablecoin, a volatile bucket that is the
+// issuer's own token, and chain legs that are not fungible with each other.
+// None of that is priced by backing_score, so there is nothing to double-count.
+// See the AXIS 4 note further down, which already said this; the two comments
+// disagreed and this one was the stale half.
 
 const chainOverride = z
   .object({
