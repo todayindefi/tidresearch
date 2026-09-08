@@ -14,7 +14,10 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 date: "2026-07-08"
 last_verified: "2026-07-08"
-last_revised: "2026-08-23"
+# ⚠️ 2026-09-08 re-measured the six-chain supply distribution and the chains
+# list.  HOLDS at 2026-07-08 — the backing, issuer and structural
+# material was not re-read.
+last_revised: "2026-09-08"
 featured: false
 production: true
 issuer: "Paxos Digital Singapore"
