@@ -7,7 +7,10 @@ category: "tradfi-equity"
 assessment_type: "light"
 date: "2026-07-31"
 last_verified: "2026-07-31"
-last_revised: "2026-08-23"
+# ⚠️ 2026-09-08 re-based the Q2 delinquency table (three rows were comparing to
+# 31 Dec 2025, not 31 Mar) and refreshed the lien mix. `last_verified` HOLDS —
+# the filing was not re-read end to end.
+last_revised: "2026-09-08"
 featured: false
 production: true
 issuer: "Figure Technology Solutions, Inc. (Nasdaq: FIGR)"
@@ -87,16 +90,20 @@ The most useful credit series is Figure's loans held for sale: loans still on it
 
 ⚠️ **But the trend did not reverse. It matured — and this report predicted the mechanism in the paragraph below**, which says the 30–59 spike "matters because it feeds the 60–89 and 90-plus day buckets over the next few quarters." That is what the quarter shows:
 
-| | 31 Mar 2026 | 30 Jun 2026 | |
+⚠️ **Each row states its own prior date, because a 10-Q's comparative column is not one basis.** Income-statement style measures compare to the prior quarter; balance-sheet items compare to the **prior year-end**. Reading the filing's comparative column as a single "31 Mar" would mis-date three of these six rows.
+
+| | prior read | 30 Jun 2026 | |
 |---|---:|---:|---|
-| Headline delinquency | 6.61% | **5.05%** | improved |
-| 30–59 day bucket | $10.724M | — | **−53%** |
-| **90-plus day bucket** | $14.387M | **$19.543M** | ⚠️ **+35.8%** |
-| 60–89 day loans | 4,193 | 4,267 | flat |
-| **Nonaccrual UPB** | $2.4M | **$14.1M** | ⚠️ share of 90+ on nonaccrual, ~17% → ~72% |
+| Headline delinquency | 6.61% (31 Mar 2026) | **5.05%** | improved |
+| 30–59 day bucket | $10.724M (31 Mar 2026) | — | **−53%** |
+| **90-plus day bucket** | $19.216M (31 Mar 2026) | **$19.543M** | **+1.7% — essentially flat** |
+| **60–89 day loans** | 2,285 (31 Mar 2026) | **4,267** | ⚠️ **+87%** |
+| **Nonaccrual UPB** | $2.4M (31 Dec 2025) | **$14.1M** | ⚠️ share of 90-plus on nonaccrual, about 17% → about 72% |
 | **Securitized w-avg 60+** | 0.8% | **1.1%** | ⚠️ broke a flat line |
 
-**The 60–89 bucket staying flat while 90-plus rose is the signature of a wave passing *through* rather than stopping.** The early bucket emptied because its contents aged, not only because fewer loans entered it. And the nonaccrual move is the sharper read: the 90-plus dollars are not merely larger, a much larger share of them have been reclassified as loans Figure no longer expects to accrue interest on.
+*The 31 Mar 90-plus figure is derived from this report's own reading below — 3.90% of the $492.725M book — rather than lifted from the comparative column.*
+
+⚠️ **The wave is in the middle bucket, and it has not landed yet.** 90-plus was essentially flat across the quarter (+1.7%) while **60–89 nearly doubled, 2,285 → 4,267 loans**. So the 30–59 collapse is not loans curing — **the early bucket emptied because its contents aged into the next one**, which is now carrying them. **The 90-plus bucket is flat because the wave has not reached it, not because it has passed.** On this reading the headline improvement and the forward risk are the same event seen at two points in the pipeline. And the nonaccrual move is the sharper read: the 90-plus dollars are not merely larger, a much larger share of them have been reclassified as loans Figure no longer expects to accrue interest on.
 
 ⚠️ **The securitized line is the one that matters most, because it is this report's own mechanism turning.** The section below explains that Democratized Prime forces loans more than 60 days delinquent *out* of the collateral pool, which is why the securitized statistic stayed clean at 0.8% at both December and March. **It is now 1.1%.** The clean pool is less clean, and that is the number the selection-bias argument said should stay flat.
 
@@ -112,7 +119,7 @@ The deterioration is not an artifact of a smaller book. Between year-end and 31 
 
 Those figures cover all loans held for sale, not the exact collateral pledged to PRIME's facility. They are a proxy. But Figure highlights its reliance on HELOCs, and the proxy moved adversely for three periods before improving at the headline in Q2 — with the back buckets continuing to fill, as set out above. With no public facility-level tape, it is the closest recurring filing measure.
 
-Borrower statistics look reassuring: credit scores around 741 and combined loan-to-value around 59%. But they do not show Figure's recovery position. The facility collateral is about **40% first lien and roughly 58% second lien**, with a small third-lien remainder. Second liens are paid after the first mortgage, so loss severity can exceed what the property-equity figure suggests.
+Borrower statistics look reassuring: credit scores around 741 and combined loan-to-value around 59%. But they do not show Figure's recovery position. The facility collateral is about **46% first lien and roughly 52% second lien** (46.31% / 51.68%, read 2026-09-08 — first-lien share has risen from about 40%), with a small third-lien remainder. Second liens are paid after the first mortgage, so loss severity can exceed what the property-equity figure suggests.
 
 The facility's contractual advance rate is up to **95%** of pledged balances, leaving about a 5% lender-level haircut. Property equity absorbs losses first, then this haircut protects the senior facility. A severe event would generally be needed to impair principal, but “59% loan-to-value” is not a 41% cushion belonging directly to PRIME holders.
 
@@ -183,7 +190,7 @@ it as a cash equivalent.
 
 *Revision history: 2026-08-23 — **refreshed to Figure Technology Solutions' Q2-2026 10-Q (filed 2026-08-14; unaudited interim); Overall held at 5.0.** The delinquency series this report's thesis rests on gained its fourth data point. **Headline held-for-sale delinquency fell 6.61% → 5.05%**, and the improvement is genuine rather than a denominator effect: the book grew **17.8%** — the exact shape that manufactures a false recovery — so the numerator was tested separately and **delinquent dollars fell 9.9%**. Both legs moved favourably, and the 30–59 day bucket fell 53%, reversing the 365% spike recorded for Q1. Method control: reconstructing 31 December 2025 from the new filing's comparative column returns 5.457% against the 5.46% published here, so the new figure sits on this report's own basis.
 
-⚠️ **The score is held anyway, and the reasoning is on the page rather than implied — a held score against a favourable headline reads as refusing to update unless the argument is shown.** The trend did not reverse, it **matured**, exactly as this report's own text predicted when it said the 30–59 spike "feeds the 60–89 and 90-plus day buckets over the next few quarters": **90-plus dollars rose $14.387M → $19.543M (+35.8%)**, the 60–89 bucket stayed flat at 4,193 → 4,267 loans — the signature of a wave passing *through* rather than stopping — and **nonaccrual UPB went $2.4M → $14.1M**, taking the share of 90-plus loans on nonaccrual from about 17% to about 72%. **Most importantly, the securitized weighted-average 60+ figure broke its flat line at 0.8% (December and March) and printed 1.1%.** That is this report's own selection-bias mechanism turning: Democratized Prime forces 60+ loans out of the collateral pool, which is why that number had stayed clean — and the clean pool is now less clean. The improvement is at the front of the pipeline and the deterioration is at the back, where losses are realised.
+⚠️ **The score is held anyway, and the reasoning is on the page rather than implied — a held score against a favourable headline reads as refusing to update unless the argument is shown.** The trend did not reverse, it **matured**, exactly as this report's own text predicted when it said the 30–59 spike "feeds the 60–89 and 90-plus day buckets over the next few quarters": **90-plus dollars were essentially flat, $19.216M → $19.543M (+1.7%)**, while the 60–89 bucket **nearly doubled, 2,285 → 4,267 loans** — a wave that has aged out of the earliest bucket and is now sitting one step short of 90-plus — and **nonaccrual UPB went $2.4M → $14.1M**, taking the share of 90-plus loans on nonaccrual from about 17% to about 72%. **Most importantly, the securitized weighted-average 60+ figure broke its flat line at 0.8% (December and March) and printed 1.1%.** That is this report's own selection-bias mechanism turning: Democratized Prime forces 60+ loans out of the collateral pool, which is why that number had stayed clean — and the clean pool is now less clean. The improvement is at the front of the pipeline and the deterioration is at the back, where losses are realised.
 
 **The hold is made falsifiable rather than left as judgement:** what would move it is a **second consecutive quarter** of falling headline delinquency **with 90-plus dollars flat or falling and securitized 60+ back at or below 0.8%**. Q3 10-Q due around 2026-11-14.
 
