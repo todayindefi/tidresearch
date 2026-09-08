@@ -21,7 +21,25 @@ production: true
 # legal counterparty. The Figure relationship is supported (the report calls
 # Hastra a disclosed Figure related party), but the composite is not.
 yield_bearing: true
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. Migrated at this refresh. ⚠️ backing_score CANNOT
+# RENDER without the frame — the historical vault-share rubric has no Backing
+# row, so the field alone would be schema-legal and invisible. Fourth instance
+# of that trap this week.
+#   backing_score 5.0 is NEW, and the axis was one-sided rather than absent by
+#     design: 11 other vault-share/wrapped reports here carry both fields.
+#   ⚠️ THE POINT OF SPLITTING IT OUT: content.config.ts says underlying_score
+#     means "collateral quality of the underlying" off-frame and "what the value
+#     passes through to" on-frame, "and for a vault share those coincide."
+#     FOR PRIME THEY DO NOT — they diverge by the whole Democratized Prime
+#     layer, which the Dependencies rationale names and then scores past.
+#   ⚠️ Backing is a CW20 RECEIPT CLAIM on lending pools, not a reserve of YLDS,
+#     and 97.59% of it is a claim on ONE pool.
+# ⚠️ `redemption_score: 6.0` is RETAINED but no longer rendered: it is the
+# evidence for axis 3, scored on the WORSE leg. Both legs sit at 6.0 here.
+axis_frame: six
 volatility_score: 6.0
+backing_score: 5.0
 structural_score: 5.0
 redemption_score: 6.0
 underlying_score: 5.5
@@ -102,13 +120,13 @@ claim a holder actually owns is unregulated.
 
 ## Risk by axis
 
-**Volatility — 6.0.** PRIME accrues through its NAV rather than targeting a fixed $1 market price. Its meaningful observed secondary-market drawdown was about 4.4%; the quoted $1.50 all-time high appears to be a seed-pool artifact and is not useful evidence of volatility. A rising NAV and active liquidity incentives can keep market pricing orderly in normal conditions, but neither removes credit risk from the asset accumulating underneath.
+**Stability — 6.0.** PRIME accrues through its NAV rather than targeting a fixed $1 market price. Its meaningful observed secondary-market drawdown was about 4.4%; the quoted $1.50 all-time high appears to be a seed-pool artifact and is not useful evidence of volatility. A rising NAV and active liquidity incentives can keep market pricing orderly in normal conditions, but neither removes credit risk from the asset accumulating underneath.
 
 Figure's filings disclose Democratized Prime as a **senior** lending facility **collateralized by** HELOCs owned by Figure Lending, not direct ownership of a miscellaneous loan pool. Seniority and collateralization should reduce loss severity relative to a junior or unsecured position. They do not eliminate the exposure. Falling home values, borrower delinquency, funding costs, or a frozen securitization market can still slow repayment or impair returns. Figure's broader loans-held-for-sale delinquency rose 3.91% → 5.46% → 6.61% before easing to **5.05% at 30 June 2026** — ⚠️ **a headline improvement with the 60–89 bucket nearly doubling underneath it** — while the PRIME-specific warehouse loan tape remains private.
 
 The stronger legal description is balanced by limited history and concentration in one origination/securitization channel. The [warehouse monitor](https://todayindefi.github.io/backing-monitor/?asset=hastra-prime), updated hourly, tracks inventory and EDGAR ABS-15G securitization cadence. A longer stress record and facility-level delinquency would support a higher mark; stalled turnover or rising losses would move it down.
 
-**Liquidity — 6.0.** Ethereum Uniswap V3 has recently shown under $10M of pool liquidity. That gives holders a practical immediate exit for ordinary size and is materially better than wYLDS's standalone market. It also creates a price-discovery path independent of Hastra's primary redemption process.
+**Liquidity & Exit — 6.0.** Ethereum Uniswap V3 has recently shown under $10M of pool liquidity. That gives holders a practical immediate exit for ordinary size and is materially better than wYLDS's standalone market. It also creates a price-discovery path independent of Hastra's primary redemption process.
 
 Both venues have now been measured directly, and both turn out to be capped the same way: by how much of the other side of the pool there is to sell into. On Ethereum that is roughly $6.4M of USDC; on Solana, measured from the pool's own liquidity rather than estimated from a router, it is roughly $5.9M of PYUSD. Together that is about 2.7% of PRIME's market value — but the two are separate exits in different currencies, so reaching both means splitting the position across two chains rather than selling once.
 
@@ -118,7 +136,7 @@ The limitation is durability. The deepest Ethereum market is supported by the PR
 
 Primary liquidity ultimately bottoms out in YLDS. FCC reported $263.4M of certificate surrenders in Q1 2026 and **$499.4M paid for surrenders in Q2** against a book that ended June at $557.5M — evidence that the **YLDS layer** can clear substantial volume at face plus accrued interest. It is not evidence that PRIME can redeem the same amount on demand: PRIME must first unbond into wYLDS, Hastra must process the wrapper request, and settlement proceeds must travel back to the redeeming chain. Better sustained, non-incentivized DEX depth and a funded wrapper-level buffer would improve this axis.
 
-**Structural — 5.0.** Two independent audits are meaningful positives. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) found a critical Solana vault-account validation flaw and a share-inflation issue; both were remediated, and all findings were closed. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) subsequently reviewed the Solana and Ethereum stack and reported no critical or high-severity findings. A serious bug found before deployment is double-edged evidence, but detection, repair, and a clean second review are substantially better than relying on an unaudited codebase.
+**Contract & Admin — 5.0.** Two independent audits are meaningful positives. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) found a critical Solana vault-account validation flaw and a share-inflation issue; both were remediated, and all findings were closed. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) subsequently reviewed the Solana and Ethereum stack and reported no critical or high-severity findings. A serious bug found before deployment is double-edged evidence, but detection, repair, and a clean second review are substantially better than relying on an unaudited codebase.
 
 Independent reads reconcile PRIME supply with wYLDS in the staking vault, and FCC's audited §28 disclosure independently corroborates the YLDS coverage ratio. The caveat is legal and operational segregation. Provenance balances show much of the identified reserve YLDS in Figure operational accounts containing loan assets rather than a clean, named, bankruptcy-remote wrapper reserve. Hastra's [proof of reserves](https://hastra.io/proof-of-reserves) is directionally supported, but the mapping from those accounts to wYLDS claims still depends on Hastra and Figure.
 
@@ -150,7 +168,13 @@ What has not changed is the part that actually binds. Getting dollars still requ
 
 So this is a redemption process that is well resourced for an ordinary queue and still administratively gated under stress — which is why the secondary market, not the redemption queue, remains the route that matters if you need out quickly.
 
-**Underlying — 5.5.** PRIME's proximate underlying is wYLDS, which wraps FCC-issued YLDS. Audited FY2025 statements and an **unaudited Q2 interim filing (2026-08-14)** show that at June 30, qualified assets were **$561.627M against a $557.494M certificate reserve — 100.74% coverage**, up from 100.30% at March 31 with the surplus more than doubling to $4.133M.
+**Backing — 5.0.** ⚠️ **What stands behind PRIME is not a reserve of YLDS. It is a CW20 receipt claim on lending pools**, and it is concentrated: **97.59% is a claim on the Home Equity pool alone** ($592.81M), with AUTOYLDS at 1.40% ($8.53M) and a bare vault sweep at 1.01% ($6.14M), against $607.47M total.
+
+⚠️ **And the cushion at this layer is 17.6 basis points.** Coverage is **100.1763%** — a surplus of **$1.07M** over a $606.4M wYLDS supply. ✅ **That is a surplus rather than a shortfall**, and the book behind it is the one described below. But it is thin in a way the figures this report leads with do not convey, which is the reason this axis is now scored separately.
+
+⚠️ **THREE CUSHIONS SIT AT THREE LAYERS AND THEY DO NOT ADD.** **17.6bp at the wrapper** (here), **a roughly 5% margin at the facility** (the 95% advance rate, below), and **100.74% at FCC** (the certificate reserve, below) — which is the borrower's own reserve requirement one layer further out. **They apply in sequence to different obligations, so the largest of the three is not the one nearest a PRIME holder; the 17.6bp is.** A reader given only the outermost figure would materially overstate the protection standing in front of them.
+
+**Dependencies — 5.5.** PRIME's proximate underlying is wYLDS, which wraps FCC-issued YLDS. Audited FY2025 statements and an **unaudited Q2 interim filing (2026-08-14)** show that at June 30, qualified assets were **$561.627M against a $557.494M certificate reserve — 100.74% coverage**, up from 100.30% at March 31 with the surplus more than doubling to $4.133M.
 
 ⚠️ **The composition moved the other way, and it is the part that matters here.** The certificate reserve fell **7.0%** over the quarter and **the entire contraction was external**: third-party holdings **$125.057M → $78.497M, down 37.2%**, while related-party holdings *rose* 1.0% to $477.536M — taking the related-party share of fully-paid certificates from about 78.9% to about **85.9%**. Q2 flows corroborate it: $452.7M issued against $499.4M paid for surrenders, a net **−$46.7M** against a third-party decline of −$46.56M. Roughly $950M of gross churn netting to an outflow of outside holders.
 
@@ -198,6 +222,8 @@ That is why the mark falls to 5.0, but not lower. Backing still reconciles rough
 *This report uses public documentation, market data, two published audits, independent Solana, Ethereum, and Provenance reads, and FCC filings available through [EDGAR](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001974395). Corrections welcome to info@tidresearch.com.*
 
 ## Revision history
+
+- **2026-09-08 — Backing 5.0 added; no other axis moved.** The axis was one-sided rather than absent by design — 11 other vault-share reports here carry both fields. ⚠️ **What backs PRIME is a CW20 receipt claim on lending pools, not a reserve of YLDS, and 97.59% of it is a claim on the Home Equity pool alone** ($592.81M of $607.47M). ⚠️ **Coverage at that layer is 100.1763% — a 17.6bp cushion on a $1.07M surplus over $606.4M of wYLDS.** ⚠️ **Three cushions sit at three layers and do not add:** 17.6bp at the wrapper, about 5% at the facility on a 95% advance rate, and 100.74% at FCC, which is the borrower's reserve requirement one layer further out. **The largest is the furthest away; the nearest is the thinnest.** Report migrated to the six-axis core so the new axis renders — the historical vault-share rubric has no Backing row.
 
 - **2026-08-27 — admin topology measured; no score change.** The Ethereum ERC1967Proxy terminates at a `TimelockController` with `getMinDelay()` of **86,400 seconds, one day**. ⚠️ **About 99.7% of the backing does not sit on that path** — it sits in Provenance custody with **threshold one, immediate effect, self-administered and no timelock**, held by three authorised parties of whom any one can act alone, two being ordinary accounts on an affiliated trading platform.
 - **2026-08-23 — refreshed to FCC's Q2-2026 10-Q (filed 2026-08-14, unaudited).** At 30 June: qualified assets **$561.627M** against a **$557.494M** certificate reserve — **coverage 100.74%**, up from 100.30%, with the surplus rising from $1.818M to **$4.133M**. ⚠️ **Coverage improved because the denominator fell.** The reserve contracted **7.0%** and the whole contraction was external: third parties **$125.057M → $78.497M, −37.2%**, while related parties *rose* 1.0% to **$477.536M**, taking the related-party share from about 78.9% to **85.9%**. Flows corroborate it — $452.7M issued against $499.4M surrendered, net −$46.7M. **Not a backing alarm:** coverage is above 100%, the surplus doubled and the §28 test is intact. ⚠️ **A test with a date:** at the Q3 10-Q, expected around 2026-11-14, compare FCC's third-party certificate line against Hastra's wYLDS reserve holdings as at the same date — if the reserve exceeds the third-party line, Hastra's certificates are necessarily related-party.
