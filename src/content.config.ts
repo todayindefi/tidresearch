@@ -74,6 +74,15 @@ const chainOverride = z
 // dependency — which is why ~26 reports can SEED axis 4 instead of authoring
 // it. ⚠️ Seeded is not the same as judged: a carried-over number still has to
 // be re-read against concentration and circularity before it is trusted.
+// ⚠️ "THOSE COINCIDE" HOLDS ONLY UNTIL THE UNDERLYING IS LENT OR DEPLOYED
+// ONWARD. Once it is, the reserve BEHIND the underlying and the chain the value
+// PASSES THROUGH are different objects, and one score cannot carry both.
+// Worked case: hastra-prime (2026-09-08). Its proximate underlying is wYLDS,
+// but what actually backs it is a CW20 receipt claim on lending pools — 97.59%
+// on a single pool — so Backing and Dependencies diverge by the whole
+// Democratized Prime layer. ⚠️ A vault-share whose underlying is DEPLOYED
+// rather than HELD needs both fields; susdat (STRC deployed underneath, no
+// backing_score) looks like the next case this catches.
 // The earlier five-axis draft merged `underlying_score` INTO Backing, which
 // would have deleted the dependency axis exactly where the dependency IS the
 // risk (syzUSD -> yzUSD, sUSDe -> USDe, apyUSD -> apxUSD). That is why six.
