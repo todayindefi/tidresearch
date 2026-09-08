@@ -10,7 +10,12 @@ last_verified: "2026-08-24"
 # Scope-limited pass on the 2026-08-31 Strategy 8-K. ⚠️ `last_verified` is
 # deliberately NOT bumped — it stamps a whole-body re-read and this was the
 # buyback/runway material only.
-last_revised: "2026-08-31"
+# ⚠️ 2026-09-08 8-K (accession 0001193125-26-384402): DCS repurchase authorisation
+# doubled $1.0B -> $2.0B, largest STRC week yet at $176.3M / 1,810,885 sh ~$97.36.
+# ⚠️ ISSUER-FILED figures taken from that accession via riskAnalyst; this desk has
+# NOT read the filing directly, and the page says so. The mid-September exhaustion
+# call is VOID rather than missed — the denominator was replaced.
+last_revised: "2026-09-08"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
@@ -85,7 +90,7 @@ Strategy's June 2026 "Digital Credit Capital Framework" replaced what had looked
 
 ## The buyback: real, finite, and getting less effective
 
-Strategy authorised **$1.0B** for repurchasing its digital-credit securities, with **STRC as the explicit initial priority**. The programme has been used hard:
+Strategy authorised **$1.0B** for repurchasing its digital-credit securities, with **STRC as the explicit initial priority**, and ⚠️ **doubled that authorisation to $2.0B on 2026-09-08** (8-K accession `0001193125-26-384402`, period 08-31→09-07). The programme has been used hard:
 
 | week ending | repurchased | approx. average price |
 |---|---:|---:|
@@ -106,11 +111,11 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 
 ⚠️ **State that narrowly, because an average repurchase price is not a market print.** It is the mean of whatever the programme filled at over a week, and **it cannot distinguish a secondary re-rating that the buyback merely bought into from more aggressive bidding that moved the price itself.** A rising average is consistent with both, and this page is not able to say which.
 
-⚠️ **The runway is now short enough that the choice of basis barely matters. At the most recent week's $151.8M, the remaining $364.8M is about 2.4 weeks — roughly MID-SEPTEMBER.**
+⚠️ **The exhaustion question this report was tracking is VOID, not answered — the denominator was replaced.** This page put the remaining $364.8M at about 2.4 weeks of spend, landing **mid-September**, and named that as the decision point. ⚠️ **On 2026-09-08 Strategy re-authorised the programme from $1.0B to $2.0B** and bought its largest week yet, **$176.3M for 1,810,885 shares at about $97.36**. So the runway did not run out and the forecast was not missed: **the arithmetic stopped applying.**
 
-**The spread between the two bases has collapsed.** At $653.0M remaining, a most-recent-week pace put the end in late September and a four-week average in early-to-mid October — three weeks apart, wide enough that the choice of basis mattered. **At $364.8M against a still-rising pace, both land inside September.** ⚠️ **An early-to-mid-October end date is no longer supportable on either basis.**
+⚠️ **A re-authorisation is two-sided and should not be read as pure reassurance.** It removes the near-term exhaustion that this report identified as the thing to watch, and it is also evidence that the issuer intends to keep bidding — which is the same fact seen from the holder's side and from the funding side. **The bid is no longer finite on the horizon this page was measuring**, but it remains discretionary, and nothing about the doubling is contractual.
 
-**The programme is finite by construction, and it is now visibly close to the end.** ⚠️ **A price recovery riding an expiring issuer bid is not a re-rating** — and the closer the bid gets to exhaustion, the more that distinction decides what happens next.
+**What survives unchanged is the shape of the question, only on a longer horizon:** the programme is still finite by construction, and ⚠️ **a price recovery riding an issuer bid is still not a re-rating.** The distinction simply stops being decided in September.
 
 ⚠️ **And the funding source changed.** Through early August the buybacks were funded by **selling Bitcoin** — the 2026-08-10 filing earmarked the entire net proceeds of a $108.6M BTC sale for STRC repurchases. In the week to 2026-08-16, **no Bitcoin was sold at all**; the $132.2M of buybacks and $52.4M of dividends came from about **$333.7M of common-stock issuance**. **Common-equity funding has held through the two weeks since**, and holdings stand at **845,050 BTC**.
 
