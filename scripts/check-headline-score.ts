@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 /**
- * Build gate: the body's headline risk score must match `overall_score`.
+ * Build gate: the body's AUTHORED SCORES must match frontmatter — both the
+ * headline risk score and every row of the Scoring Rationale table.
  *
  * WHY THIS EXISTS. The headline — `**Moderate risk · 5.0/10**` — is AUTHORED
  * BODY MARKDOWN, not a component reading frontmatter. So a score change that
@@ -27,6 +28,74 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
+
+/**
+ * ⚠️ THE SCORE TABLE IS THE SECOND HALF, ADDED 2026-09-08 AFTER THE HEADLINE
+ * CHECK ALONE LET ONE THROUGH. On crvUSD a careful multi-place pass updated
+ * frontmatter, three PegKeeper figures, the keeper table, the burn-buffer line,
+ * the Backing row and a revision entry — and left `| **Overall** | **4.5** |`
+ * against a frontmatter of 5.0. The headline check passed it, because crvUSD
+ * has no headline line at all.
+ *
+ * The shape of the failure: FRONTMATTER IS ONE EDIT AND THE BODY IS SEVERAL, so
+ * the body is where a pass runs out. riskAnalyst hit the same thing at scale —
+ * nine rows across six reports.
+ *
+ * ⚠️ VERIFY THE COLUMN SHAPE BEFORE READING A COLUMN. Only tables whose header
+ * names column 2 as "Score" are read. `strcx` carries
+ * `| Category | Raw STRC | STRCx | Δ | notes |`, and reading column 2 blind
+ * produced four false findings on a report that was perfectly consistent.
+ */
+const LABEL_TO_FIELD: Record<string, string> = {
+  "peg mechanism": "peg_mechanism_score",
+  stability: "volatility_score",
+  volatility: "volatility_score",
+  backing: "backing_score",
+  liquidity: "liquidity_score",
+  "liquidity & exit": "liquidity_score",
+  underlying: "underlying_score",
+  dependencies: "underlying_score",
+  "contract & admin": "structural_score",
+  structural: "structural_score",
+  redemption: "redemption_score",
+  issuer: "issuer_score",
+  credit: "credit_score",
+  operational: "operational_score",
+  overall: "overall_score",
+};
+
+function checkScoreTable(file: string, fm: string, body: string, errors: string[]) {
+  const lines = body.split("\n");
+  let inScoreTable = false;
+  for (const line of lines) {
+    const cells = line.split("|").map((c) => c.trim());
+    if (cells.length < 4 || cells[0] !== "") {
+      if (!line.trim().startsWith("|")) inScoreTable = false;
+      continue;
+    }
+    // Header row: column 2 must literally be a score column.
+    if (/^score\b/i.test(cells[2].replace(/\*/g, ""))) {
+      inScoreTable = true;
+      continue;
+    }
+    if (!inScoreTable) continue;
+    const label = cells[1].replace(/\*|`/g, "").trim().toLowerCase();
+    const field = LABEL_TO_FIELD[label];
+    if (!field) continue;
+    // Chain overrides annotate the cell: "4.5 (Monad: 3.0)" — the base is first.
+    const shown = cells[2].replace(/\*/g, "").match(/^([0-9]+(?:\.[0-9]+)?)/);
+    if (!shown) continue;
+    const declared = fm.match(new RegExp(`^${field}:\\s*([0-9.]+)`, "m"))?.[1];
+    if (!declared) continue;
+    if (Math.abs(Number(shown[1]) - Number(declared)) > 0.001) {
+      errors.push(
+        `${file}: score table row "${cells[1]}" reads ${shown[1]} but ` +
+          `${field} is ${declared}. Frontmatter is one edit and the body is several.`
+      );
+    }
+  }
+}
+
 const DIR = "src/content/reports";
 const errors: string[] = [];
 let checked = 0;
@@ -43,6 +112,8 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   if (!declared) continue;
 
   // `**<band> risk · N/10**` — the separator is what tells a headline from an axis line.
+  checkScoreTable(file, fm, body, errors);
+
   const headline = body.match(
     /^\*\*[^*\n]*?risk\s*[·|-]\s*([0-9]+(?:\.[0-9]+)?)\s*\/\s*10/im
   );
@@ -60,7 +131,7 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
 }
 
 if (errors.length) {
-  console.error("\n⚠️  headline-score check failed:\n");
+  console.error("\n⚠️  authored-score check failed:\n");
   for (const e of errors) console.error("  " + e);
   console.error("");
   process.exit(1);

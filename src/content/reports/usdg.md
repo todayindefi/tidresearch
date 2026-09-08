@@ -2,7 +2,13 @@
 asset: "USDG"
 slug: "usdg"
 aliases: ["USDG", "Global Dollar"]
-chains: ["eth", "solana"]
+# ⚠️ ALL SIX DEPLOYMENTS. `chains` is a JOIN KEY, so an unlisted chain reads as
+# absent — this listed two of six while the LARGEST (X Layer, 49% of supply) was
+# missing and the body discussed it three times. Slugs agreed with riskAnalyst
+# 2026-09-08; `xlayer` and `ink` were new to the corpus and are established here.
+# ⚠️ Display and filtering only on this side: adding a chain here emits no score.
+# `chain_overrides` is separate and explicit, so nothing inherits a default.
+chains: ["eth", "solana", "hood", "xlayer", "ink", "arb"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "light"
@@ -40,17 +46,17 @@ It launched in November 2024 and has grown quickly to become a top-30 asset (cur
 
 | chain | supply | share |
 |---|---:|---:|
-| **X Layer** | **1,868,197,490.62** | **55.2%** |
-| Solana | 608,899,270.33 | 18.0% |
-| Ethereum | 447,158,857.86 | 13.2% |
-| Robinhood Chain | 398,736,130.25 | 11.8% |
-| Ink | 63,548,230.10 | 1.9% |
-| Arbitrum | 601,207.02 | 0.02% |
-| **total** | **3,387,141,186.18** | 100% |
+| **X Layer** | **1,597,431,469.07** | **49.0%** |
+| Robinhood Chain | 670,125,507.07 | 20.5% |
+| Solana | 578,491,094.54 | 17.7% |
+| Ethereum | 354,487,588.63 | 10.9% |
+| Ink | 60,335,614.48 | 1.8% |
+| Arbitrum | 601,209.12 | 0.02% |
+| **total** | **3,261,472,482.91** | 100% |
 
 **All six deployments are read, so this is a complete measurement rather than a floor** — $3.387B against a published "around $3B-plus". **Read it as corroboration of the headline figure, with the bonus of knowing where the supply actually lives.**
 
-**The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries an outright majority of USDG at 55.2%.** The structural discussion in this report is written as though Ethereum were USDG's centre of gravity, and it is not; Ethereum holds 13.2%, behind X Layer and ahead of Solana's 18.0% only in the sense that it is third. A regulated, Paxos-issued dollar with more than half its supply on a single non-Ethereum chain means the majority of holders carry that chain's liveness, sequencer and bridge risk rather than Ethereum's. That is a factual property of where the token sits, not evidence of a problem with it — but it is a materially different picture from an Ethereum-centred one. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
+**The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries 49.0% of USDG**, just short of an outright majority and down from 55.2% a fortnight earlier. ⚠️ **The movement is Robinhood Chain, which grew 68.1% in that window to 20.5% and took second place** — while Ethereum, the chain most readers assume this asset lives on, is **10.9%**. The structural discussion in this report is written as though Ethereum were USDG's centre of gravity, and it is not; Ethereum holds 13.2%, behind X Layer and ahead of Solana's 18.0% only in the sense that it is third. A regulated, Paxos-issued dollar with more than half its supply on a single non-Ethereum chain means the majority of holders carry that chain's liveness, sequencer and bridge risk rather than Ethereum's. That is a factual property of where the token sits, not evidence of a problem with it — but it is a materially different picture from an Ethereum-centred one. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
 
 The 7.0 reflects top-tier regulated backing and issuer quality with an adoption/liquidity discount. It's a useful contrast with USDT, which lands at the same headline score for the opposite reasons — USDG has stronger issuer transparency and backing disclosure, but thinner liquidity. Read that way, a 7.0 isn't a single quality of "good enough"; it's a balance of strengths and weaknesses, and USDG's are almost the exact inverse of Tether's. If your priority is knowing precisely what backs your dollar and who is regulated to hold it, USDG scores better than its market-cap rank might suggest. If your priority is being able to move size at the peg on any venue at any hour, it scores worse.
 

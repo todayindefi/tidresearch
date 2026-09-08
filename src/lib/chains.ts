@@ -35,6 +35,8 @@ const ALIASES: Record<string, string> = {
   sonic: "sonic",
   robinhood: "robinhood",
   hood: "robinhood",
+  xlayer: "xlayer",
+  ink: "ink",
 };
 
 const LABELS: Record<string, string> = {
@@ -62,6 +64,8 @@ const LABELS: Record<string, string> = {
   gnosis: "Gnosis",
   sonic: "Sonic",
   robinhood: "Robinhood Chain",
+  xlayer: "X Layer",
+  ink: "Ink",
 };
 
 export function normalizeChain(c: string): string {
