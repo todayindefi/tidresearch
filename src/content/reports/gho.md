@@ -8,6 +8,10 @@ peg_mechanism: "crypto-overcollateralized"
 assessment_type: "full"
 date: "2026-06-07"
 last_verified: "2026-08-29"
+# ⚠️ 2026-09-08 re-measured supply and all eight facilitator levels (identical
+# to the wei) and added which direction the mint caps bind. `last_verified`
+# HOLDS — the GSM, audit and issuer material was not re-read.
+last_revised: "2026-09-08"
 featured: false
 production: true
 issuer: "Aave DAO"
@@ -71,7 +75,7 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 ⚠️ **`seized = true` alongside `frozen = false` is the signature of a wind-down, not a pause pending restart.** Freezing halts a module you intend to restart; **seizure is the GSM's terminal emergency action.** Neither module can swap GHO against USDC or USDT, **so the mechanism that would arbitrage a sub-$1 GHO back toward par is not available.**
 
-**Seventeen days unchanged is the more useful fact than either reading alone.** A module seized today could be mid-incident; **one that has held seized, unfrozen, empty and capped at zero across seventeen days is behaving like a decommissioned component** — which makes this an observation rather than an inference.
+**Unchanged since 2026-08-13 is the more useful fact than either reading alone.** A module seized today could be mid-incident; **one that has held seized, unfrozen, empty and capped at zero for weeks is behaving like a decommissioned component** — which makes this an observation rather than an inference.
 
 **And Curve's Emergency DAO set the GHO PegKeeper debt ceiling to 0**, so that keeper can neither mint nor burn and contributes nothing in either direction. ⚠️ **What has not stopped: the GHO/crvUSD pool still exists and still provides DEX depth.** **What ended is its role as a defence mechanism, not its role as liquidity** — see axis 3.
 
@@ -87,12 +91,19 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 ```
 2026-08-13   699,000,000.00   (prior pass recorded +7.7% growth over the preceding week)
-2026-08-30   699,000,000.00   +0.0% over 17 days
+2026-08-30   699,000,000.00   +0.0%
+2026-09-08   699,000,000.00   +0.0% — every facilitator level identical to the wei
 ```
 
-**A growth rate that went from +7.7% in a week to exactly zero over seventeen days is a state change, not a slowdown.** **65.8% of supply sits at hard caps**, so a substantial part of the float is structurally unable to expand without governance raising ceilings.
+**A growth rate that went from +7.7% in a week to exactly zero, and has held there since 2026-08-13, is a state change rather than a slowdown.** **65.8% of supply sits at hard caps**, so a substantial part of the float is structurally unable to expand without governance raising ceilings.
 
-⚠️ **That cuts both ways for a holder, which is why it does not move this axis on its own.** Caps that bind are a constraint on uncontrolled issuance, and they are equally a constraint on the asset's ability to meet demand.
+⚠️ **Which direction the cap binds is what decides how to read that 65.8%, and it is the question this report has not answered.** A facilitator at capacity cannot **mint**. So the leg the caps constrain is the defence against GHO trading **above** par — the arbitrage that mints fresh GHO into a premium and sells it back toward $1. **GHO trades at $0.998702, which is 0.13% *below* par**, so that is not the leg under load today.
+
+**Below par the correcting trade is a different one: buy GHO under $1 and repay debt at face value.** It does not touch a facilitator bucket and works whatever the ceilings say. ⚠️ **So "65.8% at hard caps" is not an active peg failure** — and a reader meeting that figure next to "no functioning GSM" will reasonably conclude that it is. **It is a latent, one-sided constraint, and clearing it needs a governance vote: the vote is the exposure, not the cap.**
+
+⚠️ **That is not a reassurance, because both legs are impaired and only one of them is being tested.** Upward correction is throttled by the caps. Downward correction lost its reliable route when both Stability Modules were seized, leaving borrower repayment — which depends on there being borrowers who want to repay. **The leg currently under load is the impaired one without a mechanism behind it.**
+
+⚠️ **And the caps cut both ways for a holder, which is why they do not move this axis alone.** Caps that bind are a constraint on uncontrolled issuance, and equally a constraint on the asset's ability to meet demand.
 
 ## 3 · Liquidity & Exit
 
@@ -166,14 +177,14 @@ hasRole(DEFAULT_ADMIN_ROLE, X)      310M facilitator     GHO token
 - **Anyone who needs to know who can mint.** For 44.3% of supply, that list is not readable from chain — narrowed by the `hasRole` checks above, but not closed (axis 5).
 - **Anyone treating the "GSM" label as a description of backing.** It is a name, not an implementation (axis 5).
 - **Anyone relying on a fixed-price exit.** Both stability modules are seized; a DEX is the exit (axes 1 and 3).
-- **Anyone sizing on growth.** Supply has not moved in seventeen days and most of it is at ceilings (axis 2).
+- **Anyone sizing on growth.** Supply has not moved since 2026-08-13 and most of it is at ceilings (axis 2).
 
 ## What to watch
 
 - ⚠️ **Any capacity raise on the 310M bucket.** This is the re-score trigger and the single most consequential thing that could change here (axis 5).
 - **Whether either GSM is unseized**, which would restore the par-defence route and the fixed-price exit together (axes 1 and 3).
 - **Whether the mint role is ever made enumerable**, by a facilitator upgrade or by governance publishing the holders (axis 5).
-- **Whether supply moves at all.** Seventeen days of exactly zero is unusual enough that a resumption is itself information (axis 2).
+- **Whether supply moves at all.** Exactly zero since 2026-08-13 is unusual enough that a resumption is itself information (axis 2).
 - **Mint destinations for the 310M**, if traced — the open question with the clearest resolution path (axis 5).
 ---
 
