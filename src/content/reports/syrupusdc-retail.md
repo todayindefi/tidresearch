@@ -118,7 +118,7 @@ The Pool Delegate model is the structural difference from purely algorithmic pro
 
 **The credit read, as at the August 2026 check, is reassuring.** The loans-only collateral ratio across the Syrup family came in at **175%**, above the 145–170% band this report describes as typical. Pool collateral ratio is 100%, unrealized losses are **zero**, and no loan is impaired, called, or in default. Deployment runs around 97% and the pool is using roughly two-fifths of its liquidity cap. Live figures are on the dashboard; the durable read is that the loan book is comfortably overcollateralized and the loss-recognition signal is clean.
 
-That matters for how you read the rest of this report and the August rubric change: **nothing about credit deteriorated.** The change was that a question this report had never scored — redemption — got its own dial.
+That matters for how you read the rest of this report and the August rubric change: **nothing about credit deteriorated.** The change was that redemption got its own dial.
 
 **Two things do belong on the debit side, and they are about verification rather than credit.**
 

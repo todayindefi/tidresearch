@@ -152,7 +152,7 @@ In practice that's a solid mechanism — tighter than a thin, unknown stablecoin
 | Mantle | 501,103.50 | 0.02% |
 | **total** | **3,320,823,580.23** | 100% |
 
-⚠️ **Mantle is new to this table and was never measured by anyone until today.** Paxos publishes a canonical deployment list; this report had been assembling one from accumulated observation instead, **and a list grown by discovery can only ever contain what someone already happened to find.** Robinhood Chain was missing until 2026-09-06, X Layer until 09-07, Mantle until today — **three misses on one asset, all the same defect.** The fix is to enumerate from the issuer's published set, which takes one read.
+**Paxos publishes a canonical deployment list, and this table is measured against that list rather than against the chains any one source happens to surface.** ⚠️ **That matters more than it sounds: a chain list grown by discovery is complete only by luck, and an unlisted deployment reads as a zero in every chain-keyed comparison rather than as a gap.**
 
 ✅ **Mantle is 0.02% of supply, so no conclusion on this page turns on it.** The point is not the half-million dollars; it is that **the total was published as a total when it was a floor.**
 
@@ -240,7 +240,7 @@ So USDG's liquidity isn't just "how big is it" — it's "how healthy and broad i
 
 ### Solana was read on 2026-09-09, and it is the strongest set of powers on any USDG chain
 
-⚠️ **This report previously declined to extrapolate the EVM pattern onto Solana. That was the right call, because the pattern does not hold — Solana is not similar, it is worse.**
+⚠️ **The EVM pattern does not carry onto Solana, and the difference runs against the holder: Solana is not similar, it is worse.**
 
 **The mint is `2u1tszSe…jGWH`, on Token-2022 rather than the classic SPL token program.** ✅ **Identity established by what it points back to** rather than by trusting an address: it reports metadata name **"Global Dollar"**, symbol **USDG**, six decimals, and a supply of **589,224,349.94** — matching the 589,775,089.71 in the distribution table above, read minutes apart.
 

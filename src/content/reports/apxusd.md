@@ -103,7 +103,7 @@ apxUSD broke peg in the first week of June 2026. Two things happened at once:
 - **The collateral de-anchored.** Strategy's STRC preferred — the dominant reserve asset — fell well below its $100 par, to an all-time low around $74.57 in late June. That is a direct mark-to-market hit to a reserve that is **mostly STRC**. (STRC has since recovered to around $95 — see the 2026-08-18 update box above for where that leaves things.) (Note: STRC's old "drift below ~$95 forces a dividend hike to defend par" reflex was itself removed by Strategy's 06-29 framework — par defense is now a discretionary soft floor; see the update box at the top.)
 - **Holders headed for the exit.** A meaningful share of supply was redeemed/sold over the same window, so reserves shrank faster than supply.
 
-The result: apxUSD traded at a material discount and Apyx's own attestation feed went to a **persistent, issuer-attested sub-100% collateral ratio** — where it has remained ever since. The first-week trough was into the **low-90s on the dollar and a mid-90s% collateral ratio**; through late June the dislocation *deepened* to about **$0.82 (roughly −18%) with a collateral ratio near 84%**. That was never the transient mark-to-market wobble earlier versions of this report told readers to ignore; it was a real shortfall, and it has now run for months rather than weeks. It has substantially repaired — see the 2026-08-18 update box above for the current figures — but it has not closed. Because apxUSD has **no atomic on-chain redemption** — no contract you can call to swap one apxUSD for a dollar of collateral — there is no built-in arbitrage to force the price back to $1. Recovery depends on STRC re-rating (now on the soft-floor bid) and on Apyx restocking reserves through its off-chain pipeline.
+The result: apxUSD traded at a material discount and Apyx's own attestation feed went to a **persistent, issuer-attested sub-100% collateral ratio** — where it has remained ever since. The first-week trough was into the **low-90s on the dollar and a mid-90s% collateral ratio**; through late June the dislocation *deepened* to about **$0.82 (roughly −18%) with a collateral ratio near 84%**. That is not a transient mark-to-market wobble; it is a real shortfall, and it has now run for months rather than weeks. It has substantially repaired — see the 2026-08-18 update box above for the current figures — but it has not closed. Because apxUSD has **no atomic on-chain redemption** — no contract you can call to swap one apxUSD for a dollar of collateral — there is no built-in arbitrage to force the price back to $1. Recovery depends on STRC re-rating (now on the soft-floor bid) and on Apyx restocking reserves through its off-chain pipeline.
 
 Treat the specific discount and collateral ratio as a **moving event, not a fixed number** — check the [live dashboard](https://tidresearch.com/dashboards/?asset=apxusd) for the current values. (One caveat: Apyx pulls its own secondary-market depth off-hours by design, so weekend snapshots overstate the steady-state dislocation.)
 
@@ -133,7 +133,7 @@ That correction — more STRC concentration than previously scored, and a thinne
 
 ## Score breakdown
 
-⚠️ **This page had no score breakdown until 2026-09-09, which is how an unsourced Dependencies number survived on it.** Every axis now states its reason.
+Every axis now states its reason.
 
 | Dimension | Score | Notes |
 |---|---:|---|

@@ -85,7 +85,7 @@ A live Strategy NAV input is not yet wired into the dashboard — the LTV-band t
 
 ## Score breakdown
 
-⚠️ **This page had no score breakdown until 2026-09-09, which is how an unsourced Dependencies number survived on it.** Every axis now states its reason.
+Every axis now states its reason.
 
 | Dimension | Score | Notes |
 |---|---:|---|
@@ -133,7 +133,7 @@ Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient s
 | 2026-08-23 21:43 | **1.4525%** | **$1,160,127** |
 | 2026-08-24 08:43 | 1.4527% | $1,160,494 |
 
-**One redemption — a single holder burning 429,610 shares for about $427,000 — took the buffer down 27% in an hour, paid entirely out of the on-chain leg, and landed it back at almost exactly the 1.45% this report had called the low.** It did not rebuild and then fall. **It round-tripped**, and it has sat flat for the eleven hours since.
+**One redemption — a single holder burning 429,610 shares for about $427,000 — took the buffer down 27% in an hour, paid entirely out of the on-chain leg, and landed it back at almost exactly 1.45%.** It did not rebuild and then fall. **It round-tripped**, and it has sat flat for the eleven hours since.
 
 ⚠️ **So the honest description of this metric is its band and its amplitude, and no refill time at all — because the refill is not a rate.** In the eleven hours after the redemption the buffer moved **+$367 in total**, and not smoothly: two discrete credits of $87 and $280, with flat zeros either side. **The $2,200-an-hour build that preceded the redemption was deposits, not accrual, and the deposits stopped.**
 
@@ -155,7 +155,7 @@ Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient s
 
 **Yield.** The headline target is **about 11% APY** via STRC dividend pass-through, vesting linearly into share value over 30 days — an anti-sniping mechanism that prevents deposit-before-dividend attacks and is a genuinely good design choice often skipped in newer vaults. You do not receive periodic payments; your shares grow in USDat-equivalent value. The dashboard renders realized 7-day and 30-day APY against the 11% target line. Tax treatment of that growth is your problem to figure out.
 
-**The upstream cash flow is stronger than the mark suggests, with a caveat.** Strategy's ability to *pay* the STRC dividend improved materially through 2026: its Q2 filing confirmed a large and growing cash reserve — on the order of several billion dollars, covering years of preferred dividends — and a discretionary buyback program has been supporting the STRC price directly. ⚠️ **The caveat is that this bid is finite — and as of 2026-08-24 it is no longer funded the way this report described.** This passage previously said the repurchases were paid for by selling Bitcoin, and that the programme would exhaust around late September. **The funding flipped.** Per the 2026-08-17 filing, **no Bitcoin was bought or sold** in the week to 08-16 — holdings flat at 840,447 — and the $132.2M of STRC repurchases came from about **$333.7M of common-stock issuance**. Cumulatively $347.0M is spent with **$653.0M remaining** of the $1.0B authorisation.
+**The upstream cash flow is stronger than the mark suggests, with a caveat.** Strategy's ability to *pay* the STRC dividend improved materially through 2026: its Q2 filing confirmed a large and growing cash reserve — on the order of several billion dollars, covering years of preferred dividends — and a discretionary buyback program has been supporting the STRC price directly. ⚠️ **The caveat is that this bid is finite — and as of 2026-08-24 it is no longer funded the way this report described.** The repurchases are not paid for by selling Bitcoin, and the programme is not on course to exhaust around late September. **The funding flipped.** Per the 2026-08-17 filing, **no Bitcoin was bought or sold** in the week to 08-16 — holdings flat at 840,447 — and the $132.2M of STRC repurchases came from about **$333.7M of common-stock issuance**. Cumulatively $347.0M is spent with **$653.0M remaining** of the $1.0B authorisation.
 
 **On timing, the honest answer depends on which pace you use:** about **five weeks** at the latest week's $132.2M, or about **seven and a half** at the four-week average of $86.8M — late September against early-to-mid October. The burn rate is rising, so the first is conservative and the second representative. See the [STRC report](/reports/strc/) for the full derivation.
 

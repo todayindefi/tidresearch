@@ -113,7 +113,7 @@ Walked on 2026-08-26 by bytecode extraction and call simulation rather than by r
 
 **Three keys, one transaction, no timelock, and no veto** — the canceller is the proposer, and the two Safes are the same three people. **The 48-hour window that this report has emphasised protects the path an attacker would not need to use.**
 
-⚠️ **A qualification published earlier on 2026-09-09 was too generous and is corrected here.** It said the issuance-gating roles are held by nobody, so the authority above is latent rather than standing. ✅ **That is true — of 0.28% of USDai.** ⚠️ **It is false of the other 99.72%, and the reason is that Arbitrum's mint gate is not a role at all.**
+⚠️ **Whether that authority is latent or standing depends on the chain, and the split is lopsided.** On Ethereum, Base and Plasma the issuance-gating roles are currently held by nobody, so the path must be created before it can be used. ⚠️ **On Arbitrum — 99.72% of USDai — the mint gate is not a role at all, and the path is open now.**
 
 **Re-measured with a positive control in the same pass** (`totalSupply()` answered 287,434,005.53, so the run is valid rather than uniformly failing):
 

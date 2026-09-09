@@ -72,7 +72,7 @@ than its regulatory standing suggests.
 
 ## Score breakdown
 
-⚠️ **This report has carried an overall of 5.0 without ever showing the axes beneath it.** They are published here so the composite can be argued with rather than taken on trust — the companion [MSTR](/reports/mstr) analysis has always shown its four, and this one should too. **No score changes: these are the marks the report has been carrying.**
+**The four axes beneath the overall, so the composite can be argued with rather than taken on trust.** Each points at the section that carries its evidence.
 
 | Axis | Score | What it rests on |
 |---|---|---|

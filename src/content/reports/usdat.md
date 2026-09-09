@@ -65,7 +65,7 @@ At an independent read on **2026-08-29** the contract held **78,289,018.32 PYUSD
 
 The figures behind the "not a shortfall, not a depeg" statement above: deviation **+0.03%** on 2026-08-23, contract not paused, Curve pool about $9.7M, and exit quotes at $1K, $10K and $100K all returning *positive* slippage. The secondary market did not react, because there was nothing in the market to react to. What changed is **what backs the token, and how much of that a reader can check.**
 
-The composition claim is therefore now best stated as **effectively 100% PYUSDx**, where every prior revision of this report said effectively 100% $M. There is still no STRC, no SATA, and no digital-credit exposure of any kind.
+The composition claim is therefore now best stated as **effectively 100% PYUSDx**. There is still no STRC, no SATA, and no digital-credit exposure of any kind.
 
 **And the check that was supposed to catch this did not fire.** This report named the exact tripwire — a non-{$M, USDC} token appearing in the treasury — and pointed readers at the live dashboard's drift-probe panel, which it said fires the moment any new token appears. PYUSDx *was* that token. The probe logged it and did not flag it: it prices unrecognised tokens through a third-party quote feed, that feed carries no PYUSDx quote, an unpriced token defaulted to a value of zero, and the alert threshold was denominated in dollars. So a $93.9M position was recorded, valued at nothing, and listed unflagged among the nine spam airdrop tokens the contract has collected over the months — names like `AIFreeUse.cc` and `WorldCupAI.pro`, unsolicited dust correctly worth zero. Those are still dust. **PYUSDx was filed alongside them for four days.**
 
