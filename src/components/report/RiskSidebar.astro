@@ -148,6 +148,18 @@ const LIVE_COMPUTED_KEYS = [
   "backing_score",
   "liquidity_score",
 ];
+// An axis can be deliberately unrated. content.config.ts has accepted
+// axis_exemptions since the six-axis frame landed and nothing ever rendered
+// them, so a blocked axis looked exactly like an axis nobody had considered —
+// the same silent-blank failure the build gate exists to catch in frontmatter.
+// Show it as an explicit unrated row carrying its reason.
+const exemptAxes = (data.axis_exemptions ?? [])
+  .map((e: { axis: string; reason: string }) => ({
+    label: e.axis.replace(/^\d+\s*/, ""),
+    reason: e.reason,
+  }))
+  .filter((e) => !scoredAxes.some((a) => a.label === e.label));
+
 const liveAxisLabels = scoredAxes
   .filter((a) => LIVE_COMPUTED_KEYS.includes(a.key))
   .map((a) => a.label);
@@ -233,7 +245,7 @@ const categoryLabel = (c: string) =>
     </div>
   )}
 
-  {scoredAxes.length > 0 && (
+  {(scoredAxes.length > 0 || exemptAxes.length > 0) && (
     <div>
       <div class="eyebrow mb-3">Score Breakdown</div>
       <div class="space-y-2">
@@ -256,7 +268,22 @@ const categoryLabel = (c: string) =>
             );
           })
         }
+        {
+          exemptAxes.map((e) => (
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-muted-foreground">{e.label}</span>
+              <span class="text-muted-foreground/60 text-xs text-right shrink-0">not rated</span>
+            </div>
+          ))
+        }
       </div>
+      {exemptAxes.length > 0 && (
+        <p class="text-muted-foreground/70 text-xs mt-3 leading-relaxed">
+          {exemptAxes.map((e) => (
+            <span class="block mt-1"><strong class="font-medium">{e.label}</strong> is not rated: {e.reason}</span>
+          ))}
+        </p>
+      )}
       {showLiveCaveat && (
         <p class="text-muted-foreground/70 text-xs mt-3 leading-relaxed">
           {liveAxisPhrase} {liveAxisLabels.length > 1 ? "are" : "is"} authored

@@ -37,27 +37,38 @@ last_verified: "2026-07-08"
 # are still 63 days unverified, and Liquidity 6.5 is explicitly NOT re-derived —
 # a fresh stamp over an unmeasured axis is the false-fresh signal the field
 # exists to prevent. Do not bump it until those three are measured.
-# ⚠️ NOT MIGRATED to axis_frame: six, and both missing axes are BLOCKED rather
-# than skipped:
-#   axis 4 Dependencies — blocked on ONE contract read: is X Layer USDG natively
-#     issued by Paxos (supplyController) or bridged (OptimismMintable-style gate)?
-#     Those are different dependency graphs over 49% of supply, so no number can
-#     exist before it is answered.
-#   axis 5 Contract & Admin — DECLINED at 0 OF 6 CHAINS WALKED. No usdg walk
-#     exists in security_analyst's store at all. Ethereum alone is 10.9% of
-#     supply, so the tempting partial would score a tenth of the asset. Price: a
-#     six-chain authority walk. ⚠️ X Layer and Robinhood Chain reachability is
-#     the SAME open question as the liquidity item — answer it once.
+# ⚠️ MIGRATED to axis_frame: six on 2026-09-09, during this refresh — on policy
+# (existing assets migrate at their next refresh, not in a separate pass).
+# Both missing axes are BLOCKED rather than skipped, and both blockers have
+# CHANGED rather than cleared, so re-read the reasons before assuming staleness:
+#   axis 4 Dependencies — the old blocker (is X Layer USDG Paxos-issued or
+#     bridged?) IS ANSWERED: all six EVM legs are upgradeable proxies, one
+#     timelock template, no supplyController. What blocks it now is SOLANA at
+#     17.8% of supply, which is where the dependency graph actually differs
+#     (SPL mint authority vs an EVM timelock), plus two open MAS entity
+#     questions that feed Issuer and this axis together.
+#   axis 5 Contract & Admin — the six-chain EVM walk IS DONE (2026-09-09): one
+#     signing address holds proposer/executor/canceller on all six timelocks
+#     AND pause + asset-protection directly on all six tokens. riskAnalyst
+#     scored 4.0 EVM-scoped on the timelock finding alone; that was returned
+#     for re-derivation because the pause/freeze legs carry NO delay, which is
+#     a different finding from the one the 4.0 priced. Solana still unread.
 last_revised: "2026-09-09"
 featured: false
 production: true
 issuer: "Paxos Digital Singapore"
-market_cap_approx: 3150000000
+market_cap_approx: 3320823580
 peg_mechanism_score: 8.0
 backing_score: 7.5
 liquidity_score: 6.5
 issuer_score: 7.5
 overall_score: 7.0
+axis_frame: six
+axis_exemptions:
+  - axis: "4 Dependencies"
+    reason: "Solana is 17.8% of supply and its authority model is unread; the SPL mint/freeze authority is exactly where the dependency graph differs from the EVM timelocks, so a six-chain-only number would misstate the axis. Two MAS entity questions also open."
+  - axis: "5 Contract & Admin"
+    reason: "EVM walk complete 2026-09-09 and adverse; returned to riskAnalyst for re-derivation after pause + asset-protection were found OUTSIDE the timelock on all six chains. Solana unread. Expect a number, not a permanent blank."
 ---
 
 # USDG — Risk Report
@@ -130,21 +141,27 @@ The 7.0 reflects top-tier regulated backing and issuer quality with an adoption/
 
 ⚠️ **What that address actually is — and this genuinely cuts both ways.** It has **zero code on all six chains**, which establishes one thing precisely: **there is no on-chain multisig.** Nothing on any of these chains requires a second signature. ✅ **But zero code does not mean one person with one seed phrase.** An externally-owned address can be driven by threshold signing — **MPC, or an HSM quorum at a custodian** — where several people must approve before a signature is ever produced. **That machinery lives off-chain, and a chain cannot see it.** It is also the normal arrangement at a regulated issuer, so it is a live possibility here rather than a courtesy caveat. **The accurate statement is therefore: a single signing address with no on-chain quorum, whose off-chain key custody is unpublished and cannot be verified from outside.** ⚠️ **Do not read that as "one employee could do it" — and do not read it as safe.** What is measurable is that the on-chain protection is absent; whether an off-chain one exists is a question only Paxos can answer.
 
-**What the key reaches, and what it does not.** These are upgradeable proxies, so replacing an implementation changes what the token does for every holder on that chain. ✅ **It does not reach the reserves.** Paxos holds those off-chain and this authority does not touch them — the backing assessment above stands unaltered. **This is an upgrade path, not a reserve path.** On a token whose entire proposition is that it behaves like a dollar, though, control of the implementation is not a small residual power.
+**What the key reaches, and what it does not.** These are upgradeable proxies, so replacing an implementation changes what the token does for every holder on that chain. ✅ **It does not reach the reserves.** Paxos holds those off-chain and this authority does not touch them — the backing assessment above stands unaltered. **This is an upgrade path, not a reserve path.**
 
-✅ **The 24 hours is a real floor, and that matters more now than it did before.** Because these are stock OpenZeppelin, `updateDelay` is `onlySelf` — **shortening the delay must itself wait out the current delay.** It cannot be dropped to zero on the way to doing something else. **So whoever holds the roles, a change to these tokens is visible on-chain for a day before it can take effect.** That is the one structural protection here, and it is genuine.
+⚠️ **It is also not only an upgrade path.** The same address holds two roles **directly on the token itself, outside the timelock entirely**: `PAUSE_ROLE` and `ASSET_PROTECTION_ROLE`. **Measured on all six EVM chains, unanimous.** ✅ **The controls were run on both dimensions this time** — a fabricated role name returns false, and a control address returns false, on every chain — so neither the role nor the holder is being waved through. The machinery is live on the deployed implementation: `isFrozen` answers, and `paused()` answers and currently reads false.
+
+⚠️ **So the 24-hour delay does not cover the fastest powers.** The timelock governs **upgrades**. Pause and asset protection are **immediate**, they are held by **the same single signing address**, and a pause stops transfers for everyone on that chain in one transaction. **The holder of an upgrade key and the holder of the emergency key are not separated here; they are the same address.**
+
+✅ **The 24 hours is a real floor — for what it actually covers.** Because these are stock OpenZeppelin, `updateDelay` is `onlySelf`: **shortening the delay must itself wait out the current delay**, so it cannot be dropped to zero on the way to doing something else. **An implementation change is therefore visible on-chain for a day before it can take effect.** That protection is genuine and it is worth having. ⚠️ **But state its scope exactly: it applies to the upgrade path and not to pause or asset protection**, which need no proposal and no wait.
 
 ⚠️ **One limit on all of the above, stated rather than buried: this is current state, not history.** The role holders were read live on the day. **Whether these roles have ever moved could not be established** — the contracts are not `AccessControlEnumerable`, so members cannot be enumerated, and an attempt to scan role-change events across the deployment range **was refused on every chunk requested.** ✅ **A refused read is not a clean history.** Nothing here says the roles have never changed hands; only that today's holder is measured.
 
 ✅ **Those reverts are measured absences, not silence.** On each chain, symbol, name, decimals, total supply, owner and the delay all answered in the same pass. **A function that reverts while its neighbours answer is evidence; a contract that answers nothing is unreachable, and none of these was.**
 
-⚠️ **What this does and does not say.** It does **not** say USDG is unbacked or that Paxos is not the issuer. ✅ **Paxos publishes every one of these addresses as canonical USDG in its own developer documentation**, including the X Layer deployment, so these tokens sit inside the perimeter the issuer claims and attests against. **What it says is narrower and still worth knowing: the on-chain issuance and upgrade path is not the one a reader infers from "issued by Paxos", and a contract with a 24-hour delay stands between a governance decision and every holder's token.**
+⚠️ **What this does and does not say.** It does **not** say USDG is unbacked or that Paxos is not the issuer. ✅ **Paxos publishes every one of these addresses as canonical USDG in its own developer documentation**, including the X Layer deployment, so these tokens sit inside the perimeter the issuer claims and attests against. **What it says is narrower and still worth knowing: the on-chain issuance and upgrade path is not the one a reader infers from "issued by Paxos", and the fastest powers over a holder's balance answer to a single signing address with no delay in front of them.**
+
+⚠️ **One further mismatch, reported as a fact and not as an accusation.** Paxos' own USDG contract repository publishes a role table naming `DEFAULT_ADMIN_ROLE` at `0x137Dcd97…0713` and `PAUSE_ROLE` and `ASSET_PROTECTION_ROLE` at `0x0644Bd02…5D33`, with the assurance that *"the addresses above utilize multisignature contracts"* requiring *"a quorum of signers in the same physical location."* ✅ **That assurance is not empty: both addresses are genuine multisig contracts, carrying about 2.3KB of code each.** ⚠️ **Neither holds any role on USDG.** Every role query against both returns false, while the same queries identify the timelock as `DEFAULT_ADMIN_ROLE` and the single signing address as the pause and asset-protection holder. ✅ **The benign reading is that the table predates a migration and was not updated** — plausible, and we cannot exclude it. **Either way, a reader who checks the issuer's own repository today is told these powers sit behind an in-person multisig quorum, and on-chain they do not.**
 
 **The remaining gap is Solana, and it is a real one.** The controller question is now answered on the six EVM chains. **Solana carries 17.8% of supply and its authority model is not read here** — a different chain needs a different method, not the same call, and this report does not extrapolate the EVM pattern onto it.
 
 **Coverage: six of seven chains for architecture; seven of seven for supply.** Solana carries 17.8% and **its authority model is not read here** — it is not an EVM chain, so it needs a different method rather than the same call, and this report does not extrapolate the pattern onto it.
 
-**No score is attached to this yet, and the reason has changed.** Until 2026-09-09 the Dependencies and Contract & Admin axes were unscored because the controllers were unidentified. **That blocker is gone** — the EVM upgrade authority is now measured. What remains open is **Solana's authority model at 17.8% of supply**, and a score set on the EVM legs alone would be quoting six-sevenths of the asset as though it were all of it. ⚠️ **A refusal to score is a statement about our confidence and never a reason to withhold a measurement we hold** — so the finding is published now, and the number follows when Solana is read.
+**No score is attached to Contract & Admin, and there are now two reasons rather than one.** The first is **Solana**: it carries 17.8% of supply, its authority model is unread, and a score set on the EVM legs alone would quote six-sevenths of the asset as though it were all of it. The second is that the **pause and asset-protection finding above changes what there is to score** — an authority with a 24-hour floor in front of it and an authority with none are different findings, and the second was measured after the first was scored. ⚠️ **A refusal to score is a statement about our confidence and never a reason to withhold a measurement we hold** — so every measurement above is published now, and the number follows the two open items.
 
 ## What you actually earn
 
@@ -225,7 +242,7 @@ Holders who want a regulated, high-quality-reserve dollar from an established is
 
 ---
 
-*Revision history: 2026-09-09 — **all seven deployments measured on one date; a seventh chain found; the architecture read on all six EVM legs.** ⚠️ **Paxos publishes seven canonical USDG deployments and this report tracked six** — **Mantle** (0.02% of supply) had never been measured by anyone. Robinhood Chain was missing until 09-06 and X Layer until 09-07: **three misses on one asset, all from growing a chain list by discovery instead of enumerating the issuer's published set.** Supply restated to **$3,320,823,580.23** across seven chains at a **single as-of date**, replacing a six-chain figure assembled from readings taken days apart; X Layer is **47.98%**, not 49.0%. ⚠️ **Architecturally every EVM deployment is an upgradeable proxy with no Paxos `supplyController` and a 24-hour timelock under a distinct owner contract per chain** — measured, not inferred. ✅ **Paxos publishes all of these addresses as canonical, so they sit inside the attested perimeter**; that resolves scope and not the numeric reconciliation, which is still owed at a matched attestation date. ⚠️ **The upgrade authority on all six EVM chains was then identified: a single address holds propose, execute and cancel on every one of the six timelocks** — eighteen role checks, each with a control that returned false — **covering 82.24% of supply with a compromise threshold of one and no independent veto.** ✅ **It carries no code on any chain, so there is no on-chain multisig; that does not exclude off-chain MPC or HSM threshold custody, which is unpublished and unverifiable from outside.** The 24-hour delay is confirmed as a genuine first-action floor (`updateDelay` is `onlySelf`), and this authority reaches the implementation, **not the reserves.** ⚠️ **Current state only — role-change history could not be read, as every event-scan chunk was refused.** Contract & Admin is now scoreable and awaits a score; Solana's authority model (17.8% of supply) remains unread.*
+*Revision history: 2026-09-09 — **all seven deployments measured on one date; a seventh chain found; the architecture read on all six EVM legs.** ⚠️ **Paxos publishes seven canonical USDG deployments and this report tracked six** — **Mantle** (0.02% of supply) had never been measured by anyone. Robinhood Chain was missing until 09-06 and X Layer until 09-07: **three misses on one asset, all from growing a chain list by discovery instead of enumerating the issuer's published set.** Supply restated to **$3,320,823,580.23** across seven chains at a **single as-of date**, replacing a six-chain figure assembled from readings taken days apart; X Layer is **47.98%**, not 49.0%. ⚠️ **Architecturally every EVM deployment is an upgradeable proxy with no Paxos `supplyController` and a 24-hour timelock under a distinct owner contract per chain** — measured, not inferred. ✅ **Paxos publishes all of these addresses as canonical, so they sit inside the attested perimeter**; that resolves scope and not the numeric reconciliation, which is still owed at a matched attestation date. ⚠️ **The upgrade authority on all six EVM chains was then identified: a single address holds propose, execute and cancel on every one of the six timelocks** — eighteen role checks, each with a control that returned false — **covering 82.24% of supply with a compromise threshold of one and no independent veto.** ✅ **It carries no code on any chain, so there is no on-chain multisig; that does not exclude off-chain MPC or HSM threshold custody, which is unpublished and unverifiable from outside.** The 24-hour delay is confirmed as a genuine first-action floor (`updateDelay` is `onlySelf`), and this authority reaches the implementation, **not the reserves.** ⚠️ **Current state only — role-change history could not be read, as every event-scan chunk was refused.** ⚠️ **The same address also holds `PAUSE_ROLE` and `ASSET_PROTECTION_ROLE` directly on the token on all six chains, outside the timelock** — measured with controls on both the role and the holder — **so pause and freeze carry no delay at all**, and the 24-hour floor is confirmed to cover the upgrade path only. ⚠️ **Paxos' own contract repository publishes a role table placing both of those roles at a multisig address that holds neither**, alongside an in-person-quorum assurance; the addresses it names are real multisigs but hold no USDG role, which may be an un-updated table. Contract & Admin returns to unscored pending re-derivation on these facts; Solana's authority model (17.8% of supply) remains unread.*
 
 *Revision history: 2026-08-23 — supply measured across **all six** mainnet deployments; no score change. Paxos publishes the complete USDG deployment list, which is what made this measurable rather than estimable — the denominator was never unknowable, it simply had not been looked for. Read 2026-08-23 with USDC controls passing and every row confirming `symbol()` and `decimals()`: **X Layer 1,868,197,490.62 (55.2%), Solana 608,899,270.33 (18.0%), Ethereum 447,158,857.86 (13.2%), Robinhood Chain 398,736,130.25 (11.8%), Ink 63,548,230.10 (1.9%), Arbitrum 601,207.02** — **$3,387,141,186.18 in total**, against a published "around $3B-plus". **This corroborates the headline figure rather than challenging it**, and replaces a hedge pointing readers at a third-party aggregator with a complete answer. **The finding is the distribution:** X Layer — OKX's chain — carries an outright majority at 55.2%, where this report's structural discussion assumed Ethereum was the centre of gravity; Ethereum is 13.2%. Stated as a factual property of where the token sits, not as an adverse finding.  **When a total is a floor, every share derived from it is provisional too**; shares are now published only over a complete denominator. `last_verified` is **not** bumped; only supply was read. *
 
