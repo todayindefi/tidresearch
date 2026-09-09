@@ -84,62 +84,6 @@ syrupUSDC is Maple Finance's onchain yield-bearing stablecoin. You deposit USDC,
 
 The "overcollateralized at all times" framing in Maple's marketing applies to the Loans bucket. The Liquidity bucket is intentionally at par — it's not collateralized credit, it's pool-owned strategies parking capital in yield-generating positions while remaining nominally redeemable. The Pool Delegate rotates this layer across a menu of issuers — Paxos (PYUSD), Superstate (USTB, a NAV-accruing tokenized T-bill), Circle/Tether (USDC/USDT AMM-LP) — and the mix drifts under discretion within days, with no governance gate. Through 2026 the layer rotated substantially out of USTB into PYUSD; **any single issuer can come to dominate the layer** (recently ~90%+ Paxos PYUSD). Current per-issuer allocation is live on the dashboard; the durable facts are the issuer menu, that the mix is delegate-discretionary, and that single-issuer concentration inside the layer can run high.
 
-## What you actually earn
-
-**~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries` over the past week). This is the durable yield from institutional borrowers paying interest on their loans, net of Maple's protocol take and 3.33% delegate fee. It varies by loan-book composition and rate environment; ~3–9% range across individual loans, weighted-avg currently ~4.5–5%.
-
-At ~4.5–5%, syrupUSDC is currently **competitive with or above the comparable yield set**: 3-month T-bills are around 3.7–4.0% (US Treasury fiscal data, March 2026 average 3.70%), tokenized T-bill products (BUIDL, USTB, USYC) net ~3.5–4.0% after management fees, and onchain USDC lending on Aave V3 / Morpho is in the 3.5–4.5% range. The Maple value proposition is "real institutional credit yield, ~4.5–5%, with the risk profile of overcollateralized loans + at-par Liquidity strategies." That's a ~70–100 bp spread above T-bills, which is appropriate compensation for institutional credit risk rather than a yield-chase number.
-
-syrupUSDC also has a structural advantage that pure tokenized-T-bill products don't: it's accepted as collateral on Morpho, Euler, and other DeFi lending markets, so a holder can borrow against it and lever the yield if the borrow rate is favorable. That makes it more capital-efficient than locked T-bill exposure, and is a meaningful part of the value proposition for allocators with a use for the borrowed capital.
-
-## How exit works
-
-Two paths, both permissionless (no KYC required for either):
-
-**1. DEX aggregator (preferred for retail):** Use KyberSwap, 1inch, or any DEX aggregator. Empirical exit cost is **single-digit-to-low-double-digit bps** at retail-to-low-institutional notional; live tiered slippage on the dashboard. Sub-minute settlement. Aggregators route across Uniswap v3/v4, Balancer, and other listed pools — significantly more depth than the strict "Uniswap+Balancer pool TVL" headline implies.
-
-**2. Direct redemption:** Submit a redemption request to the vault contract; the WithdrawalManager processes it. Maple claims average withdrawal time under 5 minutes during normal markets. This is the path for sizes that exceed aggregator-route depth.
-
-The honest qualifier: aggregator routing is excellent in normal market conditions but less reliable during stress. If many holders try to exit at once (a credit event, a crypto-cycle drawdown that hits institutional borrowers simultaneously), aggregator slippage widens and the redemption queue becomes the binding constraint. Queue speed depends on free USDC in the pool versus outstanding loan principal — if loans are fully deployed, the queue lengthens until borrowers repay or get margin-called.
-
-## What the contracts are doing
-
-syrupUSDC is an ERC-4626 vault (the standard "deposit → get share token" pattern). The Ethereum deployment is canonical; the multi-chain versions (Solana, Arbitrum, Base, Plasma) are bridged extensions of the same product.
-
-What sits behind the scenes:
-- Borrowers post collateral that's held off-chain by custodians under Pool Delegate policy. The smart contract itself does not hold or price the collateral — Maple's GraphQL exposes the asset, amount, and required collateralization level per loan
-- A single Pool Delegate (an institutional credit firm vetted by Maple) sets all loan terms, monitors borrower health, and has the right to call any loan with a 24-hour notice + 48-hour grace period before default
-- The smart contracts handle loan accounting, payment scheduling, and the time-based default trigger — but the credit-relevant decisions (who to lend to, on what terms, when to call) are human-discretionary
-- WithdrawalManager handles the redemption queue; LoanManager tracks per-loan principal and payment state
-
-The Pool Delegate model is the structural difference from purely algorithmic protocols (like Aave). It adds discretionary credit risk — a delegate's bad loan, a delegate-borrower conflict of interest, or a delegate mistake during a fast-moving market can produce losses that algorithmic protocols wouldn't face. The delegate is also a single externally-owned address (single private key) and Maple's first-loss cover requirement for the pool is currently $0 — meaning no on-chain protocol equity absorbs losses before depositors. Mitigated by: Maple's delegate vetting, public delegate identity, and Maple Labs' reputational stake.
-
-## Backing and how verifiable it is
-
-**The credit read, as at the August 2026 check, is reassuring.** The loans-only collateral ratio across the Syrup family came in at **175%**, above the 145–170% band this report describes as typical. Pool collateral ratio is 100%, unrealized losses are **zero**, and no loan is impaired, called, or in default. Deployment runs around 97% and the pool is using roughly two-fifths of its liquidity cap. Live figures are on the dashboard; the durable read is that the loan book is comfortably overcollateralized and the loss-recognition signal is clean.
-
-That matters for how you read the rest of this report and the August rubric change: **nothing about credit deteriorated.** The change was that redemption got its own dial.
-
-**Two things do belong on the debit side, and they are about verification rather than credit.**
-
-**The collateral is off-chain.** Borrowers post collateral to custodians under Pool Delegate policy. The smart contract does not hold it and does not price it. What you can read is what Maple publishes — asset, amount, and required collateralization per loan — so your assurance runs through Maple's reporting and the delegate's monitoring, not through an on-chain balance you can check yourself. This is normal for institutional credit and abnormal for DeFi, and it is the main reason the Underlying axis sits at 7.0 rather than higher.
-
-**Maple's public loan data has a known artifact, and it is not small.** A subset of loans periodically read *below* 100% collateralization in Maple's public GraphQL while every authoritative signal says they are fine — unrealized losses zero, none impaired, none called, none defaulted. At the August 2026 check that subset covered about 39% of the loan book, up from roughly a quarter in July. Read it correctly: **the artifact grew, the credit did not deteriorate.** The pool collateral ratio is the authoritative figure and it is clean. But a reader trying to verify this book independently should know that the most obvious public data source disagrees with the authoritative one on a material share of it, and that the discrepancy is a reporting issue rather than a solvency one.
-
-**One live indicator is worth naming.** A single loan of about $25M — under 3% of the book — sat in the 100–120% collateralization range at the August check. That is the "tightest loan approaching par" signal working as designed at small size against a 175% book. It is the indicator firing, not a credit event; what would matter is many loans compressing toward par at once.
-
-## Audits & security
-
-Strong by DeFi-stablecoin standards:
-
-- **8+ audits** total. The current v2/Syrup contracts specifically reviewed by **Spearbit** and **Trail of Bits** (both top-tier), plus Three Sigma and Peckshield.
-- **$1M+ Immunefi bug bounty** active.
-- ERC-4626 standard architecture; well-understood pattern.
-
-Caveats:
-- Multi-chain bridging uses **Chainlink CCIP** with the **CCT (Cross-Chain Token) standard** — burn-and-mint native deployments on each chain (Ethereum canonical + Solana, Arbitrum, Base, Plasma), not a wrapped/lockbox model. **This is structurally a different attack class from the April 2026 LayerZero OFT incidents (rsETH, Drift, Volo)** — those exploits hit single-DVN OFT configurations and admin-key compromises that don't map to CCIP's architecture. CCIP has a clean track record at scale through April 2026 (no public exploits since 2023 launch) with a Risk Management Network as an anti-fraud backstop. What you trade off vs LayerZero: concentrated trust in Chainlink as a single (mature) provider, rather than distributed quorum across DVNs. Per-chain DD still warranted: verify CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues.
-- The Pool Delegate roster is what you're trusting at the credit-judgment layer. Maple publishes current delegates; cross-check that they're active and reputable before sizing institutional positions.
-
 ## Score breakdown
 
 | Dimension | Score | Notes |
@@ -155,6 +99,74 @@ Caveats:
 **A note on the axes.** This report scores on the six-axis core — **Stability · Backing · Liquidity & Exit · Dependencies · Contract & Admin · Issuer** — the same frame as every other vault-share report on this site.
 
 ⚠️ **Two things about that frame matter for reading the table.** **Backing is newly scored here**: the earlier rubric had no reserve axis at all, so the loan book that constitutes the entire asset was graded on everything except itself. And **Liquidity & Exit covers both exit paths and is scored on the worse one, never the average** — venue depth and primary redemption are stated separately in that row, because averaging them would hide which half set the number. `redemption_score` is retained as the evidence behind that axis rather than rendered as its own row.
+
+## 1 · Stability — 8.5
+
+### What you actually earn
+
+**~4.5–5% APY** (verified live from Maple's GraphQL `syrupGlobals.apyTimeSeries` over the past week). This is the durable yield from institutional borrowers paying interest on their loans, net of Maple's protocol take and 3.33% delegate fee. It varies by loan-book composition and rate environment; ~3–9% range across individual loans, weighted-avg currently ~4.5–5%.
+
+At ~4.5–5%, syrupUSDC is currently **competitive with or above the comparable yield set**: 3-month T-bills are around 3.7–4.0% (US Treasury fiscal data, March 2026 average 3.70%), tokenized T-bill products (BUIDL, USTB, USYC) net ~3.5–4.0% after management fees, and onchain USDC lending on Aave V3 / Morpho is in the 3.5–4.5% range. The Maple value proposition is "real institutional credit yield, ~4.5–5%, with the risk profile of overcollateralized loans + at-par Liquidity strategies." That's a ~70–100 bp spread above T-bills, which is appropriate compensation for institutional credit risk rather than a yield-chase number.
+
+syrupUSDC also has a structural advantage that pure tokenized-T-bill products don't: it's accepted as collateral on Morpho, Euler, and other DeFi lending markets, so a holder can borrow against it and lever the yield if the borrow rate is favorable. That makes it more capital-efficient than locked T-bill exposure, and is a meaningful part of the value proposition for allocators with a use for the borrowed capital.
+
+## 2 · Backing — 6.5
+
+**The credit read, as at the August 2026 check, is reassuring.** The loans-only collateral ratio across the Syrup family came in at **175%**, above the 145–170% band this report describes as typical. Pool collateral ratio is 100%, unrealized losses are **zero**, and no loan is impaired, called, or in default. Deployment runs around 97% and the pool is using roughly two-fifths of its liquidity cap. Live figures are on the dashboard; the durable read is that the loan book is comfortably overcollateralized and the loss-recognition signal is clean.
+
+That matters for how you read the rest of this report and the August rubric change: **nothing about credit deteriorated.** The change was that redemption got its own dial.
+
+**Two things do belong on the debit side, and they are about verification rather than credit.**
+
+**The collateral is off-chain.** Borrowers post collateral to custodians under Pool Delegate policy. The smart contract does not hold it and does not price it. What you can read is what Maple publishes — asset, amount, and required collateralization per loan — so your assurance runs through Maple's reporting and the delegate's monitoring, not through an on-chain balance you can check yourself. This is normal for institutional credit and abnormal for DeFi, and it is the main reason the Underlying axis sits at 7.0 rather than higher.
+
+**Maple's public loan data has a known artifact, and it is not small.** A subset of loans periodically read *below* 100% collateralization in Maple's public GraphQL while every authoritative signal says they are fine — unrealized losses zero, none impaired, none called, none defaulted. At the August 2026 check that subset covered about 39% of the loan book, up from roughly a quarter in July. Read it correctly: **the artifact grew, the credit did not deteriorate.** The pool collateral ratio is the authoritative figure and it is clean. But a reader trying to verify this book independently should know that the most obvious public data source disagrees with the authoritative one on a material share of it, and that the discrepancy is a reporting issue rather than a solvency one.
+
+**One live indicator is worth naming.** A single loan of about $25M — under 3% of the book — sat in the 100–120% collateralization range at the August check. That is the "tightest loan approaching par" signal working as designed at small size against a 175% book. It is the indicator firing, not a credit event; what would matter is many loans compressing toward par at once.
+
+## 3 · Liquidity & Exit — 7.5
+
+Two paths, both permissionless (no KYC required for either):
+
+**1. DEX aggregator (preferred for retail):** Use KyberSwap, 1inch, or any DEX aggregator. Empirical exit cost is **single-digit-to-low-double-digit bps** at retail-to-low-institutional notional; live tiered slippage on the dashboard. Sub-minute settlement. Aggregators route across Uniswap v3/v4, Balancer, and other listed pools — significantly more depth than the strict "Uniswap+Balancer pool TVL" headline implies.
+
+**2. Direct redemption:** Submit a redemption request to the vault contract; the WithdrawalManager processes it. Maple claims average withdrawal time under 5 minutes during normal markets. This is the path for sizes that exceed aggregator-route depth.
+
+The honest qualifier: aggregator routing is excellent in normal market conditions but less reliable during stress. If many holders try to exit at once (a credit event, a crypto-cycle drawdown that hits institutional borrowers simultaneously), aggregator slippage widens and the redemption queue becomes the binding constraint. Queue speed depends on free USDC in the pool versus outstanding loan principal — if loans are fully deployed, the queue lengthens until borrowers repay or get margin-called.
+
+## 4 · Dependencies — 5.5
+
+**What these pools depend on, as distinct from what backs them.** The operator is **Maple Labs**; origination is at the **Pool Delegate's discretion**; the **Liquidity-layer custody addresses are shared across both pools**; and **Maple's GraphQL is the only source of per-loan collateral data**, so collateral visibility depends on a single off-chain endpoint.
+
+⚠️ **The cross-pool exposure is the part neither pool's standalone view shows.** One borrower holds **$100M here** and is simultaneously **syrupUSDT's largest at 24.19%** — **14.43% of the family loan book** across the two pools.
+
+## 5 · Contract & Admin — 4.5
+
+### What the contracts are doing
+
+syrupUSDC is an ERC-4626 vault (the standard "deposit → get share token" pattern). The Ethereum deployment is canonical; the multi-chain versions (Solana, Arbitrum, Base, Plasma) are bridged extensions of the same product.
+
+What sits behind the scenes:
+- Borrowers post collateral that's held off-chain by custodians under Pool Delegate policy. The smart contract itself does not hold or price the collateral — Maple's GraphQL exposes the asset, amount, and required collateralization level per loan
+- A single Pool Delegate (an institutional credit firm vetted by Maple) sets all loan terms, monitors borrower health, and has the right to call any loan with a 24-hour notice + 48-hour grace period before default
+- The smart contracts handle loan accounting, payment scheduling, and the time-based default trigger — but the credit-relevant decisions (who to lend to, on what terms, when to call) are human-discretionary
+- WithdrawalManager handles the redemption queue; LoanManager tracks per-loan principal and payment state
+
+The Pool Delegate model is the structural difference from purely algorithmic protocols (like Aave). It adds discretionary credit risk — a delegate's bad loan, a delegate-borrower conflict of interest, or a delegate mistake during a fast-moving market can produce losses that algorithmic protocols wouldn't face. The delegate is also a single externally-owned address (single private key) and Maple's first-loss cover requirement for the pool is currently $0 — meaning no on-chain protocol equity absorbs losses before depositors. Mitigated by: Maple's delegate vetting, public delegate identity, and Maple Labs' reputational stake.
+
+## 6 · Issuer — 5.5
+
+### Audits & security
+
+Strong by DeFi-stablecoin standards:
+
+- **8+ audits** total. The current v2/Syrup contracts specifically reviewed by **Spearbit** and **Trail of Bits** (both top-tier), plus Three Sigma and Peckshield.
+- **$1M+ Immunefi bug bounty** active.
+- ERC-4626 standard architecture; well-understood pattern.
+
+Caveats:
+- Multi-chain bridging uses **Chainlink CCIP** with the **CCT (Cross-Chain Token) standard** — burn-and-mint native deployments on each chain (Ethereum canonical + Solana, Arbitrum, Base, Plasma), not a wrapped/lockbox model. **This is structurally a different attack class from the April 2026 LayerZero OFT incidents (rsETH, Drift, Volo)** — those exploits hit single-DVN OFT configurations and admin-key compromises that don't map to CCIP's architecture. CCIP has a clean track record at scale through April 2026 (no public exploits since 2023 launch) with a Risk Management Network as an anti-fraud backstop. What you trade off vs LayerZero: concentrated trust in Chainlink as a single (mature) provider, rather than distributed quorum across DVNs. Per-chain DD still warranted: verify CCT pool addresses on Chainlink's CCIP directory and check per-chain pool depth before sizing on non-Ethereum venues.
+- The Pool Delegate roster is what you're trusting at the credit-judgment layer. Maple publishes current delegates; cross-check that they're active and reputable before sizing institutional positions.
 
 ## Who it's for
 
