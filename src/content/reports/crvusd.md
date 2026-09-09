@@ -18,11 +18,9 @@ backing_score: 5.0
 liquidity_score: 6.0
 issuer_score: 6.0
 overall_score: 5.0
+underlying_score: 4.0
 structural_score: 5.5
 axis_frame: six
-axis_exemptions:
-  - axis: "4 Dependencies"
-    reason: "The YieldBasis credit line is crvUSD's largest single dependency and its dominant issuance source, and neither surface carries a number for it yet — the published body describes it at length and the internal assessment names it a key risk, but no Dependencies score has been authored. Requested from riskAnalyst 2026-09-09; expect a number, not a permanent blank."
 issuer: "Curve Finance"
 market_cap_approx: 225000000
 production: true
@@ -83,6 +81,7 @@ All crvUSD is minted through a single contract: the ControllerFactory (`0xC9332f
 | Backing | **5.0** | **Set on a level rather than a snapshot, because a single reading was measured at the peak of a four-day transient.** PegKeeper debt ran 14.07% → 34.56% → 14.0% of supply between 08-19 and 09-07 while **the peg never deviated more than 0.049% from par** — keepers absorbing pool imbalance, not a solvency event. Blended system: CDP markets at high CR (small), YB pools near 100% CR (BTC-backed), and a PegKeeper leg that is uncollateralized by construction and currently **14.0% of supply**. ⚠️ **The trigger for the next cut is a LEVEL, not a reading: below 5.0 only if the ratio holds above 25% for more than five consecutive daily readings.** The August episode lasted four and would deliberately not have fired — a four-day excursion with the peg at par is the mechanism working, and a rule that fired on it would re-make this mistake |
 | Liquidity | 6.0 | Deep Curve pool liquidity, strong DEX integration. YB pools add significant depth but also directional flow risk proportional to BTC volatility. PK pools (USDC, USDT, frxUSD as the heavyweights, plus PYUSD) provide additional stablecoin liquidity, and the GHO/crvUSD pool still adds DEX depth even though its keeper no longer backstops the peg; the USDT pool is the largest by reserves and holds all current PK debt. |
 | Issuer | 6.0 | Curve is one of DeFi's most established protocols (10+ audit firms, $2B+ TVL history). CRV tokenomics add governance complexity. Egorov's dual Curve/YB role creates concentrated influence over crvUSD's supply architecture. |
+| Dependencies | **4.0** | **YieldBasis holds a $1B line, 100% drawn — roughly 47.5% of all crvUSD minted to one counterparty.** ⚠️ **The idle $669.3M is allocated by YieldBasis's own DAO, which Curve cannot reach**, and that DAO's seven-day duration is **early execution** rather than a delay. ✅ Held at 4.0 because expansion needs a 7-day Curve vote while contraction is one-way and immediate. Argued under [4 · Dependencies](#4--dependencies--40) |
 | Contract & Admin | **5.5** | ✅ **The token cannot be replaced** — 3,572 bytes of Vyper with all three EIP-1967 slots reading zero, re-verified 2026-09-09. **Mint capacity moves through a Curve DAO vote, not a key.** ⚠️ **Docked for the 5-of-9 emergency Safe, which carries no execution delay, and for the bridged legs, which answer to each chain's own operators rather than to Curve.** Argued in full under [5 · Contract & Admin](#5--contract--admin--55) |
 | **Overall** | **5.0** | **This composite tracks its weakest axis, and the axis that pulled it down was measured at the peak of a four-day PegKeeper excursion rather than at a level. With Backing back at 5.0 the composite follows it. ⚠️ **What has not changed is the structure:** the PegKeeper leg is uncollateralized by construction, and a sustained rise in its share of supply is still the thing that would cut this — on the level trigger recorded above, not on a single reading |
 
@@ -312,9 +311,17 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 
 **6.0 rather than higher** because depth is concentrated in pools the protocol itself seeded, and **rather than lower** because that depth is real, on-chain and measurable today.
 
-## 4 · Dependencies — not rated
+## 4 · Dependencies — 4.0
 
-⚠️ **This axis carries no number yet; the Score breakdown above says why.** The two dependencies it would be scored on are below.
+**crvUSD's largest dependency is a single counterparty, and the size of it is the finding.** YieldBasis holds a **$1,000,000,000 credit line that is 100% drawn** — **$669.3M idle and $330.8M deployed** — against a **$2.105B** total supply and a **$76.8M** CDP book. ⚠️ **One counterparty has been minted roughly 47.5% of all crvUSD in existence.**
+
+⚠️ **And the idle $669.3M is allocated by YieldBasis's own governance, which Curve cannot reach.** The allocation authority sits with YieldBasis's Aragon OSx DAO rather than the Curve DAO, and the Curve Ownership Agent's permission over it was **measured as absent rather than assumed**. **crvUSD's dominant supply source is directed by a governance system its own issuer does not control.**
+
+⚠️ **That DAO's seven-day voting duration is not a delay, and the distinction matters more than the number.** Its voting mode is **early execution**: a proposal clearing **55% support at 30% participation executes immediately**, before the seven days elapse. ✅ **"Seven-day governance" would be a true sentence and a misleading one** — the duration is a ceiling on how long a vote may take, not a floor on how fast it can act. **The minimum proposing power is one token.**
+
+✅ **What holds this at 4.0 rather than lower is that the ceiling control is asymmetric in the safe direction.** Expanding the line requires a **7-day Curve DAO vote with a genuine floor**; `reduce_debt_ceiling` is **one-way and immediate** for the 5-of-9 emergency Safe. **Expansion is slow and public; contraction is fast.** ⚠️ **Two items remain unscored — the stablecoin fraction and the unwind path — and both can only move this axis down.**
+
+**The two dependencies this axis is scored on are set out below.**
 
 ### YieldBasis Dependency (KEY RISK)
 
