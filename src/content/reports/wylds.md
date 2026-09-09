@@ -7,11 +7,25 @@ category: "wrapped-token"
 assessment_type: "light"
 date: "2026-07-24"
 last_verified: "2026-07-30"
-last_revised: "2026-08-23"
+last_revised: "2026-09-09"
 featured: false
 production: true
 yield_bearing: true
 underlying_assets: ["YLDS"]
+# ⚠️ 2026-09-09: issuer_score 6.5 authored — absent on BOTH surfaces until now,
+# and it renders on the wrapped-token rubric, so no migration was needed.
+# ⚠️ backing_score is NOT added here on purpose: it does NOT render on this
+# rubric, so it would require axis_frame: six — and migrating re-labels
+# underlying_score 7.5 as DEPENDENCIES, whose prose here argues COLLATERAL
+# QUALITY (FCC's Level 1/Level 2 mix). That is the occupied-with-the-wrong-
+# rationale case, so Backing and Dependencies are deferred to wylds's own
+# refresh pass rather than half-done here.
+# ⚠️ overall_score HOLDS at 6.0. riskAnalyst reads 5.5 and calls it arithmetic,
+# but on OUR axis set — keeping underlying 7.5 — the mean is EXACTLY 6.000, so
+# 6.0 sits at the mean and the convention holds. Their 5.5 follows from their
+# Dependencies 5.5, not from the new axes: the overall move is entangled with
+# the axis-4 question, not independent of it.
+issuer_score: 6.5
 issuer: "Hastra (wrapper) / Figure Certificate Company (backing)"
 market_cap_approx: 490000000
 volatility_score: 7.0
@@ -82,7 +96,11 @@ Figure, the company behind this token, is covered separately in [Figure](/report
 
 For the Q1 comparison retained below: at March 31, FCC's unaudited Q1 interim filing reported $601.524M of qualified assets against a $599.706M certificate reserve, approximately 100.3% coverage. The fair-value hierarchy showed $211.3M of Level 1 Treasuries and money-market funds, $389.6M of Level 2 Treasury-collateralized repo, and Level 3 assets of zero. This composition directly confirms that YLDS backing is not exposed to Figure's HELOC business. The asset pool is high quality, and cash held outside the investment portfolio was just $0.7M, at a single bank.
 
-One structural point deserves more weight than the coverage ratio. The certificates are explicitly unsecured obligations of Figure Certificate Company, backed solely by its assets. The qualified assets sit on deposit at a custodian because the Investment Company Act requires it, but that is a regulatory asset test, not a security interest — a certificate holder is an unsecured creditor of FCC, not the beneficiary of a bankruptcy-remote trust. Read together with the co-mingled reserve accounts on Provenance, this means there is no bankruptcy-remote ring-fence at either layer of the stack. Coverage can be 100.3% and that still be true.
+One structural point deserves more weight than the coverage ratio. The certificates are explicitly unsecured obligations of Figure Certificate Company, backed solely by its assets. The qualified assets sit on deposit at a custodian because the Investment Company Act requires it, but that is a regulatory asset test, not a security interest — a certificate holder is an unsecured creditor of FCC, not the beneficiary of a bankruptcy-remote trust. ⚠️ **That legal point is the load-bearing one, and it stands on its own: there is no bankruptcy-remote ring-fence at either layer of the stack, and coverage can be 100.3% while that remains true.**
+
+⚠️ **What does NOT support it any more is co-mingling, and this report should say so rather than let the premise sit.** An earlier reading treated the reserve as co-mingled and not independently reconstructable, on the basis that the two proof-of-reserve "pool" addresses held no bank-module YLDS. **Those addresses are repo-token CW20 contracts and were never meant to hold it** — the reserve reconstructs exactly, **$607,474,509 summing to total backing with no residual**, through CW20 receipt queries the original reading never made. **So the reserve is reconstructable, and a reader should not carry the opposite impression from this page.**
+
+✅ **What replaces it is weaker but real, and it is concentration rather than opacity: about 99.7% of the backing sits in a single Provenance account.** That is a genuine single-point exposure. **It is not the same claim as co-mingling, and it does not carry the same weight** — one says nobody can see the reserve, the other says everyone can see it and it is in one place.
 
 Residual risks explain why this does not score still higher. About 65% of qualified assets were repo rather than outright Treasuries. The repo is short-dated and government-collateralized but adds counterparty and settlement exposure concentrated in one name: the entire repo book — 65% of qualified assets — faces UMB Bank N.A., which is also the custodian holding the securities. A second repo facility is documented but was unused at quarter-end. The collateral is overnight Treasuries, so quality is high; the concentration is nonetheless a single point of failure rather than a diversified book. FCC disclosure also arrives with roughly a 45-day lag—the March 31 quarter was filed May 15—so it is a confirming layer beneath live chain data. Most importantly, wYLDS holders do not own YLDS directly; they hold an unregulated wrapper claim mediated by Hastra. Strong base assets do not prove wrapper-level segregation or bankruptcy remoteness.
 
@@ -127,6 +145,8 @@ The 6.0 score therefore holds, but it now rests on a better-separated assessment
 *This report uses public documentation, market data, two published audits, independent Solana, Ethereum, and Provenance reads, and FCC filings available through [EDGAR](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001974395). YLDS is folded in as wYLDS's backing. Corrections welcome to info@tidresearch.com.*
 
 ## Revision history
+
+- **2026-09-09 — Issuer 6.5 added; the co-mingling premise is withdrawn; no other score moves.** The Issuer axis was absent on both surfaces and scores **Figure Certificate Company** the entity — a full SEC reporting registrant filing 10-K/10-Q with officer certifications, KPMG-audited since 2024 with a clean opinion. **Held below 7** because the audit opinion covers only the annual statements and the interim going-concern conclusion is conditional on parent support. Set **equal to [hastra-prime](/reports/hastra-prime/)'s 6.5**, since the axis scores the entity rather than the wrapper. ⚠️ **Separately, the reserve is reconstructable and this page had implied otherwise:** it sums exactly to **$607,474,509** with no residual via CW20 receipt queries. The earlier co-mingling reading rested on two proof-of-reserve "pool" addresses holding no bank-module YLDS — **they are repo-token contracts that were never meant to.** The unsecured-creditor conclusion is unaffected and stands on the legal structure; **what replaces co-mingling is concentration — about 99.7% of backing in a single Provenance account.**
 
 - **2026-08-23 — refreshed to FCC's Q2-2026 10-Q (filed 2026-08-14, unaudited).** At 30 June: qualified assets **$561.627M** against a **$557.494M** certificate reserve — **coverage 100.74%**, up from 100.30%, with the surplus rising from $1.818M to **$4.133M**. ⚠️ **Coverage improved because the denominator fell.** The reserve contracted **7.0%** and the whole contraction was external: third parties **$125.057M → $78.497M, −37.2%**, while related parties *rose* 1.0% to **$477.536M**, taking the related-party share from about 78.9% to **85.9%**. Flows corroborate it — $452.7M issued against $499.4M surrendered, net −$46.7M. **Not a backing alarm:** coverage is above 100%, the surplus doubled and the §28 test is intact. ⚠️ **A test with a date:** at the Q3 10-Q, expected around 2026-11-14, compare FCC's third-party certificate line against Hastra's wYLDS reserve holdings as at the same date — if the reserve exceeds the third-party line, Hastra's certificates are necessarily related-party.
 - **2026-07-30 — figures restated as ranges.** Supply, collateralization, yield rate, standalone volume and staked share are given as ranges rather than point-in-time values. The Figure software licence renews annually after its initial term, and cash at bank is $0.7M.
