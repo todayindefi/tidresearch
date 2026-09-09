@@ -8,7 +8,12 @@ aliases: ["USDG", "Global Dollar"]
 # 2026-09-08; `xlayer` and `ink` were new to the corpus and are established here.
 # ⚠️ Display and filtering only on this side: adding a chain here emits no score.
 # `chain_overrides` is separate and explicit, so nothing inherits a default.
-chains: ["eth", "solana", "hood", "xlayer", "ink", "arb"]
+# ⚠️ SEVEN, not six. `mantle` was added 2026-09-09 after Paxos' own published
+# deployment set showed a chain NEITHER repo tracked. It is listed here only
+# because its supply has been READ (501,103.50) — a declared-but-unmeasured
+# chain enters every chain-keyed join as a zero, which is the failure this list
+# exists to avoid.
+chains: ["eth", "solana", "hood", "xlayer", "ink", "arb", "mantle"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "light"
@@ -73,21 +78,55 @@ It launched in November 2024 and has grown quickly to become a top-30 asset (cur
 
 **Measured across the full deployment set 2026-08-23.** Paxos publishes the complete list of USDG mainnet deployments, which is what makes this measurable rather than estimable. Every row below returned `symbol() = "USDG"` and `decimals() = 6`, so these are the right tokens rather than addresses that merely answered, with USDC controls passing in the same batch:
 
+⚠️ **All seven deployments, every one read on 2026-09-09** — a single as-of date, so no share below is the product of comparing chains measured on different days.
+
 | chain | supply | share |
 |---|---:|---:|
-| **X Layer** | **1,597,431,469.07** | **49.0%** |
-| Robinhood Chain | 670,125,507.07 | 20.5% |
-| Solana | 578,491,094.54 | 17.7% |
-| Ethereum | 354,487,588.63 | 10.9% |
-| Ink | 60,335,614.48 | 1.8% |
-| Arbitrum | 601,209.12 | 0.02% |
-| **total** | **3,261,472,482.91** | 100% |
+| **X Layer** | **1,593,188,137.00** | **47.98%** |
+| Robinhood Chain | 699,787,565.23 | 21.07% |
+| Solana | 589,775,089.71 | 17.76% |
+| Ethereum | 376,228,399.62 | 11.33% |
+| Ink | 60,742,042.65 | 1.83% |
+| Arbitrum | 601,242.52 | 0.02% |
+| Mantle | 501,103.50 | 0.02% |
+| **total** | **3,320,823,580.23** | 100% |
+
+⚠️ **Mantle is new to this table and was never measured by anyone until today.** Paxos publishes a canonical deployment list; this report had been assembling one from accumulated observation instead, **and a list grown by discovery can only ever contain what someone already happened to find.** Robinhood Chain was missing until 2026-09-06, X Layer until 09-07, Mantle until today — **three misses on one asset, all the same defect.** The fix is to enumerate from the issuer's published set, which takes one read.
+
+✅ **Mantle is 0.02% of supply, so no conclusion on this page turns on it.** The point is not the half-million dollars; it is that **the total was published as a total when it was a floor.**
 
 **All six deployments are read, so this is a complete measurement rather than a floor** — $3.387B against a published "around $3B-plus". **Read it as corroboration of the headline figure, with the bonus of knowing where the supply actually lives.**
 
-**The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries 49.0% of USDG**, just short of an outright majority and down from 55.2% a fortnight earlier. ⚠️ **The movement is Robinhood Chain, which grew 68.1% in that window to 20.5% and took second place** — while Ethereum, the chain most readers assume this asset lives on, is **10.9%**. The structural discussion in this report is written as though Ethereum were USDG's centre of gravity, and it is not; Ethereum holds 13.2%, behind X Layer and ahead of Solana's 18.0% only in the sense that it is third. A regulated, Paxos-issued dollar with more than half its supply on a single non-Ethereum chain means the majority of holders carry that chain's liveness, sequencer and bridge risk rather than Ethereum's. That is a factual property of where the token sits, not evidence of a problem with it — but it is a materially different picture from an Ethereum-centred one. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
+**The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries 47.98% of USDG**, short of an outright majority and down from a reading above 55% a fortnight ago. ⚠️ **The movement is Robinhood Chain, which grew 68.1% in that window to 20.5% and took second place** — while Ethereum, the chain most readers assume this asset lives on, is **10.9%**. The structural discussion in this report is written as though Ethereum were USDG's centre of gravity, and it is not; Ethereum holds 13.2%, behind X Layer and ahead of Solana's 18.0% only in the sense that it is third. A regulated, Paxos-issued dollar with more than half its supply on a single non-Ethereum chain means the majority of holders carry that chain's liveness, sequencer and bridge risk rather than Ethereum's. That is a factual property of where the token sits, not evidence of a problem with it — but it is a materially different picture from an Ethereum-centred one. That growth is real and fast, but USDG still sits behind USDC and USDT on secondary-market liquidity and DeFi integration, and its distribution is consortium-led: the Global Dollar Network shares reserve yield with the exchanges and wallets that drive adoption.
 
 The 7.0 reflects top-tier regulated backing and issuer quality with an adoption/liquidity discount. It's a useful contrast with USDT, which lands at the same headline score for the opposite reasons — USDG has stronger issuer transparency and backing disclosure, but thinner liquidity. Read that way, a 7.0 isn't a single quality of "good enough"; it's a balance of strengths and weaknesses, and USDG's are almost the exact inverse of Tether's. If your priority is knowing precisely what backs your dollar and who is regulated to hold it, USDG scores better than its market-cap rank might suggest. If your priority is being able to move size at the peg on any venue at any hour, it scores worse.
+
+## Every USDG deployment is an upgradeable proxy, and Paxos' issuance path is not in any of them
+
+⚠️ **Read on-chain 2026-09-09 across all six EVM deployments — 82.2% of supply — and they are architecturally identical.** This is not a quirk of one chain.
+
+| chain | upgradeable proxy | `supplyController()` | owner | delay |
+|---|---|---|---|---:|
+| X Layer | yes | **reverts** | contract | 24h |
+| Robinhood Chain | yes | **reverts** | contract | 24h |
+| Ethereum | yes | **reverts** | contract | 24h |
+| Ink | yes | **reverts** | contract | 24h |
+| Arbitrum | yes | **reverts** | contract | 24h |
+| Mantle | yes | **reverts** | contract | 24h |
+
+**On every one of them:** the token is an **EIP-1967 upgradeable proxy** — its code can be replaced; **`supplyController()` reverts**, so the function Paxos uses to issue its own tokens is absent; the standard bridge accessors (`l1Token`, `remoteToken`, `bridge`, `l2Bridge`) also revert, so these are not conventional bridge-minted tokens either; and `owner()` is **a contract rather than a plain key**, holding a **24-hour timelock**.
+
+⚠️ **Each chain has a different owner contract, all of identical bytecode size.** So this is one deployment pattern repeated six times with a separate controller per chain, not a single authority governing the asset.
+
+✅ **Those reverts are measured absences, not silence.** On each chain, symbol, name, decimals, total supply, owner and the delay all answered in the same pass. **A function that reverts while its neighbours answer is evidence; a contract that answers nothing is unreachable, and none of these was.**
+
+⚠️ **What this does and does not say.** It does **not** say USDG is unbacked or that Paxos is not the issuer. ✅ **Paxos publishes every one of these addresses as canonical USDG in its own developer documentation**, including the X Layer deployment, so these tokens sit inside the perimeter the issuer claims and attests against. **What it says is narrower and still worth knowing: the on-chain issuance and upgrade path is not the one a reader infers from "issued by Paxos", and a contract with a 24-hour delay stands between a governance decision and every holder's token.**
+
+⚠️ **The material gap is who holds those timelocks, and this report cannot tell you.** The delay is measured on all six; **the proposer and executor are unidentified on all six.** A 24-hour delay whose controller is unknown is a reaction window of unknown value rather than a guarantee.
+
+**Coverage: six of seven chains for architecture; seven of seven for supply.** Solana carries 17.8% and **its authority model is not read here** — it is not an EVM chain, so it needs a different method rather than the same call, and this report does not extrapolate the pattern onto it.
+
+**No score is attached to this, deliberately.** The Dependencies and Contract & Admin axes stay unscored while the controllers are unidentified and Solana's authority model is unread. ⚠️ **But a refusal to score is a statement about our confidence, and it is never a reason to withhold a measurement we hold** — so the finding is published and the number is not.
 
 ## What you actually earn
 
@@ -167,6 +206,8 @@ Holders who want a regulated, high-quality-reserve dollar from an established is
 - ⚠️ **Whether Singapore's stablecoin framework is actually in force over USDG.** Secondary sources describe USDG as issued under it while also recording that the framework MAS finalised in August 2023 was *expected* to commence in mid-2026. **A dated expectation about a future commencement is not a measurement of today's legal status**, and this report asserts it in neither direction. ✅ **Note what is claimed and what is not: "MAS-supervised entity" is a claim about the ENTITY, not that the token is regulated under the single-currency-stablecoin regime.** That distinction is deliberate and should not be tidied away.
 
 ---
+
+*Revision history: 2026-09-09 — **all seven deployments measured on one date; a seventh chain found; the architecture read on all six EVM legs.** ⚠️ **Paxos publishes seven canonical USDG deployments and this report tracked six** — **Mantle** (0.02% of supply) had never been measured by anyone. Robinhood Chain was missing until 09-06 and X Layer until 09-07: **three misses on one asset, all from growing a chain list by discovery instead of enumerating the issuer's published set.** Supply restated to **$3,320,823,580.23** across seven chains at a **single as-of date**, replacing a six-chain figure assembled from readings taken days apart; X Layer is **47.98%**, not 49.0%. ⚠️ **Architecturally every EVM deployment is an upgradeable proxy with no Paxos `supplyController` and a 24-hour timelock under a distinct owner contract per chain** — measured, not inferred. ✅ **Paxos publishes all of these addresses as canonical, so they sit inside the attested perimeter**; that resolves scope and not the numeric reconciliation, which is still owed at a matched attestation date. Dependencies and Contract & Admin remain unscored: the timelock controllers are unidentified on all six and Solana's authority model is unread.*
 
 *Revision history: 2026-08-23 — supply measured across **all six** mainnet deployments; no score change. Paxos publishes the complete USDG deployment list, which is what made this measurable rather than estimable — the denominator was never unknowable, it simply had not been looked for. Read 2026-08-23 with USDC controls passing and every row confirming `symbol()` and `decimals()`: **X Layer 1,868,197,490.62 (55.2%), Solana 608,899,270.33 (18.0%), Ethereum 447,158,857.86 (13.2%), Robinhood Chain 398,736,130.25 (11.8%), Ink 63,548,230.10 (1.9%), Arbitrum 601,207.02** — **$3,387,141,186.18 in total**, against a published "around $3B-plus". **This corroborates the headline figure rather than challenging it**, and replaces a hedge pointing readers at a third-party aggregator with a complete answer. **The finding is the distribution:** X Layer — OKX's chain — carries an outright majority at 55.2%, where this report's structural discussion assumed Ethereum was the centre of gravity; Ethereum is 13.2%. Stated as a factual property of where the token sits, not as an adverse finding.  **When a total is a floor, every share derived from it is provisional too**; shares are now published only over a complete denominator. `last_verified` is **not** bumped; only supply was read. *
 
