@@ -2,7 +2,13 @@
 asset: "USDm"
 slug: "usdm"
 aliases: ["USDm", "Mento USD"]
-chains: ["celo", "monad", "eth"]
+# ⚠️ `eth` REMOVED 2026-09-09. USDm IS NOT DEPLOYED ON ETHEREUM, and this key had
+# carried it as though it were. `chains:` records where the ASSET IS DEPLOYED, not
+# where its collateral or its authority sits — the Mento Reserve holds an Ethereum
+# leg and the admin walk crosses Ethereum, and BOTH belong in the body rather than
+# here. A listed-but-absent chain is the mirror of usdg's missing Mantle: that one
+# read as zero, this one reads as a deployment that does not exist.
+chains: ["celo", "monad"]
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdm"
 category: "stablecoin"
 peg_mechanism: "Reserve-backed (fiat-stable basket)"
