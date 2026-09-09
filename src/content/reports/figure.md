@@ -70,6 +70,18 @@ than its regulatory standing suggests.
 | **Governance** | The weakest area. A multi-entity group, a regulated subsidiary whose twelve-month liquidity rests on a written parent commitment, and a related company running a public protocol on licensed Figure software with no disclosure obligations of its own. |
 | **Biggest risk** | That the loan book keeps deteriorating while the parts of it that matter most to token holders remain the hardest to see. |
 
+## Score breakdown
+
+⚠️ **This report has carried an overall of 5.0 without ever showing the axes beneath it.** They are published here so the composite can be argued with rather than taken on trust — the companion [MSTR](/reports/mstr) analysis has always shown its four, and this one should too. **No score changes: these are the marks the report has been carrying.**
+
+| Axis | Score | What it rests on |
+|---|---|---|
+| Balance sheet | **5.5** | Loans that cannot be sold or pledged **accumulate on the balance sheet**, which is why the securitized-pool statistics are the flattering proxy and the held-for-sale book is the honest one. See [the loan book](#the-loan-book). |
+| Credit quality | **5.0** | ⚠️ **Re-based to evidence rather than proxy, and one good quarter does not un-base it.** Headline delinquency improved 6.61% → 5.05%, but **nonaccrual UPB went $2.4M → $14.1M** — roughly 17% to 72% of the 90-plus bucket — and the securitized 60-plus line broke flat at 0.8% → 1.1%. **The direction of the headline and the direction of the composition disagree.** |
+| Funding model | **5.5** | Four exits — hold, whole-loan sale, securitization, Democratized Prime — genuinely diversify funding, **but at least one must stay open for originations to keep moving.** See [how Figure funds itself](#how-figure-funds-itself). |
+| **Governance** | **4.5** | **The weakest axis, and deliberately so.** Dependencies overlap across a listed parent, a lender, a regulated certificate issuer, advisers and transfer agents, and interchangeable use of "Parent" can assign an obligation to the wrong entity. Hastra is a **related party rather than a subsidiary**, with no public-company disclosure obligation. |
+| **Overall** | **5.0** | Sits at the mean of the four and below the two stronger ones, because **governance and credit quality are the axes that would transmit a problem to anything downstream** — and this report exists as a dependency for [wYLDS](/reports/wylds) and [PRIME](/reports/hastra-prime), not as an equity view. |
+
 ## The two halves of Figure
 
 The Figure name covers several legal entities. Figure Technology Solutions, Inc. is the Nasdaq-listed parent. Figure Lending, LLC originates and services loans. Figure Certificate Company, or FCC, is a separate SEC reporting registrant that issues YLDS, the certificate underneath wYLDS.
@@ -187,6 +199,8 @@ headline loan-to-value figures imply. Neither is a reason to avoid the stack, an
 it as a cash equivalent.
 
 *This report uses Figure Technology Solutions and Figure Certificate Company filings available through [EDGAR](https://www.sec.gov/edgar/browse/?CIK=2064124&owner=exclude), Figure's published facility terms, and public protocol and account records. It is counterparty analysis for downstream token holders, not equity investment research. Corrections welcome to info@tidresearch.com.*
+
+*Revision history: 2026-09-09 — **the four axes beneath the overall are published for the first time; no score changed.** ⚠️ **This report had carried an Overall of 5.0 with no breakdown at all**, so the composite could not be argued with — the reader saw a number and no way to test it. **Balance sheet 5.5 · Credit quality 5.0 · Funding model 5.5 · Governance 4.5** are the marks the analysis has been carrying, now shown against the sections that argue them, matching the convention the companion [MSTR](/reports/mstr) report has always followed. ✅ **The Q2-2026 content was already current** and was checked rather than assumed: headline delinquency 6.61% → 5.05%, the 90-plus bucket essentially flat at +1.7%, the 60–89 bucket at 2,285 → 4,267, and nonaccrual UPB $2.4M → $14.1M all present and correctly based. **Overall holds at 5.0.**
 
 *Revision history: 2026-08-23 — **refreshed to Figure Technology Solutions' Q2-2026 10-Q (filed 2026-08-14; unaudited interim); Overall held at 5.0.** The delinquency series this report's thesis rests on gained its fourth data point. **Headline held-for-sale delinquency fell 6.61% → 5.05%**, and the improvement is genuine rather than a denominator effect: the book grew **17.8%** — the exact shape that manufactures a false recovery — so the numerator was tested separately and **delinquent dollars fell 9.9%**. Both legs moved favourably, and the 30–59 day bucket fell 53%, reversing the 365% spike recorded for Q1. Method control: reconstructing 31 December 2025 from the new filing's comparative column returns 5.457% against the 5.46% published here, so the new figure sits on this report's own basis.
 
