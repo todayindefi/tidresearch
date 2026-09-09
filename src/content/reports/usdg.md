@@ -17,7 +17,23 @@ last_verified: "2026-07-08"
 # ⚠️ 2026-09-08 re-measured the six-chain supply distribution and the chains
 # list.  HOLDS at 2026-07-08 — the backing, issuer and structural
 # material was not re-read.
-last_revised: "2026-09-08"
+# ⚠️ REFRESH IN PROGRESS — usdg is first in the 2026-09-09 walk and is NOT DONE.
+# ⚠️ `last_verified` HOLDS at 2026-07-08 DELIBERATELY. Backing 7.5 and Issuer 7.5
+# are still 63 days unverified, and Liquidity 6.5 is explicitly NOT re-derived —
+# a fresh stamp over an unmeasured axis is the false-fresh signal the field
+# exists to prevent. Do not bump it until those three are measured.
+# ⚠️ NOT MIGRATED to axis_frame: six, and both missing axes are BLOCKED rather
+# than skipped:
+#   axis 4 Dependencies — blocked on ONE contract read: is X Layer USDG natively
+#     issued by Paxos (supplyController) or bridged (OptimismMintable-style gate)?
+#     Those are different dependency graphs over 49% of supply, so no number can
+#     exist before it is answered.
+#   axis 5 Contract & Admin — DECLINED at 0 OF 6 CHAINS WALKED. No usdg walk
+#     exists in security_analyst's store at all. Ethereum alone is 10.9% of
+#     supply, so the tempting partial would score a tenth of the asset. Price: a
+#     six-chain authority walk. ⚠️ X Layer and Robinhood Chain reachability is
+#     the SAME open question as the liquidity item — answer it once.
+last_revised: "2026-09-09"
 featured: false
 production: true
 issuer: "Paxos Digital Singapore"
@@ -110,7 +126,7 @@ Reserves are attested monthly through Paxos's process. On the contract and opera
 |---|---|---|
 | Peg Mechanism | 8.0 | Direct Paxos 1:1 mint/redeem with a regulated reserve model; institution-gated redemption backfilled by partner-exchange liquidity plus arbitrage. |
 | Backing | 7.5 | Cash + short-duration US government securities + cash-equivalents in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered; monthly attestations. Top-tier reserve quality; a notch below USDC only for monthly (vs more frequent) transparency and the Singapore-entity structure. |
-| Liquidity | 6.5 | Meaningful exchange support and rapid growth to a top-30 asset (~$3B-plus), but secondary and DEX depth still below blue-chip stablecoins; adoption is consortium-led and uneven. |
+| Liquidity | 6.5 | ⚠️ **Held, and explicitly NOT depth-measured — read this axis as an estimate rather than a reading.** The 6.5 was set against **size**: growth to a top-30 asset at about $3.26B. **Size is a proxy for depth that moves in the same direction often enough to look right, and is not the same quantity** — a $3.26B asset with thin two-sided books would score badly here, and market cap does not say which this is. ⚠️ **And the exit analysis above is venue-based and predates the six-chain correction:** it describes exchange venues and Global Dollar Network partners, while **69.5% of supply sits on X Layer (49.0%) and Robinhood Chain (20.5%)**, neither of which it mentions. **What would settle it:** a depth ladder on the Robinhood Chain USDG leg, which is one run away — the chain is reachable and USDG already appears as a quote token in measured pools — and, for X Layer, an RPC reachability check first, because **no tooling on either side currently reads that chain at all.** ⚠️ **It is not docked: cutting a score because we have not measured it would manufacture severity out of our own missing measurement**, and a Paxos-issued top-30 asset gives an Ethereum holder a genuinely fine exit. |
 | Issuer | 7.5 | Paxos — established, MAS-supervised issuer also behind PYUSD and USDP; solid regulatory track record. Standard centralized-issuer controls (freeze, compliance) and a short USDG-specific history. |
 | **Overall** | **7.0** | A high-quality, regulated, well-reserved centralized dollar held back by an adoption/liquidity discount versus USDC and USDT. Same headline as USDT but the mirror image — stronger issuer and backing transparency, weaker liquidity. |
 
