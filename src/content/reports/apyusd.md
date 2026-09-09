@@ -10,6 +10,11 @@ assessment_type: "light"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=apyusd"
 trust_disclaimer: true
 date: "2026-05-07"
+# ⚠️ 2026-09-09: bridge Safe re-read on-chain — 3-of-6 -> 4-of-7 at block
+# 25,877,589 (2026-08-31). The 08-25 measurement was CORRECT WHEN WRITTEN; the
+# asset moved under it. ⚠️ The custody Safe is STILL 3-of-6 on the same six as
+# token governance, so the quorum gap survives there. `last_verified` HOLDS.
+last_revised: "2026-09-09"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -129,14 +134,18 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 | Safe | Threshold | Function |
 |---|---|---|
 | [`0xABdd8c8e…65e96`](https://etherscan.io/address/0xABdd8c8eE69e5F5180eb9352AEFFC5CeeAD65e96) | **4 of 6** | Token governance (AccessManager admin), behind the 72-hour timelock |
-| `0xf9862EfC…3cE2` | **3 of 6** | Cross-chain bridge governor, no delay |
+| [`0xf9862EfC…3cE2`](https://etherscan.io/address/0xf9862EfC1704aC05e687f66E5cD8c130E5663cE2) | **4 of 7** | Cross-chain bridge governor, no delay |
 | [`0x37b0779a…a555`](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555) | **3 of 6** | STRCx collateral custody (≈$76M), no delay |
 
-⚠️ **So the 72-hour timelock is not a control over these people. It is a control over one of the three doors they hold.** Four of the six move the token and wait three days. **Any three of the same six move tokens across chains, or move the STRCx collateral, and wait for nothing.** **A delay is only a delay if the people it binds have no faster door.**
+⚠️ **So the 72-hour timelock is not a control over these people. It is a control over one of the three doors they hold.** Four of the six move the token and wait three days. ⚠️ **Any THREE of those same six move the STRCx collateral and wait for nothing** — the custody Safe is 3-of-6 on an owner set identical to the token admin's. **A delay is only a delay if the people it binds have no faster door.**
+
+⚠️ **The bridge leg was the same shape until 2026-08-31 and is no longer.** That Safe moved from **3-of-6 to 4-of-7** at block 25,877,589 — one owner added and the threshold raised — so **crossing chains now needs the same four signatures as moving the token, not three.** ✅ **On the bridge specifically the quorum gap is closed and what remains is a delay gap: the token side waits 72 hours, the bridge waits for nothing.** **The custody leg is where the quorum gap still lives**, and it guards the larger number.
 
 ⚠️ **Read the evidence boundary before weighting this.** **The owner-set identity and the thresholds are measured on-chain and are the hard fact.** **Which function sits at which address is the softer half** — the bridge attribution is read from a 2026-08-22 walk rather than re-derived, and the custody attribution comes from this coverage's own STRCx records. **If a role label here is wrong the concentration finding is unaffected**, because three identical owner sets is what drives it, and that is the measured part.
 
-⚠️ **This is the same shape as the [frxUSD](/reports/frxusd/) finding, and it generalises: per-contract rows can each be correct while the composite is the risk, and the composite exists only in the comparison.** Three rows reading 4-of-6, 3-of-6 and 3-of-6 tell you nothing about how many distinct people stand behind them. **That number appears only when you intersect the sets, and nothing in any row prompts you to.** Here the intersection returns six — **the honest count of people standing between an attacker and all three layers is not twelve. It is six.**
+⚠️ **This is the same shape as the [frxUSD](/reports/frxusd/) finding, and it generalises: per-contract rows can each be correct while the composite is the risk, and the composite exists only in the comparison.** Three rows reading 4-of-6, 4-of-7 and 3-of-6 tell you nothing about how many distinct people stand behind them. **That number appears only when you intersect the sets, and nothing in any row prompts you to.**
+
+**Read on-chain 2026-09-09, the token-admin and custody Safes hold the identical six owners, and the bridge Safe holds those same six plus one more.** So the union is seven and ⚠️ **the intersection is still six — and those six reach all three doors**, because four of them satisfy the token Safe, three of them satisfy custody, and four of them satisfy the bridge. **The honest count of people standing between an attacker and all three layers is not nineteen. It is six.** The seventh owner adds a signer to the bridge; he does not add a door that the six cannot open.
 
 ## 6 · Issuer
 
