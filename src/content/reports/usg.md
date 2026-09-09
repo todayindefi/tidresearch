@@ -60,7 +60,27 @@ USG is a crvUSD fork issued by Tangent Finance on Ethereum. Users mint it agains
 
 **The headline is healthy and the distribution is not.** At 2026-08-27 the aggregate collateral ratio is **131.56% conservative / 155.48% inclusive**, with **zero bad debt in any of the sixteen markets**. Read alone, that describes a comfortable book.
 
-## The aggregate is a debt-weighted mean, and two markets carry it
+## Score breakdown
+
+| axis | score | reasoning |
+|---|---:|---|
+| Stability | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
+| Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
+| Liquidity & Exit | 3.5 | One venue, no quoted depth, about $1.0M counter-side inventory against $4.34M supply |
+| Dependencies | 4.0 | Debt-weighted lookthrough across the 12 live markets scores **5.44**, each LP taken at its worse leg. Scored below that on purpose: every position is 3–4 layers deep across 12+ external protocols, and `MIN(coin price)` removes the diversification a pair would otherwise give. Weakest named constituent is Resupply reUSD at 3.5 — 9.1% of debt, and in two of the four thinnest markets |
+| Contract & Admin | 3.5 | Asset permissioning, parameter setting and governance all terminate at one 3-of-5 Safe with no execution delay; repointing `collatOracle` moves every position's health in one transaction, against a book where 74.9% sits within 10% of liquidation. The only 3-day delay covers replacing the PegKeeper admin, not the risk setters |
+| Issuer | 4.0 | Transparent data, unreviewed parameters, young sub-$5M protocol |
+| **Overall** | **4.0** | Unchanged. Axis 5 makes an authority surface explicit that was previously priced inside the Issuer row — it is a re-scoping of where the fact sits, not a new adverse read of the asset |
+
+## 1 · Stability — 5.0
+
+USG trades at **$0.99534, a −0.466% discount**. The mechanism meant to close that is the PegKeeper pair, and **its deployable defence capacity is currently $0** — both keepers report `debt() = 0`, meaning no POL-minted USG is outstanding to burn.
+
+Meanwhile the Curve pools they operate in are **73.56% USG on the worst side**, against 50% at balance. A pool that heavy on one asset is one where sellers have already moved through, and the counter-side inventory — **$1,038,555 of USDC and frxUSD** — is LP-owned, not protocol-deployable. It is exit liquidity for USG holders, which matters, but it is not peg defence and should not be counted as such.
+
+**No executable depth ladder is quoted for USG at any venue.** Pool TVL is $3.9M, but TVL is not depth, and this report does not treat it as such. The liquidity score of 3.5 reflects observed exit capacity — a single-venue, skewed pool with roughly $1.0M of counter-side inventory — not the headline TVL.
+
+## 2 · Backing — 5.0
 
 Recomputing the aggregate from the per-market data returns **131.56%** — it *is* the debt-weighted mean of the individual markets, which is exactly why it conceals their spread.
 
@@ -86,7 +106,25 @@ The two markets at the bottom of the table are the reason the average clears 130
 
 One qualification that runs against the borrower: these are **market-wide aggregates**, verified against the contracts — `totalCollateral()` and `totalDebtShares()` reproduce the published figures exactly. Each row is the distance to that market's *average* LTV reaching its threshold. Individual borrowers above the market average are closer, and some may already be liquidatable. **The table understates how soon the first liquidation lands, not how late.**
 
-## reUSD is the concentration, and there are two tokens with that ticker
+### Supply reads ten times larger than it is
+
+`totalSupply()` returns **$44,340,302**. Real circulating supply is **$4,340,566**. The difference is the pre-minted PegKeeper ceiling buffer — a crvUSD inheritance in which the contract mints its own ceiling up front and holds it. Any tool that reads `totalSupply()` on a crvUSD fork and divides will understate the collateral ratio by an order of magnitude. Real supply equals CDP debt exactly; with POL deployment at zero, **100% of circulating USG is CDP-backed**. Staked USG (sUSG) holds $1,064,103, a subset of circulating supply rather than an addition to it.
+
+## 3 · Liquidity & Exit — 3.5
+
+⚠️ **This is the weakest axis and the gap between it and the others is the point.** USG trades on **one venue with no quoted depth**, against roughly **$1.0M of counter-side inventory** for a **$4.34M supply** — so a holder wanting out at size is relying on inventory that is a fraction of the float, on a single place.
+
+✅ **Nothing here is broken and there is no evidence of failed exits.** **But an exit that has not been tested at size is not the same as one that has**, and on an asset this small the difference matters more than it would on a deep market.
+
+## 4 · Dependencies — 4.0
+
+Scoring the upstream exposure is a lookthrough rather than a judgement. Across the 12 live markets, debt-weighted, with **each collateral LP taken at its worse leg**, the constituents score **5.44**. Sixteen of the eighteen constituents already carry their own assessments; the weakest named one is **Resupply reUSD at 3.5**, which is **9.1% of debt** and sits in two of the four thinnest markets.
+
+⚠️ **The worse-leg rule is not a convention imposed from outside — it is USG's own oracle arithmetic.** The market oracle is `virtual_price × MIN(coin price)`, so the weaker constituent of a pair sets the mark, and the mark is what sets liquidation. **You take the worse leg's risk without the benefit of holding two assets**, which is the opposite of what holding an LP position normally buys you.
+
+**The axis scores 4.0, below the 5.44 lookthrough, and the gap is deliberate: constituent quality is not the binding constraint here, structure is.** Every position is **3–4 layers deep** — USG, then a StakeDAO/Convex/Curve wrapper, then a Curve pool, then two stablecoins, then their own backing — across **12+ external protocols**. Set that against the distribution above, where 74.9% of the book sits within 10% of liquidation, and the depth of the stack is what decides how far a single upstream problem travels.
+
+### reUSD is the concentration, and there are two tokens with that ticker
 
 Three markets are collateralised by pools containing **reUSD** — reUSD/sDOLA, reUSD/scrvUSD, and reUSD/fxUSD, totalling **$727,162, or 16.8% of the book**. Two of them are among the four thinnest positions USG holds, and **the single thinnest market in the entire book, at 1.55% headroom, is reUSD/sDOLA.**
 
@@ -96,19 +134,7 @@ The protocol's own monitoring flags this: *"reUSD depeg −1.02% — USG collate
 
 Aggregating all thirteen active markets by underlying asset, **USDC touches 50.1% of the book**, fxUSD 21.4%, frxUSD 21.1%, reUSD 16.8%, sDOLA 13.8%. Seventeen distinct assets in total. These sum past 100% because each market has two legs and either can impair it.
 
-## The peg is defended by pools that are already skewed, with no keeper capacity
-
-USG trades at **$0.99534, a −0.466% discount**. The mechanism meant to close that is the PegKeeper pair, and **its deployable defence capacity is currently $0** — both keepers report `debt() = 0`, meaning no POL-minted USG is outstanding to burn.
-
-Meanwhile the Curve pools they operate in are **73.56% USG on the worst side**, against 50% at balance. A pool that heavy on one asset is one where sellers have already moved through, and the counter-side inventory — **$1,038,555 of USDC and frxUSD** — is LP-owned, not protocol-deployable. It is exit liquidity for USG holders, which matters, but it is not peg defence and should not be counted as such.
-
-**No executable depth ladder is quoted for USG at any venue.** Pool TVL is $3.9M, but TVL is not depth, and this report does not treat it as such. The liquidity score of 3.5 reflects observed exit capacity — a single-venue, skewed pool with roughly $1.0M of counter-side inventory — not the headline TVL.
-
-## Supply reads ten times larger than it is
-
-`totalSupply()` returns **$44,340,302**. Real circulating supply is **$4,340,566**. The difference is the pre-minted PegKeeper ceiling buffer — a crvUSD inheritance in which the contract mints its own ceiling up front and holds it. Any tool that reads `totalSupply()` on a crvUSD fork and divides will understate the collateral ratio by an order of magnitude. Real supply equals CDP debt exactly; with POL deployment at zero, **100% of circulating USG is CDP-backed**. Staked USG (sUSG) holds $1,064,103, a subset of circulating supply rather than an addition to it.
-
-## Oracles and paused markets
+### Oracles and paused markets
 
 USG prices collateral through per-market oracles, and the dashboard independently recomputes each pool's NAV from its underlying balances to compare against them. **At this reading no market exceeds the 1% divergence threshold: zero divergent markets, with a maximum observed overvaluation of 0.57%.**
 
@@ -116,15 +142,7 @@ That is a genuine improvement rather than a quiet one — earlier the same day, 
 
 Two of the sixteen markets are paused. Tangent's paused-settings semantics let existing positions persist while new borrowing stops, so **a pause is a freeze rather than a wind-down** — the collateral stays, the exposure stays, and the market can be reopened. Neither paused market carries debt today.
 
-## What the collateral actually depends on
-
-Scoring the upstream exposure is a lookthrough rather than a judgement. Across the 12 live markets, debt-weighted, with **each collateral LP taken at its worse leg**, the constituents score **5.44**. Sixteen of the eighteen constituents already carry their own assessments; the weakest named one is **Resupply reUSD at 3.5**, which is **9.1% of debt** and sits in two of the four thinnest markets.
-
-⚠️ **The worse-leg rule is not a convention imposed from outside — it is USG's own oracle arithmetic.** The market oracle is `virtual_price × MIN(coin price)`, so the weaker constituent of a pair sets the mark, and the mark is what sets liquidation. **You take the worse leg's risk without the benefit of holding two assets**, which is the opposite of what holding an LP position normally buys you.
-
-**The axis scores 4.0, below the 5.44 lookthrough, and the gap is deliberate: constituent quality is not the binding constraint here, structure is.** Every position is **3–4 layers deep** — USG, then a StakeDAO/Convex/Curve wrapper, then a Curve pool, then two stablecoins, then their own backing — across **12+ external protocols**. Set that against the distribution above, where 74.9% of the book sits within 10% of liquidation, and the depth of the stack is what decides how far a single upstream problem travels.
-
-## Admin authority, and the layer that matters is the parameter, not the price
+## 5 · Contract & Admin — 3.5
 
 The oracle question a reader usually asks is *where does the price come from*. On USG the sharper question is **who can change which feed a market reads** — the `parameter` layer rather than the price feed. **A sound oracle behind a swappable pointer is not a sound price.**
 
@@ -136,7 +154,7 @@ The oracle question a reader usually asks is *where does the price come from*. O
 
 **None of this is evidence of misuse**, and every part of it is readable on-chain by anyone. It is the standing surface: **a fully verifiable book whose risk parameters are one multisig transaction away from changing, with no notice window in between.** For an asset whose whole strength is that the collateral can be read from contracts, this is the part that cannot be.
 
-## Issuer
+## 6 · Issuer — 4.0
 
 Tangent Finance is a small, pseudonymous-adjacent team with no published reserve attestation — none is needed, since backing is fully on-chain, but there is also no third-party review of the market parameters that decide when liquidations trigger. The issuer score of 4.0 reflects a young, sub-$5M protocol whose *data* is unusually transparent and whose *oversight* is not: no external party checks the parameters, and no published process governs who sets them. **The authority those parameters sit behind is scored separately, on Contract & Admin above** — the two are different questions, and pricing the multisig on both would count it twice.
 
@@ -153,18 +171,6 @@ The second inherited difference is defensive capacity. crvUSD's PegKeepers curre
 USG is small — **$4.34M of real supply** — and concentrated in a single Curve venue. That combination sets the practical position size well below what the collateral ratio alone would suggest. A holder large enough to matter to the pool is a holder who cannot exit it quickly, and at 73.56% USG on the worst side, some of that exit has already happened.
 
 The staking wrapper, sUSG, holds $1,064,103 — about 24.5% of supply. Staking does not change the underlying collateral risk; it adds a wrapper layer and a yield source on top of the same book.
-
-## Scores
-
-| axis | score | reasoning |
-|---|---:|---|
-| Stability | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
-| Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
-| Liquidity & Exit | 3.5 | One venue, no quoted depth, about $1.0M counter-side inventory against $4.34M supply |
-| Dependencies | 4.0 | Debt-weighted lookthrough across the 12 live markets scores **5.44**, each LP taken at its worse leg. Scored below that on purpose: every position is 3–4 layers deep across 12+ external protocols, and `MIN(coin price)` removes the diversification a pair would otherwise give. Weakest named constituent is Resupply reUSD at 3.5 — 9.1% of debt, and in two of the four thinnest markets |
-| Contract & Admin | 3.5 | Asset permissioning, parameter setting and governance all terminate at one 3-of-5 Safe with no execution delay; repointing `collatOracle` moves every position's health in one transaction, against a book where 74.9% sits within 10% of liquidation. The only 3-day delay covers replacing the PegKeeper admin, not the risk setters |
-| Issuer | 4.0 | Transparent data, unreviewed parameters, young sub-$5M protocol |
-| **Overall** | **4.0** | Unchanged. Axis 5 makes an authority surface explicit that was previously priced inside the Issuer row — it is a re-scoping of where the fact sits, not a new adverse read of the asset |
 
 ## What would change this view
 
