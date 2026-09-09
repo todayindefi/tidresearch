@@ -64,7 +64,7 @@ issuer: "Paxos Digital Singapore"
 market_cap_approx: 3320823580
 peg_mechanism_score: 8.0
 backing_score: 7.5
-liquidity_score: 6.5
+liquidity_score: 5.5
 issuer_score: 7.5
 overall_score: 6.5
 structural_score: 2.0
@@ -123,9 +123,15 @@ The knock relative to USDC is narrow and specific: attestation is *monthly* rath
 
 The "bankruptcy-remote" and "segregated" language matters more than it looks. It means the reserves are legally structured to be held apart from Paxos's own corporate balance sheet, so in a Paxos insolvency they are intended to belong to USDG holders rather than to Paxos's general creditors. This is the same reserve-protection posture Paxos uses across its regulated products, and it's a meaningful step above stablecoins that simply hold reserves as an ordinary corporate asset. The residual dependency is on the custodians themselves — DBS Bank and Standard Chartered are both large, well-rated global banks, which is about as strong as bank-custody counterparty risk gets for a stablecoin.
 
-## 3 · Liquidity & Exit — 6.5, under re-derivation
+## 3 · Liquidity & Exit — 5.5
 
-⚠️ **The 6.5 was set on size — a top-30 asset at about $3.3B — and size is a proxy for depth, not a measurement of it.** Depth was measured for the first time on 2026-09-09, across 98 venues reporting a usable two-percent book, and **the reading does not support a score set on market cap.** The axis is with our risk assessment side for re-derivation; **the number above should be read as the old basis, not as this measurement's conclusion.**
+**This axis is scored on measured executable depth**, read across 98 venues reporting a usable two-percent book on 2026-09-09.
+
+⚠️ **Not higher, and the reason is not the size of the book but what fails together.** A $18.5M two-percent book across 98 venues is real breadth, and a holder at retail or low-institutional size exits without difficulty. **But the single deepest pair is 61.4% of all down-depth, and it sits at OKX — whose own chain, X Layer, carries 47.98% of supply.** ✅ **The depth figure answers how much can leave at two percent; it cannot express what fails together.** **Capacity and correlation are different quantities, and this concentration is not diversifiable by moving chains**, because moving chains does not move the counterparty.
+
+✅ **Not lower**, because the book is genuine, the venue count is real breadth, and nothing here describes a market a normal holder cannot exit.
+
+⚠️ **One thing to know before comparing this number to others on this site.** **Only five of thirty-three published Liquidity scores rest on a measured depth figure** — this one, syrupUSDC, syrupUSDT, ZCHF and reUSDe. **USDT at 9.5, USDC at 9.5, USDS at 8.5 and USDe at 7.0 are size proxies or unstated bases.** ✅ **So the distance between this 5.5 and USDC's 9.5 is not evidence that USDG is four points worse at exit — it is evidence that one of the two was actually measured.** **That is a defect in the ladder rather than in either asset**, and the rest of the ladder is being reworked onto the same basis.
 
 | | measured | share of the $3.32B supply |
 |---|---:|---:|

@@ -56,7 +56,7 @@ underlying_managers:
 >
 > **Stability holds at 8.0, and it is important not to misread it.** That axis scores the **NAV**, which is behaving exactly as a T-Bill NAV should — 1.035365, smooth accrual, no drama. The dislocation is between the *market price* and NAV, and it is priced under Liquidity and Redemption instead. It is now the only high axis on the page. The honest summary: **the underlying T-Bills are genuinely safe, and almost everything about getting at them is not.**
 
-> Deeper analysis in the **[full institutional report →](/reports/thbill-full/request)** — free, email-gated. **Note the two reports carry different overall scores (4.0 retail vs 4.8 institutional) because they run different rubrics** — this page scores the retail experience, where there is no primary-redemption access; the institutional report weights smart-contract risk at 40% and assumes a reader who can redeem. See *On the scoring rubric* at the bottom.
+> Deeper analysis in the **[full institutional report →](/reports/thbill-full/request)** — free, email-gated. **Note the two reports carry different overall scores (3.5 retail vs 4.4 institutional) because they run different rubrics** — this page scores the retail experience, where there is no primary-redemption access; the institutional report weights smart-contract risk at 40% and assumes a reader who can redeem. See *On the scoring rubric* at the bottom.
 
 ## What this asset is now (read first)
 
