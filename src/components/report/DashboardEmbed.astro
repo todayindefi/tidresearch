@@ -12,7 +12,11 @@ const {
   title = "Live backing dashboard",
   height = "600px",
   url,
-  embed = true,
+  // ⚠️ LINK, DO NOT EMBED (owner rule, 2026-09-09). A report is an authored
+  // judgement at a stated date; an embedded live surface silently changes what
+  // the page says and can contradict the prose beside it. Pass embed={true}
+  // only if that decision is deliberately revisited.
+  embed = false,
 } = Astro.props;
 const src = url ?? `/dashboards/?asset=${encodeURIComponent(slug)}`;
 ---
