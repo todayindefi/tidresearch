@@ -118,7 +118,11 @@ The 7.0 reflects top-tier regulated backing and issuer quality with an adoption/
 
 **On every one of them:** the token is an **EIP-1967 upgradeable proxy** — its code can be replaced; **`supplyController()` reverts**, so the function Paxos uses to issue its own tokens is absent; the standard bridge accessors (`l1Token`, `remoteToken`, `bridge`, `l2Bridge`) also revert, so these are not conventional bridge-minted tokens either; and `owner()` is **a contract rather than a plain key**, holding a **24-hour timelock**.
 
-⚠️ **Each chain has a different owner contract, all of identical bytecode size.** So this is one deployment pattern repeated six times with a separate controller per chain, not a single authority governing the asset.
+⚠️ **Each chain has a different owner contract — and all six share one identical codehash**, `e616a4f6…c554b`, verified 2026-09-09 by hashing each chain's deployed runtime. ✅ **That is the strong form of the claim and it matters: identical byte-count would prove nothing** (unrelated contracts can share a length), **whereas an identical codehash across six chains is one template deployed six times, not six independent implementations.**
+
+**Each is a standard OpenZeppelin `TimelockController`** — the `PROPOSER_ROLE`, `EXECUTOR_ROLE` and `CANCELLER_ROLE` identifiers match OZ's exactly.
+
+⚠️ **So the shape is an issuer-style architecture rather than six unrelated operators — but that is an inference from the template, not a measurement of control.** A shared template says nothing about who holds the roles inside each instance. ⚠️ **And this report could not establish that: the contracts are not `AccessControlEnumerable`, so role members cannot be listed, and both public X Layer endpoints refuse `eth_getLogs` outright — a refused read, not an absence of grants.** **Who can propose, execute or cancel on these six timelocks is unknown, and that is the question that decides whether the 24-hour delay is a protection or a formality.**
 
 ✅ **Those reverts are measured absences, not silence.** On each chain, symbol, name, decimals, total supply, owner and the delay all answered in the same pass. **A function that reverts while its neighbours answer is evidence; a contract that answers nothing is unreachable, and none of these was.**
 
