@@ -8,9 +8,27 @@ peg_mechanism: "crypto-overcollateralized, oracle-free"
 assessment_type: "light"
 date: "2026-08-21"
 last_verified: "2026-08-21"
+# ⚠️ 2026-09-09: two absent axes authored and the control surface re-scoped off
+# the Issuer row. owner()/admin() re-verified on-chain here. `last_verified` HOLDS.
+last_revised: "2026-09-09"
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer. ⚠️ BOTH NEW AXES WERE GENUINELY ABSENT ON BOTH
+# SURFACES — this is a gap being filled, not a rubric mismatch being relabelled,
+# which is what makes zchf the clean one of the batch.
+#   underlying_score 6.0 renders as DEPENDENCIES: no dominant counterparty, the
+#     largest single collateral 22.4% across ~14 types and four asset classes.
+#   ⚠️ structural_score 7.5 is a RE-SCOPE OFF THE ISSUER ROW, where the control
+#     surface was being priced. The owner()/admin() reverts and the audit stack
+#     have been MOVED, not copied — leaving them on Issuer would double-count.
+#     Re-verified on-chain here 2026-09-09, not taken from the handoff:
+#     owner() and admin() both revert while totalSupply() answers normally, so
+#     the reverts are real absences rather than an unreachable contract.
+axis_frame: six
 peg_mechanism_score: 6.5
 backing_score: 4.0
 liquidity_score: 5.5
+underlying_score: 6.0
+structural_score: 7.5
 issuer_score: 5.5
 overall_score: 4.0
 issuer: "None — no issuing entity; the Frankencoin Association develops the protocol"
@@ -74,7 +92,7 @@ but it is a concentrated credit view on a handful of counterparties, not a cash-
 
 ## Risk by axis
 
-**Peg mechanism — 6.5.** The record is good and it is measured, not asserted. Against the Swiss
+**Stability — 6.5.** The record is good and it is measured, not asserted. Against the Swiss
 franc over the trailing year ZCHF traded between **0.9827 and 1.0151** — a worst deviation of
 −1.73% — and closed below 0.99 on five days. That is a tighter band than crvUSD has held, on
 one-sixth the supply, and it has been maintained for three years with **no redemption backstop at
@@ -152,7 +170,7 @@ a market. The score would move up if BOSS prints converge to its mark
 or the tokenized-equity share falls; down if the CHFAU ceiling is used, if that share passes ~45%,
 or if any issuer key is exercised against a live position.
 
-**Liquidity — 5.5.** These are measured executable quotes, not pool TVL. On the main Uniswap V3
+**Liquidity & Exit — 5.5.** These are measured executable quotes, not pool TVL. On the main Uniswap V3
 ZCHF/USDT pool, 100k ZCHF costs about 18bp, 400k costs **51bp**, and at roughly 450k the range is
 exhausted and slippage jumps past 7%. A Curve pool against crvUSD adds 50k at 39bp and 200k at
 378bp. Blended, **about CHF 500k clears same-day at roughly 61bp**, with a further ~$200k/day of
@@ -172,12 +190,20 @@ same dominant pool. Its veto window closes around **2026-09-03**. If it goes liv
 the main venue's depth, but that would be protocol-manufactured liquidity with an expiry date, not
 organic LP interest.
 
+**Dependencies — 6.0.** What ZCHF passes through to is its collateral book — 71 positions against CHF 33.52M of debt. ⚠️ **The finding is that there is no dominant counterparty**, which on this coverage is unusual enough to be worth stating as the headline: **BTC family 37.5%** (cbBTC 22.4%, WBTC 15.1%), **Swiss private company shares 31.0%** (BOSS 20.5%, DQTS 10.5%, issued via Aktionariat), **ETH family 17.6%** (LsETH 9.8%, wstETH 6.3%, WETH 1.5%), **SPYon 8.7%** (Ondo tokenized S&P 500), gold 4.3%, misc 0.9% — plus **CHFAU at 2.3% of supply**, an AllUnity fiat claim under a BaFin e-money licence. **The largest single collateral is 22.4%, across about fourteen types and four asset classes.** Set against the other assets migrated this week — apxUSD at 86.7% netted STRC, sUSDat at 99% STRC, USDat at 100% PYUSDx — **this is a genuinely diversified dependency set, and axis 4 is the axis that should say so.**
+
+⚠️ **Held below 7 by two things, and the first is a distinction this axis exists to make.** **About 39.7% of debt is collateralised by tokenized equity, and BOSS plus DQTS — 31.0% — are Swiss private shares with essentially no on-chain market.** That book is **diversified by issuer and concentrated by liquidity class**, and reading the first as covering the second is precisely the error a dependency axis is supposed to catch. ⚠️ **DQTS's entire 10.5% is a single position at 1.34x.** Second, **the CHFAU bridge puts a regulated, freezable, centralised counterparty inside a system whose whole proposition is that it has none** — 2.3% today, and the number to watch is the ceiling rather than the balance.
+
+**Contract & Admin — 7.5.** ⚠️ **Re-verified on-chain 2026-09-09: `owner()` and `admin()` both revert on the token contract [`0xB58E61C3…21cB`](https://etherscan.io/address/0xB58E61C3098d85632Df34EecfB899A1Ed80921cB), while `totalSupply()` answers normally** — so the reverts are the absence of those functions, not an unreachable contract. **There is no admin key to compromise and none to subpoena.** Three audit engagements sit behind it (ChainSecurity twice, Code4rena, BlockBite).
+
+⚠️ **But adminless is not change-less, and this is why the axis is 7.5 rather than higher.** The system still changes — it changes by **silence**. **A proposed new minter passes BY DEFAULT after 14 days unless it is vetoed**, so the security model is not "nobody can change this" but "somebody must object in time." ⚠️ **And the veto threshold is 2% of FPS — about CHF 228k — which is the security model and the concentration risk in the same number.** Cheap enough that a motivated holder can defend the system; cheap enough that a motivated holder can also hold it up. **A governance surface with no keys still has a quorum, and this one's quorum is small.**
+
 **Issuer — 5.5.** There is no issuer, and that is both the score's floor and its ceiling. What it
 buys is real: no bank, no custodian, no attestation to trust, no freeze function, no bankruptcy
-estate, and a backing analysis that is fully verifiable from public data. `owner()` and `admin()`
-revert on the token contract — there is nothing to compromise or subpoena. Three audit engagements
-(ChainSecurity twice, Code4rena, BlockBite) and three years live with no depeg incident and no
-reported bad-debt event.
+estate, and a backing analysis that is fully verifiable from public data. Three years live with no
+depeg incident and no reported bad-debt event. **The control surface itself — what can be changed,
+by whom, and how fast — is scored on Contract & Admin above rather than here**, so this axis prices
+the absence of an entity and not the absence of a key.
 
 What it costs is equally real: no redemption right against anyone, no recourse, no insurance, no
 regulator, and nobody obliged to make a shortfall good. Loss absorption stops at whatever FPS
@@ -221,5 +247,8 @@ not draw on private disclosures from any protocol, issuer or tokenization agent 
 observations about token contract permissions describe capabilities readable on-chain, not any
 suggestion that they have been misused. If something here is wrong, write to info@tidresearch.com
 and we will correct it in the next revision and credit the source.*
+
+
+- **2026-09-09 — Dependencies 6.0 and Contract & Admin 7.5 added; no existing score moves.** Both axes were genuinely absent on this page rather than mislabelled. ⚠️ **Contract & Admin is a re-scope off the Issuer row, where the control surface was being priced** — the `owner()`/`admin()` reverts and the audit stack are moved rather than copied, so nothing is counted twice. Re-verified on-chain: both calls revert while `totalSupply()` answers, so the reverts are real absences. Held at 7.5 because **a new minter passes by default after 14 days unless vetoed at 2% of FPS (about CHF 228k)** — adminless is not change-less, and that threshold is the security model and the concentration risk at once. Dependencies 6.0 on a collateral book with **no dominant counterparty** (largest single collateral 22.4% across about fourteen types), held below 7 because **31.0% is Swiss private shares with essentially no on-chain market** — diversified by issuer, concentrated by liquidity class.
 
 *Revision history: 2026-08-21 — first publication at overall 4.5. 2026-08-21, revised — supply corrected to CHF 34.2M; backing 4.5 → 4.0 and overall 4.5 → 4.0 after tracing the tokenized-share collateral to its trading venues and reading the issuer's audited accounts. Overall 4.0 (peg 6.5 / backing 4.0 / liquidity 5.5 / issuer 5.5).*
