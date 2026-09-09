@@ -42,7 +42,7 @@ volatility_score: 6.5
 backing_score: 2.0
 liquidity_score: 3.5
 underlying_score: 3.0
-structural_score: 5.0
+structural_score: 4.5
 issuer_score: 5.0
 redemption_score: 3.5
 overall_score: 3.0
@@ -62,8 +62,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 |---|---|---|---|---|
 | ≈13% APY ongoing | DEX two-hop (retail) or 3-to-20-day unlock window (institutional) | Minutes (sub-$1M via DEX) or 3–20 days (canonical) | ≈3 months | Ethereum, Base |
 
-## 1 · Stability
-
+## 1 · Stability — 6.5
 **Reference: NAV, denominated in apxUSD.** apyUSD has no $1 peg — it is a NAV-accruing vault share, and the NAV is the apxUSD-per-share ratio, growing as the STRC backing pays dividends.
 
 ⚠️ **Which is why a healthy NAV here is not a healthy position.** The NAV is measured in a unit that is itself below par, so **the share can accrue perfectly while what it accrues in loses value.** apyUSD has traded at a **meaningful discount to NAV — mid-single-digit to about −9%** during stress. Treat the specific discount as a moving figure and read it live on the [dashboard](https://tidresearch.com/dashboards/?asset=apyusd).
@@ -72,8 +71,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 
 **On the headline yield:** NAV jumped **≈33% in week 1** (Feb 20-27, 2026) from a one-time launch-seed event — donation-pattern apxUSD inflows from a small set of addresses. Since week 2 it has grown smoothly at roughly **13% APY**. ⚠️ **A new buyer earns the ongoing rate and does not capture the launch jump**, and at the current collateral ratio that 13% does not compensate for the backing and exit risk underneath it.
 
-## 2 · Backing
-
+## 2 · Backing — 2.0
 ⚠️ **The vault is 100% collateralized by construction and that fact is meaningless.** It is denominated in apxUSD, so shares always equal the assets they represent. **The collateral ratio that matters to an apyUSD holder is apxUSD's**, and it is below par.
 
 **Two ratios circulate and they are the same book measured two ways — both the issuer's:**
@@ -93,8 +91,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 
 **Backing is 2.0, inherited from [apxUSD](/reports/apxusd/) and the lowest axis here.** ⚠️ **The portion we can check independently marks better than the attestation; the portion we cannot check is the larger one.**
 
-## 3 · Liquidity & Exit
-
+## 3 · Liquidity & Exit — 3.5
 **Two exit paths, and which binds depends on size. The axis takes the worse one — here they land together at 3.5, and the binding constraint is that both terminate in a below-par asset.**
 
 **Retail-scale, sub-$1M — DEX two-hop, minutes to cash.** Sell apyUSD → apxUSD on Curve, then apxUSD → USDC. ⚠️ **Both legs price the apxUSD discount in**, so the cash received reflects the below-par value, not NAV. Trading on the apyUSD/apxUSD pool is sporadic and market-maker driven, and **Apyx pulls its own depth off-hours by design.** Backup venues exist on PancakeSwap V3 and smaller Uniswap V4 pools. **Depth on the Jupiter-routed STRCx venue is thin at roughly $180K**, which bears directly on the arithmetic one layer down.
@@ -105,8 +102,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 
 Because the canonical path terminates in apxUSD, this asset inherits the underlying's redemption model. Apyx's "Apyx 2.0" plan to move apxUSD mint/redeem to a single Redemption Value floor would improve the terminal asset — **but it is blog-only, not in docs or on-chain, and it changes nothing about this vault's own window.**
 
-## 4 · Dependencies
-
+## 4 · Dependencies — 3.0
 ⚠️ **This is a chain, not a diversified book, and every link is the same story.**
 
 ```
@@ -125,7 +121,8 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 
 ⚠️ **Holding apxUSD and apyUSD together does not diversify.** They are two claims against the same Apyx and STRC backing.
 
-## 5 · Contract & Admin
+## 5 · Contract & Admin — 4.5
+⚠️ **This axis is set equal to [apxUSD](/reports/apxusd/), and the reason is that it is literally the same admin surface.** The three Safes described below are Apyx's, not the vault's — **the wrapper adds a vault, and the vault adds no admin exposure of its own.** ✅ **A wrapper cannot be safer on admin than the thing it wraps when both answer to one set of keys**, so this sits at apxUSD's number rather than above it. **The vault's own cleanliness is real and is described below; it earns no uplift here because there is nothing to uplift past.**
 
 **The vault itself is clean.** A source review against a Sourcify full match confirms **no privileged share-mint backdoor** — issuance follows the standard ERC-4626 deposit path, with apxUSD transferred in before shares mint. **The inherited risk comes from what depositors bring in, not from the wrapper.** Three audits back the protocol (Quantstamp, Zellic, and Certora with formal verification); **there is no bug bounty.** The vault has had one observable implementation upgrade, about a month after launch, and future upgrades carry a 3-day window for the guardian role to cancel.
 
@@ -149,8 +146,7 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 
 **Read on-chain 2026-09-09, the token-admin and custody Safes hold the identical six owners, and the bridge Safe holds those same six plus one more.** So the union is seven and ⚠️ **the intersection is still six — and those six reach all three doors**, because four of them satisfy the token Safe, three of them satisfy custody, and four of them satisfy the bridge. **The honest count of people standing between an attacker and all three layers is not nineteen. It is six.** The seventh owner adds a signer to the bridge; he does not add a door that the six cannot open.
 
-## 6 · Issuer
-
+## 6 · Issuer — 5.0
 **Same protocol, same team, same admin as [apxUSD](/reports/apxusd/), and the axis carries the same 5.0.**
 
 **In its favour:** DFDV (Nasdaq-listed) backing with tier-1 investors including ParaFi and Pantera; **Wolf & Company AICPA-standards attestations published monthly**; a continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi); and **Alpaca** named as the brokerage. The issuer named on the Wolf attestation is **Preference Foundation**, with Director Carolyn Kelly signing — Apyx as a legal entity appears separate from DFDV, a standard offshore-RWA structure.
