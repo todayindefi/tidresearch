@@ -113,7 +113,23 @@ Walked on 2026-08-26 by bytecode extraction and call simulation rather than by r
 
 **Three keys, one transaction, no timelock, and no veto** — the canceller is the proposer, and the two Safes are the same three people. **The 48-hour window that this report has emphasised protects the path an attacker would not need to use.**
 
-✅ **One qualification, which runs in the issuer's favour and is measured rather than inferred.** Re-read on 2026-09-09: **`BRIDGE_ADMIN_ROLE` and `DEPOSIT_ADMIN_ROLE` are currently held by nobody** — the operations Safe, the sUSDai vault and a control address all return false. Earlier grants visible in the role history have been **revoked**. ⚠️ **So what is described above is the ability to GRANT these roles, not a standing grant sitting open** — the operations Safe can create the authority at will, but it is not exercising it today. ✅ **That distinction matters and the score reflects it:** the finding is a permission structure, not evidence that anything improper has happened, and nothing here suggests it has.
+⚠️ **A qualification published earlier on 2026-09-09 was too generous and is corrected here.** It said the issuance-gating roles are held by nobody, so the authority above is latent rather than standing. ✅ **That is true — of 0.28% of USDai.** ⚠️ **It is false of the other 99.72%, and the reason is that Arbitrum's mint gate is not a role at all.**
+
+**Re-measured with a positive control in the same pass** (`totalSupply()` answered 287,434,005.53, so the run is valid rather than uniformly failing):
+
+| simulated `mint(0x…dEaD, 1e18)` | result |
+|---|---|
+| from the bridge adapter `0xffa10065…4bae5` | **succeeds** |
+| from the operations Safe | reverts `0xe6c4247b` |
+| from a control address | reverts `0xe6c4247b` |
+
+✅ **That revert selector decodes to `InvalidAddress()`** — the contract is rejecting the *caller's address*, not a missing permission, which is the distinction the whole correction turns on.
+
+⚠️ **The adapter mints while holding no role whatsoever** — `hasRole` returns false for it on both `BRIDGE_ADMIN_ROLE` and `DEFAULT_ADMIN_ROLE`. **That is the proof the gate is an immutable address check written into the implementation, not a permission that can be granted or revoked.** ✅ **And `owner()` on that adapter returns the operations Safe.**
+
+⚠️ **So on Arbitrum the authority is STANDING, not latent, and revoking roles does not close it.** The three keys do not need to grant themselves anything; the path is open now. ✅ **The latent-permission reading remains correct for Ethereum, Base and Plasma, where the gate really is role-based and the roles really are unheld** — but those chains are **0.28% of supply between them**.
+
+⚠️ **Recorded plainly because the error ran in the issuer's favour, which is the direction that survives review most easily** — it reads as fairness rather than as a mistake.
 
 ⚠️ **It also does not soften the axis, and the reason is worth stating.** `getRoleAdmin` on both roles returns `DEFAULT_ADMIN_ROLE`, which the operations Safe holds — so the gap between "no one can mint" and "someone can mint" is **one transaction that needs no delay, no proposal and no other party's consent.** **A permission that can be granted instantly is not meaningfully different from one already held**, except that it leaves no trace until it is used.
 
