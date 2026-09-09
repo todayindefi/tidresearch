@@ -57,8 +57,7 @@ GHO is Aave DAO's overcollateralized stablecoin. It is minted by a set of author
 
 ⚠️ **Two things dominate this report and neither is about collateral quality.** The peg's defence mechanism is wound down (axis 1), and **44.3% of supply is minted by a contract whose authorised callers cannot be listed from chain state** (axis 5).
 
-## 1 · Stability
-
+## 1 · Stability — 5.5
 **Reference: a $1 par target.** ⚠️ **The mechanism that would defend it is wound down.**
 
 **Both of Aave's mainnet GHO Stability Modules are seized** — first verified on-chain **2026-08-13**, re-verified unchanged **2026-08-30**:
@@ -83,8 +82,7 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 ⚠️ **Sourcing, because these have different standing.** The seizure states and the zero ceiling are **direct on-chain reads.** **The Curve governance action itself is reported rather than read** — the Emergency DAO decision, its date and ID remain unverified, since `gov.curve.finance` returns HTTP 403 from two separate environments. See the [crvUSD report](/reports/crvusd/).
 
-## 2 · Backing
-
+## 2 · Backing — 6.0
 **GHO is overcollateralized and minted against Aave's collateral basket**, with each facilitator bounded by a governance-set bucket. **The reconciliation works:** eight facilitator levels sum to **699,000,000.00** against a `totalSupply` of **699,000,000.00** — **zero delta.**
 
 ⚠️ **Supply is frozen, not merely slow, and every level is identical to the 2026-08-13 read. Not approximately — exactly.**
@@ -105,8 +103,7 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 ⚠️ **And the caps cut both ways for a holder, which is why they do not move this axis alone.** Caps that bind are a constraint on uncontrolled issuance, and equally a constraint on the asset's ability to meet demand.
 
-## 3 · Liquidity & Exit
-
+## 3 · Liquidity & Exit — 6.0
 **Both exit paths, and the axis takes the worse one.** ⚠️ **The binding leg here is the PRIMARY route, and it closed** — stated explicitly so the axis does not read as a comment on depth.
 
 **Primary — the fixed-price swap is gone.** A GSM let a holder swap GHO against USDC or USDT at a fixed price. **Both modules are seized with `exposureCap` at zero** (axis 1), so **that route is not available at any size.** What remains on the primary side is repaying an Aave borrow position, which is only an exit for someone who minted.
@@ -115,8 +112,7 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 ⚠️ **So the shape is: a working secondary market and a closed primary one.** For a holder who did not mint, **a DEX is now the exit**, and the fixed-price backstop that would have bounded its worst case is not there.
 
-## 4 · Dependencies
-
+## 4 · Dependencies — 6.0
 ⚠️ **GHO's dependencies concentrate in Aave itself, and that is not diversification — it is one mature counterparty.** The lending pool, the collateral basket and **all eight facilitators are Aave-governed.** A governance failure or a protocol-level incident reaches every leg at once.
 
 ⚠️ **Docked specifically for concentration inside that: 44.3% of supply sits in a single facilitator**, above the 25% single-name line this coverage applies elsewhere.
@@ -125,8 +121,7 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 
 **What the concentration is not:** the counterparty is a long-lived, heavily audited protocol with public governance, which is why this axis sits at 6.0 rather than lower. **The finding is that there is one of it.**
 
-## 5 · Contract & Admin
-
+## 5 · Contract & Admin — 6.0
 ⚠️ **The largest facilitator is not what its label says.**
 
 It holds **310,000,000 GHO — 44.3% of all supply** — and is labelled **"GhoDirectFacilitator GSMs Mainnet"**. That name implies a GHO Stability Module: fiat-stable collateral swapped at a fixed price, the arrangement that makes a large minting bucket comfortable to reason about. **Its bytecode implements no such thing.** Selectors enumerated from the deployed contract at `0xE9ac5231…27d2`:
@@ -166,8 +161,7 @@ hasRole(DEFAULT_ADMIN_ROLE, X)      310M facilitator     GHO token
 
 **Re-score trigger, written to be checkable by anyone rather than a matter of judgement: any governance action raising the `0xE9ac5231…27d2` bucket above 310M.** That would remove the constraint currently bounding the authority gap.
 
-## 6 · Issuer
-
+## 6 · Issuer — 6.5
 **Aave DAO** — one of the longest-running and most heavily audited protocols in the category, with public governance, on-chain voting and a mature executor structure. **Authority over both the token and the largest facilitator sits with the governance executor**, verified above rather than assumed.
 
 ⚠️ **What holds this axis at 6.5 rather than higher is disclosure rather than conduct.** The mint-role holders are not published anywhere and are not readable from chain; a facilitator carries a name that does not describe what it implements; and the upgrade path on the token is not at the standard slots and has not been located. **None of that is misconduct. All of it means a holder must take on trust things that could be made checkable.**

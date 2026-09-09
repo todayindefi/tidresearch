@@ -72,8 +72,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 **A note on why this is 7.5 and not higher.** sUSDS cannot rank above the **7.5** we publish for [USDS](/reports/usds/), the dollar it wraps: its entire value is a claim on USDS, so every risk in that report is also a risk here. The correct treatment is **equal, not lower** — the ERC-4626 wrapper sits on the same battle-tested codebase and adds no material risk of its own. If USDS re-rates in either direction, expect this to move with it.
 
-## 1 · Stability
-
+## 1 · Stability — 9.0
 **Reference: NAV.** sUSDS pays yield by appreciating against USDS — there is no rebasing and nothing to claim. Your balance stays constant while each sUSDS becomes redeemable for slightly more USDS. **The redemption value only climbs**, so there is no meaningful price volatility at this layer.
 
 **The one path to a drawdown here is a USDS depeg**, which is a question about collateral rather than about this vault — axes 2 and 4.
@@ -83,8 +82,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 - ⚠️ **It is variable and governance-set.** The SSR is not a market rate or a fixed contract term — Sky (SKY-token) governance sets it and can raise or cut it. It broadly tracks prevailing short-term dollar rates and Sky's own revenue. **Do not underwrite a position on the current number persisting.**
 - **It is funded by diversified backing, not a single fund**, with a protocol surplus buffer absorbing the gap when revenue runs below the rate being paid. What that backing consists of is axis 2; how concentrated it is, axis 4.
 
-## 2 · Backing
-
+## 2 · Backing — 7.0
 **The reserve is USDS's, inherited whole.** sUSDS holds USDS and nothing else, so a claim here is worth what USDS is backed by. As of mid-2026 that book is:
 
 | Component | Share | |
@@ -97,8 +95,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 ⚠️ **The axis is 7.0, inherited from [USDS](/reports/usds/) rather than judged separately** — the same reserve, so the same score. **A wrapper cannot hold better collateral than the asset whose collateral it is.** What holds it below a Treasury-pure score is the USDC concentration and the newer, less-transparent credit sleeve (OTC lending + private credit + CLO, ≈14% combined) — both of which are scored as concentration under axis 4.
 
-## 3 · Liquidity & Exit
-
+## 3 · Liquidity & Exit — 8.5
 **Both exit paths, and the axis takes the worse one. Here they agree, and this is the asset's strongest dimension.**
 
 **Primary redemption — instant, atomic, permissionless.** Redeem sUSDS → USDS in the vault at any time, then USDS → USDC 1:1 through the Peg Stability Module. **No cooldown, no redemption fee, no gatekeeper, no fiat rails, no KYC, no minimum.** Getting in is the same: deposit USDS at [sky.money](https://sky.money/susds) or through Spark, or swap USDC → USDS 1:1 through the PSM first.
@@ -107,8 +104,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 ⚠️ **The one thing to watch on exit is PSM USDC liquidity under extreme stress.** The 1:1 USDS↔USDC swap depends on USDC sitting in the module; in a severe USDC-specific crisis that liquidity could be drawn down and the clean 1:1 exit would lean on the DEX market instead. **A tail consideration, not a normal-conditions concern** — and the reason this is 8.5 rather than a perfect score, alongside a small reservation for cross-chain reliance on the Spark PSM off Ethereum.
 
-## 4 · Dependencies
-
+## 4 · Dependencies — 7.0
 ⚠️ **100% of this asset's value passes through one other asset**, and within that asset a third sits in a single name.
 
 **Two concentrations, and the second is the one most readers get wrong:**
@@ -123,8 +119,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 **The axis sits at 7.0 — level with Backing, not below it.** The dependencies are high quality; what the axis records is that they are **concentrated rather than diverse**, and that the concentration is in the one name whose failure mode has already been observed once.
 
-## 5 · Contract & Admin
-
+## 5 · Contract & Admin — 7.0
 **The contracts are the lowest-risk part of the story.** sUSDS is a standard ERC-4626 vault on Ethereum at `0xa3931d71877c0e7a3148cb7eb4463524fec27fbd`, with native deployments on Base (`0x5875eee1…`), Optimism (`0xb5b2dc7f…`) and Arbitrum (`0xddb46999…`), plus Solana. The savings module, PSM and vault all descend from **MakerDAO's codebase, live and heavily audited since 2017**, with the savings-rate mechanism specifically running since 2019 as the DAI Savings Rate and sDAI. It has been battle-tested through Black Thursday in March 2020 and the March 2023 USDC depeg. **There are no known unresolved contract vulnerabilities in the savings / PSM / vault path.**
 
 ⚠️ **The binding concern is not code — it is that USDS is upgradeable, and a freeze function is governance-addable.** When MakerDAO rebranded to Sky, USDS shipped *without* a freeze function but *with* the upgrade machinery that would let governance add an address-level **freeze / blacklist** later by vote. **DAI, by contrast, remains immutable and unfreezable.** It is governance-gated — a public vote and a timelock delay, not a unilateral flip — and **no freeze function is enabled as of this writing.** But **if you specifically need a censorship-resistant position, hold DAI instead.**
@@ -133,8 +128,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 **For sizing, prefer the canonical Ethereum deployment.** Balances on Base / Optimism / Arbitrum / Solana add a bridging and cross-chain-PSM dependency on top of the base vault.
 
-## 6 · Issuer
-
+## 6 · Issuer — 7.0
 **Sky Protocol (formerly MakerDAO)** — and ⚠️ **the issuer surface here is identical to USDS's**, because sUSDS and USDS are the same legal entity. A holder's ultimate claim is against Sky either way, which is why this axis carries the same **7.0** as the [USDS report](/reports/usds/).
 
 **In its favour:** DAO-governed with a public forum and on-chain votes, one of the longest track records in DeFi, audits across many engagements, and a $10M bug bounty.

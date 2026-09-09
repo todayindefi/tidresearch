@@ -69,22 +69,19 @@ sfrxUSD is the staked form of [frxUSD](/reports/frxusd/), Frax Finance's flagshi
 |---|---|---|---|---|
 | Accrues in share price | frxUSD | Unstake, then frxUSD's own redemption path | **≈4.69%/yr, contract-enforced** | Ethereum, Fraxtal (different addresses) |
 
-## 1 · Stability
-
+## 1 · Stability — 7.0
 **Reference: NAV.** sfrxUSD accrues in share price rather than holding a peg, so the question is not deviation from a dollar but whether the share keeps its claim on frxUSD.
 
 ⚠️ **The yield has a ceiling written into the contract.** `maxDistributionPerSecondPerAsset` is **1.486668756e-09**, which annualises to about **4.69%**. **The vault cannot pay out faster than that, whatever the strategies earn** — it is a hard cap, not a target or a current rate.
 
 **That gives a reader a test rather than a score: any advertised sfrxUSD yield above roughly 4.69% is not coming from this contract.** It is coming from somewhere else — an incentive programme, a points scheme, a different product, or a number computed on a different basis. **That does not make it fake, but it will not behave like the vault's own distribution under stress.**
 
-## 2 · Backing
-
+## 2 · Backing — 6.5
 **The reserve is frxUSD's, inherited whole.** This vault holds frxUSD and nothing else, so a share is worth what frxUSD is backed by, and the composition, coverage and attestation questions all belong to the [frxUSD report](/reports/frxusd/).
 
 ⚠️ **The axis is 6.5, inherited rather than judged separately** — the same reserve, so the same score. **If frxUSD's backing moves, this must move with it.**
 
-## 3 · Liquidity & Exit
-
+## 3 · Liquidity & Exit — 5.0
 **Both exit paths, and the axis takes the worse one.**
 
 **Primary — two steps, and the second is not this vault's to control.** Unstaking returns frxUSD, and then you are in **frxUSD's own redemption path**: per-custodian, with the USDC exit gated by a buffer of roughly **$10M**.
@@ -93,8 +90,7 @@ sfrxUSD is the staked form of [frxUSD](/reports/frxusd/), Frax Finance's flagshi
 
 ⚠️ **Unmeasured is not the same as thin, and it is not the same as deep.** It is the third outcome, and it is what this axis is carrying.
 
-## 4 · Dependencies
-
+## 4 · Dependencies — 4.5
 ⚠️ **100% of this asset's value passes through frxUSD — and the concentration runs in both directions.** This vault holds **35.58% of all frxUSD**, so the two are not two exposures. A stress in either shows up in the other.
 
 **Beyond frxUSD, two Frax governance proposals allocate this vault's assets outward:**
@@ -110,8 +106,7 @@ sfrxUSD is the staked form of [frxUSD](/reports/frxusd/), Frax Finance's flagshi
 
 ⚠️ **Both proposals allocate sfrxUSD assets, not FRAX or frxUSD treasury.** Frax runs three adjacent tickers and the conflation is easy and expensive; this was confirmed before writing.
 
-## 5 · Contract & Admin
-
+## 5 · Contract & Admin — 5.0
 ⚠️ **The accessor called `timelockAddress()` is not a timelock, and the naming is the dangerous half of it.**
 
 `timelockAddress()` resolves to `0x4b45d73b…1bc1`. Read directly, that address is:
@@ -134,8 +129,7 @@ MINIMUM_DELAY()     reverts
 
 **One deployment note:** the Ethereum address **holds 0 bytes of code on Fraxtal** — Frax's own home chain — which means **a different address there, not the absence of a deployment.** So the Ethereum supply figure is not a global one, and the Fraxtal leg is unmeasured here.
 
-## 6 · Issuer
-
+## 6 · Issuer — 5.0
 **Frax Finance**, and the axis carries **5.0 — the same as [frxUSD](/reports/frxusd/)**, because it is the same issuer and a holder's claim runs to the same place.
 
 ⚠️ **Frax runs three products with adjacent tickers** — FRAX, frxUSD and sfrxUSD — and the conflation has cost readers before. **Governance allocates this vault's assets by proposal**, as FIP-450 and FIP-451 show, so the issuer's decisions reach the collateral directly rather than only the parameters.
