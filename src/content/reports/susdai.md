@@ -15,7 +15,13 @@ production: true
 issuer: "Permian Labs"
 yield_bearing: true
 volatility_score: 5.5
-structural_score: 5.5
+# ⚠️ 5.5 → 3.0 on 2026-09-09. NOT a new finding: the paragraph under "Admin, audit and
+# issuer" has said since 2026-08-18 that the 48h timelock covers the UPGRADE PATH ONLY
+# and that role grants are an undelayed 3-of-3. The SCORE DID NOT FOLLOW ITS OWN
+# SENTENCE for 22 days. A row that contradicts its own rationale is harder to catch
+# than two rows contradicting each other — there is no second value to compare against,
+# and the headline/score-table checker cannot see it.
+structural_score: 3.0
 redemption_score: 4.0
 liquidity_score: 5.0
 underlying_score: 4.5
@@ -98,7 +104,9 @@ One consequence worth stating for anyone using sUSDai as collateral elsewhere: *
 
 Practically: a malicious or buggy upgrade is visible on-chain for two days before it can land. Two days is a real observation window, though it is shorter than the 30-day redemption queue — so for a holder relying on primary redemption, the window lets you see the change coming, not necessarily exit ahead of it. The secondary market is the exit that fits inside 48 hours.
 
-**Structural surface is scored at 5.5** and the vault is more complex than a plain ERC-4626: async request-and-fulfill deposits and redemptions, a redemption queue, blacklist and freeze capability, and a Chainlink oracle dependency. Cantina (Spearbit) reviewed the vault, the redemption queue, blacklisting, the oracle integration and MetaStreet yield harvesting, reporting **0 critical, 0 high, 1 medium since fixed**, with a live bug bounty. Against that sits a substantial off-chain dependency stack — loan servicing, GPU appraisal, SPV and UCC enforcement, KYC/KYB, and the MetaStreet engine itself. Appropriate for a credit fund; not "trustless on-chain."
+**Contract & Admin is scored 3.0, cut from 5.5 on 2026-09-09.** ⚠️ **No new evidence about sUSDai produced this.** The finding is the one stated in the paragraphs above and on this page since 18 August: **the 48-hour delay governs the upgrade path only, while role grants — including whatever gates minting — are an undelayed 3-of-3.** The score simply had not followed its own rationale. ✅ **Re-verified on 2026-09-09:** the timelock's minimum delay is exactly 172,800 seconds and the ProxyAdmin is genuinely owned by it, but the governance and operations Safes turn out to hold **the identical three owners**, so the two-Safe arrangement separates no duties.
+
+**The vault's own surface is more complex than a plain ERC-4626** — async request-and-fulfill deposits and redemptions, a redemption queue, blacklist and freeze capability, and a Chainlink oracle dependency — and Cantina (Spearbit) audited it. ⚠️ **That extra layer is NOT charged for here, and the omission is deliberate rather than an oversight.** A wrapper is scored equal to its underlying on the underlying's own axis rather than notched below it, so this sits at USDai's 3.0 and no lower. **If anything that makes 3.0 generous for the wrapper**, since sUSDai carries everything USDai carries plus a vault of its own.
 
 **Issuer sits at 5.0**, matching USDai, since it is the same entity, the same governance and the same audit — and it moved with USDai on 2026-08-26. ⚠️ **The finding is that USDai's 48-hour timelock governs upgrades but not issuance:** the three keys behind both Apyx-style Safes can mint USDai without delay, either by granting `BRIDGE_ADMIN_ROLE` (they hold `DEFAULT_ADMIN` on all four chains) or via `setPeer` on the LayerZero OFT adapter they own, which is itself a mint. **That reaches this vault through its underlying**, since sUSDai's assets are USDai: undelayed issuance dilutes the pool a share is a claim on, even though it touches neither the vault contract nor the PYUSD reserve. **See the [USDai report](/reports/usdai/) for the measurement, its coverage limits, and why this is 5.0 rather than lower.** Permian Labs carries MetaStreet lineage and a $13.4M Series A from Framework, Dragonfly, Coinbase Ventures and Arbitrum. It is held down by a roughly ten-month track record, single-operator concentration, and no stress event to date.
 

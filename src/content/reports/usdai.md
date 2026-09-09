@@ -19,6 +19,13 @@ backing_score: 7.0
 underlying_score: 7.5
 liquidity_score: 4.5
 issuer_score: 5.0
+structural_score: 3.0
+# ⚠️ MIGRATED to axis_frame: six on 2026-09-09, in the pass that first scored axis 5.
+# Before this the report carried five axes and NO Contract & Admin row, so the finding
+# argued at length under "Audits, admin & team" reached a reader as prose only — there
+# was no number for it to disagree with. structural_score has no row in the stablecoin
+# rubric, so on the old frame a 3.0 written here would have rendered NOWHERE.
+axis_frame: six
 overall_score: 5.5
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdai"
 ---
@@ -94,6 +101,10 @@ The third path in practice is to **stake into sUSDai** rather than exit, which t
 **Admin control over UPGRADES sits behind a 48-hour on-chain timelock, and for that path the delay is binding rather than decorative.** ⚠️ **Read the scope of that sentence carefully: minting never touches the timelock at all.** See below. USDai's ProxyAdmin (`0x2ddf39c7…`) is owned by a **`TimelockController` at `0x0EEA1EE0…639b` with a minimum delay of 172,800 seconds — exactly 48 hours** — re-verified independently on-chain on 2026-08-12. The detail that makes it real: **the timelock holds its own admin role**, so the delay cannot be shortened, and no new role can be granted, without first passing through the full 48 hours. Proposal authority sits with a **3-of-3 Safe multisig** with three known signers; operational permissions on the token sit with a **second 3-of-3 Safe at a different address — but walked per chain on 2026-08-26, the two hold the identical three owners on all four deployments.** ⚠️ **Two addresses, one body.** Describing the second as a *sibling* multisig would be literally true and would imply a separation of duties that does not exist. ⚠️ **And the canceller role sits with the proposer**, so nothing inside the system can stop a queued upgrade: **the 48 hours are a notice window for holders, not a control.** That does not weaken the point above — the delay is real and cannot be shortened — but it buys time to react rather than a veto anyone can exercise. **Note what this is not:** 3-of-3 has zero redundancy, so every key is load-bearing. This is not a thin-threshold finding. No role revocations have occurred since deployment.
 
 ⚠️ **And the timelock governs upgrades, not issuance. Those same three keys can mint USDai without any delay, by two independent routes.**
+
+**Contract & Admin is scored 3.0, and 2026-09-09 is the first time this axis carries a number at all.** ⚠️ **Nothing adverse arrived to justify it — the report has argued this finding for weeks without a score attached to it.** ✅ **Two facts were re-measured on 2026-09-09 before the number was set.** The timelock's minimum delay is **172,800 seconds — exactly 48 hours**, and the USDai ProxyAdmin's `owner()` really is that timelock, so the upgrade protection is genuine. ⚠️ **But the token's `DEFAULT_ADMIN_ROLE` is held by the operations Safe and not by the timelock** — confirmed live, against a control address that returns false — **so role grants sit outside the delay entirely.**
+
+⚠️ **And the two-Safe structure separates nothing.** The governance Safe holds proposer, canceller *and* executor on the timelock; the operations Safe holds executor as well. **Both are 3-of-3, and both have the identical three owners.** So the party that queues an upgrade, the party that could cancel it, and the party that can grant mint authority without any delay are **one signer set of three keys**. ✅ **Not scored lower than 3.0 because that quorum is real and on-chain** — three distinct keys must sign, which is more than several assets on this site can say. ⚠️ **Not scored higher because the undelayed path reaches issuance**, and an asset whose supply can be expanded without notice is not protected by a delay on its code.
 
 Walked on 2026-08-26 by bytecode extraction and call simulation rather than by reading role names: `mint(address,uint256)` is present on every implementation and gated by AccessControl, and **the revert names the role it wants** — calls from the operations Safe and from a burn address both return OZ v5 `AccessControlUnauthorizedAccount`, carrying `0x751b795d…` = **`BRIDGE_ADMIN_ROLE`**. Two routes reach it:
 
