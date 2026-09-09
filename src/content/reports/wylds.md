@@ -14,17 +14,30 @@ yield_bearing: true
 underlying_assets: ["YLDS"]
 # ⚠️ 2026-09-09: issuer_score 6.5 authored — absent on BOTH surfaces until now,
 # and it renders on the wrapped-token rubric, so no migration was needed.
-# ⚠️ backing_score is NOT added here on purpose: it does NOT render on this
-# rubric, so it would require axis_frame: six — and migrating re-labels
-# underlying_score 7.5 as DEPENDENCIES, whose prose here argues COLLATERAL
-# QUALITY (FCC's Level 1/Level 2 mix). That is the occupied-with-the-wrong-
-# rationale case, so Backing and Dependencies are deferred to wylds's own
-# refresh pass rather than half-done here.
-# ⚠️ overall_score HOLDS at 6.0. riskAnalyst reads 5.5 and calls it arithmetic,
-# but on OUR axis set — keeping underlying 7.5 — the mean is EXACTLY 6.000, so
-# 6.0 sits at the mean and the convention holds. Their 5.5 follows from their
-# Dependencies 5.5, not from the new axes: the overall move is entangled with
-# the axis-4 question, not independent of it.
+# ⚠️ MIGRATED to axis_frame: six on 2026-09-09 — this IS the refresh pass the
+# note below deferred to, and the deferral was correct: doing it earlier would
+# have been the half-done version.
+# ⚠️ underlying_score 7.5 -> 5.5 AS PART OF THE MIGRATION, and it is NOT a
+# deterioration. On the wrapped-token rubric that field was labelled UNDERLYING
+# and its prose argued COLLATERAL QUALITY. On the six-axis core the same field
+# renders as DEPENDENCIES, which asks what the token passes through. Two
+# questions, one field — the classic occupied-with-the-wrong-rationale case.
+# The collateral-quality argument did not disappear: it MOVED to Backing 5.0,
+# which now exists and renders. If the page reads as though the asset got worse,
+# this migration has failed.
+# 5.5 is EQUAL to hastra-prime, which runs the identical chain PLUS a staking
+# layer. Wrapper axis rule settled by the owner 2026-09-09: EQUAL, don't notch.
+# ⚠️ overall 6.0 -> 5.5. The earlier note held 6.0 on the grounds that it sat
+# EXACTLY at the mean of the then-published axis set. That set no longer exists:
+# Backing was added and Dependencies re-based, so the mean is now 5.667 and 5.5
+# sits just below it — the same below-its-own-mean convention, recomputed rather
+# than abandoned. Both surfaces now read 5.5.
+# ⚠️ redemption_score 6.5 is RETAINED but NO LONGER RENDERS: the six-axis core
+# has no Redemption row and folds exit into Liquidity & Exit. Its paragraph is
+# kept in the body as the evidence for axis 3. Do not read the blank as an
+# unscored axis — same treatment as onyc.
+backing_score: 5.0
+axis_frame: six
 issuer_score: 6.5
 issuer: "Hastra (wrapper) / Figure Certificate Company (backing)"
 market_cap_approx: 490000000
@@ -32,13 +45,13 @@ volatility_score: 7.0
 liquidity_score: 4.0
 structural_score: 6.0
 redemption_score: 6.5
-underlying_score: 7.5
-overall_score: 6.0
+underlying_score: 5.5
+overall_score: 5.5
 companion_report: "hastra-prime"
 ---
 
 # wYLDS — Risk Report
-**Lower-to-moderate risk · 6.0 / 10**
+**Moderate risk · 5.5 / 10**
 *Wrapped token · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), backed by Figure's YLDS · ~$490M · verified 2026-07-30*
 
 ## Summary
@@ -73,7 +86,13 @@ Ethereum is now the larger of the two deployments, while the overwhelming majori
 
 ## Risk by axis
 
-**Underlying — 7.5.** YLDS is a face-amount certificate issued by FCC and backed by qualified assets under §28 of the Investment Company Act. FCC is a reporting registrant in its own right, and KPMG has served as auditor since 2024. Its FY2025 audit carried a clean opinion, no going-concern qualification, and no identified material weakness. That opinion covers the annual statements. FCC's own interim filing carries a liquidity and going-concern note in which it concludes it has twelve months of funding specifically because its parent has committed, by letter, to pay its invoices directly and periodically forgive intercompany balances. This is a conditional conclusion resting on parent support, not an independent one. This remains materially stronger evidence than a token dashboard or issuer attestation because the reserve and asset test appear in recurring SEC filings with officer certifications.
+**Backing — 5.0.** YLDS is a face-amount certificate issued by FCC and backed by qualified assets under §28 of the Investment Company Act. FCC is a reporting registrant in its own right, and KPMG has served as auditor since 2024; its FY2025 audit carried a clean opinion, no going-concern qualification, and no identified material weakness. ✅ **That is materially stronger evidence than a token dashboard or an issuer attestation**, because the reserve and asset test appear in recurring SEC filings with officer certifications. **Coverage and composition are set out under "At a glance" above** and are not repeated here. ⚠️ **What holds this at 5.0 rather than higher is the wrapper, not the certificate:** identified wrapper reserves exist but are **not demonstrably ring-fenced**, and the quarter's coverage improvement came partly from a shrinking denominator — third-party holdings fell 37.2% while related-party holdings rose 1.0%.
+
+**Dependencies — 5.5.** ⚠️ **This axis was published at 7.5 until 2026-09-09, and the change is a correction of what the axis was measuring rather than a deterioration in the asset.** The 7.5 argued **collateral quality** — what the assets beneath are. **Dependencies asks a different question: what this token passes through, and who it depends on at each hop.** ✅ **No adverse evidence arrived, nothing about FCC's assets got worse, and Backing above still carries the collateral-quality case at 5.0.**
+
+**The chain is wYLDS → YLDS (issued by FCC) → Figure**, and **one company sits at every hop.** ⚠️ **The dependency that matters most is stated in FCC's own filing:** its interim liquidity and going-concern note concludes it has twelve months of funding **specifically because its parent has committed, by letter, to pay its invoices directly and periodically forgive intercompany balances.** ⚠️ **That is a conditional conclusion resting on parent support, not an independent one** — and it is a dependency fact, not a collateral fact, which is precisely why it belongs on this axis and not on Backing.
+
+✅ **5.5 is set EQUAL to [hastra-prime](/reports/hastra-prime), not notched above it.** hastra-prime runs the identical chain **plus** a PRIME staking layer, and scores 5.5 on Dependencies. A wrapper is scored equal to its underlying on the underlying's own axis rather than notched, so a shorter chain does not earn a higher number here. **The shorter chain is genuinely less exposed, and that difference is priced on the other axes rather than by inflating this one.**
 
 Figure, the company behind this token, is covered separately in [Figure](/reports/figure).
 
@@ -104,13 +123,13 @@ One structural point deserves more weight than the coverage ratio. The certifica
 
 Residual risks explain why this does not score still higher. About 65% of qualified assets were repo rather than outright Treasuries. The repo is short-dated and government-collateralized but adds counterparty and settlement exposure concentrated in one name: the entire repo book — 65% of qualified assets — faces UMB Bank N.A., which is also the custodian holding the securities. A second repo facility is documented but was unused at quarter-end. The collateral is overnight Treasuries, so quality is high; the concentration is nonetheless a single point of failure rather than a diversified book. FCC disclosure also arrives with roughly a 45-day lag—the March 31 quarter was filed May 15—so it is a confirming layer beneath live chain data. Most importantly, wYLDS holders do not own YLDS directly; they hold an unregulated wrapper claim mediated by Hastra. Strong base assets do not prove wrapper-level segregation or bankruptcy remoteness.
 
-**Volatility — 7.0.** wYLDS targets $1 and distributes yield as additional tokens rather than allowing the quoted price to compound upward. It has generally traded close to par. Realistic observed drawdowns have been around 2–3%; the quoted $1.07 high appears to be a low-liquidity seed-pool print rather than evidence of meaningful appreciation. This is strong price behavior for a young wrapper.
+**Stability — 7.0.** wYLDS targets $1 and distributes yield as additional tokens rather than allowing the quoted price to compound upward. It has generally traded close to par. Realistic observed drawdowns have been around 2–3%; the quoted $1.07 high appears to be a low-liquidity seed-pool print rather than evidence of meaningful appreciation. This is strong price behavior for a young wrapper.
 
 The stability comes from a credible certificate reserve and working primary conversion, not deep secondary liquidity. Thin pools can print temporary discounts even when the backing remains sound. Ethereum's majority supply and the very small freely trading Solana float mean a single aggregate price can hide materially different depth across venues. Issuer freeze controls also mean price stability is not the only risk a holder faces.
 
 FCC's filing data improves confidence in the reference value. Qualified assets exceeded the reserve, and certificate holders may surrender at face plus accrued interest. But wYLDS is one layer removed from that right: Hastra holds and redeems YLDS on users' behalf. A disruption at Hastra, a delayed off-chain sale, or a loss of DEX incentives can create a wrapper discount without any impairment to FCC's assets. More stress-period observations and deeper unincentivized pools would support a higher volatility score.
 
-**Liquidity — 4.0.** This remains the weakest axis. Standalone DEX volume has been a few tens of thousands of dollars a day, small relative to a wrapper supply measured in hundreds of millions. Independent Solana reads found the overwhelming majority of Solana wYLDS locked inside PRIME, leaving only a few million of genuine unstaked float. Aggregators that treat the entire token supply as circulating materially overstate what can trade.
+**Liquidity & Exit — 4.0.** This remains the weakest axis. Standalone DEX volume has been a few tens of thousands of dollars a day, small relative to a wrapper supply measured in hundreds of millions. Independent Solana reads found the overwhelming majority of Solana wYLDS locked inside PRIME, leaving only a few million of genuine unstaked float. Aggregators that treat the entire token supply as circulating materially overstate what can trade.
 
 Ethereum is now the larger of the two deployments, but wYLDS primarily functions there as a route into PRIME rather than a deep standalone market. A holder can request primary redemption, yet that process is administered rather than atomic and depends on off-chain YLDS sales. There is no large trustless venue that reliably absorbs institutional size near par.
 
@@ -118,11 +137,13 @@ The thinness of that standalone market is a direct consequence of PRIME absorbin
 
 FCC's activity shows that the base certificate is not the obvious bottleneck: $530.5M was issued and $263.4M surrendered in Q1 against a roughly $600M ending reserve, and **Q2 processed more — $452.7M issued against $499.4M paid for surrenders**, on a book that ended the quarter at $557.5M. This proves that the **YLDS layer** has processed large surrenders; it does not mean wYLDS or PRIME can redeem $263.4M on demand. Wrapper queue capacity, administrator responsiveness, chain settlement, and secondary depth remain separate constraints. A funded USDC reserve and sustained six- or seven-figure DEX depth would be the clearest improvements.
 
-**Structural — 6.0.** The wrapper code is open source and has two meaningful reviews. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) identified and closed a critical vault-account validation bug plus a share-inflation issue. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) later reviewed both Solana and Ethereum implementations and found no critical or high-severity issues. The sequence—serious flaws found, remediated, then reviewed again—is stronger than a clean but shallow one-off audit, although the original flaws show the consequences of implementation error.
+**Contract & Admin — 6.0.** The wrapper code is open source and has two meaningful reviews. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) identified and closed a critical vault-account validation bug plus a share-inflation issue. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) later reviewed both Solana and Ethereum implementations and found no critical or high-severity issues. The sequence—serious flaws found, remediated, then reviewed again—is stronger than a clean but shallow one-off audit, although the original flaws show the consequences of implementation error.
 
 Reserve architecture is the principal negative. Hastra's [proof of reserves](https://hastra.io/proof-of-reserves) and public-chain balances show wrapper coverage a little over 100%, while FCC's filing separately shows its certificate reserve was covered above 100% at 31 March 2026. These are different measures on different dates, not a single matching ratio. Yet the PoR “pool” labels do not map cleanly to the accounts holding most YLDS. The identified balances sat in Figure operational accounts, including an account that also held tokenized loan assets. Total coverage can be checked; a clean, ring-fenced wYLDS reserve and its bankruptcy-remoteness cannot be established from balances alone.
 
 The new corporate evidence adds positives and negatives rather than forcing a score change. Hastra is a disclosed Figure related party, not a consolidated subsidiary. Its YLDS is recorded as current debt to a related party; it pays a 50-basis-point revenue royalty and relies on a nontransferable Figure software licence whose initial term runs to December 2028 and renews annually thereafter. That reduces the uncertainty of dealing with an unidentified arm's-length wrapper but increases correlated-failure and licence termination or breach risk. Separately, FCC reported 79% of certificates held by Figure's parent and entities controlled by that parent. The filing does not place Hastra in that group, so no such inference is made here. FCC itself has only $292K of equity on a $601.8M balance sheet because Figure's parent pays operating expenses directly—$471K in Q1—and records them as capital contributions. This is a pass-through structure, not evidence that reserve assets are missing or that FCC is distressed, but it is a parent-dependency channel. FCC's interim filing concludes it has twelve months of liquidity specifically because its parent committed, by letter, to pay invoices directly and periodically forgive intercompany balances. That conclusion depends on continued parent support. Live mint and freeze authority, majority-Ethereum implementation exposure, and unproven wrapper segregation keep the structural score at 6.0 despite the stronger audited base layer.
+
+**Issuer — 6.5.** ⚠️ **Two parties, and a reader should not merge them.** The certificate issuer is **Figure Certificate Company**, SEC-registered and KPMG-audited. The wrapper operator is **Hastra**, which is **not** registered, **not** audited as an issuer, and **not** a Figure subsidiary — it is a disclosed Figure related party using licensed Figure software. ✅ **The regulated half is genuinely regulated**; ⚠️ **retail recourse runs through the unregulated half**, because it is Hastra that operates redemption and holds freeze controls.
 
 **Redemption — 6.5.** Minting is permissionless and atomic: a user supplies USDC and receives wYLDS. The reverse path is a two-stage operational process. A holder submits a redemption request, Hastra sells YLDS through Figure Markets, and an administrator completes the wYLDS-to-USDC transaction. An eight-day sample showed about six redemptions a day, paid 1:1 to the cent and typically completed well under an hour. That is concrete evidence of a working normal-market process.
 
@@ -148,6 +169,7 @@ The 6.0 score therefore holds, but it now rests on a better-separated assessment
 
 - **2026-09-09 — Issuer 6.5 added; the co-mingling premise is withdrawn; no other score moves.** The Issuer axis was absent on both surfaces and scores **Figure Certificate Company** the entity — a full SEC reporting registrant filing 10-K/10-Q with officer certifications, KPMG-audited since 2024 with a clean opinion. **Held below 7** because the audit opinion covers only the annual statements and the interim going-concern conclusion is conditional on parent support. Set **equal to [hastra-prime](/reports/hastra-prime/)'s 6.5**, since the axis scores the entity rather than the wrapper. ⚠️ **Separately, the reserve is reconstructable and this page had implied otherwise:** it sums exactly to **$607,474,509** with no residual via CW20 receipt queries. The earlier co-mingling reading rested on two proof-of-reserve "pool" addresses holding no bank-module YLDS — **they are repo-token contracts that were never meant to.** The unsecured-creditor conclusion is unaffected and stands on the legal structure; **what replaces co-mingling is concentration — about 99.7% of backing in a single Provenance account.**
 
+- **2026-09-09 — migrated to the six-axis frame; Dependencies re-based and Backing added.** ⚠️ **The asset did not get worse and nothing adverse arrived.** Under the previous rubric one field was labelled **Underlying** and its rationale argued **collateral quality** — what FCC's assets are. The six-axis core renders that same field as **Dependencies**, which asks what the token passes through and who it depends on at each hop. **Two different questions had been sharing one number.** The collateral-quality case did not disappear; it moved to a **Backing** axis that now exists and scores **5.0**, and Dependencies was re-argued from the passthrough chain at **5.5** — **equal to [hastra-prime](/reports/hastra-prime)**, which runs the identical chain plus a staking layer, per the wrapper rule that a wrapper is scored equal to its underlying rather than notched. An **Issuer** paragraph was added at **6.5**, separating the SEC-registered certificate issuer from the unregistered wrapper operator through which retail recourse actually runs. **Overall 6.0 → 5.5:** the earlier 6.0 was held because it sat exactly at the mean of the then-published axis set, and that set no longer exists — with Backing added and Dependencies re-based the mean is 5.667, so 5.5 keeps the same below-its-own-mean convention rather than abandoning it. **Redemption 6.5 is retained but no longer rendered**, since the six-axis core folds exit into Liquidity & Exit; its paragraph remains as that axis's evidence. Published and internal now agree on every axis.
 - **2026-08-23 — refreshed to FCC's Q2-2026 10-Q (filed 2026-08-14, unaudited).** At 30 June: qualified assets **$561.627M** against a **$557.494M** certificate reserve — **coverage 100.74%**, up from 100.30%, with the surplus rising from $1.818M to **$4.133M**. ⚠️ **Coverage improved because the denominator fell.** The reserve contracted **7.0%** and the whole contraction was external: third parties **$125.057M → $78.497M, −37.2%**, while related parties *rose* 1.0% to **$477.536M**, taking the related-party share from about 78.9% to **85.9%**. Flows corroborate it — $452.7M issued against $499.4M surrendered, net −$46.7M. **Not a backing alarm:** coverage is above 100%, the surplus doubled and the §28 test is intact. ⚠️ **A test with a date:** at the Q3 10-Q, expected around 2026-11-14, compare FCC's third-party certificate line against Hastra's wYLDS reserve holdings as at the same date — if the reserve exceeds the third-party line, Hastra's certificates are necessarily related-party.
 - **2026-07-30 — figures restated as ranges.** Supply, collateralization, yield rate, standalone volume and staked share are given as ranges rather than point-in-time values. The Figure software licence renews annually after its initial term, and cash at bank is $0.7M.
 - **2026-07-27 — Structural 6.5 → 6.0, Overall 6.5 → 6.0.** Backing confirmed 1:1, reserve co-mingled rather than segregated, liquid redemption buffer approximately nil, Ethereum now the majority deployment.
