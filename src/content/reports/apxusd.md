@@ -13,7 +13,10 @@ last_verified: "2026-08-25"
 # Scope-limited pass on the 2026-08-31 Strategy 8-K. ⚠️ `last_verified` is
 # deliberately NOT bumped — it stamps a whole-body re-read and this was the
 # buyback/runway material only.
-last_revised: "2026-08-31"
+# ⚠️ 2026-09-09: bridge Safe re-read on-chain — 3-of-6 -> 4-of-7 at block
+# 25,877,589 (2026-08-31). The 08-25 owner-set-identity finding was CORRECT WHEN
+# WRITTEN; the asset moved under it. `last_verified` HOLDS.
+last_revised: "2026-09-09"
 featured: false
 production: true
 # issuer: withheld pending review — this report states the issuing entity is
