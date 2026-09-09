@@ -46,7 +46,14 @@ underlying_score: 5.5
 liquidity_score: 6.0
 issuer_score: 6.5
 overall_score: 5.0
-market_cap_approx: 480000000
+# ⚠️ 480,000,000 -> 599,000,000 on 2026-09-09. The old figure was a TOKEN SUPPLY
+# number used where a USD market cap belongs, and it was six weeks stale on top of
+# that. market_cap_approx is USD site-wide. Basis: supply 566,094,909 measured on
+# BOTH chains 2026-09-09, times the PRIME/WYLDS feed at 1.058394, times an assumed
+# wYLDS peg of $1.00 — two measured legs and one assumed leg, so it moves if wYLDS
+# moves. riskAnalyst carried 457,000,000 (supply 434.9M x NAV 1.0505 at 2026-07-27)
+# and the gap between the two files was a BASIS difference, not a disagreement.
+market_cap_approx: 599000000
 ---
 
 # Hastra PRIME — Risk Report
@@ -62,8 +69,9 @@ PRIME is a yield-bearing token issued by Hastra. You get it by staking
 you by rising in price rather than by sending you extra tokens. One PRIME is worth
 a little over $1 and rising, and the reference yield is around 7% a year. The rate
 floats with how much of the facility is lent out and is published by the issuer.
-Total size is roughly half a billion dollars, most of it on Ethereum and the rest
-on Solana.
+⚠️ **Re-measured 2026-09-09: total supply is 566,094,909 PRIME, up 30.2% in six weeks** from the 434.9M recorded on 2026-07-27. **The growth is entirely on Ethereum** — 278.6M → **432,420,596**, up 55% — while **Solana fell** 156.3M → **133,674,313**. So the asset is now **76% Ethereum and 24% Solana**, a more concentrated split than the roughly two-thirds it was six weeks ago.
+
+⚠️ **Market cap is a product, and the basis is stated because two of its three legs are measured and one is assumed.** Supply is read on-chain on both chains. The exchange rate comes from the same feed every Morpho PRIME market uses, whose `description()` is **"PRIME / WYLDS Exchange Rate"** and which returns **1.058394**. ⚠️ **That prices PRIME in wYLDS, not in dollars** — converting to USD assumes wYLDS holds its dollar peg, which the Backing section supports but does not guarantee. On that basis **market cap is approximately $599M**.
 
 The most important thing to understand is that the yield does not come from the
 Treasuries. Hastra lends those dollars out again, into a Figure-run facility called
@@ -113,7 +121,7 @@ claim a holder actually owns is unregulated.
 | **How to exit** | Sell near NAV on Ethereum Uniswap V3, or unbond PRIME→wYLDS and request wYLDS→USDC. The primary path is admin-fulfilled and depends on administered YLDS sales in market hours. |
 | **Liquidity** | Around $5M can be sold on Ethereum within a few basis points, then a hard ceiling set by the pool's USDC side — a little over 1% of market value, and it moves daily. Good execution below it, campaign-supported, no gradual warning as you approach it. |
 | **Yield** | Around 7% through NAV growth, sourced from a senior facility collateralized by Figure-owned HELOCs—not from the Treasury/repo assets backing YLDS. The rate floats with facility use and is published by the issuer. The Treasury layer pays SOFR minus 0.35%, around 3%, so roughly 3 to 4 points of PRIME's yield is payment for HELOC credit risk. |
-| **Used as collateral** | Heavily. Over half the supply is posted against borrowing on Morpho and Kamino at 86–88% LTV. Priced by an accrued-value oracle, so market dips don't trigger liquidations — but the mark can exceed what the collateral would sell for. |
+| **Used as collateral** | Heavily. ⚠️ **The share is under review: the posted figure dates from 2026-07-27 and supply has since grown 30.2%**, so "over half" is no longer established — the same dollars posted would now be under half. **That the practice is large is not in question**, on Morpho and Kamino at 86–88% LTV. Priced by an accrued-value oracle, so market dips don't trigger liquidations — but the mark can exceed what the collateral would sell for. |
 | **Admin & custody** | Hastra controls fulfillment and freeze functions; the token stack spans Ethereum, Solana, and Provenance. Hastra is a disclosed Figure related party and uses licensed Figure software. |
 | **Regulated?** | FCC/YLDS is SEC-registered and KPMG-audited. Hastra and PRIME are not, so holders rely on an unregulated wrapper and staking stack above the regulated certificate. |
 | **Biggest risk** | Deteriorating private-credit performance inside an opaque facility, imperfect reserve segregation, and an admin-mediated primary exit that is funded sale-by-sale rather than from a standing reserve. |
@@ -156,7 +164,7 @@ A third control sits alongside these. The programs that record who owns what, an
 
 The related-party disclosure cuts both ways. Hastra is not a Figure subsidiary, yet it is not fully arm's-length: its YLDS is booked as current debt to a related party, it pays Figure a 50-basis-point revenue royalty, and its protocol runs on a nontransferable Figure software licence whose initial term runs to December 2028 and renews annually thereafter. This makes the operating relationship more legible and reduces the “unknown offshore wrapper” concern. It also correlates failures that would otherwise be independent, and introduces termination and breach risk. Figure's certificate permissions, live mint and freeze controls elsewhere in the stack, unproven bankruptcy remoteness, and majority-Ethereum implementation exposure keep the score at 5.0.
 
-One thing a holder should know that the token's own documentation does not emphasise: PRIME is used far more as collateral than as a holding. Across Morpho on Ethereum and Kamino on Solana, well over $200M has been borrowed against posted PRIME — more than half the token's total value — at loan-to-value ceilings of 86% and 88%, the latter allowing roughly eight times leverage. There is currently no bad debt in any of those markets.
+One thing a holder should know that the token's own documentation does not emphasise: PRIME is used far more as collateral than as a holding. Across Morpho on Ethereum and Kamino on Solana, well over $200M has been borrowed against posted PRIME at loan-to-value ceilings of 86% and 88%, the latter allowing roughly eight times leverage. There is currently no bad debt in any of those markets. ⚠️ **This report previously called that borrowing more than half the token's total value; that fraction is withdrawn rather than restated.** The collateral figures were measured on 2026-07-27 and **supply has since grown 30.2%**, so the denominator moved while the numerator has not been re-read. ✅ **The borrowed amount stands as a measured floor; the ratio does not, and building a new one from a fresh denominator and a stale numerator would be worse than saying so.**
 
 That matters less than it first appears, for a reason worth understanding. Lending venues price PRIME from a Chainlink exchange-rate feed that tracks its accrued value, not from its market price. So a fall in the secondary market cannot by itself trigger liquidations, and the reflexive spiral you would otherwise expect from a thinly traded asset at 88% LTV is structurally absent. That is a genuine design strength.
 
@@ -222,6 +230,8 @@ That is why the mark falls to 5.0, but not lower. Backing still reconciles rough
 *This report uses public documentation, market data, two published audits, independent Solana, Ethereum, and Provenance reads, and FCC filings available through [EDGAR](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001974395). Corrections welcome to info@tidresearch.com.*
 
 ## Revision history
+
+- **2026-09-09 — supply re-measured on both chains; market cap corrected onto a stated basis; two collateral fractions withdrawn.** ⚠️ **Total supply is 566,094,909 PRIME, up 30.2%** from the 434.9M read on 2026-07-27 — and the growth is entirely on Ethereum (278.6M → **432,420,596**, +55%) while **Solana fell** to 133,674,313, moving the split from roughly two-thirds Ethereum to **76%**. ⚠️ **`market_cap_approx` had been 480,000,000, a TOKEN SUPPLY figure sitting in a field that is USD site-wide**, six weeks stale besides. It is now **$599M**: supply measured on both chains, times the PRIME/WYLDS oracle at **1.058394**, times an assumed **$1.00** wYLDS peg — **two measured legs and one assumed leg**, said plainly so the figure moves if wYLDS does. ✅ **The gap to the internal 457,000,000 was a basis difference and not a disagreement** — that figure was supply × NAV at 2026-07-27, this one was raw supply. ⚠️ **Two collateral-share claims are withdrawn rather than restated:** "over half the supply is posted" and "more than half the token's total value" both divided by a denominator that has since moved 30.2%, against a numerator not re-read. **The borrowed amount stands as a measured floor; the fraction does not.** ✅ **No scores changed** — nothing measured bears on an axis, and growth in an asset whose risks are structural is not by itself a re-score.
 
 - **2026-09-08 — Backing 5.0 added; no other axis moved.** The axis was one-sided rather than absent by design — 11 other vault-share reports here carry both fields. ⚠️ **What backs PRIME is a CW20 receipt claim on lending pools, not a reserve of YLDS, and 97.59% of it is a claim on the Home Equity pool alone** ($592.81M of $607.47M). ⚠️ **Coverage at that layer is 100.1763% — a 17.6bp cushion on a $1.07M surplus over $606.4M of wYLDS.** ⚠️ **Three cushions sit at three layers and do not add:** 17.6bp at the wrapper, about 5% at the facility on a 95% advance rate, and 100.74% at FCC, which is the borrower's reserve requirement one layer further out. **The largest is the furthest away; the nearest is the thinnest.** Report migrated to the six-axis core so the new axis renders — the historical vault-share rubric has no Backing row.
 
