@@ -96,7 +96,23 @@ apxUSD is a $1-target stablecoin from Apyx, a young protocol (live since Feb 202
 |---|---|---|---|---|
 | $1 target, RWA-backed synthetic (broke peg June 2026) | None (yield routes to apyUSD) | DEX (Curve) or Apyx USDC settlement (opaque) | about 6 months | Ethereum, Base, BNB Chain |
 
-## The June 2026 depeg
+## Score breakdown
+
+Every axis now states its reason.
+
+| Dimension | Score | Notes |
+|---|---:|---|
+| Stability | 2.5 | The June 2026 depeg is the record, and the post-mortem is on the page above. Held rather than recovered |
+| Backing | 2.0 | Attested collateral ratio sits just under par on both of the issuer's own published bases — **98.0177% netted, 98.5901% gross** — and the netting is what the axis has to look through |
+| Liquidity & Exit | 3.0 | Unchanged. Manual mint/redeem plumbing was the thing the depeg broke, and the off-hours mismatch that caused it is structural rather than fixed |
+| **Dependencies** | **3.0** | **STRC is 86.7% of what actually backs the token on the issuer's own netted basis**, against a 56.44% gross share — two of the four basket legs are the protocol's own positions. Argued under [4 · Dependencies](#4--dependencies--30) |
+| **Contract & Admin** | **4.5** | **Three Safes: token governance 4-of-6 behind 72h, STRCx custody 3-of-6 with no delay, bridge 4-of-7 with no delay.** ⚠️ **The custody leg binds** — same owner set as governance, no wait, over the reserve asset. Argued under [5 · Contract & Admin](#5--contract--admin--45) |
+| Issuer | 5.0 | Unchanged, and deliberately about **behaviour rather than the contract layer** — the June operational failures are what stepped it down |
+| **Overall** | **3.0** | Unchanged. Neither new axis argues the composite up or down |
+
+## 1 · Stability — 2.5
+
+### The June 2026 depeg
 
 apxUSD broke peg in the first week of June 2026. Two things happened at once:
 
@@ -107,7 +123,19 @@ The result: apxUSD traded at a material discount and Apyx's own attestation feed
 
 Treat the specific discount and collateral ratio as a **moving event, not a fixed number** — check the [live dashboard](https://tidresearch.com/dashboards/?asset=apxusd) for the current values. (One caveat: Apyx pulls its own secondary-market depth off-hours by design, so weekend snapshots overstate the steady-state dislocation.)
 
-## Backing & solvency
+### Peg & yield dynamics
+
+**apxUSD is designed to trade at $1 — and in June 2026 it didn't.** Peg integrity rests on three things, all of which the depeg tested:
+
+1. **STRC + cash backing holds its value.** STRC fell well below par, directly cutting reserve value. As of 06-29, Strategy defends STRC value with a discretionary soft floor (buyback / reserve) rather than a reflexive sub-$95 dividend hike — a bid under the price, not a peg. STRC is a ≈1-year-old instrument, not yet tested through a prolonged BTC drawdown or an MSTR equity-raise pause.
+2. **The Alpaca brokerage and the STRCx Safe hold what's reported.** Wolf's monthly CPA examinations independently verify the securities sleeve at two snapshot dates per month, and the STRCx Safe at [`0x37b0779a…`](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555) is verifiable on-chain in real time. Wolf does not opine on the cash sleeve after the April scope narrowing.
+3. **Secondary depth absorbs flows.** It did not absorb the June redemption wave at par.
+
+**What broke the peg, and what restores it:** STRC de-anchoring on a concentrated reserve plus a redemption wave pushed collateralization below par, and with no atomic redemption there's no automatic arbitrage to close the gap. The path back to $1 requires STRC to re-rate up — now on Strategy's discretionary soft-floor bid (the $1.0B STRC-priority buyback plus a cash reserve that has since built to a record $4.80B), not the old forced sub-$95 dividend hike — and Apyx to restore the collateral ratio to ≥100% on the attested feed for a sustained window. As of August 2026 the first half has largely happened and the second has not, which is why the scores are unchanged.
+
+**"Apyx 2.0" — an announced redemption redesign (June 15, 2026).** In a follow-up to the post-mortem, Apyx outlined a reworked mint/redeem model intended to fix a flaw the June event exposed. Everyone — in calm and in stress — would mint and redeem at a single **Redemption Value**, a floor price carrying a small spread, with the dashboard's headline NAV relabeled **Total Collateral Value** so the gap between the two reads directly as the overcollateralization buffer (their worked example: $1.02 of collateral behind a $1.00 redemption floor). Approved counterparties would quote against the reserve through a structured **RFQ**. Apyx frames the redesign as closing the prior "free put option" — under the old NAV-redemption logic, the first redeemers in a drawdown could arbitrage the buffer at the expense of everyone who stayed, exactly the dynamic that played out in June; under Redemption Value the buffer instead accrues to long-term holders. The intent is a genuine improvement in the redemption logic. **The important caveat: this is blog-only as of this revision.** Apyx's own docs at [`docs.apyx.fi`](https://docs.apyx.fi) still describe the old mechanism (apxUSD "settled in USDC / not directly redeemable"), no contract, PSM, or cooldown change has been disclosed, and redemption stays off-chain and is now explicitly gated to "approved counterparties." Redemption Value is an announced pricing *policy*, not an enforceable on-chain mechanism — so it doesn't change the no-atomic-redemption reality behind the Peg and Backing scores, and the scores are unchanged. Read it as a credible fix that is **pending adoption into the docs and on-chain confirmation**, not as a live guarantee that Apyx now redeems at a floor.
+
+## 2 · Backing — 2.0
 
 **Backing is verifiable through two layers.** (a) A continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi) signs each snapshot from a secure enclave with a key registered on-chain. (b) Monthly third-party CPA-firm attestations by **Wolf & Company, P.C.** (Boston; AICPA examination standards) published at [`docs.apyx.fi`](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) — March 2026 and April 2026 reports both signed. The live dashboard shows reserves, supply, and collateralization; as of this revision the attested ratio is **below 100%** (see *The June 2026 depeg* above).
 
@@ -131,21 +159,7 @@ That correction — more STRC concentration than previously scored, and a thinne
 
 **A note on "solvent."** In its post-mortem Apyx says it "remained solvent throughout — reserves exceeded the *market* value of supply." That is a weaker claim than reserves covering supply at **par ($1)**. By the stricter, standard measure — collateral ratio versus par — apxUSD has been below 100%. Both framings are true; the par-based one is the conservative one, and it's the one that matters when you're holding a token that's supposed to be worth a dollar.
 
-## Score breakdown
-
-Every axis now states its reason.
-
-| Dimension | Score | Notes |
-|---|---:|---|
-| Stability | 2.5 | The June 2026 depeg is the record, and the post-mortem is on the page above. Held rather than recovered |
-| Backing | 2.0 | Attested collateral ratio sits just under par on both of the issuer's own published bases — **98.0177% netted, 98.5901% gross** — and the netting is what the axis has to look through |
-| Liquidity & Exit | 3.0 | Unchanged. Manual mint/redeem plumbing was the thing the depeg broke, and the off-hours mismatch that caused it is structural rather than fixed |
-| **Dependencies** | **3.0** | ⚠️ **Cut from an unsourced 5.0.** Gross basket (2026-09-07): **STRC 56.44%**, Inventory 17.55%, protocol-owned liquidity 17.33%, cash 8.67%. ⚠️ **But the gross share understates it and the issuer's own basis says so** — the attested ratio is netted on both sides, and **on that basis STRC is 175.5M / 202.5M = 86.7% of what actually backs the token.** ⚠️ **Two of the four legs are circular:** POL and Inventory are the protocol's own positions sitting inside its own backing, and netting them out is exactly what produces 86.7%. **For a dependency read the netted figure is the honest one** |
-| **Contract & Admin** | **4.5** | ⚠️ **New axis, and it was scored nowhere rather than scored twice** — Issuer's 5.0 explicitly prices behaviour, "not the contract layer". **Three Safes, not one:** token governance **4-of-6 behind a 72-hour timelock**; STRCx custody **3-of-6, no delay**; bridge **4-of-7, no delay**. ⚠️ **The binding constraint is the custody leg: three keys and no wait, over the reserve asset, on an owner set identical to token governance.** A delay is only a delay if the people it binds have no faster door. ✅ Held at 4.5 rather than lower on a genuine audit stack (Quantstamp, Certora formal verification, Zellic) and a guardian role that can cancel scheduled operations |
-| Issuer | 5.0 | Unchanged, and deliberately about **behaviour rather than the contract layer** — the June operational failures are what stepped it down |
-| **Overall** | **3.0** | Unchanged. Neither new axis argues the composite up or down |
-
-## Exit liquidity
+## 3 · Liquidity & Exit — 3.0
 
 **Entry:** Mint at Apyx (manual, EIP-712 signed order workflow) or buy on the Curve apxUSD/USDC pool on Ethereum. The Curve pool is the realistic retail entry and exit venue.
 
@@ -155,19 +169,21 @@ Every axis now states its reason.
 
 The durable finding on this axis is that secondary depth is **variable and issuer-discretionary**, not the dependable book earlier scores implied — which, together with a peg that has been dislocated continuously since June (currently around $0.94, having been as low as about $0.82, with KyberSwap aggregator depth rather than weekend pool depth the canonical exit mark), is why the **Liquidity axis sits at 3.0**. The narrowing discount improves the *level* of the exit mark without changing the finding: depth still varies with the issuer's own participation and the time of day. Two related constraints live on other axes: **coordinated-run capacity** (secondary depth is a small fraction of supply, a backing/buffer concern) and **redemption-mechanism opacity** (the undocumented off-chain settlement path, a peg-mechanism concern).
 
-## Peg & yield dynamics
+## 4 · Dependencies — 3.0
 
-**apxUSD is designed to trade at $1 — and in June 2026 it didn't.** Peg integrity rests on three things, all of which the depeg tested:
+**Gross basket (2026-09-07): STRC 56.44%, Inventory 17.55%, protocol-owned liquidity 17.33%, cash 8.67%.** ⚠️ **The gross share understates the exposure, and the issuer's own basis says so** — the attested ratio is netted on both sides, and **on that basis STRC is 175.5M / 202.5M = 86.7% of what actually backs the token.**
 
-1. **STRC + cash backing holds its value.** STRC fell well below par, directly cutting reserve value. As of 06-29, Strategy defends STRC value with a discretionary soft floor (buyback / reserve) rather than a reflexive sub-$95 dividend hike — a bid under the price, not a peg. STRC is a ≈1-year-old instrument, not yet tested through a prolonged BTC drawdown or an MSTR equity-raise pause.
-2. **The Alpaca brokerage and the STRCx Safe hold what's reported.** Wolf's monthly CPA examinations independently verify the securities sleeve at two snapshot dates per month, and the STRCx Safe at [`0x37b0779a…`](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555) is verifiable on-chain in real time. Wolf does not opine on the cash sleeve after the April scope narrowing.
-3. **Secondary depth absorbs flows.** It did not absorb the June redemption wave at par.
+⚠️ **Two of the four legs are circular.** Protocol-owned liquidity and Inventory are the protocol's own positions sitting inside its own backing, and netting them out is exactly what produces 86.7%. **For a dependency read the netted figure is the honest one**, because a basket that counts your own positions as diversification is not diversified.
 
-**What broke the peg, and what restores it:** STRC de-anchoring on a concentrated reserve plus a redemption wave pushed collateralization below par, and with no atomic redemption there's no automatic arbitrage to close the gap. The path back to $1 requires STRC to re-rate up — now on Strategy's discretionary soft-floor bid (the $1.0B STRC-priority buyback plus a cash reserve that has since built to a record $4.80B), not the old forced sub-$95 dividend hike — and Apyx to restore the collateral ratio to ≥100% on the attested feed for a sustained window. As of August 2026 the first half has largely happened and the second has not, which is why the scores are unchanged.
+## 5 · Contract & Admin — 4.5
 
-**"Apyx 2.0" — an announced redemption redesign (June 15, 2026).** In a follow-up to the post-mortem, Apyx outlined a reworked mint/redeem model intended to fix a flaw the June event exposed. Everyone — in calm and in stress — would mint and redeem at a single **Redemption Value**, a floor price carrying a small spread, with the dashboard's headline NAV relabeled **Total Collateral Value** so the gap between the two reads directly as the overcollateralization buffer (their worked example: $1.02 of collateral behind a $1.00 redemption floor). Approved counterparties would quote against the reserve through a structured **RFQ**. Apyx frames the redesign as closing the prior "free put option" — under the old NAV-redemption logic, the first redeemers in a drawdown could arbitrage the buffer at the expense of everyone who stayed, exactly the dynamic that played out in June; under Redemption Value the buffer instead accrues to long-term holders. The intent is a genuine improvement in the redemption logic. **The important caveat: this is blog-only as of this revision.** Apyx's own docs at [`docs.apyx.fi`](https://docs.apyx.fi) still describe the old mechanism (apxUSD "settled in USDC / not directly redeemable"), no contract, PSM, or cooldown change has been disclosed, and redemption stays off-chain and is now explicitly gated to "approved counterparties." Redemption Value is an announced pricing *policy*, not an enforceable on-chain mechanism — so it doesn't change the no-atomic-redemption reality behind the Peg and Backing scores, and the scores are unchanged. Read it as a credible fix that is **pending adoption into the docs and on-chain confirmation**, not as a live guarantee that Apyx now redeems at a floor.
+**Three Safes, not one.** Token governance is **4-of-6 behind a 72-hour timelock**; STRCx custody is **3-of-6 with no delay**; the bridge is **4-of-7 with no delay**.
 
-## Audits, admin & team
+⚠️ **The binding constraint is the custody leg: three keys and no wait, over the reserve asset, on an owner set identical to token governance.** **A delay is only a delay if the people it binds have no faster door**, and here they do.
+
+✅ **Held at 4.5 rather than lower** on a genuine audit stack — Quantstamp, Certora formal verification and Zellic — and a guardian role that can cancel scheduled operations.
+
+## 6 · Issuer — 5.0
 
 **Backers + audits + contract layer are solid; the June depeg exposed the operations:**
 

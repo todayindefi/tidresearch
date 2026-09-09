@@ -46,7 +46,13 @@ The 5.5/10 is driven by an unusually strong backing story set against an unusual
 
 Supply has moved a lot and is worth reading correctly. It fell from about $283M in May to about $155M in late July as holders rotated into the staked sUSDai leg for yield, and has since **recovered to $172.63M**. Coverage held above par through all of it. This is capital moving between the two legs of one protocol, not redemption stress.
 
-## Backing & solvency
+## 1 · Stability — 7.0
+
+**Peg.** USDai has held close to par since launch, with the Curve-implied price sitting a fraction above the dollar at the last read. The **Peg axis sits at 7.0**: the 1:1 PYUSD redemption available to onboarded participants is a genuine par-enforcement mechanism, and the arbitrage that transmits it to the secondary market has worked in calm conditions. What holds it there rather than higher is that the enforcement mechanism runs through a gated participant set, so the peg's defense in a stress event depends on onboarded market makers choosing to arbitrage into a thin pool. Extreme historical depeg prints on data aggregators are seed-pool artifacts and should be disregarded.
+
+**Yield.** USDai is **non-yield-bearing.** The reserve economics are captured at the protocol level, and holders seeking yield stake into sUSDai, which is where NAV growth, GPU credit exposure and the 30-day redemption queue all live. On the holder side this makes USDai structurally comparable to holding USDC — a stable unit of account, no yield — with the difference that its float is considerably smaller and its secondary market considerably thinner.
+
+## 2 · Backing — 7.0
 
 USDai's distinguishing property is that the reserve is not somewhere else. There is no custodian wallet, no off-chain treasury, no reserve-manager contract — the **USDai token contract holds the PYUSD itself**. Verified on-chain on 2026-08-12, the contract held **174,318,300 PYUSD against 172,630,798 USDai outstanding on Arbitrum**. ⚠️ **That 100.98% was never a cushion. It was a denominator missing three chains.** Re-measured across all four deployments on 2026-08-26, supply is **173,113,349.09** against a PYUSD reserve of **173,113,349.10** — the two sides reconcile to **about a cent on $173M**. **Coverage sits at par by construction**: USDai mints one-for-one against PYUSD held in the token contract, so the ratio is not a margin that could erode. It is an identity.
 
@@ -60,7 +66,21 @@ The 101.4% recorded in July and the 100.98% above are **both Arbitrum-only**, an
 
 **A note on where the token lives, for anyone doing the two-read check themselves.** USDai is deployed on four chains — Arbitrum, Plasma, Base and Ethereum — but **effectively all of it is on Arbitrum**: as of 2026-08-18 the off-Arbitrum floats were roughly 790,000 on Plasma, 176,000 on Base and under 6,000 on Ethereum, against about 175M on Arbitrum. ⚠️ **It is tempting to reason that, being well under one percent of supply, the bridged float does not move the coverage picture. That reasoning fails here, and the conclusion it reaches happens to survive, which is exactly why it is worth spelling out.** Coverage is above par on either convention. But on Arbitrum alone it reads **100.55%**; across all four deployments it reads **100.0000000%**. **Counting the bridged tokens does not nudge the ratio. It consumes the entire apparent cushion.** When the surplus is itself half a percent, a sub-one-percent change in the denominator is not a rounding detail — it is the whole quantity. **A small share of supply is immaterial only relative to the margin it is being measured against.** **The live dashboard below now computes on the same four-chain basis** — it reads coverage at par, on `all_chain_supply`, and reports the per-chain split that sums to it. ⚠️ **It also raises a "coverage thin" warning, and that is correct rather than alarming: at par there is no cushion, which is exactly what the phantom 0.548% surplus used to suppress.** A flag appearing here is the monitor describing the mechanism properly, not backing deteriorating. **The reserve, the mint-and-redeem path and the coverage check all live on Arbitrum**, which is the contract to read. One practical trap: **the token has the same address on every chain** (`0x0A1a1A10…82EF`), a deterministic deployment, so an address-only check cannot tell you which chain you are looking at — pair the address with the chain id. One use the Plasma float does serve: USDai is accepted as lending collateral on Fluid there, where it marks at about $0.9993.
 
-## The underlying: PYUSD, and what USDai is not exposed to
+## 3 · Liquidity & Exit — 4.5
+
+This is the weakest dimension by a distance, and the reason a strong backing score does not produce a strong overall one.
+
+**For onboarded market makers and institutional depositors:** direct 1:1 PYUSD mint and redemption at the contract. This is the clean exit — no slippage, no AMM tax. It requires completing Permian's KYC onboarding, and since Q2 2026 contract-level mint and redeem have been **restricted to that group**.
+
+**For everyone else:** the secondary market, dominated by the Curve USDai/USDC pool, with a Uniswap V4 pool alongside it. That pool sits **below about $2M against a supply near $173M** — roughly one percent of the float — and there is **no centralized-exchange listing**. Retail-size exits price fine; in calm conditions arbitrageurs hold USDai close to par, and it has traded around $1.0007. But the depth that carries you in a stress event is not there, and a holder of any size cannot exit through secondary without moving the price against themselves.
+
+**The asymmetry between those two paths is the single biggest retail-relevant risk on this asset.** It is not a solvency risk — the reserve is there and verifiable — it is a risk that the mechanism which guarantees par is unavailable to you specifically. Holding, transferring and staking remain fully permissionless; only the redemption window is gated.
+
+The third path in practice is to **stake into sUSDai** rather than exit, which trades a liquidity problem for a credit-and-queue problem. Different risk profile, [different report](/reports/susdai/).
+
+## 4 · Dependencies — 7.5
+
+**What USDai passes through to, and what it is not exposed to.**
 
 **A note on how the two backing-related axes divide, because they are not measuring the same thing.** On this rubric **Backing scores whether the reserve can be *verified*** — here, a `baseToken()` call and a `balanceOf` against supply, which is about as good as that gets. **Underlying scores what the reserve *is*.** A reader comparing this report against one that folds both into a single number should expect the split to produce different-looking figures for the same book; it is a difference in what is being asked, not in what was found.
 
@@ -78,25 +98,7 @@ The confusion is understandable and worth resolving explicitly. USD.AI's **origi
 
 **Using M0's rails is not holding M0's collateral.** No ceiling from the `$M` assessment applies here, and USDai's backing score is unaffected by it.
 
-## Exit liquidity
-
-This is the weakest dimension by a distance, and the reason a strong backing score does not produce a strong overall one.
-
-**For onboarded market makers and institutional depositors:** direct 1:1 PYUSD mint and redemption at the contract. This is the clean exit — no slippage, no AMM tax. It requires completing Permian's KYC onboarding, and since Q2 2026 contract-level mint and redeem have been **restricted to that group**.
-
-**For everyone else:** the secondary market, dominated by the Curve USDai/USDC pool, with a Uniswap V4 pool alongside it. That pool sits **below about $2M against a supply near $173M** — roughly one percent of the float — and there is **no centralized-exchange listing**. Retail-size exits price fine; in calm conditions arbitrageurs hold USDai close to par, and it has traded around $1.0007. But the depth that carries you in a stress event is not there, and a holder of any size cannot exit through secondary without moving the price against themselves.
-
-**The asymmetry between those two paths is the single biggest retail-relevant risk on this asset.** It is not a solvency risk — the reserve is there and verifiable — it is a risk that the mechanism which guarantees par is unavailable to you specifically. Holding, transferring and staking remain fully permissionless; only the redemption window is gated.
-
-The third path in practice is to **stake into sUSDai** rather than exit, which trades a liquidity problem for a credit-and-queue problem. Different risk profile, [different report](/reports/susdai/).
-
-## Peg & yield dynamics
-
-**Peg.** USDai has held close to par since launch, with the Curve-implied price sitting a fraction above the dollar at the last read. The **Peg axis sits at 7.0**: the 1:1 PYUSD redemption available to onboarded participants is a genuine par-enforcement mechanism, and the arbitrage that transmits it to the secondary market has worked in calm conditions. What holds it there rather than higher is that the enforcement mechanism runs through a gated participant set, so the peg's defense in a stress event depends on onboarded market makers choosing to arbitrage into a thin pool. Extreme historical depeg prints on data aggregators are seed-pool artifacts and should be disregarded.
-
-**Yield.** USDai is **non-yield-bearing.** The reserve economics are captured at the protocol level, and holders seeking yield stake into sUSDai, which is where NAV growth, GPU credit exposure and the 30-day redemption queue all live. On the holder side this makes USDai structurally comparable to holding USDC — a stable unit of account, no yield — with the difference that its float is considerably smaller and its secondary market considerably thinner.
-
-## Audits, admin & team
+## 5 · Contract & Admin — 3.0
 
 **Admin control over UPGRADES sits behind a 48-hour on-chain timelock, and for that path the delay is binding rather than decorative.** ⚠️ **Read the scope of that sentence carefully: minting never touches the timelock at all.** See below. USDai's ProxyAdmin (`0x2ddf39c7…`) is owned by a **`TimelockController` at `0x0EEA1EE0…639b` with a minimum delay of 172,800 seconds — exactly 48 hours** — re-verified independently on-chain on 2026-08-12. The detail that makes it real: **the timelock holds its own admin role**, so the delay cannot be shortened, and no new role can be granted, without first passing through the full 48 hours. Proposal authority sits with a **3-of-3 Safe multisig** with three known signers; operational permissions on the token sit with a **second 3-of-3 Safe at a different address — but walked per chain on 2026-08-26, the two hold the identical three owners on all four deployments.** ⚠️ **Two addresses, one body.** Describing the second as a *sibling* multisig would be literally true and would imply a separation of duties that does not exist. ⚠️ **And the canceller role sits with the proposer**, so nothing inside the system can stop a queued upgrade: **the 48 hours are a notice window for holders, not a control.** That does not weaken the point above — the delay is real and cannot be shortened — but it buys time to react rather than a veto anyone can exercise. **Note what this is not:** 3-of-3 has zero redundancy, so every key is load-bearing. This is not a thin-threshold finding. No role revocations have occurred since deployment.
 
@@ -142,6 +144,8 @@ Walked on 2026-08-26 by bytecode extraction and call simulation rather than by r
 That distinction — a timelock that governs itself versus one an admin can shorten at will — is the same test applied in the [Saturn reports](/reports/usdat/), and it lets you compare admin posture across issuers on like terms. USDai passes it. In practice it means a malicious or buggy upgrade is publicly visible for two days before it can take effect, and for a holder whose realistic exit is a secondary pool that clears in minutes, **two days is a usable window**. The same timelock owns the ProxyAdmin on sUSDai, so both legs of the protocol share one authority chain.
 
 The upgrade posture is still meaningfully stronger than the single-key setups common among stablecoins of the same age. **But it is one path of two, and the faster one is unguarded**, which is why the Issuer axis sits at 5.0.
+
+## 6 · Issuer — 5.0
 
 **Audits:** one security review, by Cantina (Spearbit), covering USDai and sUSDai together — 0 critical, 0 high, 1 medium since fixed. A live bug bounty is running. One audit is thin by the standards of a mature issuer, adequate for a protocol under a year old.
 

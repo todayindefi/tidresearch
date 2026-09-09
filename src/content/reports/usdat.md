@@ -55,7 +55,27 @@ Two things this is **not**. It is not a shortfall, and it is not a depeg. Covera
 
 The important nuance on the supply contraction is that the **backing ratio never moved**. Roughly a third of the float redeemed out over ten weeks and the reserve tracked it down almost exactly, holding at or just above 100% the whole way. That is the closest thing to a live stress test this asset has, and it passed.
 
-## Backing & solvency
+## Score breakdown
+
+| Dimension | Score | Notes |
+|---|---:|---|
+| Stability | 6.5 | Unchanged |
+| Backing | 5.5 | Unchanged. The chain is verifiable at the first and third links and not at the middle one — see above |
+| Liquidity & Exit | 5.5 | Unchanged. Single-venue, and a shrinking float makes it harder to improve rather than easier |
+| **Dependencies** | **5.0** | ⚠️ **The reserve is 100.00% PYUSDx**, with the M^0 leg rotated out to 0.00% — **every dollar sits under one intermediary.** Held at 5.0 on **concentration, not quality**: the asset at the end of the chain improved while the number of independent paths to it went to one. **The verifiability loss is charged to Backing rather than here**, and PYUSD's quality is not credited upward, because doing so would assert a pass-through that nobody outside MoonPay can show |
+| **Contract & Admin** | **4.0** | ⚠️ **New axis.** Ethereum reach is full — all seven controller slots checked. The upgrade path runs EIP-1967 admin → ProxyAdmin `0xcf1072da…1a7d` → **SaturnTimelock**, terminal, `getMinDelay()` **432,000s = 5 days**, self-administered, with execution permissionless via `address(0)`. ⚠️ **But `compromise_threshold` is 1** — a single common-operator key reaches the path, and the five days is notice rather than a second approval. ⚠️ **And the deciding fact is an operating one, not a contract one: `isAllowedAsset(PYUSDx)` returns FALSE while `totalAssets()` reports 38.12 against a $63.67M reserve.** The contract is behaving exactly as written; **the operator rotated the reserve into an asset it never allowlisted.** ⚠️ **The BNB threshold is recorded as unverified rather than as a number** — an earlier record read 3, which was a different protocol's Safe entirely, and a wrong identity is worse than an admitted gap |
+| Issuer | 5.0 | Unchanged |
+| **Overall** | **4.5** | Unchanged. Neither new axis argues the composite up or down |
+
+## 1 · Stability — 6.5
+
+**Peg.** USDat has held a tight band against USDC since launch, and that band has tightened rather than loosened as supply contracted. Brief launch-day prints outside it were seed-pool noise, not stress. The live dashboard renders the current Curve-implied price and deviation from the dollar peg.
+
+**Yield.** USDat is **non-yield-bearing by design.** The reserves accrue yield at the Treasury layer, but that yield is captured by Saturn's protocol revenue vault, not passed to USDat holders. Users seeking yield stake into [sUSDat](/reports/susdat/), Saturn's sibling vault that carries the STRC-dividend pass-through — a materially riskier instrument.
+
+This makes USDat structurally analogous to USDC or USDT on the holder side: a stable unit of account, no yield, with the protocol monetizing the float. The trade-off is that USDat's float is institutional-permissioned rather than general-purpose.
+
+## 2 · Backing — 5.5
 
 USDat's distinguishing claim at launch — and it was true — was that **all capital sits directly in the USDat smart contract address**: no off-chain treasury, no custodian wallet, no separate reserve-manager contract, just the token contract holding $M and USDC. **The first half of that still holds. What changed on 2026-08-19 is what the contract holds.**
 
@@ -92,19 +112,7 @@ The other side of that: **a permissioned stablecoin that sheds a third of its fl
 
 **Forward risk worth tracking:** Saturn's documentation still describes possible future allocations toward digital-credit exposure — most plausibly STRC, Strategy's variable-rate perpetual preferred; see the [sUSDat report](/reports/susdat/) for what that backing class looks like under stress. **As of 2026-08-23 that rotation has not started**, and the yield-and-credit leg of the Saturn stack remains contained inside sUSDat's dynamic reserve. It is worth stating the lesson of this revision plainly: this report spent three revisions watching for the STRC rotation, and a completely different one arrived.
 
-## Score breakdown
-
-| Dimension | Score | Notes |
-|---|---:|---|
-| Stability | 6.5 | Unchanged |
-| Backing | 5.5 | Unchanged. The chain is verifiable at the first and third links and not at the middle one — see above |
-| Liquidity & Exit | 5.5 | Unchanged. Single-venue, and a shrinking float makes it harder to improve rather than easier |
-| **Dependencies** | **5.0** | ⚠️ **The reserve is 100.00% PYUSDx**, with the M^0 leg rotated out to 0.00% — **every dollar sits under one intermediary.** Held at 5.0 on **concentration, not quality**: the asset at the end of the chain improved while the number of independent paths to it went to one. **The verifiability loss is charged to Backing rather than here**, and PYUSD's quality is not credited upward, because doing so would assert a pass-through that nobody outside MoonPay can show |
-| **Contract & Admin** | **4.0** | ⚠️ **New axis.** Ethereum reach is full — all seven controller slots checked. The upgrade path runs EIP-1967 admin → ProxyAdmin `0xcf1072da…1a7d` → **SaturnTimelock**, terminal, `getMinDelay()` **432,000s = 5 days**, self-administered, with execution permissionless via `address(0)`. ⚠️ **But `compromise_threshold` is 1** — a single common-operator key reaches the path, and the five days is notice rather than a second approval. ⚠️ **And the deciding fact is an operating one, not a contract one: `isAllowedAsset(PYUSDx)` returns FALSE while `totalAssets()` reports 38.12 against a $63.67M reserve.** The contract is behaving exactly as written; **the operator rotated the reserve into an asset it never allowlisted.** ⚠️ **The BNB threshold is recorded as unverified rather than as a number** — an earlier record read 3, which was a different protocol's Safe entirely, and a wrong identity is worse than an admitted gap |
-| Issuer | 5.0 | Unchanged |
-| **Overall** | **4.5** | Unchanged. Neither new axis argues the composite up or down |
-
-## Exit liquidity
+## 3 · Liquidity & Exit — 5.5
 
 Two paths, very different audiences:
 
@@ -120,17 +128,11 @@ The peg itself is the strong part of the picture: USDat has traded inside a band
 
 That permissioning penalty is scored on the **Issuer** axis (5.0), not here, so the two are not double-counted: Liquidity scores the depth that actually exists for someone already inside the addressable universe.
 
-## Peg & yield dynamics
+## 4 · Dependencies — 5.0
 
-**Peg.** USDat has held a tight band against USDC since launch, and that band has tightened rather than loosened as supply contracted. Brief launch-day prints outside it were seed-pool noise, not stress. The live dashboard renders the current Curve-implied price and deviation from the dollar peg.
+**What USDat passes through to, as distinct from what backs it.** ⚠️ **The reserve is now effectively 100% PYUSDx**, so a holder's exposure runs through **Paxos** — the PYUSDx issuer — rather than through Saturn alone. **Composition and verification are argued under Backing above; this axis is about the counterparty that composition creates.** ⚠️ **A single-name reserve is a single-name dependency**, and the diversification a multi-asset reserve would provide is not present.
 
-**Yield.** USDat is **non-yield-bearing by design.** The reserves accrue yield at the Treasury layer, but that yield is captured by Saturn's protocol revenue vault, not passed to USDat holders. Users seeking yield stake into [sUSDat](/reports/susdat/), Saturn's sibling vault that carries the STRC-dividend pass-through — a materially riskier instrument.
-
-This makes USDat structurally analogous to USDC or USDT on the holder side: a stable unit of account, no yield, with the protocol monetizing the float. The trade-off is that USDat's float is institutional-permissioned rather than general-purpose.
-
-## Audits, admin & team
-
-**Audits:** three reports published — Three Sigma (Audit #1) and Certora (Audits #2 and #3). Certora is a top-tier formal-verification shop; two Certora reports plus one Three Sigma is a real audit package for a protocol under a year old. Individual finding severities are not surfaced in this review. No new audits have been published since April 2026.
+## 5 · Contract & Admin — 4.0
 
 **Admin control sits behind a 5-day on-chain timelock.** USDat is a TransparentUpgradeableProxy whose upgrade path routes through an OZ ProxyAdmin. Both `DEFAULT_ADMIN_ROLE` on the token and ownership of that ProxyAdmin are held by a **`TimelockController` at `0xfD5782E3BFF366601da3973aE30C583dE4F08A67` with a minimum delay of 432,000 seconds — exactly five days.** Verified independently on-chain on 2026-08-11. Practically, this means: **if Saturn wants to change the contract or upgrade its logic, the action becomes publicly visible five days before it can take effect, and you can redeem or sell in the meantime.** For a token that is redeemable 1:1 at par, five days of notice is a meaningful protection rather than a formality.
 
@@ -147,14 +149,18 @@ The migration happened **between 2026-06-08 and 2026-06-10** — during the shar
 
 For a KYC-permissioned instrument these are ordinary compliance powers, and their presence is not by itself alarming. Two things a reader should hold onto anyway. First, **they exist now and did not before**, so anyone who assessed this contract on an earlier revision of this report was assessing a smaller surface. Second, **the timelock governs who holds those roles, not when they can be used** — granting the role passes through five days, but a role-holder acts immediately. Who currently holds `FORCED_TRANSFER_MANAGER_ROLE` is not something this pass established.
 
+The same timelock now holds the admin role on **sUSDat** as well, so the two assets continue to share an admin surface — but that shared surface is now delay-gated rather than immediate. See the [sibling report](/reports/susdat/).
+
+## 6 · Issuer — 5.0
+
+**Audits:** three reports published — Three Sigma (Audit #1) and Certora (Audits #2 and #3). Certora is a top-tier formal-verification shop; two Certora reports plus one Three Sigma is a real audit package for a protocol under a year old. Individual finding severities are not surfaced in this review. No new audits have been published since April 2026.
+
 Four residual risks now sit against the issuer axis, and together they are why it moves from 5.5 to 5.0:
 
 - **Saturn is both sole proposer and sole canceller.** It alone decides what enters the queue and can withdraw anything it queued. The timelock constrains *speed and surprise*, not *authority*.
 - **The proposer key is represented as a Fireblocks 2-of-3 MPC wallet, and that representation cannot be verified on-chain.** An MPC wallet and an ordinary single-key address look identical from the outside. Taken at face value it means no single compromised device can queue an action; taken skeptically it is an issuer claim with no independent attestation behind it. Fireblocks does not publish per-customer proofs. This is load-bearing for the issuer score and is stated here rather than assumed.
 - **The holder universe is KYC-permissioned**, which is an issuer design choice with real consequences for composability and venue diversity, as described above.
 - **The documentation does not describe the asset.** Saturn's docs still state that the reserve targets *"100% M (M0's tokenized U.S. Treasuries product)"* and that *"Saturn has no plans to transition USDat's reserve asset away from tokenized U.S. Treasuries."* Strata's USDat page does not mention PYUSDx either. **That inconsistency is the issuer finding** — not that a rotation happened, which is an issuer's prerogative, but that a standing public commitment has been left contradicted by the contract. To be explicit about what we are *not* saying: **we are not calling this migration undisclosed.** Secondary coverage consistently describes a planned migration beginning 2026-08-19 and completing around 2026-08-26. We could not reach a primary Saturn announcement either to confirm it or to rule it out, and an issuer should not be marked down on a search summary. The verifiable finding is the stale commitment, and that is what the half-point prices.
-
-The same timelock now holds the admin role on **sUSDat** as well, so the two assets continue to share an admin surface — but that shared surface is now delay-gated rather than immediate. See the [sibling report](/reports/susdat/).
 
 **Team and backers:** named team with prior experience at Artemis and M31 Capital. $800K raised January 2026 from YZi Labs and Sora Ventures. Named institutional depositors disclosed (Flowdesk, Galaxy — around $10M aggregate). Operational partners include Galaxy, Securitize, and Clear Street.
 
@@ -195,4 +201,4 @@ Live backing composition, peg, slippage tiers, admin status, and drift-probe res
 
 *This report is based on public Saturn documentation and independent on-chain reads, most recently on 2026-08-23. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).*
 
-*Revision history: 2026-08-29 — **supply contraction and a scope correction; no score change.** Reserves read **78,289,018.32 PYUSDx against 78,289,018.32 USDat on Ethereum, ratio 1.000000** — down from 93,857,319.18 on 08-23, **−16.59%**. **The reserve has tracked supply to the cent throughout**, which is what makes this redemption rather than impairment. ⚠️ **On 2026-08-27 supply fell 15.74% in one day through 108 burns from a single account, which was 54.5% of the 30-day contraction and now holds zero.** That account is gone and **the contraction is not** — a further $2,172,153, or 2.70%, left on 08-29 without it. **`totalAssets()` now reports exactly 0.00**, against 38.12 previously: at a dust value the accessor is merely wrong, at zero anything dividing by it degenerates. **Backing figures are Ethereum-only.** BSC carries 3,110,021.56 tokens (3.72%) whose backing is unread rather than absent — that implementation exposes no backing accessor — so **no combined ratio is published**, since an Ethereum numerator over two-chain supply would read about 96.28% and invent a shortfall nobody measured. `market_cap_approx` is the sum of both supply legs, 81,399,040. **Scores held at 5.5 backing / 4.5 overall:** concentration is lower with that holder gone, and the finding — that a 15.7% position was invisible to every published source — is a measurement gap rather than a change in the asset. 
+*Revision history: 2026-08-29 — **supply contraction and a scope correction; no score change.** Reserves read **78,289,018.32 PYUSDx against 78,289,018.32 USDat on Ethereum, ratio 1.000000** — down from 93,857,319.18 on 08-23, **−16.59%**. **The reserve has tracked supply to the cent throughout**, which is what makes this redemption rather than impairment. ⚠️ **On 2026-08-27 supply fell 15.74% in one day through 108 burns from a single account, which was 54.5% of the 30-day contraction and now holds zero.** That account is gone and **the contraction is not** — a further $2,172,153, or 2.70%, left on 08-29 without it. **`totalAssets()` now reports exactly 0.00**, against 38.12 previously: at a dust value the accessor is merely wrong, at zero anything dividing by it degenerates. **Backing figures are Ethereum-only.** BSC carries 3,110,021.56 tokens (3.72%) whose backing is unread rather than absent — that implementation exposes no backing accessor — so **no combined ratio is published**, since an Ethereum numerator over two-chain supply would read about 96.28% and invent a shortfall nobody measured. `market_cap_approx` is the sum of both supply legs, 81,399,040. **Scores held at 5.5 backing / 4.5 overall:** concentration is lower with that holder gone, and the finding — that a 15.7% position was invisible to every published source — is a measurement gap rather than a change in the asset.
