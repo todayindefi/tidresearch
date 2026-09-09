@@ -18,6 +18,16 @@ last_verified: "2026-07-08"
 # list.  HOLDS at 2026-07-08 — the backing, issuer and structural
 # material was not re-read.
 # ⚠️ REFRESH IN PROGRESS — usdg is first in the 2026-09-09 walk and is NOT DONE.
+# ⚠️ Backing 7.5 and Issuer 7.5 were RE-MEASURED 2026-09-09 and both HELD — but
+# held is not the same as settled. Backing: the attestor moved Enrome -> KPMG on
+# 2026-02-27, a real improvement, not moved UP on one favourable fact. Issuer:
+# TWO OPEN QUESTIONS, both unresolved rather than adverse — which Paxos
+# Singapore entity holds the MPI licence, and whether the MAS stablecoin
+# framework is in force over USDG. A score should not move on the average of two
+# unresolved possibilities.
+# ⚠️ Price on the entity question: one lookup each in MAS' Financial Institutions
+# Directory. A third-party register returned HTTP 403 on riskAnalyst's attempt —
+# a REFUSED read, not an absence, and it must not settle the question by default.
 # ⚠️ `last_verified` HOLDS at 2026-07-08 DELIBERATELY. Backing 7.5 and Issuer 7.5
 # are still 63 days unverified, and Liquidity 6.5 is explicitly NOT re-derived —
 # a fresh stamp over an unmeasured axis is the false-fresh signal the field
@@ -49,7 +59,7 @@ overall_score: 7.0
 
 **Moderate risk · 7.0/10**
 
-> **A high-quality regulated dollar with a smaller-but-growing footprint.** USDG (Global Dollar) is issued by Paxos — the same regulated issuer behind PYUSD and USDP — through its Singapore entity, and it's backed 1:1 by cash and short-term US Treasuries held in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered, with monthly attestations. On backing and issuer quality it sits in the top tier. What holds it to a 7.0 is liquidity: it has grown fast to a top-30 asset (roughly 3x in its first stretch, now around $3B-plus), but its secondary-market and DeFi depth still sit well below USDC and USDT. The other thing that makes USDG distinctive is its business model — it shares its reserve income with the platforms that drive its adoption, the "Global Dollar Network."
+> **A high-quality dollar from a supervised issuer, with a smaller-but-growing footprint.** USDG (Global Dollar) is issued by Paxos — the same regulated issuer behind PYUSD and USDP — through its Singapore entity, and it's backed 1:1 by cash and short-term US Treasuries held in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered, with monthly attestations. On backing and issuer quality it sits in the top tier. What holds it to a 7.0 is liquidity: it has grown fast to a top-30 asset (roughly 3x in its first stretch, now around $3B-plus), but its secondary-market and DeFi depth still sit well below USDC and USDT. The other thing that makes USDG distinctive is its business model — it shares its reserve income with the platforms that drive its adoption, the "Global Dollar Network."
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -93,7 +103,15 @@ In practice that's a solid mechanism — tighter than a thin, unknown stablecoin
 
 USDG is backed 1:1 by **cash, cash-equivalents, and short-duration US Treasuries**, held in **segregated, bankruptcy-remote accounts** at DBS Bank and Standard Chartered — two reputable global custodians. Paxos publishes **monthly attestations** of the reserves.
 
-This is a genuinely high-quality reserve profile. The knock relative to USDC is narrow and specific: attestation is *monthly* rather than USDC's more frequent reserve-fund reporting, and USDG runs through Paxos's **Singapore (MAS) entity** rather than a US trust. Neither is a reserve-quality concern — the assets behind USDG are conservative and well-custodied. They're transparency-cadence and jurisdiction points, not composition risks.
+This is a genuinely high-quality reserve profile.
+
+✅ **The attestor changed, and it is an upgrade: reports posted on or after 2026-02-27 are issued by KPMG LLP.** Everything before that was **Enrome LLP**, a small Singapore practice — so the only third-party check that exists for these reserves moved to a Big Four firm.
+
+⚠️ **Read that with its limit attached, because "KPMG" invites a stronger reading than the engagement supports.** Both the Enrome and the KPMG examinations are conducted under **ISCA standards** (Institute of Singapore Chartered Accountants) — **not PCAOB, not AICPA.** ⚠️ **An attestation is not an audit under any of those regimes**, and the change of firm does not import a US audit standard the engagement never carried.
+
+⚠️ **Worth naming why this report could not have told you any of that until now: it said "monthly attestations" and never said by whom.** That sentence was equally true before and after the change. **A rationale that stays true across a material event is not a robust rationale — it is one that cannot report.**
+
+The knock relative to USDC is narrow and specific: attestation is *monthly* rather than USDC's more frequent reserve-fund reporting, and USDG runs through Paxos's **Singapore (MAS) entity** rather than a US trust. Neither is a reserve-quality concern — the assets behind USDG are conservative and well-custodied. They're transparency-cadence and jurisdiction points, not composition risks.
 
 The "bankruptcy-remote" and "segregated" language matters more than it looks. It means the reserves are legally structured to be held apart from Paxos's own corporate balance sheet, so in a Paxos insolvency they are intended to belong to USDG holders rather than to Paxos's general creditors. This is the same reserve-protection posture Paxos uses across its regulated products, and it's a meaningful step above stablecoins that simply hold reserves as an ordinary corporate asset. The residual dependency is on the custodians themselves — DBS Bank and Standard Chartered are both large, well-rated global banks, which is about as strong as bank-custody counterparty risk gets for a stablecoin.
 
@@ -125,7 +143,7 @@ Reserves are attested monthly through Paxos's process. On the contract and opera
 | Dimension | Score | Notes |
 |---|---|---|
 | Peg Mechanism | 8.0 | Direct Paxos 1:1 mint/redeem with a regulated reserve model; institution-gated redemption backfilled by partner-exchange liquidity plus arbitrage. |
-| Backing | 7.5 | Cash + short-duration US government securities + cash-equivalents in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered; monthly attestations. Top-tier reserve quality; a notch below USDC only for monthly (vs more frequent) transparency and the Singapore-entity structure. |
+| Backing | 7.5 | Cash + short-duration US government securities + cash-equivalents in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered. ⚠️ **Monthly attestations, and the attestor is now named rather than implied: KPMG LLP since 2026-02-27, Enrome LLP before it — under ISCA standards, which is an attestation and not a PCAOB or AICPA audit.** Top-tier reserve quality; a notch below USDC only for monthly (vs more frequent) transparency and the Singapore-entity structure. |
 | Liquidity | 6.5 | ⚠️ **Held, and explicitly NOT depth-measured — read this axis as an estimate rather than a reading.** The 6.5 was set against **size**: growth to a top-30 asset at about $3.26B. **Size is a proxy for depth that moves in the same direction often enough to look right, and is not the same quantity** — a $3.26B asset with thin two-sided books would score badly here, and market cap does not say which this is. ⚠️ **And the exit analysis above is venue-based and predates the six-chain correction:** it describes exchange venues and Global Dollar Network partners, while **69.5% of supply sits on X Layer (49.0%) and Robinhood Chain (20.5%)**, neither of which it mentions. **What would settle it:** a depth ladder on the Robinhood Chain USDG leg, which is one run away — the chain is reachable and USDG already appears as a quote token in measured pools — and, for X Layer, an RPC reachability check first, because **no tooling on either side currently reads that chain at all.** ⚠️ **It is not docked: cutting a score because we have not measured it would manufacture severity out of our own missing measurement**, and a Paxos-issued top-30 asset gives an Ethereum holder a genuinely fine exit. |
 | Issuer | 7.5 | Paxos — established, MAS-supervised issuer also behind PYUSD and USDP; solid regulatory track record. Standard centralized-issuer controls (freeze, compliance) and a short USDG-specific history. |
 | **Overall** | **7.0** | A high-quality, regulated, well-reserved centralized dollar held back by an adoption/liquidity discount versus USDC and USDT. Same headline as USDT but the mirror image — stronger issuer and backing transparency, weaker liquidity. |
@@ -145,7 +163,8 @@ Holders who want a regulated, high-quality-reserve dollar from an established is
 - **Liquidity and adoption trajectory.** USDG's growth and its DeFi/exchange depth are the swing factor for the score; continued growth in genuinely deep venues would support a higher liquidity mark over time.
 - **Global Dollar Network health.** Partner participation drives USDG's liquidity; concentration or partner churn is the key structural risk.
 - **Reserve attestations.** Published monthly — watch for any composition drift.
-- **Regulatory status** under the evolving US and Singapore stablecoin frameworks.
+- ⚠️ **Which Paxos Singapore entity actually holds the licence, because there are two and the names are close.** The widely-cited November 2022 Major Payment Institution licence went to **Paxos Global Pte Ltd**; USDG's issuer is **Paxos Digital Singapore Pte Ltd**. **Whether PDS holds its own MPI licence or operates under an affiliate's is not established here**, and that question is the entire content of "MAS-supervised entity". ⚠️ **A shared name is not a shared identity** — the same trap as the two reUSDs, and as the two tokens presenting as USDG on Robinhood Chain. Settled by one lookup per entity in MAS' own Financial Institutions Directory.
+- ⚠️ **Whether Singapore's stablecoin framework is actually in force over USDG.** Secondary sources describe USDG as issued under it while also recording that the framework MAS finalised in August 2023 was *expected* to commence in mid-2026. **A dated expectation about a future commencement is not a measurement of today's legal status**, and this report asserts it in neither direction. ✅ **Note what is claimed and what is not: "MAS-supervised entity" is a claim about the ENTITY, not that the token is regulated under the single-currency-stablecoin regime.** That distinction is deliberate and should not be tidied away.
 
 ---
 
