@@ -9,14 +9,28 @@ assessment_type: "light"
 companion_report: "susdat"
 date: "2026-05-20"
 last_verified: "2026-08-23"
-last_revised: "2026-08-29"
+last_revised: "2026-09-09"
 featured: false
 production: true
 issuer: "Saturn Labs"
 market_cap_approx: 81399040
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer.
+#   structural_score 4.0 is NEW — absent on both surfaces until now.
+#   ⚠️ underlying_score 5.5 -> 5.0, and this is NOT the unsourced case that
+#     apxusd and susdat were. The published 5.5 was WELL ARGUED — it separated
+#     "what the collateral IS" from Backing's "arrangement around it", declined
+#     to charge the verifiability loss twice, and declined to credit PYUSD's
+#     quality upward. ⚠️ IT ANSWERS THE OFF-FRAME QUESTION. On the frame the
+#     field becomes DEPENDENCIES — what the value passes through to, and how
+#     concentrated — which is a different question, so the half-point is not a
+#     disagreement being resolved. The old reasoning is preserved where it is
+#     still true rather than deleted.
+axis_frame: six
 peg_mechanism_score: 6.5
 backing_score: 5.5
-underlying_score: 5.5
+underlying_score: 5.0
+structural_score: 4.0
 liquidity_score: 5.5
 issuer_score: 5.0
 overall_score: 4.5
@@ -72,9 +86,23 @@ The other side of that: **a permissioned stablecoin that sheds a third of its fl
 
 **Read the backing claim one hop at a time: a USDat is a claim on PYUSDx, PYUSDx is a claim on PYUSD, and PYUSD is a claim on cash and short-dated Treasuries.** The first link you can still verify yourself in seconds, and it is still good. The third is the best-attested link in the chain and better than anything this asset carried before. **The middle link is the one nobody outside MoonPay can currently show you** — and it now sits under effectively 100% of the reserve, where the unassessed M0 minter federation used to sit. The shape of the problem is the same as before; it moved one layer over and got one layer deeper. Most readers see "T-bill backed" and assume they hold T-bills; here you hold a token that holds a token that holds them.
 
-The collateral-quality read is carried separately on the **Underlying axis, held at 5.5**, and the hold is deliberate in both directions. That axis measures what the collateral *is*, as distinct from Backing, which measures the arrangement around it and how much of that you can check. On what the collateral is, the change roughly offsets: the asset at the end of the chain got better, and an unassessed intermediary was added in front of it. **The loss of verifiability is not charged here** — it is already priced in the backing move above, and charging one fact to two axes would double-count it, the same way the permissioning penalty is scored on Issuer rather than on Liquidity. Nor is the axis raised, which PYUSD's quality alone might argue for: crediting that quality upward would assert a pass-through through PYUSDx that nobody has verified.
+**Two judgements about that chain sit on the Dependencies axis at 5.0, and both are holds rather than moves.** ⚠️ **The loss of verifiability is not charged there** — it is already priced in the backing move above, and charging one fact to two axes would double-count it, the same way the permissioning penalty is scored on Issuer rather than on Liquidity. **Nor is the axis raised, which PYUSD's quality alone might argue for: crediting that quality upward would assert a pass-through through PYUSDx that nobody has verified.**
+
+⚠️ **What holds the axis at 5.0 rather than higher is concentration, not quality.** The reserve is **100.00% PYUSDx ($63,668,490)**, with the M^0 leg rotated out entirely to 0.00% — so **every dollar of the reserve now sits under a single intermediary.** The asset at the end of the chain got better and the number of independent paths to it went to one. **A dependency read scores the count of paths; a collateral read scores what is at the end of them, and those two moved in opposite directions here.**
 
 **Forward risk worth tracking:** Saturn's documentation still describes possible future allocations toward digital-credit exposure — most plausibly STRC, Strategy's variable-rate perpetual preferred; see the [sUSDat report](/reports/susdat/) for what that backing class looks like under stress. **As of 2026-08-23 that rotation has not started**, and the yield-and-credit leg of the Saturn stack remains contained inside sUSDat's dynamic reserve. It is worth stating the lesson of this revision plainly: this report spent three revisions watching for the STRC rotation, and a completely different one arrived.
+
+## Score breakdown
+
+| Dimension | Score | Notes |
+|---|---:|---|
+| Stability | 6.5 | Unchanged |
+| Backing | 5.5 | Unchanged. The chain is verifiable at the first and third links and not at the middle one — see above |
+| Liquidity & Exit | 5.5 | Unchanged. Single-venue, and a shrinking float makes it harder to improve rather than easier |
+| **Dependencies** | **5.0** | ⚠️ **The reserve is 100.00% PYUSDx**, with the M^0 leg rotated out to 0.00% — **every dollar sits under one intermediary.** Held at 5.0 on **concentration, not quality**: the asset at the end of the chain improved while the number of independent paths to it went to one. **The verifiability loss is charged to Backing rather than here**, and PYUSD's quality is not credited upward, because doing so would assert a pass-through that nobody outside MoonPay can show |
+| **Contract & Admin** | **4.0** | ⚠️ **New axis.** Ethereum reach is full — all seven controller slots checked. The upgrade path runs EIP-1967 admin → ProxyAdmin `0xcf1072da…1a7d` → **SaturnTimelock**, terminal, `getMinDelay()` **432,000s = 5 days**, self-administered, with execution permissionless via `address(0)`. ⚠️ **But `compromise_threshold` is 1** — a single common-operator key reaches the path, and the five days is notice rather than a second approval. ⚠️ **And the deciding fact is an operating one, not a contract one: `isAllowedAsset(PYUSDx)` returns FALSE while `totalAssets()` reports 38.12 against a $63.67M reserve.** The contract is behaving exactly as written; **the operator rotated the reserve into an asset it never allowlisted.** ⚠️ **The BNB threshold is recorded as unverified rather than as a number** — an earlier record read 3, which was a different protocol's Safe entirely, and a wrong identity is worse than an admitted gap |
+| Issuer | 5.0 | Unchanged |
+| **Overall** | **4.5** | Unchanged. Neither new axis argues the composite up or down |
 
 ## Exit liquidity
 

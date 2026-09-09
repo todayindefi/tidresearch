@@ -24,11 +24,25 @@ production: true
 # a legal entity. "Apyx (DFDV-affiliated)" therefore names neither the entity the
 # report identifies as the issuer nor a relationship the report asserts. Restore
 # only with the legal issuer confirmed against the body.
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer.
+#   structural_score 4.5 is NEW. ⚠️ It is NOT a re-scope off Issuer — Issuer's
+#     5.0 explicitly prices BEHAVIOUR ("not the contract layer"), so the control
+#     surface was scored nowhere rather than scored twice.
+#   ⚠️ underlying_score 5.0 -> 3.0, and the published 5.0 was UNSOURCED — no
+#     rationale row existed anywhere on this page, only the frontmatter field.
+#     Adopting riskAnalyst's authored 3.0 rather than defending an unargued
+#     number. Contrast usdat, whose 5.5 IS argued.
+#   ⚠️ Migrating changes what underlying_score MEANS here — off-frame it is
+#     collateral quality, on-frame it is Dependencies — so the value had to be
+#     decided WITH the migration.
+axis_frame: six
 peg_mechanism_score: 2.5
 backing_score: 2.0
 liquidity_score: 3.0
 issuer_score: 5.0
-underlying_score: 5.0
+underlying_score: 3.0
+structural_score: 4.5
 overall_score: 3.0
 # audited_reserves: withheld — the reserves are only partly examined, and the
 # unexamined part is the one this report keeps flagging. Wolf's engagement narrowed
@@ -117,6 +131,20 @@ That correction — more STRC concentration than previously scored, and a thinne
 
 **A note on "solvent."** In its post-mortem Apyx says it "remained solvent throughout — reserves exceeded the *market* value of supply." That is a weaker claim than reserves covering supply at **par ($1)**. By the stricter, standard measure — collateral ratio versus par — apxUSD has been below 100%. Both framings are true; the par-based one is the conservative one, and it's the one that matters when you're holding a token that's supposed to be worth a dollar.
 
+## Score breakdown
+
+⚠️ **This page had no score breakdown until 2026-09-09, which is how an unsourced Dependencies number survived on it.** Every axis now states its reason.
+
+| Dimension | Score | Notes |
+|---|---:|---|
+| Stability | 2.5 | The June 2026 depeg is the record, and the post-mortem is on the page above. Held rather than recovered |
+| Backing | 2.0 | Attested collateral ratio sits just under par on both of the issuer's own published bases — **98.0177% netted, 98.5901% gross** — and the netting is what the axis has to look through |
+| Liquidity & Exit | 3.0 | Unchanged. Manual mint/redeem plumbing was the thing the depeg broke, and the off-hours mismatch that caused it is structural rather than fixed |
+| **Dependencies** | **3.0** | ⚠️ **Cut from an unsourced 5.0.** Gross basket (2026-09-07): **STRC 56.44%**, Inventory 17.55%, protocol-owned liquidity 17.33%, cash 8.67%. ⚠️ **But the gross share understates it and the issuer's own basis says so** — the attested ratio is netted on both sides, and **on that basis STRC is 175.5M / 202.5M = 86.7% of what actually backs the token.** ⚠️ **Two of the four legs are circular:** POL and Inventory are the protocol's own positions sitting inside its own backing, and netting them out is exactly what produces 86.7%. **For a dependency read the netted figure is the honest one** |
+| **Contract & Admin** | **4.5** | ⚠️ **New axis, and it was scored nowhere rather than scored twice** — Issuer's 5.0 explicitly prices behaviour, "not the contract layer". **Three Safes, not one:** token governance **4-of-6 behind a 72-hour timelock**; STRCx custody **3-of-6, no delay**; bridge **4-of-7, no delay**. ⚠️ **The binding constraint is the custody leg: three keys and no wait, over the reserve asset, on an owner set identical to token governance.** A delay is only a delay if the people it binds have no faster door. ✅ Held at 4.5 rather than lower on a genuine audit stack (Quantstamp, Certora formal verification, Zellic) and a guardian role that can cancel scheduled operations |
+| Issuer | 5.0 | Unchanged, and deliberately about **behaviour rather than the contract layer** — the June operational failures are what stepped it down |
+| **Overall** | **3.0** | Unchanged. Neither new axis argues the composite up or down |
+
 ## Exit liquidity
 
 **Entry:** Mint at Apyx (manual, EIP-712 signed order workflow) or buy on the Curve apxUSD/USDC pool on Ethereum. The Curve pool is the realistic retail entry and exit venue.
@@ -145,7 +173,7 @@ The durable finding on this axis is that secondary depth is **variable and issue
 
 - **Backed by DeFi Development Corp (DFDV)**, a Nasdaq-listed company. Joseph Onorati (DFDV CEO) is publicly named. Investors include ParaFi, Pantera, Kraken Ventures, Wintermute Ventures, GSR.
 - **Three audits:** Quantstamp (Feb 2026), Certora (Mar 2026 — formal verification, 1 high-severity finding fixed), Zellic (Mar 2026). Solid stack.
-- **Admin posture (verified on-chain):** A 4-of-6 Gnosis Safe controls the protocol, with a **72-hour timelock** on sensitive actions and a distributed guardian role that can cancel scheduled operations. Token-side admin is materially better than typical young-protocol baseline.
+- **Admin posture (verified on-chain):** Token governance is a **4-of-6 Safe behind a 72-hour timelock**, with a distributed guardian role that can cancel scheduled operations. ⚠️ **Read that as one of three doors rather than as the admin posture.** The same six people also hold a **3-of-6 custody Safe over the STRCx collateral with no delay at all**, and a **4-of-7 bridge Safe**, also undelayed. **The binding constraint is not four keys plus 72 hours — it is three keys and no wait, over the reserve asset.** See the topology above; this is what Contract & Admin scores.
 
 **The post-mortem is two-sided — both halves matter:**
 - **What Apyx admitted went wrong:** overnight/weekend liquidity was pulled (a TradFi/DeFi off-hours mismatch), the manual mint/redeem plumbing was too slow to defend the peg at scale, communications lagged, and *Apyx's own dashboard briefly showed an inflated NAV from a STRCx pricing bug.* These confirm the operational fragility the depeg surfaced — and are why the **Issuer axis steps down to 5.0** (behavior, not the contract layer).

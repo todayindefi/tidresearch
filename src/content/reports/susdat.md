@@ -4,21 +4,42 @@ slug: "susdat"
 aliases: ["sUSDat", "Saturn sUSDat", "staked USDat"]
 chains: ["eth"]
 category: "vault-share"
-underlying_assets: ["USDat"]
+# ⚠️ WAS ["USDat"], WHICH THE BALANCE SHEET CONTRADICTS. The name "staked
+# USDat", the ticker and this field all imply the vault wraps USDat. It holds
+# 1.00% of it. 99.00% is an off-chain STRC claim. Corrected 2026-09-09.
+underlying_assets: ["STRC (off-chain claim, 99%)", "USDat (on-chain buffer, 1%)"]
 yield_bearing: true
 assessment_type: "light"
 companion_report: "usdat"
 date: "2026-05-20"
 last_verified: "2026-08-24"
+# ⚠️ 2026-09-09: backing_score authored, Dependencies cut from an unsourced 3.5,
+# underlying_assets corrected, score breakdown added. `last_verified` HOLDS.
+last_revised: "2026-09-09"
 featured: false
 production: true
 issuer: "Saturn Labs"
+# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
+# Contract & Admin · Issuer.
+#   backing_score 2.5 is NEW and was never scored on either surface. ⚠️ THIS
+#     ASSET IS WHY BOTH AXES HAVE TO EXIST: sUSDat's reserve IS NOT USDat's
+#     reserve. USDat is 100% PYUSDx; sUSDat is 99% off-chain STRC claim.
+#   ⚠️ underlying_score 3.5 -> 2.5, and the published 3.5 was UNSOURCED — no
+#     rationale row existed anywhere on this page, only the frontmatter field.
+#     Adopting riskAnalyst's authored 2.5 rather than defending a number with
+#     no argument behind it. Contrast usdat, whose 5.5 IS argued and is being
+#     handled differently.
+#   ⚠️ Migrating changes what underlying_score MEANS on this page — off-frame
+#     it is collateral quality, on-frame it is Dependencies. That is why the
+#     value had to be decided WITH the migration and not after it.
+axis_frame: six
 volatility_score: 3.5
+backing_score: 2.5
 structural_score: 4.5
 redemption_score: 3.5
 liquidity_score: 3.5
 issuer_score: 5.0
-underlying_score: 3.5
+underlying_score: 2.5
 overall_score: 3.5
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
@@ -61,6 +82,20 @@ The live dashboard makes this asymmetry visually explicit: the reserve-split pan
 Strategy's LTV has stayed below the first rotation threshold throughout the events of 2026, so the reserve has sat STRC-dominant the entire time. That is exactly why the de-anchoring flowed straight through: the rule only meaningfully de-risks once LTV breaches the 33–40% region, which makes it a circuit-breaker against severe stress rather than protection against the moderate stress actually witnessed. Treat it as insurance against a catastrophe, not as a hedge.
 
 A live Strategy NAV input is not yet wired into the dashboard — the LTV-band table is shown, but the current-band indicator is deferred until a free feed is identified.
+
+## Score breakdown
+
+⚠️ **This page had no score breakdown until 2026-09-09, which is how an unsourced Dependencies number survived on it.** Every axis now states its reason.
+
+| Dimension | Score | Notes |
+|---|---:|---|
+| Stability | 3.5 | Share value has run below par for extended stretches; NAV is a reported figure over a reserve that is 99% off-chain, so the mark and the asset move together rather than independently |
+| **Backing** | **2.5** | ⚠️ **New axis, and it exists because sUSDat's reserve is not USDat's reserve.** USDat is **100.00% PYUSDx**; sUSDat is **99.00% an off-chain STRC claim ($73.81M) plus 1.00% on-chain USDat ($0.73M)** — total **$74.54M**, collateral ratio **101.83%**, surplus $1.34M. ⚠️ **The producer tags the 99% leg `oracle_unverified` itself**, so the honest reading is *attested, not measured*. **The name, the ticker and this report's own `underlying_assets` field all implied the vault wraps USDat; the balance sheet says it holds 1% of it** — that field is corrected in this pass |
+| Liquidity & Exit | 3.5 | Scored on the worse leg. The on-chain buffer has run in the low single digits as a share of assets, so redemption at size depends on the off-chain leg being realised rather than on anything a holder can execute |
+| **Dependencies** | **2.5** | ⚠️ **Cut from an unsourced 3.5.** The chain is **sUSDat → USDat → STRC → MSTR → bitcoin**, and 99% of the reserve sits at the STRC link — a preferred claim on a bitcoin treasury company, whose buyback support is discretionary and currently clears [about 2.6% below par](/reports/strc/). **Saturn Labs is the second dependency and the operator of the first.** ⚠️ **Concentration here is not a tail case, it is the design** |
+| Contract & Admin | 4.5 | Unchanged. Vault contract and admin posture as described under *Audits, admin & team* |
+| Issuer | 5.0 | Unchanged, and deliberately identical to [USDat](/reports/usdat/) — this axis scores Saturn Labs the company |
+| **Overall** | **3.5** | Unchanged. Both new axes land at or below the existing composite, so nothing here argues the number up or down |
 
 ## Exit liquidity
 
