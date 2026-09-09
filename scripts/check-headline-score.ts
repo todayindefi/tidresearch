@@ -20,7 +20,7 @@
  * is an editorial convention gap rather than a defect — this check has no
  * opinion on whether they should have one.
  *
- * ⚠️ The `·` separator is load-bearing in the pattern. `thbill-full` opens with
+ * ⚠️ The `·` separator is load-bearing in the pattern. One report opened with
  * `**Contract Risk Score: 5.5/10**`, which is an AXIS line, not an overall
  * headline; matching on "risk" plus a number alone reports it as a mismatch
  * against its 4.4 overall. Requiring the separator distinguishes the two.

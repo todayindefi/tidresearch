@@ -12,7 +12,7 @@
  *   hasDashboardEmbed(slug)  — should THIS PAGE embed the dashboard?
  *   assetHasDashboard(data)  — does a dashboard exist for this ASSET at all?
  *
- * They differ on purpose. `thbill-full` embeds and the retail thBILL summary
+ * They differ on purpose. Some reports embed a dashboard and others link it
  * does not, because the retail page is deliberately kept clean — that decision
  * predates this file and is not a bug. The syrup pair runs the other way:
  * `syrupusdc`/`syrupusdt` (retail) embed while the `-full` reports do not.
@@ -32,7 +32,6 @@ export const DASHBOARD_EMBED_SLUGS = new Set<string>([
   "usdd",
   "ousd",
   "thusd",
-  "thbill-full",
   "syrupusdc",
   "syrupusdt",
   "hastra-prime",

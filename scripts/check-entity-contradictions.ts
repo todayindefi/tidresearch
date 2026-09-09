@@ -36,7 +36,7 @@
  *     more convenient.
  *   - Threshold conflicts are caught reliably. Verified against commit 0c3c23c,
  *     where it independently found a live 3-of-5 / 4-of-6 contradiction in
- *     thbill-full that two human correction passes had missed.
+ *     a since-retired institutional report, which two human correction passes had missed.
  *   - ROLE conflicts are BEST-EFFORT and vocabulary-bound. Verified against the
  *     same commit, it did NOT catch the 0x37b0779a…a555 mislabel — apyusd called
  *     it "the bridge Safe" while apxusd said STRCx "sits in" it, and "sits in"
@@ -211,7 +211,7 @@ async function main() {
         const hi = Math.max(owner, m.index!);
         if (BOUNDARY_RE.test(line.slice(lo, hi))) continue;
         // A Safe at the same address on a different chain legitimately has a
-        // different threshold — thbill-full states three for one address and is
+        // different threshold — one report stated three for one address and was
         // right. So a threshold is qualified by the chain named next to it, and
         // only conflicts with another reading of the SAME chain.
         // Address-sameness does not imply authority-sameness.

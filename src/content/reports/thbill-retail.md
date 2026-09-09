@@ -7,7 +7,6 @@ category: "tokenized-treasury"
 peg_mechanism: "nav-accruing"
 assessment_type: "light"
 audience: "retail"
-companion_report: "thbill-full"
 date: "2026-04-28"
 last_verified: "2026-08-18"
 last_revised: "2026-08-23"
@@ -56,7 +55,7 @@ underlying_managers:
 >
 > **Stability holds at 8.0, and it is important not to misread it.** That axis scores the **NAV**, which is behaving exactly as a T-Bill NAV should — 1.035365, smooth accrual, no drama. The dislocation is between the *market price* and NAV, and it is priced under Liquidity and Redemption instead. It is now the only high axis on the page. The honest summary: **the underlying T-Bills are genuinely safe, and almost everything about getting at them is not.**
 
-> Deeper analysis in the **[full institutional report →](/reports/thbill-full/request)** — free, email-gated. **Note the two reports carry different overall scores (3.5 retail vs 4.4 institutional) because they run different rubrics** — this page scores the retail experience, where there is no primary-redemption access; the institutional report weights smart-contract risk at 40% and assumes a reader who can redeem. See *On the scoring rubric* at the bottom.
+> **On scoring:** this page scores the retail experience — a holder with no primary-redemption access. See *On the scoring rubric* at the bottom for what each axis is doing.
 
 ## What this asset is now (read first)
 
@@ -243,8 +242,6 @@ It sits at 5.0 because this axis has to answer a second question as well: **can 
 **Who it's for:** Existing thBILL holders who want to understand current backing and exit dynamics. KYC'd allocators evaluating institutional-grade T-Bill exposure with primary-redemption access. Holders of thUSD who want to inspect the largest reserve component of that product. **New retail allocators seeking Theo yield should look at [thUSD](/reports/thusd) instead — the consumer-facing front-end has migrated.**
 
 **Who should avoid:** Anyone who needs instant redemption, wants direct legal ownership of the underlying Treasuries, is risk-averse to issuers under one year old, or is sizing positions larger than DEX depth can clear without material slippage.
-
-**For deeper detail** — full audit findings, bridge architecture, DVN configuration, peer comparison, governance, and primary-redemption mechanics — see the [full institutional report](/reports/thbill-full/request) (email-gated, \~13,500 words).
 
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. Some attack classes — a recent example: the rsETH single-DVN bridge exploit in April 2026 — only become visible after they manifest in production; our methodology is retrospective on novel risks. We also cannot fully audit the underlying T-bill custody chain at Standard Chartered, Wellington Management's portfolio composition, the MPC operator's signer composition, or the Zenith audit report (acknowledged by Theo's docs but not publicly linked). Sized positions should leave room for residual unknowns this analysis cannot enumerate.
 
