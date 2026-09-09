@@ -123,7 +123,30 @@ The knock relative to USDC is narrow and specific: attestation is *monthly* rath
 
 The "bankruptcy-remote" and "segregated" language matters more than it looks. It means the reserves are legally structured to be held apart from Paxos's own corporate balance sheet, so in a Paxos insolvency they are intended to belong to USDG holders rather than to Paxos's general creditors. This is the same reserve-protection posture Paxos uses across its regulated products, and it's a meaningful step above stablecoins that simply hold reserves as an ordinary corporate asset. The residual dependency is on the custodians themselves — DBS Bank and Standard Chartered are both large, well-rated global banks, which is about as strong as bank-custody counterparty risk gets for a stablecoin.
 
-## 3 · Liquidity & Exit — 6.5
+## 3 · Liquidity & Exit — 6.5, under re-derivation
+
+⚠️ **The 6.5 was set on size — a top-30 asset at about $3.3B — and size is a proxy for depth, not a measurement of it.** Depth was measured for the first time on 2026-09-09, across 98 venues reporting a usable two-percent book, and **the reading does not support a score set on market cap.** The axis is with our risk assessment side for re-derivation; **the number above should be read as the old basis, not as this measurement's conclusion.**
+
+| | measured | share of the $3.32B supply |
+|---|---:|---:|
+| **2% down-depth (the exit side)** | **$18,506,051** | **0.557%** |
+| 2% up-depth | $55,464,129 | 1.670% |
+| — of which centralized venues (22) | $14,650,780 | |
+| — of which on-chain venues (76) | $3,855,271 | |
+
+⚠️ **Three things in that table matter more than the headline number.**
+
+**Exit depth is thin against the float.** About **half a percent** of supply can leave within two percent of par. **That is a real constraint at size**, and it is invisible in a market-cap reading — which is precisely why the old basis flattered this axis.
+
+⚠️ **The book is asymmetric, and it leans the wrong way for a holder.** Up-depth is **three times** down-depth. **Buying USDG is materially easier than selling it**, and an exit score should be written on the side that is thinner.
+
+⚠️ **And the exit is concentrated in the same counterparty that hosts the asset.** **A single pair — OKX's USDG/USDT — is 61.4% of all measured down-depth.** Set that beside the distribution above: **X Layer, OKX's own chain, carries 47.98% of supply.** ✅ **Neither figure alone says anything alarming.** **Together they say that the largest host of USDG and the dominant route out of it are the same party** — so a venue problem and a chain problem would not be independent events.
+
+✅ **One venue was excluded and the exclusion is stated rather than made silently.** A Uniswap V4 pool on Robinhood Chain reported a two-percent depth of roughly **$3.03 × 10²³** — some nine quadrillion percent of the asset's entire supply. **It is excluded on the principle that two-percent depth cannot exceed the supply of the thing being quoted.** ⚠️ **Aggregating it would have produced a confident figure to four significant digits that was nonsense**, and the aggregate above is the only one on this page that a reader should use.
+
+**What the qualitative picture below still gets right** is the mechanism: institutions mint and redeem 1:1 with Paxos, retail exits on secondary venues, and arbitrage between the two is what holds the peg for holders without a redemption line. **The measurement does not contradict that. It prices how much of it is available at once.**
+
+### How exit works in practice
 
 Institutions mint and redeem USDG 1:1 directly with Paxos. Retail holders exit through the **secondary market** on supporting venues — the major exchanges that list it. Because direct redemption is institution-gated, retail peg stability leans on partner-exchange liquidity plus arbitrage: when the token drifts from a dollar, institutions with a redemption line have the incentive to close the gap.
 
