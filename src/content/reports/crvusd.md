@@ -316,16 +316,18 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 
 ## 3 · Liquidity & Exit — 6.0
 
-**crvUSD's exit is native rather than borrowed — Curve's own pools give it real on-chain depth.** ⚠️ **But the aggregate depth figure answers a different question from the one a seller is asking, and the two differ by more than ten times.** Measured on-chain 2026-09-10 by reading each pool's `coins()` and token balances directly:
+**crvUSD's exit is native rather than borrowed — Curve's own pools give it real on-chain depth.** ⚠️ **But the aggregate depth figure answers a different question from the one a seller is asking, and the two differ by more than five times.** Measured on-chain 2026-09-10 by calling `coins()` and `balanceOf()` on each pool directly — **crvUSD actually resident in the pool, not a notional**:
 
 | exit route | what you receive | measured |
 |---|---|---:|
 | PegKeeper pools — stable side | **dollars** | **$27,157,970** |
-| YieldBasis cryptopools — crvUSD side | **BTC or ETH** | $356,793,233 |
+| YieldBasis cryptopools — crvUSD side | **BTC or ETH** | $144,794,876 |
 
 ⚠️ **All eight YieldBasis pools pair crvUSD with WBTC, cbBTC, tBTC or WETH — not one pairs it with a dollar stablecoin**, verified by `coins()` on each. **So selling crvUSD into them leaves a holder in BTC or ETH, not in dollars.** ✅ **That is still an exit, and BTC and ETH are far deeper markets than any stablecoin pool** — but it is a **two-hop** exit that takes on price risk between the hops, and its depth **thins in exactly the BTC volatility that would provoke it.**
 
 ✅ **The one-hop dollar exit is the $27.16M of stablecoins sitting opposite crvUSD in the Curve pools** — **11.69% of the $232.3M issuance-side supply**. The **USDT PegKeeper pool is the largest single venue** at $13.16M of USDT against $14.90M of crvUSD, followed by frxUSD ($7.39M) and USDC ($5.18M). ⚠️ **The GHO pool ($1.01M of GHO) is larger than the PYUSD pool ($0.41M)**, which is worth noting because the GHO keeper is decommissioned — **a decommissioned keeper is not a drained pool**, and its depth still counts on this axis even though it no longer backstops the peg.
+
+⚠️ **Three different YieldBasis figures are in circulation and they differ by up to three times, so the basis has to be stated.** The **$144.79M** above is crvUSD **resident in the eight cryptopools**, read by `balanceOf()` on each. A **debt** basis — what YieldBasis owes across its pools — gives **$118.91M**. A **notional** basis gives a figure near **$356M**. ✅ **The finding does not rest on choosing one:** the two-hop route exceeds the one-hop dollar exit on every basis.
 
 **The independently measured 2% depth floor is $10,000,000, recorded as `ladder_exhausted`** — the deepest rung quoted still cleared inside 200bps, so the crossing is above where the ladder looks. ⚠️ **That is a floor, not a limit that was found**, and it is consistent with a $27.16M stable side.
 
