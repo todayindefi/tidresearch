@@ -21,7 +21,10 @@ let checked = 0;
 // Phrases addressed to a reader's memory of an earlier version of the page.
 const SELF_REF: [RegExp, string][] = [
   [/\bthis report previously\b/i, "this report previously…"],
-  [/\bprevious(ly)? (said|described|called|carried|stated|argued)\b/i, "previously said/called…"],
+  // Must be the REPORT that previously said it. "the ERC-20 that previously carried
+  // the cUSD ticker" is the ASSET's history and is allowed by §4.
+  [/\b(this|our) (report|page|coverage|analysis)[^.]{0,40}\bprevious(ly)?\b/i, "this report previously…"],
+  [/\bprevious(ly)? (said|described|called|stated|argued)\b/i, "previously said/described…"],
   [/\bis corrected here\b/i, "is corrected here"],
   [/\bthis (report|page|coverage) (has carried|carried|had|never)\b/i, "this report carried/had…"],
   [/\bearlier version(s)? of this (report|page)\b/i, "earlier version of this report"],

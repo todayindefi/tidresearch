@@ -14,12 +14,12 @@ category: "stablecoin"
 peg_mechanism: "Reserve-backed (fiat-stable basket)"
 assessment_type: "light"
 date: "2026-05-29"
-last_verified: "2026-07-23"
-last_revised: "2026-09-07"
+last_verified: "2026-09-10"
+last_revised: "2026-09-10"
 featured: false
 production: true
 issuer: "Mento Labs (Germany)"
-market_cap_approx: 16575377
+market_cap_approx: 16719242
 # SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
 # Contract & Admin · Issuer. Migrated at this refresh, per the refresh-driven
 # policy. ⚠️ structural_score CANNOT RENDER without the frame — the historical
@@ -119,6 +119,8 @@ USDm-on-Monad now sits in the ≈40% gross / ≈65% ex-POL Reserve-coverage rang
 
 ## 1 · Stability — 7.0
 
+✅ **Measured 2026-09-10.** USDm's combined supply is **16,719,242.43** — **14,272,199.65 on Celo** and **2,447,042.78 on Monad** — and it trades at **$0.999774**, 0.023% below par. ⚠️ **One identity trap worth naming, because a price feed is easy to take on the ticker:** the market data for this asset is published under **"Mento Dollar"** against the Celo contract `0x765DE816…1282a`, **which is the same ERC-20 that previously carried the cUSD ticker.** A separate asset also trades as *USDM* — Mountain Protocol's — and quoting it here would price the wrong token. **The figure above is tied to the contract, not to the symbol.**
+
 USDm uses **oracle-priced pricing, not arbitrage-defended pricing**. Mento V3's Functional Polynomial Market Maker (FPMM) quotes the Chainlink oracle rate ± fees directly. The pool maintains an invariant of "value per LP share at the oracle price" rather than a curve.
 
 This has three practical implications:
@@ -213,6 +215,15 @@ This recursive structure is **inherent to the V3 design**. Today it is operation
 
 ## 5 · Contract & Admin — 4.0
 
+**The on-chain admin model differs sharply across the two chains.**
+
+- **Celo:** veMENTO holders → Governor → 2-day Timelock → contracts, with a Watchdog Multisig retaining veto power. Mature.
+- **Monad:** a Gnosis Safe at `0x58099b74f4acd642da77b4b7966b4138ec5ba458` **directly owns every core contract** — the USDm token `0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115`, the ReserveV2 `0x4255Cf38e51516766180b33122029A88Cb853806`, the FPMM pools, oracle adapter and breaker box. ⚠️ **No timelock, no DAO check.** Per Mento governance proposal MGP-14 this was framed as temporary during deployment; the migration to a timelock has not happened.
+
+⚠️ **Measured 2026-09-10, that Safe is 4-of-6 — six distinct owners, threshold four** — with a control address returning false on `isOwner`, so the reading discriminates. ✅ **Stated with its limit: one Monad endpoint answered and four refused (403, 429, 400, and one empty result), so this is a single-source reading rather than a corroborated one.** ⚠️ **It also differs from a 4-of-7 recorded earlier for the same Safe. An owner may have been removed, or the earlier count may have been wrong — nothing on-chain here distinguishes those, and the discrepancy is recorded rather than resolved by preference.**
+
+⚠️ **The overlap matters more than the threshold.** The same four signatures reach **both the token and the reserve that backs it**, and the token is an **upgradeable proxy** — its EIP-1967 implementation slot is populated. **So token governance and reserve custody are not independent controls on that chain**, and the code behind USDm on Monad can be replaced by the party that also holds its collateral.
+
 Mento V3's audit roster is **strong**:
 - **ChainSecurity** — Mento Core V3 (FPMM + CDP), Feb 2026 (top-tier)
 - **0xMacro** — multiple engagements on governance and locking
@@ -225,10 +236,7 @@ The novel FPMM design itself has had only one professional review (ChainSecurity
 
 [Mento Labs](https://www.mento.org) is a German entity led by CEO **Markus Franke** (doxxed). The team spun out of cLabs (the core developer of Celo) in 2022 with direct lineage to the original cUSD developers, and raised **$10M Series A in October 2024** from Hashkey Capital, Verda Ventures, w3.fund, Flori Ventures, plus former Citigroup CEO Richard Parsons as an angel.
 
-Mento Labs operates the Reserve contracts and the multisig that governs USDm on each chain. The on-chain admin model differs sharply across chains:
-
-- **Celo:** veMENTO holders → Governor → 2-day Timelock → contracts, with a Watchdog Multisig retaining veto power. Mature.
-- **Monad:** 4-of-7 Gnosis Safe `0x58099b74…ba458` directly owns every core contract (USDm token, Reserve, FPMM pools, oracle adapter, breaker box). **No timelock, no DAO check.** Per Mento governance proposal MGP-14, this was framed as a temporary state during deployment; as of report date, ≈10 weeks post-launch, the migration to a timelock has not happened.
+Mento Labs operates the Reserve contracts and the multisig that governs USDm on each chain. **The on-chain admin model differs sharply across the two chains, and is set out under [5 · Contract & Admin](#5--contract--admin--40).**
 
 ## What you actually earn
 
