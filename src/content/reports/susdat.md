@@ -141,7 +141,7 @@ That is the mechanism that matters. Redemptions are served from the on-chain buf
 
 Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient spike**, not a normal level — measured against this report's own earlier readings (about 1.8% in July, about 2.3% in August) the 08-17 reading of 1.4% is a modest move within the band this vault has oscillated in for months, not a collapse. And the off-chain STRC figure is a **residual** — total assets minus the on-chain buffer — not an independently attested number. It confirms that the buffer fell; it is not evidence of what was bought with it.
 
-⚠️ **Superseded within hours of being written, and the way it failed is the finding.** This report said on 2026-08-23 that the buffer was "rebuilding rather than draining further" at about **1.93% of assets**, up from a 1.45% low, and called that "a real move in the right direction." **Every figure was accurate when taken. The direction reversed the same evening.**
+⚠️ **A rebuild that looked real reversed within hours, and the way it reversed is the finding.** On 2026-08-23 the buffer read about **1.93% of assets**, up from a 1.45% low and apparently rebuilding rather than draining further. **Every figure was accurate when taken. The direction reversed the same evening.**
 
 | time (UTC) | buffer | on-chain USDat |
 |---|---:|---:|

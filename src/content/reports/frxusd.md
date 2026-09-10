@@ -118,7 +118,7 @@ Frax Finance itself is an established team (Sam Kazemian, 5+ years, active devel
 
 ## Growth & adoption
 
-**The float is now contracting, not flat.** ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124M (Jun 2026) → **≈$105.5M (Aug 2026)** circulating — down roughly **15% in nine weeks**. A previous version of this report called this "plateaued"; that framing is now too kind.
+**The float is now contracting, not flat.** ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124M (Jun 2026) → **≈$105.5M (Aug 2026)** circulating — down roughly **15% in nine weeks**. That is a contraction, not a plateau.
 
 What makes it worth a second look is the combination: the float is shrinking *while* integrations keep broadening (Aave V4 as a default borrowable asset, more OFT chains). A stablecoin adding venues and losing float usually means the new venues are not where the demand is. More than a year after launch it remains a sub-top-50 stablecoin, well behind newer entrants like USDS and USDe.
 

@@ -383,9 +383,9 @@ The original double-counted address (`TZ1Ss...`) is not referenced in post-2.0 P
 
 ## Monitoring Recommendations
 
-To properly monitor USDD 2.0, the following would be needed:
+The things that would move the assessment, and what a holder can watch:
 
-1. **Tron chain support** — Current backing monitor only covers EVM chains. Need TronGrid API integration to read reserve wallet balances and USDD supply on Tron.
+1. **Tron-side reserves** — the majority of backing sits on Tron, where reserve wallet balances and USDD supply need reading directly rather than inferred from the EVM chains.
 2. **Smart Allocator position tracing** — Trace the Smart Allocator's Aave and JustLend positions and cross-reference against HTX's published PoR wallet addresses to determine whether positions overlap (confirming or ruling out double-counting under 2.0).
 3. **PSM depth monitoring** — Track USDT/USDC reserves in Ethereum and BNB Chain PSMs. Alert if PSM reserves drop below meaningful exit thresholds.
 4. **TRX price sensitivity** — Calculate "stress collateral ratio" at TRX -30%, -50%, -70% to quantify death spiral risk.
