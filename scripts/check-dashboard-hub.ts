@@ -13,14 +13,30 @@
  *   (a) the asset has a production report here, and
  *   (b) backing-monitor serves a live dashboard for it.
  *
- * Leg (a) is checkable in CI and is enforced hard. Leg (b) needs
- * ~/backing-monitor, which does not exist on the Netlify builder.
+ * Leg (a) is checkable from this repo alone. Leg (b) reads backing-monitor's
+ * registry, and it is fetched from their DEPLOYED site rather than a local
+ * checkout:
  *
- * ⚠️ SO LEG (b) IS CHECKED ONLY WHEN THE REGISTRY IS PRESENT, AND SAYS SO OUT
- * LOUD WHEN IT IS NOT. A check that silently skips the half it cannot see
- * reports the hub clean and means "I did not look" — that is the failure this
- * repo keeps hitting, most recently a feed sweep that read the wrong nesting
- * level and reported 0 of 126 when the answer was 86.
+ *     https://todayindefi.github.io/backing-monitor/data/assets.json
+ *     200 · CORS open · cache-control max-age=600 · 27 entries, 25 published
+ *
+ * ⚠️ FETCH THE DEPLOYED COPY, NOT A WORKING TREE. What Pages is serving is what
+ * our readers actually hit; someone's local file can be ahead of or behind it.
+ * backing-monitor answered our liveness question from the deployed copy for the
+ * same reason. A local checkout is used only as a fallback when the network is
+ * unavailable.
+ *
+ * This matters beyond convenience. The hub links rather than embeds now, so a
+ * dashboard that gets unpublished or renamed becomes an INVISIBLE bad link.
+ * Fetching means our own prebuild catches that on every production build,
+ * instead of depending on a peer session noticing and messaging us — and as
+ * backing-monitor put it, a ping is a weaker guarantee than a fetch, because a
+ * session ends and its successor has no memory that we depend on it.
+ *
+ * ⚠️ WHEN NEITHER SOURCE IS REACHABLE, SAY SO AND DO NOT PASS QUIETLY. A check
+ * that silently skips the half it cannot see reports the hub clean and means
+ * "I did not look" — the failure this repo keeps hitting, most recently a feed
+ * sweep that read the wrong nesting level and reported 0 of 126 when it was 86.
  */
 import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -31,6 +47,37 @@ const REPO_ROOT = resolve(import.meta.dirname, "..");
 const HUB = join(REPO_ROOT, "src", "pages", "dashboards", "index.astro");
 const REPORTS = join(REPO_ROOT, "src", "content", "reports");
 const REGISTRY = join(homedir(), "backing-monitor", "data", "assets.json");
+const REGISTRY_URL =
+  "https://todayindefi.github.io/backing-monitor/data/assets.json";
+
+/** Live slugs from the DEPLOYED registry, falling back to a local checkout. */
+async function liveSlugs(): Promise<{ live: Set<string>; source: string } | null> {
+  const parse = (raw: string) => {
+    const reg = JSON.parse(raw);
+    const rowsRaw = Array.isArray(reg) ? reg : (reg.assets ?? reg);
+    const rows = Array.isArray(rowsRaw) ? rowsRaw : Object.values(rowsRaw);
+    return new Set<string>(
+      rows.filter((r: any) => r?.published === true).map((r: any) => r.slug),
+    );
+  };
+  try {
+    const ac = new AbortController();
+    const t = setTimeout(() => ac.abort(), 15_000);
+    const res = await fetch(REGISTRY_URL, { signal: ac.signal });
+    clearTimeout(t);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return { live: parse(await res.text()), source: `deployed registry (${REGISTRY_URL})` };
+  } catch (err) {
+    console.log(
+      `check-dashboard-hub: deployed registry unreachable (${(err as Error).message}); ` +
+        `falling back to a local checkout.`,
+    );
+  }
+  if (existsSync(REGISTRY)) {
+    return { live: parse(await readFile(REGISTRY, "utf8")), source: `local ${REGISTRY}` };
+  }
+  return null;
+}
 
 const src = await readFile(HUB, "utf8");
 const start = src.indexOf("const allDashboards");
@@ -82,13 +129,9 @@ for (const e of entries) {
 }
 
 // ---- leg (b): the dashboard must actually be live ---------------------------
-if (existsSync(REGISTRY)) {
-  const reg = JSON.parse(await readFile(REGISTRY, "utf8"));
-  const rowsRaw = Array.isArray(reg) ? reg : (reg.assets ?? reg);
-  const rows = Array.isArray(rowsRaw) ? rowsRaw : Object.values(rowsRaw);
-  const live = new Set(
-    rows.filter((r: any) => r?.published === true).map((r: any) => r.slug),
-  );
+const registry = await liveSlugs();
+if (registry) {
+  const { live, source } = registry;
   if (live.size === 0) {
     console.error("check-dashboard-hub: registry parsed to ZERO live slugs — refusing to pass.");
     process.exit(1);
@@ -97,14 +140,17 @@ if (existsSync(REGISTRY)) {
     // thBILL is its own repo with its own proxy rule; not in this registry.
     if (e.hasUrl || !e.asset) continue;
     if (!live.has(e.asset)) {
-      errors.push(`${e.name}: ?asset=${e.asset} is not published by backing-monitor`);
+      errors.push(
+        `${e.name}: ?asset=${e.asset} is not published by backing-monitor — ` +
+          `the tile would link a reader to nothing`,
+      );
     }
   }
-  console.log(`check-dashboard-hub: leg (b) checked against ${live.size} live slugs.`);
+  console.log(`check-dashboard-hub: leg (b) checked against ${live.size} live slugs from ${source}.`);
 } else {
   console.log(
-    `check-dashboard-hub: ⚠️ leg (b) NOT CHECKED — no registry at ${REGISTRY}. ` +
-      `Liveness of each ?asset= link is unverified in this run (expected on CI).`,
+    "check-dashboard-hub: ⚠️ leg (b) NOT CHECKED — deployed registry unreachable and no " +
+      "local checkout. Liveness of each ?asset= link is UNVERIFIED in this run.",
   );
 }
 
