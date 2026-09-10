@@ -7,11 +7,18 @@ category: "stablecoin"
 peg_mechanism: "algorithmic"
 assessment_type: "full"
 date: "2026-03-28"
-# ⚠️ HOLDS at 2026-08-23. The 2026-09-08 pass re-derived the Backing axis from
-# the PegKeeper daily series and nothing else — the peg mechanism, liquidity and
-# issuer work were not re-read. Bumping it would claim a full re-verification
-# that did not happen and would reset the 90-day staleness budget.
-last_verified: "2026-08-23"
+# ⚠️ BUMPED to 2026-09-10 after a whole-body pass. What was re-read, so the
+# next sweep knows what this date does and does not cover:
+#   RE-MEASURED ON-CHAIN: crvUSD totalSupply, minter and EIP-1967 slots; all
+#   nine ControllerFactory ceilings and total_debt; all fifteen PegKeeper debts;
+#   the YieldBasis factory ceiling, residual and idle balance; every PegKeeper
+#   and YieldBasis pool's coins() and token balances; both collateral ratios.
+#   NOT RE-DERIVABLE IN THIS PASS: the 2,985-hourly-sample peg series behind the
+#   Stability rationale is a historical series, not a spot read — the current
+#   quote (0.9996) was checked and is consistent, but the distribution was not
+#   rebuilt. The ten-plus audit-firm count is carried from Curve's own
+#   disclosures and was not independently re-counted.
+last_verified: "2026-09-10"
 last_revised: "2026-09-10"
 peg_mechanism_score: 6.0
 backing_score: 5.0
@@ -309,11 +316,22 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 
 ## 3 · Liquidity & Exit — 6.0
 
-**crvUSD's exit is its strongest practical feature and it is native rather than borrowed.** Curve's own pools give it deep on-chain depth, and three distinct pool families contribute: the **PegKeeper pools** (USDC, USDT and frxUSD as the heavyweights, plus PYUSD), the **YieldBasis BTC pools**, and the **GHO/crvUSD pool** — which still adds DEX depth even though its keeper no longer backstops the peg, a distinction worth keeping separate because a decommissioned keeper is not a drained pool.
+**crvUSD's exit is native rather than borrowed — Curve's own pools give it real on-chain depth.** ⚠️ **But the aggregate depth figure answers a different question from the one a seller is asking, and the two differ by more than ten times.** Measured on-chain 2026-09-10 by reading each pool's `coins()` and token balances directly:
 
-⚠️ **The YieldBasis pools cut both ways on this axis.** They add significant depth, and that depth is **directionally correlated with BTC volatility** — the flow that would test an exit is the same flow that thins those pools. ✅ **The USDT PegKeeper pool is the largest by reserves and is the practical backstop**, which is also why its concentration is a Backing concern above rather than a Liquidity one here.
+| exit route | what you receive | measured |
+|---|---|---:|
+| PegKeeper pools — stable side | **dollars** | **$27,157,970** |
+| YieldBasis cryptopools — crvUSD side | **BTC or ETH** | $356,793,233 |
 
-**6.0 rather than higher** because depth is concentrated in pools the protocol itself seeded, and **rather than lower** because that depth is real, on-chain and measurable today.
+⚠️ **All eight YieldBasis pools pair crvUSD with WBTC, cbBTC, tBTC or WETH — not one pairs it with a dollar stablecoin**, verified by `coins()` on each. **So selling crvUSD into them leaves a holder in BTC or ETH, not in dollars.** ✅ **That is still an exit, and BTC and ETH are far deeper markets than any stablecoin pool** — but it is a **two-hop** exit that takes on price risk between the hops, and its depth **thins in exactly the BTC volatility that would provoke it.**
+
+✅ **The one-hop dollar exit is the $27.16M of stablecoins sitting opposite crvUSD in the Curve pools** — **11.69% of the $232.3M issuance-side supply**. The **USDT PegKeeper pool is the largest single venue** at $13.16M of USDT against $14.90M of crvUSD, followed by frxUSD ($7.39M) and USDC ($5.18M). ⚠️ **The GHO pool ($1.01M of GHO) is larger than the PYUSD pool ($0.41M)**, which is worth noting because the GHO keeper is decommissioned — **a decommissioned keeper is not a drained pool**, and its depth still counts on this axis even though it no longer backstops the peg.
+
+**The independently measured 2% depth floor is $10,000,000, recorded as `ladder_exhausted`** — the deepest rung quoted still cleared inside 200bps, so the crossing is above where the ladder looks. ⚠️ **That is a floor, not a limit that was found**, and it is consistent with a $27.16M stable side.
+
+**6.0 rather than higher** because the one-hop dollar exit is a low-eight-figure number against a nine-figure supply, and the depth that dwarfs it pays in a volatile asset. **Rather than lower** because both routes are real, on-chain and measurable today, and the deepest measured rung still cleared inside 2%.
+
+⚠️ **This axis is priced on depth, not on the peg holding** — the peg record is argued under Stability above.
 
 ## 4 · Dependencies — 4.5
 
@@ -495,7 +513,7 @@ crvUSD has been audited by **10+ firms** across multiple engagements as part of 
 
 ## 6 · Issuer — 6.0
 
-**Curve is one of DeFi's most established protocols** — a decade-scale deployment history, ten-plus audit firms across its contracts, and a track record through multiple market cycles. ✅ **On longevity and transparency this is close to the top of what a decentralised issuer can offer.**
+**Curve is one of DeFi's most established protocols** — deployed since **2020**, ten-plus audit firms across its contracts, and a track record through multiple market cycles. ⚠️ **The audit-firm count is carried from the protocol's own disclosures and was not independently re-counted in this pass.** ✅ **On longevity and transparency this is close to the top of what a decentralised issuer can offer.**
 
 ⚠️ **What holds it at 6.0 is concentration rather than competence.** CRV tokenomics add governance complexity, and **Michael Egorov's dual role across Curve and YieldBasis creates concentrated influence over crvUSD's supply architecture specifically** — the same person is central to the protocol that issues the asset and to the counterparty holding its largest credit line. **That is a governance fact, not an allegation**, and it is priced here rather than on Dependencies because it is about who decides, not about what the asset passes through.
 
