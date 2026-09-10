@@ -78,7 +78,7 @@ axis_exemptions:
 
 **Moderate risk · 6.5/10**
 
-> **A high-quality dollar from a supervised issuer, with a smaller-but-growing footprint.** USDG (Global Dollar) is issued by Paxos — the same regulated issuer behind PYUSD and USDP — through its Singapore entity, and it's backed 1:1 by cash and short-term US Treasuries held in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered, with monthly attestations. On backing and issuer quality it sits in the top tier. What holds it to a 7.0 is liquidity: it has grown fast to a top-30 asset (roughly 3x in its first stretch, now around $3B-plus), but its secondary-market and DeFi depth still sit well below USDC and USDT. The other thing that makes USDG distinctive is its business model — it shares its reserve income with the platforms that drive its adoption, the "Global Dollar Network."
+> **A high-quality dollar from a supervised issuer, with a smaller-but-growing footprint.** USDG (Global Dollar) is issued by Paxos — the same regulated issuer behind PYUSD and USDP — through its Singapore entity, and it's backed 1:1 by cash and short-term US Treasuries held in segregated, bankruptcy-remote accounts at DBS Bank and Standard Chartered, with monthly attestations. On backing and issuer quality it sits in the top tier. What holds it to a 6.5 is liquidity: it has grown fast to a top-30 asset (roughly 3x in its first stretch, now around $3B-plus), but its secondary-market and DeFi depth still sit well below USDC and USDT. The other thing that makes USDG distinctive is its business model — it shares its reserve income with the platforms that drive its adoption, the "Global Dollar Network."
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -88,7 +88,7 @@ axis_exemptions:
 
 USDG is a US-dollar stablecoin issued by **Paxos Digital Singapore Pte. Ltd.**, a MAS-supervised entity within the Paxos group. It is fully redeemable 1:1 from Paxos, backed by cash, cash-equivalents, and short-duration US government securities held in segregated, bankruptcy-remote accounts — custody split between DBS Bank and Standard Chartered — with **monthly Paxos reserve reports and attestations**.
 
-It launched in November 2024 and has grown quickly to become a top-30 asset (currently around $3B-plus; check a live source such as [CoinGecko](https://www.coingecko.com/en/coins/global-dollar) for the up-to-date figure). **That is a cross-chain aggregate, and USDG is unusually concentrated away from Ethereum** — the Ethereum leg read 447,300,985 on 2026-08-23, only about 15% of the asset. An Ethereum-only figure is not a usable proxy for USDG's size — **Ethereum is 15% of it.**
+It launched in November 2024 and has grown quickly to become a top-30 asset (**$3,316,225,593** measured across all six Paxos-listed deployments on 2026-09-10; it moves daily). **That is a cross-chain aggregate, and USDG is unusually concentrated away from Ethereum** — the Ethereum leg read 447,300,985 on 2026-08-23, only about 15% of the asset. An Ethereum-only figure is not a usable proxy for USDG's size — **Ethereum is 15% of it.**
 
 **The 6.5 reflects top-tier regulated backing and issuer quality, an adoption/liquidity discount, and — from 2026-09-09 — the operational-control finding set out below.** ⚠️ **It no longer lands at the same headline as USDT.** The contrast with USDT still holds on the axes it was written about: USDG has stronger issuer transparency and backing disclosure, and thinner liquidity. **What separates them now is a different axis entirely** — USDG's backing and issuer remain the stronger of the two, and its on-chain control structure is the weakest in this band.
 
@@ -185,7 +185,7 @@ In practice that's a solid mechanism — tighter than a thin, unknown stablecoin
 
 ✅ **Mantle is 0.02% of supply, so no conclusion on this page turns on it.** The point is not the half-million dollars; it is that **the total was published as a total when it was a floor.**
 
-**All six deployments are read, so this is a complete measurement rather than a floor** — $3.387B against a published "around $3B-plus". **Read it as corroboration of the headline figure, with the bonus of knowing where the supply actually lives.**
+**All six deployments are read, so this is a complete measurement rather than a floor** — **$3.32B** against a published "around $3B-plus". **Read it as corroboration of the headline figure, with the bonus of knowing where the supply actually lives.**
 
 **The distribution is the finding, and it is worth stating plainly.** **X Layer — OKX's chain — carries 47.80% of USDG**, short of an outright majority though close to it, and down from a reading above 55% a fortnight ago. ⚠️ **Robinhood Chain is now second at 20.66%**, having roughly doubled its share in that window. ⚠️ **Ethereum — the chain most readers assume this asset lives on — is FOURTH at 11.53%**, behind Solana's 18.14% as well.
 

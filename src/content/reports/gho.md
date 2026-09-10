@@ -88,14 +88,14 @@ GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 ⚠️ **Supply is frozen, not merely slow, and every level is identical to the 2026-08-13 read. Not approximately — exactly.**
 
 ```
-2026-08-13   699,000,000.00   (prior pass recorded +7.7% growth over the preceding week)
+2026-08-13   699,000,000.00   (the preceding week had run +7.7%)
 2026-08-30   699,000,000.00   +0.0%
 2026-09-08   699,000,000.00   +0.0% — every facilitator level identical to the wei
 ```
 
 **A growth rate that went from +7.7% in a week to exactly zero, and has held there since 2026-08-13, is a state change rather than a slowdown.** **65.8% of supply sits at hard caps**, so a substantial part of the float is structurally unable to expand without governance raising ceilings.
 
-⚠️ **Which direction the cap binds is what decides how to read that 65.8%, and it is the question this report has not answered.** A facilitator at capacity cannot **mint**. So the leg the caps constrain is the defence against GHO trading **above** par — the arbitrage that mints fresh GHO into a premium and sells it back toward $1. **GHO trades at $0.998702, which is 0.13% *below* par**, so that is not the leg under load today.
+⚠️ **Which direction the cap binds decides how to read that 65.8%.** A facilitator at capacity cannot **mint**. So the leg the caps constrain is the defence against GHO trading **above** par — the arbitrage that mints fresh GHO into a premium and sells it back toward $1. **GHO trades at $0.998702, which is 0.13% *below* par**, so that is not the leg under load today.
 
 **Below par the correcting trade is a different one: buy GHO under $1 and repay debt at face value.** It does not touch a facilitator bucket and works whatever the ceilings say. ⚠️ **So "65.8% at hard caps" is not an active peg failure** — and a reader meeting that figure next to "no functioning GSM" will reasonably conclude that it is. **It is a latent, one-sided constraint, and clearing it needs a governance vote: the vote is the exposure, not the cap.**
 
