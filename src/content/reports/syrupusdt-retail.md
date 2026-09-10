@@ -63,7 +63,7 @@ overall_score: 6.0
 
 **Moderate risk · 6.0/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
 
-*Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).*
+*Live pool backing, peg deviation, and free-liquidity / withdrawal-queue state are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).* ⚠️ **No tiered exit ladder is published for syrupUSDT** — unlike [syrupUSDC](/reports/syrupusdc/), which carries one. **Exit sizing here has to come from the free-liquidity share and the queue, not from a slippage table.**
 
 > ⚠️ **What is current and what is not, because this page carries two dates.** **Re-measured 2026-09-06:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **18 loans, 9 borrowers, $392,718,462.42** — every concentration figure computed on that denominator, and the **admin and authority topology**, hand-walked on-chain, which is what sets Contract & Admin. **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the older date deliberately** — the concentration and authority material is today's; the description of how the vault works is August's.
 
