@@ -26,25 +26,13 @@ overall_score: 3.5
 # the overstatement this report exists to correct. Needs a scoped string, not a flag.
 # team_doxxed: withheld — §IV says the team is "semi-doxxed and credentialed".
 # True/false has no way to express "semi", and the true branch is the wrong one.
----
-
-# thUSD — Risk Report
+---# thUSD — Risk Report
 
 **Elevated risk · 3.5/10**
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
 | Lower end of 6–10% APY target band (sthUSD only) | Sell on DEX at NAV discount | KYC-gated, $200K-per-tx cap | About 4 months since launch | Ethereum, Arbitrum, Stable |
-
-> **2026-08-18 update — Backing 3.5 → 3.0. Overall holds at 4.0.** Two developments pull in opposite directions and this update explains both, because the headline number moved the *helpful* way while the thing underneath it got worse.
->
-> ⚠️ **Superseded on 2026-08-23 — the slide did not stop, and the answer it produced was wrong.** This report said coverage had stabilised at 62.30% and that the open question resolved toward *designed scaling*. **Three days later, on 2026-08-21, on-chain coverage fell from 61.22% to 42.86% in a single day** — $24.99M of reserves left the safe with thUSD supply unchanged **to the dollar**. That is the exact inverse of the matched-mint evidence the designed-scaling conclusion rested on, and **42.86% is well below the 53.21% this report called the trough**, so the bottom identified here is no longer the bottom. See "Where the backing actually sits" below. Backing is cut 3.0 → 2.5.
->
-> **But a rising coverage percentage is not by itself good news, and it is worth understanding why.** Coverage is on-chain reserves divided by supply. When that ratio sits below 100%, *adding equal dollars to the top and bottom pushes the percentage up* — $10M of new supply matched by $10M of new reserves raises a 60% ratio even though nothing about the shortfall improved. So the percentage alone tells you very little. What matters is whether the new dollars arrived matched. **Here they did:** between 2026-08-12 and 08-13, supply rose $109.89M → $136.18M (+$26.29M) while on-chain reserves rose $58.50M → $84.82M (+$26.32M) — matched to within about $30,000. That is issuance arriving *with* its reserves, the inverse of the May–July pattern, and it is genuine issuance discipline. The improvement is real; the metric that reports it is just a poor witness.
->
-> **What got worse: the on-chain cash buffer is gone.** USDT went **$2.0M → $0** and USDC **$0.4M → about $22**. On-chain reserves are now **100% thBILL** — not "mostly," there is no other component. Two consequences. There is no on-chain cash to meet a redemption without unwinding thBILL through the Libeara T+1→T+7 settlement rail; and the reserve is now entirely concentrated in **Theo's own product**, so the collateral is not independent of the issuer.
->
-> **And the collateral itself was re-rated.** [thBILL](/reports/thbill) was cut to **4.0 overall** on 2026-08-18. Since thUSD's reserve is now 100% thBILL, that input flows straight into this report's Backing axis. Netting all of it — the matched mint against the drained buffer and a weaker look-through — **Backing moves to 3.0 and Overall holds at 4.0.**
 
 ## Read this first — there are at least three "thUSDs"
 
@@ -254,6 +242,16 @@ The Backing axis then marks that down for everything about *how the backing is h
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. The off-chain leg of the strategy — CME futures positions, physical gold inventory, lending counterparties, MPC custody composition, NAV-oracle source — is opaque to us and may carry risk this report cannot enumerate. Theo's prior product (thBILL) has demonstrated a multi-month clean operating track record on a similar trust model; that is encouraging but does not constitute proof for thUSD's more complex strategy. Sized positions should leave room for residual unknowns this analysis cannot enumerate.
 
 ## Revision history
+
+> **2026-08-18 update — Backing 3.5 → 3.0. Overall holds at 4.0.** Two developments pull in opposite directions and this update explains both, because the headline number moved the *helpful* way while the thing underneath it got worse.
+>
+> ⚠️ **Superseded on 2026-08-23 — the slide did not stop, and the answer it produced was wrong.** This report said coverage had stabilised at 62.30% and that the open question resolved toward *designed scaling*. **Three days later, on 2026-08-21, on-chain coverage fell from 61.22% to 42.86% in a single day** — $24.99M of reserves left the safe with thUSD supply unchanged **to the dollar**. That is the exact inverse of the matched-mint evidence the designed-scaling conclusion rested on, and **42.86% is well below the 53.21% this report called the trough**, so the bottom identified here is no longer the bottom. See "Where the backing actually sits" below. Backing is cut 3.0 → 2.5.
+>
+> **But a rising coverage percentage is not by itself good news, and it is worth understanding why.** Coverage is on-chain reserves divided by supply. When that ratio sits below 100%, *adding equal dollars to the top and bottom pushes the percentage up* — $10M of new supply matched by $10M of new reserves raises a 60% ratio even though nothing about the shortfall improved. So the percentage alone tells you very little. What matters is whether the new dollars arrived matched. **Here they did:** between 2026-08-12 and 08-13, supply rose $109.89M → $136.18M (+$26.29M) while on-chain reserves rose $58.50M → $84.82M (+$26.32M) — matched to within about $30,000. That is issuance arriving *with* its reserves, the inverse of the May–July pattern, and it is genuine issuance discipline. The improvement is real; the metric that reports it is just a poor witness.
+>
+> **What got worse: the on-chain cash buffer is gone.** USDT went **$2.0M → $0** and USDC **$0.4M → about $22**. On-chain reserves are now **100% thBILL** — not "mostly," there is no other component. Two consequences. There is no on-chain cash to meet a redemption without unwinding thBILL through the Libeara T+1→T+7 settlement rail; and the reserve is now entirely concentrated in **Theo's own product**, so the collateral is not independent of the issuer.
+>
+> **And the collateral itself was re-rated.** [thBILL](/reports/thbill) was cut to **4.0 overall** on 2026-08-18. Since thUSD's reserve is now 100% thBILL, that input flows straight into this report's Backing axis. Netting all of it — the matched mint against the drained buffer and a weaker look-through — **Backing moves to 3.0 and Overall holds at 4.0.**
 
 - **2026-08-23 — on-chain coverage collapsed 61.22% → 42.86% in one day; Backing 3.0 → 2.5, Overall cut.** The coverage series, supply and reserve balances were all re-read.
 - **2026-08-18 — coverage stabilised, cash buffer drained, look-through re-rated. Backing 3.5 → 3.0.**

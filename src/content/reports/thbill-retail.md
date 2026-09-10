@@ -29,9 +29,7 @@ underlying_managers:
   - "Wellington Management (sub-advisor)"
   - "Fidelity International (FILQ manager/issuer)"
   - "Sygnum (FILQ tokenization)"
----
-
-# thBILL — Risk Report
+---# thBILL — Risk Report
 
 **Elevated risk · 3.5/10**
 
@@ -44,16 +42,6 @@ underlying_managers:
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
 | about 3% APY | Sell on DEX at a NAV discount | KYC-gated, and not converting in practice | about 13 months | Ethereum, Arbitrum, Base, HyperEVM |
-
-> **2026-08-18 update — Overall 4.5 → 4.0, and this report has moved onto the correct scoring rubric.**
->
-> **The rubric fix comes first, because it is why the re-rate was overdue.** thBILL is a vault share — a fund unit whose price tracks NAV — but this page had been scored on the stablecoin rubric (peg / backing / underlying / liquidity / issuer). That rubric **has no redemption axis**, so thBILL's single most important retail fact — that you probably cannot redeem through the primary path — had nowhere to land on the page retail readers actually see. It has now moved to the vault-share axes used for every other fund-share report on this site: **Stability / Contract & Admin / Redemption / Underlying / Liquidity / Issuer**. Nothing was rescored to make the numbers fit; the peg and backing material has moved into the Liquidity and Underlying discussions, where it belongs.
->
-> **Two axes then fell, and both fall out of one fact: thBILL has stopped being a product and become plumbing.**
-> - **Redemption 3.5 → 2.0.** An issuer that no longer offers an asset externally does not have a working external redemption channel, whatever the contract permits. Publicly checkable: **the last redemption of any kind was 2026-07-09, and the last non-operator redemption was 2026-07-08 — about six weeks ago.** Supply was, when this was written, identical to its own 24-hour-ago reading to twelve decimal places (84,059,152.134528): no mint, no burn. ⚠️ **That stopped being true on 2026-08-22, and what replaced it strengthens this axis rather than softening it.** Supply fell 29% to 58,480,001.56 — and still **no redemption is recorded**, the last of any kind remaining 2026-07-09. Roughly 25.6M tokens left supply with nothing logged against them, by a mechanism not visible in on-chain events. A holder looking for evidence of a working external redemption channel has less of it now, not more.
-> - **Liquidity 3.5 → 2.0.** As thBILL becomes an internal reserve asset there is progressively less of it *outside* the protocol to trade. Aggregate DEX liquidity is **$671,715** against a fund of about **$87.0M — 0.77%**, on 24-hour volume of **$89,364**. That liquidity is best read against "$130M+". The float has shrunk in **absolute** terms, not just relative.
->
-> **Stability holds at 8.0, and it is important not to misread it.** That axis scores the **NAV**, which is behaving exactly as a T-Bill NAV should — 1.035365, smooth accrual, no drama. The dislocation is between the *market price* and NAV, and it is priced under Liquidity and Redemption instead. It is now the only high axis on the page. The honest summary: **the underlying T-Bills are genuinely safe, and almost everything about getting at them is not.**
 
 > **On scoring:** this page scores the retail experience — a holder with no primary-redemption access. See *On the scoring rubric* at the bottom for what each axis is doing.
 
@@ -246,6 +234,16 @@ It sits at 5.0 because this axis has to answer a second question as well: **can 
 **A note on what this report doesn't cover.** This analysis combines what we can verify on-chain with what's publicly documented. Some attack classes — a recent example: the rsETH single-DVN bridge exploit in April 2026 — only become visible after they manifest in production; our methodology is retrospective on novel risks. We also cannot fully audit the underlying T-bill custody chain at Standard Chartered, Wellington Management's portfolio composition, the MPC operator's signer composition, or the Zenith audit report (acknowledged by Theo's docs but not publicly linked). Sized positions should leave room for residual unknowns this analysis cannot enumerate.
 
 ## Revision history
+
+> **2026-08-18 update — Overall 4.5 → 4.0, and this report has moved onto the correct scoring rubric.**
+>
+> **The rubric fix comes first, because it is why the re-rate was overdue.** thBILL is a vault share — a fund unit whose price tracks NAV — but this page had been scored on the stablecoin rubric (peg / backing / underlying / liquidity / issuer). That rubric **has no redemption axis**, so thBILL's single most important retail fact — that you probably cannot redeem through the primary path — had nowhere to land on the page retail readers actually see. It has now moved to the vault-share axes used for every other fund-share report on this site: **Stability / Contract & Admin / Redemption / Underlying / Liquidity / Issuer**. Nothing was rescored to make the numbers fit; the peg and backing material has moved into the Liquidity and Underlying discussions, where it belongs.
+>
+> **Two axes then fell, and both fall out of one fact: thBILL has stopped being a product and become plumbing.**
+> - **Redemption 3.5 → 2.0.** An issuer that no longer offers an asset externally does not have a working external redemption channel, whatever the contract permits. Publicly checkable: **the last redemption of any kind was 2026-07-09, and the last non-operator redemption was 2026-07-08 — about six weeks ago.** Supply was, when this was written, identical to its own 24-hour-ago reading to twelve decimal places (84,059,152.134528): no mint, no burn. ⚠️ **That stopped being true on 2026-08-22, and what replaced it strengthens this axis rather than softening it.** Supply fell 29% to 58,480,001.56 — and still **no redemption is recorded**, the last of any kind remaining 2026-07-09. Roughly 25.6M tokens left supply with nothing logged against them, by a mechanism not visible in on-chain events. A holder looking for evidence of a working external redemption channel has less of it now, not more.
+> - **Liquidity 3.5 → 2.0.** As thBILL becomes an internal reserve asset there is progressively less of it *outside* the protocol to trade. Aggregate DEX liquidity is **$671,715** against a fund of about **$87.0M — 0.77%**, on 24-hour volume of **$89,364**. That liquidity is best read against "$130M+". The float has shrunk in **absolute** terms, not just relative.
+>
+> **Stability holds at 8.0, and it is important not to misread it.** That axis scores the **NAV**, which is behaving exactly as a T-Bill NAV should — 1.035365, smooth accrual, no drama. The dislocation is between the *market price* and NAV, and it is priced under Liquidity and Redemption instead. It is now the only high axis on the page. The honest summary: **the underlying T-Bills are genuinely safe, and almost everything about getting at them is not.**
 
 - **2026-08-23 — reserve composition restated, custody measured, scores cut.** **96.34% of thBILL is held intra-protocol at the thUSD reserve**, against a 55–70% band recorded earlier in the year: of 58,480,001.56 outstanding, **56,336,827.05 sits in the reserve Safe**, leaving an external float near **2.14M tokens, about $2.2M**. Supply fell **29%** over the period, to about **$60.6M** at NAV 1.035365 from $87.0M on 08-18. ⚠️ **The last redemption through the primary path was 2026-07-09**, and the last not attributable to Theo's own operator address was 2026-07-08. **Reserve custody sits at bare single-signature wallets outside the multisig.** The market discount reached **−2.58% to NAV**, outside the −80 to −150 bp band, which the float collapse explains rather than a stress event.
 - **2026-08-23 — per-chain Safe thresholds measured.** The same Theo Safe `0x94877640…01295` governs all four chains at **4-of-6 on Ethereum, 3-of-5 on Arbitrum, 3-of-4 on Base and HyperEVM**. ⚠️ **The owner sets are strictly nested — one signer set with three chains holding truncations of it**, not four independent configurations. Ethereum's sixth signer is `0x97f60fb7…`. Separately, `ROLE_ADMIN` sits on a bare EOA `0xa04bddfb…9b2a` alongside the 4-of-7 Safe `0xd6d4Bcde…a196`.

@@ -18,9 +18,7 @@ issuer: "Frax Finance"
 market_cap_approx: 105500000
 featured: false
 production: true
----
-
-# Frax USD (frxUSD) — Risk Report
+---# Frax USD (frxUSD) — Risk Report
 
 **Moderate risk · 5.5/10 · Strong Treasury backing, undercut by unaudited upgradeable contracts**
 
@@ -32,9 +30,9 @@ frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as par
 |---|---|---|---|---|
 | $1.00 (trades ≈$0.9993) | None (stake to sfrxUSD for yield) | Per-custodian redemption; USDC exit gated by a ≈$10M buffer | Active flagship, float contracting | Ethereum + 10 chains (LayerZero OFT) |
 
-⚠️ **One thing this report has never said about its own supply: better than a third of it sits in a single vault.** Measured 2026-08-29, **sfrxUSD — the staked form — holds 36,232,343.43 frxUSD against a total supply of 101,827,130.47, or 35.58%.** **So a reader treating frxUSD's float as broadly distributed is reading a number that is substantially one contract's balance**, and the concentration is between the two assets rather than across holders. ⚠️ **And the vault's governance is weaker than its interface suggests: its `timelockAddress()` accessor resolves to a 3-of-6 Safe with no execution delay**, while `owner()` reverts — so the accessor's name is the only governance signal the interface offers, and it asserts a delay that does not exist. See the **[sfrxUSD report](/reports/sfrxusd/)** for the vault's own assessment, including the accessor finding above and the contract-enforced yield ceiling.
-
 ## Backing & reserves
+
+⚠️ **Better than a third of frxUSD's supply sits in a single vault.** Measured 2026-08-29, **sfrxUSD — the staked form — holds 36,232,343.43 frxUSD against a total supply of 101,827,130.47, or 35.58%.** **So a reader treating frxUSD's float as broadly distributed is reading a number that is substantially one contract's balance**, and the concentration is between the two assets rather than across holders. ⚠️ **And the vault's governance is weaker than its interface suggests: its `timelockAddress()` accessor resolves to a 3-of-6 Safe with no execution delay**, while `owner()` reverts — so the accessor's name is the only governance signal the interface offers, and it asserts a delay that does not exist. See the **[sfrxUSD report](/reports/sfrxusd/)** for the vault's own assessment, including the accessor finding above and the contract-enforced yield ceiling.
 
 **The backing is genuinely high-quality — tokenized US Treasuries — but concentrated and not independently audited at the token level.**
 
@@ -149,6 +147,8 @@ What makes it worth a second look is the combination: the float is shrinking *wh
 *This report describes frxUSD as of August 2026, based on public Frax/LlamaRisk documentation and direct on-chain reads (owner, threshold, signer overlap and supply re-verified 2026-08-13). Frax Finance has not engaged on this report. The backing sits partly off-chain with regulated custodians and tokenized-fund issuers; figures rely on those issuers' attestations plus on-chain data. The Chaos Labs PoR feed could not be retrieved on either of the last two passes. Corrections welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
+
+
 
 - **2026-08-29 — supply concentration recorded; no score change.** **sfrxUSD holds 36,232,343.43 frxUSD against a total supply of 101,827,130.47 — 35.58%.** That vault's `timelockAddress()` accessor resolves to a **3-of-6 Safe with no execution delay**, and `owner()` reverts, so the accessor name is the only governance signal the interface offers. See the [sfrxUSD report](/reports/sfrxusd/).
 - **2026-08-23 — upgrade timelock measured at 24 hours**, and it does not cover the powers that matter most: on the OFT legs `setPeer` points the token at a peer whose inbound messages credit balances, with no upgrade and nothing for a proxy-watcher to see.
