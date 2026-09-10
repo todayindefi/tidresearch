@@ -33,6 +33,25 @@ const SELF_REF: [RegExp, string][] = [
   [/\bevery prior revision\b/i, "every prior revision"],
 ];
 
+/**
+ * §5 of docs/report-format.md: dashboards are LINKED, never embedded.
+ *
+ * ⚠️ THIS RULE CAN GO STALE IN A DIRECTION THE PROSE DOES NOT NOTICE. When the
+ * embeds were removed on 2026-09-09 the iframes went, but two production reports
+ * kept telling readers the data was "on the embedded dashboard below" — a promise
+ * pointing at a surface that no longer existed on the page. The build stayed green
+ * because nothing checks prose against layout.
+ *
+ * Found the same week as a sibling case: crvUSD told readers to check the dashboard
+ * for per-keeper PegKeeper debt, which that dashboard has never rendered. A pointer
+ * is a claim about another surface, and it ages without anyone editing it.
+ */
+const STALE_SURFACE: [RegExp, string][] = [
+  [/\bembedded dashboard\b/i, "\"embedded dashboard\" — dashboards are linked, not embedded (§5)"],
+  [/\bdashboard (embedded )?below\b/i, "\"dashboard below\" — the page links out; there is nothing below"],
+  [/\bembed(ded)? (below|here|above)\b/i, "promises an embed that no longer renders"],
+];
+
 for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   const text = readFileSync(join(DIR, file), "utf8");
   const end = text.indexOf("\n---", 4);
@@ -63,6 +82,11 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
       const at = main.slice(Math.max(0, m.index! - 60), m.index! + 80).replace(/\s+/g, " ");
       errors.push(`${file}: self-reference "${label}" outside Revision history — …${at}… (docs/report-format.md §4).`);
     }
+  }
+
+  for (const [re, label] of STALE_SURFACE) {
+    const hit = body.match(re);
+    if (hit) errors.push(`${file}: ${label} — "${hit[0]}"`);
   }
 }
 

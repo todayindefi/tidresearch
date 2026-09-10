@@ -133,7 +133,7 @@ Practically: a malicious or buggy upgrade is visible on-chain for two days befor
 
 ## Live dashboard
 
-A stacked-bar decomposition of total assets, the credit-pipeline framing, NAV trajectory, secondary-market depth across venues, and the 48-hour pending-upgrade watch are on the embedded dashboard below. ⚠️ **One scope note on that last panel, because it is the one a holder would rely on: the pending-upgrade watch covers scheduled upgrades only.** It reads `CallScheduled` on the timelock — and **the mint path never touches the timelock**, so an undelayed issuance will not appear there and gives no advance warning. The dashboard itself now says so; this sentence previously did not.
+A stacked-bar decomposition of total assets, the credit-pipeline framing, NAV trajectory, secondary-market depth across venues, and the 48-hour pending-upgrade watch are on the [live dashboard](https://tidresearch.com/dashboards/?asset=susdai). ⚠️ **One scope note on that last panel, because it is the one a holder would rely on: the pending-upgrade watch covers scheduled upgrades only.** It reads `CallScheduled` on the timelock — and **the mint path never touches the timelock**, so an undelayed issuance will not appear there and gives no advance warning. The dashboard itself now says so; this sentence previously did not.
 
 ## Sibling
 
