@@ -78,19 +78,24 @@ Appropriate for: DeFi-comfortable users who already understand Ethena-style synt
 
 **Admin chain has been hardened over the last two weeks.** Through 2026-05-14 to 2026-05-17, Theo migrated ownership of thUSD, sthUSD, and the thUSD OFT adapter on all three chains (Ethereum + Arbitrum + Stable) to a **new OpenZeppelin TimelockController at `0x2bb4b7e6e83fa6b77d0143dad631843cb73dca02`**. On-chain reads confirm `getMinDelay() = 172,800 seconds = 48 hours` **on Ethereum.**
 
-⚠️ **The addresses are shared across chains; the configuration is not — and the difference decides whether the delay is a delay.** Re-read on-chain 2026-09-10, each with a control address that returns false:
+⚠️ **The addresses are shared across all three chains; the configuration is not — and the difference decides whether the delay is a delay.** Re-read on-chain 2026-09-10, every role check paired with a control address that returns false:
 
-| | Ethereum | Arbitrum |
-|---|---|---|
-| `getMinDelay()` | **172,800s — 48 hours** | **64,800s — 18 hours** |
-| Safe threshold | **4-of-6** | **3-of-5** |
-| Safe holds `DEFAULT_ADMIN` on its own timelock | **no — revoked** | ⚠️ **yes** |
+| | Ethereum | **Stable** | Arbitrum |
+|---|---|---|---|
+| thUSD held | 135,840,056.30 | **51,416,245.78** | 195,599.26 |
+| share of *bridged* supply | — | **99.62%** | 0.38% |
+| `getMinDelay()` | **172,800s — 48h** | **64,800s — 18h** | **64,800s — 18h** |
+| Safe threshold | **4-of-6** | **3-of-5** | **3-of-5** |
+| Safe holds `DEFAULT_ADMIN` on its own timelock | **no — revoked** | ⚠️ **yes** | ⚠️ **yes** |
 
-✅ **On Ethereum the hardening is exactly what it claims to be.** The Safe gave up `DEFAULT_ADMIN` on the timelock, so **48 hours is a floor it must clear rather than a value it can set**, and four signatures are needed.
+⚠️ **The last row is the one that matters, and it is not an Arbitrum footnote.** Where the Safe still holds `DEFAULT_ADMIN` on its own timelock, **the 18 hours is a value that Safe can set rather than a floor it must clear — and three signatures reach it, not four.** ✅ **On Ethereum that role was given up, so 48 hours there is genuinely binding.**
 
-⚠️ **On Arbitrum it is not.** The Safe still holds `DEFAULT_ADMIN` on its own timelock, so **the 18 hours is a setting that Safe can change rather than a window a holder can rely on** — and **three signatures reach it, not four.** ⚠️ **`getMinDelay()` returning 172,800 is an Ethereum reading; it does not describe the other chains.**
+⚠️ **Stable is where the bridged money is.** Of the **51,611,845.04 thUSD** locked in the Ethereum adapter — which reconciles to the cent against the two remote supplies — **99.62% sits on Stable and 0.38% on Arbitrum.** **Stable alone is 37.85% of Ethereum's thUSD supply.** ⚠️ **So a holder of bridged thUSD is overwhelmingly on the weaker configuration, and a per-chain reading that is accurate line by line can still mislead in aggregate.**
 
-⚠️ **Stable is not read.** The migration is described across three chains and this comparison covers two — **"Ethereum 48h, Arbitrum 18h, Stable unread" is the honest shape**, and the Stable leg should not be assumed to match either.
+⚠️ **Two further peers are configured and empty.** The Ethereum adapter's LayerZero peer set was enumerated rather than taken from the chain list, and it returns **four** peers: Stable, Arbitrum, **BNB Chain and Mantle** — the last two holding **zero supply**. ✅ **A configured peer with no supply is latent surface rather than present exposure**: it is a path that can carry value without any new authorisation being granted.
+
+⚠️ **One thing is unread rather than clear.** The LayerZero **delegate** on Stable could not be retrieved — the call that answers on Ethereum and Arbitrum returned nothing there, **and the control address returned nothing either, so that is a failed read and not an absence of a delegate.** ⚠️ **On the other two chains that delegate is the Safe directly, with no notice period at all** — so this should be read as an open question rather than as a clean leg.
+
  PROPOSER_ROLE and EXECUTOR_ROLE on the new Timelock are held by the disclosed Safe `0x94877640dd9e6f1e3cb56bf7b5665b7152601295`, which on Ethereum is now **4-of-6** (one additional signer and threshold bump versus the originally-disclosed 3-of-5). ⚠️ **On Ethereum this is the right shape for an institutional product, and 48 hours there is a real exit window rather than a checkbox. On Arbitrum it is closer to the checkbox** — a shorter delay that the signers who would use it can themselves reset.
 
 ⚠️ **thUSD's own admin posture is genuinely good, and it is not the posture of the reserve beneath it.** At the product layer the Safe runs at **threshold 4** on v1.4.1, and the token owner on Ethereum is a **48-hour TimelockController** (`min_delay` 172,800) — the same shape this coverage credits on [USDS](/reports/usds/), and the reason it is not docked there. **But the reserve asset underneath, thBILL's ULTRA leg, has no multisig at any position**: a single plain key holds sole admin over the token and has replaced its logic twice this year (see the [thBILL report](/reports/thbill/)). **Same issuer, two very different postures, and a reader should not infer either from the other** — a timelock over thUSD's contracts does not reach the thing the reserve is made of.
