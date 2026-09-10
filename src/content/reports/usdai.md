@@ -30,7 +30,7 @@ overall_score: 5.5
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=usdai"
 ---
 
-# USDai — Retail Risk Report
+# USDai — Risk Report
 
 **Moderate risk · 5.5/10**
 

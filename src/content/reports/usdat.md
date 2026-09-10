@@ -37,7 +37,7 @@ overall_score: 4.5
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdat"
 ---
 
-# USDat — Retail Risk Report
+# USDat — Risk Report
 
 **Moderate-elevated risk · 4.5/10**
 

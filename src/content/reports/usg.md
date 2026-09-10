@@ -50,7 +50,7 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usg"
 production: true
 ---
 
-# USG — Asset Risk Assessment (Light)
+# USG — Risk Report
 
 **Category:** Stablecoin | **Peg Mechanism:** Hybrid (CDP + PegKeepers) | **Issuer:** Tangent Finance
 

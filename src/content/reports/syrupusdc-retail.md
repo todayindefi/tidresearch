@@ -59,7 +59,7 @@ issuer_score: 5.5
 overall_score: 6.75
 ---
 
-# syrupUSDC — Retail Risk Report
+# syrupUSDC — Risk Report
 
 **Moderate-to-low risk · 6.75/10**
 

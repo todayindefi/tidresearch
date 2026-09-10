@@ -58,7 +58,7 @@ redemption_score: 3.5
 overall_score: 4.0
 ---
 
-# ONyc — Retail Risk Report
+# ONyc — Risk Report
 
 **High risk · 4.0/10**
 

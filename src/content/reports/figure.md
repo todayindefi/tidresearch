@@ -20,7 +20,7 @@ companion_report: "hastra-prime"
 overall_score: 5.0
 ---
 
-# Figure — Counterparty Risk Report
+# Figure — Risk Report
 **Moderate-elevated risk · 5.0 / 10**
 *TradFi dependency · Nasdaq: FIGR · Upstream of PRIME and wYLDS · verified 2026-07-31*
 

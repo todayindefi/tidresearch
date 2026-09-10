@@ -28,7 +28,7 @@ overall_score: 3.5
 # True/false has no way to express "semi", and the true branch is the wrong one.
 ---
 
-# thUSD — Retail Risk Report
+# thUSD — Risk Report
 
 **Elevated risk · 3.5/10**
 

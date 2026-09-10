@@ -30,7 +30,7 @@ overall_score: 5.0
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=susdai"
 ---
 
-# sUSDai — Retail Risk Report
+# sUSDai — Risk Report
 
 **Moderate-to-elevated risk · 5.0/10**
 

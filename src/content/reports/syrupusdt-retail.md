@@ -59,7 +59,7 @@ issuer_score: 5.5
 overall_score: 6.0
 ---
 
-# syrupUSDT — Retail Risk Report
+# syrupUSDT — Risk Report
 
 **Moderate risk · 6.0/10 · Sibling product to [syrupUSDC](/reports/syrupusdc/)**
 

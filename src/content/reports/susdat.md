@@ -44,7 +44,7 @@ overall_score: 3.5
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
 
-# sUSDat — Retail Risk Report
+# sUSDat — Risk Report
 
 **Significant risk · 3.5/10**
 

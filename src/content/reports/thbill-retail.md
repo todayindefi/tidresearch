@@ -31,7 +31,7 @@ underlying_managers:
   - "Sygnum (FILQ tokenization)"
 ---
 
-# thBILL — Retail Risk Report
+# thBILL — Risk Report
 
 **Elevated risk · 3.5/10**
 
