@@ -90,3 +90,9 @@ what the page says and can contradict the prose beside it.
   **refused**. A failed read is not an absence.
 - **Sweep the value, then read each hit.** A number usually appears in more than
   one place; a search is a candidate generator, never a decision.
+
+## 7 · Contract & Admin carries its own evidence rules
+
+Axis 5 has requirements the other axes do not, because it is the axis where an on-chain read looks most conclusive and is most easily over-read. **See [contract-admin-axis.md](contract-admin-axis.md).**
+
+In short: derive every address from a call that returns it rather than from a display string; read slots and role IDs off the contract rather than from their names; **reconcile the measurement against the issuer's own docs and repositories, and record whether they agree, disagree, or are silent**; check whether any audit or bug bounty actually covers the privileged-role surface; and state the chains not read. **`eth_getCode` returning `0x` proves there is no on-chain quorum — it never proves one private key.**
