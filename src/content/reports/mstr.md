@@ -18,7 +18,9 @@ issuer: "Strategy Inc."
 yield_bearing: false
 underlying_assets: ["btc"]
 overall_score: 4.5
----# MSTR (Strategy Inc.) — Risk Report
+---
+
+# MSTR (Strategy Inc.) — Risk Report
 
 > **Scope: dependency analysis.** This report analyzes Strategy as an upstream issuer for STRC, STRCx, and downstream-asset holders (apxUSD, apyUSD, sUSDat, etc.).
 > It is **NOT an equity investment analysis** of MSTR common stock. No buy or sell guidance on MSTR is intended or implied.
@@ -124,7 +126,7 @@ Common equity is roughly **$37B**, on **384,225,751 shares** (364,585,501 class 
 
 ### The wall is 2028, not 2030 — because every tranche carries a holder put
 
-**Each convertible tranche gives holders a noncontingent right to require Strategy to repurchase the notes for cash at 100% of principal**, on a date well before stated maturity — in the 10-Q's words, a *"noncontingent right to require the Company to repurchase for cash all or any portion of their respective notes at a repurchase price equal to 100% of the principal amount."* Noncontingent. Cash. Par. **This report never previously mentioned puts, and they change the binding schedule entirely.**
+**Each convertible tranche gives holders a noncontingent right to require Strategy to repurchase the notes for cash at 100% of principal**, on a date well before stated maturity — in the 10-Q's words, a *"noncontingent right to require the Company to repurchase for cash all or any portion of their respective notes at a repurchase price equal to 100% of the principal amount."* Noncontingent. Cash. Par. ⚠️ **The holder puts, not the maturities, are what set the binding schedule.**
 
 | tranche | maturity | principal | conversion price | **holder put date** |
 |---|---|---:|---:|---|

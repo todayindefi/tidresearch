@@ -95,7 +95,7 @@ The report stated that **$1,200,803 of stable collateral left the Ethereum leg a
 
 ⚠️ **State the denominator, because two very different numbers live on this asset.** The rated 0.9120 is **stable-only reserve against all Mento stablecoin debt** — $13.81M over $15.14M. Against total Mento stablecoin *supply* of about $19.6M the same reserve is **70.4%**, and gross reserve against USDm's own supply is **111%**. **Three ratios, three denominators, and the field names do not say which is which.**
 
-⚠️ **`backing_score` is HELD at 4.5, and the reason matters more than the number: 0.912 is essentially the 0.909 that drove the July cut to 4.5 in the first place.** The correction **restores the basis the score was set on** rather than changing the score. But **"just below par and recovering" and "at the level that triggered a downgrade" are different sentences**, and this page had been telling readers the first one.
+⚠️ **`backing_score` is HELD at 4.5, and the reason matters more than the number: 0.912 is essentially the 0.909 that drove the July cut to 4.5 in the first place.** The correction **restores the basis the score was set on** rather than changing the score. ⚠️ **But "just below par and recovering" and "at the level that triggered a downgrade" are different sentences, and this reading is the second one.**
 
 **On the August retraction itself:** EUROP is worth **7.55pp of coverage** and the restated daily closes read **0.9877 (08-25)** and **0.9846 (08-26)** — **both above the 0.98 line the cut was conditioned on.** Corrected stable-only coverage is **99.27%, not 91.73%**, and any statement on this page that it sits in the low-0.90s was true as measured and false as reality.
 
@@ -260,7 +260,7 @@ USDm is a reasonably-engineered stablecoin from a credible team with a strong au
 
 ---
 
-## Revision History
+## Revision history
 
 *⚠️ **2026-09-07 — the reserve total was being read from the issuer's API, and the API overstated it. Stable-only coverage 0.9955 → 0.9120; backing HELD at 4.5.** The analyzer measured both an on-chain balance sweep and Mento's API total, published the divergence, and then used the API anyway — its correction was `max(api_total, candidate)`, and a max() can only ever raise, so with the API reading high the correction was a **silent no-op** and every corrected field equalled its uncorrected twin. Swept on-chain the reserve is **$18,618,906, not $20,094,988** — the API overstated the Ethereum leg by **$1,377,289 (about 11.8%)** and Monad by a further 8%. ⚠️ **0.912 is essentially the 0.909 that drove the July cut to 4.5, so this restores the basis the score was set on rather than changing the score** — but the page had been saying "just below par" for a figure that is at the downgrade level. ⚠️ **This is not a reversal of the 2026-08-28 EUROP retraction**, which stands: that was a classifier excluding a real holding, and this is a total read from the wrong source.*
 

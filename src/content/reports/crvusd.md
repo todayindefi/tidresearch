@@ -24,7 +24,9 @@ axis_frame: six
 issuer: "Curve Finance"
 market_cap_approx: 225000000
 production: true
----# crvUSD — Risk Report
+---
+
+# crvUSD — Risk Report
 
 **Category:** Stablecoin | **Peg Mechanism:** Algorithmic (LLAMMA + PegKeepers) | **Issuer:** Curve Finance
 

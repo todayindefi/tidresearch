@@ -18,7 +18,9 @@ issuer: "Frax Finance"
 market_cap_approx: 105500000
 featured: false
 production: true
----# Frax USD (frxUSD) — Risk Report
+---
+
+# Frax USD (frxUSD) — Risk Report
 
 **Moderate risk · 5.5/10 · Strong Treasury backing, undercut by unaudited upgradeable contracts**
 

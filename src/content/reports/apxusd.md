@@ -49,7 +49,9 @@ overall_score: 3.0
 # to securities-only after 2026-03-31 and the June 2026 report "again excluded cash",
 # so the largest reserve component has had no CPA coverage for months; the body also
 # states this is "not a full financial-statement audit". `true` asserts the opposite.
----# apxUSD — Risk Report
+---
+
+# apxUSD — Risk Report
 
 **Significant risk · 3.0/10**
 

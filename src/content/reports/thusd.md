@@ -26,7 +26,9 @@ overall_score: 3.5
 # the overstatement this report exists to correct. Needs a scoped string, not a flag.
 # team_doxxed: withheld — §IV says the team is "semi-doxxed and credentialed".
 # True/false has no way to express "semi", and the true branch is the wrong one.
----# thUSD — Risk Report
+---
+
+# thUSD — Risk Report
 
 **Elevated risk · 3.5/10**
 

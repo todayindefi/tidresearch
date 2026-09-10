@@ -48,7 +48,9 @@ redemption_score: 3.0
 underlying_score: 3.0
 issuer_score: 6.0
 overall_score: 3.0
----# STRC + STRCx — Risk Report
+---
+
+# STRC + STRCx — Risk Report
 
 **Significant risk · 3.0/10**
 

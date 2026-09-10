@@ -29,7 +29,9 @@ underlying_managers:
   - "Wellington Management (sub-advisor)"
   - "Fidelity International (FILQ manager/issuer)"
   - "Sygnum (FILQ tokenization)"
----# thBILL — Risk Report
+---
+
+# thBILL — Risk Report
 
 **Elevated risk · 3.5/10**
 
@@ -99,7 +101,7 @@ thBILL's price goes up over time. At launch ($1.00), today (\~$1.023), roughly +
 
 **Where the $37M went, and what is and isn't known.** It is **located, not missing**: a single contract now holds 35,211,770 ULTRA, 97.29% of that token's supply, established by walking the token's entire transfer history rather than sampling. **That is the same concentration the reserve always had — it moved, it did not shrink.** The move looks operational rather than hostile: someone sent **one** token along the full route first, waited, then sent the remaining 35.2M by the identical path under two hours later, and returned the test token. An operator rehearses a migration that way; an attacker does not.
 
-**That reading is now confirmed rather than inferred.** The key that deployed the destination contract also deployed the ULTRA token itself, the waypoint used in the move, and a manager contract this coverage had already identified as Theo's — and the contracts involved were created in July 2025, thirteen months before the transfer. **The destination is Theo's own infrastructure.** So the money did not leave Theo; **our own monitoring was reading the old address**, which is a gap in our tooling rather than a problem with the reserve, and the fix belongs there.
+**That reading is now confirmed rather than inferred.** The key that deployed the destination contract also deployed the ULTRA token itself, the waypoint used in the move, and a manager contract independently identified as Theo's — and the contracts involved were created in July 2025, thirteen months before the transfer. **The destination is Theo's own infrastructure.** So the money did not leave Theo; **our own monitoring was reading the old address**, which is a gap in our tooling rather than a problem with the reserve, and the fix belongs there.
 
 ⚠️ **But closing that question opened a larger one, and it is the part worth your attention.** The **ULTRA token itself** — the biggest single thing backing thBILL — is built on the same replaceable-logic pattern as the contracts above. **The asset behind your holding is not a fixed contract; whoever holds its upgrade key can change what it does.** And that key is not readable from the chain.
 
