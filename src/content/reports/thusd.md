@@ -14,6 +14,8 @@ peg_mechanism_score: 4.0
 backing_score: 2.5
 underlying_score: 3.0
 liquidity_score: 3.5
+structural_score: 4.0
+axis_frame: six
 issuer_score: 5.5
 overall_score: 3.5
 # audited: withheld — a boolean cannot carry this claim and gets it backwards.
@@ -70,7 +72,16 @@ The catch for retail is the same as thBILL's: **you do not have a primary redemp
 
 Appropriate for: DeFi-comfortable users who already understand Ethena-style synthetic dollars, are sizing well below DEX depth, and want exposure to the gold-basis trade. Not appropriate for: anyone who needs instant or sized liquidity, anyone who wants direct legal claim on the underlying gold or Treasuries, or anyone uncomfortable with a very young product running an off-chain strategy with zero proof-of-reserves.
 
-## I. Smart Contract Risk
+## 5 · Contract & Admin — 4.0
+
+⚠️ **On the Ethereum configuration alone this axis would sit at 4.5.** The 48-hour timelock is a floor rather than a setting — `updateDelay` is `onlySelf`, so shortening it must itself wait out the current delay — `DEFAULT_ADMIN` was given up by the Safe, and **thUSD has no pause function at all**, so no party can freeze transfers. ✅ **The pause asymmetry runs fail-safe:** a halt is instant, a restart takes 48 hours.
+
+⚠️ **The half point comes off for the cross-chain half, and it is not a rounding-error concern.** **38.0% of Ethereum-supply-equivalent thUSD is bridged**, and on both remote chains the delay is **18 hours the Safe can itself alter**, at a **lower quorum** — 3-of-5 rather than 4-of-6. On every chain where the LayerZero delegate could be read, that delegate is **the Safe directly, with no notice period at all.**
+
+⚠️ **And the two Safes that look independent are not.** The governance Safe is **4-of-6**; the Safe holding thUSD's on-chain reserves is **4-of-5**; **they share exactly four owners — the threshold of both.** ✅ **Verified on-chain 2026-09-10:** four shared, two governance-only, one reserve-only. **A single set of four signatures therefore satisfies governance and custody at once**, and the separation the two-Safe structure appears to provide is not there.
+
+⚠️ **`EMERGENCY_ROLE` holders are not established.** The minter reads as unpaused today — **a state reading, not an authority reading.** It says what is true now, not who can change it.
+
 
 **One audit, narrow scope.** The Zenith audit (publicly published at github.com/zenith-security/reports) covers exactly **one file** — the sthUSD staking vault. The thUSD token itself, the Minter (which handles mint and redeem), the OFT Adapters (which handle cross-chain), and the off-chain strategy adapter are **not in any public audit**. Roughly one of five on-chain surfaces has audit coverage. Theo describes this as "the thUSD audit," which is technically accurate but materially overstates breadth. Findings on the file that *was* audited are clean — zero Critical, zero High, zero Medium — so what's audited looks fine. The risk is in what isn't.
 
@@ -112,7 +123,11 @@ Flagged and not asserted: the sthUSD OFT owner is `0xf5b0bf09…`, **not** the t
 
 The single biggest watch-item used to be whether OFT Adapter ownership would get transferred under the Safe-and-Timelock structure (which is what Theo had already done for thBILL). That's now happened for three of the four OFT contracts. The remaining piece — sthUSD OFT — would close the story. The new highest-concentration risk in the system is whichever single key holds the MINTER_ROLE on the Minter contract (still an EOA per disclosed baseline); the OFT-EOA concern that previously dominated this section has been materially reduced.
 
-## II. Economic / Backing Risk
+## 1 · Stability — 4.0
+
+**thUSD targets $1.00 and holds it in ordinary conditions.** ⚠️ **What a peg reading does not tell a holder is whether they can act on it** — the deviation that matters here is between the market price and the redemption path, and it is priced under Liquidity & Exit rather than treated as a stability question.
+
+## 2 · Backing — 2.5
 
 ⚠️ **Where the backing actually sits, as at 2026-08-23 — restated after a single-day collapse.** On-chain visible coverage is **42.86%** of thUSD supply: **$58.35M of on-chain reserves against $136.14M outstanding**, at the reserve safe `0xec417ccb…3c2f`. The implied off-chain backing is about **$77.8M (57.14% of supply)**, inferred from the coverage gap rather than from any attestation.
 
@@ -181,7 +196,13 @@ On-chain coverage has stepped down through 2026 — low-90s% in mid-May, 59.5% i
 
 **NAV oracle architecture is undisclosed.** The share price that determines sthUSD redemption combines on-chain thBILL NAV, an off-chain CME futures mark, off-chain gold spot, and off-chain lending interest. Whoever publishes that share price is the most-trusted contract in the system, and Theo has not publicly documented who it is. The thBILL pattern suggests it's an MPC-attested value from Theo's own infrastructure.
 
-## III. Liquidity (Retail Exit)
+## 4 · Dependencies — 3.0
+
+**thUSD's value is a claim on thBILL, and thBILL's is a claim on a T-Bill portfolio held by a third party.** The chain runs **thUSD → thBILL → the underlying bills**, so a holder's exposure is not this contract's design but the layer beneath it, covered separately in [thBILL](/reports/thbill/).
+
+⚠️ **That layer is the weaker one, and its composition is set out under Backing above rather than repeated here.** ✅ **The split is deliberate: Backing scores what stands behind the token; Dependencies scores who has to keep functioning for that backing to stay reachable.**
+
+## 3 · Liquidity & Exit — 3.5
 
 **The real price-discovery venue is on Ethereum — a correction to our earlier read.** Secondary liquidity centers on a **≈$4.75M Uniswap V4 thUSD/USDC 0.01% pool on Ethereum** (`0xb30bf32e…5b5a0d`), trading at ≈$1.001 with ≈$110K/day volume (GeckoTerminal, 2026-07-02). Our prior report centered Arbitrum and stated there was "no meaningful Ethereum DEX liquidity" — **that was wrong**; the Ethereum pool is the venue that matters. Arbitrum is ≈$30K of dust across ≈17 pools with negligible volume — ignore it. CoinGecko lists no thUSD tickers (this asset is DEX-only).
 
@@ -191,7 +212,7 @@ On-chain coverage has stepped down through 2026 — low-90s% in mid-May, 59.5% i
 
 **Practical exit cost for sized retail is still adverse.** There is now some observable volume to anchor against (≈$110K/day on the Ethereum pool), but at ≈$4.75M depth a large sell moves the price, and there is no Pendle/Curve backstop. **The practical answer for sized retail allocations remains: no meaningful retail exit at scale.** The peg is structurally underwritten by the gated KYC arb (Minter `redeem()` at $1 par), not by deep secondary liquidity.
 
-## IV. Project / Issuer Risk
+## 6 · Issuer — 5.5
 
 **The institutional roster is one of the strongest in DeFi-adjacent stablecoins.** Standard Chartered's Libeara handles tokenization. Wellington Management is the sub-advisor on the underlying T-Bill fund. FundBridge Capital is the gold custodian and runs the 20% first-loss buffer. SIG (Susquehanna) provides prime brokerage. Flowdesk and Amber are secondary-market makers. Concrete (Blueprint Finance) ran the Genesis pre-deposit vault. Mustafa Gold — one of Asia's largest gold retailers — is named as a borrower on the gold-lending side. Underlying T-Bill custody is MAS-regulated (Singapore) via Standard Chartered's local subsidiary.
 
