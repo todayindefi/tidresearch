@@ -35,7 +35,7 @@ issuer: "Saturn Labs"
 axis_frame: six
 volatility_score: 3.5
 backing_score: 2.5
-structural_score: 4.5
+structural_score: 4.0
 redemption_score: 3.5
 liquidity_score: 3.5
 issuer_score: 5.0
@@ -70,7 +70,7 @@ Every axis now states its reason.
 | **Backing** | **2.5** | ⚠️ **New axis, and it exists because sUSDat's reserve is not USDat's reserve.** USDat is **100.00% PYUSDx**; sUSDat is **99.00% an off-chain STRC claim ($73.81M) plus 1.00% on-chain USDat ($0.73M)** — total **$74.54M**, collateral ratio **101.83%**, surplus $1.34M. ⚠️ **The producer tags the 99% leg `oracle_unverified` itself**, so the honest reading is *attested, not measured*. **The name, the ticker and this report's own `underlying_assets` field all implied the vault wraps USDat; the balance sheet says it holds 1% of it** — that field is corrected in this pass |
 | Liquidity & Exit | 3.5 | Scored on the worse leg. The on-chain buffer has run in the low single digits as a share of assets, so redemption at size depends on the off-chain leg being realised rather than on anything a holder can execute |
 | **Dependencies** | **2.5** | **The chain is **sUSDat → USDat → STRC → MSTR → bitcoin**, and 99% of the reserve sits at the STRC link — a preferred claim on a bitcoin treasury company, whose buyback support is discretionary and currently clears [about 2.6% below par](/reports/strc/). **Saturn Labs is the second dependency and the operator of the first.** ⚠️ **Concentration here is not a tail case, it is the design** |
-| Contract & Admin | 4.5 | Unchanged. Vault contract and admin posture as described under *Audits, admin & team* |
+| Contract & Admin | **4.0** | **Set equal to [USDat](/reports/usdat/), which shares the same SaturnTimelock, delay, roles and `DEFAULT_ADMIN`.** ✅ **A genuine five-day self-administered delay with permissionless execution and no zero-delay path** — ⚠️ **but `PROPOSER` and `CANCELLER` are one EOA, so the cancel power belongs to whoever compromises the proposer**, and it is unestablished whether five days is exit-usable. Argued under [5 · Contract & Admin](#5--contract--admin--40) |
 | Issuer | 5.0 | Unchanged, and deliberately identical to [USDat](/reports/usdat/) — this axis scores Saturn Labs the company |
 | **Overall** | **3.5** | Unchanged. Both new axes land at or below the existing composite, so nothing here argues the number up or down |
 
@@ -167,7 +167,23 @@ Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient s
 
 **sUSDat's exposure is almost entirely to something it cannot read on-chain.** ⚠️ **About 99% of the vault's claim is an off-chain STRC position and roughly 1% is an on-chain USDat buffer**, so the dependency chain runs **sUSDat → USDat → STRC → Strategy Inc.** ✅ **The USDat leg is verifiable with a single call; the STRC leg is not**, and that asymmetry is the axis. **Composition is argued under Backing above** — this axis prices who is at the far end of it. See [MSTR](/reports/mstr) for the Strategy analysis and [STRC](/reports/strc) for the instrument itself.
 
-## 5 · Contract & Admin — 4.5
+## 5 · Contract & Admin — 4.0
+
+✅ **The delay itself is the strongest in the STRC family, and it survives scrutiny rather than merely being long.** Re-verified on-chain 2026-09-10, each role check paired with a control address that returns false:
+
+- **`getMinDelay()` is 432,000 seconds — five days.**
+- ⚠️ **`getThreshold()` REVERTS, and that revert is the discrimination rather than the number** — it establishes the terminal is a **TimelockController and not a Safe wearing one's name.**
+- **It is self-administered:** `DEFAULT_ADMIN` is held by the timelock itself, so **shortening the five days must itself clear five days.**
+- ✅ **Execution is permissionless** — `EXECUTOR_ROLE` is held by `address(0)` — so **a matured operation cannot be stalled by whoever queued it.**
+- **There is no zero-delay path anywhere on this surface**, which is not true of every asset this site covers.
+
+⚠️⚠️ **And the door it guards has one key.** **`PROPOSER_ROLE` and `CANCELLER_ROLE` are held by the same single externally-owned address** — `0x61018258…6820`, zero bytes of code, nonce 38. ⚠️ **So there is no independent veto: against a compromised proposer, the power to cancel belongs to the attacker.** ✅ **A five-day window that only one party can open and the same party can close is a weaker protection than five days sounds.**
+
+⚠️ **One caveat that must not be smoothed away: it is not established that five days is EXIT-USABLE.** `vestingPeriod()` returns 259,200 seconds, but that is a **yield parameter, not a withdrawal gate**, and the withdrawal-queue delay did not resolve against twelve candidate signatures — **with a fabricated getter reverting as the control, so the method discriminates.** ✅ **A notice period protects only if the exit is shorter than the notice.** **That relationship is unresolved here — which is an open question, not a favourable finding.**
+
+⚠️ **This axis is set EQUAL to [USDat](/reports/usdat/) rather than above it, and the reason is that they share the terminal.** Both sit behind **the same SaturnTimelock**, with the same five-day delay, the same roles and the same `DEFAULT_ADMIN` on both targets — **the Ethereum authority facts are identical**, so a wrapper cannot outrank the asset it wraps on the underlying's own axis.
+
+⚠️ **And one chain is undeclared-unwalked:** susdat declares **Monad**, and Monad has not been walked. **Nothing on this axis describes that leg.**
 
 **Admin control sits behind a 5-day on-chain timelock, shared with USDat.** `DEFAULT_ADMIN_ROLE` on sUSDat is held by the same `TimelockController` that administers USDat and owns its ProxyAdmin — minimum delay 432,000 seconds, exactly five days, verified independently on-chain on 2026-08-11. The migration from the previous single-key admin took place in early June 2026. Execution of a queued action is permissionless (the executor role is held by the zero address), and the timelock administers itself, so the delay cannot be shortened and roles cannot be regranted without first passing through the five days.
 

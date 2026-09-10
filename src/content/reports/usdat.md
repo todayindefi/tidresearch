@@ -134,6 +134,20 @@ That permissioning penalty is scored on the **Issuer** axis (5.0), not here, so 
 
 ## 5 · Contract & Admin — 4.0
 
+✅ **The delay itself is the strongest in the STRC family, and it survives scrutiny rather than merely being long.** Re-verified on-chain 2026-09-10, each role check paired with a control address that returns false:
+
+- **`getMinDelay()` is 432,000 seconds — five days.**
+- ⚠️ **`getThreshold()` REVERTS, and that revert is the discrimination rather than the number** — it establishes the terminal is a **TimelockController and not a Safe wearing one's name.**
+- **It is self-administered:** `DEFAULT_ADMIN` is held by the timelock itself, so **shortening the five days must itself clear five days.**
+- ✅ **Execution is permissionless** — `EXECUTOR_ROLE` is held by `address(0)` — so **a matured operation cannot be stalled by whoever queued it.**
+- **There is no zero-delay path anywhere on this surface**, which is not true of every asset this site covers.
+
+⚠️⚠️ **And the door it guards has one key.** **`PROPOSER_ROLE` and `CANCELLER_ROLE` are held by the same single externally-owned address** — `0x61018258…6820`, zero bytes of code, nonce 38. ⚠️ **So there is no independent veto: against a compromised proposer, the power to cancel belongs to the attacker.** ✅ **A five-day window that only one party can open and the same party can close is a weaker protection than five days sounds.**
+
+⚠️ **One caveat that must not be smoothed away: it is not established that five days is EXIT-USABLE.** `vestingPeriod()` returns 259,200 seconds, but that is a **yield parameter, not a withdrawal gate**, and the withdrawal-queue delay did not resolve against twelve candidate signatures — **with a fabricated getter reverting as the control, so the method discriminates.** ✅ **A notice period protects only if the exit is shorter than the notice.** **That relationship is unresolved here — which is an open question, not a favourable finding.**
+
+⚠️ **Unread rather than empty, on the second chain:** the proposer and canceller on **BNB** were not found among seven enumerated candidates, and Saturn's address there has a **nonce of 0 — it has never transacted on that chain.** **That is an absence of activity, not an established absence of authority.**
+
 **Admin control sits behind a 5-day on-chain timelock.** USDat is a TransparentUpgradeableProxy whose upgrade path routes through an OZ ProxyAdmin. Both `DEFAULT_ADMIN_ROLE` on the token and ownership of that ProxyAdmin are held by a **`TimelockController` at `0xfD5782E3BFF366601da3973aE30C583dE4F08A67` with a minimum delay of 432,000 seconds — exactly five days.** Verified independently on-chain on 2026-08-11. Practically, this means: **if Saturn wants to change the contract or upgrade its logic, the action becomes publicly visible five days before it can take effect, and you can redeem or sell in the meantime.** For a token that is redeemable 1:1 at par, five days of notice is a meaningful protection rather than a formality.
 
 The wiring is what makes it real rather than decorative, and each leg was checked:
