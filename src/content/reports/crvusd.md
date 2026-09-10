@@ -12,7 +12,7 @@ date: "2026-03-28"
 # issuer work were not re-read. Bumping it would claim a full re-verification
 # that did not happen and would reset the 90-day staleness budget.
 last_verified: "2026-08-23"
-last_revised: "2026-09-08"
+last_revised: "2026-09-10"
 peg_mechanism_score: 6.0
 backing_score: 5.0
 liquidity_score: 6.0
@@ -322,6 +322,8 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 ✅ **But Curve can stop the market, and that is a different power from directing it.** **The YieldBasis factory's `emergency_admin()` is `0x467947ee…1e0c` — the very same 5-of-9 Safe that is crvUSD's own emergency admin**, verified on-chain with the factory's `admin()` answering in the same pass. **Curve's emergency Safe can kill a YieldBasis market and force emergency withdrawal**, through the leveraged-token and gauge logic that gates on that address. ⚠️ **The factory itself only stores and sets the address; the enforcement sits one layer down in the market contracts**, so the reach is specific rather than general — it is a stop, not a steering wheel.
 
 **So the asymmetry runs in both directions.** ⚠️ **Curve cannot say where the money goes**, and ✅ **it can shut the position down immediately, with no delay, by two independent levers** — `reduce_debt_ceiling`, which is one-way, and the kill path above. **The exposure is 47.5% of supply either way; the containment is better than the allocation picture alone suggests.**
+
+✅ **And the ceiling being fully drawn is itself a bound on the fast path.** With the $1B line **100% drawn**, the undelayed YieldBasis route can only *reallocate* crvUSD that has **already been minted** — the idle $669.3M — and **cannot create new supply**. Minting beyond the line requires **raising the ceiling**, and that is the slow, public **7-day Curve DAO vote with a genuine participation floor**. ⚠️ **This bounds the speed, not the size.** The 47.5% is already outstanding, and nothing here reduces what a reallocation of the idle balance could do to the markets it lands in — it establishes only that the fast lever cannot make the position *larger*.
 
 ⚠️ **That DAO's seven-day voting duration is not a delay, and the distinction matters more than the number.** Its voting mode is **early execution**: a proposal clearing **55% support at 30% participation executes immediately**, before the seven days elapse. ✅ **"Seven-day governance" would be a true sentence and a misleading one** — the duration is a ceiling on how long a vote may take, not a floor on how fast it can act. **The minimum proposing power is one token.**
 
