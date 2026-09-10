@@ -168,9 +168,22 @@ DeFi users who want yield exposure to Ethena's post-pivot reserve portfolio and 
 
 ## The fee switch, and what it replaced
 
-Ethena tokenholders have approved a **fee switch**: once USDe supply reaches a stated milestone, **95% of net revenue** across Ethena's three business lines — revenue otherwise paid to the Ethena Foundation — is directed to **ENA buybacks**.
+Ethena tokenholders have approved a **fee switch**: once USDe supply reaches a stated milestone, **95% of the Ethena Foundation's net revenue** — the Foundation's own cut, not the protocol's — is directed to **ENA buybacks**.
 
-⚠️ **It is dormant, and this report is not treating it as a deterioration.** USDe supply is roughly **$4.08B** against a first milestone reported at **$7.5B**, so activation needs about **+84% growth from here.** **Nothing is being diverted today**, and a reader should not take this as a change to current yield or current backing.
+⚠️ **The denominator is the whole story here, and the proposal's own milestone table supplies it.** The schedule is expressed as a take rate against **gross** protocol revenue, and it reconciles with the 95% figure exactly:
+
+| USDe supply | $7.5B | $10B | $15B | $20B | $25B+ |
+|---|---:|---:|---:|---:|---:|
+| Gross protocol APY (assumed) | 6.0% | 6.0% | 6.0% | 6.0% | 6.0% |
+| Annualized gross revenue | $450m | $600m | $900m | $1,200m | — |
+| **Net revenue take rate for buybacks** | **5%** | 10% | 15% | 20% | 25% |
+| Annualized buyback volume | **$22.5m** | $60m | $135m | $240m | — |
+
+✅ **So at the first milestone the buyback is $22.5m against $450m of gross protocol revenue — 5%.** The Foundation's net is about **5.3%** of protocol revenue, and 95% of *that* is what goes to buybacks. ⚠️ **Read without the denominator, "95% of net revenue" suggests almost all protocol economics leave. They do not** — the figure a USDe holder forgoes at that milestone is about **0.50% of a $4.47B book per year.**
+
+⚠️ **Two limits the table states about itself.** It holds protocol APY constant at **6.0%**, which the proposal says is **below** Ethena's realised gross APY since inception, *"in order to isolate the effect of the supply milestones"* — so it is a schedule illustration, not a revenue forecast. And it calls the figures **illustrative**, varying with realised rewards and the composition of the USDe backing.
+
+⚠️ **It is dormant, and this report is not treating it as a deterioration.** USDe supply is **$4,468,386,035** — read on-chain today — against a first milestone of **$7.5B**, so activation needs **+67.8%** growth from here. ⚠️ **That gap has narrowed: supply is up 9.86% in twelve days.** ✅ **Stated as arithmetic on a single window rather than as a forecast** — at that trailing rate the milestone is roughly two months out, and a twelve-day window is not a trend. **Nothing is being diverted today**, and a reader should not take this as a change to current yield or current backing.
 
 ⚠️ **The part worth knowing is what the schedule displaced.** The proposal's own text states that these milestones *"would replace any suggested parameters previously suggested by the Risk Committee"* — **and the Risk Committee thread is where the reserve-fund protections lived**: a monthly adequacy assessment gating activation, and a stated priority ordering of **Reserve Fund capitalization first**, then competitive sUSDe yields, then sENA.
 
@@ -178,7 +191,7 @@ Ethena tokenholders have approved a **fee switch**: once USDe supply reaches a s
 
 ⚠️ **Two things this report has not read, and does not source to itself.** The milestone table is an **IPFS-embedded image**, and the Risk Committee's supporting analysis sits in the proposal's replies — **either could reinstate a reserve-fund test as a gate on activation, and neither has been retrieved.** Tier figures circulating in press coverage (5% above $7.5B, 10% at $10B, 15% at $15B) are **second-hand and are used here for no judgement.**
 
-**The honest summary is structural rather than immediate: the protocol has committed by tokenholder vote to routing the majority of net revenue outward as it scales, and the reserve-fund-first ordering that previously governed that decision no longer applies in the text that replaced it.**
+**The honest summary is structural rather than immediate, and smaller than the headline percentage suggests: the protocol has committed by tokenholder vote to routing a rising share of revenue outward as it scales — 5% of gross at the first milestone, stepping to 25% above $25B — and the reserve-fund-first ordering that previously governed that decision no longer applies in the text that replaced it.**
 
 ## What to watch
 
@@ -186,7 +199,7 @@ Ethena tokenholders have approved a **fee switch**: once USDe supply reaches a s
 - **Cooldown silo depth.** Mass-redemption signal. Resolve the address with `silo()` on the sUSDe vault, then read its USDe balance — it held roughly $25M at a 2026-08-23 check. Resolving it each time rather than reusing a saved address is the point: the silo can be redeployed, and a stale address reads as an empty contract rather than as an error.
 - **Secondary market discount.** Mean -17bps / max -127bps historically. Sustained widening beyond -200bps is the early-warning indicator for stress.
 - **sUSDe APY trend.** ~3.72% as of March 2026, used here as an anchor rather than a live quote — verify the current rate on Ethena's dashboard. Sustained sub-3% prints would suggest reserve-portfolio yield compression beyond expectations.
-- ⚠️ **Whether a reserve-fund test is reinstated as a gate on the fee switch.** This line previously tracked the Reserve Fund composition and USDtb interest-redirect work through the **monthly Reserve Fund subcommittee** as a forward-positive item. **That is the process the approved fee-switch schedule supersedes** — so watching that venue now points at a superseded one. **The live question is whether the milestone table or the Risk Committee's supporting analysis restores a reserve-fund condition**, since the replacement text does not carry one.
+- ✅ **ANSWERED — no reserve-fund test gates the fee switch, and it resolved against the reserve fund.** The ratified proposal and its milestone table were read in full: **activation gates on USDe supply milestones only.** The body records that the schedule was *"signed off by the Risk Committee"* — ⚠️ **sign-off on a schedule is not a surviving test**, and no reserve-fund condition appears in the text that was approved. ✅ **The vote is final and was uncontested: 17,786,102.45 FOR, 0 AGAINST, 0 abstaining, 88 voters, against a 5,000,000 quorum — 3.56× cleared.** ⚠️ **One thread remains genuinely open:** the Risk Committee's supporting analysis sits in the proposal replies and has not been retrieved, and it could carry a condition the ratified text does not.
 - **Aave / Morpho / Pendle loop concentration.** $6.4B+ leveraged exposure against a ~$4.5B underlying USDe float (June 2026) — structurally larger than unit supply, and the gap widens as supply contracts. Pendle PT-sUSDe is the primary growth vector per Chaos Labs Aave-forum debate.
 
 ## A note on the architecture pivot
@@ -217,7 +230,7 @@ PT-sUSDe instruments themselves (specific maturities, fixed-yield discounts) are
 
 ## Revision history
 
-- **2026-08-29 — fee switch recorded; no score change.** Ethena tokenholders have approved directing **95% of net revenue** to ENA buybacks once a USDe supply milestone is reached. **It is dormant: supply is about $4.08B against a first milestone reported at $7.5B.** ⚠️ **The schedule replaces the Risk Committee parameters that previously governed it** — a monthly adequacy assessment gating activation, and an ordering of Reserve Fund capitalization first, then sUSDe yields, then sENA. **The replacement text carries no reserve-fund condition.** The milestone table is an IPFS-embedded image and the supporting analysis sits in unretrieved replies; press-reported tiers are second-hand.
+- **2026-08-29 — fee switch recorded; no score change.** Ethena tokenholders have approved directing **95% of the Ethena Foundation's net revenue** to ENA buybacks once a USDe supply milestone is reached — **$22.5m against $450m of gross protocol revenue, 5%, at the first milestone.** **It is dormant: supply is **$4,468,386,035** against a first milestone of **$7.5B — 67.8% away**.** ⚠️ **The schedule replaces the Risk Committee parameters that previously governed it** — a monthly adequacy assessment gating activation, and an ordering of Reserve Fund capitalization first, then sUSDe yields, then sENA. **The replacement text carries no reserve-fund condition.** The milestone table is an IPFS-embedded image and the supporting analysis sits in unretrieved replies; press-reported tiers are second-hand.
 - **2026-08-25 — re-verified; scores held at 6.5.**
 - **2026-08-23 — cooldown silo address corrected.**
 - **2026-07-15 — dynamic cooldown shipped** (Ethena proposal #759): the fixed 7-day silo is replaced.
