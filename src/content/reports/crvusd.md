@@ -24,39 +24,11 @@ axis_frame: six
 issuer: "Curve Finance"
 market_cap_approx: 225000000
 production: true
----
-
-# crvUSD — Asset Risk Assessment (Full)
+---# crvUSD — Risk Report
 
 **Category:** Stablecoin | **Peg Mechanism:** Algorithmic (LLAMMA + PegKeepers) | **Issuer:** Curve Finance
 
 **Live data:** [crvUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
-
-⚠️ **Operating regime — restated 2026-08-23, and every range below was breached within ten days of publication.**
-
-| | published as durable range (2026-08-13) | measured 2026-08-23 |
-|---|---|---|
-| Total supply | mid $200Ms | **$300.5M** |
-| Conservative CR (symmetric) | 105–115% | **101.96%** — below the floor |
-| Inclusive CR | 110–120% | **92.21%** — below par |
-| YieldBasis share | 60–80%, trending toward the 80% danger line | **47.1%** — moved the opposite way |
-| PegKeeper debt | $33.75M (all USDT keeper) | **$36.98M — 14.0% of supply** (2026-09-07) |
-
-**PegKeeper debt is the number to watch here, and the way to read it is as a level rather than a snapshot.** PegKeeper crvUSD is protocol-minted and protocol-owned, and **it is not backed by collateral** — so the share of supply it represents is the share that is uncollateralized. **Measured 2026-09-07 it is $36.98M against $263.29M of supply — 14.0%**, and it has held between 13.9% and 16.7% for the ten days to that date.
-
-⚠️ **It does not sit still, and a single reading of it is not a state.** Between 2026-08-19 and 2026-08-24 the ratio ran **14.07% → 20.35% → 32.72% → 34.56%**, then decayed back through 23.68% and 15.68% to the level above. **A reading taken on 08-24 would have described a third of supply as uncollateralized; three days before the spike it was 14.07%, and three days after the peak it was on its way back there.**
-
-✅ **The peg did not move while that happened, which is what says the mechanism was working rather than failing.** Across the entire excursion crvUSD never deviated more than **0.049%** from par — 0.99999, 0.99993 and 0.99991 on 08-21, 08-22 and 08-23, at the very moment PegKeeper debt tripled. **Keepers absorbing pool imbalance is what this looks like from the outside; a solvency event looks nothing like it.** The implicit backing tracks the same way: `PegKeeper debt − pool stables` was **+$32.80M** at the peak and **−$2.58M** on 2026-09-07, and it read **−$6.65M** on 08-19 — it oscillates around zero as a matter of course rather than widening.
-
-⚠️ **This is not a depeg and should not be read as one.** PegKeeper minting *is* the peg mechanism functioning as designed — keepers mint into pools above a dollar and burn below. crvUSD trades at **$1.0009**, the minting market's collateral ratio is **230.7%**, and the $98.6M of burn capacity is real, deployable defence. **What changed is composition, not solvency:** the peg is being defended by expanding uncollateralized supply, at three times the scale this report described.
-
-**A definitional note, because this report warns about it and it would silently corrupt every figure above.** The supply figure used here is **`total_supply` at $300.5M, not `totalSupply()` at $2,104.8M** — the latter includes pre-minted ceiling buffer that was never issued. Every ratio on this page uses the former.
-
-⚠️ **And the headline collateral ratio now rests on a basis this coverage changed after publication.** Our feed records a CR basis change on **2026-08-18**, five days after this report was last verified. The 101.96% above is the **deployed** basis; on the **minted** basis the same book reads **99.17% — below par**. A reader comparing this report's 105–115% against the live dashboard is therefore comparing across a definitional change that was never disclosed. **This report takes no view on which basis is correct** — that is a question for the monitoring side — but it should not be possible to meet the two numbers without being told they are not measured the same way.
-
-⚠️ **One lesson about this report's own format, which is otherwise good practice.** This report publishes **durable ranges rather than point-in-time anchors**, and says so, precisely so that daily movement does not make it stale. That remains the right choice. But it carries a failure mode worth naming: **a stale point figure looks stale next to a live value, whereas a breached range still looks authoritative — because a range reads as having already accounted for movement.** No drift check can compare a live number against "105–115%". Four ranges here were breached in ten days, and the YieldBasis one moved *opposite* to the direction this report explicitly called. **A range needs a re-check date the way a point figure needs its date**, and this one is dated 2026-08-23.
-
-PegKeeper debt remains entirely in the USDT keeper; the GHO keeper is decommissioned at a 0 ceiling. **Numbers move daily — the dashboard is the source of truth**, and the ranges above are re-checked as of 2026-08-23 rather than assumed to outlive the interval between passes.
 
 ## Summary
 
@@ -86,6 +58,9 @@ All crvUSD is minted through a single contract: the ControllerFactory (`0xC9332f
 | **Overall** | **5.0** | **This composite tracks its weakest axis, and the axis that pulled it down was measured at the peak of a four-day PegKeeper excursion rather than at a level. With Backing back at 5.0 the composite follows it. ⚠️ **What has not changed is the structure:** the PegKeeper leg is uncollateralized by construction, and a sustained rise in its share of supply is still the thing that would cut this — on the level trigger recorded above, not on a single reading |
 
 ## 1 · Stability — 6.0
+
+
+✅ **The peg did not move while that happened, which is what says the mechanism was working rather than failing.** Across the entire excursion crvUSD never deviated more than **0.049%** from par — 0.99999, 0.99993 and 0.99991 on 08-21, 08-22 and 08-23, at the very moment PegKeeper debt tripled. **Keepers absorbing pool imbalance is what this looks like from the outside; a solvency event looks nothing like it.** The implicit backing tracks the same way: `PegKeeper debt − pool stables` was **+$32.80M** at the peak and **−$2.58M** on 2026-09-07, and it read **−$6.65M** on 08-19 — it oscillates around zero as a matter of course rather than widening.
 
 **How the peg is defended, and how well it has held.**
 
@@ -180,6 +155,31 @@ Average peg of **$0.9997** — one of the tightest for a decentralized stablecoi
 ---
 
 ## 2 · Backing — 5.0
+
+
+**Current operating regime, measured 2026-08-23 unless dated otherwise.**
+
+| | measured |
+|---|---|
+| Total supply | **$300.5M** |
+| Conservative CR (symmetric) | **101.96%** |
+| Inclusive CR | **92.21%** — below par |
+| YieldBasis share | **47.1%** |
+| PegKeeper debt | **$36.98M — 14.0% of supply** (2026-09-07) |
+
+⚠️ **These are point measurements on a system that moves daily**, and the [dashboard](https://tidresearch.com/dashboards/?asset=crvusd) is the source of truth between passes.
+
+**PegKeeper debt is the number to watch here, and the way to read it is as a level rather than a snapshot.** PegKeeper crvUSD is protocol-minted and protocol-owned, and **it is not backed by collateral** — so the share of supply it represents is the share that is uncollateralized. **Measured 2026-09-07 it is $36.98M against $263.29M of supply — 14.0%**, and it has held between 13.9% and 16.7% for the ten days to that date.
+
+⚠️ **It does not sit still, and a single reading of it is not a state.** Between 2026-08-19 and 2026-08-24 the ratio ran **14.07% → 20.35% → 32.72% → 34.56%**, then decayed back through 23.68% and 15.68% to the level above. **A reading taken on 08-24 would have described a third of supply as uncollateralized; three days before the spike it was 14.07%, and three days after the peak it was on its way back there.**
+
+⚠️ **This is not a depeg and should not be read as one.** PegKeeper minting *is* the peg mechanism functioning as designed — keepers mint into pools above a dollar and burn below. crvUSD trades at **$1.0009**, the minting market's collateral ratio is **230.7%**, and the $98.6M of burn capacity is real, deployable defence. **What changed is composition, not solvency:** the peg is being defended by expanding uncollateralized supply, at three times the scale this report described.
+
+**A definitional note, because this report warns about it and it would silently corrupt every figure above.** The supply figure used here is **`total_supply` at $300.5M, not `totalSupply()` at $2,104.8M** — the latter includes pre-minted ceiling buffer that was never issued. Every ratio on this page uses the former.
+
+⚠️ **And the headline collateral ratio now rests on a basis this coverage changed after publication.** Our feed records a CR basis change on **2026-08-18**, five days after this report was last verified. The 101.96% above is the **deployed** basis; on the **minted** basis the same book reads **99.17% — below par**. A reader comparing this report's 105–115% against the live dashboard is therefore comparing across a definitional change that was never disclosed. **This report takes no view on which basis is correct** — that is a question for the monitoring side — but it should not be possible to meet the two numbers without being told they are not measured the same way.
+
+PegKeeper debt remains entirely in the USDT keeper; the GHO keeper is decommissioned at a 0 ceiling. **Numbers move daily — the dashboard is the source of truth**, and the ranges above are re-checked as of 2026-08-23 rather than assumed to outlive the interval between passes.
 
 **What creates crvUSD, and what stands behind each source.**
 
