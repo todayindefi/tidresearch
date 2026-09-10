@@ -76,13 +76,28 @@ Appropriate for: DeFi-comfortable users who already understand Ethena-style synt
 
 **No bug bounty.**
 
-**Admin chain has been hardened over the last two weeks.** Through 2026-05-14 to 2026-05-17, Theo migrated ownership of thUSD, sthUSD, and the thUSD OFT adapter on all three chains (Ethereum + Arbitrum + Stable) to a **new OpenZeppelin TimelockController at `0x2bb4b7e6e83fa6b77d0143dad631843cb73dca02`**. On-chain reads confirm `getMinDelay() = 172,800 seconds = 48 hours`. PROPOSER_ROLE and EXECUTOR_ROLE on the new Timelock are held by the disclosed Safe `0x94877640dd9e6f1e3cb56bf7b5665b7152601295`, which is now **4-of-6** (one additional signer and threshold bump versus the originally-disclosed 3-of-5). This is the right shape for an institutional product — and 48 hours is a real exit window, not a checkbox.
+**Admin chain has been hardened over the last two weeks.** Through 2026-05-14 to 2026-05-17, Theo migrated ownership of thUSD, sthUSD, and the thUSD OFT adapter on all three chains (Ethereum + Arbitrum + Stable) to a **new OpenZeppelin TimelockController at `0x2bb4b7e6e83fa6b77d0143dad631843cb73dca02`**. On-chain reads confirm `getMinDelay() = 172,800 seconds = 48 hours` **on Ethereum.**
 
-⚠️ **thUSD's own admin posture is genuinely good, and it is not the posture of the reserve beneath it.** At the product layer the Safe runs at **threshold 4** on v1.4.1, and the token owner is a **48-hour TimelockController** (`min_delay` 172,800) — the same shape this coverage credits on [USDS](/reports/usds/), and the reason it is not docked there. **But the reserve asset underneath, thBILL's ULTRA leg, has no multisig at any position**: a single plain key holds sole admin over the token and has replaced its logic twice this year (see the [thBILL report](/reports/thbill/)). **Same issuer, two very different postures, and a reader should not infer either from the other** — a 48-hour timelock over thUSD's contracts does not reach the thing the reserve is made of.
+⚠️ **The addresses are shared across chains; the configuration is not — and the difference decides whether the delay is a delay.** Re-read on-chain 2026-09-10, each with a control address that returns false:
+
+| | Ethereum | Arbitrum |
+|---|---|---|
+| `getMinDelay()` | **172,800s — 48 hours** | **64,800s — 18 hours** |
+| Safe threshold | **4-of-6** | **3-of-5** |
+| Safe holds `DEFAULT_ADMIN` on its own timelock | **no — revoked** | ⚠️ **yes** |
+
+✅ **On Ethereum the hardening is exactly what it claims to be.** The Safe gave up `DEFAULT_ADMIN` on the timelock, so **48 hours is a floor it must clear rather than a value it can set**, and four signatures are needed.
+
+⚠️ **On Arbitrum it is not.** The Safe still holds `DEFAULT_ADMIN` on its own timelock, so **the 18 hours is a setting that Safe can change rather than a window a holder can rely on** — and **three signatures reach it, not four.** ⚠️ **`getMinDelay()` returning 172,800 is an Ethereum reading; it does not describe the other chains.**
+
+⚠️ **Stable is not read.** The migration is described across three chains and this comparison covers two — **"Ethereum 48h, Arbitrum 18h, Stable unread" is the honest shape**, and the Stable leg should not be assumed to match either.
+ PROPOSER_ROLE and EXECUTOR_ROLE on the new Timelock are held by the disclosed Safe `0x94877640dd9e6f1e3cb56bf7b5665b7152601295`, which on Ethereum is now **4-of-6** (one additional signer and threshold bump versus the originally-disclosed 3-of-5). ⚠️ **On Ethereum this is the right shape for an institutional product, and 48 hours there is a real exit window rather than a checkbox. On Arbitrum it is closer to the checkbox** — a shorter delay that the signers who would use it can themselves reset.
+
+⚠️ **thUSD's own admin posture is genuinely good, and it is not the posture of the reserve beneath it.** At the product layer the Safe runs at **threshold 4** on v1.4.1, and the token owner on Ethereum is a **48-hour TimelockController** (`min_delay` 172,800) — the same shape this coverage credits on [USDS](/reports/usds/), and the reason it is not docked there. **But the reserve asset underneath, thBILL's ULTRA leg, has no multisig at any position**: a single plain key holds sole admin over the token and has replaced its logic twice this year (see the [thBILL report](/reports/thbill/)). **Same issuer, two very different postures, and a reader should not infer either from the other** — a timelock over thUSD's contracts does not reach the thing the reserve is made of.
 
 Flagged and not asserted: the sthUSD OFT owner is `0xf5b0bf09…`, **not** the timelock that owns the other three contracts. This report does not characterise it.
 
-**Cross-chain layer is now under the same admin chain as the token contracts.** As of 2026-05-17 the thUSD OFT adapter on all three chains is owned by the same 48-hour TimelockController described above. A malicious peer-config change can no longer ship in a single transaction — proposals are scheduled on the Timelock, surface on-chain for 48 hours, and require the 4-of-6 Safe to execute. This closes what was previously the highest concentrated-key risk in the system.
+**Cross-chain layer is now under the same admin chain as the token contracts.** As of 2026-05-17 the thUSD OFT adapter on all three chains is owned by the same TimelockController address described above. ⚠️ **On Ethereum** a malicious peer-config change can no longer ship in a single transaction — proposals are scheduled, surface on-chain for **48 hours**, and require the **4-of-6** Safe to execute. ⚠️ **On Arbitrum the same address is configured differently: an 18-hour delay that the 3-of-5 Safe can itself alter**, so the equivalent protection is materially weaker there. This closes what was previously the highest concentrated-key risk in the system.
 
 **The one remaining EOA-owned contract is the sthUSD OFT adapter** (`0xc2D07082120Cbd0E75B5F12D6c5d41fC2600dd39`), still owned by the original signer `0xf5b0bf09acc504f0d470134f05fe776d1f90cae0`. The stakes are materially lower — bridged sthUSD supply is essentially zero today (sub-$1 across Arbitrum + Stable) — so the worst-case attack is a future-state concern rather than a current-balance risk. Watch-item: completion of this last migration would close out the OFT-EOA story entirely.
 
@@ -181,7 +196,7 @@ On-chain coverage has stepped down through 2026 — low-90s% in mid-May, 59.5% i
 
 **Disclosure quality on the things that *are* disclosed is competent.** Contract addresses are public. The Zenith audit is public. The strategy and partner stack are documented at `docs.theo.xyz`. The gaps are: NAV oracle architecture, fee schedule, FCM identity, gold custody location, MPC signer composition, and the per-tx redemption cap mechanism — none of which are publicly disclosed.
 
-**No public Theo token, no on-chain DAO.** Governance is corporate, executed through the 4-of-6 Safe and the 48-hour TimelockController (post-migration; see §I). Same pattern as thBILL, now under a more defensive admin configuration than thBILL has on its equivalent layer.
+**No public Theo token, no on-chain DAO.** Governance is corporate, executed through the Safe and TimelockController described in §I — **4-of-6 behind a binding 48 hours on Ethereum, 3-of-5 behind a self-alterable 18 hours on Arbitrum.** Same pattern as thBILL, now under a more defensive admin configuration than thBILL has on its equivalent layer.
 
 Strong partner stack and a credentialed team, undermined by a young, unlicensed, non-bankruptcy-remote issuer and material disclosure gaps on the off-chain layer.
 
