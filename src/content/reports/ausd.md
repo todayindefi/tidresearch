@@ -2,18 +2,21 @@
 asset: "AUSD"
 slug: "ausd"
 aliases: ["AUSD", "Agora Dollar", "Agora USD"]
-chains: ["eth", "arb", "avax", "base", "polygon", "bnb", "sol", "sui", "monad"]
+chains: ["eth", "arb", "avax", "base", "polygon", "bnb", "mantle", "monad", "sol", "sui"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "full"
 date: "2026-07-08"
 last_verified: "2026-08-24"
-last_revised: "2026-08-25"
+last_revised: "2026-09-10"
 featured: false
 production: true
 issuer: "Agora Finance (Agora Bermuda Limited)"
 market_cap_approx: 181000000
 peg_mechanism_score: 8.5
+underlying_score: 7.0
+structural_score: 2.5
+axis_frame: six
 backing_score: 8.0
 liquidity_score: 6.5
 issuer_score: 6.0
@@ -36,11 +39,13 @@ AUSD is a fully fiat-backed stablecoin issued by **Agora Bermuda Limited**, back
 
 The 6.0/10 reflects genuinely strong, transparent backing offset by small scale, a roughly two-year record, Bermuda (non-US) regulation, single-manager / single-custodian concentration, and an upgrade path with no notice period on any measured chain. It's worth stating the anchor plainly: AUSD sits a full notch below USDT's 7.0, and it gets there from the opposite direction. USDT earns its number on deep, everywhere liquidity despite weak issuer transparency; AUSD's case is strong backing transparency against thin liquidity. **The shapes are still mirror images and the gap is now a notch rather than a rounding** — the contrast is measured, not rhetorical: AUSD backing 8.0 against USDT's 6.0, USDT liquidity 9.5 against AUSD's 6.5.
 
-## What you actually earn
+## 1 · Stability — 8.5
 
-**Nothing native** — plain AUSD pays no yield. You can earn on it through DeFi (for example, AUSD Pendle pools on Monad), but that's a separate venue decision with its own risks, not a property of the token itself. Holding AUSD is for people who want a clean, transparent dollar, not a yield instrument.
+Here's the reason strong backing doesn't carry the score higher. AUSD's reserves depend on a **single manager (VanEck)** and a **single custodian (State Street)**. There is no diversification: if either firm had an operational failure, a legal freeze, or lost access, *all* of AUSD's backing would be affected at once. There's no second manager or second custodian to fall back on.
 
-## What backs it — and why the transparency is a real strength
+This isn't a hypothetical concern that only analysts raise. **Anchorage Digital delisted AUSD in June 2025**, citing exactly this concentration. Anchorage is a conservative, regulated custodian, so that's an independent counterparty signal worth weighing — not proof that anything is wrong with the reserves, but a real institution deciding the concentration was more than it wanted to hold.
+
+## 2 · Backing — 8.0
 
 AUSD is backed 1:1 by **cash, overnight reverse repos, and short-term US Treasuries** — and nothing else. No unsecured commercial paper, no money-market fund shares, no long-duration bonds. This is about as conservative as a fiat-reserve mix gets, and it means the reserves don't carry meaningful interest-rate or credit risk of their own.
 
@@ -48,19 +53,57 @@ The reserves are **managed by VanEck** (a >$100B asset manager) and **custodied 
 
 What sets AUSD apart from most stablecoins its size is two layers of transparency, not one: **monthly PwC attestations** *and* **real-time on-chain proof-of-reserves via Chaos Labs**. The on-chain PoR is the standout — it's a live, verifiable feed rather than a point-in-time PDF. That's a step beyond USDT (which publishes no on-chain PoR) and even beyond USDC (attestations, but not real-time on-chain proof). This is why AUSD's **backing axis scores 8.0** — the reserves are clean and the proof is genuinely good.
 
-## The concentration caveat
-
-Here's the reason strong backing doesn't carry the score higher. AUSD's reserves depend on a **single manager (VanEck)** and a **single custodian (State Street)**. There is no diversification: if either firm had an operational failure, a legal freeze, or lost access, *all* of AUSD's backing would be affected at once. There's no second manager or second custodian to fall back on.
-
-This isn't a hypothetical concern that only analysts raise. **Anchorage Digital delisted AUSD in June 2025**, citing exactly this concentration. Anchorage is a conservative, regulated custodian, so that's an independent counterparty signal worth weighing — not proof that anything is wrong with the reserves, but a real institution deciding the concentration was more than it wanted to hold.
-
-## How exit works
+## 3 · Liquidity & Exit — 6.5
 
 AUSD's headline exit is a **zero-fee, atomic instant swap to USDC or USDT** on Agora's Stable Swap protocol. This is a very strong peg mechanism: anyone can swap AUSD for USDC/USDT at 1:1 with no fee, instantly, on-chain. That's the tightest peg-arbitrage leash of any sub-$1B stablecoin, and it's what backfills the token's otherwise modest DEX depth — if AUSD ever traded below a dollar, arbitrageurs can swap it back to par all day.
 
 On top of that, **whitelisted institutions can redeem 1:1 directly to fiat**.
 
 The caveat: secondary market depth on DEXes is **thin on most chains** (moderate on Ethereum). So in a stress scenario where the instant-swap mechanism were paused, secondary liquidity would *not* absorb large forced sellers cleanly. The practical rule is to size your position against the assumption that the swap mechanism is live — because when it's live, exit is excellent, and when it isn't, the open market is shallow.
+
+## 4 · Dependencies — 7.0
+
+✅ **The service-provider set is genuinely diversified, and this is the strongest axis on the report.** Reserves are managed by **VanEck**, custodied at **State Street**, attested by **PwC**, and risk-monitored by **Chaos Labs** — **four distinct firms with no role overlap and no circular legs**, where one firm marking its own work is the usual failure.
+
+⚠️ **What holds it below higher is that there is no redundancy at either layer.** One manager, one custodian. The set is diverse across *functions* but single-threaded within each, so the axis prices breadth of counterparty type rather than depth of substitution.
+
+⚠️ **This overlaps with a dock already taken on Backing**, where the 8.0 is reduced for single-manager and single-custodian concentration — the same facts. **The overlap is flagged rather than resolved here**, because re-deriving Backing is a separate judgement from publishing this one.
+
+
+## 5 · Contract & Admin — 2.5
+
+⚠️ **Upgrade authority on AUSD is a single address with no on-chain quorum and no delay, and it is the same address on every EVM chain it is deployed to.** Measured 2026-09-10 across all eight EVM deployments — Ethereum, Arbitrum, Avalanche, Base, Polygon, BNB Chain, Mantle and Monad:
+
+| read | result |
+|---|---|
+| token `0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a` | identical 5,937-byte proxy on all eight |
+| EIP-1967 admin slot | `0xb8fcc66d…4dedee` — the same ProxyAdmin on all eight |
+| `ProxyAdmin.owner()` | `0x68898B77EbF7b55dCA8A2e62d6Fd74959a2930e2` on all eight |
+| `getMinDelay()` on that admin | **reverts on all eight — there is no TimelockController** |
+| `eth_getCode` on the owner | **`0x` on all eight — no contract, so no on-chain quorum** |
+
+Two fabricated control addresses revert on the same calls, so the reads discriminate.
+
+⚠️ **What that means, stated precisely.** `upgradeAndCall` is gated on `onlyOwner`, the owner is an account with no code, and no timelock sits in front of it. **So a single signature replaces the token implementation, and it takes effect immediately.** ✅ **`Ownable2Step` is present, and it does not help here** — it makes *transferring* ownership two-step; it does nothing to constrain *using* it.
+
+⚠️ **And the same address controls all eight chains at once**, because an EOA address derives from a public key and is chain-independent. **One signature is not one chain's worth of exposure.**
+
+✅ **What cannot be read on-chain, and is therefore not claimed:** whether that address is backed by a **single private key or by an off-chain MPC or HSM quorum**. `eth_getCode` returning `0x` proves there is no *on-chain* quorum; it says nothing about custody arrangements that live off-chain. **The finding is the absence of an enforceable delay and of any quorum a third party can verify — not a claim about how Agora holds the key.**
+
+**The comparison that sets the score is USDC**, which has the same proxy shape and is *credited* for using **three different owner keys across three chains**, so a single compromise reaches one chain. **AUSD is the inverse of that design.**
+
+⚠️ **Coverage: eight of the deployments were read. The two non-EVM legs — Solana and Sui — cannot carry this proxy shape at all and were not assessed here.** A ninth address on Blast returned no code, so AUSD does not appear to be deployed there under the same address. **Chains not read are unread, not clean.**
+
+
+## 6 · Issuer — 6.0
+
+Agora is **doxxed and well-capitalized**: a Paradigm-led $50M Series A, VanEck and State Street as strategic partners, and a team that includes ex-MakerDAO engineers. That's a credible foundation.
+
+The offsets are real, though. Agora is **only about two years old**, and it's regulated under **Bermuda's Segregated Accounts Companies (SAC) Act** rather than a US regime like NYDFS. The Bermuda structure is genuinely bankruptcy-remote, but it's a less-tested enforcement pathway than the US trust structures behind USDC or PYUSD. Standard centralized controls apply — Agora can mint, burn, and freeze the token. For these reasons AUSD scores **below** NYDFS-regulated peers like Paxos (PYUSD) and Ripple (RLUSD) on the issuer axis.
+
+## What you actually earn
+
+**Nothing native** — plain AUSD pays no yield. You can earn on it through DeFi (for example, AUSD Pendle pools on Monad), but that's a separate venue decision with its own risks, not a property of the token itself. Holding AUSD is for people who want a clean, transparent dollar, not a yield instrument.
 
 ## The two-token structure — AUSD vs AUSD0
 
@@ -74,12 +117,6 @@ This is the one structural nuance every holder should understand, and it's simpl
 ## A note on chain concentration
 
 A large and growing share of AUSD now lives on **Monad** — roughly 40% of supply as at this report's 2026-07-08 pass, where AUSD is the largest stablecoin, boosted by Pendle yield pools. Treat that share as indicative rather than current: it is a ratio of two figures that both move, Monad is among the AUSD deployments this coverage cannot read directly, and a chain share can drift materially without either underlying number looking unusual. Monad is a young chain. The relevant risk there isn't a bridge exploit (that route rides AUSD0's strongest-secured configuration) but **chain liveness**: if Monad halted, bridging that supply back to Ethereum could be delayed. It's a "how young is the chain" consideration, not a "can the bridge be hacked" one.
-
-## The issuer — Agora
-
-Agora is **doxxed and well-capitalized**: a Paradigm-led $50M Series A, VanEck and State Street as strategic partners, and a team that includes ex-MakerDAO engineers. That's a credible foundation.
-
-The offsets are real, though. Agora is **only about two years old**, and it's regulated under **Bermuda's Segregated Accounts Companies (SAC) Act** rather than a US regime like NYDFS. The Bermuda structure is genuinely bankruptcy-remote, but it's a less-tested enforcement pathway than the US trust structures behind USDC or PYUSD. Standard centralized controls apply — Agora can mint, burn, and freeze the token. For these reasons AUSD scores **below** NYDFS-regulated peers like Paxos (PYUSD) and Ripple (RLUSD) on the issuer axis.
 
 ## Track record
 

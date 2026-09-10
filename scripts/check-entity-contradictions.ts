@@ -317,8 +317,17 @@ async function main() {
     }
 
     // --- hard conflict: a truncated form that matches two different full addresses
+    //
+    // ⚠️ ONLY when a TRUNCATED mention is actually present. Two different FULL
+    // addresses that happen to share a leading prefix are not ambiguous — nothing
+    // needs resolving, because neither is standing in for the other. AUSD's token
+    // is `0x00000000eFE302BE…9012a` and the burn address is `0x0000…dEaD`; they
+    // group under the same prefix and are both written out in full, so a reader
+    // can never confuse them. Firing there sent me to "measure which is right"
+    // on a pair where both were already right.
     const fulls = new Set(ms.map((m) => m.full).filter(Boolean) as string[]);
-    if (fulls.size > 1) {
+    const hasTruncated = ms.some((m) => !m.full);
+    if (fulls.size > 1 && hasTruncated) {
       errors++;
       const g = new Map<string, Mention[]>();
       for (const m of ms) {
