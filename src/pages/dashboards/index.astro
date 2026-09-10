@@ -1,55 +1,330 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import DashboardEmbed from "@/components/report/DashboardEmbed.astro";
 import Badge from "@/components/ui/Badge.astro";
 import { isProductionStage } from "@/lib/stage";
 
+/**
+ * The dashboard hub: TILES THAT LINK. It does not embed.
+ *
+ * ⚠️ THIS PAGE USED TO IFRAME EIGHTEEN DASHBOARDS AT 650px EACH, and that was
+ * wrong twice over. It contradicted the owner's link-don't-embed rule
+ * (2026-09-09) — the rule was applied to report pages and to DashboardEmbed's
+ * default, but this page passed `embed={d.embed ?? true}` and so overrode the
+ * safe default it was supposed to inherit. And it could not be checked locally:
+ * every iframe pointed at `/dashboards/?asset=<slug>`, which is THIS page, so it
+ * only resolved because netlify.toml proxies requests carrying `?asset=` out to
+ * backing-monitor. In `npm run dev` the page nested inside itself.
+ *
+ * ⚠️ THE FAILURE MODE INVERTS WHEN YOU STOP EMBEDDING. A dead embed is visible
+ * as a broken frame on our own page; a dead LINK is invisible until a reader
+ * clicks it. So the list below is not hand-maintained any more — see the gate.
+ *
+ * WHICH TILES SHOW ON PRODUCTION (owner ruling, 2026-09-10): the JOIN of
+ * "the asset has a production report here" AND "backing-monitor serves a live
+ * dashboard". Both legs required. Two useful consequences fall out of the rule
+ * rather than needing special cases:
+ *   - `bmnr`'s dashboard is 11.2 days stale, and its report is staging-only, so
+ *     the join drops it with no staleness carve-out.
+ *   - `cusd` is live and healthy on backing-monitor but has no report at all,
+ *     so it is staging-only and its tile carries no report link.
+ *
+ * Live-set verified with backing-monitor against their DEPLOYED site, not their
+ * registry file, on 2026-09-10: 25 published slugs, 12 render-verified in a
+ * browser and 13 verified as 200 + fresh feed + all axis blocks present.
+ */
 interface Dashboard {
-  slug: string;
+  /** Report slug — the /reports/<slug> link. Omit when no report exists. */
+  slug?: string;
+  /** backing-monitor slug — the ?asset=<asset> link. NOT always the report slug. */
+  asset: string;
   name: string;
   chain: string;
   description: string;
   category?: string;
+  /** Overrides the ?asset= link. Only thBILL, which has its own repo. */
   url?: string;
-  embed?: boolean;
-  // Same gate as the report frontmatter: defaults false (staging-only).
-  // Flip to true when approved for the production site.
+  /** Production requires BOTH legs of the join. See the note above. */
   production?: boolean;
 }
 
 const allDashboards: Dashboard[] = [
+  // ---- production: production report AND live dashboard -------------------
   {
-    slug: "thbill",
+    slug: "thbill-retail",
+    asset: "thbill",
     name: "thBILL",
-    chain: "Ethereum + Arbitrum + Base + Avalanche + HyperEVM + Solana (canonical on Ethereum, LayerZero OFT elsewhere)",
-    description: "Tokenized US T-bill basket (RWA) — live backing, peg, and DeFi yield monitoring across chains.",
+    chain: "Ethereum + Arbitrum + Base + Avalanche + HyperEVM + Solana",
+    description:
+      "Tokenized US T-bill basket (RWA) — live backing, peg, and DeFi yield monitoring across chains.",
     category: "RWA",
+    // Its own repo (thbill-risk-info) with its own proxy rule, not backing-monitor.
     url: "/dashboards/thbill/",
     production: true,
   },
-  { slug: "crvusd", name: "crvUSD", chain: "Ethereum", description: "CDP stablecoin with LLAMMA soft-liquidation, multi-market collateral." },
-  { slug: "usdd", name: "USDD", chain: "Tron + Ethereum + BNB", description: "MakerDAO-fork stablecoin backed by TRX/USDT vaults and HTX Smart Allocator." },
-  { slug: "ousd", name: "OUSD", chain: "Ethereum", description: "Rebasing stablecoin backed by USDC via Vault strategies." },
-  { slug: "syrupusdc", name: "syrupUSDC", chain: "Ethereum", description: "ERC-4626 share over Maple's institutional open-term lending pool. Cross-pool family panel surfaces shared-borrower concentration with syrupUSDT.", category: "Lending", production: true },
-  { slug: "syrupusdt", name: "syrupUSDT", chain: "Ethereum", description: "USDT-denominated sibling pool to syrupUSDC. Same Maple architecture, smaller pool, materially higher per-pool concentration.", category: "Lending", production: true },
-  { slug: "hastra-prime", name: "Hastra PRIME / wYLDS", chain: "Provenance + Solana + Ethereum", description: "Independent monitoring of backing, cross-chain supply, reserve segregation, redemption-buffer health, and liquidity for Hastra PRIME and its wYLDS underlying.", category: "Yield", production: true },
-  { slug: "apxusd", name: "apxUSD", chain: "Ethereum", description: "Apyx's $1-pegged synthetic stablecoin backed by STRC (an MSTR preferred-stock dividend instrument) plus cash & equivalents. RWA-collateralized, Accountable proof-of-solvency feed.", category: "RWA", production: true },
-  { slug: "apyusd", name: "apyUSD", chain: "Ethereum + Base (CCIP bridge)", description: "Yield-bearing ERC-4626 vault wrapper over apxUSD. Captures the STRC dividend stream as NAV growth (~13% APY); 30-day UnlockToken cooldown on canonical exits, retail-scale DEX exits in minutes.", category: "Yield", production: true },
-  { slug: "usdat", name: "USDat", chain: "Ethereum", description: "Saturn Labs' permissioned, non-yield stablecoin. Reserve rotated out of $M (M0 tokenized T-bills) into PYUSDx (PayPal/MoonPay/M0, PYUSD-backed) on 2026-08-19; effectively the whole reserve plus a small USDC float sits directly in the token contract, with coverage holding at 1:1 through the move.", category: "RWA" },
-  { slug: "susdat", name: "sUSDat", chain: "Ethereum", description: "Saturn's yield-bearing ERC-4626 wrapper for USDat. Captures STRC-dividend pass-through (~11% APY target) into NAV; dynamic LTV-rotation rule between on-chain USDat buffer and off-chain STRC at custodian.", category: "Yield" },
-  { slug: "thusd", name: "thUSD", chain: "Ethereum + Arbitrum + Stable (canonical on Ethereum, LayerZero OFT elsewhere)", description: "Theo Network's yield-bearing two-token stablecoin (thUSD + sthUSD ERC-4626) backed by a delta-neutral gold-carry strategy (long thGOLD / short CME gold futures) plus a thBILL T-bill float. Live supply, sthUSD NAV / share price, staking ratio, on-chain reserve coverage vs off-chain-implied backing, cross-chain lockbox conservation, mint/burn flow windows, and admin-chain (4-of-6 Safe -> 48h Timelock) + critical-event monitoring.", category: "Yield" },
-  { slug: "mstr", name: "MSTR (Strategy Inc.)", chain: "Strategy (NASDAQ: MSTR)", description: "Strategy Inc.'s BTC-treasury equity — upstream issuer for the STRC family (STRCx, apxUSD, apyUSD, sUSDat). Live mNAV regime, balance sheet snapshot, capital structure (debt + preferred stack), per-share BTC NAV trajectory, and SEC EDGAR 8-K event log. Dependency-analysis scope; not an MSTR equity recommendation.", category: "TradFi Equity", production: true },
-  { slug: "bmnr", name: "BMNR (BitMine Immersion)", chain: "BitMine (NYSE: BMNR)", description: "BitMine Immersion's ETH-treasury equity — the ETH analog of MSTR. Live mNAV regime, treasury composition, weekly ETH-buy cadence, ATM-funded firepower and runway-to-target (5% of circulating ETH). Issuer dependency / firepower scope; not a BMNR equity recommendation.", category: "TradFi Equity" },
-  { slug: "strc", name: "STRC + STRCx", chain: "Strategy (NASDAQ: STRC) + Ethereum (STRCx)", description: "Strategy's variable-rate perpetual preferred stock (STRC) and Backed Finance's on-chain wrapper (STRCx). Live mNAV regime, MSTR/BTC overview, par-anchor dividend rate state, cash-service waterfall with rate-ceiling overlay, SEC EDGAR 8-K event log, and downstream portfolio exposure across Apyx + Saturn.", category: "RWA", production: true },
-  { slug: "usde", name: "USDe", chain: "Ethereum", description: "Independent on-chain tracker of Ethena's Coinbase reserve wallets — per-wallet Aave/Morpho deposits, position drift, and daily reserve-composition trend. Complements Ethena's transparency page and the Risk Committee feeds.", production: true },
-  { slug: "susde", name: "sUSDe", chain: "Ethereum", description: "Yield-bearing staked USDe. Shares USDe's reserve backing and adds the vault balance / NAV view on top of the reserve-wallet tracker.", category: "Yield", production: true },
-  { slug: "usdai", name: "USDai", chain: "Arbitrum", description: "Synthetic dollar backed 1:1 by PYUSD reserves held on-chain (coverage just above par, verifiable in two RPC reads). Self-administered 48-hour timelock + 3-of-3 Safe upgrade gate. Not exposed to $M.", category: "RWA" },
-  { slug: "susdai", name: "sUSDai", chain: "Arbitrum", description: "Yield-bearing ERC-7540 async vault for USDai — staked into GPU/equipment-finance loans via MetaStreet. 30-day FIFO redemption queue; totalAssets reconciles on-chain across the idle buffer and drawn loans, with the deposit escrow now fully drawn.", category: "Yield" },
+  {
+    slug: "crvusd",
+    asset: "crvusd",
+    name: "crvUSD",
+    chain: "Ethereum",
+    description:
+      "CDP stablecoin with LLAMMA soft-liquidation, multi-market collateral.",
+    category: "Stablecoin",
+    production: true,
+  },
+  {
+    slug: "usde",
+    asset: "usde",
+    name: "USDe",
+    chain: "Ethereum",
+    description:
+      "Independent on-chain tracker of Ethena's Coinbase reserve wallets — per-wallet Aave/Morpho deposits, position drift, and daily reserve-composition trend.",
+    category: "Stablecoin",
+    production: true,
+  },
+  {
+    slug: "usds",
+    asset: "usds",
+    name: "USDS",
+    chain: "Ethereum",
+    description:
+      "Sky's USDS — supply, collateral composition, and peg health for the Maker successor stablecoin.",
+    category: "Stablecoin",
+    production: true,
+  },
+  {
+    slug: "usdm",
+    asset: "usdm",
+    name: "USDm (Mento Dollar)",
+    chain: "Monad + Celo",
+    description:
+      "Mento's multi-collateral dollar. Reserve composition, cross-chain supply, and peg tracking against the Mento reserve.",
+    category: "Stablecoin",
+    production: true,
+  },
+  {
+    slug: "usg",
+    asset: "usg",
+    name: "USG (Tangent Finance)",
+    chain: "Ethereum",
+    description:
+      "Early-stage crvUSD-architecture CDP stablecoin. Borrowers mint against stablecoin Curve-LP collateral across 12 markets; peg held by two PegKeeper pools.",
+    category: "Stablecoin",
+    production: true,
+  },
+  {
+    slug: "thusd",
+    asset: "thusd",
+    name: "thUSD",
+    chain: "Ethereum + Arbitrum + Stable",
+    description:
+      "Theo Network's yield-bearing two-token stablecoin backed by a delta-neutral gold-carry strategy plus a thBILL float. Supply, sthUSD NAV, reserve coverage, lockbox conservation, and the 4-of-6 Safe → 48h Timelock admin chain.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "syrupusdc-retail",
+    asset: "syrupusdc",
+    name: "syrupUSDC",
+    chain: "Ethereum",
+    description:
+      "ERC-4626 share over Maple's institutional open-term lending pool. Cross-pool family panel surfaces shared-borrower concentration with syrupUSDT.",
+    category: "Lending",
+    production: true,
+  },
+  {
+    slug: "syrupusdt-retail",
+    asset: "syrupusdt",
+    name: "syrupUSDT",
+    chain: "Ethereum",
+    description:
+      "USDT-denominated sibling pool to syrupUSDC. Same Maple architecture, smaller pool, materially higher per-pool concentration.",
+    category: "Lending",
+    production: true,
+  },
+  {
+    slug: "hastra-prime",
+    asset: "hastra-prime",
+    name: "Hastra PRIME / wYLDS",
+    chain: "Provenance + Solana + Ethereum",
+    description:
+      "Backing, cross-chain supply, reserve segregation, redemption-buffer health, and liquidity for Hastra PRIME and its wYLDS underlying.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "apxusd",
+    asset: "apxusd",
+    name: "apxUSD",
+    chain: "Ethereum + Base",
+    description:
+      "Apyx's $1-pegged synthetic stablecoin backed by STRC plus cash & equivalents. RWA-collateralized, Accountable proof-of-solvency feed.",
+    category: "RWA",
+    production: true,
+  },
+  {
+    slug: "apyusd",
+    asset: "apyusd",
+    name: "apyUSD",
+    chain: "Ethereum + Base (CCIP bridge)",
+    description:
+      "Yield-bearing ERC-4626 wrapper over apxUSD. Captures the STRC dividend stream as NAV growth; 30-day UnlockToken cooldown on canonical exits.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "usdat",
+    asset: "usdat",
+    name: "USDat",
+    chain: "Ethereum",
+    description:
+      "Saturn Labs' permissioned, non-yield stablecoin. Reserve rotated out of $M into PYUSDx on 2026-08-19; coverage held at 1:1 through the move.",
+    category: "RWA",
+    production: true,
+  },
+  {
+    slug: "susdat",
+    asset: "susdat",
+    name: "sUSDat",
+    chain: "Ethereum",
+    description:
+      "Saturn's yield-bearing ERC-4626 wrapper for USDat. STRC-dividend pass-through into NAV; dynamic LTV-rotation between on-chain buffer and off-chain STRC.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "susde",
+    asset: "susde",
+    name: "sUSDe",
+    chain: "Ethereum",
+    description:
+      "Yield-bearing staked USDe. Shares USDe's reserve backing and adds the vault balance / NAV view on top of the reserve-wallet tracker.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "susds",
+    asset: "susds",
+    name: "sUSDS",
+    chain: "Ethereum",
+    description:
+      "Sky Savings USDS — the yield-bearing wrapper over USDS. Vault NAV, savings rate, and the underlying USDS backing view.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "usdai",
+    asset: "usdai",
+    name: "USDai",
+    chain: "Arbitrum + Plasma + Base + Ethereum",
+    description:
+      "Synthetic dollar backed 1:1 by PYUSD reserves held on-chain. Self-administered 48-hour timelock + 3-of-3 Safe upgrade gate.",
+    category: "RWA",
+    production: true,
+  },
+  {
+    slug: "susdai",
+    asset: "susdai",
+    name: "sUSDai",
+    chain: "Arbitrum + Plasma + Base + Ethereum",
+    description:
+      "Yield-bearing ERC-7540 async vault for USDai — staked into GPU/equipment-finance loans via MetaStreet. 30-day FIFO redemption queue.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "mstr",
+    asset: "mstr",
+    name: "MSTR (Strategy Inc.)",
+    chain: "Strategy (NASDAQ: MSTR)",
+    description:
+      "Strategy Inc.'s BTC-treasury equity — upstream issuer for the STRC family. mNAV regime, balance sheet, capital structure, per-share BTC NAV, and SEC EDGAR 8-K log. Dependency scope; not an equity recommendation.",
+    category: "TradFi Equity",
+    production: true,
+  },
+  {
+    // One dashboard, two production reports (strc and strcx). Linked to the
+    // underlying; the wrapper is named in the description so neither is orphaned.
+    slug: "strc",
+    asset: "strc",
+    name: "STRC + STRCx",
+    chain: "Strategy (NASDAQ: STRC) + Ethereum (STRCx)",
+    description:
+      "Strategy's variable-rate perpetual preferred stock and Backed Finance's on-chain wrapper STRCx. Par-anchor dividend state, cash-service waterfall with rate-ceiling overlay, 8-K log, and downstream exposure across Apyx + Saturn.",
+    category: "RWA",
+    production: true,
+  },
+
+  // ---- staging only: dashboard is live, but the report is not on production
+  // (or does not exist). Fails the second leg of the join, so it is held back.
+  {
+    slug: "ousd",
+    asset: "ousd",
+    name: "OUSD (Origin Dollar)",
+    chain: "Ethereum",
+    description: "Rebasing stablecoin backed by USDC via Vault strategies.",
+    category: "Stablecoin",
+  },
+  {
+    slug: "usdd",
+    asset: "usdd",
+    name: "USDD",
+    chain: "Tron + Ethereum + BNB",
+    description:
+      "MakerDAO-fork stablecoin backed by TRX/USDT vaults and HTX Smart Allocator, with a full HTX overlap analysis.",
+    category: "Stablecoin",
+  },
+  {
+    // ⚠️ No report exists for cusd. The tile deliberately carries no report link.
+    asset: "cusd",
+    name: "cUSD",
+    chain: "Ethereum",
+    description: "Live backing and peg monitoring. No TID report published yet.",
+    category: "Stablecoin",
+  },
+  {
+    slug: "syzusd",
+    asset: "syzusd",
+    name: "syzUSD",
+    chain: "Monad",
+    description: "Yuzu Money's yield-bearing wrapper over yzUSD.",
+    category: "Yield",
+  },
+  {
+    slug: "yzusd",
+    asset: "yzusd",
+    name: "yzUSD",
+    chain: "Monad",
+    description: "Yuzu Money's stablecoin — backing and peg monitoring.",
+    category: "Stablecoin",
+  },
+  {
+    // ⚠️ Dashboard is 11.2 DAYS STALE (backing-monitor, 2026-09-10) and carries
+    // its own staleness banner. Held on the join anyway, since its report is
+    // staging-only — but do not promote this tile without re-checking the feed.
+    slug: "bmnr",
+    asset: "bmnr",
+    name: "BMNR (BitMine Immersion)",
+    chain: "BitMine (NYSE: BMNR)",
+    description:
+      "BitMine Immersion's ETH-treasury equity — the ETH analog of MSTR. Issuer dependency / firepower scope; not an equity recommendation.",
+    category: "TradFi Equity",
+  },
 ];
 
 const dashboards = isProductionStage
   ? allDashboards.filter((d) => d.production === true)
   : allDashboards;
+
+const linkFor = (d: Dashboard) => d.url ?? `/dashboards/?asset=${d.asset}`;
+
+// Stable category order; anything unlisted sorts to the end under "Other".
+const ORDER = ["Stablecoin", "Yield", "RWA", "Lending", "TradFi Equity"];
+const groups = ORDER.map((c) => ({
+  category: c,
+  items: dashboards.filter((d) => d.category === c),
+})).filter((g) => g.items.length > 0);
+const ungrouped = dashboards.filter((d) => !ORDER.includes(d.category ?? ""));
+if (ungrouped.length) groups.push({ category: "Other", items: ungrouped });
 ---
 
 <BaseLayout
@@ -62,37 +337,48 @@ const dashboards = isProductionStage
       <h1 class="text-4xl md:text-5xl font-bold mb-4">Backing Dashboards</h1>
       <p class="text-muted-foreground max-w-2xl">
         Hourly on-chain monitoring of supply, collateral, and peg health for each
-        monitored asset.
+        monitored asset. Dashboards open in a new tab and update independently of
+        the research reports, which are authored judgements at a stated date.
       </p>
     </div>
 
-    <div class="space-y-16">
+    <div class="space-y-12">
       {
-        dashboards.map((d) => (
-          <section id={d.slug}>
-            <div class="flex items-end justify-between flex-wrap gap-2 mb-4">
-              <div>
-                <div class="flex items-center gap-2 mb-1 flex-wrap">
-                  <h2 class="text-2xl font-bold">{d.name}</h2>
-                  {d.category && <Badge variant="outline">{d.category}</Badge>}
-                </div>
-                <p class="text-sm text-muted-foreground font-mono">{d.chain}</p>
-              </div>
-              <a
-                href={`/reports/${d.slug}`}
-                class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold"
-              >
-                Read Report →
-              </a>
+        groups.map((g) => (
+          <section>
+            <h2 class="eyebrow mb-4 pb-2 border-b border-border">
+              {g.category} <span class="text-muted-foreground">({g.items.length})</span>
+            </h2>
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {g.items.map((d) => (
+                <article class="border border-border bg-card p-5 flex flex-col">
+                  <div class="flex items-start justify-between gap-2 mb-1">
+                    <h3 class="text-lg font-bold leading-tight">{d.name}</h3>
+                    {d.category && <Badge variant="outline">{d.category}</Badge>}
+                  </div>
+                  <p class="text-xs text-muted-foreground font-mono mb-3">{d.chain}</p>
+                  <p class="text-sm text-muted-foreground mb-5 flex-1">{d.description}</p>
+                  <div class="flex items-center gap-4 pt-3 border-t border-border">
+                    <a
+                      href={linkFor(d)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-sm uppercase tracking-wider text-primary hover:underline font-semibold"
+                    >
+                      Open dashboard ↗
+                    </a>
+                    {d.slug && (
+                      <a
+                        href={`/reports/${d.slug}`}
+                        class="text-sm uppercase tracking-wider text-muted-foreground hover:underline"
+                      >
+                        Read report →
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
             </div>
-            <p class="text-muted-foreground mb-4 max-w-3xl">{d.description}</p>
-            <DashboardEmbed
-              slug={d.slug}
-              title={`${d.name} backing dashboard`}
-              height="650px"
-              url={d.url}
-              embed={d.embed ?? true}
-            />
           </section>
         ))
       }
