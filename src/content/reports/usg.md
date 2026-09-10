@@ -10,7 +10,7 @@ date: "2026-08-27"
 last_verified: "2026-08-27"
 # Scope-limited pass 2026-09-06: an authority walk at block 25915396 added
 # axis 5. Nothing else was re-read, so `last_verified` HOLDS at 2026-08-27.
-last_revised: "2026-09-06"
+last_revised: "2026-09-11"
 # SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
 # Contract & Admin · Issuer. Order matches the dashboards exactly.
 #   ⚠️ NOT ONE PUBLISHED NUMBER MOVES. peg 5.0, backing 5.0, liquidity 3.5,
@@ -112,9 +112,28 @@ One qualification that runs against the borrower: these are **market-wide aggreg
 
 ## 3 · Liquidity & Exit — 3.5
 
-⚠️ **This is the weakest axis and the gap between it and the others is the point.** USG trades on **one venue with no quoted depth**, against roughly **$1.0M of counter-side inventory** for a **$4.34M supply** — so a holder wanting out at size is relying on inventory that is a fraction of the float, on a single place.
+**USG trades on two Curve PegKeeper pools and nowhere else, and the exit is now measured rather than described.** Quoted 2026-09-11 with `get_dy` on each pool — the call a seller's transaction actually makes — against a **$4.46M** supply:
 
-✅ **Nothing here is broken and there is no evidence of failed exits.** **But an exit that has not been tested at size is not the same as one that has**, and on an asset this small the difference matters more than it would on a deep market.
+| selling | USG → USDC | USG → frxUSD | **split across both** |
+|---:|---:|---:|---:|
+| $10,000 | −51.5 bps | −45.1 bps | — |
+| $100,000 | −64.8 bps | −54.0 bps | — |
+| $250,000 | −108.0 bps | −77.7 bps | — |
+| $300,000 | −136.9 bps | −90.3 bps | **−67.7 bps** |
+| $400,000 | **−276.1 bps** | −131.3 bps | **−78.4 bps** |
+| $500,000 | −929.0 bps | **−229.7 bps** | **−92.9 bps** |
+| $600,000 | — | — | **−113.6 bps** |
+| $1,000,000 | −5,242 bps | −3,930 bps | — |
+
+⚠️ **The exit is expensive at every size, and that is the finding a depth headline would hide.** **Selling $10,000 costs about half a percent.** This is not a deep-at-small, thin-at-size profile — the floor cost is high and the cliff is steep on top of it.
+
+✅ **But a seller who splits across both pools does far better than either alone, and it is worth stating because the obvious method understates it.** Each pool crosses 2% on its own between **$350K and $400K** (USDC) and between **$450K and $500K** (frxUSD). **Split, $600,000 clears inside 1.2%** — about **13.5% of supply**. A single-pool ladder would read roughly **2.5× worse than the executable exit**, because the pools are independent and a seller uses both.
+
+⚠️ **Two limits on these figures, stated rather than buried.** They are a **single-block snapshot**, and PegKeeper pool balances move with keeper activity — this is a dated reading, not a standing property. And the split column quotes an **even** split, not an optimal one, so it is a **floor** on best execution rather than the best a solver would find.
+
+**What backs the exit is inventory, not depth-on-paper:** **$471,641 of USDC and $611,245 of frxUSD** sit opposite USG across the two pools — **$1,082,886** a seller can execute into, against $4.46M outstanding. ⚠️ **The USG side of those same pools is not exit liquidity for a seller**, and USG is **71–73%** of each pool, so the counter-side is the smaller half of a small venue.
+
+✅ **Nothing here is broken and there is no evidence of a failed exit.** The measurement says what an exit costs, not that one has gone wrong.
 
 ## 4 · Dependencies — 4.0
 
