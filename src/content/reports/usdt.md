@@ -11,7 +11,7 @@ last_verified: "2026-08-25"
 # ⚠️ Scope-limited 2026-09-07: reconciled the Issuer score column against
 # frontmatter and flagged a forward-dated claim whose date had passed. Nothing
 # was re-measured, so `last_verified` HOLDS.
-last_revised: "2026-09-07"
+last_revised: "2026-09-11"
 featured: false
 production: true
 issuer: "Tether Limited (BVI) / iFinex"
@@ -19,6 +19,9 @@ market_cap_approx: 183500000000
 peg_mechanism_score: 7.5
 backing_score: 6.0
 liquidity_score: 9.5
+underlying_score: 4.0
+structural_score: 3.5
+axis_frame: six
 issuer_score: 5.0
 overall_score: 7.0
 ---
@@ -43,17 +46,11 @@ The **7.0/10** reflects that balance — unmatched liquidity and a proven peg ag
 
 Tether's **Q2 2026 attestation**, published 2026-07-31, moved one part of that picture. USDT is still over-collateralized and the peg did not budge, but the cushion of reserves above what Tether owes holders **halved in a single quarter**, from a record $8.23 billion to $4.11 billion. We have cut the Backing score from 6.5 to **6.0** on that. The overall score **holds at 7.0** — liquidity and peg resilience are untouched, and one quarter of evidence on one axis does not re-price a decade-proven asset. The detail is in "What backs it" below.
 
-## What you actually earn
+## 1 · Stability — 7.5
 
-**Nothing** — plain USDT pays no yield. It is a settlement and trading dollar, not an income product. If you want yield on a Tether-adjacent dollar, that lives in separate staked or lending products, not in USDT itself.
+The reassuring counterweight to all of the above is the track record. Despite a decade of FUD cycles, regulatory actions and one brief dip to about **$0.9975** during the May 2022 TerraUST collapse, USDT has always returned to peg. Massive secondary liquidity plus arbitrage redemption is a robust peg defense, and it has never suffered a sustained loss of peg. When the rest of the market was on fire, USDT held.
 
-## How exit works
-
-For retail, exit is the secondary market — and it is the best exit in all of crypto. USDT trades at near-zero slippage at any realistic size, on every major CEX and DEX, on every chain. Direct redemption with Tether does exist, but it is gated to verified, qualified customers, typically with $100k+ minimums; ordinary holders never touch it directly.
-
-What keeps the peg tight is that those qualified redeemers *do* arbitrage. Any discount to $1 gets bought up and redeemed at par, which has reliably pulled USDT back to peg through every historical wobble. You don't need access to the redemption window yourself — you benefit from the people who have it.
-
-## What backs it — and the transparency question
+## 2 · Backing — 6.0
 
 **Start with what did not happen.** USDT is over-collateralized. Tether holds more assets than it owes to holders, the Q2 2026 attestation confirms it, and the peg never moved — not by a basis point that mattered. Nothing below is a shortfall, and none of it is a reason to expect one tomorrow.
 
@@ -112,8 +109,51 @@ Three genuine positives in the same report, and they are why this is a 0.5 move 
 - **USDT kept growing** — issuance was up $446 million into a quarter when the stablecoin market overall contracted. Demand for the product is not the problem here.
 
 Since June 30th both gold and bitcoin have partly recovered, which on a mark-to-market basis puts the cushion back near $4.8 billion. That recovery is a reason not to over-read a single quarterly snapshot — and also a reminder of the underlying point, since a buffer that moves that much on price alone is a buffer that depends on prices.
+## 3 · Liquidity & Exit — 9.5
 
-## The issuer
+For retail, exit is the secondary market — and it is the best exit in all of crypto. USDT trades at near-zero slippage at any realistic size, on every major CEX and DEX, on every chain. Direct redemption with Tether does exist, but it is gated to verified, qualified customers, typically with $100k+ minimums; ordinary holders never touch it directly.
+
+What keeps the peg tight is that those qualified redeemers *do* arbitrage. Any discount to $1 gets bought up and redeemed at par, which has reliably pulled USDT back to peg through every historical wobble. You don't need access to the redemption window yourself — you benefit from the people who have it.
+
+## 4 · Dependencies — 4.0
+
+✅ **The majority of the book is the most substitutable asset there is.** Roughly **77%** is US Treasuries — **$114.96B of T-bills plus $25.62B of reverse repo**. On composition alone this is a strong reserve, and that belongs first.
+
+⚠️⚠️ **What holds the axis to 4.0 is that the counterparty set has never been enumerated at all.** **No full audit has ever been completed.** What exists is quarterly attestation by **BDO Italia** — an accounting firm, not a Big Four auditor — and an attestation reports **point-in-time composition, not counterparty identity**. **So for a $183.64B liability book, not one custodian or banking counterparty can be named.**
+
+⚠️ **That is unenumerability rather than concentration, and it is worse in a specific way: it cannot be assessed in either direction.** A concentrated set that is named can be judged — a reader can look at the name and form a view. An unnamed set offers nothing to judge. **The absence is the finding.**
+
+⚠️ **Two further pieces of the set are unnamed by construction.** About **$13.5B of secured loans** is a counterparty book with no disclosed borrowers. And the **iFinex / Bitfinex affiliation** means some portion of the arrangement may not be third-party at all.
+
+**Why this sits below frxUSD's 4.5, which has ~90% in a single custodian:** **Frax's custodians are named.** A named concentration is more assessable than an unnamed one, even when the named concentration is severe.
+
+✅ **The counter-argument, because overstating risk is not the safe direction either.** 77% Treasuries is a great deal of good collateral, and it is the majority of the book. **If the loan book and the custodian set were disclosed and clean, this axis would plausibly be a 6.0.** What is missing is disclosure, not demonstrated quality.
+
+⚠️ **Deliberately not priced here: the gold ($18.84B), the bitcoin ($5.80B), or the 6.0× volatile-asset-to-surplus ratio.** Those are market risk and are already carried by **Backing** above. Importing them would price one fact on two axes.
+
+## 5 · Contract & Admin — 3.5
+
+⚠️ **On Ethereum, USDT's owner is a 3-of-6 multisig with no delay of any kind.** Measured 2026-09-11 from the token outward:
+
+- Token `0xdAC17F958D2ee523a2206206994597C13D831ec7` — `symbol()` **USDT**, `totalSupply()` **88,306,028,997.33**, `deprecated()` **false**, `upgradedAddress()` zero
+- `owner()` → `0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828`, a contract
+- That contract returns **`required() = 3`** with **six owners**, all externally-owned accounts with live non-zero nonces
+- **`getThreshold()` fails ABI decoding** — the positive discriminator for the older `MultiSigWallet` surface. It is not a Gnosis Safe, and is not classified as one by address shape.
+
+✅ **The permission was measured, not inferred.** `eth_call` of `deprecate()` **reverts** from `0x…dEaD` and **succeeds from the owner**, with a fabricated selector absent from the bytecode as a control. **A selector present in bytecode proves a function exists; it does not prove who may run it.** This establishes the caller gate.
+
+⚠️ **`deprecate(address)` is the power that carries the score.** It redirects the token's behaviour to an address the owner selects — **upgrade-equivalent, on a contract that has no proxy.** It is **dormant, not absent**: `deprecated()` reads false today, and three signatures can change that with no on-chain delay. The same three also reach `issue`, `redeem`, `addBlackList`, `destroyBlackFunds`, `pause`, `unpause`, `setParams` and `transferOwnership`.
+
+✅ **3-of-6 is a real quorum**, which places this above the any-of-1 assets — USDC at 3.0 and PYUSD at 2.5, where a single signature suffices. ⚠️ **And below RLUSD at 4.0**, because RLUSD needs **seven** signatures to change code while USDT's three do everything, `deprecate` included.
+
+⚠️ **Tether is the only issuer in this cohort that discloses these powers** — in its legal terms rather than its technical documentation. *"freezing or confiscation of any … Tether Tokens"*, *"blacklisting any Digital Tokens Address"*, and being *"under no obligation to … maintain support for any particular blockchain"* map one-to-one onto `destroyBlackFunds`, `addBlackList` and `deprecate`. **A contract read and a legal document agreeing is real corroboration, because they are unrelated sources rather than two methods sharing one operand.**
+
+⚠️ **Disclosure does not soften this score.** This axis prices the **reaction window**, and *"in its sole discretion"* with no stated threshold or process is the explicit absence of one. **Who signs remains undisclosed**, exactly as with the other four assets in this cohort.
+
+**Coverage: Ethereum, Solana and Avalanche measured.** Avalanche's token owner and proxy admin converge on **the same 3-of-6 signer set as Ethereum** — one signer set across two rails, not two independent ones. **Solana's mint and freeze authority both resolve to a 2-of-3 SPL Token multisig** (`numRequiredSigners` 2 of `numValidSigners` 3 — read m, not n). ⚠️ **Tron is Tether-declared and unmeasured. BNB, Arbitrum, Optimism and Polygon appear on this report's chain list but are not Tether-declared as native USD₮** — they are present-but-not-issuer-declared and **unread on this axis, which is not the same as clean.**
+
+
+## 6 · Issuer — 5.0
 
 Tether Limited is BVI-domiciled, sits inside a complex iFinex/Bitfinex corporate structure, and holds no US banking license. Two resolved regulatory matters are in the record, and they are worth stating cleanly:
 
@@ -130,9 +170,9 @@ USDT also sits **outside the US GENIUS Act framework**, and that timetable is no
 
 **For a US retail holder this is a two-year horizon, not a today problem.** Nothing about your access changes this year, and the 2028 date is the one to diarize. But it is worth understanding Tether's actual strategy, because it is not "get USDT compliant". Tether's US-regulated product is a *separate* token: **USA₮/USAT**, launched 2026-01-28, issued by Anchorage Digital Bank (OCC-chartered) with Cantor Fitzgerald as reserve custodian, and expanded to Celo on 2026-07-29. The read is that USAT exists so that USDT does not have to comply — USDT is being positioned for offshore and emerging-market demand, where most of its use already is. That is a coherent business plan. It also means USDT itself is unlikely to ever pick up a US regulatory wrapper.
 
-## Peg resilience
+## What you actually earn
 
-The reassuring counterweight to all of the above is the track record. Despite a decade of FUD cycles, regulatory actions and one brief dip to about **$0.9975** during the May 2022 TerraUST collapse, USDT has always returned to peg. Massive secondary liquidity plus arbitrage redemption is a robust peg defense, and it has never suffered a sustained loss of peg. When the rest of the market was on fire, USDT held.
+**Nothing** — plain USDT pays no yield. It is a settlement and trading dollar, not an income product. If you want yield on a Tether-adjacent dollar, that lives in separate staked or lending products, not in USDT itself.
 
 ## Audits & security
 
@@ -159,7 +199,7 @@ The token contracts themselves are simple, long-lived and heavily battle-tested.
 | Peg Mechanism | 7.5 | Standard fiat mint/redeem, proven across a decade including TerraUST contagion. High redemption minimums are offset by the deepest arbitrage network in crypto. |
 | Backing | 6.0 | **Down from 6.5 (2026-08-03).** Reserves remain majority US Treasuries (about 77%), but the Q2 2026 attestation halved the surplus from $8.23B to $4.11B (104.5% to 102.2% collateralization) while the issuer bought a further $1.91B of gold and bitcoin into a book now roughly 6× the cushion, and about $1.9B left the reserve unexplained. Still attestations only (BDO Italia, not Big Four), no on-chain proof of reserves, and a history of misrepresentation settlements. |
 | Liquidity | 9.5 | Best-in-class — deepest stablecoin liquidity on every major CEX and DEX, the highest trading volume of any crypto asset, on virtually every chain. Near-zero slippage at any realistic size. |
-| Issuer | 5.0 | Two resolved regulatory settlements (NYAG + CFTC), BVI domicile with a complex iFinex/Bitfinex structure, no completed full audit, and USDT sits outside the US GENIUS Act framework. Offset by 10+ years operating, improved transparency, and no sustained depeg. ⚠️ **Every item above is regulatory, structural or disclosure-related; none of them priced the on-chain control surface — an undelayed 3-of-6 of plain keys holding `deprecate`, `destroyBlackFunds` and blacklist authority over the Ethereum leg. A drag this axis had never counted. The cut prices the **absence of a reaction window**, not the quorum size; see the note below the table. |
+| Issuer | 5.0 | Two resolved regulatory settlements (NYAG + CFTC), BVI domicile with a complex iFinex/Bitfinex structure, no completed full audit, and USDT sits outside the US GENIUS Act framework. Offset by 10+ years operating, improved transparency, and no sustained depeg. **These are entity facts and they carry the 5.0 on their own.** ⚠️ **The on-chain control surface is not priced here** — the undelayed 3-of-6 holding `deprecate`, `destroyBlackFunds` and blacklist authority is argued under [5 · Contract & Admin](#5--contract--admin--35), and counting it on both axes would price one fact twice. |
 | **Overall** | **7.0** | **Held at 7.0 (2026-08-03).** Unmatched liquidity and a decade of peg resilience carry real weight, and neither was touched by the Q2 print — peg and liquidity scores are unchanged, and the drawdown that halved the surplus was substantially a gold and bitcoin move that has since partly reversed. Backing comes down one notch on a single quarter of evidence, which is documented here rather than compounded into the headline score. Issuer transparency and regulatory history remain the dominant residual risks. A second consecutive quarter of surplus erosion in Q3 would take this to 6.5. **⚠️ Held at 7.0 on 2026-08-23 despite the Issuer cut, and the reason should not be left to inference.** This composite is liquidity-weighted rather than floor-tracking — it already sits above Backing 6.0 and well above Issuer, because Liquidity 9.5 and Peg 7.5 carry it, and neither was touched by the admin finding. The Issuer move is also a recalibration on a drag that axis never counted, not a deterioration in Tether's conduct. And the one trigger already allocated to this number is a *backing* trigger; collapsing an unrelated issuer half-notch into it would blur the signal a reader is being told to watch. (Contrast [AUSD](/reports/ausd/), whose Overall tracks its weakest axis and therefore did follow its Issuer cut.) |
 
 > **How the Issuer cut was decided, and why it is not about quorum size.** When this finding was first published on 2026-08-23 it was documented but left unpriced, pending a pass across every report in this coverage with a measured upgrade path. That pass has run, and the discriminating variable is **not** the signing threshold — it is **whether a holder gets a reaction window**. [USDS](/reports/usds/) holds the same upgrade capability and is **not** docked, because its path carries a verified 48-hour delay — ⚠️ **a window that is narrower than this comparison once implied: USDS's own walk finds an undelayed UsdsJoin route and no independent canceller, so its 48 hours is notice rather than veto (see [USDS](/reports/usds/) axis 5).** ✅ **The distinction still holds, and it holds on the thing the dock actually prices: two days of public warning against none at all.** ⚠️ **Qualified 2026-08-25:** that path's cancel power is *not* independent — schedule and cancel answer to the same authority — so the 48 hours is **notice a holder can act on rather than an interruption a third party can apply**. The cohort distinction survives the correction, because the discriminating variable was always whether a *holder* gets a reaction window, and USDS still gives one where the docked cases give none. [thBILL](/reports/thbill/) has a **3-of-5** quorum and **is** docked, on an axis rationale that names "no timelock on admin actions" outright. So a quorum does not offset the absence of a delay; USDS is the control that shows what does. USDT has no delay at all, which places it on the same side as USDC and thBILL despite a harder signer set. **The quorum credit is real and is paid in the prose above rather than in the number** — three independent, individually verified keys is a better posture than one key or than five undisclosed ones, but it does not hand a holder time to act.

@@ -1,4 +1,9 @@
 ---
+# ⚠️ STAGING PERMANENTLY — owner ruling 2026-09-11: not held, and the report
+# quality is not good enough to promote. This is CLOSED, not pending: do not
+# raise it as a promote-or-leave decision, do not prioritise its refresh, and
+# do not treat its staleness as a defect. Reviving it needs a quality pass
+# first; the blocker is the report, not the approval.
 asset: "USDD"
 slug: "usdd"
 aliases: ["USDD", "Decentralized USD", "USDD 2.0"]
