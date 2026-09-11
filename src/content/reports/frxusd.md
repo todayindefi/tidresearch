@@ -27,6 +27,8 @@ production: true
 
 **Moderate risk · 5.5/10 · Strong Treasury backing, undercut by unaudited upgradeable contracts**
 
+⚠️ **The 5.5 sits +0.25 above its own axis mean of 5.25** — against the at-or-below convention applied elsewhere in this coverage. **Held by decision on 2026-09-11** rather than left unresolved: the axis work that lowered the mean did not change any reserve, peg, liquidity or issuer fact. **The six axes below are current; this headline is the cell to treat as the judgement call.**
+
 > **This report covers frxUSD (`0xCAcd6fd2…586E29`), Frax Finance's current flagship stablecoin — NOT Legacy FRAX (`0x853d955a…1b99e`).** They are separate assets with separate balance sheets and separate contracts. The 1:1 FRAX→frxUSD migration was closed in April 2025 (FIP-430). If you're looking at the deprecated, under-collateralized predecessor, see the Legacy FRAX report instead.
 
 frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as part of the "North Star" upgrade. It is backed 1:1 by tokenized US Treasuries held with regulated custodians, and it replaced legacy FRAX as the primary Frax dollar. The asset itself has performed well — the peg has held tightly since launch — but the structural risks sit on the contract and exit side, not the backing.

@@ -136,7 +136,7 @@ The other residual risks are structural rather than reserve-quality problems: th
 | Backing | 7.0 | USD cash + Treasuries + cash equivalents at an NYDFS-regulated trust, segregated at BNY Mellon, monthly attestations; conservative composition, but attestation-based rather than real-time PoR and a shorter history. |
 | Liquidity | 7.0 | ~$1.78B cap with a Binance Tier-1 listing and ~$100M+ daily volume — exit no longer hinges on issuer redemption. Held at 7.0 (not higher) because DEX-native depth still trails USDC/USDT and liquidity is fragmented across XRPL, Ethereum and the new L2s. |
 | Issuer | 7.5 | Ripple — well-capitalized, institutional focus, NYDFS-regulated, SEC overhang resolved, and expanding regulated/institutional reach (Japan/JFSA, Deutsche Bank, Mastercard). No governance red flags. |
-| **Overall** | **7.0** | A solid, increasingly liquid regulated stablecoin appropriate for a core position; residual watch items are the still-short multi-cycle track record and attestation-versus-real-time-PoR transparency. |
+| **Overall** | **7.0** | A solid, increasingly liquid regulated stablecoin appropriate for a core position; residual watch items are the still-short multi-cycle track record and attestation-versus-real-time-PoR transparency. ⚠️ **Held, and it sits +0.50 above its own axis mean of 6.50** — against the at-or-below convention applied elsewhere in this coverage. **Held by decision on 2026-09-11** rather than left unresolved — the axis work that lowered the mean did not change any reserve, peg, liquidity or issuer fact. |
 
 ## Who it's for
 

@@ -137,7 +137,7 @@ PYUSD sits under NYDFS oversight with **monthly Withum attestations** on reserve
 | Backing | 8.0 | High-quality reserves — cash, short-dated Treasuries, reverse repo — in bankruptcy-remote NYDFS trust, with monthly Withum attestations. Top-tier, the same playbook as USDC. |
 | Liquidity | 6.5 | Grown ~4x to a multi-billion supply and now dominates the Solana stablecoin market, with deep DeFi integration on native ETH/SOL. Still thinner than USDC/USDT and concentrated on native chains — the long-tail LayerZero chains are transport-only. |
 | Issuer | 7.5 | Paxos — NYDFS-regulated, multi-year track record — issuing for PayPal (public company, huge distribution, strong reputational alignment). One of the strongest issuer profiles in the set. |
-| **Overall** | **7.0** | Top-tier regulated issuer and reserve posture, held back by liquidity still below USDC/USDT and a newly-added cross-chain bridge surface. Best held on its native Ethereum/Solana rails. |
+| **Overall** | **7.0** | Top-tier regulated issuer and reserve posture, held back by liquidity still below USDC/USDT and a newly-added cross-chain bridge surface. Best held on its native Ethereum/Solana rails. ⚠️ **Held, and it sits +0.50 above its own axis mean of 6.50** — against the at-or-below convention applied elsewhere in this coverage. **Held by decision on 2026-09-11** rather than left unresolved — the axis work that lowered the mean did not change any reserve, peg, liquidity or issuer fact. |
 
 ## Who it's for
 
