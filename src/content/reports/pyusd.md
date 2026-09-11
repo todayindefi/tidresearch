@@ -12,7 +12,7 @@ last_revised: "2026-09-11"
 featured: false
 production: true
 issuer: "Paxos Trust Company (on behalf of PayPal)"
-market_cap_approx: 2770000000
+market_cap_approx: 2452034067
 peg_mechanism_score: 7.5
 backing_score: 8.0
 liquidity_score: 6.5
@@ -37,7 +37,7 @@ overall_score: 7.0
 
 PYUSD is PayPal's fiat-backed stablecoin, issued and managed by **Paxos Trust Company** under **NYDFS** supervision — one of the most rigorous US stablecoin regimes. It is backed 1:1 by cash, short-dated US Treasuries and Treasury reverse repos held in bankruptcy-remote trust accounts, with **monthly attestations by Withum**.
 
-It has grown roughly 4x over the past year to a multi-billion supply — around **$2.77 billion** as of this report's 2026-07-09 pass, off a **peak above $4 billion** in March 2026. **That is a cross-chain total and is not reproducible from an Ethereum read** — PYUSD is native on both Ethereum and Solana, Solana is not an EVM chain, and the Ethereum leg alone read 1,969,119,192 on 2026-08-23, roughly 70% of the total. **We have now read the Solana leg directly: 688,176,370.75 on 2026-08-23**, against the mint Paxos publishes at paxos.com/pyusd. Added to the Ethereum leg that is **2,657,295,563 — about 96% of the published ~$2.77B accounted for across the two native chains**, with the Arbitrum and Stellar deployments plus the LayerZero-reachable float making up the rest. **Read that as corroboration of the headline figure, not as a challenge to it.** It remains the fastest growth among the major stablecoins, and it now leads the Solana stablecoin market. PYUSD is native on **Ethereum, Solana, Arbitrum and Stellar**, with a **LayerZero OFT** layer extending its reach to further chains.
+Supply is **$2.452 billion across its two native chains, measured 2026-09-11** — **$1,715,817,167** on Ethereum and **736,216,900** on Solana — off a **peak above $4 billion** in March 2026. ⚠️ **The two legs are moving in opposite directions:** Ethereum has fallen from **1,969,119,192** on 2026-08-23, while Solana has risen from **688,176,370**. **That is a cross-chain total and is not reproducible from an Ethereum read** — PYUSD is native on both Ethereum and Solana, Solana is not an EVM chain, and the Ethereum leg alone read 1,969,119,192 on 2026-08-23, roughly 70% of the total. **We have now read the Solana leg directly: 688,176,370.75 on 2026-08-23**, against the mint Paxos publishes at paxos.com/pyusd. Added to the Ethereum leg that is **2,657,295,563 — about 96% of the published ~$2.77B accounted for across the two native chains**, with the Arbitrum and Stellar deployments plus the LayerZero-reachable float making up the rest. **Read that as corroboration of the headline figure, not as a challenge to it.** It remains the fastest growth among the major stablecoins, and it now leads the Solana stablecoin market. PYUSD is native on **Ethereum, Solana, Arbitrum and Stellar**, with a **LayerZero OFT** layer extending its reach to further chains.
 
 The 7.0/10 reflects a top-tier regulated issuer and reserve posture, held back by two things: liquidity that is still below USDC and USDT, and a newly-added cross-chain bridge surface. On the qualities that matter most for a fiat dollar — who stands behind it and what actually backs it — PYUSD is among the strongest in the set. It sits a step below the biggest names purely on market depth and on the newness of its multichain surface — whose main bridge we have now verified is strongly configured.
 
@@ -87,6 +87,28 @@ The caveat is *where* that depth lives. It is concentrated on the native chains.
 ⚠️ **Any-of-1, not 1-of-n.** One signature replaces the implementation and it takes effect immediately. **The nonce moved from 4 to 5 during the period this was being assessed**, so the key is in active use rather than dormant.
 
 ⚠️ **Custody is undisclosed.** Empty code proves there is **no on-chain quorum**; it cannot distinguish a single private key from an off-chain MPC or HSM quorum. **Paxos's published contract repository makes no multisig claim about this admin.** *(Paxos Custody's HSM and cold-storage material describes customer asset custody, which is a different thing from the token's upgrade key.)* **So this is "no verifiable quorum", not "one private key".**
+
+### The Solana leg, which the Ethereum reading does not cover
+
+⚠️ **PYUSD's Solana deployment carries a power its Ethereum contract has no equivalent of.** Measured 2026-09-11 on the mint itself:
+
+| authority | holder |
+|---|---|
+| `freezeAuthority` | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` |
+| **`permanentDelegate`** | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` |
+| `mintCloseAuthority` | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` |
+| `transferHook` authority | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` |
+| `mintAuthority` | `8Jornc27vtAYPkwDzsZVgLQchAYyC8nD7aCNPCDV8Qk2` *(different)* |
+
+Mint `2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo`, Token-2022, supply **736,216,899.87**.
+
+⚠️ **`permanentDelegate` is not a freeze.** A freeze immobilises a balance where it sits. A permanent delegate can **move any holder's tokens, to anywhere, without that holder's signature or consent** — and it is set at the mint, so it applies to every account that has ever held the token. **There is no equivalent power in PYUSD's Ethereum contract.**
+
+⚠️⚠️ **The same address holds those four authorities on USDG, Paxos's other stablecoin.** Verified by reading USDG's mint (`2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH`, supply **598,539,708.22**) directly. **Mint authorities differ between the two assets; the seize surface does not.** So one address carries move-anyone's-balance authority over roughly **$1.335 billion** of Solana-side supply across two tokens — see [USDG](/reports/usdg/).
+
+✅ **Read this as disclosed capability, not as evidence of misuse.** Paxos is a regulated issuer and a permanent delegate is a plausible compliance instrument — the comparable power on Ethereum is why `destroyBlackFunds` exists on USDT. ⚠️ **And whether `2apBGMsS…` is a single key or a multisig cannot be read from a Solana address**, and Paxos's contract repository does not say. **So this is "one address holds seize authority over both assets", not "one person can do this."**
+
+⚠️ **A holder cannot easily discover this.** It is a Token-2022 mint extension, not a function on a contract page — you have to know the extension exists and go and read the mint.
 
 
 ## 6 · Issuer — 7.5

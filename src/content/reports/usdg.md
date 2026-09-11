@@ -276,14 +276,16 @@ So USDG's liquidity isn't just "how big is it" — it's "how healthy and broad i
 | authority | holder | shape |
 |---|---|---|
 | `mintAuthority` | `3YJL8ses…bhxR` | a Token-2022 multisig account — **but see below** |
-| `freezeAuthority` | `2apBGMsS…YJjk` | plain account, no code |
-| **`permanentDelegate`** | `2apBGMsS…YJjk` | plain account, no code |
-| `mintCloseAuthority` | `2apBGMsS…YJjk` | plain account, no code |
-| `transferHook` authority | `2apBGMsS…YJjk` | plain account, no code (no hook set today) |
+| `freezeAuthority` | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` | plain account, no code |
+| **`permanentDelegate`** | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` | plain account, no code |
+| `mintCloseAuthority` | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` | plain account, no code |
+| `transferHook` authority | `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` | plain account, no code (no hook set today) |
 
 ⚠️ **The mint authority is a multisig that requires one signature.** The account really is of type `multisig` and really does list four signers, so nearly every surface will render it as multisig-protected. **Its `numRequiredSigners` is 1** — confirmed in the parsed account and again in the raw layout, where the threshold and signer-count bytes read **1 and 4**. ✅ **A four-signer multisig requiring one signature is a true description and a misleading one**, and it is worth stating in full rather than in summary.
 
-⚠️ **And the holder of the emergency powers is one of those four signers.** So `2apBGMsS…YJjk` can **mint**, and it already holds freeze, permanent delegate, mint-close and transfer-hook authority. ✅ **The control that makes the shape claim meaningful:** that address is owned by the System Program with **zero bytes of data**, while the mint authority queried the same way is owned by Token-2022 with **355 bytes**. Same query, two shapes — the emergency holder is the bare one.
+⚠️⚠️ **And that same address holds the same four authorities on PYUSD, Paxos's other stablecoin.** Verified 2026-09-11 by reading PYUSD's mint (`2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo`, supply **736,216,899.87**) directly: `freezeAuthority`, `permanentDelegate`, `mintCloseAuthority` and `transferHook` authority all return `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk`, while the **mint authority differs**. **Minting is separated per asset; the seize surface is shared** — one address carries move-anyone's-balance authority over roughly **$1.335 billion** of Solana-side supply across the two tokens. See [PYUSD](/reports/pyusd/). ✅ **Disclosed capability, not evidence of misuse** — and a Solana address does not reveal whether it is one key or a quorum, so this is not a claim about how Paxos holds it.
+
+⚠️ **And the holder of the emergency powers is one of those four signers.** So `2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk` can **mint**, and it already holds freeze, permanent delegate, mint-close and transfer-hook authority. ✅ **The control that makes the shape claim meaningful:** that address is owned by the System Program with **zero bytes of data**, while the mint authority queried the same way is owned by Token-2022 with **355 bytes**. Same query, two shapes — the emergency holder is the bare one.
 
 ⚠️ **A permanent delegate is a stronger power than anything on the EVM legs.** On the six EVM chains, seizure takes two steps — freeze, then wipe — and the address holding them **cannot mint**, because `SUPPLY_CONTROLLER_ROLE` returns false for it. **A Solana permanent delegate can move any holder's balance in a single instruction with no freeze step**, and through the one-of-four this key reaches minting as well. **The EVM key is the constrained one.**
 
