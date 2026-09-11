@@ -1,4 +1,13 @@
 ---
+# ⚠️ PARTIAL REFRESH 2026-09-12, and last_verified is NOT bumped. What was
+# added: Q2 2026 results (10-Q, 2026-08-14), the $600M 8.500% senior notes due
+# 2031 (closed 2026-07-14), and the Kiavi acquisition (closed 2026-09-01,
+# $717M, ~$590M cash). Sources are the company's own releases and 8-K.
+# ⚠️ NOT RE-DERIVED: every delinquency, securitization and FCC figure below is
+# still Q1 2026 (31 March). The loan-book analysis that drives the score has
+# NOT been re-run against Q2, and a quarter with 132% volume growth moves the
+# denominator of every ratio in it. Bumping last_verified would claim that
+# work was done.
 asset: "Figure"
 slug: "figure"
 aliases: ["Figure", "FIGR", "Figure Technology Solutions", "Figure Lending", "Figure Certificate Company", "FCC"]
@@ -10,7 +19,7 @@ last_verified: "2026-07-31"
 # ⚠️ 2026-09-08 re-based the Q2 delinquency table (three rows were comparing to
 # 31 Dec 2025, not 31 Mar) and refreshed the lien mix. `last_verified` HOLDS —
 # the filing was not re-read end to end.
-last_revised: "2026-09-08"
+last_revised: "2026-09-12"
 featured: false
 production: true
 issuer: "Figure Technology Solutions, Inc. (Nasdaq: FIGR)"
@@ -145,9 +154,39 @@ This creates selection bias. The sub-1% statistic describes loans remaining insi
 
 For PRIME holders, Figure's ability to replace or finance removed collateral is part of the protection. The held-for-sale trend is not a map of PRIME's pool, but it is closer to the balance-sheet risk supporting that promise than the securitized statistic.
 
+## What changed after Q1, and it is structural
+
+⚠️ **Most of this report is built on Q1 2026 figures (31 March). Three things have happened since, and two of them change the shape of the company rather than its numbers.**
+
+**Q2 2026, reported 2026-08-13 and filed on Form 10-Q 2026-08-14:**
+
+| | Q2 2026 | change |
+|---|---:|---|
+| Net revenue | **$226M** | +113% YoY |
+| Net income | **$87M** | +192%, margin 38.8% |
+| Diluted EPS | **$0.35** | +338% |
+| Adjusted EBITDA | **$119M** | +126%, margin 54.6% |
+| Consumer Loan Marketplace volume | **$4.3B** | +132% |
+| Figure Connect volume | **$2.8B** | 65% of total, from 56% |
+| Loan servicing assets | **$155M** | on $17.3B of underlying loans |
+
+**Q3 guidance is $4.8–5.2B of marketplace volume.** ✅ **On growth and margin this is a strong quarter, and the shift toward Figure Connect is a shift toward capital-light fee revenue** — volume that earns a fee rather than volume that has to be funded.
+
+⚠️ **Figure has taken on $600M of senior debt at 8.500%.** The notes were priced **2026-07-09** and closed **2026-07-14** — `$600,000,000` aggregate principal, **8.500% Senior Notes due 2031**, sold at par to qualified institutional buyers, net proceeds about **$587.5M**. **This is a funding layer the rest of this report does not describe**, and at 8.5% it is expensive money against a loan book whose delinquency trend is the reason this page is not scored higher.
+
+⚠️ **And the Kiavi acquisition has closed — it is not pending.** Announced **2026-06-10** at a **$717M** total purchase price and **closed 2026-09-01** per the Form 8-K. Figure paid **approximately $590M in cash, net of cash acquired**, funded primarily from the notes above, and at closing **repaid Kiavi's existing credit facilities and terminated a Master Repurchase Agreement with Deutsche Bank**.
+
+**What Figure bought is a different lending business from its own.** Kiavi lends to **residential real estate investors** — short-term **Residential Transition Loans** and longer-term **DSCR** rental-property loans. ⚠️ **That is investor-property credit, not owner-occupied home equity**, and it behaves differently in a downturn: an investor with a vacant rental and a borrower with a home they live in do not default at the same time or for the same reasons. **The loan book this report analyses is now not the whole loan book.**
+
+⚠️ **Two flow figures, and they go to two different places — do not merge them.** Figure's and Kiavi's own announcements say the acquisition adds **over $7B in new annual first-lien volume to the Figure Connect marketplace**, and **more than $100M monthly to Democratized Prime**. ✅ **The second one is the one that reaches a token holder**: Democratized Prime is the facility PRIME's backing is lent into, so this changes that pipeline's composition — see [PRIME](/reports/hastra-prime/) and [wYLDS](/reports/wylds/).
+
+⚠️ **A joint venture between Figure and Sixth Street is reported to be buying loans off Kiavi's balance sheet.** ✅ **That appears in the companies' announcements and not in the closing 8-K, so it is reported rather than filed** — recorded here at that standing.
+
+⚠️ **None of the delinquency analysis below has been re-derived against Q2.** The three-period trend, the two disagreeing delinquency numbers and the securitization figures are all Q1-based. **A quarter in which volume grew 132% is exactly the quarter in which a delinquency ratio's denominator moves**, so those figures should be read as dated rather than current.
+
 ## How Figure funds itself
 
-Figure can hold loans, transfer them to institutional buyers, securitize them, or pledge them into Democratized Prime. Four exits diversify funding, but at least one must remain open for new originations to keep moving.
+Figure can hold loans, transfer them to institutional buyers, securitize them, or pledge them into Democratized Prime. Four exits diversify funding, but at least one must remain open for new originations to keep moving. ⚠️ **Since 2026-07-14 there is also a fifth source that is not an exit at all: $600M of 8.500% senior notes due 2031.** **That is balance-sheet leverage rather than a way of moving loans off it**, and it services at a fixed 8.5% whether or not any of the four exits stays open. **The figures in this section are Q1 and predate it.**
 
 Collateral in unconsolidated securitization vehicles rose from **$4.596B at 31 December 2025 to $6.766B at 31 March 2026**. The trusts are isolated from Figure's creditors. A third-party special servicer handles delinquent and defaulted loans and cannot be removed without cause—a meaningful independent protection.
 
