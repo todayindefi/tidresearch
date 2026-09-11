@@ -1,4 +1,17 @@
 ---
+# ⚠️ BUMPED to 2026-09-11 after a whole-body pass. Scope:
+#   RE-MEASURED on-chain: wYLDS supply on BOTH legs (Ethereum 454,494,951.73
+#   + Solana 152,180,128.76 = 606,675,080.49); the Ethereum proxy shape and
+#   its implementation; the AccessControl role IDs read off the contract; the
+#   non-enumerability of role holders; and both Solana mint authorities.
+#   ⚠️ NOT RE-DERIVED: every FCC figure on this page is from SEC filings
+#   (Q1/Q2 2026) and is documentary, not on-chain -- qualified assets, the
+#   certificate reserve, the related/third-party split, issuance and surrender
+#   flows. The Provenance-side reserve (CW20 receipt queries, the 99.7%
+#   single-account concentration) was NOT re-read: it is a Cosmos chain and
+#   outside the reader used here. The audits are carried, not re-checked.
+#   ⚠️ COVERAGE CANNOT BE COMPUTED from this pass: supply is dated 2026-09-11
+#   and the reserve figure is not, and two dates do not make a ratio.
 asset: "wYLDS"
 slug: "wylds"
 aliases: ["wYLDS", "Wrapped YLDS", "Hastra Wrapped YLDS"]
@@ -6,8 +19,8 @@ chains: ["solana", "ethereum"]
 category: "wrapped-token"
 assessment_type: "light"
 date: "2026-07-24"
-last_verified: "2026-07-30"
-last_revised: "2026-09-09"
+last_verified: "2026-09-11"
+last_revised: "2026-09-11"
 featured: false
 production: true
 yield_bearing: true
@@ -40,7 +53,7 @@ backing_score: 5.0
 axis_frame: six
 issuer_score: 6.5
 issuer: "Hastra (wrapper) / Figure Certificate Company (backing)"
-market_cap_approx: 490000000
+market_cap_approx: 606675080
 volatility_score: 7.0
 liquidity_score: 4.0
 structural_score: 6.0
@@ -52,7 +65,7 @@ companion_report: "hastra-prime"
 
 # wYLDS — Risk Report
 **Moderate risk · 5.5 / 10**
-*Wrapped token · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), backed by Figure's YLDS · ~$490M · verified 2026-07-30*
+*Wrapped token · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), backed by Figure's YLDS · **606,675,080 wYLDS** across both chains, measured 2026-09-11 · verified 2026-09-11*
 
 ## Summary
 
@@ -66,7 +79,7 @@ The wrapper is less tidy than the underlying certificate. Independent chain read
 
 Hastra is closer to Figure than an arm's-length wrapper issuer. Figure's filings name Signum Ltd., doing business as Hastra, as a **related party**, not a consolidated subsidiary. A December 2025 agreement grants Hastra a nontransferable licence to Figure software whose initial term runs to December 2028 and renews annually thereafter, and charges a 0.50% royalty on protocol transaction revenue. Figure records YLDS held by Hastra as “Debt, current to related parties.” This reduces the unknown-counterparty concern but increases correlated-failure and contractual dependency. The filings do not show that Hastra is controlled by Figure's parent, and they do not establish that its YLDS belongs to FCC's $473M parent-controlled holdings.
 
-⚠️ **This question is now testable on a date, and it was not before.** Hastra's wYLDS reserve currently holds **604,547,163 YLDS**, which **exceeds FCC's entire certificate reserve at quarter-end ($557.494M)**. That is **not a contradiction** — the readings are 7.7 weeks apart, and it simply implies at least 8.4% growth in the certificate book since 30 June, which is unremarkable for a book that turned over roughly $950M gross in the quarter. It cannot be tested now because our wYLDS supply history does not reach back to June or July.
+⚠️ **This question is now testable on a date, and it was not before.** Hastra's wYLDS reserve holds **604,547,163 YLDS**, which **exceeds FCC's entire certificate reserve at quarter-end ($557.494M)**. ⚠️ **Do not read that against the supply figure above as a coverage ratio** — wYLDS supply is **606,675,080 measured 2026-09-11** while the reserve figure is from an earlier read, and **two numbers taken on different dates do not make a ratio.** Establishing coverage needs both legs read on one date. That is **not a contradiction** — the readings are 7.7 weeks apart, and it simply implies at least 8.4% growth in the certificate book since 30 June, which is unremarkable for a book that turned over roughly $950M gross in the quarter. It cannot be tested now because our wYLDS supply history does not reach back to June or July.
 
 **But it gives a clean test with a date.** At the Q3 10-Q, expected around **2026-11-14**, compare FCC's third-party certificate line against Hastra's wYLDS reserve holdings **as at the same date**. If the reserve exceeds the third-party line, Hastra's certificates are *necessarily* related-party and this question closes by arithmetic rather than by disclosure. With third-party certificates now at $78.497M and the wYLDS reserve above $600M, that test looks likely to resolve — but likely is not the same as established, and this report does not treat it as answered.
 
@@ -144,6 +157,22 @@ One structural point deserves more weight than the coverage ratio. The certifica
 Residual risks explain why this does not score still higher. About 65% of qualified assets were repo rather than outright Treasuries. The repo is short-dated and government-collateralized but adds counterparty and settlement exposure concentrated in one name: the entire repo book — 65% of qualified assets — faces UMB Bank N.A., which is also the custodian holding the securities. A second repo facility is documented but was unused at quarter-end. The collateral is overnight Treasuries, so quality is high; the concentration is nonetheless a single point of failure rather than a diversified book. FCC disclosure also arrives with roughly a 45-day lag—the March 31 quarter was filed May 15—so it is a confirming layer beneath live chain data. Most importantly, wYLDS holders do not own YLDS directly; they hold an unregulated wrapper claim mediated by Hastra. Strong base assets do not prove wrapper-level segregation or bankruptcy remoteness.
 
 ## 5 · Contract & Admin — 6.0
+
+**The token itself, measured 2026-09-11 so a reader can check it** — with a fabricated address returning nothing in the same pass:
+
+| leg | address | supply | shape |
+|---|---|---:|---|
+| Ethereum | `0x6aD038cA6C04e885630851278ca0a856Ad9a66Cc` | **454,494,951.73** | ERC-1967 proxy → impl `0x06e0b915…9723` |
+| Solana | `8fr7WGTVFszfyNWRMXj6fRjZZAnDwmXwEpCrtzmUkdih` | **152,180,128.76** | SPL Token mint, 6 decimals |
+
+**Total supply 606,675,080.49**, 74.9% on Ethereum. ⚠️ **The Ethereum leg is a proxy and the EIP-1967 admin slot is empty** — upgrade authority runs through **AccessControl roles on the implementation**, not through a proxy admin. `UPGRADER_ROLE` and `PAUSER_ROLE` both exist, and their role IDs are the standard OpenZeppelin keccak values, checked against the contract rather than assumed.
+
+⚠️ **Who holds those roles cannot be read from chain state.** The contract reports `AccessControlEnumerable` as **false** and `getRoleMemberCount` **reverts**, so there is no way to ask it who can upgrade. **An empty answer there means the question is unsupported, not that nobody holds the role.** The upgrade path exists and its holders are unenumerable.
+
+**On Solana the mint authority is `AJuGsS1NrHgxpHgUu7AgCvshFGL8WdRwxks9sfAVhNQM` and the freeze authority `8A18H7n3atDfQsN8rLvt98hj5WZJWwhqqR8digDvbia6`.** ⚠️ **Both are unfunded accounts holding no lamports and no data** — the state of a cold key that has never itself paid a fee. ✅ **That reads identically to an address that does not exist, and the only reason it is legible here is that both were returned by the mint itself rather than looked up** — an authority named by its own subject is a designation, an address that merely returns nothing is not evidence of anything.
+
+⚠️ **As everywhere on this site, none of that establishes custody.** Unfunded keypairs prove there is no on-chain quorum; MPC and HSM arrangements are off-chain and unreadable.
+
 
 The wrapper code is open source and has two meaningful reviews. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) identified and closed a critical vault-account validation bug plus a share-inflation issue. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) later reviewed both Solana and Ethereum implementations and found no critical or high-severity issues. The sequence—serious flaws found, remediated, then reviewed again—is stronger than a clean but shallow one-off audit, although the original flaws show the consequences of implementation error.
 
