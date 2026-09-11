@@ -7,13 +7,17 @@ category: "vault-share"
 underlying_assets: ["USDe"]
 assessment_type: "full"
 date: "2026-05-22"
-last_revised: "2026-08-29"
+last_revised: "2026-09-11"
 last_verified: "2026-08-25"
 featured: false
 production: true
 issuer: "Ethena Labs"
 yield_bearing: true
 volatility_score: 6.5
+backing_score: 6.5
+underlying_score: 6.0
+issuer_score: 7.0
+axis_frame: six
 liquidity_score: 7.0
 structural_score: 5.5
 redemption_score: 6.5
@@ -43,22 +47,27 @@ Secondary markets are deep: Curve sUSDe/USDe and sUSDe/USDC pools, plus Pendle P
 
 The 6.5/10 score matches USDe (which is the floor — sUSDe cannot meaningfully be safer than its underlying) and reflects (a) the improved post-pivot profile, (b) successful navigation of October 2025, and (c) deep, well-functioning secondary markets — counterbalanced by (a) a cooldown that, while now much shorter, can still step back toward 7 days if coverage thins and (b) massive Aave / Morpho / Pendle loop concentration that structurally exceeds USDe's float on a leveraged basis.
 
-## What you actually earn
+## 1 · Stability — 6.5
 
-sUSDe distributes yield via NAV growth on the ERC-4626 vault share — no rebasing. Each share's `convertToAssets()` value grows over time as Ethena's reserve portfolio distributes yield to stakers.
+The defining stress event for the underlying USDe (see [USDe retail report](/reports/usde/)) was also a real test of the sUSDe wrapper layer:
 
-The yield source has changed materially since the architecture pivot:
+- $1B+ unstaking pressure within hours
+- Cooldown silo absorbed flows without operational issues
+- sUSDe secondary briefly detached from NAV (peak observed discount in this window: well within the historical -127bps max)
+- No NAV loss to stakers who held through
+- Per LlamaRisk's back-test, during the October 10–11 window specifically, dynamic-cooldown calculations would have **driven cooldown duration to its minimum** because liquid coverage actually *spiked* to 2.43× the 3-day threshold as nervous holders unstaked. This is the inverse of a bank-run dynamic. (That back-test was run against the proposed model, which contemplated a 0-day floor; the mechanism Ethena actually shipped floors at 1 day.)
 
-| Era | Source | Typical APY | Tail risk |
-|---|---|---|---|
-| Feb 2024 – Sep 2025 (basis-trade dominant) | Perp funding + stETH staking | 8–15%, peaks 30–40% | Yield can plateau or go negative in sustained negative funding |
-| **Q1 2026 onward (post-pivot)** | Institutional lending + stable spreads + RWA yield + 11% residual basis | **~3.72%** (March 2026) | Materially reduced — credit yield is durable, not funding-dependent |
+The wrapper layer survived its first major stress at scale. The cooldown silo did its job; secondary markets absorbed the discount-seekers; NAV held. Worth being precise about what this does and doesn't tell you: October 2025 tested the **fixed 7-day** silo, since that's what was deployed at the time. The dynamic mechanism that governs exits today has not yet been through a comparable stress event — the back-test above is a simulation of how it would have behaved, not a record of how it did.
 
-The Reserve Fund (the loss-absorption buffer underlying USDe — see the [USDe retail report](/reports/usde/) §"What October 10, 2025 actually proved" for context) is currently ~9× overcapitalized versus Risk Committee floor recommendations. There's an active proposal to redirect USDtb interest earnings from the Reserve Fund to sUSDe holders rather than build the fund further — if implemented, that lifts sUSDe APY modestly.
+## 2 · Backing — 6.5
 
-**A note on the pre-pivot peak yields**: Many DeFi loopers and content creators reference sUSDe APYs from 2024–2025 when funding regimes were high and the basis trade dominated. Those numbers reflect a different system. The post-pivot reality is a single-digit rate — ~3.72% was the Q1-2026 print, and it is used throughout this report as an anchor for the *shape* of post-pivot yield, not as a live quote. Check Ethena's dashboard for the current rate. The Risk Committee's view (per March 2026 Reserve Fund subcommittee post) is that the structurally lower yield with much-reduced variance is the right shape for the new architecture.
+⚠️ **This is inherited from USDe and is not an independent measurement of sUSDe.** sUSDe holds USDe and has no reserve of its own — **its collateral *is* USDe's reserve** — so a wrapper cannot outrank its underlying on the underlying's own axis. ✅ **The same rule already governs this report's Contract & Admin row**, which moved 7.0 → 5.5 on 2026-09-09 to match USDe, so the page is now consistent with itself rather than applying one rule on one axis.
 
-## How exit works
+⚠️ **The published collateral ratio is understated, and that is the unusual direction.** The live feed reads **103.58%** on a **$1,368,057,913** book — but it embeds Ethena's **July 23** snapshot, while the **August 26** attestation (the 21st, published 2026-09-03) is live. **The gap moves the central figure roughly 16 points in Ethena's favour.** So a reader comparing this ratio against Ethena's own disclosure will find ours the more conservative of the two, not the other way round.
+
+⚠️ **And the loss-absorption layer has a single dependency.** The Reserve Fund is **100% USDtb**, and USDtb is **more than 90% BUIDL-backed** — so the buffer that is supposed to absorb a shortfall in the reserve concentrates into one instrument and, behind it, one issuer.
+
+## 3 · Liquidity & Exit — 7.0
 
 The redemption profile is the binding wrapper-specific constraint.
 
@@ -105,19 +114,15 @@ The ~17bps mean discount reflects the time-value of waiting through the cooldown
 
 **Important — exit asymmetry note.** sUSDe has time-asymmetric exit (instant via secondary at small discount, primary at NAV after the dynamic 1–7-day cooldown — 1 day today) but **no access-asymmetric exit** — no KYC, no gating, no jurisdictional restriction on holding or staking. This is structurally better than tokenized RWAs that have gated primary redemption (like the cousin product reUSDe from Re Protocol, which is non-U.S. KYC only — see that report for the contrast).
 
-## What October 10, 2025 actually proved for sUSDe specifically
+## 4 · Dependencies — 6.0
 
-The defining stress event for the underlying USDe (see [USDe retail report](/reports/usde/)) was also a real test of the sUSDe wrapper layer:
+✅ **Set equal to USDe's 6.0, because sUSDe is a pure wrapper — its only asset is USDe.** The dependency book arrives **undiluted**: there is nothing at this layer that diversifies it, and nothing that can make the wrapper safer than the thing it holds. **This axis prices the counterparty set — how many, how concentrated, how substitutable** — while whether the backing can be *verified* stays on Backing above, so the two do not charge twice for one fact.
 
-- $1B+ unstaking pressure within hours
-- Cooldown silo absorbed flows without operational issues
-- sUSDe secondary briefly detached from NAV (peak observed discount in this window: well within the historical -127bps max)
-- No NAV loss to stakers who held through
-- Per LlamaRisk's back-test, during the October 10–11 window specifically, dynamic-cooldown calculations would have **driven cooldown duration to its minimum** because liquid coverage actually *spiked* to 2.43× the 3-day threshold as nervous holders unstaked. This is the inverse of a bank-run dynamic. (That back-test was run against the proposed model, which contemplated a 0-day floor; the mechanism Ethena actually shipped floors at 1 day.)
+⚠️ **Inherited, not independently derived: it moves when USDe's Dependencies score moves.** What sits inside it is argued on the [USDe report](/reports/usde/) — the Coinbase concentration across custody, perpetuals venue and distribution, and the lending book whose two largest borrowers are the two largest custodians.
 
-The wrapper layer survived its first major stress at scale. The cooldown silo did its job; secondary markets absorbed the discount-seekers; NAV held. Worth being precise about what this does and doesn't tell you: October 2025 tested the **fixed 7-day** silo, since that's what was deployed at the time. The dynamic mechanism that governs exits today has not yet been through a comparable stress event — the back-test above is a simulation of how it would have behaved, not a record of how it did.
+✅ **Measured against Ethena's August 26 attestation**, which shows the custody set **re-diversifying** rather than concentrating — Coinbase 73.09% → 57.19%, Ceffu 0.68% → 9.62%, and a sixth arrangement appearing. **That is better data than the dashboard currently holds**, which still embeds the July snapshot.
 
-## What the contracts are doing
+## 5 · Contract & Admin — 5.5
 
 sUSDe is a standard ERC-4626 vault at `0x9D39A5DE30e57443BfF2A8307A4256c8797A3497` on Ethereum, with deployments on the same chains as USDe (LayerZero OFT). The vault:
 
@@ -128,6 +133,29 @@ sUSDe is a standard ERC-4626 vault at `0x9D39A5DE30e57443BfF2A8307A4256c8797A349
 The cooldown silo is a thin escrow contract — minor additional surface beyond the core vault, no known vulnerabilities. The dynamic cooldown adds a governance-set duration parameter on top; `cooldownDuration()` is the authoritative read for what your exit will actually cost in time.
 
 For lending protocols that use sUSDe as collateral (Aave, Morpho, Pendle PT integrations), the standard pricing is `convertToAssets()` — i.e., the oracle reads NAV, not secondary market price. This has a subtle structural consequence: during a sUSDe secondary discount window, the collateral oracle keeps reading NAV (so loopers don't get prematurely liquidated), but the realized exit price is the secondary discount (so lenders may eat the gap if the cooldown queue blows out). Verify oracle source per lending market before sizing leveraged sUSDe positions.
+
+## 6 · Issuer — 7.0
+
+⚠️ **Inherited from USDe and held equal, because this axis scores the entity.** It is identical across everything Ethena issues, and deriving it twice would create a second surface for one judgement.
+
+**What it rests on:** a doxxed team, top-tier investors, active regulatory engagement, a broad verification ecosystem (Reserve Fund subcommittee, LlamaRisk, Blockworks, Chaos Labs, Chainlink) — and, most of all, **behaviour proven through the October 2025 stress event** rather than asserted in advance.
+
+⚠️ **One correction that matters more than the number, because the number did not move.** This score's stated basis previously held that **ENA-token voting was absent** and that **the Risk Committee provided functional governance review in its place**. **Both halves were false.** ENA voting exists, and its first material use — a Snapshot vote closed 2026-09-02 — **superseded a Risk Committee parameter.** The body named as the compensating control is the one that was overridden. **A score can be right while the reason given for it is false, and the reason is what a reader acts on.**
+
+## What you actually earn
+
+sUSDe distributes yield via NAV growth on the ERC-4626 vault share — no rebasing. Each share's `convertToAssets()` value grows over time as Ethena's reserve portfolio distributes yield to stakers.
+
+The yield source has changed materially since the architecture pivot:
+
+| Era | Source | Typical APY | Tail risk |
+|---|---|---|---|
+| Feb 2024 – Sep 2025 (basis-trade dominant) | Perp funding + stETH staking | 8–15%, peaks 30–40% | Yield can plateau or go negative in sustained negative funding |
+| **Q1 2026 onward (post-pivot)** | Institutional lending + stable spreads + RWA yield + 11% residual basis | **~3.72%** (March 2026) | Materially reduced — credit yield is durable, not funding-dependent |
+
+The Reserve Fund (the loss-absorption buffer underlying USDe — see the [USDe retail report](/reports/usde/) §"What October 10, 2025 actually proved" for context) is currently ~9× overcapitalized versus Risk Committee floor recommendations. There's an active proposal to redirect USDtb interest earnings from the Reserve Fund to sUSDe holders rather than build the fund further — if implemented, that lifts sUSDe APY modestly.
+
+**A note on the pre-pivot peak yields**: Many DeFi loopers and content creators reference sUSDe APYs from 2024–2025 when funding regimes were high and the basis trade dominated. Those numbers reflect a different system. The post-pivot reality is a single-digit rate — ~3.72% was the Q1-2026 print, and it is used throughout this report as an anchor for the *shape* of post-pivot yield, not as a live quote. Check Ethena's dashboard for the current rate. The Risk Committee's view (per March 2026 Reserve Fund subcommittee post) is that the structurally lower yield with much-reduced variance is the right shape for the new architecture.
 
 ## Audits & security
 
