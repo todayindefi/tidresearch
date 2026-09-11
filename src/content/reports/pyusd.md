@@ -1,18 +1,30 @@
 ---
+# ⚠️ BUMPED to 2026-09-11 after a whole-body pass. Scope, so the next sweep
+# knows what this date covers:
+#   RE-MEASURED: supply on all five Paxos-published deployments (Ethereum,
+#   Solana, Arbitrum, Polygon, X Layer); the upgrade authority on each of the
+#   four EVM legs from each token's own storage; the Solana mint's Token-2022
+#   authorities; and the chain list checked against Paxos's published address
+#   page rather than against our own prose.
+#   NOT RE-DERIVED: reserve composition is attestation-based and not readable
+#   on-chain — the NYDFS trust structure and the monthly attestation cadence
+#   are carried, not re-verified. The peg history and the issuer facts were
+#   not re-read. A reported Stellar deployment could not be confirmed against
+#   Paxos's published list and is excluded rather than counted.
 asset: "PYUSD"
 slug: "pyusd"
 aliases: ["PYUSD", "PayPal USD"]
-chains: ["eth", "sol", "arb", "stellar"]
+chains: ["eth", "sol", "arb", "polygon", "xlayer"]
 category: "stablecoin"
 peg_mechanism: "fiat-backed"
 assessment_type: "light"
 date: "2026-07-08"
-last_verified: "2026-07-09"
+last_verified: "2026-09-11"
 last_revised: "2026-09-11"
 featured: false
 production: true
 issuer: "Paxos Trust Company (on behalf of PayPal)"
-market_cap_approx: 2452034067
+market_cap_approx: 2799412248
 peg_mechanism_score: 7.5
 backing_score: 8.0
 liquidity_score: 6.5
@@ -31,13 +43,23 @@ overall_score: 7.0
 
 | Yield | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| None (PayPal has at times run promotional rewards, not a native yield) | Sell on a supporting CEX/DEX at peg; redeem 1:1 via Paxos | Mint/redeem 1:1 with Paxos; retail exits via market | Since Aug 2023 | Native on Ethereum, Solana, Arbitrum, Stellar; LayerZero transport to more |
+| None (PayPal has at times run promotional rewards, not a native yield) | Sell on a supporting CEX/DEX at peg; redeem 1:1 via Paxos | Mint/redeem 1:1 with Paxos; retail exits via market | Since Aug 2023 | Native on Ethereum, Solana, Arbitrum, Polygon and X Layer per Paxos's published list; LayerZero transport to more |
 
 ## Summary
 
 PYUSD is PayPal's fiat-backed stablecoin, issued and managed by **Paxos Trust Company** under **NYDFS** supervision — one of the most rigorous US stablecoin regimes. It is backed 1:1 by cash, short-dated US Treasuries and Treasury reverse repos held in bankruptcy-remote trust accounts, with **monthly attestations by Withum**.
 
-Supply is **$2.452 billion across its two native chains, measured 2026-09-11** — **$1,715,817,167** on Ethereum and **736,216,900** on Solana — off a **peak above $4 billion** in March 2026. ⚠️ **The two legs are moving in opposite directions:** Ethereum has fallen from **1,969,119,192** on 2026-08-23, while Solana has risen from **688,176,370**. **That is a cross-chain total and is not reproducible from an Ethereum read** — PYUSD is native on both Ethereum and Solana, Solana is not an EVM chain, and the Ethereum leg alone read 1,969,119,192 on 2026-08-23, roughly 70% of the total. **We have now read the Solana leg directly: 688,176,370.75 on 2026-08-23**, against the mint Paxos publishes at paxos.com/pyusd. Added to the Ethereum leg that is **2,657,295,563 — about 96% of the published ~$2.77B accounted for across the two native chains**, with the Arbitrum and Stellar deployments plus the LayerZero-reachable float making up the rest. **Read that as corroboration of the headline figure, not as a challenge to it.** It remains the fastest growth among the major stablecoins, and it now leads the Solana stablecoin market. PYUSD is native on **Ethereum, Solana, Arbitrum and Stellar**, with a **LayerZero OFT** layer extending its reach to further chains.
+Supply is **$2,799,412,248 across five deployments, measured 2026-09-11** against Paxos's own published address list — off a **peak above $4 billion** in March 2026:
+
+| chain | supply | share |
+|---|---:|---:|
+| Ethereum | 1,715,817,167 | 61.29% |
+| Solana | 736,216,900 | 26.30% |
+| Arbitrum | 335,922,942 | 12.00% |
+| Polygon | 10,373,137 | 0.37% |
+| X Layer | 1,082,102 | 0.04% |
+
+⚠️ **The two largest legs are moving in opposite directions:** Ethereum has fallen from **1,969,119,192** on 2026-08-23, while Solana has risen from **688,176,370**. **That is a cross-chain total and is not reproducible from an Ethereum read** — PYUSD is native on both Ethereum and Solana, Solana is not an EVM chain, and the Ethereum leg alone read 1,969,119,192 on 2026-08-23, roughly 70% of the total. ✅ **All five legs are now read directly against Paxos's own published address list**, so the total above is a measurement rather than a headline corroborated in part. ⚠️ **The composition is not what a two-chain reading suggests:** Ethereum and Solana are 87.6% of supply, and **Arbitrum alone is 12%** — larger than Polygon and X Layer combined by a factor of thirty.
 
 The 7.0/10 reflects a top-tier regulated issuer and reserve posture, held back by two things: liquidity that is still below USDC and USDT, and a newly-added cross-chain bridge surface. On the qualities that matter most for a fiat dollar — who stands behind it and what actually backs it — PYUSD is among the strongest in the set. It sits a step below the biggest names purely on market depth and on the newness of its multichain surface — whose main bridge we have now verified is strongly configured.
 
@@ -45,7 +67,7 @@ The 7.0/10 reflects a top-tier regulated issuer and reserve posture, held back b
 
 This is the new structural point, and it deserves to be framed honestly rather than alarmingly.
 
-PYUSD's 2026 expansion added native **Arbitrum** and **Stellar** deployments plus a **LayerZero OFT** (Omnichain Fungible Token) cross-chain transport layer reaching additional chains. An OFT bridge introduces a specific exploit class: a compromised cross-chain verifier could, in principle, mint unbacked tokens on a destination chain. That is the class of failure that drained KelpDAO's rsETH in April 2026 — a bridge-layer compromise, not a reserve failure.
+PYUSD's 2026 expansion added native **Arbitrum**, **Polygon** and **X Layer** deployments plus a **LayerZero OFT** (Omnichain Fungible Token) cross-chain transport layer reaching additional chains. ⚠️ **A Stellar deployment has been reported but does not appear on Paxos's published mainnet address list, so it is not counted here**. An OFT bridge introduces a specific exploit class: a compromised cross-chain verifier could, in principle, mint unbacked tokens on a destination chain. That is the class of failure that drained KelpDAO's rsETH in April 2026 — a bridge-layer compromise, not a reserve failure.
 
 Here is the part that matters for most readers: **your deep, canonical PYUSD lives on the native chains — Ethereum and Solana — and is not exposed to that class.** The exposure, to whatever extent it exists, would sit on the long-tail bridged chains, where balances are far smaller. We verified the main (Paxos-run) bridge configuration on-chain: **every active route requires three independent verifiers to agree — LayerZero Labs, Paxos's own verifier, and a third (Canary) — with no single-point exposure.** That is a genuinely strong setup, stronger than several peers, and it means no one compromised verifier can forge a cross-chain mint. There is also a *separate*, permissionless bridge layer (a Stargate-based deployment sometimes labelled PYUSD0); we resolved and checked that too — it is its own three-of-three-verifier mesh with no weak route, and, importantly, **it has no bridge link back to the native PYUSD reserve on Ethereum**, so even in the worst case it could not unlock the real backing. We treat the bridge as a **watch item, not a downgrade** — no live incident, nothing suggesting an imminent depeg. The simple practical rule still holds: for size, hold and transact on the native chains.
 
@@ -60,7 +82,7 @@ Bankruptcy-remote structure matters: it means reserve assets are held for the be
 
 Institutions mint and redeem 1:1 with Paxos; retail exits happen through the secondary market, plus in-app conversion for PayPal users. Native Ethereum and Solana liquidity is genuinely deep now — PYUSD is the leading Solana stablecoin — with real DeFi integration across Morpho, Aave and Curve.
 
-The caveat is *where* that depth lives. It is concentrated on the native chains. The long-tail LayerZero-reachable chains exist for transport and reach, not for deep local markets, so exiting a large position on one of those is a bridge-back-then-sell operation rather than a local one. For retail size on Ethereum or Solana, exit at the peg is straightforward; for large size on a bridged chain, plan the route back to a native chain first.
+The caveat is *where* that depth lives. ⚠️ **Supply and depth are not the same distribution, and the native set is wider than the deep set.** Paxos issues natively on five chains, but **Ethereum and Solana carry 87.6% of supply** and hold effectively all of the real market depth. **Arbitrum is natively issued and 12% of supply**, with far thinner local markets than that share suggests; Polygon and X Layer together are **0.41%**. The LayerZero-reachable chains beyond those exist for transport and reach, not for deep local markets. **So exiting a large position anywhere except Ethereum or Solana is a bridge-back-then-sell operation rather than a local one — including on a chain where PYUSD is native.** For retail size on Ethereum or Solana, exit at the peg is straightforward; for large size on a bridged chain, plan the route back to a native chain first.
 
 ## 4 · Dependencies — 7.0
 
@@ -87,6 +109,25 @@ The caveat is *where* that depth lives. It is concentrated on the native chains.
 ⚠️ **Any-of-1, not 1-of-n.** One signature replaces the implementation and it takes effect immediately. **The nonce moved from 4 to 5 during the period this was being assessed**, so the key is in active use rather than dormant.
 
 ⚠️ **Custody is undisclosed.** Empty code proves there is **no on-chain quorum**; it cannot distinguish a single private key from an off-chain MPC or HSM quorum. **Paxos's published contract repository makes no multisig claim about this admin.** *(Paxos Custody's HSM and cold-storage material describes customer asset custody, which is a different thing from the token's upgrade key.)* **So this is "no verifiable quorum", not "one private key".**
+
+### The other EVM legs, and where the Ethereum key reaches
+
+⚠️ **The Ethereum admin also controls Arbitrum.** Measured 2026-09-11 from each token's own storage, against Paxos's published address list:
+
+| chain | token | upgrade authority | shape |
+|---|---|---|---|
+| Ethereum | `0x6c3ea903…a0e8` | `0xc94bcf6e…851c` | **no code** — any-of-1 |
+| Arbitrum | `0x46850aD6…6984` | `0xc94bcf6e…851c` | **the same address**, no code |
+| X Layer | `0x87b4a817…06B4` | `0x9cb0bdad…5c0e` | **a contract**, 6,754 bytes |
+| Polygon | `0x99aF3EeA…0750` | *no proxy-admin slot*; `owner()` = `0x3Af3e85f…024B` | — |
+
+⚠️ **One key with no on-chain quorum reaches $2.05B — Ethereum plus Arbitrum, 73% of all PYUSD.** An EOA address derives from a public key and is chain-independent, so the same address on two chains is one signing identity, not two. ⚠️ **This is the opposite of the design USDC is credited for**, where six chains use six distinct keys so one compromise reaches one chain — see [USDC](/reports/usdc/).
+
+✅ **X Layer is the exception and it runs the other way:** its upgrade authority is a **contract**, not a bare key, so that leg has an on-chain quorum the Ethereum leg does not. It is also 0.04% of supply.
+
+⚠️ **Polygon uses a different pattern entirely** — neither proxy-admin slot is set, and authority resolves through `owner()`. ⚠️ **That owner's address is consistent with a role-holder named on our [USDG](/reports/usdg/) page, but our record of that one is truncated and the link could not be verified** — it is recorded as unconfirmed rather than asserted.
+
+⚠️ **Coverage: five deployments read, all from Paxos's published list.** ⚠️ **Stellar is named elsewhere in this report as a native deployment and does not appear on Paxos's mainnet address page** — treat that leg as unconfirmed rather than measured.
 
 ### The Solana leg, which the Ethereum reading does not cover
 
