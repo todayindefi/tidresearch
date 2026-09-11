@@ -20,12 +20,12 @@ underlying_score: 7.0
 structural_score: 3.0
 axis_frame: six
 issuer_score: 8.0
-overall_score: 8.5
+overall_score: 7.5
 ---
 
 # USDC — Risk Report
 
-**Low risk · 8.5/10**
+**Low risk · 7.5/10**
 
 > **The regulated dollar that sets the bar.** USDC is the fiat-backed stablecoin every other stablecoin gets measured against — fully reserved in cash and short-dated US Treasuries, attested monthly by a Big-Four firm, backed by an SEC-registered reserve fund with *daily* public portfolio reporting, and now formally compliant under the US GENIUS Act stablecoin law. It's deeply liquid on every major chain and redeemable 1:1 with a regulated issuer. Three things keep it short of a perfect score: Circle can freeze addresses on-chain — a compliance feature that is also a centralization vector; USDC briefly broke its peg in March 2023 when $3.3 billion of reserves were stuck at the failing Silicon Valley Bank, recovering only after a federal backstop; and the mainnet upgrade key carries no timelock and no on-chain quorum over roughly $49.9B, the largest single-key exposure in this coverage.
 
@@ -110,7 +110,7 @@ Keep this in proportion. It is why the Issuer axis is 8.0 rather than 8.5 and th
 | Backing | 9.0 | 100% cash + short-dated Treasuries via an SEC-registered 2a-7 money-market fund; Deloitte monthly attestations plus daily public portfolio reporting. Cleanest reserve profile of any major stablecoin. |
 | Liquidity | 9.5 | Deepest regulated-stablecoin liquidity across every major chain; the default DeFi settlement and collateral asset. Near-zero slippage at any realistic size. |
 | Issuer | 8.0 | Circle — regulated, GENIUS Act-compliant, transparent, publicly listed. Docked for the on-chain address-freeze capability (compliance-driven, but a centralization vector), regulated-entity dependence, and a no-delay, no-quorum single-key upgrade path over the largest balance in the set. |
-| **Overall** | **8.5** | The gold standard for fiat-backed stablecoins — fully reserved, Big-Four attested, federally regulated, deeply liquid. Held short of the top of the scale by the freeze capability, the SVB depeg precedent, and the undelayed mainnet upgrade key. This is still the reference point the rest of the stablecoin set is scored against; nothing else in this coverage scores above 7.5. ⚠️ **Held, and it sits +0.92 above its own axis mean of 7.58** — against the at-or-below convention applied elsewhere in this coverage. ⚠️ **A lower figure is settled upstream and awaiting publication here**, so treat this cell as the stale one — the axes above are current. |
+| **Overall** | **7.5** | The gold standard for fiat-backed stablecoins — fully reserved, Big-Four attested, federally regulated, deeply liquid. Held short of the top of the scale by the freeze capability, the SVB depeg precedent, and the undelayed mainnet upgrade key. This is still the reference point the rest of the stablecoin set is scored against; nothing else in this coverage scores above 7.5. ⚠️ **Cut 8.5 → 7.5 on 2026-09-11, and nothing about USDC got worse.** The 8.5 was authored across four axes; **Dependencies 7.0 and Contract & Admin 3.0 were measured afterwards** and pulled the axis mean to **7.58**, which the 8.5 exceeded. No reserve, peg, liquidity or issuer fact changed. ✅ **Peg 9.0, backing 9.0 and liquidity 9.5 remain the strongest in this coverage** — what moved the composite is the two axes that had never been measured. |
 
 ## Who it's for
 
