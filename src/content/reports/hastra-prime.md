@@ -1,4 +1,15 @@
 ---
+# ⚠️ BUMPED to 2026-09-11 after a whole-body pass. Scope:
+#   RE-MEASURED on-chain: PRIME supply on BOTH legs; the share price read as
+#   totalAssets/totalSupply from the vault itself; asset() confirming wYLDS as
+#   the sole underlying; the Ethereum proxy shape and implementation; and both
+#   Solana mint authorities. Also measured wYLDS's own supply on both chains
+#   (see the wYLDS report), which is what the linked dashboard reports.
+#   ⚠️ NOT RE-DERIVED: every FCC figure is documentary from SEC filings, not
+#   on-chain. The Provenance-side reserve and its 99.7% single-account
+#   concentration were NOT re-read -- Cosmos chain, outside the reader used
+#   here. Coverage ratios at the wYLDS layer are carried, not recomputed, and
+#   supply and reserve figures taken on different dates do not make a ratio.
 asset: "Hastra PRIME"
 slug: "hastra-prime"
 aliases: ["PRIME", "Hastra PRIME", "Staked wYLDS"]
@@ -8,12 +19,12 @@ underlying_assets: ["wYLDS", "YLDS"]
 assessment_type: "light"
 companion_report: "wylds"
 date: "2026-07-25"
-last_verified: "2026-07-31"
+last_verified: "2026-09-11"
 # ⚠️ 2026-09-08: the 08-27 pass picked up the FCC half of the mid-August filing
 # window and left the Figure half, so the Underlying row cited Q2 while the
 # summary still cited Q1 as current. Figure trend and facility growth refreshed
 # here. `last_verified` HOLDS — the certificate and FCC material was not re-read.
-last_revised: "2026-09-08"
+last_revised: "2026-09-11"
 featured: false
 production: true
 # issuer: withheld pending review — "Provenance" is the blockchain the token
@@ -53,7 +64,7 @@ overall_score: 5.0
 # wYLDS peg of $1.00 — two measured legs and one assumed leg, so it moves if wYLDS
 # moves. riskAnalyst carried 457,000,000 (supply 434.9M x NAV 1.0505 at 2026-07-27)
 # and the gap between the two files was a BASIS difference, not a disagreement.
-market_cap_approx: 599000000
+market_cap_approx: 590168139
 ---
 
 # Hastra PRIME — Risk Report
@@ -71,7 +82,7 @@ a little over $1 and rising, and the reference yield is around 7% a year. The ra
 floats with how much of the facility is lent out and is published by the issuer.
 ⚠️ **Re-measured 2026-09-09: total supply is 566,094,909 PRIME, up 30.2% in six weeks** from the 434.9M recorded on 2026-07-27. **The growth is entirely on Ethereum** — 278.6M → **432,420,596**, up 55% — while **Solana fell** 156.3M → **133,674,313**. So the asset is now **76% Ethereum and 24% Solana**, a more concentrated split than the roughly two-thirds it was six weeks ago.
 
-⚠️ **Market cap is a product, and the basis is stated because two of its three legs are measured and one is assumed.** Supply is read on-chain on both chains. The exchange rate comes from the same feed every Morpho PRIME market uses, whose `description()` is **"PRIME / WYLDS Exchange Rate"** and which returns **1.058394**. ⚠️ **That prices PRIME in wYLDS, not in dollars** — converting to USD assumes wYLDS holds its dollar peg, which the Backing section supports but does not guarantee. On that basis **market cap is approximately $599M**.
+⚠️ **Market cap is a product, and the basis is stated because two of its three legs are measured and one is assumed.** Supply is read on-chain on both chains. The exchange rate comes from the same feed every Morpho PRIME market uses, whose `description()` is **"PRIME / WYLDS Exchange Rate"** and which returns **1.058394**. ⚠️ **That prices PRIME in wYLDS, not in dollars** — converting to USD assumes wYLDS holds its dollar peg, which the Backing section supports but does not guarantee. On that basis **market cap is $590.2M, re-measured 2026-09-11** — PRIME supply **557,427,587** across both chains (Ethereum 426,496,242, Solana 130,931,345) times a share price of **1.058735** read from the vault itself. ⚠️ **Both legs and the share price are read on the same date**, so this is a measurement rather than a supply figure multiplied by a carried price — the two drift apart, and 1.5% of this book is $9M.
 
 The most important thing to understand is that the yield does not come from the
 Treasuries. Hastra lends those dollars out again, into a Figure-run facility called
@@ -175,6 +186,22 @@ It is worth being precise about how much protection that seniority actually prov
 Two things had moved against this axis and the more recent read splits them: one has sharpened, the other has reversed. Figure's delinquency on loans held for sale rose for three consecutive periods — 3.91%, 5.46%, 6.61% — and then **fell to 5.05% at 30 June 2026.** ⚠️ **The headline reversed; the trend did not.** Across that quarter the 90-plus bucket was essentially flat (+1.7%) while **60–89 nearly doubled, 2,285 → 4,267 loans**, so the earliest bucket emptied by ageing into the next one rather than by curing — and nonaccrual UPB went $2.4M → $14.1M. **The wave is one step short of 90-plus, not past it.** See [Figure](/reports/figure/) for the full basis. ⚠️ **Securitized pools moved 0.8% → 1.1% over the same period**, and that is the number that matters most here, because it is this mechanism turning: the loans that cannot be sold had been accumulating where they are — the same balance sheet that collateralizes this facility — and the securitized tape is where that shows up first. ✅ **Separately, the facility has resumed growing**: outstanding $351.8M → $410.1M and supplied $521.2M → $620.4M between 2026-07-30 and 2026-09-08, with utilisation roughly flat at 66.1%.
 
 ## 5 · Contract & Admin — 5.0
+
+**The contracts, measured 2026-09-11, so this is checkable** — with a fabricated address returning nothing in the same pass:
+
+| leg | address | supply | shape |
+|---|---|---:|---|
+| PRIME, Ethereum | `0x19ebb35279A16207Ec4ba82799CC64715065F7F6` | **426,496,242.51** | ERC-1967 proxy → impl `0x881fe0e5…d4c5` |
+| PRIME, Solana | `3b8X44fLF9ooXaUm3hhSgjpmVs6rZZ3pPoGnGahc3Uu7` | **130,931,344.68** | SPL Token mint, 6 decimals |
+
+✅ **The relationship to wYLDS is established by the contract rather than asserted:** PRIME's `asset()` returns `0x6aD038cA6C04e885630851278ca0a856Ad9a66Cc`, which is wYLDS. **PRIME is an ERC-4626 vault whose only asset is wYLDS**, and the contract says so itself.
+
+**Share price read directly: `totalAssets` 451,546,531.46 wYLDS against `totalSupply` 426,496,242.51 PRIME = 1.058735.** ⚠️ **That is the number this report's market-cap figure multiplies by, and it is now measured rather than carried.**
+
+⚠️ **The Ethereum leg's EIP-1967 admin slot is empty**, the same shape as wYLDS — upgrade authority does not run through a proxy admin, so probing that slot alone reports no upgrade path where one exists. **On Solana the mint authority is `EtnHujEkqJJbgfTA2aC6vgZp8DVgwG6KdBxt9V1J31KK` and the freeze authority `YBRBjnVxo7Cik6xwxMxkZMjAcytSW25efgk5ZPgojJU`.**
+
+⚠️⚠️ **And a reader following the dashboard link on this page should know what it measures.** The live dashboard registered under this asset's slug reports **`total_supply` 606,671,129 at NAV 1.00** — those are **wYLDS's** figures, not PRIME's. **PRIME's supply is 557,427,587 at a share price of 1.0587.** ✅ **That is not an error in the dashboard** — it monitors the wYLDS backing layer, which is the right thing to watch for a PRIME holder — **but the numbers on it are not this asset's, and nothing on it says so.**
+
 
 Two independent audits are meaningful positives. [Informal Systems](https://hastra.io/Hastra_vault-mint_&_vault-stake_Solana_Programs_Summary_Audit_Report.pdf) found a critical Solana vault-account validation flaw and a share-inflation issue; both were remediated, and all findings were closed. [Sherlock](https://hastra.io/sherlock-hastra-audit.pdf) subsequently reviewed the Solana and Ethereum stack and reported no critical or high-severity findings. A serious bug found before deployment is double-edged evidence, but detection, repair, and a clean second review are substantially better than relying on an unaudited codebase.
 
