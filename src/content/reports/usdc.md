@@ -9,12 +9,16 @@ assessment_type: "light"
 date: "2026-07-08"
 last_verified: "2026-08-24"
 featured: false
+last_revised: "2026-09-11"
 production: true
 issuer: "Circle"
 market_cap_approx: 75500000000
 peg_mechanism_score: 9.0
 backing_score: 9.0
 liquidity_score: 9.5
+underlying_score: 7.0
+structural_score: 3.0
+axis_frame: six
 issuer_score: 8.0
 overall_score: 8.5
 ---
@@ -35,25 +39,58 @@ USDC is Circle's fully fiat-backed stablecoin, roughly $75.5 billion in supply. 
 
 It is also the most widely integrated regulated stablecoin in DeFi. In Q2 2026, USDC overtook USDT in adjusted on-chain transaction volume, cementing its role as the default settlement and collateral dollar. The 8.5 is the ceiling of our stablecoin set — nothing else in this coverage scores above 7.5 — held short of a perfect score by the freeze capability, the SVB precedent, and the undelayed mainnet upgrade key, all covered below.
 
-## What you actually earn
+## 1 · Stability — 9.0
 
-**Nothing** — plain USDC pays no yield. Any return comes from lending it or holding a wrapped or savings product built on top of it, not from the token itself. Holding USDC is for people who want a liquid, regulated, DeFi-native dollar rather than yield.
+This is the one historical stress event worth knowing. In March 2023, USDC briefly depegged to about $0.87 when roughly $3.3 billion of reserves were trapped at the collapsing Silicon Valley Bank. It recovered within days, once the FDIC backstopped SVB deposits. The lesson Circle took from it: reserves are now concentrated in the SEC-registered money-market fund and Treasuries rather than uninsured bank deposits, materially reducing — though not eliminating — single-bank exposure. It is the one time USDC has broken peg, it was a dated event rather than a live state, and it recovered fully.
 
-## How exit works
+## 2 · Backing — 9.0
+
+USDC is backed 100% by cash plus short-dated US Treasuries, with no unsecured credit exposure. The majority sits in the SEC-registered Circle Reserve Fund, which publishes its portfolio **daily** — a more granular disclosure regime than any monthly-attestation-only peer, and well above USDT, which has no on-chain proof of reserves and only quarterly attestations. This is the cleanest reserve profile of any major stablecoin: you can see, day by day, exactly what stands behind the token.
+## 3 · Liquidity & Exit — 9.5
 
 This is one of USDC's strongest dimensions — best-in-class for a regulated dollar. Retail holders exit through the secondary market at near-zero slippage on every major chain. Businesses with Circle Mint accounts redeem 1:1 directly with Circle. The combination of regulated 1:1 redemption and deep secondary liquidity gives USDC an extremely tight arbitrage leash: any meaningful discount gets bought up and redeemed at $1, which is why the peg holds so reliably under normal conditions.
 
-## What backs it
+## 4 · Dependencies — 7.0
 
-USDC is backed 100% by cash plus short-dated US Treasuries, with no unsecured credit exposure. The majority sits in the SEC-registered Circle Reserve Fund, which publishes its portfolio **daily** — a more granular disclosure regime than any monthly-attestation-only peer, and well above USDT, which has no on-chain proof of reserves and only quarterly attestations. This is the cleanest reserve profile of any major stablecoin: you can see, day by day, exactly what stands behind the token.
+**The counterparty set is genuinely broad** — multiple banking partners, multiple custodians, a major attestor — and breadth of that kind is real. ⚠️ **But USDC is the one asset in this coverage that has *demonstrated* its dependency risk rather than been assessed for it.**
 
-## The freeze and centralization caveat
+⚠️ **March 2023: $3.3B of reserves sat at a single bank, Silicon Valley Bank, and USDC traded to about $0.87.** Reserves were high-quality **throughout** — the assets were not the problem. **The peg broke anyway, because access to them did.** Recovery came from an **FDIC backstop**, which is **outside the arrangement**: it was not substitution within the counterparty set, it was a third party stepping in.
+
+⚠️ **Bank substitutability is a post-hoc fact.** Circle re-banked afterwards, and that is genuine — **but a holder mid-run cannot invoke a bank Circle has not yet moved to.** The set is substitutable over weeks, not over the hours in which a depeg resolves.
+
+**Held three points below Backing's 9.0, and the gap is the whole reason these are two axes.** Backing asks what the reserves are; Dependencies asks what stands between a holder and them. **In March 2023 the first answer was excellent and the second one failed.**
+
+⚠️ **Not priced here: the attestor's identity and Circle's regulatory standing.** Those belong to Issuer, and importing them would credit one comfort on two axes.
+
+## 5 · Contract & Admin — 3.0
+
+⚠️ **Every USDC deployment is upgradeable by a single address with no on-chain quorum and no delay.** Measured 2026-09-11 by reading each chain's own proxy storage:
+
+| chain | upgrade authority | code |
+|---|---|---|
+| Ethereum | `0x807a96288a1a408dbc13de2b1d087d10356395d2` | none |
+| Arbitrum | `0x2e0a67588cfbcad40f9e4dd76052436190a77a68` | none |
+| Base | `0x4fc7850364958d97b4d3f5a08f79db2493f8ca44` | none |
+| Optimism | `0xbb8a939e2b1923d248ac4c2f6aed0a4d71cb18a3` | none |
+| Polygon | `0x9238e612387ebba4d4fa0d76dbfba99b453417b3` | none |
+| Monad | `0xc66bf3ef02d30e942bbab7f871d07b14d0ccc619` | none |
+
+⚠️ **The admin lives in the legacy ZeppelinOS slot, and both EIP-1967 slots read zero on every chain.** `keccak256("org.zeppelinos.proxy.admin")`. **A reader probing the modern slot and then `admin()` finds nothing twice and concludes there is no upgrade path. There is one.**
+
+✅ **Six distinct keys across six chains, so no single key reaches the whole asset.** ⚠️ **That containment is a property of the asset, not a benefit to any holder.** An Ethereum holder gains nothing from the Arbitrum key being separate and still faces **one undelayed key over $49.86B**. Anything reasoning from "six separate keys" toward holder safety is a systemic claim wearing a holder frame.
+
+⚠️ **What cannot be read on-chain, and is therefore not claimed:** whether those addresses are backed by a single private key or by an off-chain MPC or HSM quorum. Empty code proves there is **no on-chain quorum** — nothing more. ⚠️ **Circle's published contract documentation specifies the permissions and says nothing about custody, signer counts, or the nature of the admin account.** *(Circle's MPC material describes Circle Wallets, a separate product, and does not speak to this admin.)* **So custody here is undisclosed, not known to be a single key.**
+
+**Coverage: six EVM chains read. Solana and other non-EVM deployments cannot carry this proxy shape and were not assessed — unread, not clean.**
+
+
+## 6 · Issuer — 8.0
 
 This is the one durable knock. Circle, as a regulated issuer, can **freeze USDC held at specific addresses** in response to law-enforcement orders. It is a compliance feature — it protects the issuer and can help recover stolen funds — but it is also a censorship and centralization surface: your USDC is freezable by the issuer in a way that an immutable, permissionless dollar is not. In practice the capability has been used sparingly and only under legal process, but it is a real property to understand before holding at size.
 
-## The March 2023 SVB precedent
+## What you actually earn
 
-This is the one historical stress event worth knowing. In March 2023, USDC briefly depegged to about $0.87 when roughly $3.3 billion of reserves were trapped at the collapsing Silicon Valley Bank. It recovered within days, once the FDIC backstopped SVB deposits. The lesson Circle took from it: reserves are now concentrated in the SEC-registered money-market fund and Treasuries rather than uninsured bank deposits, materially reducing — though not eliminating — single-bank exposure. It is the one time USDC has broken peg, it was a dated event rather than a live state, and it recovered fully.
+**Nothing** — plain USDC pays no yield. Any return comes from lending it or holding a wrapped or savings product built on top of it, not from the token itself. Holding USDC is for people who want a liquid, regulated, DeFi-native dollar rather than yield.
 
 ## Audits & security
 

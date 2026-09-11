@@ -8,10 +8,13 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 date: "2026-06-10"
 last_verified: "2026-08-23"
-last_revised: "2026-08-29"
+last_revised: "2026-09-11"
 peg_mechanism_score: 6.5
 backing_score: 6.5
 liquidity_score: 5.5
+underlying_score: 4.5
+structural_score: 3.5
+axis_frame: six
 issuer_score: 5.0
 overall_score: 5.5
 issuer: "Frax Finance"
@@ -32,7 +35,11 @@ frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as par
 |---|---|---|---|---|
 | $1.00 (trades ≈$0.9993) | None (stake to sfrxUSD for yield) | Per-custodian redemption; USDC exit gated by a ≈$10M buffer | Active flagship, float contracting | Ethereum + 10 chains (LayerZero OFT) |
 
-## Backing & reserves
+## 1 · Stability — 6.5
+
+**frxUSD has held its peg tightly since launch — this is the strongest part of the picture.** Per LlamaRisk, the maximum deviation has been about **$0.00985**, with only one wick beyond 0.5% (June 26, 2025) that recovered within hours. Hourly volatility has been tighter than USDe. Current price is about **$0.9993** (roughly 7bps below par, 2026-08-13). The risks in this report are structural (contracts, redemption), not operational — the token has done what a stablecoin should so far.
+
+## 2 · Backing — 6.5
 
 ⚠️ **Better than a third of frxUSD's supply sits in a single vault.** Measured 2026-08-29, **sfrxUSD — the staked form — holds 36,232,343.43 frxUSD against a total supply of 101,827,130.47, or 35.58%.** **So a reader treating frxUSD's float as broadly distributed is reading a number that is substantially one contract's balance**, and the concentration is between the two assets rather than across holders. ⚠️ **And the vault's governance is weaker than its interface suggests: its `timelockAddress()` accessor resolves to a 3-of-6 Safe with no execution delay**, while `owner()` reverts — so the accessor's name is the only governance signal the interface offers, and it asserts a delay that does not exist. See the **[sfrxUSD report](/reports/sfrxusd/)** for the vault's own assessment, including the accessor finding above and the contract-enforced yield ceiling.
 
@@ -41,8 +48,7 @@ frxUSD is Frax Finance's flagship payment stablecoin, launched April 2025 as par
 frxUSD is collateralized by a basket of tokenized Treasury products: **BlackRock BUIDL** (via Securitize), **Superstate USTB and USCC**, **WisdomTree WTGXX**, plus USDC (Circle), AUSD (Agora), and JTRSY (Centrifuge). Per LlamaRisk's July 2025 review the collateral ratio was about **103.7%**, and despite the BlackRock-forward marketing, **Superstate funds (USTB + USCC) represented over 90% of backing in aggregate** at that time. T-bill quality is excellent; the concentration in a single fund manager is the risk vector. The current public framing emphasizes custodian diversification, but the live split could not be independently re-verified on this pass — treat the ≈90% Superstate figure as the last confirmed reading, not a guarantee of today's mix.
 
 **A consolidated proof-of-reserves feed now exists, but we still have not been able to read it.** frxUSD integrated **Chaos Labs Proof of Reserves** in late 2025 to publish on-chain collateralization attestations as the token expands cross-chain. This is a real transparency improvement over launch — but it has now failed verification on two consecutive passes, by two different failure modes: on 2026-06-08 the frxUSD PoR card rendered empty ("—") while sibling feeds (USDe, AUSD, USDT0) populated normally, and on 2026-08-13 `oracles.chaoslabs.xyz` did not resolve at all from our environment. That second failure may well be transient or local to us — but the practical status is unchanged, and it has been unchanged for two months: the PoR "exists but is unverified." The fallback remains the underlying-fund attestations (EY for USTB/WTGXX, PwC for BUIDL). **There is no third-party audit of the frxUSD stablecoin contracts themselves** (see Contracts below) — the audits cover the underlying funds, not the token.
-
-## Exit liquidity & redemption
+## 3 · Liquidity & Exit — 5.5
 
 **This is the most underappreciated risk: redemption is fragmented, and clean USDC exit at scale is shallower than the headline suggests.**
 
@@ -59,28 +65,42 @@ On the secondary market, liquidity has improved but is still mid-tier:
 
 Daily volume is now about **$10.8M** (roughly 3.7× the ≈$2.9M seen in April), so the trajectory is improving — but for a sized exit, the binding constraint is still the USDC-pairing depth, not the headline TVL.
 
-## Peg performance
+## 4 · Dependencies — 4.5
 
-**frxUSD has held its peg tightly since launch — this is the strongest part of the picture.** Per LlamaRisk, the maximum deviation has been about **$0.00985**, with only one wick beyond 0.5% (June 26, 2025) that recovered within hours. Hourly volatility has been tighter than USDe. Current price is about **$0.9993** (roughly 7bps below par, 2026-08-13). The risks in this report are structural (contracts, redemption), not operational — the token has done what a stablecoin should so far.
+⚠️ **Three named custodians read as diversification and are not.** This is the axis where breadth and substitutability come apart most sharply, and frxUSD is the clearest case of it in this coverage.
 
-## Contracts & admin
+⚠️ **Redemption is non-fungible per custodian.** BUIDL redeems to BUIDL; USTB redeems to USTB. **A holder cannot route around a failed custodian** — so three names are not one diversified backstop, they are **three single points of failure**, each serving only its own sleeve.
+
+⚠️ **The concentration is heavier than the marketing implies.** LlamaRisk puts roughly **90% with Superstate**, while public emphasis falls on BUIDL. ⚠️ **That ~90% figure is LlamaRisk's and we have not independently re-verified the live split** — the concentration driving this score is **sourced, not measured here.** Closing that needs a working proof-of-reserve feed or a direct custodian-split read.
+
+⚠️ **And the door a retail holder actually uses is narrower than the custodian list suggests:** an exit to USDC routes through **Superstate's $10M buffer cap**. That cap, not the number of custodians, is the practical width.
+
+⚠️ **Proof-of-reserve was unverifiable on two separate attempts** — the Chaos feed returned empty on 2026-06-08, and `oracles.chaoslabs.xyz` did not resolve at all on 2026-08-13. **Two failures at different times is a standing gap rather than an outage.**
+
+## 5 · Contract & Admin — 3.5
+
+⚠️ **There is a 24-hour timelock and the party it constrains can shorten it to two hours.** Measured 2026-09-11:
+
+- Ethereum token owner is a **4-of-7 Safe**, `0xfffffF4F3baC444b2C0ecf2A1840d018bE783937` — threshold 4, seven owners, **all seven of them plain externally-owned accounts**
+- `ProxyAdmin` `0x0b2c3df006b2bd43cbcc60075e7a0bf314474ed6` is owned by Timelock `0xb898Ad2976b4d8f2E21521C9db16b7497825E503`
+- That timelock's `delay()` is **86,400s (24h)** — but its **`MINIMUM_DELAY()` is 7,200s (2h)**
+- And its `admin()` is **the same 4-of-7 Safe the delay is supposed to constrain**
+
+⚠️ **So 24 hours is a setting, not a constraint.** The party subject to the delay can lower it toward the two-hour floor. **A delay the delayed party controls bounds nothing it does not choose to be bound by.**
+
+⚠️ **And the delay does not cover the paths that matter most to a holder anyway.** The same Safe **mints, freezes, thaws and pauses with zero delay.** ⚠️ **No freezer being appointed today is not a constraint** — appointing one is a single undelayed transaction, so the freeze capability is scored as **present, not dormant**.
+
+**Fraxtal resolves to a separate 3-of-5 Safe**, `0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6`.
+
+⚠️ **There is no single canonical frxUSD address, and the one commonly cited is silent on Ethereum.** `0x80Eede496655FB9047dD39d9f418d5483ed600df` serves Optimism, Arbitrum, BNB and Polygon; Ethereum is `0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29`; Base and Linea differ again. **An existence check against Ethereum alone returns nothing and would read as a fabricated address.**
+
+**Coverage: 8 of 11 declared chains. No exhaustive peer enumeration was run, so this is a measured subset rather than a completeness claim** — closing it needs a `peers(uint32)` sweep across the endpoint set.
+
+### What else sits on this axis
 
 **This is where the score is lost.** Three things compound:
 
 - **No third-party audit of the frxUSD stablecoin contracts.** LlamaRisk states this explicitly. The contracts are **upgradeable proxies**. Frax's in-house "Security Cartel" reviewed the FIP-430 upgrade path, and ChainSecurity audited the FXB-side upgrade — but the frxUSD ERC-20 itself has no public third-party audit report. For an upgradeable stablecoin, that is the single biggest contract-level risk.
-- ⚠️ **There IS a timelock on upgrades, it is 24 hours, and it does not cover the powers that matter most.** Read at Ethereum head with a USDC control passing: the frxUSD proxy's admin is a ProxyAdmin at `0x0b2c3df0…`, whose owner is a **Compound-style Timelock** at `0xb898ad29…` with `delay()` = **86,400 seconds, 24 hours**.
-
-  **But the correction cuts the other way too, and on balance the picture is not better.** The timelock's own `admin()` is `0xffFFfF4F…3937` — **the same address as `frxUSD.owner()`**, an equality checked directly rather than assumed. That Safe is **threshold 4 of 7 owners, all seven of them plain externally-owned accounts.** So one holder controls three powers at three different speeds:
-
-  | power | route | delay |
-  |---|---|---|
-  | Upgrade the implementation | ProxyAdmin → Timelock | **24 hours** |
-  | **Mint** | owner-gated directly | **none** |
-  | **Freeze / pause** | owner-gated directly | **none** |
-
-  **The powers that can seize or halt a holder's balance are the ones with no delay on them.** These are not three independent failure paths — it is one signer set with three routes out, and threshold 4 governs all of them.
-
-  ⚠️ **And the delay is only as deep as its floor.** The timelock reports `MINIMUM_DELAY()` = **7,200 seconds — two hours.** The same Safe that the delay constrains is the body that can call `setDelay` on it, so the practical protection is 24 hours of notice **once**, and two hours thereafter. A gate whose depth is set by the party it gates is a different instrument from one with a hard floor beneath it.
 - **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the 4-of-7 / no-timelock / upgradeable / unaudited setup is exactly what would *enable* such an action silently, which is why it's worth flagging.
 
 ### The owner address changed, and we found it by re-reading the chain
@@ -116,7 +136,8 @@ There are two honest readings here and you should hold both.
 
 Frax Finance itself is an established team (Sam Kazemian, 5+ years, active development on frxUSD, Fraxtal L2, and frxETH) — the issuer-level track record is real. The contract-trust profile is the offsetting concern.
 
-## Growth & adoption
+
+## 6 · Issuer — 5.0
 
 **The float is now contracting, not flat.** ≈$65M (Jul 2025) → ≈$125M (Apr 2026) → ≈$124M (Jun 2026) → **≈$105.5M (Aug 2026)** circulating — down roughly **15% in nine weeks**. That is a contraction, not a plateau.
 

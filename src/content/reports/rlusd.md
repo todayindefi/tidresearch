@@ -9,12 +9,16 @@ assessment_type: "light"
 date: "2026-07-08"
 last_verified: "2026-08-24"
 featured: false
+last_revised: "2026-09-11"
 production: true
 issuer: "Standard Custody & Trust Company (Ripple)"
 market_cap_approx: 1589600000
 peg_mechanism_score: 7.0
 backing_score: 7.0
 liquidity_score: 7.0
+underlying_score: 6.5
+structural_score: 4.0
+axis_frame: six
 issuer_score: 7.5
 overall_score: 7.0
 ---
@@ -39,35 +43,65 @@ Launched in December 2024, RLUSD has scaled to the multi-billion tier while hold
 
 The 7.0/10 reflects a well-regulated, increasingly liquid stablecoin whose main residual risks are a still-short multi-cycle track record and attestation-versus-real-time-PoR transparency — not reserve quality or issuer strength. It's worth noting that RLUSD, USDT, USDG and PYUSD all cluster around 7.0 for *different* reasons. RLUSD's profile is issuer-strong and liquidity-solid but multi-cycle-record-short — close to the mirror image of USDT's liquidity-strong, issuer-opaque profile.
 
-## What you actually earn
+## 1 · Stability — 7.0
 
-**Nothing native** — plain RLUSD pays no yield. You'd earn by lending it or putting it to work in DeFi and payments rails, not by holding the token. If you want a dollar that accrues yield in your wallet, RLUSD is not that product; it's a settlement and reserve dollar.
+This is the honest limiter, and it's the single biggest reason RLUSD sits at 7.0 rather than higher despite a clean record and strong regulation. RLUSD is **about 18 months old**.
 
-## How exit works
+Scaling roughly 4x to a multi-billion supply while holding peg is a real, positive signal — it says the reserve and redemption operations work *at scale*, not just at launch size. But it is **not** the same thing as being tested through a severe redemption run or a genuine market crisis. USDC has been through one (the March 2023 Silicon Valley Bank scare, when it briefly depegged and then recovered); USDT has been through a decade of stress episodes. RLUSD has been through neither. How it handles its first genuine redemption run is a real, open question — and the answer isn't in the data yet.
 
-This is materially better than a year ago. RLUSD now carries a **Binance** Tier-1 listing plus other venues, with daily volume in the **$100M+** range, so large exits no longer hinge solely on issuer redemption — deep CEX liquidity is available at the peg. Institutions can mint and redeem 1:1 directly with the regulated issuer.
-
-The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC and USDT and is fragmented across XRP Ledger, Ethereum and the newer L2 deployments, so very large **on-chain-only** exits still benefit from routing through a CEX. For DeFi composability specifically, the Ethereum-side liquidity is what matters, and that is where the bulk of supply lives — roughly two-thirds of the cross-ledger total.
-
-## What backs it
+## 2 · Backing — 7.0
 
 ⚠️ **The reserve is over-collateralised, not 1:1.** Ripple's attestation reports roughly **107%** of liabilities in USD cash, US Treasuries and cash equivalents, held in **segregated accounts at BNY Mellon** under NYDFS oversight, with **monthly attestations**.
 
 **That surplus does not lift the Backing axis, and the reason is worth stating.** 7% of headroom is real, but **Ripple publishes no asset-composition breakdown** — the attestation gives a total, not a split between cash, bills and equivalents by maturity. **A larger number you cannot decompose is not the same evidence as a smaller number you can**, which is why this axis holds at 7.0 rather than rising toward the fully-disclosed cohort. Note also that "backed 107%" and "redeemable 1:1" are different claims: the redemption terms below are unchanged and correct. This is a conservative, high-quality composition — the same regulatory regime that governs PYUSD and GUSD, and a genuine strength of the asset.
 
 The knock relative to USDC is twofold and modest: attestations are **monthly and point-in-time** rather than continuous real-time proof-of-reserves, and RLUSD has a **shorter operating history** than the incumbents. Neither is a red flag on reserve quality — the composition itself is exactly what you want in a fiat-backed dollar — but both are reasons the backing score is 7.0 rather than higher.
+## 3 · Liquidity & Exit — 7.0
 
-## The issuer — Ripple
+This is materially better than a year ago. RLUSD now carries a **Binance** Tier-1 listing plus other venues, with daily volume in the **$100M+** range, so large exits no longer hinge solely on issuer redemption — deep CEX liquidity is available at the peg. Institutions can mint and redeem 1:1 directly with the regulated issuer.
+
+The remaining caveat is on-chain depth. DEX-native liquidity still trails USDC and USDT and is fragmented across XRP Ledger, Ethereum and the newer L2 deployments, so very large **on-chain-only** exits still benefit from routing through a CEX. For DeFi composability specifically, the Ethereum-side liquidity is what matters, and that is where the bulk of supply lives — roughly two-thirds of the cross-ledger total.
+
+## 4 · Dependencies — 6.5
+
+**A narrower counterparty set than the larger dollar tokens, and verification that is periodic rather than continuous.**
+
+⚠️ **Reserve verification is attestation-based rather than real-time proof-of-reserve.** This axis prices what a holder can check **between** attestations — and between them, the answer is the issuer's word. That is normal for a regulated issuer and it is still a dependency: the gap is time, not competence.
+
+⚠️ **RLUSD has two native rails and this assessment has read one.** The Ethereum side is enumerated below; **XRPL has never been read.** XRPL holders additionally depend on XRPL liveness and its validator set, and any bridged L2 representation adds messaging and transceiver operators on top. ✅ **A dependency set enumerated on one of two rails is a measured subset, not a completeness claim**, and it is recorded that way rather than as a clean result.
+
+⚠️ **Not priced here: Ripple's regulatory posture or its attestor's identity.** Those sit on Issuer.
+
+## 5 · Contract & Admin — 4.0
+
+**The expensive quorum guards the code; the cheap one guards the money — and no delay stands in front of either.** Measured 2026-09-11 against the token's own role constants:
+
+| power | terminal | quorum |
+|---|---|---:|
+| Upgrade code | `0x863c8754c298d3efec3863f2a46f1c71a355ce6c` | **7** |
+| Default admin | `0x66fc2d9e4897cf3886a340a4cabc23cca2ac6a0e` | **7** |
+| Pause **and** clawback | `0x83f7f1c6a1547afe2841943f428cf6ff28541fa9` | **2** |
+| Mint | `0x97e9d0b0bcbe86e1e230b0ffd3a5f1f9b8428591` | **2** |
+| Burn | `0x1073d55dfb892ed86151015402db8b1cdb6ede78` | **2** |
+
+⚠️ **Two signatures can mint, burn, globally pause, or claw back a named holder's balance. Seven are needed to change code.** ✅ **4.0 rather than lower because quorum 2 is a real quorum** — this is not the any-of-1 shape — **and rather than higher because there is no timelock anywhere, so quorum is the only bar there is.**
+
+⚠️ **Pause and clawback are the same contract.** They read as two controls and are one: a single pair of signatures halts transfers globally **and** force-transfers a specific holder's balance.
+
+⚠️ **These terminals are verified-present, not proven complete.** The token reports `AccessControlEnumerable` as **false** and `getRoleMemberCount` **reverts** — so the contract cannot be asked "who else holds this role." **An empty result from that question means the question is unsupported, not that no other holder exists.** Another terminal would not appear in the table above.
+
+**These are Ripple `MultiSign` contracts, not Gnosis Safes** — `quorum()` is the correct accessor and `getThreshold()` reverting is what discriminates the type. **Ethereum only; XRPL authority is unread.**
+
+
+## 6 · Issuer — 7.5
 
 The issuer is the clearest strength here. Ripple is well-capitalized, with substantial corporate reserves and an institutional/payments orientation that aligns its incentives toward stablecoin reliability — a stablecoin failure would damage the far larger cross-border-payments business it's built around.
 
 Two things reinforce the picture. First, the **SEC legal overhang resolved in 2024**, removing a regulatory tail risk that had hung over the company for years. Second, RLUSD's regulated reach has expanded fast since launch: a **JFSA-approved Japan launch** via SBI VC Trade, **Deutsche Bank** adopting Ripple's payment infrastructure, and a **Mastercard pilot** through the Gemini Credit Card. Standard centralized-issuer controls apply — freeze, mint and burn — which is expected for a regulated model, not a negative surprise. There are no governance red flags. That combination of capitalization, resolved regulatory status, and institutional traction is what earns the issuer axis a 7.5.
 
-## The "still young" caveat
+## What you actually earn
 
-This is the honest limiter, and it's the single biggest reason RLUSD sits at 7.0 rather than higher despite a clean record and strong regulation. RLUSD is **about 18 months old**.
-
-Scaling roughly 4x to a multi-billion supply while holding peg is a real, positive signal — it says the reserve and redemption operations work *at scale*, not just at launch size. But it is **not** the same thing as being tested through a severe redemption run or a genuine market crisis. USDC has been through one (the March 2023 Silicon Valley Bank scare, when it briefly depegged and then recovered); USDT has been through a decade of stress episodes. RLUSD has been through neither. How it handles its first genuine redemption run is a real, open question — and the answer isn't in the data yet.
+**Nothing native** — plain RLUSD pays no yield. You'd earn by lending it or putting it to work in DeFi and payments rails, not by holding the token. If you want a dollar that accrues yield in your wallet, RLUSD is not that product; it's a settlement and reserve dollar.
 
 ## Multi-chain expansion
 
