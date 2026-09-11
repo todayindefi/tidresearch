@@ -5,18 +5,29 @@ aliases: ["ONyc", "Onyx", "OnRe Tokenized Reinsurance", "Onchain Yield Coin"]
 chains: ["solana"]
 category: "vault-share"
 underlying_assets: ["sUSDe", "reinsurance premium float"]
+# ⚠️ BUMPED to 2026-09-11 after a whole-body pass. Scope:
+#   RE-MEASURED on-chain: ONyc supply; the mint's authority set; the OnRe
+#   program's upgrade authority via its ProgramData account; and the account
+#   TYPE of each privileged wallet (System-owned, zero bytes = a plain
+#   keypair, not an SPL multisig or a Squads vault). A fabricated pubkey
+#   returned null in the same pass, so the reads discriminate.
+#   ⚠️ NOT RE-DERIVED, and all of it is OPERATOR-POSTED rather than readable:
+#   NAV (~1.13), the 11.64% APY, utilisation 94.65%, capital managed on-chain
+#   ($245.81M), and the reinsurance book itself. None of that is on-chain and
+#   none of it was re-verified here. The Bermuda wrapper and the Quantstamp
+#   audit are carried, not re-checked.
 assessment_type: "light"
 date: "2026-07-23"
-last_verified: "2026-07-23"
+last_verified: "2026-09-11"
 # ⚠️ market_cap_approx ADDED 2026-09-09 — the field was ABSENT, so this asset was
 # rendering and sorting with no size at all. BASIS, because this one is a product
-# and not a reading: SUPPLY is measured on-chain 2026-09-09 (266,271,281.72), NAV
+# and not a reading: SUPPLY is measured on-chain 2026-09-11 (270,454,463.60), NAV
 # is ~1.13 and is OPERATOR-POSTED, carried from the 2026-07-22 assessment and NOT
 # re-verified. So the figure moves with NAV and is an approximation on one measured
 # leg and one carried leg. It is NOT the $245.81M "capital managed on-chain" figure
 # in the body, which is OnRe's own disclosure at 2026-07-31 and a different quantity.
-market_cap_approx: 300900000
-last_revised: "2026-09-09"
+market_cap_approx: 305613544
+last_revised: "2026-09-11"
 featured: false
 production: true
 issuer: "OnRe (Bermuda SAC)"
@@ -111,9 +122,19 @@ ONyc is OnRe's tokenized reinsurance yield coin on Solana — a proportional cla
 ## 5 · Contract & Admin — 4.0
 ⚠️ **On-chain control is single-key, and this is the sharpest gap between the legal wrapper and the code.**
 
-Solana reads show the **program upgrade authority and freeze authority are each a single plain wallet** — **no multisig, no timelock.** ✅ **Re-verified 2026-09-09 and both still hold:** the freeze authority is a System-owned account with zero bytes of data, and the program's upgrade authority resolves through its ProgramData account to another such account. ⚠️ **As everywhere on this site, a bare account proves there is no ON-CHAIN quorum and says nothing about off-chain MPC or HSM custody, which cannot be read from a chain.** **One key can redeploy the mint and redemption logic, or freeze holder tokens.**
+**The addresses, so this is checkable rather than asserted** — re-measured 2026-09-11, with a fabricated pubkey returning `null` in the same pass:
 
-The token is a classic Solana SPL mint, 9 decimals. ⚠️ **Supply re-measured 2026-09-09: 266,271,281.72 ONyc, up 24.7% from the 213,548,263 read on 2026-07-22** — so the sleeve has grown by roughly a quarter in seven weeks, and any figure on this page dated to July describes a materially smaller book than the one that exists now. Minting is mediated by an OnRe program PDA, **but the program itself is upgradeable by that single wallet.** A **Quantstamp audit** exists for the OnRe Solana implementation.
+| role | account | what it is |
+|---|---|---|
+| ONyc mint | `5Y8NV33Vv7WbnLfq3zBcKSdYPrk7g2KoiQoe7M2tcxp5` | SPL Token mint, 9 decimals |
+| **program upgrade authority** | `FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f` | ⚠️ **System-owned, 0 bytes — a plain wallet** |
+| **freeze authority** | `45YnzauhsBM8CpUz96Djf8UG5vqq2Dua62wuW9H3jaJ5` | ⚠️ **System-owned, 0 bytes — a plain wallet** |
+| mint authority | `AbpE5YLpdpxj2jRczG9P341Jicf67NvZsaZYrATbMnNX` | ✅ owned by OnRe's program — a PDA |
+| OnRe program | `onreuGhHHgVzMWSkj2oQDLDtvvGvoepBPkqyaubFcwe` | BPF upgradeable loader |
+
+✅ **The mint is identified by the pointer back rather than by name:** its mint authority is a PDA owned by OnRe's own program, which is what ties this mint to this issuer. ⚠️ **Both privileged wallets are System-Program-owned with zero bytes of account data** — that is the shape of an ordinary keypair. **An SPL Token multisig would be Token-program-owned; a Squads vault would be program-owned. Neither is.** ⚠️ **As everywhere on this site, a bare account proves there is no ON-CHAIN quorum and says nothing about off-chain MPC or HSM custody, which cannot be read from a chain.** **One key can redeploy the mint and redemption logic, or freeze holder tokens.**
+
+The token is a classic Solana SPL mint, 9 decimals. ⚠️ **Supply re-measured 2026-09-11: 270,454,463.60 ONyc** — up from 266,271,281.72 two days earlier, and **up 26.6% from the 213,548,263 read on 2026-07-22**. **The sleeve has grown by roughly a quarter in seven weeks and is still growing**, so any figure on this page dated to July describes a materially smaller book than the one that exists now. Minting is mediated by an OnRe program PDA, **but the program itself is upgradeable by that single wallet.** A **Quantstamp audit** exists for the OnRe Solana implementation.
 
 ⚠️ **The Bermuda regulated wrapper is a real legal backstop, but it is off-chain. It does not remove the on-chain key risk**, and an audit describes the code as written rather than who may replace it.
 
