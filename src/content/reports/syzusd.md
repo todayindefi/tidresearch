@@ -61,7 +61,7 @@ axis_frame: six
 volatility_score: 3.0
 backing_score: 4.5
 liquidity_score: 3.0
-underlying_score: 2.5
+underlying_score: 3.0
 structural_score: 2.0
 issuer_score: 4.0
 # 4.0, not higher: the exit terminates in yzUSD rather than cash.
@@ -168,7 +168,9 @@ maxRedeem(holder)  == balanceOf(holder)     exactly, for every address tested
 
 ⚠️ **Where this asset actually lives matters more than either ladder: Sei ($9.19M) and Pharos ($2.86M) together hold 52% of all mirrored supply**, and neither has a CEX presence or mature tooling. Sei carries the highest-yielding syzUSD venue anywhere — a Feather loop at 28.44% APY — and **no local way out.** A reader told "Plasma, Monad and Ethereum" would badly misjudge this.
 
-## 4 · Dependencies
+## 4 · Dependencies — 3.0
+
+⚠️ **This score is equal to yzUSD's own, and that is the point rather than a softening.** A wrapper whose only asset is the thing it wraps carries that asset's dependency book **undiluted** — it cannot be safer than what it holds, and nothing here is diversified away. **Everything below arrives whole from yzUSD.**
 
 ⚠️ **100% of this asset's value passes through one other asset.** There is no diversification at this layer and none is possible: the vault holds yzUSD and nothing else.
 
