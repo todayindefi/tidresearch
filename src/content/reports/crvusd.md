@@ -22,7 +22,7 @@ last_verified: "2026-09-10"
 last_revised: "2026-09-10"
 peg_mechanism_score: 6.0
 backing_score: 5.0
-liquidity_score: 6.0
+liquidity_score: 8.0
 issuer_score: 6.0
 overall_score: 5.0
 underlying_score: 4.5
@@ -60,7 +60,7 @@ All crvUSD is minted through a single contract: the ControllerFactory (`0xC9332f
 |----------|-------|-------|
 | Peg Mechanism | 6.0 | LLAMMA + PegKeepers + monetary policy is a sophisticated system with a $0.9997 average peg, and 2,985 hourly multi-DEX samples show a median −9 bps deviation from $1.00 — at the top end of decentralized stables, tighter than thBILL by ~3× and only marginally looser than OUSD. YieldBasis flows did increase peg volatility 66% in mean absolute deviation post-Sep-2025 launch, and rate swings between 0% and 12%+ remain a structural feature, but elevated volatility hasn't broken the peg through Q2 2026. PK downside defense capacity fluctuates with deployment — depleted PK debt means no active burn buffer, while concentrated deployment (as currently sits in the USDT keeper) exposes the protocol to that pool's liquidity if a depeg arrives — but the realized tightness through the YB era carries the score. |
 | Backing | **5.0** | **Three legs, backed differently.** CDP markets are overcollateralized (small, **197% weighted CR**); YieldBasis pools are BTC-backed near 100% CR; and the **PegKeeper leg is uncollateralized by construction** — protocol-minted crvUSD whose only backing is the stablecoins sitting opposite it in the pools. ⚠️ **That third leg is the one to watch, and its size swings:** it ran **14.07% → 34.56% → 6.81%** of supply between 2026-08-19 and 2026-09-10. **The peg held throughout, never more than 0.049% from par**, so the swings are keepers absorbing pool imbalance rather than a solvency event. **A sustained rise is what would cut this — above 25% of supply for more than five consecutive daily readings, not a single high print.** Argued in full under [2 · Backing](#2--backing--50) |
-| Liquidity | 6.0 | ⚠️ **Two different exits, and only one pays in dollars.** The **one-hop dollar exit is $27.16M** — the stablecoins sitting opposite crvUSD in the Curve pools, **11.69% of issuance-side supply**, largest venue USDT. **All eight YieldBasis pools pair crvUSD with BTC or ETH**, so their **$144.79M** is a two-hop exit that carries price risk between hops and thins in the volatility that would provoke it. **The measured 2% depth floor is $10M**, the deepest rung tested still clearing inside 200bps. Argued in full under [3 · Liquidity & Exit](#3--liquidity--exit--60) |
+| Liquidity | **8.0** | ✅ **The best measured exit in this coverage.** All-in cost to sell into USDC: **2.7bps at $100,000, 3.3bps at $1,000,000, 16.0bps at $10,000,000**, tested to $50M. ⚠️ **The cliff is real and sits above every size this axis scores for — $25,000,000 costs 1,078bps.** **All eight YieldBasis pools pair crvUSD with BTC or ETH**, so the $144.79M resident there is routed through rather than exited into; the quotes above are one-hop into dollars and already carry any routing spread. Argued in full under [3 · Liquidity & Exit](#3--liquidity--exit--80) |
 | Issuer | 6.0 | Curve is one of DeFi's most established protocols (10+ audit firms, $2B+ TVL history). CRV tokenomics add governance complexity. Egorov's dual Curve/YB role creates concentrated influence over crvUSD's supply architecture. |
 | Dependencies | **4.5** | **YieldBasis holds a $1B line that is fully drawn — `debt_ceiling` and `debt_ceiling_residual` both read $1,000,000,000.00 on 2026-09-10, so headroom is zero.** **Its pools carry 51.2% of issuance-side supply.** ⚠️ **Two different shares exist depending on the denominator: the $1B line over raw `totalSupply()` gives 47.5%; measured pool debt over issuance-side supply gives 51.2%. The issuance-side basis is the one used here — see the axis.** ⚠️ **The idle $669.3M is allocated by YieldBasis's own DAO, which Curve cannot direct**, and that DAO's seven-day duration is **early execution** rather than a delay. ✅ **But Curve's 5-of-9 emergency Safe is also the YieldBasis factory's `emergency_admin`, so it can kill the market immediately.** Expansion is slow and public; contraction is fast. Argued under [4 · Dependencies](#4--dependencies--45) |
 | Contract & Admin | **5.5** | ✅ **The token cannot be replaced** — 3,572 bytes of Vyper with all three EIP-1967 slots reading zero, re-verified 2026-09-09. **Mint capacity moves through a Curve DAO vote, not a key.** ⚠️ **Docked for the 5-of-9 emergency Safe, which carries no execution delay, and for the bridged legs, which answer to each chain's own operators rather than to Curve.** Argued in full under [5 · Contract & Admin](#5--contract--admin--55) |
@@ -312,7 +312,7 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 
 ---
 
-## 3 · Liquidity & Exit — 6.0
+## 3 · Liquidity & Exit — 8.0
 
 **crvUSD's exit is native rather than borrowed — Curve's own pools give it real on-chain depth.** ⚠️ **But the aggregate depth figure answers a different question from the one a seller is asking, and the two differ by more than five times.** Measured on-chain 2026-09-10 by calling `coins()` and `balanceOf()` on each pool directly — **crvUSD actually resident in the pool, not a notional**:
 
@@ -327,9 +327,20 @@ All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crv
 
 ⚠️ **Three different YieldBasis figures are in circulation and they differ by up to three times, so the basis has to be stated.** The **$144.79M** above is crvUSD **resident in the eight cryptopools**, read by `balanceOf()` on each. A **debt** basis — what YieldBasis owes across its pools — gives **$118.91M**. A **notional** basis gives a figure near **$356M**. ✅ **The finding does not rest on choosing one:** the two-hop route exceeds the one-hop dollar exit on every basis.
 
-**The independently measured 2% depth floor is $10,000,000, recorded as `ladder_exhausted`** — the deepest rung quoted still cleared inside 200bps, so the crossing is above where the ladder looks. ⚠️ **That is a floor, not a limit that was found**, and it is consistent with a $27.16M stable side.
+**The ladder now runs past where it used to stop, and it is quoted all-in into USDC** — the cost a seller actually bears, not price impact alone:
 
-**6.0 rather than higher** because the one-hop dollar exit is a low-eight-figure number against a nine-figure supply, and the depth that dwarfs it pays in a volatile asset. **Rather than lower** because both routes are real, on-chain and measurable today, and the deepest measured rung still cleared inside 2%.
+| size | all-in cost |
+|---:|---:|
+| $1,000 | 2.6bps |
+| $100,000 | 2.7bps |
+| $1,000,000 | 3.3bps |
+| $10,000,000 | 16.0bps |
+| $25,000,000 | **1,078bps** |
+| $50,000,000 | **4,345bps** |
+
+✅ **A holder at any retail or professional size exits crvUSD for single-digit basis points, and at seven figures for 3.3.** ⚠️ **The 2% crossing is bracketed between $10M and $25M, and the cliff at $25M is steep rather than gradual** — there is no soft warning as you approach it. **Every size this axis is scored for sits below it.**
+
+**8.0 because the cost of leaving is the question, and crvUSD answers it better than anything else here.** ⚠️ **Not higher, because the exit IS the market** — there is no redeem-at-NAV channel standing behind these quotes, so a holder depends on the pools continuing to be there. ⚠️ **And the composition above still matters at size**: the dollar side is what the quotes consume, and a seller large enough to exhaust it is in a different position from the ladder's readings.
 
 ⚠️ **This axis is priced on depth, not on the peg holding** — the peg record is argued under Stability above.
 
