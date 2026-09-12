@@ -117,9 +117,9 @@ The caveat is *where* that depth lives. ⚠️ **Supply and depth are not the sa
 | chain | token | upgrade authority | shape |
 |---|---|---|---|
 | Ethereum | `0x6c3ea903…a0e8` | `0xc94bcf6e…851c` | **no code** — any-of-1 |
-| Arbitrum | `0x46850aD6…6984` | `0xc94bcf6e…851c` | **the same address**, no code |
-| X Layer | `0x87b4a817…06B4` | `0x9cb0bdad…5c0e` | **a contract**, 6,754 bytes |
-| Polygon | `0x99aF3EeA…0750` | *no proxy-admin slot*; `owner()` = `0x3Af3e85f…024B` | — |
+| Arbitrum | `0x46850aD61C2B7d64d08c9C754F45254596696984` | `0xc94bcf6e…851c` | **the same address**, no code |
+| X Layer | `0x87b4a8176B3Df6b71e26CC095edcAf4Db07506B4` | `0x9cb0bdad51dcdcef7e89c55f233b80d8a8e25c0e` | **a contract**, 6,754 bytes |
+| Polygon | `0x99aF3EeA856556646C98c8B9b2548Fe815240750` | *no proxy-admin slot*; `owner()` = `0x3Af3e85f4f97De7AD0f000B724Fb77fE5ffc024B` | — |
 
 ⚠️ **One key with no on-chain quorum reaches $2.05B — Ethereum plus Arbitrum, 73% of all PYUSD.** An EOA address derives from a public key and is chain-independent, so the same address on two chains is one signing identity, not two. ⚠️ **This is the opposite of the design USDC is credited for**, where six chains use six distinct keys so one compromise reaches one chain — see [USDC](/reports/usdc/).
 
