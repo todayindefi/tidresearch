@@ -147,7 +147,7 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 **Read on-chain 2026-09-09, the token-admin and custody Safes hold the identical six owners, and the bridge Safe holds those same six plus one more.** So the union is seven and ⚠️ **the intersection is still six — and those six reach all three doors**, because four of them satisfy the token Safe, three of them satisfy custody, and four of them satisfy the bridge. **The honest count of people standing between an attacker and all three layers is not nineteen. It is six.** The seventh owner adds a signer to the bridge; he does not add a door that the six cannot open.
 
 ## 6 · Issuer — 5.0
-**Same protocol, same team, same admin as [apxUSD](/reports/apxusd/), and the axis carries the same 5.0.**
+**Same protocol, same team, same admin as [apxUSD](/reports/apxusd/), and the axis carries the same 5.0.** ⚠️ **That is an inherited figure, not an independent judgement: if apxUSD's Issuer score moves, this must move with it.** **The condition is stated because a borrowed score with no stated condition does not age into vagueness — it ages into a confident wrong number that still reads like a considered one.**
 
 **In its favour:** DFDV (Nasdaq-listed) backing with tier-1 investors including ParaFi and Pantera; **Wolf & Company AICPA-standards attestations published monthly**; a continuous TEE-attested proof-of-solvency feed at [`accountable.apyx.fi`](https://accountable.apyx.fi); and **Alpaca** named as the brokerage. The issuer named on the Wolf attestation is **Preference Foundation**, with Director Carolyn Kelly signing — Apyx as a legal entity appears separate from DFDV, a standard offshore-RWA structure.
 
