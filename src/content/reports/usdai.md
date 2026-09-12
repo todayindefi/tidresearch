@@ -17,7 +17,7 @@ market_cap_approx: 174400973
 peg_mechanism_score: 7.0
 backing_score: 7.0
 underlying_score: 7.0
-liquidity_score: 4.5
+liquidity_score: 5.5
 issuer_score: 5.0
 structural_score: 3.0
 # ⚠️ MIGRATED to axis_frame: six on 2026-09-09, in the pass that first scored axis 5.
@@ -66,13 +66,13 @@ The 101.4% recorded in July and the 100.98% above are **both Arbitrum-only**, an
 
 **A note on where the token lives, for anyone doing the two-read check themselves.** USDai is deployed on four chains — Arbitrum, Plasma, Base and Ethereum — but **effectively all of it is on Arbitrum**: as of 2026-08-18 the off-Arbitrum floats were roughly 790,000 on Plasma, 176,000 on Base and under 6,000 on Ethereum, against about 175M on Arbitrum. ⚠️ **It is tempting to reason that, being well under one percent of supply, the bridged float does not move the coverage picture. That reasoning fails here, and the conclusion it reaches happens to survive, which is exactly why it is worth spelling out.** Coverage is above par on either convention. But on Arbitrum alone it reads **100.55%**; across all four deployments it reads **100.0000000%**. **Counting the bridged tokens does not nudge the ratio. It consumes the entire apparent cushion.** When the surplus is itself half a percent, a sub-one-percent change in the denominator is not a rounding detail — it is the whole quantity. **A small share of supply is immaterial only relative to the margin it is being measured against.** **The [live dashboard](https://tidresearch.com/dashboards/?asset=usdai) now computes on the same four-chain basis** — it reads coverage at par, on `all_chain_supply`, and reports the per-chain split that sums to it. ⚠️ **It also raises a "coverage thin" warning, and that is correct rather than alarming: at par there is no cushion, which is exactly what the phantom 0.548% surplus used to suppress.** A flag appearing here is the monitor describing the mechanism properly, not backing deteriorating. **The reserve, the mint-and-redeem path and the coverage check all live on Arbitrum**, which is the contract to read. One practical trap: **the token has the same address on every chain** (`0x0A1a1A107E45b7Ced86833863f482BC5f4ed82EF`), a deterministic deployment, so an address-only check cannot tell you which chain you are looking at — pair the address with the chain id. One use the Plasma float does serve: USDai is accepted as lending collateral on Fluid there, where it marks at about $0.9993.
 
-## 3 · Liquidity & Exit — 4.5
+## 3 · Liquidity & Exit — 5.5
 
 This is the weakest dimension by a distance, and the reason a strong backing score does not produce a strong overall one.
 
 **For onboarded market makers and institutional depositors:** direct 1:1 PYUSD mint and redemption at the contract. This is the clean exit — no slippage, no AMM tax. It requires completing Permian's KYC onboarding, and since Q2 2026 contract-level mint and redeem have been **restricted to that group**.
 
-**For everyone else:** the secondary market, dominated by the Curve USDai/USDC pool, with a Uniswap V4 pool alongside it. That pool sits **below about $2M against a supply near $173M** — roughly one percent of the float — and there is **no centralized-exchange listing**. Retail-size exits price fine; in calm conditions arbitrageurs hold USDai close to par, and it has traded around $1.0007. But the depth that carries you in a stress event is not there, and a holder of any size cannot exit through secondary without moving the price against themselves.
+**For everyone else:** the secondary market, dominated by the Curve USDai/USDC pool, with a Uniswap V4 pool alongside it. ⚠️ **Measured by quoting real sale sizes into it rather than by sizing the pool: $100,000 exits at 0.2bps and $1,000,000 at 2.6bps, with the deepest rung quoted at $2,000,000 (3.6bps).** ✅ **That is a cheap exit at every size a retail or professional holder is likely to bring.** ⚠️ **$2M is where the ladder stops, not a ceiling that was found**, and there is still **no centralized-exchange listing**. Retail-size exits price fine; in calm conditions arbitrageurs hold USDai close to par, and it has traded around $1.0007. But the depth that carries you in a stress event is not there, and a holder of any size cannot exit through secondary without moving the price against themselves.
 
 **The asymmetry between those two paths is the single biggest retail-relevant risk on this asset.** It is not a solvency risk — the reserve is there and verifiable — it is a risk that the mechanism which guarantees par is unavailable to you specifically. Holding, transferring and staking remain fully permissionless; only the redemption window is gated.
 

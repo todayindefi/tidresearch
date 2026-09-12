@@ -37,7 +37,7 @@ volatility_score: 3.5
 backing_score: 2.5
 structural_score: 4.0
 redemption_score: 3.5
-liquidity_score: 3.5
+liquidity_score: 2.0
 issuer_score: 5.0
 underlying_score: 2.5
 overall_score: 3.5
@@ -68,11 +68,13 @@ Every axis now states its reason.
 |---|---:|---|
 | Stability | 3.5 | Share value has run below par for extended stretches; NAV is a reported figure over a reserve that is 99% off-chain, so the mark and the asset move together rather than independently |
 | **Backing** | **2.5** | ⚠️ **New axis, and it exists because sUSDat's reserve is not USDat's reserve.** USDat is **100.00% PYUSDx**; sUSDat is **99.00% an off-chain STRC claim ($73.81M) plus 1.00% on-chain USDat ($0.73M)** — total **$74.54M**, collateral ratio **101.83%**, surplus $1.34M. ⚠️ **The producer tags the 99% leg `oracle_unverified` itself**, so the honest reading is *attested, not measured*. **The name, the ticker and the `underlying_assets` field all implied the vault wraps USDat; the balance sheet says it holds 1% of it** — that field is corrected in this pass |
-| Liquidity & Exit | 3.5 | Scored on the worse leg. The on-chain buffer has run in the low single digits as a share of assets, so redemption at size depends on the off-chain leg being realised rather than on anything a holder can execute |
+| Liquidity & Exit | **2.0** | ⚠️ **Scored on what it costs to leave.** Exiting **$100,000 costs 762.0bps — $7,620** — and at **$500,000 the pool is exhausted rather than expensive: $500,000 in returns $96,268.57.** The on-chain buffer has run in the low single digits as a share of assets, so redemption at size depends on the off-chain leg being realised rather than on anything a holder can execute |
 | **Dependencies** | **2.5** | **The chain is **sUSDat → USDat → STRC → MSTR → bitcoin**, and 99% of the reserve sits at the STRC link — a preferred claim on a bitcoin treasury company, whose buyback support is discretionary and currently clears [about 2.6% below par](/reports/strc/). **Saturn Labs is the second dependency and the operator of the first.** ⚠️ **Concentration here is not a tail case, it is the design** |
 | Contract & Admin | **4.0** | **Set equal to [USDat](/reports/usdat/), which shares the same SaturnTimelock, delay, roles and `DEFAULT_ADMIN`.** ✅ **A genuine five-day self-administered delay with permissionless execution and no zero-delay path** — ⚠️ **but `PROPOSER` and `CANCELLER` are one EOA, so the cancel power belongs to whoever compromises the proposer**, and it is unestablished whether five days is exit-usable. Argued under [5 · Contract & Admin](#5--contract--admin--40) |
 | Issuer | 5.0 | Unchanged, and deliberately identical to [USDat](/reports/usdat/) — this axis scores Saturn Labs the company |
-| **Overall** | **3.5** | Unchanged. Both new axes land at or below the existing composite, so nothing here argues the number up or down |
+| **Overall** | **3.5** | Held. The exit is now priced rather than described, and the axes beneath it have moved further apart than the composite has |
+
+⚠️ **This composite sits ABOVE the mean of its own axes — 3.5 against 3.25 — and the gap is stated rather than left implicit.** It follows the Liquidity cut to 2.0, which moved one axis without moving the composite. ✅ **The reason it is held: the exit is the worst thing about this asset and it is already scored at 2.0**, so charging it again through the composite would price one finding twice. ⚠️ **What would move the overall is a finding on backing or on the operator**, not further movement on exit.
 
 ## 1 · Stability — 3.5
 
@@ -113,11 +115,11 @@ Strategy's LTV has stayed below the first rotation threshold throughout the even
 
 A live Strategy NAV input is not yet wired into the dashboard — the LTV-band table is shown, but the current-band indicator is deferred until a free feed is identified.
 
-## 3 · Liquidity & Exit — 3.5
+## 3 · Liquidity & Exit — 2.0
 
 Three paths, each with material trade-offs:
 
-**Curve sUSDat/USDC (retail).** The dominant secondary venue, and a thin one: the pool holds well under a tenth of a percent of sUSDat supply. The live dashboard surfaces market-basis slippage at $1K / $10K / $100K / $500K, measuring exit cost against the live market price so that pool depth is isolated from the discount to NAV. Since June the secondary has traded at a **discount to net asset value in the region of one percent**, on top of a NAV that is itself below par. A non-onboarded holder exiting here pays both. The binding constraint is pool-to-supply capacity rather than per-trade slippage at retail size — there simply is not much pool.
+**Curve sUSDat/USDC (retail).** The dominant secondary venue, and a thin one: the pool holds well under a tenth of a percent of sUSDat supply. ⚠️ **Measured on a market basis — against the live market price, so pool depth is isolated from the discount to NAV — exiting $100,000 costs 762.0bps: $92,380 returned on $100,000 in, a cost of $7,620.** ⚠️⚠️ **At $500,000 the pool is exhausted rather than merely expensive: $500,000 in returns $96,268.57.** ✅ **That is a cap, not a price** — past it the pool has nothing further to pay with, so size stops mattering because output stops moving. Since June the secondary has traded at a **discount to net asset value in the region of one percent**, on top of a NAV that is itself below par. A non-onboarded holder exiting here pays both. ⚠️ **The binding constraint is the per-trade cost itself, not the pool's size relative to supply.** **762bps at the smallest size this coverage routinely measures is not a thin market; it is an expensive one**, and the two are different findings for a holder.
 
 **Withdrawal queue (ERC-4626 unstake).** The standard 4626 queue-based unstake into USDat, with a 10 USDat minimum. Saturn documents an expectation of **about 3–7 days, executed when market conditions permit**, with an improvement flagged for a future vault version. Read that phrasing carefully: it is a discretionary settlement window, not a contractual deadline, and the discretion exists because filling the queue at size means selling STRC at the custodian.
 

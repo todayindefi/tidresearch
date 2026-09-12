@@ -54,7 +54,7 @@ backing_score: 5.0
 structural_score: 5.0
 redemption_score: 6.0
 underlying_score: 5.5
-liquidity_score: 6.0
+liquidity_score: 7.0
 issuer_score: 6.5
 overall_score: 5.0
 # ⚠️ 480,000,000 -> 599,000,000 on 2026-09-09. The old figure was a TOKEN SUPPLY
@@ -130,7 +130,7 @@ claim a holder actually owns is unregulated.
 |---|---|
 | **Backing** | PRIME reconciles to staked wYLDS, but the certificates behind that wYLDS are lent into the Democratized Prime facility rather than held as Treasuries — so a holder's claim runs through senior, HELOC-collateralized lending. Separately, FCC reported $601.524M of qualified assets against a $599.706M YLDS reserve at 31 March 2026, and chain reads independently show wrapper coverage above 100%. Those measures describe the certificate issuer, on different dates and denominators, not where a PRIME holder's certificates sit. |
 | **How to exit** | Sell near NAV on Ethereum Uniswap V3, or unbond PRIME→wYLDS and request wYLDS→USDC. The primary path is admin-fulfilled and depends on administered YLDS sales in market hours. |
-| **Liquidity** | Around $5M can be sold on Ethereum within a few basis points, then a hard ceiling set by the pool's USDC side — a little over 1% of market value, and it moves daily. Good execution below it, campaign-supported, no gradual warning as you approach it. |
+| **Liquidity** | **2.1bps to exit $100,000 and 3.5bps at $1,000,000**, then a hard ceiling set by the pool's USDC side — 2% depth measured at **$5,900,633**, above which output stops responding to size. Good execution below it, campaign-supported, no gradual warning as you approach it. |
 | **Yield** | Around 7% through NAV growth, sourced from a senior facility collateralized by Figure-owned HELOCs—not from the Treasury/repo assets backing YLDS. The rate floats with facility use and is published by the issuer. The Treasury layer pays SOFR minus 0.35%, around 3%, so roughly 3 to 4 points of PRIME's yield is payment for HELOC credit risk. |
 | **Used as collateral** | Heavily. ⚠️ **The share is under review: the posted figure dates from 2026-07-27 and supply has since grown 30.2%**, so "over half" is no longer established — the same dollars posted would now be under half. **That the practice is large is not in question**, on Morpho and Kamino at 86–88% LTV. Priced by an accrued-value oracle, so market dips don't trigger liquidations — but the mark can exceed what the collateral would sell for. |
 | **Admin & custody** | Hastra controls fulfillment and freeze functions; the token stack spans Ethereum, Solana, and Provenance. Hastra is a disclosed Figure related party and uses licensed Figure software. |
@@ -153,13 +153,13 @@ The stronger legal description is balanced by limited history and concentration 
 
 ⚠️ **THREE CUSHIONS SIT AT THREE LAYERS AND THEY DO NOT ADD.** **17.6bp at the wrapper** (here), **a roughly 5% margin at the facility** (the 95% advance rate, below), and **100.74% at FCC** (the certificate reserve, below) — which is the borrower's own reserve requirement one layer further out. **They apply in sequence to different obligations, so the largest of the three is not the one nearest a PRIME holder; the 17.6bp is.** A reader given only the outermost figure would materially overstate the protection standing in front of them.
 
-## 3 · Liquidity & Exit — 6.0
+## 3 · Liquidity & Exit — 7.0
 
 Ethereum Uniswap V3 has recently shown under $10M of pool liquidity. That gives holders a practical immediate exit for ordinary size and is materially better than wYLDS's standalone market. It also creates a price-discovery path independent of Hastra's primary redemption process.
 
 Both venues have now been measured directly, and both turn out to be capped the same way: by how much of the other side of the pool there is to sell into. On Ethereum that is roughly $6.4M of USDC; on Solana, measured from the pool's own liquidity rather than estimated from a router, it is roughly $5.9M of PYUSD. Together that is about 2.7% of PRIME's market value — but the two are separate exits in different currencies, so reaching both means splitting the position across two chains rather than selling once.
 
-Pool size is not the same as tradeable size, so the Ethereum exit was measured by quoting actual sale sizes against that pool. Selling PRIME for USDC costs under a basis point for ordinary size and only a few basis points at $5M. Then it stops: once the pool's USDC side is consumed — roughly $6.4M when measured, and it moves day to day — additional PRIME returns no additional dollars at all. Execution is excellent right up to a cliff, with no gradual worsening to warn a seller they are approaching it. Around $5M remains the sensible ceiling for a single low-slippage exit on that venue, and that ceiling shrinks whenever the pool rotates toward PRIME. The current figure is on the dashboard, updated hourly.
+Pool size is not the same as tradeable size, so the Ethereum exit was measured by quoting actual sale sizes against that pool. Selling PRIME for USDC costs **2.1bps at $100,000 and 3.5bps at $1,000,000**, and **9.70bps at $5M**, with the ladder tested to $14M. Then it stops: once the pool's USDC side is consumed — roughly $6.4M when measured, and it moves day to day — additional PRIME returns no additional dollars at all. Execution is excellent right up to a cliff, with no gradual worsening to warn a seller they are approaching it. Around $5M remains the sensible ceiling for a single low-slippage exit on that venue, and that ceiling shrinks whenever the pool rotates toward PRIME. The current figure is on the dashboard, updated hourly.
 
 The limitation is durability. The deepest Ethereum market is supported by the PRIME Roots campaign, so observed volume should not be assumed to persist after incentives. The quote ladder is also a single-block snapshot, not guaranteed capacity. The pool was noticeably USDC-heavy when measured, and that balance is what funded the quoted exits; the ratio matters more than headline TVL, because capacity will shrink proportionally if the pool rebalances toward PRIME. Ethereum is now the larger of the two deployments. Larger exits can therefore face both pool-slippage risk and the operational risk of a market whose depth was built during a growth campaign.
 
