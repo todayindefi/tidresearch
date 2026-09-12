@@ -96,6 +96,8 @@ A price recovery driven by an expiring issuer bid is still not the same thing as
 
 This is the dimension where sUSDat differs most sharply from its sibling — **only a fraction of vault value is directly verifiable on-chain.**
 
+⚠️ **The vault's own accounting proves the point before any oracle is involved.** Read 2026-09-12, `totalAssets()` returns **$72,166,002** denominated in USDat — while **the entire supply of USDat is $68,155,049**. ⚠️ **A vault cannot hold more of an asset than exists**, so that figure is a *valuation* of something else, not a holding. **The USDat it actually holds is $1,818,584 — about 2.5% of its stated assets**, read with a single `balanceOf` against the addresses in [5 · Contract & Admin](#5--contract--admin--40). ✅ **This is checkable by anyone in two calls and does not depend on trusting the producer's split.**
+
 The vault holds USDat as an on-chain "liquidity buffer" that anyone can read with a single `balanceOf` call. That buffer has been running in the low single digits as a share of assets since midsummer — oscillating in a roughly 1.4% to 2.3% band across recent reads, against roughly one-fifth back in May — as the reserve rotated further into STRC. The remaining **about 98–99% is held off-chain as STRC plus T-bills at the custodian**. The contract's `totalAssets()` reports the combined value, but the off-chain leg currently rests on the contract's own reporting rather than on the Accountable attestation and Chainlink NAV oracle the documentation describes.
 
 The live dashboard makes this asymmetry visually explicit: the reserve-split panel renders the on-chain leg as solid green (directly verifiable) and the off-chain STRC leg as striped amber (trust-the-oracle). This is not a "the assets aren't there" signal — by all available evidence the off-chain STRC is held and accruing dividends as advertised — but it is a structural reminder that the verifiability story for sUSDat is materially weaker than for USDat itself, and it is the reason STRC's price moves land in the share price almost one-for-one.
@@ -170,6 +172,18 @@ Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient s
 **sUSDat's exposure is almost entirely to something it cannot read on-chain.** ⚠️ **About 99% of the vault's claim is an off-chain STRC position and roughly 1% is an on-chain USDat buffer**, so the dependency chain runs **sUSDat → USDat → STRC → Strategy Inc.** ✅ **The USDat leg is verifiable with a single call; the STRC leg is not**, and that asymmetry is the axis. **Composition is argued under Backing above** — this axis prices who is at the far end of it. See [MSTR](/reports/mstr) for the Strategy analysis and [STRC](/reports/strc) for the instrument itself.
 
 ## 5 · Contract & Admin — 4.0
+
+**The contracts this section describes, each identified by what it answers rather than by the name attached to it** (read 2026-09-12):
+
+| role | address | established by |
+|---|---|---|
+| sUSDat vault (ERC-4626) | `0xD166337499E176bbC38a1FBd113Ab144e5bd2Df7` | `symbol()` = sUSDat, `name()` = Staked USDat |
+| its `asset()` — USDat | `0x23238f20b894f29041f48D88eE91131C395Aaa71` | returned by the vault's own `asset()`; `symbol()` = USDat |
+| SaturnTimelock | `0xfD5782E3BFF366601da3973aE30C583dE4F08A67` | holds `DEFAULT_ADMIN_ROLE` on **both** the vault and the token |
+| USDat ProxyAdmin | `0xcf1072da5f0d127aef99136489bad08bfa3d1a7d` | USDat's EIP-1967 admin slot; its `owner()` returns the timelock |
+| sUSDat implementation | `0x2005e0ca201a37694125ff267ae57872bea0a0ce` | the vault's EIP-1967 implementation slot |
+
+✅ **Every role read was paired with a control that came back different:** `DEFAULT_ADMIN_ROLE` returns **true** for the timelock and **false** for a burn address on both contracts, so a false here means absence rather than a check that could only ever answer one way. ⚠️ **The vault's own EIP-1967 admin slot is zero** — there is no ProxyAdmin standing in front of it, and upgrade authority runs through the role above rather than through a separate contract.
 
 ✅ **The delay itself is the strongest in the STRC family, and it survives scrutiny rather than merely being long.** Re-verified on-chain 2026-09-10, each role check paired with a control address that returns false:
 
