@@ -204,7 +204,7 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 
 | | | |
 |---|---|---|
-| **Overall Risk** | **4.0/10 — Elevated** | was 4.5 |
+| **Overall Risk** | **3.5/10 — Elevated** | was 4.0 |
 | Stability | 8.0/10 | new axis |
 | Contract & Admin | 4.5/10 | new axis |
 | Redemption | 2.0/10 | new axis |
@@ -247,6 +247,6 @@ It sits at 5.0 because this axis has to answer a second question as well: **can 
 >
 > **Stability holds at 8.0, and it is important not to misread it.** That axis scores the **NAV**, which is behaving exactly as a T-Bill NAV should — 1.035365, smooth accrual, no drama. The dislocation is between the *market price* and NAV, and it is priced under Liquidity and Redemption instead. It is now the only high axis on the page. The honest summary: **the underlying T-Bills are genuinely safe, and almost everything about getting at them is not.**
 
-- **2026-08-23 — reserve composition restated, custody measured, scores cut.** **96.34% of thBILL is held intra-protocol at the thUSD reserve**, against a 55–70% band recorded earlier in the year: of 58,480,001.56 outstanding, **56,336,827.05 sits in the reserve Safe**, leaving an external float near **2.14M tokens, about $2.2M**. Supply fell **29%** over the period, to about **$60.6M** at NAV 1.035365 from $87.0M on 08-18. ⚠️ **The last redemption through the primary path was 2026-07-09**, and the last not attributable to Theo's own operator address was 2026-07-08. **Reserve custody sits at bare single-signature wallets outside the multisig.** The market discount reached **−2.58% to NAV**, outside the −80 to −150 bp band, which the float collapse explains rather than a stress event.
+- **2026-08-23 — reserve composition restated, custody measured, scores cut. Overall 4.0 → 3.5.** **96.34% of thBILL is held intra-protocol at the thUSD reserve**, against a 55–70% band recorded earlier in the year: of 58,480,001.56 outstanding, **56,336,827.05 sits in the reserve Safe**, leaving an external float near **2.14M tokens, about $2.2M**. Supply fell **29%** over the period, to about **$60.6M** at NAV 1.035365 from $87.0M on 08-18. ⚠️ **The last redemption through the primary path was 2026-07-09**, and the last not attributable to Theo's own operator address was 2026-07-08. **Reserve custody sits at bare single-signature wallets outside the multisig.** The market discount reached **−2.58% to NAV**, outside the −80 to −150 bp band, which the float collapse explains rather than a stress event.
 - **2026-08-23 — per-chain Safe thresholds measured.** The same Theo Safe `0x94877640…01295` governs all four chains at **4-of-6 on Ethereum, 3-of-5 on Arbitrum, 3-of-4 on Base and HyperEVM**. ⚠️ **The owner sets are strictly nested — one signer set with three chains holding truncations of it**, not four independent configurations. Ethereum's sixth signer is `0x97f60fb7…`. Separately, `ROLE_ADMIN` sits on a bare EOA `0xa04bddfb…9b2a` alongside the 4-of-7 Safe `0xd6d4Bcde…a196`.
 - **2026-08-18 — rubric migration and re-rate. Overall 4.5 → 4.0.**
