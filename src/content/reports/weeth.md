@@ -15,6 +15,8 @@ issuer: "ether.fi"
 yield_bearing: true
 volatility_score: 7.5
 liquidity_score: 6.5
+underlying_score: 6.0
+issuer_score: 7.5
 structural_score: 7.0
 redemption_score: 7.0
 overall_score: 7.0
@@ -172,6 +174,8 @@ If a confirmed on-chain reading shows EigenLayer exposure at "under 1% and falli
 | Liquidity | 6.5 | Deep on Curve, Balancer and Pendle at roughly 1.93M ETH-equivalent scale, but thinner than the Lido pair, limited on centralised venues, shallow on L2s. **Unchanged** — the restaking removal changed the risk model, not the order book. (Base 5.0, Arbitrum 5.5, Optimism 5.0.) |
 | Structural | 7.0 | 6-of-10 Safe into a 10-day timelock on upgrades, `PROPOSER_ROLE` confirmed on-chain, Certora formal verification, about three years clean at multi-billion scale. Capped because the unwind is unfinished (EigenPod credentials until Q4 2026) and because **the bridge layer is a separate 4-of-7 into a two-day timelock, measured 2026-08-27.** ⚠️ **Held at 7.0, and the reason for the cap has changed from unverified to measured:** the bridge exposure this axis was already discounting is now quantified and lands roughly where the cap anticipated — real delay, self-administered, with an independent canceller, but shorter and thinner than the headline. ⚠️ **The delegate path is now measured and clean on all five walked legs — delegate equals owner, so no undelayed configuration route exists there.** Ten of fifteen deployments remain unmeasured, which is breadth rather than an open door. (L2s 6.0.) |
 | Redemption | 7.0 | Permissionless and ungated: unwrap to eETH, request withdrawal, wait for a validator exit; or sell into deep DEX and Pendle markets. Raised half a point because the restaking-withdrawal delay no longer applies. Still slower and less battle-tested than stETH's queue. (L2s 6.0 — you must bridge to mainnet to redeem.) |
+| Underlying | 6.0 | ⚠️ **weETH is four upgrade arrangements, not one asset with a bridge attached.** Ethereum is the 6-of-10 Safe into a 10-day timelock. **Base and Optimism are one configuration deployed twice** — different ProxyAdmins answering to the same timelock `0x851Dd540f4D2Ec78120De0a0cc87B21EdE5Df5C6`, both at three days. ⚠️ **On Arbitrum the token is a BeaconProxy behind a beacon shared with WBTC**, so an Arbitrum holder's upgrade counterparty is the bridge operator rather than ether.fi. ✅ **Against that, the exposure itself is ordinary:** ETH consensus staking, with the residual EigenLayer dependency sitting at the validator layer while EigenPod withdrawal credentials remain until Q4 2026. |
+| Issuer | 7.5 | ✅ **ether.fi removed restaking from weETH on 2026-08-06**, moving it to a separate opt-in token — an issuer deleting a yield source to shrink a risk surface its holders were carrying, which is rare enough to credit. About three years at multi-billion scale with no incident, Certora formal verification, and a mainnet admin posture stronger than any protocol in this database. ⚠️ **Capped at 7.5 because the removal is press-reported rather than proven on-chain by us**, and because the L2 deployments are administered to a weaker standard than the mainnet contracts. |
 | **Overall** | **7.0** | Moderate risk, materially improved — and improved for a structural reason rather than a market one. Deliberately kept a notch below where we would place Rocket Pool's rETH: the EigenLayer exit is press-reported rather than verified, and the bridge configuration is unaudited by us. |
 
 ## Who it's for
