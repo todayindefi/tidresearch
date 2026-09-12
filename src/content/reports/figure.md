@@ -219,7 +219,18 @@ The group also discloses a history of losses and warns that it may not maintain 
 
 ## The regulated subsidiary
 
-FCC is the strongest node in the stack. It is a full SEC reporting registrant, and KPMG has audited its annual statements since 2024. The FY2025 opinion was clean. At **31 March 2026**, FCC reported $601.524M of qualified assets against a $599.706M certificate reserve, about 100.3% coverage. The assets were $211.3M of Treasuries and money-market funds plus $389.556M of overnight Treasury-collateralized repo, with no Level 3 holdings.
+FCC is the strongest node in the stack. It is a full SEC reporting registrant, and KPMG has audited its annual statements since 2024. The FY2025 opinion was clean. At **30 June 2026**, FCC reported **$561.910M of qualified assets against a $557.494M certificate reserve**, and at 31 March it was $601.524M against $599.706M — about 100.3% coverage then.
+
+⚠️ **The repo counterparty changed, and it is worth reading as a change in kind rather than in size.** FCC's Q2 10-Q, **Schedule I**, lists two repurchase-agreement counterparties at 30 June 2026:
+
+| counterparty | amount | share |
+|---|---:|---:|
+| **Hidden Road Partners CIV US LLC** | **$200,000K** | **70.8%** |
+| UMB Bank N.A. | $82,361K | 29.2% |
+
+**UMB still holds the investments on deposit** — $555,722K under Schedule V, alongside $5,488K of cash at Lead Bank and $700K at Flagstar Bank, N.A. **So custody and repo used to be the same name and are now two, and only custody is still UMB.** ⚠️ **$200M of a regulated retail certificate issuer's qualified assets now sits in overnight repo with a counterparty that is not the bank holding its custody.**
+
+⚠️⚠️ **What is NOT established, and should not be inferred from its inclusion here: what Hidden Road Partners CIV US LLC is.** Its legal form, ownership, regulatory status and whether it is a related party are all unread. **This is the filing's disclosure, not a judgement about the counterparty** — and the reason it appears is that the identity of a counterparty holding 70.8% of the repo book is exactly the thing a reader of [wYLDS](/reports/wylds/) would want resolved before relying on it. The assets were $211.3M of Treasuries and money-market funds plus $389.556M of overnight Treasury-collateralized repo, with no Level 3 holdings.
 
 That quarterly information is unaudited. FCC's Q1 filing explicitly says its interim financial information has not been audited; the KPMG opinion applies to the annual statements. The distinction matters because “SEC-filed” and “audited” are not interchangeable.
 
