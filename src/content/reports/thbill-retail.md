@@ -16,7 +16,7 @@ issuer: "Theo Protocol Corporation"
 volatility_score: 8.0
 structural_score: 3.5
 redemption_score: 2.0
-underlying_score: 5.0
+underlying_score: 4.0
 liquidity_score: 2.0
 issuer_score: 4.5
 overall_score: 3.5
@@ -208,9 +208,11 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 | Stability | 8.0/10 | new axis |
 | Contract & Admin | 4.5/10 | new axis |
 | Redemption | 2.0/10 | new axis |
-| Underlying | 5.0/10 | held |
+| Underlying | 4.0/10 | was 5.0 |
 | Liquidity | 2.0/10 | was 3.5 |
 | Issuer | 4.5/10 | held |
+
+**Underlying moves to 4.0.** The sponsors are bluechip — Wellington and Standard Chartered's Libeara behind tULTRA, Fidelity International behind FILQ — but this axis is read on what can be verified about the collateral, not on the strength of the names. ⚠️ **None of the three legs carries independent coverage or a published audit of its wrapper**, and about a quarter of the basket is USDC, which appears in no published description of the reserve. ✅ **The T-bill exposure itself is not in question, and this is not an exit finding** — redemption and liquidity are scored separately at 2.0 each. What moved is how much of the axis can rest on measurement rather than on sponsor reputation.
 
 **On the scoring rubric — and why it changed.** thBILL is a **vault share**: a unit in a fund, whose value tracks the fund's NAV. This report used to score it on the *stablecoin* rubric (peg / backing / underlying / liquidity / issuer), which was the wrong lens and had a specific cost — **that rubric has no redemption axis**, so the most important thing a retail holder of this asset needs to know had nowhere to appear. It now scores on the same six axes as every other fund-share report on this site.
 

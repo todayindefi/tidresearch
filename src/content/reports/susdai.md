@@ -26,13 +26,13 @@ redemption_score: 4.0
 liquidity_score: 5.0
 underlying_score: 4.5
 issuer_score: 5.0
-overall_score: 5.0
+overall_score: 4.5
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=susdai"
 ---
 
 # sUSDai — Risk Report
 
-**Moderate-to-elevated risk · 5.0/10**
+**Moderate-to-elevated risk · 4.5/10**
 
 | Yield | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=susdai
 
 sUSDai is the yield-bearing, credit-risk-bearing leg of USD.AI. You stake USDai into an ERC-7540 async vault that lends to neoclouds and AI-infrastructure operators against installed GPU hardware, run on the MetaStreet lending engine. All of the yield and all of the collateral exposure live here — **not in USDai**, which is the clean PYUSD reserve leg covered in its [own report](/reports/usdai/). In plain terms this is a **tokenized private-credit fund collateralized by AI compute hardware**, not a stablecoin, and it should be sized like one.
 
-The 5.0/10 reflects a genuinely-structured credit product carrying genuinely exotic collateral. On the supportive side: real overcollateralization at a stated 70–80% LTV, a debt-service reserve funded at each loan's close, a warrantied collateral-value schedule with an institutional reinsurance layer above it, a Cantina audit with no critical or high findings, and an admin chain whose 48-hour delay is binding rather than decorative. Working against it: the collateral depreciates on a technology cycle and cannot be marked from chain, **two borrowers represent close to the entire loan book**, delinquency and default rates are not disclosed anywhere public, and the primary exit is a 30-day queue that the protocol will let roll rather than force-liquidate loans to meet.
+The 4.5/10 reflects a genuinely-structured credit product carrying genuinely exotic collateral. On the supportive side: real overcollateralization at a stated 70–80% LTV, a debt-service reserve funded at each loan's close, a warrantied collateral-value schedule with an institutional reinsurance layer above it, a Cantina audit with no critical or high findings, and an admin chain whose 48-hour delay is binding rather than decorative. Working against it: the collateral depreciates on a technology cycle and cannot be marked from chain, **two borrowers represent close to the entire loan book**, delinquency and default rates are not disclosed anywhere public, and the primary exit is a 30-day queue that the protocol will let roll rather than force-liquidate loans to meet.
 
 The vault grew materially over the summer — **total assets of $354.99M as of 2026-08-12, up about 18% in three weeks** — and secondary depth grew faster, which is what moved the liquidity axis this cycle. What did not change is the binding constraint. Concentration, disclosure and the redemption gate are where this asset's risk actually sits, and none of them improved.
 
