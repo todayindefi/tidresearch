@@ -16,7 +16,7 @@ issuer: "Permian Labs"
 market_cap_approx: 174400973
 peg_mechanism_score: 7.0
 backing_score: 7.0
-underlying_score: 7.5
+underlying_score: 7.0
 liquidity_score: 4.5
 issuer_score: 5.0
 structural_score: 3.0
@@ -78,13 +78,17 @@ This is the weakest dimension by a distance, and the reason a strong backing sco
 
 The third path in practice is to **stake into sUSDai** rather than exit, which trades a liquidity problem for a credit-and-queue problem. Different risk profile, [different report](/reports/susdai/).
 
-## 4 · Dependencies — 7.5
+## 4 · Dependencies — 7.0
 
 **What USDai passes through to, and what it is not exposed to.**
 
-**A note on how the two backing-related axes divide, because they are not measuring the same thing.** On this rubric **Backing scores whether the reserve can be *verified*** — here, a `baseToken()` call and a `balanceOf` against supply, which is about as good as that gets. **Underlying scores what the reserve *is*.** A reader comparing this report against one that folds both into a single number should expect the split to produce different-looking figures for the same book; it is a difference in what is being asked, not in what was found.
+**How this axis is set for a wrapper, because it is not argued from scratch.** USDai holds PYUSD directly in its own token contract and passes that exposure through unchanged — it does not tranche it, re-collateralise it or redistribute it. **A passthrough wrapper's Dependencies axis is set EQUAL to its underlying's rather than derived independently**, so this row is [PYUSD](/reports/pyusd/)'s row. ✅ **That is deliberate rather than a shortcut:** scoring it separately lets a wrapper's dependency rating drift away from the thing it wraps, and a wrapper cannot depend on something better than what it holds.
 
-The **Underlying axis sits at 7.5** because PYUSD is high-quality collateral by any reasonable standard: a Paxos Trust Company stablecoin under New York Department of Financial Services supervision, fully reserved in US Treasury bills, overnight repo and cash, with monthly Paxos attestations. Holding USDai is a 1:1 claim on that. It is capped below 8 only because of the one-layer indirection — you hold a token that holds PYUSD, which holds T-bills, rather than holding the bills.
+**Dependencies therefore sits at 7.0, level with PYUSD.** What a USDai holder depends on is what a PYUSD holder depends on: ✅ **reserves in a bankruptcy-remote trust structure under NYDFS supervision** — the specific arrangement whose absence broke USDC in March 2023 — and an issuer that has run regulated stablecoins since 2018 without a depeg. Holding USDai is a 1:1 claim on that. ⚠️ **PayPal's user base is distribution, not backing**: it is why the asset has reach, not a counterparty standing behind it.
+
+⚠️ **One dependency USDai adds that native PYUSD does not: the LayerZero OFT deployment.** A bridged leg puts an endpoint, a peer configuration and a verifier set between the holder and the reserve. **That is measured and priced in [5 · Contract & Admin](#5--contract--admin--30) rather than restated here**, because what the walk found is an undelayed mint route — the adapter's `setPeer` — and not a question about what the collateral is. **It is priced once, on the axis where it was measured.**
+
+✅ **Permian Labs is not credited on this axis either.** The operator's own standing is [6 · Issuer](#6--issuer--50), where it sits at 5.0; this row is about what stands behind the reserve, and the reserve is Paxos'.
 
 **A clarification that matters for anyone reading across our coverage: USDai is not backed by `$M`.** It was widely described that way, and that description is the thing to discard — the reserve is PYUSD, and the verification above reads the actual token balance rather than trusting any description of it.
 
