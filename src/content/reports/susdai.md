@@ -80,9 +80,28 @@ The mitigants are real but bounded: the debt-service reserve, a staked-CHIP firs
 
 ## NAV, yield, and a trap on the block explorer
 
-sUSDai is a vault share, so the metric is **discount to net asset value**, not price against a dollar. NAV read on-chain at **$1.1046** on 2026-08-12, against $1.0875 on 2026-05-28 — 76 days apart, which works out to roughly **7.8% annualised**, smooth, with no jumps. That is modest for a loan book grossing more than that, and the gap is explained by fees plus the drag of holding a quarter of assets idle as the redemption buffer. Secondary prices have tracked NAV closely in calm conditions.
+sUSDai is a vault share, so the metric is **discount to net asset value**, not price against a dollar. The deposit-side price read on-chain at **$1.1046** on 2026-08-12, against $1.0875 on 2026-05-28 — 76 days apart, which works out to roughly **7.8% annualised**, smooth, with no jumps. That is modest for a loan book grossing more than that, and the gap is explained by fees plus the drag of holding a quarter of assets idle as the redemption buffer. Secondary prices have tracked NAV closely in calm conditions.
 
-**If you check this vault on a block explorer, do not compute NAV as `totalAssets / totalSupply`.** That gives about **$1.745** and it is wrong — it reads the share price roughly 58% high. The correct getter is **`convertToAssets`**, which returns $1.1046. This matters precisely for the reader doing their own homework: the naive division is the obvious thing to try, it returns a plausible-looking number, and it is badly misleading.
+### sUSDai has two share prices, and which one you want depends on what you are asking
+
+⚠️ **There is no single "NAV" here.** The vault publishes two prices and they answer different questions. Read 2026-09-12 on Arbitrum:
+
+| getter | reads | what it answers |
+|---|---:|---|
+| `depositSharePrice()` | **1.111760** | what a **new depositor pays** |
+| `convertToAssets(1e18)` | **1.111760** | ⚠️ **identical to the deposit price** |
+| **`redemptionSharePrice()`** | **1.107063** | ✅ **what an exit settles at** |
+| `totalAssets / totalSupply` | 1.566819 | ⚠️ **wrong — 41.5% above the redemption price** |
+
+⚠️ **So if you are modelling an exit, use `redemptionSharePrice()`.** The gap is **42.4 bps**, and `convertToAssets` — the getter a careful reader would naturally reach for, and the one most explorers surface — returns the **entry** price.
+
+**Quote the gap, timestamp the level.** The deposit price accrues continuously by construction, so the absolute numbers move between any two reads: 1.104646, then 1.111753, then 1.111760 over a few days. **The ~42bp spread has been far more stable than either level**, which makes it the more useful figure to carry.
+
+✅ **The divergence is deliberate and USD.AI documents it.** Their withdrawal-estimates page states that the deposit price *"continuously prorates expected upcoming repayments across all loans in the book"* while the redemption price *"is based on settled repayments and realized vault accounting."* The stated purpose is symmetric and runs **in favour of existing holders**: a new depositor *"enters at a price that already reflects the yield expected to accrue"* so they cannot buy in just before a repayment and capture a step someone else earned, and a redeemer *"does not receive value before it has actually been received by the vault."* **It is offered as an alternative to a fixed redemption fee, not as a haircut.**
+
+⚠️ **That it is documented does not make it costless to a holder.** Two prices are a thing you have to model, the redemption leg settles through a **30-day FIFO queue**, and the priority-exit auction is **not live on-chain**. **Disclosed complexity is still complexity.**
+
+**And do not compute NAV as `totalAssets / totalSupply`.** That gives about **$1.57** and is badly wrong in the flattering direction. ⚠️ **The naive division is the obvious thing to try and it returns a plausible-looking number** — which is exactly what makes it dangerous for a reader doing their own homework.
 
 The reason the two differ is that **203.42M shares represent only about $224.70M of a $355M pool** — a gap of roughly $130M between assets held and claims outstanding. To be clear about what is and is not known here: the **assets side reconciles completely**, as set out above, so nothing is missing or overstated. What is unexplained is the claims side. The most likely reading involves deposits that have been received but whose shares have not yet been minted under the vault's async settlement model, which would fit an 18% AUM increase in three weeks — **but the vault exposes no getter that confirms it**, and we do not assert a cause we cannot verify. We state the trap and the correct getter; the cause is an open item, tracked and not resolved.
 
