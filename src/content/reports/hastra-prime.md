@@ -69,7 +69,7 @@ market_cap_approx: 590168139
 
 # Hastra PRIME — Risk Report
 **Moderate-elevated risk · 5.0 / 10**
-*Vault share · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), with Figure/YLDS backing · ~half a billion dollars · verified 2026-07-30*
+*Vault share · Ethereum + Solana · Issuer: Hastra (Signum Ltd.), with Figure/YLDS backing · ~half a billion dollars · verified 2026-09-11*
 
 *Independent backing, reserve segregation, cross-chain supply, redemption-buffer health, warehouse turnover, and liquidity are on the [dashboard](https://todayindefi.github.io/backing-monitor/?asset=hastra-prime), updated hourly.*
 

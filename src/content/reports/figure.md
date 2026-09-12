@@ -15,7 +15,7 @@ chains: []
 category: "tradfi-equity"
 assessment_type: "light"
 date: "2026-07-31"
-last_verified: "2026-07-31"
+last_verified: "2026-09-13"
 # ⚠️ 2026-09-08 re-based the Q2 delinquency table (three rows were comparing to
 # 31 Dec 2025, not 31 Mar) and refreshed the lien mix. `last_verified` HOLDS —
 # the filing was not re-read end to end.
@@ -31,7 +31,7 @@ overall_score: 5.0
 
 # Figure — Risk Report
 **Moderate-elevated risk · 5.0 / 10**
-*TradFi dependency · Nasdaq: FIGR · Upstream of PRIME and wYLDS · verified 2026-07-31*
+*TradFi dependency · Nasdaq: FIGR · Upstream of PRIME and wYLDS · verified 2026-09-13*
 
 > **Scope: counterparty analysis.** This report assesses Figure as the company upstream of [PRIME](/reports/hastra-prime) and [wYLDS](/reports/wylds). It is not equity investment research and makes no recommendation about FIGR shares.
 
@@ -52,7 +52,7 @@ lending facility that PRIME's backing is lent into.
 The direction of travel on that loan book is the reason this report is not scored higher. Delinquency on the
 loans Figure holds for sale rose three periods running — from about 3.9% to about 5.5% to roughly 6.6% — and
 then **fell to 5.05% in Q2 2026**. ⚠️ **That fall is not the reversal it looks like.** Across the same quarter
-**nonaccrual UPB rose from $2.4M to $14.1M** — roughly 17% to 72% of the 90-plus bucket — and the securitized
+**nonaccrual UPB rose from $2.4M to $14.1M** — roughly 17% to 72% of the 90-plus bucket, and ⚠️ **a six-month move, 31 December 2025 to 30 June 2026, rather than a quarterly one** — and the securitized
 60-plus line broke flat at **0.8% → 1.1%**. **The rate and its composition moved in opposite directions**, and
 composition is the half that describes what is actually in the book. The book grew throughout, so the earlier
 rises were not a shrinking-denominator effect — and the later fall is partly the same arithmetic running the
@@ -76,7 +76,7 @@ than its regulatory standing suggests.
 |---|---|
 | **What it is** | The largest US non-bank home-equity lender, listed on Nasdaq, plus a separate SEC-registered subsidiary that issues the certificate backing wYLDS. |
 | **Why it matters to you** | It originates and services the loans behind PRIME's yield, and its subsidiary issues the certificate behind wYLDS. |
-| **Loan quality trend** | ⚠️ **Mixed, and the headline is the flattering half.** Delinquency on loans held for sale **fell 6.61% → 5.05%** in Q2 2026 — but **nonaccrual UPB rose $2.4M → $14.1M** and the securitized 60-plus line broke flat at **0.8% → 1.1%**. **The rate improved while the composition worsened**, and the two are argued separately under [credit quality](#why-the-two-delinquency-numbers-disagree). |
+| **Loan quality trend** | ⚠️ **Mixed, and the headline is the flattering half.** Delinquency on loans held for sale **fell 6.61% → 5.05%** in Q2 2026 — but **nonaccrual UPB rose $2.4M → $14.1M over six months (31 Dec 2025 → 30 Jun 2026)** and the securitized 60-plus line broke flat at **0.8% → 1.1%**. **The rate improved while the composition worsened**, and the two are argued separately under [credit quality](#why-the-two-delinquency-numbers-disagree). |
 | **The regulated part** | Figure Certificate Company files with the SEC, is KPMG-audited annually, and holds Treasuries, money-market funds and Treasury-backed repo. Genuinely strong, and separate from the lending risk. |
 | **Lender's cushion** | The facility advances up to 95% against pledged loan balances, so the cushion protecting lenders is around 5% — not the ~40% homeowner equity figure the loan-to-value stats might suggest. |
 | **Governance** | The weakest area. A multi-entity group, a regulated subsidiary whose twelve-month liquidity rests on a written parent commitment, and a related company running a public protocol on licensed Figure software with no disclosure obligations of its own. |
@@ -89,7 +89,7 @@ than its regulatory standing suggests.
 | Axis | Score | What it rests on |
 |---|---|---|
 | Balance sheet | **5.5** | Loans that cannot be sold or pledged **accumulate on the balance sheet**, which is why the securitized-pool statistics are the flattering proxy and the held-for-sale book is the honest one. See [the loan book](#the-loan-book). |
-| Credit quality | **5.0** | ⚠️ **Re-based to evidence rather than proxy, and one good quarter does not un-base it.** Headline delinquency improved 6.61% → 5.05%, but **nonaccrual UPB went $2.4M → $14.1M** — roughly 17% to 72% of the 90-plus bucket — and the securitized 60-plus line broke flat at 0.8% → 1.1%. **The direction of the headline and the direction of the composition disagree.** |
+| Credit quality | **5.0** | ⚠️ **Re-based to evidence rather than proxy, and one good quarter does not un-base it.** Headline delinquency improved 6.61% → 5.05%, but **nonaccrual UPB went $2.4M → $14.1M across six months** — roughly 17% to 72% of the 90-plus bucket — and the securitized 60-plus line broke flat at 0.8% → 1.1%. **The direction of the headline and the direction of the composition disagree.** |
 | Funding model | **5.5** | Four exits — hold, whole-loan sale, securitization, Democratized Prime — genuinely diversify funding, **but at least one must stay open for originations to keep moving.** ⚠️ **Held through the Kiavi close rather than cut:** $600M of term leverage replaced originate-to-distribute, which pulls the axis down, but retiring a margin-callable repo line and a credit agreement — **with all liens released** — removes a stress-correlated run channel and leaves the acquired book unencumbered. **A swap of acute risk for chronic cost, not a deterioration.** ⚠️ **Magnitude undeclared:** the filing does not state either retired facility's size. See [how Figure funds itself](#how-figure-funds-itself). |
 | **Governance** | **4.5** | **The weakest axis, and deliberately so.** Dependencies overlap across a listed parent, a lender, a regulated certificate issuer, advisers and transfer agents, and interchangeable use of "Parent" can assign an obligation to the wrong entity. Hastra is a **related party rather than a subsidiary**, with no public-company disclosure obligation. |
 | **Overall** | **5.0** | Sits at the mean of the four and below the two stronger ones, because **governance and credit quality are the axes that would transmit a problem to anything downstream** — and this report exists as a dependency for [wYLDS](/reports/wylds) and [PRIME](/reports/hastra-prime), not as an equity view. |
@@ -133,7 +133,13 @@ The most useful credit series is Figure's loans held for sale: loans still on it
 
 **So the score holds at 5.0, and the reason it holds is the same reason it was 5.0 before.** This report says the direction of travel on the loan book is why Figure is not scored higher. At the 90-plus, nonaccrual and securitized ends that direction is still adverse — the improvement is at the front of the pipeline, the deterioration is at the back, and the back is where losses are realised.
 
-**What would change it, stated so the hold is falsifiable:** a **second consecutive quarter** of falling headline delinquency, **with 90-plus dollars flat or falling and securitized 60+ back at or below 0.8%.** One quarter of a front-bucket improvement while the back buckets fill is not that. The Q3 10-Q is due around **2026-11-14**.
+**What would change it, and the test is restated because the previous one was too coarse to see this quarter.** ⚠️ **The old form asked for the headline ratio and the dollars to fall together — and that test passed on a quarter in which the 60–89 bucket nearly doubled.** **An aggregate test cannot see migration between buckets**, which is the only thing this book is doing.
+
+⚠️ **The bucket detail the aggregate hid:** the entire headline improvement is **30–59 falling 53.4%**. **60–89 is worse on both views — dollars +86.7%, ratio 0.464% → 0.735% — and it is the leading indicator.** ✅ **90-plus dollars rose only 1.7% and improved as a ratio, 3.90% → 3.37%**, which on a book growing 17.8% is new originations performing rather than old loans curing.
+
+✅ **Worth noting the Q1 pass predicted this in writing** — that the 30–59 bucket *"rolls into 60–89 and 90+ over the following two quarters"* — and 60–89 nearly doubled, at roughly 40% conversion, so real curing happened too. **A forecast that half-lands is still the strongest evidence here, because it was made before the data existed.**
+
+**The falsifiable form, per bucket rather than in aggregate: cut to 4.5 at Q3 if 60–89 rises again on both dollars and ratio, or if 90-plus rises on the ratio.** ⚠️ **Improving headline delinquency alone will not sustain the hold a second time.** The Q3 10-Q is due around **2026-11-14**.
 
 ⚠️ **And a reading habit worth carrying off this page.** A favourable headline can move for reasons that do not mean what they look like — here a delinquency rate fell partly because its denominator grew and its worst dollars aged into a slower bucket. [wYLDS](/reports/wylds/) shows the same shape from the other side, where a coverage ratio *improved* because its denominator shrank, and [thUSD](/reports/thusd/) shows it again where matched dollars flattered a sub-100% ratio. **When a ratio moves in your favour, check which side of it moved.**
 
@@ -151,7 +157,7 @@ The facility's contractual advance rate is up to **95%** of pledged balances, le
 
 Figure's securitized pools reported weighted-average delinquency of **0.8% at both 31 December 2025 and 31 March 2026** — and ⚠️ **1.1% at 30 June 2026, the first break in that flat line.** That looks inconsistent with a held-for-sale book moving from 5.46% to 6.61%. It is not inconsistent; the two groups are selected differently.
 
-Democratized Prime requires loans more than 60 days delinquent to leave its collateral pool. The troubled loan does not vanish: it moves out of the clean pool and back toward Figure's balance sheet, where Figure must substitute collateral, repay funding or absorb the problem.
+⚠️⚠️ **And the mechanism is what makes the 1.1% serious rather than merely higher.** Democratized Prime requires loans more than 60 days delinquent to leave its collateral pool — **so this pool is continuously cleaned of exactly the loans the metric counts, and the metric rose anyway.** **Loans are entering the 60-plus bucket faster than removal clears them.** ⚠️ **The two proxies also moved in opposite directions this quarter — held-for-sale improved, securitized worsened — and the one that worsened is the one with the favourable selection bias.** The troubled loan does not vanish: it moves out of the clean pool and back toward Figure's balance sheet, where Figure must substitute collateral, repay funding or absorb the problem.
 
 This creates selection bias. The sub-1% statistic describes loans remaining inside securitized pools; the higher held-for-sale statistic includes weaker loans returned to Figure. The clean number shows that trust protections work. It does not show that Figure's whole originated book is equally clean.
 
@@ -191,9 +197,9 @@ For PRIME holders, Figure's ability to replace or finance removed collateral is 
 
 Figure can hold loans, transfer them to institutional buyers, securitize them, or pledge them into Democratized Prime. Four exits diversify funding, but at least one must remain open for new originations to keep moving. ⚠️ **Since 2026-07-14 there is also a fifth source that is not an exit at all: $600M of 8.500% senior notes due 2031.** **That is balance-sheet leverage rather than a way of moving loans off it**, and it services at a fixed 8.5% whether or not any of the four exits stays open. **The figures in this section are Q1 and predate it.**
 
-Collateral in unconsolidated securitization vehicles rose from **$4.596B at 31 December 2025 to $6.766B at 31 March 2026**. The trusts are isolated from Figure's creditors. A third-party special servicer handles delinquent and defaulted loans and cannot be removed without cause—a meaningful independent protection.
+Collateral in unconsolidated securitization vehicles rose from **$4.596B at 31 December 2025 to $6.766B at 31 March 2026 and $7.731B at 30 June 2026**. ⚠️ **Maximum exposure to loss grew faster than the collateral behind it — $347.8M → $444.8M, up 27.9%, against collateral up 14.2%.** The trusts are isolated from Figure's creditors. A third-party special servicer handles delinquent and defaulted loans and cannot be removed without cause—a meaningful independent protection.
 
-Democratized Prime is another outlet. Its home-equity pool has recently lent roughly $350M, with utilization at **roughly two-thirds** and idle funds earning the YLDS-linked rate. Growth can signal a functioning market, or greater reliance on the facility if other buyers pull back.
+Democratized Prime is another outlet. Its home-equity pool had lent roughly **$351.8M against $521.2M supplied — utilization about two-thirds — read 2026-03-31**, with idle funds earning the YLDS-linked rate. ⚠️ **That is a Q1 reading, and the date is load-bearing because two other reports depend on this figure** — undated, a March number reads as current on [PRIME](/reports/hastra-prime/) and [wYLDS](/reports/wylds/). ⚠️ **The facility is now 88.1% related-party funded**, leaving a third-party leg of about $41.4M. Growth can signal a functioning market, or greater reliance on the facility if other buyers pull back.
 
 ⚠️ **At the Kiavi close, two of Kiavi's funding lines were retired rather than inherited.** Per the **2026-09-01 Form 8-K (Item 2.01)**, Figure **repaid in full** all outstanding obligations under the **Third Amended and Restated Credit Agreement** dated 2024-12-19, with U.S. Bank Trust Company, National Association as paying agent; and **Kiavi Funding, Inc. and Kiavi Funding Trust 2 terminated** their **Master Repurchase Agreement** with **Deutsche Bank AG, New York Branch**, dated 2025-09-19.
 
@@ -231,7 +237,7 @@ Governance is weakest because dependencies overlap across a listed parent, lende
 
 Hastra is a related party, not a subsidiary, with no public-company disclosure obligation. It licenses nontransferable Figure software and pays a **0.50% royalty** on transaction revenue. The initial term runs to December 2028 and renews annually. Figure records Hastra's YLDS as “Debt, current to related parties,” but the specific filing remains unresolved.
 
-At 31 March 2026, $472.990M of $598.047M in certificates—79%—was held by Figure's parent and controlled entities. The filings do not put Hastra in that set. This is entity concentration, not director or executive ownership.
+At 30 June 2026, **$477.536M of $556.033M in certificates — 85.9% — was held by Figure's parent and controlled entities**, up from 79% at 31 March. ⚠️ **The concentration rose because the affiliate leg grew and the outside leg did not:** related parties **$252.282M → $477.536M (+89.3%)** while third parties moved **$75.911M → $78.497M (+3.4%)**. **FCC roughly doubled and effectively every incremental dollar came from affiliates; outside demand is flat.** The filings do not put Hastra in that set. This is entity concentration, not director or executive ownership.
 
 Figure issues the certificate, originates and services loans, runs the facility, supports FCC and licenses Hastra's software. That reduces unknown-party risk but correlates failures. The 5.0 score reflects an unusually analyzable company whose integration makes legal boundaries and independent checks essential.
 
@@ -253,6 +259,8 @@ headline loan-to-value figures imply. Neither is a reason to avoid the stack, an
 it as a cash equivalent.
 
 *This report uses Figure Technology Solutions and Figure Certificate Company filings available through [EDGAR](https://www.sec.gov/edgar/browse/?CIK=2064124&owner=exclude), Figure's published facility terms, and public protocol and account records. It is counterparty analysis for downstream token holders, not equity investment research. Corrections welcome to info@tidresearch.com.*
+
+*Revision history: 2026-09-13 — **whole-body verification against the Q2 10-Qs and the 09-01 8-K; all four axes and the overall held.** ⚠️ **FCC's related-party concentration is 85.9%, not 79%** — related parties **$252.282M → $477.536M (+89.3%)** while third parties moved **$75.911M → $78.497M (+3.4%)**: the issuer roughly doubled and effectively every incremental dollar came from affiliates, with outside demand flat. ⚠️ **Securitization collateral is $7.731B at 30 June 2026**, and **maximum exposure to loss grew faster than the collateral behind it — $347.8M → $444.8M (+27.9%) against collateral +14.2%.** ⚠️ **The securitized 60-plus line is 1.1%, and the mechanism is what makes that serious: the Democratized Prime pool is continuously cleaned of loans more than 60 days delinquent — the exact loans the metric counts — and the metric rose anyway.** **The two delinquency proxies moved in opposite directions this quarter and the one that worsened is the one with the favourable selection bias.** ⚠️ **The credit-quality trigger is restated per bucket, because the aggregate form was too coarse to see this quarter:** the headline improvement is entirely **30–59 falling 53.4%**, while **60–89 — the leading indicator — is worse on both dollars (+86.7%) and ratio (0.464% → 0.735%)**. ✅ **90-plus dollars rose only 1.7% and improved as a ratio, 3.90% → 3.37%**, which on a book growing 17.8% reads as new originations performing. **Nonaccrual $2.4M → $14.1M is restated as a six-month move rather than a quarterly one.** **Democratized Prime's $351.8M lent against $521.2M supplied is dated to 2026-03-31** and the facility is **88.1% related-party funded**, leaving a third-party leg near $41.4M.*
 
 *Revision history: 2026-09-09 — **the four axes beneath the overall are published for the first time; no score changed.** ⚠️ **This report had carried an Overall of 5.0 with no breakdown at all**, so the composite could not be argued with — the reader saw a number and no way to test it. **Balance sheet 5.5 · Credit quality 5.0 · Funding model 5.5 · Governance 4.5** are the marks the analysis has been carrying, now shown against the sections that argue them, matching the convention the companion [MSTR](/reports/mstr) report has always followed. ✅ **The Q2-2026 content was already current** and was checked rather than assumed: headline delinquency 6.61% → 5.05%, the 90-plus bucket essentially flat at +1.7%, the 60–89 bucket at 2,285 → 4,267, and nonaccrual UPB $2.4M → $14.1M all present and correctly based. **Overall holds at 5.0.**
 
