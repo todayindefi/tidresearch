@@ -40,13 +40,13 @@ redemption_score: 3.5
 liquidity_score: 2.0
 issuer_score: 5.0
 underlying_score: 2.5
-overall_score: 3.5
+overall_score: 3.0
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
 
 # sUSDat — Risk Report
 
-**Significant risk · 3.5/10**
+**Significant risk · 3.0/10**
 
 | Yield target | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
@@ -58,7 +58,7 @@ sUSDat is the yield-bearing ERC-4626 staking wrapper for Saturn's [USDat](/repor
 
 **A sUSDat share is currently worth less than the USDat that was staked for it.** STRC de-anchored from its $100 par during the June 2026 Bitcoin drawdown, bottoming near $76, and because roughly 98% of this vault's assets are STRC held off-chain, that mark flowed almost undiluted into the share price. Share value fell to about 11% below par in July and has since recovered nearly all of it — to within about 0.6% of par on 2026-08-23 — as Strategy's buyback bid lifted STRC back toward the mid-$90s. The direction to understand is structural, not the day's number: **this vault absorbs STRC drawdowns directly into share value, not merely as foregone yield.** The 11% headline is a target conditional on the STRC mark, never a floor.
 
-The 3.5/10 score reflects a genuinely good piece of engineering wrapped around a concentrated credit bet. In its favour: a real audit set (Certora twice plus Three Sigma), a credible ERC-4626 design with 30-day anti-sniping yield vesting, a published LTV-rotation defense, a designed proof-of-reserves pipeline, and an admin surface that — as of June 2026 — sits behind the same 5-day on-chain timelock as USDat. Against it: a single cash-flow source in STRC, about 98% of vault value held off-chain at a custodian and visible only through the vault's own reporting, an on-chain buffer under two percent of assets, and a primary redemption path gated to onboarded holders.
+The 3.0/10 score reflects a genuinely good piece of engineering wrapped around a concentrated credit bet. In its favour: a real audit set (Certora twice plus Three Sigma), a credible ERC-4626 design with 30-day anti-sniping yield vesting, a published LTV-rotation defense, a designed proof-of-reserves pipeline, and an admin surface that — as of June 2026 — sits behind the same 5-day on-chain timelock as USDat. Against it: a single cash-flow source in STRC, about 98% of vault value held off-chain at a custodian and visible only through the vault's own reporting, an on-chain buffer under two percent of assets, and a primary redemption path gated to onboarded holders.
 
 ## Score breakdown
 
@@ -72,9 +72,9 @@ Every axis now states its reason.
 | **Dependencies** | **2.5** | **The chain is **sUSDat → USDat → STRC → MSTR → bitcoin**, and 99% of the reserve sits at the STRC link — a preferred claim on a bitcoin treasury company, whose buyback support is discretionary and currently clears [about 2.6% below par](/reports/strc/). **Saturn Labs is the second dependency and the operator of the first.** ⚠️ **Concentration here is not a tail case, it is the design** |
 | Contract & Admin | **4.0** | **Set equal to [USDat](/reports/usdat/), which shares the same SaturnTimelock, delay, roles and `DEFAULT_ADMIN`.** ✅ **A genuine five-day self-administered delay with permissionless execution and no zero-delay path** — ⚠️ **but `PROPOSER` and `CANCELLER` are one EOA, so the cancel power belongs to whoever compromises the proposer**, and it is unestablished whether five days is exit-usable. Argued under [5 · Contract & Admin](#5--contract--admin--40) |
 | Issuer | 5.0 | Unchanged, and deliberately identical to [USDat](/reports/usdat/) — this axis scores Saturn Labs the company |
-| **Overall** | **3.5** | Held. The exit is now priced rather than described, and the axes beneath it have moved further apart than the composite has |
+| **Overall** | **3.0** | ⚠️ **Cut, and the reason is a fact about the wrapper rather than about the collateral.** The composite had been derived by looking through to STRC, which prices what backs the vault but is **silent on whether the vault's own exit works** — and that exit is exhausted at $500,000. **A look-through cannot see a wrapper-level constraint**, so the old figure was set before this one was known |
 
-⚠️ **This composite sits ABOVE the mean of its own axes — 3.5 against 3.25 — and the gap is stated rather than left implicit.** It follows the Liquidity cut to 2.0, which moved one axis without moving the composite. ✅ **The reason it is held: the exit is the worst thing about this asset and it is already scored at 2.0**, so charging it again through the composite would price one finding twice. ⚠️ **What would move the overall is a finding on backing or on the operator**, not further movement on exit.
+**On where this sits against its own axes.** 3.0 is **0.25 below the mean of 3.25**, which is the direction most of this corpus runs. ⚠️ **The cut is not arithmetic catching up** — the composite was authored by looking through to STRC, and that derivation still reproduces on its own terms. ✅ **What changed is that a wrapper-level fact arrived that basket math structurally cannot price:** the exit is exhausted at $500,000, and no amount of reasoning about the collateral would have surfaced it.
 
 ## 1 · Stability — 3.5
 
