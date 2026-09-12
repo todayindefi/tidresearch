@@ -19,7 +19,7 @@ last_verified: "2026-07-31"
 # ⚠️ 2026-09-08 re-based the Q2 delinquency table (three rows were comparing to
 # 31 Dec 2025, not 31 Mar) and refreshed the lien mix. `last_verified` HOLDS —
 # the filing was not re-read end to end.
-last_revised: "2026-09-12"
+last_revised: "2026-09-13"
 featured: false
 production: true
 issuer: "Figure Technology Solutions, Inc. (Nasdaq: FIGR)"
@@ -50,10 +50,13 @@ it is the part with the risk. It writes loans, then sells them, securitizes them
 lending facility that PRIME's backing is lent into.
 
 The direction of travel on that loan book is the reason this report is not scored higher. Delinquency on the
-loans Figure holds for sale has now risen three periods running — from about 3.9% to about 5.5% to roughly
-6.6% — and the earliest-stage bucket, the one that feeds the later ones, grew fastest. The loan book itself
-also grew, so this is not a shrinking-denominator effect: the overdue balances grew more than twice as fast as
-the book.
+loans Figure holds for sale rose three periods running — from about 3.9% to about 5.5% to roughly 6.6% — and
+then **fell to 5.05% in Q2 2026**. ⚠️ **That fall is not the reversal it looks like.** Across the same quarter
+**nonaccrual UPB rose from $2.4M to $14.1M** — roughly 17% to 72% of the 90-plus bucket — and the securitized
+60-plus line broke flat at **0.8% → 1.1%**. **The rate and its composition moved in opposite directions**, and
+composition is the half that describes what is actually in the book. The book grew throughout, so the earlier
+rises were not a shrinking-denominator effect — and the later fall is partly the same arithmetic running the
+other way.
 
 There is a second figure that looks far better, and understanding why they differ matters more than either
 number. Loans that Figure has already securitized show delinquency under 1%. But the lending facility's own
@@ -73,7 +76,7 @@ than its regulatory standing suggests.
 |---|---|
 | **What it is** | The largest US non-bank home-equity lender, listed on Nasdaq, plus a separate SEC-registered subsidiary that issues the certificate backing wYLDS. |
 | **Why it matters to you** | It originates and services the loans behind PRIME's yield, and its subsidiary issues the certificate behind wYLDS. |
-| **Loan quality trend** | Adverse. Delinquency on loans held for sale has risen three periods running, and the earliest-stage bucket is growing fastest. |
+| **Loan quality trend** | ⚠️ **Mixed, and the headline is the flattering half.** Delinquency on loans held for sale **fell 6.61% → 5.05%** in Q2 2026 — but **nonaccrual UPB rose $2.4M → $14.1M** and the securitized 60-plus line broke flat at **0.8% → 1.1%**. **The rate improved while the composition worsened**, and the two are argued separately under [credit quality](#why-the-two-delinquency-numbers-disagree). |
 | **The regulated part** | Figure Certificate Company files with the SEC, is KPMG-audited annually, and holds Treasuries, money-market funds and Treasury-backed repo. Genuinely strong, and separate from the lending risk. |
 | **Lender's cushion** | The facility advances up to 95% against pledged loan balances, so the cushion protecting lenders is around 5% — not the ~40% homeowner equity figure the loan-to-value stats might suggest. |
 | **Governance** | The weakest area. A multi-entity group, a regulated subsidiary whose twelve-month liquidity rests on a written parent commitment, and a related company running a public protocol on licensed Figure software with no disclosure obligations of its own. |
@@ -191,6 +194,10 @@ Figure can hold loans, transfer them to institutional buyers, securitize them, o
 Collateral in unconsolidated securitization vehicles rose from **$4.596B at 31 December 2025 to $6.766B at 31 March 2026**. The trusts are isolated from Figure's creditors. A third-party special servicer handles delinquent and defaulted loans and cannot be removed without cause—a meaningful independent protection.
 
 Democratized Prime is another outlet. Its home-equity pool has recently lent roughly $350M, with utilization at **roughly two-thirds** and idle funds earning the YLDS-linked rate. Growth can signal a functioning market, or greater reliance on the facility if other buyers pull back.
+
+⚠️ **At the Kiavi close, two of Kiavi's funding lines were retired rather than inherited.** Per the **2026-09-01 Form 8-K (Item 2.01)**, Figure **repaid in full** all outstanding obligations under the **Third Amended and Restated Credit Agreement** dated 2024-12-19, with U.S. Bank Trust Company, National Association as paying agent; and **Kiavi Funding, Inc. and Kiavi Funding Trust 2 terminated** their **Master Repurchase Agreement** with **Deutsche Bank AG, New York Branch**, dated 2025-09-19.
+
+⚠️ **Read the entity, because this is the exact substitution this report marks down elsewhere:** the credit agreement is *"among Kiavi, U.S. Bank Trust Company … and the lenders party thereto"* — **these were Kiavi's facilities, not Figure's**, and at least one secondary account has already described the first as Figure's own. ✅ **What it means for funding is the same either way:** the warehouse and repo leverage that had carried Kiavi's originations is gone, and the book behind it now sits on Figure's side of the house, funded by **unsecured notes at 8.500%** rather than by secured lines against the loans themselves.
 
 Two contingent obligations matter. Figure may have to repurchase loans defaulting within 30 to 90 days of origination, an early underwriting signal. It also commits to replenish securitization reserves; the filings call that obligation **“not limited”**, although management does not expect material funding.
 
