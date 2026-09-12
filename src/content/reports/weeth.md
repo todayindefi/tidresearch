@@ -7,7 +7,7 @@ category: "wrapped-token"
 underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-08-13"
-last_revised: "2026-08-27"
+last_revised: "2026-09-12"
 last_verified: "2026-08-23"
 featured: false
 production: true
@@ -53,7 +53,7 @@ If you have not looked at this category before: a **liquid staking token (LST)**
 
 Until 2026-08-06 weETH answered a harder set of questions than that, because ether.fi also **restaked** the pooled ETH on EigenLayer, which added the risk that a third-party service (an AVS) misbehaved and the penalty was socialised back to depositors. That layer has been removed from weETH. Under 1% of ether.fi's assets remain restaked with EigenLayer, down from about half in early 2026, with the residual reported to hit zero in Q3 2026 and EigenPod withdrawal credentials to be removed from validators by Q4 2026.
 
-What is left is ordinary LST risk plus a thin wrapping layer, and one genuine standout: ether.fi's admin setup is the strongest of any protocol in this database. Every privileged action **on the mainnet contracts** — including contract upgrades — runs through a **6-of-10 Gnosis Safe into a 10-day timelock**, re-verified on-chain for this report. ⚠️ **That verification stopped at the bridge layer, as the Structural rationale says: the multi-chain bridge exposure is untouched and unverified.** So "every privileged action" describes **the set that was measured**, not every action that can affect a holder. Against that sit three things: the EigenLayer unwind is **not finished**, the restaking removal is **press-reported rather than proven on-chain by us**, and weETH on L2s is a bridged token carrying bridge trust that mainnet weETH does not.
+What is left is ordinary LST risk plus a thin wrapping layer, and one genuine standout: ether.fi's admin setup is the strongest of any protocol in this database. Every privileged action **on the mainnet contracts** — including contract upgrades — runs through a **6-of-10 Gnosis Safe into a 10-day timelock**, re-verified on-chain for this report. ⚠️ **That is the mainnet set, and it is not the whole asset.** The L2 upgrade paths have now been measured and they are weaker and, on Arbitrum, not ether.fi's at all — see **L2 weETH is a different asset** below. So "every privileged action" describes **the set that was measured on Ethereum**, and an L2 holder is not covered by it. Against that sit three things: the EigenLayer unwind is **not finished**, the restaking removal is **press-reported rather than proven on-chain by us**, and weETH on L2s is a bridged token carrying bridge trust that mainnet weETH does not.
 
 ## The number that misleads people: use ETH, not dollars
 
@@ -130,7 +130,24 @@ The code has been audited by Certora (formal verification) and Nethermind, there
 
 ## L2 weETH is a different asset
 
-weETH on Base, Arbitrum and Optimism is a bridged, upgradeable proxy (the Base admin is `0x2f6f…fb68`). Your claim on staked ETH runs through a bridge before it reaches mainnet, and that is not a theoretical concern: in April 2026 a peer LST — Kelp's rsETH — lost roughly $292M when a 1-of-1 LayerZero DVN configuration let an attacker mint unbacked tokens on destination chains.
+⚠️⚠️ **weETH is not one asset with a bridge attached — it is four separate upgrade arrangements, and one of them is not ether.fi's at all.** Measured on each chain 2026-09-12, with a fabricated address as control:
+
+| chain | token | upgrade path | delay |
+|---|---|---|---|
+| Ethereum | `0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee` | 6-of-10 Safe → timelock | **10 days** |
+| Base | `0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A` | ProxyAdmin `0x2f6f3cc4…fb68` → timelock `0x851Dd540…5Df5C6` | **3 days** |
+| Optimism | `0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF` | ProxyAdmin `0x632304ed…d5f3` → timelock **`0x851Dd540…5Df5C6`** | **3 days** |
+| **Arbitrum** | `0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe` | ⚠️ **BeaconProxy → shared beacon `0xe72ba941…37333`** | ⚠️ **none found** |
+
+⚠️ **Base and Optimism are one arrangement rendered twice, not two independent ones.** Their ProxyAdmins differ, but both answer to **the same timelock address**, `0x851Dd540f4D2Ec78120De0a0cc87B21EdE5Df5C6`, with an identical `getMinDelay()` of **259,200 seconds — 3 days**, against Ethereum's 10. **Two legs, one failure point, and a delay less than a third as deep.**
+
+⚠️⚠️ **On Arbitrum the upgrade authority is not ether.fi.** The token is a **BeaconProxy** — no implementation or admin in its own slots — sitting behind beacon `0xe72ba9418b5f2ce0a6a40501fe77c6839aa37333`. ✅ **That beacon is shared: WBTC on Arbitrum sits behind the same one**, checked directly. Its owner is `0xCF575722…A827`, itself a proxy. **So whoever can upgrade that beacon changes the code behind every token using it, and an Arbitrum weETH holder's upgrade counterparty is the bridge operator whose beacon it is — not the issuer whose name is on the token.**
+
+✅ **Identity is established by the pointer back rather than by ticker:** the Arbitrum token's `l1Address()` returns `0xCd5fE23C…9b7ee`, which is mainnet weETH.
+
+**Arbitrum supply is 49,584 weETH; Base 19,079; Optimism 10,281.**
+
+Your claim on staked ETH runs through a bridge before it reaches mainnet, and that is not a theoretical concern: in April 2026 a peer LST — Kelp's rsETH — lost roughly $292M when a 1-of-1 LayerZero DVN configuration let an attacker mint unbacked tokens on destination chains.
 
 ether.fi published a post on 2026-05-29 describing bridge hardening in direct response to that failure mode: message libraries pinned via `setSendLibrary` / `setReceiveLibrary` across all 20 weETH chains, verification raised to a **4-of-4 DVN threshold** (Canary, Horizen, Nethermind, LayerZero Labs), pair-wise rate limits on ether.fi's own bridge contracts, and the claim that the LayerZero multisig no longer has an on-chain path to change how weETH messages are verified. If accurate, that addresses precisely what went wrong for rsETH.
 
