@@ -67,7 +67,9 @@ STRCx is **Backed Finance's tokenized form of STRC** — Strategy's (formerly Mi
 |---|---|---|---|---|
 | STRC (≈$100-par preferred) | ≈12% via rebasing (July rate, net of US withholding) | Non-US AP redemption, or Solana DEX | ≈4 months (live early 2026) | Ethereum + 4 (Solana, Arbitrum, BNB, Mantle) |
 
-**Live monitoring of this wrapper** — per-chain supply across five chains, top holders, the rebasing multiplier, per-token mark and admin posture — is on the [STRCx dashboard](https://tidresearch.com/dashboards/?asset=strcx). ⚠️ **The instrument beneath it is a separate dashboard:** mNAV regime, STRC instrument state, cash-service runway and the SEC 8-K event log are on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc) — values in this report are static; the dashboard reflects current readings.
+**Live monitoring of this wrapper** — per-chain supply across five chains, top holders, the rebasing multiplier, per-token mark and admin posture — is on the [STRCx dashboard](https://tidresearch.com/dashboards/?asset=strcx). ⚠️ **The instrument beneath it is a separate dashboard:** mNAV regime, STRC instrument state, cash-service runway and the SEC 8-K event log are on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc).
+
+⚠️ **Where the embedded panel reads "Not rated" on an axis this report scores, the two are not disagreeing.** **The dashboard prints a score only beside a live measured band, or where the data producer has declared the axis non-derivable** — and STRCx has no live peg feed, no collateral ratio and no DEX depth ladder for a band to sit beside. ✅ **The scores on this page are authored from the evidence set out below; the panel is declining to imply they were measured live, which is the conservative behaviour rather than a gap.** ⚠️ **On the Stability axis specifically there is no field the producer can publish to close it**, so that row is expected to keep reading "Not rated" until the dashboard frame changes. *(Panel behaviour as at 2026-09-13.)* — values in this report are static; the dashboard reflects current readings.
 
 ## Score breakdown
 
