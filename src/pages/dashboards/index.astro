@@ -242,14 +242,27 @@ const allDashboards: Dashboard[] = [
     production: true,
   },
   {
-    // One dashboard, two production reports (strc and strcx). Linked to the
-    // underlying; the wrapper is named in the description so neither is orphaned.
+    // Split from a combined "STRC + STRCx" tile on 2026-09-13, following
+    // backinmonitor. The combined axis-basis envelope carries one score per
+    // axis, so it had to drop one asset's number per axis -- and the pair it
+    // collapsed is the one that matters: liquidity 7.0 on a Nasdaq listing
+    // against 2.5 on a ~$400k Jupiter pool. Two assets, two dashboards.
     slug: "strc",
     asset: "strc",
-    name: "STRC + STRCx",
-    chain: "Strategy (NASDAQ: STRC) + Ethereum (STRCx)",
+    name: "STRC (Strategy preferred)",
+    chain: "Nasdaq",
     description:
-      "Strategy's variable-rate perpetual preferred stock and Backed Finance's on-chain wrapper STRCx. Par-anchor dividend state, cash-service waterfall with rate-ceiling overlay, 8-K log, and downstream exposure across Apyx + Saturn.",
+      "Strategy's variable-rate perpetual preferred stock. Instrument and rate mechanics, dividend obligation and cash-service runway, rate-ceiling headroom, Digital Credit framework, downstream exposure, Strategy's funding regime, and the SEC EDGAR 8-K event log.",
+    category: "RWA",
+    production: true,
+  },
+  {
+    slug: "strcx",
+    asset: "strcx",
+    name: "STRCx (Backed wrapper)",
+    chain: "Ethereum, Solana, BNB, Arbitrum, Mantle",
+    description:
+      "Backed Finance's on-chain wrapper of STRC. Per-chain supply across five chains, top holders, the rebasing multiplier, per-token mark, and the owner()/minter() admin posture -- scored on its own axes rather than the instrument's.",
     category: "RWA",
     production: true,
   },
