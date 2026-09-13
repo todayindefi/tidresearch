@@ -221,7 +221,7 @@ The group also discloses a history of losses and warns that it may not maintain 
 
 FCC is the strongest node in the stack. It is a full SEC reporting registrant, and KPMG has audited its annual statements since 2024. The FY2025 opinion was clean. At **30 June 2026**, FCC reported **$561.910M of qualified assets against a $557.494M certificate reserve**, and at 31 March it was $601.524M against $599.706M — about 100.3% coverage then.
 
-⚠️ **The repo counterparty changed, and it is worth reading as a change in kind rather than in size.** FCC's Q2 10-Q, **Schedule I**, lists two repurchase-agreement counterparties at 30 June 2026:
+⚠️ **A dormant facility was drawn, which is a sharper fact than a counterparty changing.** The second repo line was already documented at 31 March and recorded as **unused**; by 30 June it stood at **$200,000K**, while the UMB leg fell from **$389.556M to $82,361K** and the repo book as a whole shrank **27.5%**. **Someone switched a standing line on inside the quarter.** FCC's Q2 10-Q, **Schedule I**, lists two repurchase-agreement counterparties at 30 June 2026:
 
 | counterparty | amount | share |
 |---|---:|---:|
