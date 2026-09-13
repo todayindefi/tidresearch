@@ -158,23 +158,25 @@ This is where most of the risk sits, and it depends heavily on **who you are and
 
 ⚠️ **The second-largest pool is STRCx/DIVI at $212,801 — 25.1% of all TVL — and selling into it leaves a holder in a memecoin, not cash.** ✅ **This is the same shape as crvUSD's exit split, where eight pools paired against BTC or ETH rather than a dollar:** aggregate TVL counts venues that do not end in the unit the holder needs. ⚠️ **The within-pool asymmetry below was read on 2026-06-02 and was NOT re-measured in this pass.** That headline TVL overstates practical depth. The primary pool is heavily asymmetric — roughly 87% STRCx / 13% USDC, or about $539K STRCx against only $84K USDC inventory — so a single $50K USDC-out trade meaningfully drains the dollar side, and clean exits much above $30–50K per trade route through secondary pools at materially higher slippage. The pool is also currently net-servicing exits: 24h transaction count is 971 sells against 180 buys, a 5.4:1 ratio that is the mechanism eroding the dollar side. On **Ethereum** there is effectively no DEX depth, and the on-chain holding is highly concentrated: **the top two addresses hold 60.94% of Ethereum supply** — the Apyx Safe 42.02% and the Backed hub 18.92%, measured 2026-09-13. ⚠️ **Stated against supply rather than float on purpose:** float here is computed as supply minus those same two addresses, so a share-of-float figure for them would be circular.
 
-⚠️ **The primary redemption terms, from the product's own Final Terms (Product Nr. 134, ISIN `CH1500008482`, 2026-01-30).** ⚠️ **Cited from that document rather than read here — the annex was not retrievable from this desk, and the ISIN is given so it can be checked.**
+⚠️ **The primary terms, read from the product's own Final Terms (Product Nr. 134, ISIN `CH1500008482`, 2026-01-30).**
 
 | | |
 |---|---|
 | Mechanism | Investor Put Option, no fixed maturity |
 | Eligible | **Authorised Participants only**, whitelisted after KYC/AML |
-| Minimum | **USD 5,000** |
-| Reference price | NasdaqGS quote for STRC |
-| Redemption fee | up to 0.5% of the underlying's market price, **but at least USD 100** |
-| Management fee | up to 0.25% p.a., accrued daily |
-| Custodians | Maerki Baumann (LEI `529900FMZSRFHZA8OU51`) · InCore Bank (LEI `529900V0KW3BY148IT37`) |
+| Minimum **subscription** | **USD 5,000** — the document states no redemption minimum |
+| Reference price | NasdaqGS, and `finance.yahoo.com/quote/STRC` |
+| Investor Fee | up to 0.5% of the underlying's market price, **but at least USD 100** |
+| Management fee | up to 0.25% p.a., calculated daily at 12:00 UTC |
+| Custodians | Maerki Baumann & Co. AG, Zurich (LEI `529900FMZSRFHZA8OU51`) · InCore Bank AG, Schlieren (LEI `529900V0KW3BY148IT37`) |
 
-⚠️⚠️ **The fee floor is the part a holder feels: at the USD 5,000 minimum the USD 100 floor is 2.00% — four times the headline 0.5% — and it stops binding only above USD 20,000.** **The smallest permitted primary transaction is the worst-priced one.** ⚠️ **None of this is reachable by a retail holder anyway**, since redemption is Authorised-Participant-only; it prices what an AP faces, which is the arbitrage that keeps the wrapper near its underlying.
+⚠️⚠️ **The USD 100 floor is the part a holder feels, and it applies on both legs.** The issue price is the underlying's market price **plus** that fee; the redemption price is the market price **minus** it. ⚠️ **At the USD 5,000 minimum subscription the floor is 2.00% — four times the headline 0.5% — and a round trip at that size pays it twice: USD 200 on USD 5,000, or 4.00%.** **It stops binding above USD 20,000 per leg.** **The smallest permitted primary transaction is the worst-priced one.**
 
-⚠️ **The issuer may also "terminate and redeem all but not part" of a Product** — a holder can be cashed out at the issuer's election. **A discretion rather than a default risk, and it is product-wide rather than specific to STRCx.**
+⚠️ **None of this is reachable by a retail holder**, since both legs are Authorised-Participant-only. **It prices what an AP faces — which is the arbitrage that keeps the wrapper near its underlying**, so a floor that bites hardest at small size is a floor on how finely that arbitrage can work.
 
-✅ **The custodians are named with LEIs in STRCx's own Final Terms** rather than only at the xStocks-family level, so custody is identified for this token specifically.
+⚠️ **The issuer may also "terminate and redeem all but not part of the outstanding securities"** — a holder can be cashed out at the issuer's election. **A discretion rather than a default risk, and product-wide rather than specific to STRCx.**
+
+✅ **The custodians are named with LEIs for this token specifically** rather than only at the xStocks-family level. ⚠️ **And both are Swiss — Zurich and Schlieren — while the issuer is Jersey**, which is plausibly where the Swiss association came from in the first place.
 
 **Bottom line on exit:**
 - A **non-US holder trading on Solana** has a working, if thin, secondary market.
