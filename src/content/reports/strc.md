@@ -100,8 +100,10 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 | 2026-08-16 | $132.2M | ~$95.19 |
 | 2026-08-23 | $136.4M | +$0.11 on the week |
 | **2026-08-30** | **$151.8M** | **~$97.48** |
+| 2026-09-07 | $176.3M | ~$97.36 |
+| **2026-09-13** | **$139.3M** | **~$98.07** |
 
-**Cumulatively $635.2M spent, with $364.8M remaining** as at the 2026-08-31 filing. *(Share counts for the last two weeks: 1,431,212 and 1,557,177.)*
+⚠️ **$1.05B remained at 2026-09-13** under the doubled $2.0B authorisation — **more than the $364.8M that remained on 08-31, because the board expanded the programme rather than because the pace fell.** ✅ **The discount being harvested is compressing: ~$98.07 is about 1.93% below par, against roughly 2.6% a week earlier.** ⚠️ **Week-to-week dollar totals are not compared here — consecutive filings cover different period lengths (eight calendar days against six), so a change in the headline can be a calendar artifact rather than a change in the bid.** *(Share counts: 1,431,212 and 1,557,177 for the 08-23 and 08-30 weeks; **1,810,885** for 09-07 and **1,420,467** for 09-13.)*
 
 ⚠️ **The last two rows are stated as a weekly move rather than an absolute average, because that is what the filings support.** The 8-K gives an implied repurchase price of **$97.48** for the most recent week; the intermediate figure is a delta from the week before it.
 
@@ -133,7 +135,7 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 | what you watch | the BTC stack shrinking | **mNAV**, and whether ATM issuance stays accretive |
 | how it arrives | gradually, and visibly on the balance sheet | can close quickly, and is a market condition rather than a company one |
 
-**A downstream holder who was watching the Bitcoin stack for early warning is now watching the wrong thing.** The stack stands at **845,050 BTC** as at 2026-08-31, up from 840,447 — ⚠️ **and it is now growing while the buyback runs, because common equity rather than Bitcoin sales is funding it.** Under the old framing a rising stack read as reassurance; under the current one it carries no information about the floor at all. The signal that matters is **mNAV**: at 0.9952 on 2026-08-24 it sits at parity, where equity issuance is roughly neutral rather than accretive. Read that as a level, not a trend — it has oscillated within about 2% of 1.0 for weeks, and the week-to-week direction is noise.
+**A downstream holder who was watching the Bitcoin stack for early warning is now watching the wrong thing.** The stack stands at **845,050 BTC**, reached on **2026-08-31** and **unchanged since** — confirmed in the 2026-09-14 filing (period 09-08 → 09-13), which records **no bitcoin bought or sold and no shares sold under the ATM programme.** ⚠️ **So it is neither growing nor shrinking, and the funding has moved twice since it last grew.** **The bid has run on three different mechanisms in five weeks — Bitcoin sales, then common equity, and now USD cash**, which fell **$1.44B → $1.30B** across the latest week while the restricted USD Reserve held flat at **$5.10B**. Under the old framing a rising stack read as reassurance; under the current one it carries no information about the floor at all. The signal that matters is **mNAV**: at 0.9952 on 2026-08-24 it sits at parity, where equity issuance is roughly neutral rather than accretive. Read that as a level, not a trend — it has oscillated within about 2% of 1.0 for weeks, and the week-to-week direction is noise.
 
 **This is the fact that gates the downstream assets**, because apxUSD, apyUSD and sUSDat all mark STRC to market — but the gate is now equity absorption, not collateral depletion.
 
@@ -191,7 +193,7 @@ Preferred dividends rank behind debt service. Strategy's convertible notes there
 - **Whether the funding stays on common equity or returns to Bitcoin sales.** The first preserves the collateral but spends dilution capacity; the second does the reverse. The week to 2026-08-16 was the first on common.
 - **The dividend rate.** Held at 12.00% and forward-disclaimed until sustained trading near $100. A rise signals the discretion being spent; a suspension is the tail.
 - **STRC's discount to par.** About 3.8% at 2026-08-24, against roughly 24% at the June low.
-- **The reserve direction.** Six consecutive weekly builds to about $4.80B. A sustained drawdown alongside sub-par trading is the combination that matters, not either alone.
+- **The reserve direction.** ⚠️ **The build has stopped: the USD Reserve held flat at $5.10B on both 09-07 and 09-13**, after six consecutive weekly builds to about $4.80B at 08-16. **Nothing is feeding it — the ATM is idle — and the buyback draws on general USD cash instead, which fell $1.44B → $1.30B.** A sustained drawdown alongside sub-par trading is the combination that matters, not either alone.
 
 ## Live dashboard
 
