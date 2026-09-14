@@ -25,6 +25,13 @@ production: true
 #     of the issuer's published bases, roughly 74% STRC family net of inventory,
 #     ~13% reflexive POL. ⚠️ This report had no backing axis at all, so the one
 #     thing actually driving the 3.0 was scored nowhere.
+#     ⚠️ PREMISE CHANGED 2026-09-11 — apxUSD's collateral ratio crossed back
+#     ABOVE par and has held since, on the netted basis, the gross basis and an
+#     independent conservative re-mark. The score has NOT been re-derived: the
+#     concentration half of the rationale is unchanged, and the margin is thin
+#     (~25bp median) and days old. Noted HERE because nothing renders a comment,
+#     so no sweep of published prose reaches it — the strcx shape, where a right
+#     finding sat in a comment while the body stayed wrong for weeks.
 #   underlying_score 3.0 is RETAINED and now renders as DEPENDENCIES, tracking
 #     apxUSD's OVERALL rather than its reserve — a different question from
 #     Backing, and the reason the two differ by a point. The chain is
