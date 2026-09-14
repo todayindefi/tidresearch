@@ -135,10 +135,10 @@ Three paths, each with material trade-offs:
 |---|---|
 | that redemption | **0.52% of the vault** |
 | it consumed | **33.9% of the on-chain buffer** |
-| buffer today | **$742,960** — about **two more** of that size |
+| buffer today | **$742,960** — **2.0× that single exit** |
 | refill rate | ~$21,300/day, so **~18 days to restore one** |
 
-⚠️ **The pocket a redeemer is paid from drains roughly eighteen times faster than it refills**, and a half-percent redemption takes a third of it. ✅ **This is exit capacity and must not be read as solvency: backing is intact, NAV is above par, the vault is not paused** — `paused()` returns false, verified 2026-09-14 alongside every figure above. **What it bounds is how many holders can leave through the on-chain route before the off-chain leg has to be realised.**
+⚠️⚠️ **One observation is not a distribution.** **The ratio says how deep the pocket is against the only withdrawal that has been measured — not how large the next one will be, nor how many are coming.** ⚠️ **What the pair of measurements does support: a half-percent redemption took a third of the buffer, and replacing that one draw at the observed refill rate would take about eighteen days.** **The pocket refills far more slowly than that single exit emptied it.** ✅ **This is exit capacity and must not be read as solvency: backing is intact, NAV is above par, the vault is not paused** — `paused()` returns false, verified 2026-09-14 alongside every figure above. **What it bounds is how many holders can leave through the on-chain route before the off-chain leg has to be realised.**
 
 **Withdrawal queue (ERC-4626 unstake).** The standard 4626 queue-based unstake into USDat, with a 10 USDat minimum. Saturn documents an expectation of **about 3–7 days, executed when market conditions permit**, with an improvement flagged for a future vault version. Read that phrasing carefully: it is a discretionary settlement window, not a contractual deadline, and the discretion exists because filling the queue at size means selling STRC at the custodian.
 
