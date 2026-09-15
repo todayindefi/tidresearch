@@ -29,25 +29,25 @@ production: false
 
 ## Summary
 
-BOLD is the stablecoin of Liquity v2. You mint it by depositing ETH, wstETH or rETH into a trove and borrowing against it; you can always get dollars back by redeeming BOLD against the system's own collateral, at any time, without asking anyone.
+BOLD is the stablecoin of Liquity v2. It is created when borrowers deposit WETH, wstETH or rETH in collateralized debt positions called troves. Holders can redeem BOLD directly against that collateral without an allowlist, queue or issuer approval.
 
-**What makes it unusual is what is missing.** There is no admin key. `owner()` on the token returns the zero address, both EIP-1967 proxy slots read zero, and the collateral set is closed — `getToken(3)` on the registry returns the zero address, so no fourth collateral can ever be added. Nobody can pause it, upgrade it, change a parameter, or add an asset. **Verified on-chain 2026-09-15, and reproducible by anyone in four calls.**
+The core protocol is immutable. The BOLD token has no owner or proxy administrator, and the collateral registry is permanently limited to its three existing assets. This removes the administrator and issuer risks common to many stablecoins, but it also means faulty code cannot be upgraded or paused.
 
-That property is the reason this report scores Contract & Admin at **8.5**, the highest on this site. It is also the reason the Liquidity axis sits at **5.5** and drags the composite down: an asset nobody can intervene in is an asset nobody can rescue, and the exit is thinner than the supply it has to serve.
+BOLD's main constraint is exit capacity rather than ordinary retail execution. Small sales have low measured slippage, while larger sales encounter a sharply nonlinear liquidity curve and increasingly expensive redemptions. Its **6.5/10** overall score reflects strong contract and issuer characteristics alongside more limited liquidity and correlated ETH-based backing.
+
+> **Critical token-identification warning:** the current token uses the symbol `BOLD`, while the abandoned February 2025 deployment uses `Bold`. Some systems match symbols without respecting case. Identify the live token by its Ethereum address: `0x6440f144b7e50D6a8439336510312d2F54beB01D`.
 
 ## 1 · Stability — 7.0
 
-**The peg is defended by arbitrage against the protocol's own collateral, not by a treasury or a market maker.** If BOLD trades below a dollar, anyone can buy it cheaply and redeem it against troves for collateral worth more — a mechanism that needs no permission and has no off switch.
+BOLD targets one dollar through permissionless redemption against Liquity's collateral. When BOLD trades below one dollar, a buyer can purchase it in the market and redeem it for collateral of greater stated value. The mechanism operates through the contracts rather than an issuer treasury or discretionary market-making commitment.
 
-✅ **The redemption route is genuinely un-gateable.** There is no KYC, no allowlist, no queue and no counterparty who can close it. On this site that is rare: most redemption paths we cover are gated to onboarded participants, and several are gated in practice by a discretionary window.
+Redemption has no KYC requirement, allowlist or scheduled window. This gives every holder access to the primary peg mechanism and lets arbitrageurs act whenever the market price moves below the value available through redemption.
 
-⚠️ **But the fee is size-dependent, and it rises roughly one-for-one with the share of supply being redeemed.** Measured across sizes: **0.94% at $100,000, 3.54% at $1,000,000, and 29.6% at $10,000,000.** **So redemption is always available and never cheap at scale.** The honest way to hold both facts at once: **a BOLD holder is never trapped; they are priced.**
-
-⚠️ **All three collateral types are ETH-beta.** WETH, wstETH and rETH move together, so the branches are correlated rather than independent, and a sharp ETH drawdown stresses every branch at once rather than rotating between them.
+**Risks and limitations.** Redemption remains available at size, but its variable fee becomes expensive as the redeemed share of supply grows. Measurements on 2026-09-15 produced fees of **0.94% at $100,000, 3.54% at $1,000,000 and 29.6% at $10,000,000**. All three collateral assets are also exposed to ETH: WETH, wstETH and rETH are correlated in a market drawdown, so the branches do not provide independent sources of stability.
 
 ## 2 · Backing — 7.5
 
-**The reconciliation is the strongest single fact on this asset.** Read on-chain 2026-09-15, BOLD's `totalSupply` is **34,464,705.66** against summed branch debt of **34,465,713.32** — a divergence of **$1,008, or 0.0029%**.
+BOLD is backed by collateral deposited in three separate Liquity branches. Each branch records its own debt, collateral and Stability Pool, while the same BOLD token represents debt across the system. On-chain readings on 2026-09-15 showed total BOLD supply of **34,464,705.66** against summed branch debt of **34,465,713.32**, a difference of **1,007.66 BOLD, or 0.0029%**.
 
 | branch | debt (BOLD) | collateral (units) | shutdown |
 |---|---:|---:|---|
@@ -56,73 +56,69 @@ That property is the reason this report scores Contract & Admin at **8.5**, the 
 | rETH | 4,178,330.89 | 5,769.65 rETH | none |
 | **total** | **34,465,713.32** | | |
 
-✅ **Almost nothing in this coverage reconciles to three decimal places**, and this one does so against figures the protocol publishes itself rather than against an attestation. ⚠️ **Collateral is stated in units rather than dollars on purpose:** wstETH's exchange rate against ETH rises over time, so a decline in wstETH units is not the same as a decline in value, and reporting it in dollars would mix a market price into the protocol's own accounting.
+Collateral is shown in native units because converting it to dollars would introduce an external market price into the protocol accounting. This distinction is particularly important for wstETH, whose exchange rate to ETH rises over time; a decline in wstETH units does not by itself describe the change in dollar value.
 
-**System collateralisation is about 279.8%, on roughly $96.8M of collateral, with Stability Pool coverage near 53% of outstanding debt.** ⚠️ **That ratio is the protocol's own, computed on its own oracle inputs.** ✅ **`shutdownTime()` returns zero on all three branches** — none has been retired, verified directly.
+Liquity reported system collateralization of approximately **279.8%** on about **$96.8 million** of collateral, using its own oracle inputs. Stability Pool deposits covered approximately **53%** of outstanding debt. Direct reads of `shutdownTime()` returned zero for all three branches, meaning none had entered shutdown.
 
-⚠️ **The growth is concentrated where the margin is thinnest.** Supply has risen about 14.9% over 55 days, and the growth sits in the **WETH branch, which carries the lowest minimum collateral ratio at 110%.** ⚠️ **And on wstETH — the largest branch — debt rose about 6.9% while collateral fell about 19.1% in units.** **That is a leverage increase on the branch that matters most, and it is the fact to watch on this axis.**
+**Risks and limitations.** Supply grew approximately **14.9% over 55 days**, with growth concentrated in the WETH branch, whose **110% minimum collateral ratio** is the lowest of the three. In the largest branch, wstETH debt rose about **6.9%** while collateral declined about **19.1% in units**. Although units and value are not interchangeable, the combination indicates higher leverage in the branch responsible for most BOLD debt.
 
 ## 3 · Liquidity & Exit — 5.5
 
-**This is the binding constraint, and it moved the wrong way.**
+BOLD can be exited through decentralized exchanges or redeemed through Liquity. Exchange liquidity is efficient for small transactions: a measured **$100,000** sale moved the price by approximately **0.8 basis points** on 2026-09-15. Permissionless redemption provides a second route when market liquidity is insufficient, although its fee rises with redemption size.
 
-⚠️ **The 2% depth crossing sits at roughly $4.3–4.4M**, and the ladder does something worth understanding rather than just noting: **output peaks near $8M and then turns over.** **Past that peak, selling more BOLD returns fewer dollars in total** — not merely a worse price per unit, but a smaller absolute payout. A seller who does not know where the peak is can cross it without any signal.
+The executable liquidity curve becomes materially weaker above seven figures. The measured 2% price-impact crossing was approximately **$4.3–4.4 million**. Total output peaked near an **$8 million** input and then declined, meaning that beyond the peak a larger sale could return fewer dollars in total, not merely a worse rate per token.
 
-✅ **Small exits are fine.** $100,000 moves the price by roughly **0.8 basis points**. **The problem is not retail-scale selling; it is the shape of the curve above seven figures.**
+Published pool totals require deduplication. Convex, StakeDAO, Yearn and Beefy BOLD-USDC entries are wrappers around the same underlying Curve position, so adding them together counts the same liquidity more than once. Aggregator entries labelled `liquity-v2` BOLD represent Stability Pool deposits rather than tradable market depth.
 
-⚠️⚠️ **The executable ceiling fell about 34% over 55 days while supply grew 14.9% — and aggregate DEX TVL rose over the same window.** **So every TVL-based reading of this asset moved in the opposite direction to the thing a seller actually experiences.** ⚠️ **This is why the figure to quote is the ladder, not the pool size.**
-
-⚠️ **And published depth for BOLD is easy to overstate by roughly three times.** Convex, StakeDAO, Yearn and Beefy "BOLD-USDC" entries are **LP-token wrappers over the same underlying Curve pool** — counting them adds the same liquidity several times. Separately, the `liquity-v2` "BOLD" entries on aggregators are **Stability Pool deposits, which are not tradeable depth at all.**
-
-**Redemption is the floor under all of this** — always open, never gated — but as set out above it is never the cheaper exit at any size the AMM can serve. ⚠️ **Figures here are a live router read and move intraday; quote the shape rather than the constants.** *(Ladder read 2026-09-15.)*
+**Risks and limitations.** The measured executable ceiling declined approximately **34% over 55 days**, while BOLD supply grew **14.9%** and aggregate reported DEX TVL increased. Pool TVL therefore did not reflect the exit a seller could actually execute. Router quotes change intraday, so the important finding is the curve's shape and turnover point rather than a permanently fixed dollar threshold. Redemption remained available but was more expensive than the AMM route at every measured size the AMM could serve.
 
 ## 4 · Dependencies — 7.0
 
-**What BOLD depends on is short, which is the point.** Three collateral assets, all ETH-beta; price feeds; and the solvency of its own troves. **There is no issuer treasury, no off-chain custodian, no attestation and no bridge in the core.**
+BOLD depends on the solvency and liquidation of troves backed by WETH, wstETH and rETH, together with Chainlink price feeds and the exchange-rate mechanisms used for the liquid-staking tokens. The core system has no off-chain reserve custodian, issuer treasury, attestation process or native bridge.
 
-⚠️ **The oracle is the dependency with teeth, and it is outside the authority walk.** A failed Chainlink feed does not pause a branch pending a fix — **it permanently retires that branch.** **The protocol's own immutability means a feed failure is not a recoverable incident; it is a one-way door for the collateral type behind it.**
+Chainlink feeds determine collateral values and therefore influence borrowing, liquidation, redemption and branch shutdown. A stale or failed feed can cause its associated branch to shut down. Because the deployed core cannot be upgraded, shutdown retires the branch rather than pausing it for an administrator to repair.
 
-⚠️⚠️ **And there is one place where the admin key comes back.** **sBOLD** (`0x50bd66d59911f5e086ec87ae43c811e0d059dd11`) is an ERC-4626 wrapper that routes BOLD into the Stability Pools. Verified 2026-09-15 by reading `asset()` back to BOLD: it holds **4,535,649.05 BOLD — 13.16% of all BOLD supply**, and roughly a quarter of Stability Pool deposits.
+sBOLD (`0x50bd66d59911f5e086ec87ae43c811e0d059dd11`) is a separate ERC-4626 product that allocates BOLD among Liquity Stability Pools. Its `asset()` function points to the live BOLD token. On 2026-09-15 it held **4,535,649.05 BOLD**, equal to **13.16% of supply** and approximately one-quarter of all Stability Pool deposits.
 
-⚠️ **sBOLD is not immutable.** Its `owner()` is a **2-of-3 Gnosis Safe** (`0x2dF68EA583B8394A8Cc71EeBcd4fA7c6746027D5`, threshold 2 of 3 signers read directly), and it exposes a pause. **An eighth of BOLD sits inside a wrapper with a two-signature admin.** ✅ **Not a defect in BOLD** — sBOLD is a third-party product, separately audited, and nobody is obliged to use it — **but a reader told that BOLD has no admin key deserves this in the same breath.**
+**Risks and limitations.** The three collateral branches share ETH market exposure, and an oracle failure has an irreversible branch-level consequence. sBOLD also has a different control model from BOLD itself: its owner is a **2-of-3 Gnosis Safe** at `0x2dF68EA583B8394A8Cc71EeBcd4fA7c6746027D5`, and the wrapper can be paused. These controls belong to the optional third-party wrapper rather than the BOLD core, but holders using sBOLD are exposed to them.
 
 ## 5 · Contract & Admin — 8.5
 
-**The highest score on this site, and it is checkable in four calls.**
+BOLD's core contracts are non-upgradeable and have no administrator capable of pausing the token, changing its parameters or expanding its collateral set. The following Ethereum reads were reproduced on 2026-09-15:
 
 ```
-BOLD.owner()              0x0000…0000   renounced
+BOLD.owner()              0x0000000000000000000000000000000000000000   renounced
 EIP-1967 impl slot        0x0           not a proxy
 EIP-1967 admin slot       0x0           no upgrade admin
-CollateralRegistry.getToken(3)  0x0     the collateral set is permanently closed
+CollateralRegistry.getToken(3)  0x0000000000000000000000000000000000000000   collateral set closed
 ```
 
-**No EOA, no Safe, no timelock, no upgrade path, no pause and no parameter setter exists anywhere in the core.** Five authority layers and thirty contracts were walked; the registry's own `boldToken()` returns the token address above, so the registry being examined is demonstrably BOLD's own rather than one that merely looks like it.
+The authority walk covered five layers and thirty contracts. The registry's `boldToken()` function returned the same live token address, confirming that the registry examined was the one governing this BOLD deployment. No core EOA, Safe, timelock, proxy upgrade path, manual pause or parameter setter was found.
 
-⚠️⚠️ **Immutability cuts both ways, and this is the half a reader is usually not told. Nothing can be changed by an attacker — and nothing can be fixed either.** **A bug in a live branch has no patch path.** The only remediation is permanent shutdown of that branch, after which `lastGoodPrice` drives urgent redemptions at a 0% fee with a 2% collateral bonus. **That is an orderly wind-down, not a repair.**
+[Liquity's own risk disclosure](https://docs.liquity.org/v2-documentation/risk-disclosure) agrees with these measurements: it describes the core as immutable, lists no upgradeable code or parameters, states that no manual pause or freeze exists, and limits BOLD's native deployment to Ethereum mainnet. The same disclosure points to DeDaub and ChainSecurity audits for smart-contract risk. It does not establish on the page that those audits covered every authority path walked here or map each report to the exact deployed bytecode, so audit scope is not used as proof of the absence of control. This assessment covers the native Ethereum deployment; Liquity identifies no current native cross-chain deployment.
 
-⚠️⚠️ **And Liquity has already paid this price once.** In **February 2025**, three weeks after launch, a critical bug was found in the Stability Pool — **in base code that had cleared six audit firms plus formal verification.** **There was no patch available, because there is never a patch available.** The only remediation was abandoning the deployment and asking users to migrate to a fresh one.
+**Risks and limitations.** Immutability prevents both hostile administrative changes and corrective upgrades. A bug in a live branch has no patch path; the available response is permanent branch shutdown, followed by urgent redemptions using `lastGoodPrice`, a 0% fee and a 2% collateral bonus. This is a wind-down mechanism rather than a repair.
 
-⚠️ **Two things about that episode still stand.** **The root cause has never been published.** And **202,029.51 BOLD never made the migration** — it sits in the legacy token to this day, verified on-chain. ⚠️ **The standing bug bounty caps critical findings at $125,000**, which is the counter-incentive a researcher weighs against the value of what they have found.
+That limitation became concrete in February 2025, when a critical Stability Pool issue was found in the initial Liquity v2 deployment after six audit firms and formal verification had reviewed the base code. The deployment could not be patched in place, so Liquity abandoned it and asked users to migrate to a new deployment. The root cause has not been published, **202,029.51 legacy BOLD** remained outstanding on 2026-09-15, and the standing bug bounty caps critical findings at **$125,000**.
 
 ## 6 · Issuer — 8.0
 
-**There is no issuer counterparty, and that is a measured property rather than a claim.** No company holds reserves, no entity can freeze a balance, no treasury is standing behind the peg. The score is high because the category of risk that dominates most of this site — *what if the issuer does something* — largely does not apply.
+BOLD has no issuer counterparty holding reserves or promising redemption from a corporate balance sheet. No entity can freeze an address, stop token transfers or decide whether a holder may redeem. The peg and collateral claims are implemented by the Ethereum contracts rather than guaranteed by Liquity AG or another company.
 
-⚠️ **The one live authority is LQTY governance**, which directs protocol incentives rather than the protocol's mechanics. It runs on **seven-day epochs with a six-day voting cutoff**, and a payout can arrive no earlier than the following epoch. **It cannot upgrade contracts, change collateral, or pause anything.**
+LQTY governance directs protocol incentives. It operates in seven-day epochs with a six-day voting cutoff, and approved payouts arrive no earlier than the following epoch. Its authority does not extend to upgrading the core contracts, changing the collateral registry or pausing BOLD.
 
-⚠️ **Not established, and stated rather than implied: what a governance majority costs.** **LQTY voter concentration has not been measured here**, so the price of directing that allocator is unknown. **Chainlink feed governance is likewise outside the authority walk** — which matters more than usual given that a failed feed permanently retires a branch. **And cumulative redemption volume beyond roughly 82 days needs an archive node we do not have.**
+**Risks and limitations.** LQTY voter concentration was not measured, so the cost of controlling incentive allocation is unknown. Governance of the Chainlink feeds was also outside the contract-authority walk, despite the importance of those feeds to irreversible branch shutdown. Cumulative redemption volume beyond approximately 82 days could not be measured without an archive node.
 
 ## Two tokens, and the symbols differ only by case
 
-⚠️⚠️ **This is the trap most likely to cost a reader money.**
+The live and abandoned deployments use symbols that differ only by capitalization:
 
 | | address | `symbol()` | supply |
 |---|---|---|---:|
 | **live** | `0x6440f144b7e50D6a8439336510312d2F54beB01D` | `BOLD` | 34,464,705.66 |
 | legacy | `0xb01dd87B29d187F3E3a4Bf6cdAebfb97F3D9aB98` | `Bold` | 202,029.51 |
 
-**Any case-insensitive ticker match resolves both.** ⚠️ **Resolve BOLD by address, never by symbol.** The legacy token is the abandoned February 2025 deployment; its supply is the stranded remainder that never migrated. On CoinGecko the live asset is `liquity-bold-2`.
+Case-insensitive ticker matching can resolve either token. The legacy token belongs to the abandoned February 2025 deployment, and its remaining supply did not migrate. Use the full contract address rather than the symbol when selecting BOLD. CoinGecko identifies the live asset as `liquity-bold-2`.
 
 ## Who this is for
 
@@ -137,8 +133,8 @@ CollateralRegistry.getToken(3)  0x0     the collateral set is permanently closed
 
 ## What to watch
 
-- ⚠️ **The wstETH branch's leverage** — debt rising against falling collateral units is the live adverse trend.
-- ⚠️ **Where the ladder peak sits**, not the size of the pools. Depth readings and the executable ceiling have moved in opposite directions.
+- **The wstETH branch's leverage** — debt rising against falling collateral units is the live adverse trend.
+- **Where the liquidity ladder peaks**, rather than the headline size of the pools. Reported TVL and executable capacity have moved in opposite directions.
 - **Growth concentrating in the 110% MCR branch.**
 - **sBOLD's share of supply**, and any change to what its 2-of-3 Safe can do.
 - **Any branch `shutdownTime()` moving off zero** — that is one-way.
