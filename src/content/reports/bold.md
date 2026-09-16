@@ -18,6 +18,7 @@ overall_score: 6.5
 axis_frame: six
 issuer: "Liquity (immutable protocol, no issuer counterparty)"
 market_cap_approx: 34464706
+live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=bold"
 production: false
 ---
 
@@ -26,6 +27,8 @@ production: false
 **Moderate risk · 6.5/10**
 
 **Category:** Stablecoin | **Peg Mechanism:** Overcollateralized CDP with permissionless redemption | **Issuer:** Liquity — an immutable protocol with no issuer counterparty
+
+[View the live BOLD six-axis risk dashboard](https://todayindefi.github.io/backing-monitor/?asset=bold) for peg history, collateral branches, secondary liquidity, size-dependent redemption, Stability Pool coverage, dependencies, contract authority and counterparty assessment.
 
 ## Summary
 
