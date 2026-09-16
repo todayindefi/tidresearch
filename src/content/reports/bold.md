@@ -87,7 +87,19 @@ sBOLD (`0x50bd66d59911f5e086ec87ae43c811e0d059dd11`) is a separate ERC-4626 prod
 
 ## 5 · Contract & Admin — 8.5
 
-BOLD's core contracts are non-upgradeable and have no administrator capable of pausing the token, changing its parameters or expanding its collateral set. The following Ethereum reads were reproduced on 2026-09-15:
+BOLD combines an unusually strong core control surface with residual smart-contract risk that cannot be dismissed by its audit count. These are separate halves of the assessment: broad security review does not offset an exposed administrator, and immutability does not offset defective code. The **8.5** score reflects exceptional protection against administrative change, held below the top tier because a serious code failure has already occurred and another could not be patched in place.
+
+### Intrinsic smart-contract risk
+
+Liquity v2 received **15 security engagements across six firms**, Certora formal verification and a post-defect Cantina competition. No known incident affected the current deployment during the assessed post-relaunch window. This is unusually broad review, but it is not conclusive evidence that the code is defect-free.
+
+The first Liquity v2 deployment demonstrated the residual risk. A critical Stability Pool defect was found roughly three weeks after launch despite review by six audit firms and formal verification. Its technical root cause was not publicly disclosed in the assessed record. The immutable deployment could not be repaired in place, so Liquity abandoned it and required users to migrate; **202,029.51 legacy BOLD** remained outstanding on 2026-09-15.
+
+The `liquity/bold` repository also documents approximately **26 accepted findings that remain unfixed**. The assessed Cantina bounty schedule capped a critical award at **125,000 BOLD**, approximately **0.16% of then-measured TVL**. That provides relatively weak whitehat coverage against the value at risk. These facts do not establish that the current code is unsafe; they show that even extensive review leaves consequential residual risk when the deployed system has no pause or upgrade path.
+
+### Admin and access-control risk
+
+The live BOLD core is ownerless, non-upgradeable and unpausable. Its authorized minting contracts and WETH, wstETH and rETH collateral set are permanently closed. The following Ethereum reads were reproduced on 2026-09-15:
 
 ```
 BOLD.owner()              0x0000000000000000000000000000000000000000   renounced
@@ -96,13 +108,13 @@ EIP-1967 admin slot       0x0           no upgrade admin
 CollateralRegistry.getToken(3)  0x0000000000000000000000000000000000000000   collateral set closed
 ```
 
-The authority walk covered five layers and thirty contracts. The registry's `boldToken()` function returned the same live token address, confirming that the registry examined was the one governing this BOLD deployment. No core EOA, Safe, timelock, proxy upgrade path, manual pause or parameter setter was found.
+The authority walk covered five layers, thirty contracts and all three collateral branches. The registry's `boldToken()` function returned `0x6440f144b7e50D6a8439336510312d2F54beB01D`, confirming that the registry examined governs the live BOLD token. No core EOA, Safe, timelock, proxy upgrade administrator, manual pause, mutable oracle controller or parameter setter was found.
 
 [Liquity's own risk disclosure](https://docs.liquity.org/v2-documentation/risk-disclosure) agrees with these measurements: it describes the core as immutable, lists no upgradeable code or parameters, states that no manual pause or freeze exists, and limits BOLD's native deployment to Ethereum mainnet. The same disclosure points to DeDaub and ChainSecurity audits for smart-contract risk. It does not establish on the page that those audits covered every authority path walked here or map each report to the exact deployed bytecode, so audit scope is not used as proof of the absence of control. This assessment covers the native Ethereum deployment; Liquity identifies no current native cross-chain deployment.
 
-**Risks and limitations.** Immutability prevents both hostile administrative changes and corrective upgrades. A bug in a live branch has no patch path; the available response is permanent branch shutdown, followed by urgent redemptions using `lastGoodPrice`, a 0% fee and a 2% collateral bonus. This is a wind-down mechanism rather than a repair.
+Governance is bounded rather than absent. The LQTY-weighted allocator can direct weekly initiative payments from its own BOLD balance, register an initiative and unregister competing initiatives. It cannot reach collateral branches, oracle configuration, parameters, deployed code or the authorized-contract set. Vote increases close after day six of each seven-day epoch, and payment occurs no earlier than the following epoch. That creates a reaction window rather than a contract-level timelock; vote reductions and vetoes remain possible during the window.
 
-That limitation became concrete in February 2025, when a critical Stability Pool issue was found in the initial Liquity v2 deployment after six audit firms and formal verification had reviewed the base code. The deployment could not be patched in place, so Liquity abandoned it and asked users to migrate to a new deployment. The root cause has not been published, **202,029.51 legacy BOLD** remained outstanding on 2026-09-15, and the standing bug bounty caps critical findings at **$125,000**.
+**Risks and limitations.** Immutability prevents hostile administrative changes but also removes corrective upgrades. A defect in a live branch has no in-place patch path; permanent branch shutdown and urgent redemptions using `lastGoodPrice`, a 0% fee and a 2% collateral bonus provide a wind-down mechanism rather than a repair. The historical `OwnershipTransferred(previousOwner, address(0))` event was not read. Chainlink feed governance remains outside the core authority walk. LQTY voter concentration, the cost of acquiring a majority and continuous veto monitoring are also unmeasured, so the practical strength of the allocator's reaction window is unknown.
 
 ## 6 · Issuer — 8.0
 
@@ -143,5 +155,7 @@ Case-insensitive ticker matching can resolve either token. The legacy token belo
 - **Any branch `shutdownTime()` moving off zero** — that is one-way.
 
 ## Revision history
+
+*2026-09-16 — Contract & Admin reframed into non-offsetting intrinsic-code-risk and admin/access-control halves using existing evidence. Audit breadth, the first deployment's critical defect, accepted unfixed findings and bounty coverage now sit explicitly beside the immutable authority walk and bounded LQTY allocator. Scores and whole-report verification date unchanged.*
 
 *2026-09-15 — first publication. Immutability verified on-chain: `owner()` zero, both EIP-1967 slots zero, `getToken(3)` zero against a registry whose `boldToken()` returns the token itself. Branch debts read per-branch and reconciled against `totalSupply` at 0.0029%. sBOLD identified by `asset()` and its owner read as a 2-of-3 Safe. Both token addresses confirmed by `symbol()` and supply.*
