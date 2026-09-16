@@ -19,7 +19,7 @@ axis_frame: six
 issuer: "Liquity (immutable protocol, no issuer counterparty)"
 market_cap_approx: 34464706
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=bold"
-production: false
+production: true
 ---
 
 # BOLD — Risk Report
