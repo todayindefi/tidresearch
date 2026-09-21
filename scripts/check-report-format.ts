@@ -8,13 +8,20 @@
  * Written rules decay; this checks the parts a machine can see.
  *
  * WHAT IT CANNOT SEE, stated so nobody reads a pass as a format review: whether a
- * flag sits in the RIGHT axis, whether the summary actually explains the asset,
- * and whether a figure's basis is stated. Those are the writer's job.
+ * flag sits in the RIGHT axis, whether an axis genuinely opens with a useful
+ * description, whether the summary actually explains the asset, and whether a
+ * figure's basis is stated. Those are the writer's job. Current-standard staged
+ * reports are checked here because staging is part of publication, not an
+ * exemption from the house format.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const DIR = "src/content/reports";
+// Staged drafts created before the descriptive-first standard remain migration
+// work. New staged reports, and older staged reports whose `last_verified` date
+// shows a substantive refresh, enter the gate from this date forward.
+const STAGED_FORMAT_REQUIRED_FROM = "2026-09-15";
 const errors: string[] = [];
 let checked = 0;
 
@@ -57,7 +64,13 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   const end = text.indexOf("\n---", 4);
   if (end === -1) continue;
   const fm = text.slice(0, end);
-  if (!/^production: true/m.test(fm)) continue;
+  const created = fm.match(/^date:\s*"?(\d{4}-\d{2}-\d{2})/m)?.[1];
+  const verified = fm.match(/^last_verified:\s*"?(\d{4}-\d{2}-\d{2})/m)?.[1];
+  const production = /^production:\s*true/m.test(fm);
+  const stagedOnNewStandard =
+    (created !== undefined && created >= STAGED_FORMAT_REQUIRED_FROM) ||
+    (verified !== undefined && verified >= STAGED_FORMAT_REQUIRED_FROM);
+  if (!production && !stagedOnNewStandard) continue;
   const body = text.slice(end);
   checked++;
 
@@ -96,4 +109,7 @@ if (errors.length) {
   console.error("");
   process.exit(1);
 }
-console.log(`✓ report-format check: ${checked} production report(s) match docs/report-format.md`);
+console.log(
+  `✓ report-format check: ${checked} production or current-standard staged report(s) ` +
+    `match docs/report-format.md`
+);

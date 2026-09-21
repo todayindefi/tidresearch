@@ -1,8 +1,12 @@
 # Report format
 
-The house shape for every asset report on tidresearch. Owner-set, 2026-09-10.
-Applies to **new reports and to every refresh** — a refresh brings the report onto
-this shape, it does not leave it as found.
+The house shape for every asset report on tidresearch. Owner-set, 2026-09-10;
+descriptive-first axis style added 2026-09-15.
+
+Applies to **new reports, refreshes, reviews and revisions**. Any substantive edit
+brings the report onto this shape; it does not preserve an older structure or voice
+because the page began under an earlier standard. Staging is part of the publishing
+workflow, not an exemption from it.
 
 `scripts/check-report-format.ts` enforces the mechanical parts at build time. The
 editorial parts are not machine-checkable and are the writer's job.
@@ -47,12 +51,52 @@ preamble short — a label, a headline, a sentence of orientation. If it runs pa
 
 ## 3. Flags live in the axis they belong to
 
-⚠️ and ✅ callouts go **inside the axis section that argues them**, never stacked
-in the lede. A finding about custody belongs under Contract & Admin; a
-concentration figure belongs under whichever axis prices it.
+⚠️ and ✅ callouts go **inside the axis section that argues them**, apart from the
+critical-warning exception below, and are never stacked in the lede. A finding
+about custody belongs under Contract & Admin; a concentration figure belongs
+under whichever axis prices it.
 
 **A wall of warnings above the summary tells a reader the report is alarmed
 without telling them what about.**
+
+### Each axis is descriptive first
+
+Every scored axis uses this reading order:
+
+1. **Description or summary.** Start by explaining how this part of the asset
+   works and what the current condition is. The opening must make sense to a
+   reader who has not seen the score, methodology or an earlier version.
+2. **Supporting details.** Give the measurements, mechanisms, comparisons and
+   evidence that support the description.
+3. **Risks and limitations.** Put ordinary caveats, adverse trends, missing
+   measurements and monitoring qualifications at the end of the axis.
+
+The final part may be a paragraph beginning **“Risks and limitations.”** or a
+short list when several independent items need separation. It is not required
+when the axis genuinely has no material qualification.
+
+Do not open an axis with a warning, verdict, score defence or rhetorical line
+such as “this is the binding constraint.” Describe the exit paths first; then
+show why one binds. Describe the backing first; then explain its concentration.
+Describe the authority structure first; then explain what can fail.
+
+### Warnings are exceptional
+
+Most risks should be written as clear prose, without an icon. Use `⚠️` only for
+an immediate and severe condition that a reader may need to act on before
+continuing, such as:
+
+- a material current depeg;
+- an active reserve shortfall or loss of redemption;
+- a known live exploit or imminent irreversible control action; or
+- a token, address or chain-identification hazard that could cause a reader to
+  acquire or send the wrong asset.
+
+A critical warning may appear immediately after the Summary when delaying it
+would expose the reader to harm. Keep it short, factual and actionable. Otherwise
+warnings and flags belong at the end of their axis. Never stack icons (`⚠️⚠️`),
+use warning symbols as paragraph furniture, or add a positive icon merely to
+balance a negative one.
 
 ## 4. No self-reference
 
@@ -66,6 +110,19 @@ Never write:
 - "Cut from 6.5", "Raised from 5.5", "Restored from 4.5", "scores HELD"
 - "one lesson about this report's own format"
 - dated update blocks stacked in the lede
+- “on this site”, “in this coverage”, “we cover”, or comparisons to how other
+  pages are scored
+- “the honest way to read this”, “the point is”, “a reader deserves”, or other
+  narration of the writer's reasoning process
+- “not established, and stated rather than implied” or similar methodology
+  commentary when the direct statement (“voter concentration was not measured”)
+  carries the information
+
+State the asset fact directly. “The core has no upgrade authority” is useful;
+“this report gives Contract & Admin the highest score on the site” is not. “The
+measured curve turns over near $8 million” is useful; “this is why the ladder is
+the figure to quote” is instruction about the analysis rather than description
+of the asset.
 
 **The distinction that matters:**
 
