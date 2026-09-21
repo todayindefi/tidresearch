@@ -8,7 +8,7 @@ peg_mechanism: "fiat-backed"
 assessment_type: "light"
 date: "2026-06-10"
 last_verified: "2026-08-23"
-last_revised: "2026-09-11"
+last_revised: "2026-09-21"
 peg_mechanism_score: 6.5
 backing_score: 6.5
 liquidity_score: 5.5
@@ -103,7 +103,7 @@ Daily volume is now about **$10.8M** (roughly 3.7× the ≈$2.9M seen in April),
 **This is where the score is lost.** Three things compound:
 
 - **No third-party audit of the frxUSD stablecoin contracts.** LlamaRisk states this explicitly. The contracts are **upgradeable proxies**. Frax's in-house "Security Cartel" reviewed the FIP-430 upgrade path, and ChainSecurity audited the FXB-side upgrade — but the frxUSD ERC-20 itself has no public third-party audit report. For an upgradeable stablecoin, that is the single biggest contract-level risk.
-- **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the 4-of-7 / no-timelock / upgradeable / unaudited setup is exactly what would *enable* such an action silently, which is why it's worth flagging.
+- **An unconfirmed December 2025 "stealth patch" allegation.** A single-source Medium post (Donnyoregon) claims Frax silently deployed a contract patch between Dec 5–16, 2025 to fix a zero-value-ticket vulnerability without crediting the bounty submitter, with on-chain bytecode reportedly diverging from the verified Etherscan source; Token Sniffer flagged it. No Frax public response has surfaced. **We can't confirm the specific claim** — but the configuration in place when it was alleged (3-of-5 at the time, upgradeable, unaudited, and undelayed on every power) is exactly what would *enable* such an action silently, which is why it's worth flagging. Today's setup is a partial answer and no more: the upgrade path now carries 24 hours' notice, but the contracts are still upgradeable and unaudited, and mint, freeze and pause still execute with no delay at all.
 
 ### The owner address changed, and we found it by re-reading the chain
 
@@ -113,16 +113,16 @@ Daily volume is now about **$10.8M** (roughly 3.7× the ≈$2.9M seen in April),
 |---|---|---|
 | Owner | `0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27` | **`0xfFFffF4F3baC444b2C0ecf2A1840d018bE783937`** |
 | Configuration | 3-of-5 Safe | **4-of-7 Safe (v1.3.0)** |
-| Timelock | none | **none** — unchanged |
+| Timelock | none | **none on the owner itself** — upgrades run through a separate 24h Timelock (`0xb898Ad2976b4d8f2E21521C9db16b7497825E503`, 2h floor) whose `admin()` is this same Safe; see the measurement above |
 | Signer overlap | — | **zero** (`isOwner()` on the new Safe returns false for the old one) |
 
 The old Safe still exists and is still 3-of-5; it simply no longer controls frxUSD.
 
 There are two honest readings here and you should hold both.
 
-**The direction is better.** Four independent keys out of seven is a higher bar to compromise than three out of five, and key compromise is the most likely failure mode for an upgradeable, unaudited stablecoin contract. That is a real improvement, and it is why the Issuer score moves from 5.0 to 5.5.
+**The direction is better.** Four independent keys out of seven is a higher bar to compromise than three out of five, and key compromise is the most likely failure mode for an upgradeable, unaudited stablecoin contract. That is a real improvement on Ethereum. It does not widen the authority, though: measuring all seven EVM legs shows four distinct keys reach every chain (below), so the Issuer score stands at **5.0**.
 
-**The manner is not reassuring.** This was a complete, zero-overlap replacement of the controlling signer set, on a contract that is an upgradeable proxy with no public third-party audit and no execution delay — and we found it by routinely re-reading the chain, not from any announcement or governance record. **We could not locate the record authorising the handover.** That absence does not mean no such record exists; it means we cannot distinguish "a maturing issuer widening its multisig through proper process" from "a signer set replaced quietly" using on-chain state alone. Both are consistent with what we can see. Treat the improvement as provisional until the authorising record surfaces.
+**The manner is not reassuring.** This was a complete, zero-overlap replacement of the controlling signer set, on a contract that is an upgradeable proxy with no public third-party audit, whose balance-affecting powers carry no execution delay — and we found it by routinely re-reading the chain, not from any announcement or governance record. **We could not locate the record authorising the handover.** That absence does not mean no such record exists; it means we cannot distinguish "a maturing issuer widening its multisig through proper process" from "a signer set replaced quietly" using on-chain state alone. Both are consistent with what we can see. Treat the improvement as provisional until the authorising record surfaces.
 
 ### ⚠️ Four keys reach all seven chains, and the OFT path does not need an upgrade
 
@@ -162,7 +162,7 @@ What makes it worth a second look is the combination: the float is shrinking *wh
 
 - **Chaos PoR feed.** If the frxUSD card on the Chaos dashboard starts populating with live numbers, that closes the current "exists but unverified" gap and is a genuine backing-transparency uplift.
 - **Backing concentration.** The ≈90% Superstate exposure (USTB + USCC) vs the "diversified custodians" marketing — watch for the live split to be re-confirmed either way.
-- **Multisig / upgrades.** The 4-of-7 owner (`0xfFFf…3937`, in place as of 2026-08-13) can upgrade behind a **24-hour timelock it also administers**, and can mint, freeze and pause **with no delay at all**. Watch for a `setDelay` call — the floor is two hours. Any implementation upgrade, another owner change, or resolution of the Dec 2025 patch allegation would be material — as would a timelock, which is the change that would actually move this score.
+- **Multisig / upgrades.** The 4-of-7 owner (`0xfFFf…3937`, in place as of 2026-08-13) can upgrade behind a **24-hour timelock it also administers**, and can mint, freeze and pause **with no delay at all**. Watch for a `setDelay` call — the floor is two hours. Any implementation upgrade, another owner change, or resolution of the Dec 2025 patch allegation would be material — as would a delay over the balance-affecting powers, or a floor the Safe cannot lower, which are the changes that would actually move this score.
 - **The authorising record for the August 2026 owner migration.** A Frax governance post or vote documenting the handover to the 4-of-7 Safe would resolve the open question above. Its appearance would firm up the Issuer score; continued absence keeps the improvement provisional.
 - **USDC-exit depth.** The Superstate USDC buffer and Curve USDC-pairing depth are the real exit constraint — more than headline float.
 - **FXB redemption asset.** Note that Frax Bonds (FXBs) currently redeem to *Legacy FRAX* on mainnet, not frxUSD — the Fraxtal upgrade making frxUSD the FXB underlying was still being audited at last check. Verify before relying on it.
@@ -173,8 +173,7 @@ What makes it worth a second look is the combination: the float is shrinking *wh
 
 ## Revision history
 
-
-
+- **2026-09-21 — admin topology re-measured; no score change.** frxUSD's `ProxyAdmin` is owned by a 24-hour Compound-style Timelock (`0xb898Ad2976b4d8f2E21521C9db16b7497825E503`, `MINIMUM_DELAY` 7,200s) whose `admin()` is the 4-of-7 owner Safe; mint, freeze, thaw and pause remain undelayed on the owner path. The December 2025 stealth-patch allegation is dated to the 3-of-5 configuration then in place. Issuer stands at 5.0, where it was set on 2026-08-24 after all seven EVM legs were measured.
 - **2026-08-29 — supply concentration recorded; no score change.** **sfrxUSD holds 36,232,343.43 frxUSD against a total supply of 101,827,130.47 — 35.58%.** That vault's `timelockAddress()` accessor resolves to a **3-of-6 Safe with no execution delay**, and `owner()` reverts, so the accessor name is the only governance signal the interface offers. See the [sfrxUSD report](/reports/sfrxusd/).
 - **2026-08-23 — upgrade timelock measured at 24 hours**, and it does not cover the powers that matter most: on the OFT legs `setPeer` points the token at a peer whose inbound messages credit balances, with no upgrade and nothing for a proxy-watcher to see.
 - **2026-08-13 — admin migration found on-chain:** the frxUSD owner moved from the 3-of-5 Safe `0xB174…`.
