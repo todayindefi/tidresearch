@@ -10,8 +10,10 @@ last_verified: "2026-08-17"
 # 2026-09-21 8-K (accession 0001193125-26-396093, period 09-14 -> 09-20): read
 # directly from EDGAR by this desk. First USD Reserve decline ($5.10B -> $5.04B,
 # $57.4M drawn for dividends + interest), 950 BTC bought from USD Cash, STRC
-# buyback $174.0M / 1,771,238 sh ~$98.24, ATM idle a third week. Scores HELD;
-# analyst review of Funding 4.5 -> 4.0 pending, not reflected here.
+# buyback $174.0M / 1,771,238 sh ~$98.24, common ATM idle a third filing, preferred
+# ATM untouched in all 17 weekly filings since 05-26. Facts-only pass: scores not
+# re-examined here; the Funding axis is under analyst review and the page does not
+# assert HELD.
 # Earlier: 2026-09-08 8-K (0001193125-26-384402) DCS authorisation doubled to $2.0B.
 last_revised: "2026-09-22"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
@@ -42,7 +44,7 @@ This report is the **issuer-level analysis** that Strategy's preferred-stock hol
 
 ⚠️⚠️ **The 2026-09-21 filing (period 09-14 → 09-20, accession `0001193125-26-396093`, read directly from EDGAR) is the first in which the USD Reserve fell: $5.10B → $5.04B.** The filing states that Strategy *"used $57.4 million of the USD Reserve to fund the payment of dividends on its preferred stock and interest on its outstanding indebtedness"* — the first filing to carry a reserve-draw sentence at all. The reserve had printed $5.10B flat for four consecutive weeks (08-23 through 09-13), and the 08-24 filing shows how it was held there: $300.0M of common-ATM net proceeds explicitly *"used to increase the USD Reserve."* With the ATM idle for three weeks, the top-up stopped and the dividend now comes out of the reserve itself. ⚠️ **This is a first observed net draw, not a burn rate** — $57.4M is one payment week and does not annualise to anything meaningful (×52 sits far above the roughly $1.71B stated preferred base, ×12 far below it). It is 1.1% of the reserve.
 
-⚠️ **Bitcoin buying resumed, but small, above cost, and from the cash pocket.** 950 BTC for $75.7M at about $79,670 — ending a three-week halt, but 0.11% of the stack, bought above the $75,412 average cost (which moved to $75,416), and funded from USD Cash rather than from any new capital. Holdings 845,050 → **846,000**; aggregate cost $63.73B → $63.80B. **This is not the flywheel restarting**: no common ATM for a third straight week, no preferred issuance, and the purchase drew on the same finite pocket that funds the buyback. **The STRC buyback ran a sixth consecutive week at its highest price yet**: 1,771,238 shares for **$174.0M**, about **$98.24 — roughly 1.76% below par** (prior week ~$98.07 / 1.93%). STRF, STRK, STRD and MSTR common: zero again. **$875.1M remains** of the $2.0B digital-credit authorisation; $1.0B remains untouched under the separate MSTR common programme.
+⚠️ **Bitcoin buying resumed, but small, above cost, and from the cash pocket.** 950 BTC for $75.7M at about $79,670 — ending a three-week halt, but 0.11% of the stack, bought above the $75,412 average cost (which moved to $75,416), and funded from USD Cash rather than from any new capital. Holdings 845,050 → **846,000**; aggregate cost $63.73B → $63.80B. **This is not the flywheel restarting**: no common ATM for a third straight filing, no preferred issuance in any of the 17 weekly filings since 2026-05-26 (the preferred capacity column has been frozen at $17,510.8M for STRC throughout), and the purchase drew on the same finite pocket that funds the buyback. **The STRC buyback ran a sixth consecutive week at its highest price yet**: 1,771,238 shares for **$174.0M**, about **$98.24 — roughly 1.76% below par** (prior week ~$98.07 / 1.93%). STRF, STRK, STRD and MSTR common: zero again. **$875.1M remains** of the $2.0B digital-credit authorisation; $1.0B remains untouched under the separate MSTR common programme.
 
 ⚠️⚠️ **The two pockets are not interchangeable, and this week both fell.** The USD Reserve is the balance the filings describe as backing the dividend, so coverage months are correctly computed against it; the buyback and the bitcoin purchase draw on USD Cash. **USD Cash: $1.61B → $1.44B → $1.30B → $1.05B** — this week $174.0M of buyback plus $75.7M of bitcoin, $249.7M out with zero in. Combined liquid (Reserve + Cash) fell **$6.40B → $6.09B, the largest weekly decline of the series.** At this week's pace USD Cash lasts about **4.2 weeks**; at the three-week average outflow (about $187M/wk) about **5.6 weeks**. ⚠️ **Both figures assume no capital formation at all** — the condition that has held for three weeks and could stop holding on any Monday, since roughly $21.7B of common-ATM and $17.5B of STRC-ATM capacity sit unused. Whether the idle legs are a choice or an absence of demand has been an open question since 08-10, and this filing does not resolve it. ⚠️ **Week-to-week dollar totals are not compared here: consecutive filings cover different period lengths**, so a change in the headline can be a calendar artifact rather than a change in the bid.
 
@@ -223,12 +225,11 @@ Each of these signals has a live panel on the [MSTR dashboard](https://tidresear
 
 ## Revision history
 
-> **2026-09-22 (weekly 8-K, period 09-14→09-20, accession 0001193125-26-396093, read at source from EDGAR) — first USD Reserve decline; bitcoin buying resumed from cash; marks HELD (Overall 4.5).**
+> **2026-09-22 (weekly 8-K, period 09-14→09-20, accession 0001193125-26-396093, read at source from EDGAR) — first USD Reserve decline; bitcoin buying resumed from cash.**
 > - **USD Reserve $5.10B → $5.04B**, the first decline in the series, with the filing stating $57.4M of the reserve was used to pay preferred dividends and interest — the first reserve-draw sentence in any weekly filing. A first observed net draw, not a run rate.
 > - **950 BTC bought for $75.7M (~$79,670) from USD Cash**, ending a three-week halt; holdings **846,000**, aggregate cost $63.80B, average $75,416 (nudged up: the purchase was above cost basis).
 > - **STRC buyback: 1,771,238 shares for $174.0M at ~$98.24 (1.76% below par)**, sixth consecutive week and highest price yet; STRF/STRK/STRD/MSTR zero; **$875.1M remains** under the $2.0B digital-credit programme; $1.0B untouched under the MSTR programme.
-> - **USD Cash $1.30B → $1.05B** ($249.7M out, nothing in); combined Reserve + Cash **$6.40B → $6.09B**, the largest weekly decline of the series. Common ATM zero for a third week; preferred issuance still zero against ~$17.5B of STRC capacity.
-> - **No score change.** Balance 5.0 / Funding 4.5 / Refinancing 4.5 / Governance 4.5 / Overall 4.5 hold. The draw is 1.1% of the reserve and one payment week; the idle issuance legs may be choice rather than inability.
+> - **USD Cash $1.30B → $1.05B** ($249.7M out, nothing in); combined Reserve + Cash **$6.40B → $6.09B**, the largest weekly decline of the series. Common ATM zero for a third filing; preferred issuance zero in all 17 weekly filings since 2026-05-26, against ~$17.5B of STRC capacity that has never moved.
 
 > **2026-08-17 (weekly 8-Ks, periods 07-27→08-16) — Bitcoin selling resumed and is now funding STRC buybacks; marks HELD (Overall 4.5).** Read at source from EDGAR (CIK 1050446), accessions 0001193125-26-329565, -341297 and -353240.
 >
