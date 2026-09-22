@@ -18,6 +18,15 @@ liquidity_score: 4.0
 underlying_score: 4.5
 structural_score: 5.0
 issuer_score: 5.5
+# Timelock role history (axis 5) — end state verified on-chain here; the event
+# history is riskAnalyst's Etherscan read, pinned to the hardening tx
+# 0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af (block
+# 24,920,489, 2026-04-20: EXECUTOR -> 0x0, TIMELOCK_ADMIN revoked from the Safe
+# and from 0xa1d0027ca4c0cb79f9403d06a29470abc7b0a468). Deployment grants:
+# 0x4be19268a0f6a7e08f10fdf0afcb665acc9135c5f28b7db0d1870d4d4499970f and
+# 0x1e535204641e8fb44a97b357490e9cc9caeae2d1752a309479ef24ecdee14a28 (2026-04-06).
+# Public RPCs refuse historical eth_getLogs, so grant histories cannot be
+# re-derived from this desk; they come from whoever holds an Etherscan key.
 # redemption_score is retained as the evidence for axis 3 and is not rendered on
 # the six-axis frame: Liquidity & Exit is scored on the WORSE leg, and the worse
 # leg here is the unmeasured fxUSD -> USDC hop, not redemption.
@@ -85,7 +94,7 @@ fxUSD is the terminal dependency: it is what the Stability Pool pays out, what t
 
 ## 5 · Contract & Admin — 5.0
 
-The fxSAVE share is an upgradeable proxy. Its EIP-1967 implementation slot resolves to `0xe4031e271809d20074e4bef1caeefec5f710e8a6` and its admin slot to a ProxyAdmin at `0x9b54b7703551d9d0ced177a78367560a8b2edda4`, whose `owner()` is an OpenZeppelin TimelockController at `0x68863fb8855b04509a835082478D6E3D0bE4E61a` with a minimum delay of 259,200 seconds — 72 hours. Every address here was read from a call that returned it, and the role table was read off the contract: proposer and canceller authority is held solely by a Gnosis Safe v1.3.0 at `0x26b2ec4E02ebe2F54583af25b647b1D619e67BbF` requiring **6 of 9 signatures**, all nine owners externally-owned accounts; the timelock is its own only administrator, and that state was reached deliberately — the role history shows the Safe and one deployer address were granted the admin role at deployment (blocks 24,819,073 and 24,819,089) and both were revoked at block 24,920,489, in the same action that granted the executor role to the zero address. Since then no external party can administer the timelock, and because execution is open, a scheduled operation cannot be blocked once its delay elapses. Shortening the delay is itself subject to it — `updateDelay` succeeds only when called by the timelock, so a reduction must be scheduled and wait the full 72 hours in public.
+The fxSAVE share is an upgradeable proxy. Its EIP-1967 implementation slot resolves to `0xe4031e271809d20074e4bef1caeefec5f710e8a6` and its admin slot to a ProxyAdmin at `0x9b54b7703551d9d0ced177a78367560a8b2edda4`, whose `owner()` is an OpenZeppelin TimelockController at `0x68863fb8855b04509a835082478D6E3D0bE4E61a` with a minimum delay of 259,200 seconds — 72 hours. Every address here was read from a call that returned it, and the role table was read off the contract: proposer and canceller authority is held solely by a Gnosis Safe v1.3.0 at `0x26b2ec4E02ebe2F54583af25b647b1D619e67BbF` requiring **6 of 9 signatures**, all nine owners externally-owned accounts; the timelock is its own only administrator, and that state was reached deliberately — the role history shows the Safe and one deployer address were granted the admin role at deployment on 2026-04-06 and both were revoked on 2026-04-20 (block 24,920,489, transaction `0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af`), in the same action that granted the executor role to the zero address — the admin surface was tightened two weeks after launch, not at launch. The current role state was verified on-chain; the event history is cited from that transaction. Since then no external party can administer the timelock, and because execution is open, a scheduled operation cannot be blocked once its delay elapses. Shortening the delay is itself subject to it — `updateDelay` succeeds only when called by the timelock, so a reduction must be scheduled and wait the full 72 hours in public.
 
 Custody is segregated: assets sit in a bare 45-byte minimal proxy with no admin of its own, and its gauge balance reconciled to `totalAssets()` exactly. Two audits are published, and the one serious finding on record — a double-flash-loan access-control bypass in the router peripheral, found by ChainSecurity in April 2025 with over $2M at risk — was responsibly disclosed, fixed, and never exploited.
 
