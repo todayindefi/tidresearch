@@ -14,7 +14,7 @@ issuer: "f(x) Protocol (AladdinDAO)"
 market_cap_approx: 77700000
 volatility_score: 5.0
 backing_score: 4.5
-liquidity_score: 4.0
+liquidity_score: 3.5
 underlying_score: 4.5
 structural_score: 5.0
 issuer_score: 5.5
@@ -29,7 +29,8 @@ issuer_score: 5.5
 # re-derived from this desk; they come from whoever holds an Etherscan key.
 # redemption_score is retained as the evidence for axis 3 and is not rendered on
 # the six-axis frame: Liquidity & Exit is scored on the WORSE leg, and the worse
-# leg here is the unmeasured fxUSD -> USDC hop, not redemption.
+# leg here is the fxUSD -> USDC hop (measured 2026-09-22: ~$4.65M USDC ceiling), not
+# redemption.
 redemption_score: 7.0
 overall_score: 4.5
 featured: false
@@ -46,7 +47,7 @@ production: false
 
 fxSAVE is an ERC-4626 vault share issued by f(x) Protocol on Ethereum. It is widely described as "saved fxUSD", and that description is wrong in a way that matters: the vault's `asset()` is not fxUSD but **fxSP, the f(x) Stability Pool token**. The Stability Pool is the protocol's liquidation backstop — it absorbs collateral from liquidated positions in exchange for burning fxUSD, and pays depositors for taking that role. fxSAVE is therefore a yield-bearing claim on a loss-absorbing pool, and its worst day arrives on the same day as the worst day for the collateral behind fxUSD.
 
-The token has no peg. One fxSAVE was worth 1.108142 fxSP on 2026-09-22 and the exchange rate rises as the pool accrues. At a quoted price of $1.1189 and 69,462,472 shares outstanding, the market capitalisation is about $77.7M. Redemption is immediate, permissionless and uncapped, and the accounting reconciles exactly — but it pays out in fxUSD, whose only sizeable venue is a $10.0M Curve pool against USDC, and an instant redemption realises about 4.3% less than the quoted price.
+The token has no peg. One fxSAVE was worth 1.108142 fxSP on 2026-09-22 and the exchange rate rises as the pool accrues. At a quoted price of $1.1189 and 69,462,472 shares outstanding, the market capitalisation is about $77.7M. Redemption is immediate, permissionless and uncapped, and the accounting reconciles exactly — but it pays out in fxUSD, whose own protocol redemption is refused and whose market can yield at most about $4.65M of USDC at any size, and an instant redemption realises about 4.3% less than the quoted price.
 
 Roughly 27% of all fxSAVE — about $21.0M — sits in Morpho Blue as collateral for USDC loans at 86% and 91.5% loan-to-value. The **4.5/10** overall score reflects a well-constructed wrapper around a pool designed to lose value under stress, whose exit is only as good as the pool it lands in.
 
@@ -66,15 +67,15 @@ The bookkeeping between the layers is exact. fxSAVE holds no fxSP directly; its 
 
 **Risks and limitations.** The collateral behind fxUSD is pledged against leveraged positions rather than held idle, so the backing's worst day and fxSAVE's worst day are the same event. The Stability Pool converts into that collateral by design during imbalance — that is the risk a depositor is paid to carry, not a defect, but it means fxSAVE cannot be read as a claim on stablecoins. The 2.4% sub-par redemption on fxSP is unseparated between fee and absorbed loss, and that is the reason the score sits half a notch below fxUSD's own backing.
 
-## 3 · Liquidity & Exit — 4.0
+## 3 · Liquidity & Exit — 3.5
 
 A holder can leave two ways. The spot route is thin: a single Curve pool, fxSAVE/scrvUSD at `0xb6E4821c6fCABe32f5F452dfD3Ef20Ce2A3a48E2`, held $535,283 of TVL on 2026-09-22 — 0.69% of market capitalisation — and three other listed pairs (DOLA, litUSD, sUSDaf) held effectively nothing. Those figures are pool TVL from Curve's stable-ng factory listing, not depth at a slippage bound.
 
 The redemption route is strong, and it was simulated rather than assumed. On 2026-09-22, `redeem` of 1,000,000 fxSAVE from a real holder returned 1,108,141.67 fxSP and 10,000,000 returned 11,081,416.68 — linear, uncapped, with the same call from the burn address reverting on `ERC4626ExceededMaxRedeem` as it should. `maxRedeem` for Morpho Blue's entire 18,751,881.70 balance returned the full amount. From fxSP, `instantRedeem` into fxUSD returned 966,643.36 on 1,000,000 and 9,666,433.62 on 10,000,000, again linear; a second, delayed path (`requestRedeem`) also succeeds.
 
-**The binding leg is neither of those. It is the last hop, fxUSD to USDC**, which runs through a single Curve pool carrying $10,003,381 of TVL. Every other fxUSD venue on Curve is smaller — reUSD, USDnr and msUSD pairs at $1.39M, $0.71M and $0.43M, and four more under $0.2M — for about $13.0M of fxUSD venue TVL in total. Redemption converts a fxSAVE position into a fxUSD position, and fxUSD's depth is what a seller then meets.
+**The binding leg is neither of those. It is the last hop, fxUSD to USDC.** fxUSD's own protocol redemption is refused (see the [fxUSD report](/reports/fxusd/)), so that hop is DEX-only, and it was measured end to end on 2026-09-22: a routed sell of fxUSD crosses 2% at between $4.25M and $4.30M, and **proceeds peak at $4,648,576 USDC** — beyond that size the router sells fxUSD for ETH and total USDC falls. About **$4.65M is the most USDC obtainable at any size**, a ceiling rather than a cost. Thirty-three Curve pools were enumerated and no Uniswap, SushiSwap or Balancer venue for fxUSD exists. Redemption converts a fxSAVE position into a fxUSD position, and that ceiling is what a seller then meets.
 
-**Risks and limitations.** That leg is unmeasured: no slippage ladder has been run on it, and pool TVL is not executable size, so the 4.0 is a cap rather than a measurement, and it moves if a ladder shows the pool deeper or shallower than its TVL implies. fxSAVE's exit is also worse than fxUSD's own, despite ending in the same pool, because of an overhang fxUSD does not carry: Morpho Blue holds 18,751,881.70 fxSAVE (27.0% of supply), and a liquidation of that book is a forced, simultaneous, one-directional flow of roughly 20.1M fxUSD into a $10.0M pool, with every liquidator arriving at once. A wrapper whose holders are concentrated in one lending market exits worse than the asset it redeems into. Only Curve's stable-ng factory was enumerated; Uniswap and Balancer were not, so the $13.0M venue total is a floor. And the instant path costs about 1.0% more than the patient one.
+**Risks and limitations.** fxSAVE's exit is worse than fxUSD's own, despite ending in the same market, because of an overhang fxUSD does not carry: 90.55% of fxUSD sits locked in the Stability Pool and only about 1.87M is free float, and a fxSAVE redemption converts locked fxUSD into float that then meets the $4.65M ceiling. Morpho Blue holds 18,751,881.70 fxSAVE (27.0% of supply), and a liquidation of that book is a forced, simultaneous, one-directional flow of roughly 20.1M fxUSD against a ceiling a quarter that size. A wrapper whose holders are concentrated in one lending market exits worse than the asset it redeems into. The fxSAVE spot venues were read from Curve's stable-ng factory only; the ladder is a point-in-time router measurement and moves with pool balances. Only Curve's stable-ng factory was enumerated; Uniswap and Balancer were not, so the $13.0M venue total is a floor. And the instant path costs about 1.0% more than the patient one.
 
 ## 4 · Dependencies — 4.5
 
@@ -114,18 +115,20 @@ f(x) Protocol is built and operated by AladdinDAO and has run on Ethereum since 
 ## Who should avoid it
 
 - Anyone who reads "saved fxUSD" as a stablecoin savings product. The underlying is a loss-absorbing pool, not a reserve.
-- Anyone who needs a dollar exit at size. Redemption is uncapped, but it terminates in fxUSD, and fxUSD's exit is one $10.0M pool with no measured depth.
+- Anyone who needs a dollar exit at size. Redemption is uncapped, but it terminates in fxUSD, whose market yields at most about $4.65M of USDC at any size.
 - Anyone counting fxSAVE and fxUSD as two separate exposures. They share a ProxyAdmin and a timelock.
 
 ## What to watch
 
 - The fxSP redemption rate against par (0.976407 patient, 0.966643 instant on 2026-09-22). A widening discount is the pool absorbing losses; whether the current 2.4% is fee or loss is the open question that decides how to read it.
 - The gap between fxSAVE's quoted price and its instant-realisable value, currently about 4.3%. This is the figure a Morpho lender's cushion has to survive.
-- USDC/fxUSD Curve pool TVL ($10.0M) and any measured depth ladder on it. A ladder would replace the cap on axis 3 with a measurement.
+- The USDC ceiling on the fxUSD sell ladder ($4.65M peak proceeds on 2026-09-22) and the USDC/fxUSD Curve pool's balance.
 - Morpho Blue's fxSAVE balance (18,751,881.70, 27.0% of supply) relative to that pool.
 - `MinDelayChange` on the timelock at `0x68863fb8855b04509a835082478D6E3D0bE4E61a`, any change to the proposer Safe's 6-of-9 owner set or threshold, and any implementation change on the fxSAVE or fxUSD proxies — one queue governs both.
 - The vault's gauge balance against `totalAssets()`; they matched to the wei and should continue to.
 
 ## Revision history
 
-*2026-09-22 — first staged publication. Custody chain, share supply, `totalAssets`, `convertToAssets`, the Morpho Blue balance, the proxy implementation and admin slots, the ProxyAdmin owner, the timelock delay and its role holders, and the proposer Safe's owners and threshold read on-chain; redemption paths established by `eth_call` simulation with a burn-address control; venue TVL from Curve's stable-ng factory listing. Admin addresses reconciled against the issuer's v2 deployment manifest and the OpenZeppelin audit scope. Not done: a depth ladder on fxUSD/USDC, separation of fxSP's sub-par redemption into fee and loss, matching the deployed implementation to the audited commit, and a Polygon read.*
+*2026-09-22 (later) — Liquidity & Exit 4.0 → 3.5, overall held at 4.5. The fxUSD → USDC leg measured: proceeds peak at $4,648,576 USDC, 2% crossing at $4.25M–$4.30M, 33 Curve pools enumerated and no Uniswap, SushiSwap or Balancer venue; fxUSD's own redemption confirmed refused, so the leg is DEX-only; 90.55% of fxUSD locked in the Stability Pool.*
+
+*2026-09-22 — first staged publication. Custody chain, share supply, `totalAssets`, `convertToAssets`, the Morpho Blue balance, the proxy implementation and admin slots, the ProxyAdmin owner, the timelock delay and its role holders, and the proposer Safe's owners and threshold read on-chain; redemption paths established by `eth_call` simulation with a burn-address control; venue TVL from Curve's stable-ng factory listing. Admin addresses reconciled against the issuer's v2 deployment manifest and the OpenZeppelin audit scope. Not done at first publication: a depth ladder on fxUSD/USDC, separation of fxSP's sub-par redemption into fee and loss, matching the deployed implementation to the audited commit, and a Polygon read.*
