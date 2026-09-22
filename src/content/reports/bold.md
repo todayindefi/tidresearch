@@ -8,6 +8,7 @@ peg_mechanism: "overcollateralized CDP with permissionless redemption"
 assessment_type: "full"
 date: "2026-09-15"
 last_verified: "2026-09-15"
+last_revised: "2026-09-22"
 peg_mechanism_score: 7.0
 backing_score: 7.5
 liquidity_score: 5.5
@@ -19,7 +20,7 @@ axis_frame: six
 issuer: "Liquity (immutable protocol, no issuer counterparty)"
 market_cap_approx: 34464706
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=bold"
-production: false
+production: true
 ---
 
 # BOLD — Risk Report
@@ -67,13 +68,13 @@ Liquity reported system collateralization of approximately **279.8%** on about *
 
 ## 3 · Liquidity & Exit — 5.5
 
-BOLD can be exited through decentralized exchanges or redeemed through Liquity. Exchange liquidity is efficient for small transactions: a measured **$100,000** sale moved the price by approximately **0.8 basis points** on 2026-09-15. Permissionless redemption provides a second route when market liquidity is insufficient, although its fee rises with redemption size.
+BOLD can be exited through decentralized exchanges or redeemed through Liquity. Exchange liquidity is efficient for anything under seven figures: on the routed sell ladder measured 2026-09-22, **$1,000** moved the price 0.81 basis points, **$10,000** 0.86, **$100,000** 1.32 and **$1,000,000** 5.87. Permissionless redemption provides a second route when market liquidity is insufficient, although its fee rises with redemption size.
 
-The executable liquidity curve becomes materially weaker above seven figures. The measured 2% price-impact crossing was approximately **$4.3–4.4 million**. Total output peaked near an **$8 million** input and then declined, meaning that beyond the peak a larger sale could return fewer dollars in total, not merely a worse rate per token.
+The executable curve becomes materially weaker above that. The price falls **0.5%** at between **$3,232,422 and $3,250,000** of BOLD sold — the first point at which exiting costs real money — and **2%** at between **$4.52 million and $4.66 million**. Total USDC output peaks at about **$5.06 million** of input and then declines, meaning that beyond the peak a larger sale returns fewer dollars in total, not merely a worse rate per token. The 0.5% bracket is measured to within $17,578; the 2% bracket is about 3% wide because the router's route split changes near it, so the two brackets' precisions are independent.
 
 Published pool totals require deduplication. Convex, StakeDAO, Yearn and Beefy BOLD-USDC entries are wrappers around the same underlying Curve position, so adding them together counts the same liquidity more than once. Aggregator entries labelled `liquity-v2` BOLD represent Stability Pool deposits rather than tradable market depth.
 
-**Risks and limitations.** The measured executable ceiling declined approximately **34% over 55 days**, while BOLD supply grew **14.9%** and aggregate reported DEX TVL increased. Pool TVL therefore did not reflect the exit a seller could actually execute. Router quotes change intraday, so the important finding is the curve's shape and turnover point rather than a permanently fixed dollar threshold. Redemption remained available but was more expensive than the AMM route at every measured size the AMM could serve.
+**Risks and limitations.** The measured executable ceiling declined approximately **34% over 55 days**, while BOLD supply grew **14.9%** and aggregate reported DEX TVL increased. Pool TVL therefore did not reflect the exit a seller could actually execute. Router quotes change with pool balances on every refresh — these brackets carry their 2026-09-22 date and drift daily — so the important finding is the curve's shape and turnover point rather than a permanently fixed dollar threshold. Redemption remained available but was more expensive than the AMM route at every measured size the AMM could serve.
 
 ## 4 · Dependencies — 7.0
 
@@ -155,6 +156,8 @@ Case-insensitive ticker matching can resolve either token. The legacy token belo
 - **Any branch `shutdownTime()` moving off zero** — that is one-way.
 
 ## Revision history
+
+*2026-09-22 — exit ladder re-measured on the daily path; Liquidity & Exit held at 5.5. The 0.5% crossing ($3.23M–$3.25M) is now stated as the primary figure beside the 2% crossing ($4.52M–$4.66M) and the ~$5.06M output ceiling; the earlier 2%-only reading of about $4.3–4.4M sat on a different marginal baseline and is superseded. Promoted to production.*
 
 *2026-09-16 — Contract & Admin reframed into non-offsetting intrinsic-code-risk and admin/access-control halves using existing evidence. Audit breadth, the first deployment's critical defect, accepted unfixed findings and bounty coverage now sit explicitly beside the immutable authority walk and bounded LQTY allocator. Scores and whole-report verification date unchanged.*
 
