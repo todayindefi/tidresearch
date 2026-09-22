@@ -66,7 +66,7 @@ fxUSD is minted against wstETH and WBTC. Users deposit one of the two, open a le
 | WBTC `0xab709e26fa6b0a30c119d8c55b887ded24952473` | 1,292.12 WBTC at $85,224.68 | $110,120,544 | 76,591,690 | **143.8%** |
 | **Aggregate** | | **$132,714,802** | **85,378,602** | **155.4%** |
 
-The two pool debts sum to 85,378,602 against a token `totalSupply()` of 85,378,866 — 264 apart — so the debt ledger and the token reconcile independently. Supply was 78,600,047.69 on 2026-09-06.
+The two pool debts sum to 85,378,602 against a token `totalSupply()` of 85,378,866 — 264 apart — so the debt ledger and the token reconcile independently. The collateral side was checked a different way: the $132.7M computed from the pools' raw collateral and spot prices sits within 1.2% of an independent third-party TVL aggregation for the protocol ($134.3M), so quantities, prices and the 18-decimal normalisation of the WBTC figure (the token itself carries 8) agree across two unrelated paths. Supply was 78,600,047.69 on 2026-09-06.
 
 The headline is not the 155.4%. **89.7% of all fxUSD debt is against WBTC**, at the lower of the two ratios. "Backed by wstETH and WBTC" implies a balance that does not exist: this is overwhelmingly a WBTC-backed stablecoin, and WBTC is a custodial asset.
 
