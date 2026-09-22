@@ -8,7 +8,7 @@ peg_mechanism: "active-strategy"
 assessment_type: "light"
 date: "2026-06-08"
 last_verified: "2026-06-08"
-last_revised: "2026-08-29"
+last_revised: "2026-09-22"
 featured: false
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=yzusd"
 # HELD IN STAGING DELIBERATELY — do not promote on a freshness or
@@ -43,8 +43,11 @@ market_cap_approx: 58497074
 #   structural_score 5.0 is NEW. The old stablecoin rubric had no Contract & Admin
 #     axis, so yzUSD's 2-day OZ TimelockController on the token owner was scored
 #     nowhere. It is the better half of a split authority and rates above every
-#     other axis here — held to 5.0, not higher, because the timelock's proposer
-#     and executor set is NOT established in this coverage.
+#     other axis here. 2026-09-22: 4.5 — the 5.0 was a stale body-table row on
+#     riskAnalyst's side (their frontmatter always said 4.5, commit 2ae0369); the
+#     proposer/canceller/executor set is now read (4-of-5 Safe holds all three,
+#     verified from this desk on rpc.plasma.to). Overall 4.0 now sits 0.08 ABOVE
+#     the six-axis mean of 3.92 — disclosure added under the headline.
 # Stability, Backing and Issuer carry over unchanged; `peg_mechanism_score` is the
 # Stability key for a $1-referenced asset. See content.config.ts for the frame.
 axis_frame: six
@@ -60,7 +63,7 @@ liquidity_score: 3.0
 # has failed and the look-through is published and reproducible; it is a
 # concentration and circularity finding, not an opacity one.
 underlying_score: 3.0
-structural_score: 5.0
+structural_score: 4.5
 issuer_score: 4.0
 overall_score: 4.0
 chain_overrides:
@@ -80,6 +83,8 @@ chain_overrides:
 # yzUSD — Risk Report
 
 **Significant risk · 4.0/10** (3.0/10 on Monad)
+
+The 4.0 sits above its own six-axis mean — 4.0 against 3.92 — by a rounding margin; the axes are current and the headline is the judgement call.
 
 > ⚠️ **What is current and what is not.** The on-chain figures below — supply, the vault relationship, the authority split and the reserve address — were measured **2026-08-29**. The rest of the body, including the strategy description and the redemption mechanics, dates from **2026-06-08** and has not been re-read. The card shows both dates.
 
@@ -179,7 +184,7 @@ $250k  −12.13 bps
 
 **The syzUSD vault and its ProxyAdmin are both owned by `0xa2a97004…`, verified live as a 4-of-5 Safe — not a bare key. The bare EOA `0x4ea00dc0…` owns the bridge.** ⚠️ **So the single-key exposure is real, and its blast radius is the roughly 10.9M mirrored shares rather than the 99.1% of value sitting in the vault.**
 
-**This axis scores 5.0 — the highest on this report — and the two-day delay is why.** ⚠️ **It is also why the score is not higher: whether that delay has a floor, and who can propose through it, is not established.** Two days is a setting until the proposer set and any `MINIMUM_DELAY` are read. **And on Monad the axis drops to 2.0**, because the mirror's authority is the bare key with no delay.
+**This axis scores 4.5 — the highest on this report — and the two-day delay is why.** Both the yzUSD token owner and the proxy admin sit behind that single 48-hour `TimelockController` on Plasma (`0x2130457539612ae9838e0314cda1a8abbdb7cfbc`), so no bare key controls the token. Its role table was read on-chain: one 4-of-5 Safe, `0xa2a9700407934e913c840556b3d29f19cf6f203d`, holds the proposer, canceller **and** executor roles, and the timelock is its own only administrator. The delay therefore provides a public reaction window but no independent veto — the four signatures that schedule a change can also cancel it and execute it. That same Safe is the upgrade owner for [yzPP](/reports/yzpp/) and for syzUSD's Plasma vault, so the three Yuzu assets share one authority surface rather than three; anything treating them as separate legs is counting diversification that does not exist. `MINIMUM_DELAY()` and `MIN_DELAY()` both revert, so 48 hours is a configured setting rather than a code-enforced floor, though any reduction must itself wait out the current delay. **And on Monad the axis drops to 2.0**, because the mirror's authority is the bare key with no delay.
 
 ## 6 · Issuer
 
@@ -203,9 +208,9 @@ $250k  −12.13 bps
 
 - **Whether the Reserve Fund grows with issuance.** $503K against $58.5M — 0.86% — and the ratio is what to track, not the balance (axis 2).
 - **The loop share and the Ethena concentration.** Those two, not the headline CR, are what would move this score (axis 4).
-- **The timelock's proposer set and delay floor**, which would establish whether the two days is structural or a setting (axis 5).
+- **The 4-of-5 Safe's owner set and threshold, and any `MinDelayChange` on the Plasma timelock** — one quorum stands behind yzUSD, yzPP and syzUSD (axis 5).
 - **Whether the wrapper's bare EOA is ever replaced by a multisig or timelock.** Unchanged across 82 days (axis 5).
 - **Whether the operators are ever named** (axis 6).
 ---
 
-*Revision history: 2026-08-29 — **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%** over the gap, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. **Backing is published and verifiable — CR 106.92% as measured 2026-08-29**, $62,546,859.02 against $58,497,074.10 (⚠️ **the reserve moves in steps; the body carries the current read**) — with **about 70% of the reserve in levered loop positions, Ethena at 34.7% of backing, then roughly five times a $4.05M surplus, and 4.8% in the issuer's own yzPRIME**, whose book runs a $4,557 surplus on $7.58M. **The Reserve Fund holds $503,428.89, 0.86% of supply**, almost all `aMonUSDT0` on Monad. **Authority is split across three layers:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, the syzUSD vault and its ProxyAdmin are a 4-of-5 Safe, and the bridge is a bare EOA with no delay. **Scores held at 4.0**, because the observations point in both directions and a re-score needs a basis the composition figures do not settle. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
+*Revision history: 2026-09-22 — **Contract & Admin 4.5; Overall held at 4.0.** The Plasma timelock's role table was read: one 4-of-5 Safe holds proposer, canceller and executor, the timelock administers itself, and the same Safe is the upgrade owner for yzPP and syzUSD's Plasma vault. The delay is a reaction window without an independent veto. Nothing else re-read; `last_verified` stays 2026-06-08. 2026-08-29 — **first measurement pass since 2026-06-08; no score change.** Supply on Plasma is **58,497,074, up 38.9%** over the gap, while Monad (23.77) and Ethereum (0.10) remain a stub and a placeholder. ⚠️ **99.1% of all yzUSD sits inside a single syzUSD vault**, so this is a wrapper input rather than a circulating stablecoin, and every ratio quoted against supply describes a locked quantity. **Backing is published and verifiable — CR 106.92% as measured 2026-08-29**, $62,546,859.02 against $58,497,074.10 (⚠️ **the reserve moves in steps; the body carries the current read**) — with **about 70% of the reserve in levered loop positions, Ethena at 34.7% of backing, then roughly five times a $4.05M surplus, and 4.8% in the issuer's own yzPRIME**, whose book runs a $4,557 surplus on $7.58M. **The Reserve Fund holds $503,428.89, 0.86% of supply**, almost all `aMonUSDT0` on Monad. **Authority is split across three layers:** the yzUSD token owner is an OZ `TimelockController` with a 2-day delay, the syzUSD vault and its ProxyAdmin are a 4-of-5 Safe, and the bridge is a bare EOA with no delay. **Scores held at 4.0**, because the observations point in both directions and a re-score needs a basis the composition figures do not settle. `last_verified` stays **2026-06-08**: only the on-chain layer was re-measured, and the strategy and redemption material has not been re-read.*
