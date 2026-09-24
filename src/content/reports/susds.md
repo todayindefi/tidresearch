@@ -42,7 +42,7 @@ yield_bearing: true
 # evidence for axis 3, and both legs are stated in prose under that heading.
 axis_frame: six
 volatility_score: 9.0
-backing_score: 6.5
+backing_score: 6.0
 liquidity_score: 8.5
 underlying_score: 6.5
 structural_score: 7.0
@@ -83,7 +83,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 - ⚠️ **It is variable and governance-set.** The SSR is not a market rate or a fixed contract term — Sky (SKY-token) governance sets it and can raise or cut it. It broadly tracks prevailing short-term dollar rates and Sky's own revenue. **Do not underwrite a position on the current number persisting.**
 - **It is funded by diversified backing, not a single fund**, with a protocol surplus buffer absorbing the gap when revenue runs below the rate being paid. What that backing consists of is axis 2; how concentrated it is, axis 4.
 
-## 2 · Backing — 6.5
+## 2 · Backing — 6.0
 **The reserve is USDS's, inherited whole.** sUSDS holds USDS and nothing else, so a claim here is worth what USDS is backed by. As of mid-2026 that book is:
 
 | Component | Share | |
@@ -168,6 +168,23 @@ Holders who want a simple, liquid, permissionless way to earn a roughly money-ma
 - **2026-08-18 — Overall held at 7.5**, level with [USDS](/reports/usds/) rather than above it, since a wrapper cannot outrank the dollar it wraps.
 - **2026-07-09 — collateral model refreshed.** Star-allocator system about 52%, crypto CDPs about 7%.
 
+> **2026-09-24 (later) — Backing 6.5 → 6.0.** A condition set earlier the same day has been met, on
+> our own reading of Block Analitica's public Sky endpoint rather than a second-hand figure (150 items,
+> as-of 2026-09-24T02:20). **Spark — the allocator that has grown fastest and now holds a third of the
+> book — is 61.2% on-chain crypto lending, 30.7% stablecoins, 7.4% over-the-counter lending, and holds
+> no tokenized-treasury sleeve at all.**
+>
+> Two corrections to the earlier note are worth making rather than quietly dropping. **Grove is less
+> treasury-weighted than it first appeared** — 29.3% AAA corporate debt and 25.3% short-duration
+> T-bills, but also 24.3% OTC and 16.5% on-chain lending — so the shift between the two allocators is
+> milder than stated, and this change rests on Spark's own composition rather than on that contrast.
+> And **Obex, a smaller allocator, is 99.2% OTC crypto lending**, a concentration not previously
+> described here.
+>
+> A note on arithmetic for anyone checking: Block Analitica's "backed" figure and the protocol's
+> on-chain vault debt are **23.7% apart for Spark**, so the percentages above and the 33% share are on
+> different bases and must not be multiplied together.
+>
 > **2026-09-24 — Backing 7.0 → 6.5, Dependencies 7.0 → 6.5, Overall 7.5 → 7.0.** Sky's allocator mix
 > has concentrated. Measured from the protocol's own ilk registry on 2026-09-24 against the same
 > reading on 2026-08-01: **Spark has gone from 21.66% to 33.01% of Sky's total vault debt and has

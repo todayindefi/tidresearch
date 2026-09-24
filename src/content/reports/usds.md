@@ -41,7 +41,7 @@ market_cap_approx: 8411000000
 # material.
 axis_frame: six
 peg_mechanism_score: 7.5
-backing_score: 6.5
+backing_score: 6.0
 liquidity_score: 8.5
 underlying_score: 6.5
 structural_score: 7.0
@@ -74,7 +74,7 @@ The 7.5/10 reflects a genuinely robust, systemically important stablecoin — cl
 | Dimension | Score | Notes |
 |---|---|---|
 | Stability | 7.5 | Three-layer, battle-tested peg — USDC PSM 1:1, DAI parity, and overcollateralized vaults — with a clean roughly-20-month history. Strong partly *because* it's USDC-anchored, which is also its main transmission risk. |
-| Backing | 6.5 | Overcollateralized, diversified, on-chain transparent, with a growing surplus reserve — well above opaque peers. Held down by the ≈33% USDC concentration (the largest single asset, and rising) and off-chain Treasury-manager exposure. |
+| Backing | 6.0 | Overcollateralized, diversified, on-chain transparent, with a growing surplus reserve — well above opaque peers. Held down by the ≈33% USDC concentration (the largest single asset, and rising) and off-chain Treasury-manager exposure. |
 | Liquidity & Exit | 8.5 | About $8.4B in size, deep permissionless DEX liquidity, plus 1:1 convertibility to both USDC (via the PSM) and DAI. Exit at peg is near-frictionless. No KYC or geographic gate. |
 | Dependencies | 6.5 | **Prices passthrough and concentration, not collateral quality.** ⚠️ **About 35% of backing is USDC**, range-bound between roughly 33% and 40% across the last 59 days — so **USDS is correlated to USDC rather than diversified from it.** The March 2023 precedent is the point rather than an analogy: DAI followed USDC down through this same module. A less-transparent credit sleeve runs about **14.8%** (OTC crypto lending 9.64%, AAA corporate 4.99%, private credit 0.21%). ⚠️ **And the mix is drifting the wrong way** — crypto lending 29.18% → 30.66% while T-bills fell 15.78% → 13.85%. |
 | Contract & Admin | 7.0 | Both walked layers — contract-upgrade and asset-permission on Ethereum — terminate at **DSPause with a 2-day timelock**. ⚠️ **The 2 days does not cover everything: the UsdsJoin path on both layers reads no timelock at all.** ⚠️ **And the delay is notice rather than protection.** `plot()` and `drop()` share **one DSAuth authority**, so there is no independent canceller — against a compromised proposer, the power to cancel belongs to the compromised party. `MIN_DELAY()` and `MINIMUM_DELAY()` both revert and `setDelay()` executes through the pause proxy, so **2 days is a current setting, not a floor.** ✅ **Held at 7.0 rather than docked, and on the rubric rather than on leniency: what earns a dock is the absence of a reaction window, and USDS still gives one where [USDT](/reports/usdt/) and [thBILL](/reports/thbill/) give none.** ⚠️ **The delay is established; the compromise cost is not** — the walk records no signer threshold, so this row makes no claim about how many keys it would take. |
@@ -87,7 +87,7 @@ The 7.5/10 reflects a genuinely robust, systemically important stablecoin — cl
 
 ⚠️ **It is strong partly *because* of the USDC leg, which is the same fact that docks Backing and Dependencies below.** A PSM that converts 1:1 on demand is the most reliable peg mechanism available and it works by holding the asset it converts into. **The stability this buys and the concentration it creates are the same arrangement seen from two sides**, and this report scores them separately rather than counting the benefit twice.
 
-## 2 · Backing — 6.5
+## 2 · Backing — 6.0
 
 USDS and DAI share one collateral pool, about $12.8 billion combined. As of mid-2026 the mix looks quite different from the classic MakerDAO picture, and it's worth understanding how the system actually mints dollars today:
 
@@ -181,6 +181,23 @@ If you want yield on USDS, the relevant product is **sUSDS** — the ERC-4626 sa
 - **2026-08-25 — admin path re-verified on-chain; no score change.** The GSM delay reads **172,800 seconds — 48 hours** — with `owner()` at zero. ⚠️ **`plot()` and `drop()` answer to the same DSAuth authority**, so there is no independent canceller: the 48 hours are notice rather than a control anyone else can act on.
 - **2026-07-09 — collateral model refreshed.** Star-allocator system about 52%; crypto CDP share restated.
 
+> **2026-09-24 (later) — Backing 6.5 → 6.0.** A condition set earlier the same day has been met, on
+> our own reading of Block Analitica's public Sky endpoint rather than a second-hand figure (150 items,
+> as-of 2026-09-24T02:20). **Spark — the allocator that has grown fastest and now holds a third of the
+> book — is 61.2% on-chain crypto lending, 30.7% stablecoins, 7.4% over-the-counter lending, and holds
+> no tokenized-treasury sleeve at all.**
+>
+> Two corrections to the earlier note are worth making rather than quietly dropping. **Grove is less
+> treasury-weighted than it first appeared** — 29.3% AAA corporate debt and 25.3% short-duration
+> T-bills, but also 24.3% OTC and 16.5% on-chain lending — so the shift between the two allocators is
+> milder than stated, and this change rests on Spark's own composition rather than on that contrast.
+> And **Obex, a smaller allocator, is 99.2% OTC crypto lending**, a concentration not previously
+> described here.
+>
+> A note on arithmetic for anyone checking: Block Analitica's "backed" figure and the protocol's
+> on-chain vault debt are **23.7% apart for Spark**, so the percentages above and the 33% share are on
+> different bases and must not be multiplied together.
+>
 > **2026-09-24 — Backing 7.0 → 6.5, Dependencies 7.0 → 6.5, Overall 7.5 → 7.0.** Sky's allocator mix
 > has concentrated. Measured from the protocol's own ilk registry on 2026-09-24 against the same
 > reading on 2026-08-01: **Spark has gone from 21.66% to 33.01% of Sky's total vault debt and has
