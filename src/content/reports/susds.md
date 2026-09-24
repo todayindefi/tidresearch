@@ -10,6 +10,7 @@ production: true
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susds"
 date: "2026-05-27"
 last_verified: "2026-08-25"
+last_revised: "2026-09-24"
 featured: false
 issuer: "Sky Protocol (formerly MakerDAO)"
 yield_bearing: true
@@ -41,18 +42,18 @@ yield_bearing: true
 # evidence for axis 3, and both legs are stated in prose under that heading.
 axis_frame: six
 volatility_score: 9.0
-backing_score: 7.0
+backing_score: 6.5
 liquidity_score: 8.5
-underlying_score: 7.0
+underlying_score: 6.5
 structural_score: 7.0
 issuer_score: 7.0
 redemption_score: 8.5
-overall_score: 7.5
+overall_score: 7.0
 ---
 
 # sUSDS — Risk Report
 
-**Moderate-low risk · 7.5/10**
+**Moderate-low risk · 7.0/10**
 
 **Live data:** [sUSDS Backing Dashboard](https://tidresearch.com/dashboards/?asset=susds) — hourly peg, liquidity depth, NAV accrual, and sUSDS/USDS coverage from two independent reads, with the dependency chain through to [USDS](/reports/usds/) shown alongside. **The collateral look-through behind that USDS layer is on its dashboard** — this report covers the wrapper; what ultimately backs it sits one link upstream.
 
@@ -82,7 +83,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 - ⚠️ **It is variable and governance-set.** The SSR is not a market rate or a fixed contract term — Sky (SKY-token) governance sets it and can raise or cut it. It broadly tracks prevailing short-term dollar rates and Sky's own revenue. **Do not underwrite a position on the current number persisting.**
 - **It is funded by diversified backing, not a single fund**, with a protocol surplus buffer absorbing the gap when revenue runs below the rate being paid. What that backing consists of is axis 2; how concentrated it is, axis 4.
 
-## 2 · Backing — 7.0
+## 2 · Backing — 6.5
 **The reserve is USDS's, inherited whole.** sUSDS holds USDS and nothing else, so a claim here is worth what USDS is backed by. As of mid-2026 that book is:
 
 | Component | Share | |
@@ -104,7 +105,7 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 ⚠️ **The one thing to watch on exit is PSM USDC liquidity under extreme stress.** The 1:1 USDS↔USDC swap depends on USDC sitting in the module; in a severe USDC-specific crisis that liquidity could be drawn down and the clean 1:1 exit would lean on the DEX market instead. **A tail consideration, not a normal-conditions concern** — and the reason this is 8.5 rather than a perfect score, alongside a small reservation for cross-chain reliance on the Spark PSM off Ethereum.
 
-## 4 · Dependencies — 7.0
+## 4 · Dependencies — 6.5
 ⚠️ **100% of this asset's value passes through one other asset**, and within that asset a third sits in a single name.
 
 **Two concentrations, and the second is the one most readers get wrong:**
@@ -166,3 +167,22 @@ Holders who want a simple, liquid, permissionless way to earn a roughly money-ma
 - **2026-08-25 — admin path re-verified; no score change.** The GSM delay reads **172,800 seconds — 48 hours** — with `owner()` at zero, and ⚠️ **`plot()` and `drop()` answer to the same DSAuth authority**, so there is no independent canceller.
 - **2026-08-18 — Overall held at 7.5**, level with [USDS](/reports/usds/) rather than above it, since a wrapper cannot outrank the dollar it wraps.
 - **2026-07-09 — collateral model refreshed.** Star-allocator system about 52%, crypto CDPs about 7%.
+
+> **2026-09-24 — Backing 7.0 → 6.5, Dependencies 7.0 → 6.5, Overall 7.5 → 7.0.** Sky's allocator mix
+> has concentrated. Measured from the protocol's own ilk registry on 2026-09-24 against the same
+> reading on 2026-08-01: **Spark has gone from 21.66% to 33.01% of Sky's total vault debt and has
+> overtaken Grove**, which fell from 25.05% to 15.34%. Obex was flat to within $4 million across both
+> dates, which is what establishes the two readings are comparable. So **roughly 48% of the backing now
+> sits with two Star allocators** rather than being spread across three, and the largest of them has
+> grown by more than half in seven weeks.
+>
+> Two further things are worth stating plainly. Grove operates **two** allocator vaults, and the larger
+> one is named `ALLOCATOR-BLOOM-A` — sizing Grove by the vault that carries its own name understates it
+> by about 24 times, which is a trap for anyone reading the registry directly. And the largest single
+> holding inside Spark's allocation is **$647 million of sUSDS**, while Grove lends against sUSDS at up
+> to 96.5% loan-to-value — meaning part of what backs USDS is a claim on USDS. The positions and their
+> sizes are measured; whether the protocol's published backing figures net that circularity out is not
+> established here, and the score change does not depend on it.
+>
+> Stability, Liquidity & Exit, Contract & Admin and Issuer are unchanged — this review did not
+> re-examine them.

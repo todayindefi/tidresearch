@@ -10,7 +10,7 @@ production: true
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usds"
 date: "2026-05-27"
 last_verified: "2026-08-25"
-last_revised: "2026-09-07"
+last_revised: "2026-09-24"
 featured: false
 issuer: "Sky Protocol (formerly MakerDAO)"
 market_cap_approx: 8411000000
@@ -41,17 +41,17 @@ market_cap_approx: 8411000000
 # material.
 axis_frame: six
 peg_mechanism_score: 7.5
-backing_score: 7.0
+backing_score: 6.5
 liquidity_score: 8.5
-underlying_score: 7.0
+underlying_score: 6.5
 structural_score: 7.0
 issuer_score: 7.0
-overall_score: 7.5
+overall_score: 7.0
 ---
 
 # USDS — Risk Report
 
-**Moderate-low risk · 7.5/10**
+**Moderate-low risk · 7.0/10**
 
 **Live data:** [USDS Backing Dashboard](https://tidresearch.com/dashboards/?asset=usds) — hourly peg, liquidity depth, issuer and dependency reads, and **the collateral look-through behind the reserve** (USDC, JTRSY, BUIDL, cbBTC, wstETH, JAAA, PYUSD and the rest, each as a share). ⚠️ **That breakdown answers "what actually backs this" and exists nowhere else** — this report describes the mechanism; the dashboard shows the current composition.
 
@@ -74,12 +74,12 @@ The 7.5/10 reflects a genuinely robust, systemically important stablecoin — cl
 | Dimension | Score | Notes |
 |---|---|---|
 | Stability | 7.5 | Three-layer, battle-tested peg — USDC PSM 1:1, DAI parity, and overcollateralized vaults — with a clean roughly-20-month history. Strong partly *because* it's USDC-anchored, which is also its main transmission risk. |
-| Backing | 7.0 | Overcollateralized, diversified, on-chain transparent, with a growing surplus reserve — well above opaque peers. Held down by the ≈33% USDC concentration (the largest single asset, and rising) and off-chain Treasury-manager exposure. |
+| Backing | 6.5 | Overcollateralized, diversified, on-chain transparent, with a growing surplus reserve — well above opaque peers. Held down by the ≈33% USDC concentration (the largest single asset, and rising) and off-chain Treasury-manager exposure. |
 | Liquidity & Exit | 8.5 | About $8.4B in size, deep permissionless DEX liquidity, plus 1:1 convertibility to both USDC (via the PSM) and DAI. Exit at peg is near-frictionless. No KYC or geographic gate. |
-| Dependencies | 7.0 | **Prices passthrough and concentration, not collateral quality.** ⚠️ **About 35% of backing is USDC**, range-bound between roughly 33% and 40% across the last 59 days — so **USDS is correlated to USDC rather than diversified from it.** The March 2023 precedent is the point rather than an analogy: DAI followed USDC down through this same module. A less-transparent credit sleeve runs about **14.8%** (OTC crypto lending 9.64%, AAA corporate 4.99%, private credit 0.21%). ⚠️ **And the mix is drifting the wrong way** — crypto lending 29.18% → 30.66% while T-bills fell 15.78% → 13.85%. |
+| Dependencies | 6.5 | **Prices passthrough and concentration, not collateral quality.** ⚠️ **About 35% of backing is USDC**, range-bound between roughly 33% and 40% across the last 59 days — so **USDS is correlated to USDC rather than diversified from it.** The March 2023 precedent is the point rather than an analogy: DAI followed USDC down through this same module. A less-transparent credit sleeve runs about **14.8%** (OTC crypto lending 9.64%, AAA corporate 4.99%, private credit 0.21%). ⚠️ **And the mix is drifting the wrong way** — crypto lending 29.18% → 30.66% while T-bills fell 15.78% → 13.85%. |
 | Contract & Admin | 7.0 | Both walked layers — contract-upgrade and asset-permission on Ethereum — terminate at **DSPause with a 2-day timelock**. ⚠️ **The 2 days does not cover everything: the UsdsJoin path on both layers reads no timelock at all.** ⚠️ **And the delay is notice rather than protection.** `plot()` and `drop()` share **one DSAuth authority**, so there is no independent canceller — against a compromised proposer, the power to cancel belongs to the compromised party. `MIN_DELAY()` and `MINIMUM_DELAY()` both revert and `setDelay()` executes through the pause proxy, so **2 days is a current setting, not a floor.** ✅ **Held at 7.0 rather than docked, and on the rubric rather than on leniency: what earns a dock is the absence of a reaction window, and USDS still gives one where [USDT](/reports/usdt/) and [thBILL](/reports/thbill/) give none.** ⚠️ **The delay is established; the compromise cost is not** — the walk records no signer threshold, so this row makes no claim about how many keys it would take. |
 | Issuer | 7.0 | Sky/MakerDAO — among the most established, longest-running issuers in DeFi; DAO-governed with a 48-hour timelock, broad audits, and a $10M bounty. Docked for the upgradeable contract with a governance-addable freeze, governance complexity (the Endgame "Stars"/subDAO structure), and governance-capture tail risk. |
-| **Overall** | **7.5** | A systemically important, deeply liquid, battle-tested, overcollateralized and transparent dollar — stronger than opaque or thin peers, a notch below fully-regulated USDC. The two caveats that keep it here: about a third of backing is USDC (real correlation, not diversification), and USDS is upgradeable with a governance-addable freeze that DAI lacks. Strong for holders who accept Sky's governance/upgrade surface and the USDC coupling; those who need an unfreezable, USDC-decorrelated dollar should convert to DAI. ⚠️ **Held, and it sits +0.17 above its own axis mean of 7.33** — against the at-or-below convention applied elsewhere in this coverage. It was already above the mean on five axes, so authoring the sixth widened a gap it did not cause. **It is held rather than adjusted for two reasons:** a vow-deficit trigger on Backing fires or clears around 2026-09-20 and will force a re-derivation of the whole set, and **[sUSDS](/reports/susds/) is equalised to this number under the wrapper rule**, so moving it moves a second asset. **Moving it now would move it twice in two weeks.** |
+| **Overall** | **7.0** | A systemically important, deeply liquid, battle-tested, overcollateralized and transparent dollar — stronger than opaque or thin peers, a notch below fully-regulated USDC. The two caveats that keep it here: about a third of backing is USDC (real correlation, not diversification), and USDS is upgradeable with a governance-addable freeze that DAI lacks. Strong for holders who accept Sky's governance/upgrade surface and the USDC coupling; those who need an unfreezable, USDC-decorrelated dollar should convert to DAI. ⚠️ **Held, and it sits +0.17 above its own axis mean of 7.33** — against the at-or-below convention applied elsewhere in this coverage. It was already above the mean on five axes, so authoring the sixth widened a gap it did not cause. **It is held rather than adjusted for two reasons:** a vow-deficit trigger on Backing fires or clears around 2026-09-20 and will force a re-derivation of the whole set, and **[sUSDS](/reports/susds/) is equalised to this number under the wrapper rule**, so moving it moves a second asset. **Moving it now would move it twice in two weeks.** |
 
 ## 1 · Stability — 7.5
 
@@ -87,7 +87,7 @@ The 7.5/10 reflects a genuinely robust, systemically important stablecoin — cl
 
 ⚠️ **It is strong partly *because* of the USDC leg, which is the same fact that docks Backing and Dependencies below.** A PSM that converts 1:1 on demand is the most reliable peg mechanism available and it works by holding the asset it converts into. **The stability this buys and the concentration it creates are the same arrangement seen from two sides**, and this report scores them separately rather than counting the benefit twice.
 
-## 2 · Backing — 7.0
+## 2 · Backing — 6.5
 
 USDS and DAI share one collateral pool, about $12.8 billion combined. As of mid-2026 the mix looks quite different from the classic MakerDAO picture, and it's worth understanding how the system actually mints dollars today:
 
@@ -108,7 +108,7 @@ This is one of USDS's strongest dimensions. There are three permissionless exits
 
 No KYC, no minimum, no lockup, no gatekeeper. The one tail consideration is the PSM's USDC inventory in an extreme, USDC-specific crisis — if that drained, the clean 1:1 swap would lean on the DEX market instead. That's a stress-scenario caveat, not a normal-conditions concern.
 
-## 4 · Dependencies — 7.0
+## 4 · Dependencies — 6.5
 
 **What USDS passes through to, as distinct from the quality of what backs it.**
 
@@ -180,3 +180,22 @@ If you want yield on USDS, the relevant product is **sUSDS** — the ERC-4626 sa
 
 - **2026-08-25 — admin path re-verified on-chain; no score change.** The GSM delay reads **172,800 seconds — 48 hours** — with `owner()` at zero. ⚠️ **`plot()` and `drop()` answer to the same DSAuth authority**, so there is no independent canceller: the 48 hours are notice rather than a control anyone else can act on.
 - **2026-07-09 — collateral model refreshed.** Star-allocator system about 52%; crypto CDP share restated.
+
+> **2026-09-24 — Backing 7.0 → 6.5, Dependencies 7.0 → 6.5, Overall 7.5 → 7.0.** Sky's allocator mix
+> has concentrated. Measured from the protocol's own ilk registry on 2026-09-24 against the same
+> reading on 2026-08-01: **Spark has gone from 21.66% to 33.01% of Sky's total vault debt and has
+> overtaken Grove**, which fell from 25.05% to 15.34%. Obex was flat to within $4 million across both
+> dates, which is what establishes the two readings are comparable. So **roughly 48% of the backing now
+> sits with two Star allocators** rather than being spread across three, and the largest of them has
+> grown by more than half in seven weeks.
+>
+> Two further things are worth stating plainly. Grove operates **two** allocator vaults, and the larger
+> one is named `ALLOCATOR-BLOOM-A` — sizing Grove by the vault that carries its own name understates it
+> by about 24 times, which is a trap for anyone reading the registry directly. And the largest single
+> holding inside Spark's allocation is **$647 million of sUSDS**, while Grove lends against sUSDS at up
+> to 96.5% loan-to-value — meaning part of what backs USDS is a claim on USDS. The positions and their
+> sizes are measured; whether the protocol's published backing figures net that circularity out is not
+> established here, and the score change does not depend on it.
+>
+> Stability, Liquidity & Exit, Contract & Admin and Issuer are unchanged — this review did not
+> re-examine them.
