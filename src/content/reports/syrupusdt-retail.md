@@ -13,7 +13,13 @@ date: "2026-05-03"
 # The 2026-09-06 pass re-measured the loan book, the concentration denominator
 # and the admin/authority topology; it did NOT re-read the NAV mechanism, yield,
 # the depth ladders, the audit corpus or the withdrawal-queue mechanics. The
-# body states that split at the top. ⚠️ riskAnalyst moved THEIR copy to
+# 2026-09-24 pass re-measured the book (contracted 37.9% to $244,037,062.37) and
+# re-cut concentration on a CORRECTED basis — by distinct borrower on the lending
+# subset, not by position on the inclusive book. ⚠️ Those figures are NOT
+# comparable with the 2026-09-06 ones: different construction AND a book that
+# shrank by more than a third. Do not diff them. Per-loan collateral visibility
+# still dates from 2026-09-06 and predates that contraction. The body states
+# that split at the top. ⚠️ riskAnalyst moved THEIR copy to
 # 2026-09-07 under their own rule (last_verified moves when SOMETHING was
 # re-measured). The conventions differ on purpose: their field ranks a refresh
 # queue, ours tells a reader how old a claim is, and our card already renders
@@ -65,7 +71,7 @@ overall_score: 6.0
 
 *Live pool backing, peg deviation, and free-liquidity / withdrawal-queue state are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt).* ⚠️ **No tiered exit ladder is published for syrupUSDT** — unlike [syrupUSDC](/reports/syrupusdc/), which carries one. **Exit sizing here has to come from the free-liquidity share and the queue, not from a slippage table.**
 
-> ⚠️ **What is current and what is not, because this page carries two dates.** **Re-measured 2026-09-06:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **18 loans, 9 borrowers, $392,718,462.42** — every concentration figure computed on that denominator, and the **admin and authority topology**, hand-walked on-chain, which is what sets Contract & Admin. **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the older date deliberately** — the concentration and authority material is today's; the description of how the vault works is August's.
+> ⚠️ **What is current and what is not, because this page carries several dates.** **Re-measured 2026-09-24:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **17 positions totalling $244,037,062.37**, of which **$187,087,047.37 is lending across 8 loan positions and six distinct borrowers**, and **$56,950,015.00 sits in 9 liquidity positions** — with every borrower-concentration figure below computed on the lending side, and the **admin and authority topology**, re-walked on-chain and unchanged, which is what sets Contract & Admin. **Dating from 2026-09-06 and not re-measured since:** per-loan collateral visibility and the composition of the visible book. ⚠️ **The loan book has contracted 37.9% since that read, so those collateral figures describe a materially different set of loans.** **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the oldest date deliberately** — the concentration and authority material is current; the description of how the vault works is August's.
 
 > *What's pinned in this report is structural risk — architecture, the issuer menu, the risk axes, and the scores. Current magnitudes (pool split, per-issuer allocation, collateral ratio, concentration, exit tiers) drift weekly and are live on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt). This report is written to stay correct across that drift.*
 
@@ -79,15 +85,15 @@ syrupUSDT is the USDT-denominated sibling of syrupUSDC in Maple Finance's "Syrup
 
 **Pool composition (structure verified against Maple's own AUM Details page)**: roughly 85–90% Loans (third-party institutional credit, BTC-heavy + XRP at 125–150% init level) + roughly 10–15% Liquidity (pool-owned PYUSD/USDC-AMM/USDT-AMM positions, a thinner Liquidity layer than syrupUSDC); the dollar magnitudes shift with the book and are surfaced live on the dashboard rather than pinned here. Note the 125–150% figure is each loan's *funding* collateral level, not a live health reading — the buffer that matters is how close current collateralization sits to par (100%), which the dashboard tracks. The Liquidity layer is at-par with the underlying asset and routes through Maple's lending infrastructure as accounting wrapper, but is functionally pool-owned strategy custody, NOT third-party credit. "Overcollateralized at all times" applies to the loan book; the Liquidity layer is intentionally at par.
 
-The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level, AND it shares borrowers with syrupUSDC.** ⚠️ **Measured 2026-09-06 against the pool's full deployed principal of $392.72M: the largest borrower is 24.19%, against 22.32% in syrupUSDC.** **The conclusion is unchanged — syrupUSDT is the more concentrated pool — but the margin is about two points, not a double-digit gap.** A single borrower default here writes down roughly a quarter of the principal in one event.
+The catch: **syrupUSDT's lending is highly concentrated, AND it shares borrowers with syrupUSDC.** ⚠️ **Measured 2026-09-24 across distinct borrowers rather than individual loans: six borrowers hold the pool's $187,087,047.37 of lending, the largest at 49.30% and the top three at 92.16%.** A single default by the largest borrower writes down close to half the pool's lending in one event. ⚠️ **These figures are not comparable with syrupUSDC's published concentration.** At this read the two pools' numbers are built on different constructions, so a like-for-like sibling comparison is not available and none is drawn here.
 
-**The shape of that concentration is flat rather than thin.** syrupUSDT's Herfindahl index is **1,876** — "moderate" on its own bucket labels — with the top three borrowers at **66.77% across nine**. The ladder runs **24.19% / 23.49% / 19.10% / 14.05% / 12.73%**: removing the largest loan leaves eight borrowers and a new top name at 23.5%, so this is a pool with several comparable exposures rather than one dominant loan above a thin remainder. syrupUSDC's equivalent is **1,354 including the Liquidity bucket**, across 16 borrowers. **syrupUSDT remains the more concentrated of the two, by a smaller margin than a single-name comparison suggests — the HHI gap is wider than the top-1 gap, and it is the honest one.**
+**The shape of that concentration is one dominant exposure above a short tail.** Across distinct borrowers the ladder runs **49.30% / 29.50% / 13.36% / 6.41% / 1.41% / 0.02%**, and the Herfindahl index is **3,522** — **"highly concentrated"** on the standard bands. ⚠️ **The largest borrower's position is three separate loans**, so any view that ranks individual loans rather than counterparties understates it: removing that borrower leaves five, with the next at 29.50% of the lending book. ⚠️ **A further $56,950,015.00 sits in nine liquidity positions — 23.3% of the pool's total book.** Those are pool-owned strategy positions rather than loans, and folding them into a concentration ratio dilutes it heavily. **Quote which side of that line any syrupUSDT concentration figure is computed on.**
 
 **The buffer compounds it.** syrupUSDT's Liquidity bucket is about **3.3%** of book against syrupUSDC's **6.1%** — so the more concentrated pool carries roughly half the relative cushion. That is a comparison of *relative size only*: as both reports are careful to say, the Liquidity bucket is pool-owned strategy positions, nominally redeemable, **not idle cash**.
 
 ✅ **Worth stating plainly alongside all of that: credit quality is clean on both pools — zero impaired, zero called, zero defaulted.** The concentration described here is a structural exposure, not a problem currently manifesting. And because the same borrowers borrow from BOTH pools, holding both syrupUSDC and syrupUSDT together does NOT diversify your credit exposure to those entities — it concentrates them.
 
-**Loan count is the other half of the picture, and it is larger than a headline concentration figure suggests.** Measured 2026-09-06, syrupUSDT's book is **18 loans across 9 borrowers**, against **35 loans across 16 borrowers** for syrupUSDC — on a pool roughly 41% the size. So syrupUSDT carries about half the borrowers on 41% of the principal: **more concentrated per dollar, but not a handful of loans.** Fewer borrowers still means fewer repayment events arriving to refill the queue that services redemptions, and it is part of why this report's **Underlying, Liquidity and Redemption axes all sit below syrupUSDC's** despite identical contracts, identical audits and the same curator. **Loan counts turn over; the smaller-book pattern is the durable feature**, and current counts are live on the dashboard.
+**Position count is the other half of the picture, and it cuts against the headline rather than softening it.** Measured 2026-09-24, syrupUSDT's book is **17 positions — 8 loans and 9 liquidity positions** — but the lending sits with only **six distinct borrowers**, because the largest holds three separate loans. ⚠️ **Counting positions rather than counterparties makes this pool look better diversified than it is.** Few borrowers also means few repayment events arriving to refill the queue that services redemptions, and it is part of why this report's **Dependencies, Liquidity and Redemption axes all sit below syrupUSDC's** despite identical contracts, identical audits and the same curator. ⚠️ **syrupUSDC's counts are deliberately not quoted alongside these** — at this read the two pools' figures are built on different constructions and the comparison would not be like-for-like. **Position counts turn over; the small-borrower-set pattern is the durable feature**, and current counts are live on the dashboard.
 
 ## Score breakdown
 
@@ -95,8 +101,8 @@ The catch: **syrupUSDT is more concentrated than syrupUSDC at the per-pool level
 |---|---|---|
 | Stability | 8.5 | NAV-accruing share, organic yield, zero principal losses to date across the Syrup product line. Same as syrupUSDC — the share price only climbs in normal operation, and the path to a drawdown is a credit loss, scored under Underlying. |
 | Backing | 6.0 | Loan book fully enumerated and reconciling to deployed principal exactly, with zero impaired or defaulted. ⚠️ **The cap is collateral VISIBILITY, not the collateral ratio.** Argued under [2 · Backing](#2--backing--60) |
-| Liquidity & Exit | 6.0 | **Scored on the worse of the two legs.** Venue depth is the binding one at 6.0: a materially smaller Ethereum pool than syrupUSDC, higher aggregator slippage and longer queue cadence at institutional sizing. The primary leg — permissionless mint and redeem at the vault layer, no KYC — scores 6.5 and is not what sets the axis. Free liquidity has been running under 2%, where our monitor flags exits as forced into the queue. |
-| Dependencies | 5.0 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: one borrower is 24.19% of this pool and 10.43% of syrupUSDC, for 14.43% of the family loan book** — an exposure neither pool's standalone view shows. |
+| Liquidity & Exit | 6.0 | **Scored on the worse of the two legs.** Venue depth is the binding one at 6.0: a materially smaller Ethereum pool than syrupUSDC, higher aggregator slippage and longer queue cadence at institutional sizing. The primary leg — permissionless mint and redeem at the vault layer, no KYC — scores 6.5 and is not what sets the axis. Free liquidity is **3.39%** of the pool at 2026-09-24 — inside the band where our monitor flags only that large exits will queue, and **about 3.1x the cushion syrupUSDC is carrying.** ⚠️ **That runs opposite to this axis, which is set on secondary-market depth rather than cushion.** |
+| Dependencies | 5.0 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: three of this pool's six borrowers also borrow from syrupUSDC, $304.3M between them and 26.25% of family lending** — an exposure neither pool's standalone view shows. |
 | Contract & Admin | 4.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
 | Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. This axis scores the **entity**, so it is deliberately identical to [syrupUSDC](/reports/syrupusdc/); per-pool differences belong under Contract & Admin. |
 | **Overall** | **6.0** | ⚠️ **Held, and under review.** The Contract & Admin re-scope lowered the axis mean to **5.92**, so this number now sits **+0.08 above its own axes** — contrary to the at-or-below convention applied elsewhere in this coverage. **It is held rather than adjusted because no one has re-derived it, and inventing a figure here would publish something nobody computed.** The axes above are current; this cell is the one to treat as pending |
@@ -115,7 +121,7 @@ At ~4.5–5%, syrupUSDT sits **above the comparable USD-yield set**: 3-month T-b
 
 ## 2 · Backing — 6.0
 
-The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — 18 loans, 9 borrowers, $392,718,462.42, zero residual — with zero impaired, called or defaulted. ⚠️ **The cap on this axis is collateral VISIBILITY, not the collateral ratio.** Per-loan collateral comes from Maple's GraphQL API, which returns nothing for the seven loans recovered in the 2026-09-06 reconciliation, and the loan contracts carry no on-chain collateral field — **so collateral is priced over 63.2% of the book and the headline ratio is computed on that subset.** Existence and principal are verified; collateral is not. The visible book is also **96.7% crypto** (BTC 74.4%, XRP 22.3%), which is half a point below syrupUSDC on the same axis.
+The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — **17 positions, $244,037,062.37, zero residual**, measured 2026-09-24 — with zero impaired, called or defaulted. **That total is $187,087,047.37 of lending across six borrowers, plus $56,950,015.00 held in nine liquidity positions.** ⚠️ **The cap on this axis is collateral VISIBILITY, not the collateral ratio.** Per-loan collateral comes from Maple's GraphQL API, which returns nothing for a portion of the book, and the loan contracts carry no on-chain collateral field. Existence and principal are verified; collateral is not, and that gap is what holds this axis down rather than anything the collateral ratio says. ⚠️ **The coverage figures themselves date from 2026-09-06 and have NOT been re-measured:** at that read collateral was priced over **63.2%** of the book, and the visible portion was **96.7% crypto** (BTC 74.4%, XRP 22.3%). ⚠️ **The book has contracted 37.9% since, so both figures describe a materially different set of loans and should be read as September measurements rather than current ones.**
 
 ## 3 · Liquidity & Exit — 6.0
 
@@ -127,7 +133,7 @@ Two paths, same mechanics as syrupUSDC, but smaller pool depth:
 
 For sizing above the low retail range (~$50K+), you'll likely use the queue. Stress-case redemption depth is bound by loan-repayment cadence on the smaller principal base — expect queue latency of weeks rather than days for institutional sizes during correlated outflow stress.
 
-**Free liquidity is the number that decides how quickly the queue clears, and this pool runs it thinner than syrupUSDC.** Both pools sit around 97% deployed into loans, so the uncommitted cash available to settle redemptions immediately is a low single-digit percentage of the pool in both cases. But syrupUSDT has been running at the bottom of that range — under 2% — where our monitor flags exits as *forced into the queue*, while syrupUSDC has been sitting in the 2–5% band where the flag reads only that large exits will queue. Live figures on the dashboard; the durable point is that the same architecture, run on a smaller pool with a five-loan book, leaves less cash standing between a redemption request and a wait.
+**Free liquidity is the number that decides how quickly the queue clears, and on this measure syrupUSDT is the better-cushioned of the two pools.** Measured 2026-09-24 as uncommitted cash over total assets — the Liquidity bucket counts as deployed, since those are strategy positions rather than settleable cash — syrupUSDT holds **3.39%** against syrupUSDC's **1.08%**. Both pools are heavily deployed, but syrupUSDT sits in the band where our monitor flags only that *large* exits will queue, while **syrupUSDC is below the 2% level where the monitor flags exits as forced into the queue.** ⚠️ **This is the reverse of what the two Liquidity & Exit scores suggest** — syrupUSDC scores higher on that axis, but on secondary-market depth, not on cushion. **Read the two facts separately rather than inferring one from the other.** Live figures on the dashboard; the durable point is that a small borrower set means few repayment events arriving to refill whichever cushion a pool is running.
 
 **The credit read itself is reassuring, and worth separating from the exit question.** At the August 2026 check the Syrup family's loans-only collateral ratio came in at **175%** — above the 145–170% band these reports describe as typical — with pool collateral ratio at 100% and **zero** unrealized losses. No loan is impaired, called, or in default. Nothing about the loan book deteriorated; what this report changed in August is that redemption finally has a score of its own.
 
@@ -135,31 +141,30 @@ For sizing above the low retail range (~$50K+), you'll likely use the queue. Str
 
 **What these pools depend on, as distinct from what backs them.** The operator is **Maple Labs**; origination is at the **Pool Delegate's discretion**; the **Liquidity-layer custody addresses are shared across both pools**; and **Maple's GraphQL is the only source of per-loan collateral data**, so collateral visibility depends on a single off-chain endpoint.
 
-⚠️ **The cross-pool exposure is the part neither pool's standalone view shows.** One borrower is **24.19% of this pool** and **10.43% of syrupUSDC** — **14.43% of the family loan book** across the two pools.
+⚠️ **The cross-pool exposure is the part neither pool's standalone view shows.** Three of this pool's six borrowers also borrow from syrupUSDC — **$304,296,502 between them, 26.25% of family lending.** The largest, `0x8669F318…f1e9`, is **29.50% of this pool's lending and 9.94% of syrupUSDC's**, which is **13.09% of the family book** as one counterparty.
 
 ### Cross-pool concentration: one product, two denominations
 
 Maple presents syrupUSDC and syrupUSDT as a single Syrup credit line offered in two stable denominations — not two independent credit baskets. A Syrup loan is offered to one institutional borrower across the family rather than partitioned per pool, so the borrower set is **shared by design**. Choosing syrupUSDT vs syrupUSDC is a choice of denomination, not an independent credit pick.
 
-That makes the right sizing unit the **family loan book**, not the per-pool number. Syrup runs a small borrower set (**9 in syrupUSDT, 16 in syrupUSDC** as at 2026-09-06; the overlap is discussed below), so expect single-counterparty concentration above the ~10%-per-counterparty limit common in institutional credit frameworks. That's the structural product feature, not a temporary state — borrower turnover happens but the small-set + overlap pattern persists.
+That makes the right sizing unit the **family loan book**, not the per-pool number. Syrup runs a small borrower set (**6 in syrupUSDT, 16 in syrupUSDC** as at 2026-09-24; the overlap is set out below), so expect single-counterparty concentration above the 10%-per-counterparty limit common in institutional credit frameworks. That's the structural product feature, not a temporary state.
 
-**Measured 2026-09-06, on a family loan book of $1.35B** — $392.72M in syrupUSDT plus $958.76M in syrupUSDC, each reconciling exactly to its pool's deployed principal with zero residual:
+**Measured 2026-09-24, on a family lending book of $1,159,344,816.21** — $187,087,047.37 in syrupUSDT plus $972,257,768.84 in syrupUSDC, each reconciling exactly to its pool's enumerated lending with zero residual. ⚠️ **Liquidity-bucket positions are excluded from both sides**, because the two pools hold them in very different proportion (23.3% of book against 2.0%) and including them would make the halves incomparable:
 
-| Family borrower | syrupUSDT | syrupUSDC | Combined | % of $1.35B family book |
-|---|---:|---:|---:|---:|
-| `0x198aEC3c…529A` | — | $214.0M | **$214.0M** | **15.83%** |
-| `0x09b845bb…6B8a` | — | $200.0M | **$200.0M** | **14.80%** |
-| `0xb99a2c4C…bcF5` | **$95.0M** | **$100.0M** | **$195.0M** | **14.43%** |
-| `0x8669F318…f1e9` | $55.2M | $96.6M | $151.8M | 11.23% |
-| `0x282B6cca…b30c` | — | $100.0M | $100.0M | 7.40% |
-| `0x8fee157C…2628` | $92.2M | — | $92.2M | 6.82% |
-| `0xB62446A8…D505` | $12.0M | $65.5M | $77.5M | 5.73% |
+| Family borrower | syrupUSDT | syrupUSDC | Family total | % of family lending | In both pools |
+|---|---:|---:|---:|---:|:---:|
+| `0x198aEC3c…529A` | — | $214.0M | **$214.0M** | **18.46%** | |
+| `0x09b845bb…6B8a` | — | $200.0M | **$200.0M** | **17.25%** | |
+| `0x8669F318…f1e9` | $55.19M | $96.61M | **$151.80M** | **13.09%** | ⚠️ **yes** |
+| `0x8fee157C…2628` | $92.23M | — | $92.23M | 7.96% | |
+| `0xB62446A8…D505` | $12.0M | $65.5M | $77.5M | 6.68% | ⚠️ yes |
+| `0xb99a2c4C…bcF5` | $25.0M | $50.0M | $75.0M | 6.47% | ⚠️ yes |
 
-**Top-three family borrowers are about 45% of the family loan book, and the single largest is 15.83%** — both above the 10%-per-counterparty limit common in institutional credit frameworks.
+**The family's top three borrowers are 48.80% of family lending and the single largest is 18.46%** — both far above the 10%-per-counterparty limit common in institutional credit frameworks.
 
-⚠️ **The row that matters most for anyone holding both pools is the third.** `0xb99a2c4C…bcF5` is **syrupUSDT's single largest borrower at 24.19% of that pool**, and separately holds **$100M in syrupUSDC**, where it ties for third at 10.43%. **Combined it is 14.43% of the family book — a number neither pool's own page shows.** Per-pool sizing reads this as a 24% exposure and a 10% exposure; it is one counterparty at 14.4% of everything.
+⚠️ **Three of syrupUSDT's six borrowers also borrow from syrupUSDC — $304,296,502 between them, 26.25% of family lending.** The largest is `0x8669F318…f1e9` at **$151.80M across both pools, 13.09% of the family book**: per-pool sizing reads that as a 29.50% exposure in one pool and a 9.94% exposure in the other, when it is one counterparty at 13.09% of everything. **Holding both pools does not diversify these three — it doubles them.**
 
-⚠️ **Note which direction each figure moved.** The reconciliation *lowered* concentration inside each pool and *raised* the visible cross-pool exposure, because three of the four recovered syrupUSDC loans went to borrowers already on the list. **A correction is not automatically good news for every reading of the book.**
+⚠️ **Do not merge this with the concentration figures above.** syrupUSDT's largest borrower — the one at **49.30%** of its lending — is `0x8fee157C…2628`, and it is **syrupUSDT-only**. The most concentrated borrower and the largest cross-pool borrower are different entities, and so are the two risks.
 
 The Liquidity layer (PYUSD/AMM custody) is also shared across the family — a Maple-firm-level custody event affects both pools.
 
@@ -187,12 +192,12 @@ Allocators who already hold or are sizing into syrupUSDC and want USDT-denominat
 
 - Anyone holding syrupUSDC and looking for a "diversification" sister product — the cross-pool borrower overlap means it concentrates rather than diversifies for the family's biggest borrowers
 - Position sizes above the low-MM range without explicit queue tolerance — the smaller pool is queue-bound earlier than syrupUSDC at proportional sizes
-- Anyone needing the largest single-borrower exposure to stay below 20% of pool — syrupUSDT's largest borrower is **24.19%** of pool
+- Anyone needing the largest single-borrower exposure to stay below 20% of pool — syrupUSDT's largest borrower is **49.30%** of the pool's lending
 
 ## What to watch
 
-- **Per-pool concentration.** Largest borrower is **24.19%** of pool, HHI **1,876** across 9 borrowers. Watch the live dashboard for changes.
-- **Cross-pool concentration if you also hold syrupUSDC.** The largest cross-pool borrower is **14.43% of the family loan book** and the family top-three about **45%**, both above the 10%-per-counterparty norm (live figures on the dashboard). Liquidity layer custody is also shared between pools. Compute combined per-borrower exposure rather than treating the pools as independent.
+- **Per-pool concentration.** Six borrowers hold the pool's lending: the largest at **49.30%**, the top three at **92.16%**, and a Herfindahl index of **3,522** — ⚠️ **"highly concentrated" on the standard bands.** A further 23.3% of the total book sits in nine liquidity positions, which are not lending. Watch the live dashboard for changes.
+- **Cross-pool concentration if you also hold syrupUSDC.** Three of this pool's six borrowers also borrow from syrupUSDC — **26.25% of family lending**, the largest single counterparty at **13.09%** — and the family top-three are **48.80%**, all above the 10%-per-counterparty norm (live figures on the dashboard). Liquidity-layer custody is shared between the pools as well. Compute combined per-borrower exposure rather than treating the pools as independent.
 - **Pool Delegate roster changes.** Same Pool Delegate firm runs both pools but with different operational EOAs.
 
 ## What the collateral figures do and do not cover
@@ -226,6 +231,7 @@ Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ 
 
 ## Revision history
 
+- **2026-09-24 — the loan book contracted by 37.9%, and borrower concentration is re-measured on a corrected basis.** Deployed principal fell from **$392.72M to $244,037,062.37** in eighteen days, cross-checked on-chain where the pool's total assets read **$252.59M**, so the book cannot be the larger figure. That total splits into **$187,087,047.37 of lending across 8 loan positions** and **$56,950,015.00 across 9 liquidity positions**, the liquidity bucket being **23.3% of the book**. ⚠️ **Measured across distinct borrowers rather than positions, the lending is highly concentrated: six borrowers, the largest at 49.30%, the top three at 92.16%, and a Herfindahl index of 3,522.** The largest borrower's position is spread across three separate loans, which a position-level view understates. ⚠️ **These figures cannot be set against the September measurement.** The book contracted by more than a third in the interval and the earlier figures were computed on a different construction, so no statement about whether concentration rose or fell is supportable and none is made here. ✅ Credit quality is unchanged — **zero impaired, zero called, zero in default** across all 17 positions — and free liquidity is **3.34%**. **Scores are unchanged at this entry; the score implication of the corrected basis is under review.** ⚠️ **Whether the contraction reflects healthy repayment or weaker borrower demand is not established.**
 - **2026-09-06 — the authority topology is walked, and the 3-day governance delay is a detection window rather than a gate.** ⚠️ **The `pause` layer is the Pool Delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption, and it needs no compromise to bite: inaction is enough.** ⚠️ **The multisig path is the faster one:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. A role update is the one class the canceller may not cancel. ✅ Upgrades are capped to Maple-published implementations (`registerImplementation` is `onlyGovernor`), which with 8+ audits and a $1M+ bounty is what holds Contract & Admin at 4.5 rather than lower. **Both pools measure the same on this axis — same six paths, same thresholds, same delay flags.** Dependencies moves to 5.0 and Backing is scored for the first time at 6.0, capped by collateral visibility rather than by the collateral ratio.
 - **2026-09-06 — the concentration figures were measured against an incomplete loan book and were too high in the risk-increasing direction.** Enumerating from the loan manager's `PaymentAdded` events reconciles the book to the pool's deployed principal exactly, with zero residual: **18 active loans across 9 borrowers totalling $392,718,462.42**, where the previous read saw 11 loans, 7 borrowers and $248.07M. Seven active positions worth **$144,645,910.05** were missing. **Largest borrower 24.19% (published as 38.3%), top-3 66.77% (published as 90.77%), HHI 1,876 (published as 2,911).** ⚠️ **The ladder is flatter than described, not thinner:** 24.19 / 23.49 / 19.10 / 14.05 / 12.73, so removing the largest loan leaves eight borrowers and a 23.5% top name. syrupUSDT is still the more concentrated of the two pools; the sibling gap on the largest borrower is about **two points, not the fifteen or twenty-five previously published**. ⚠️ **This is the second correction on this claim in the same direction.** Scores unchanged: the axes that cited concentration are held on the measured borrower-set spread, which is now what carries them. The largest cross-pool borrower is **$195M, 14.43% of the $1.35B family loan book** — a figure neither pool's own page shows.
 - **2026-08-18 — moved onto the correct scoring rubric; no score changed.** This report was filed as a stablecoin and rendered the stablecoin axes (peg mechanism, backing). syrupUSDT is a **vault share**, and the practical cost was that the stablecoin rubric has **no redemption axis** — so for a vault roughly 97% deployed into loans, and one running free liquidity thinner than its sibling, the binding retail question was discussed in prose but never scored. The page now carries Stability 8.5 / Contract & Admin 6.0 / **Redemption 6.5** / Underlying 6.5 / Liquidity 6.0 / Issuer 5.5, Overall unchanged at **6.0**. Stability, Contract & Admin and Redemption are newly *visible*, not newly *assigned*; every axis published on both sides already agreed. Backing 6.5 became Underlying 6.5, which now also carries the verifiability question backing used to answer. Figures refreshed to the August 2026 check: the credit read is **reassuring** — loans-only collateral ratio 175%, above its band, pool collateral ratio 100%, zero unrealized losses — and the structural fact behind this pool's Underlying, Liquidity and Redemption axes sitting below its sibling's is its smaller borrower set on a smaller pool.
@@ -234,41 +240,3 @@ Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ 
 ---
 
 *Revision history: 2026-08-23 — concentration figures measured and quantified; no score change on either pool. ⚠️ Those figures were computed against an incomplete enumeration of the loan book and were too high; see the 2026-09-06 entry above for the measured replacements. Credit quality was clean on both pools at that read — zero impaired, zero called, zero defaulted — and remains so. syrupUSDT's Liquidity bucket is about **3.3% of book against syrupUSDC's 6.1%**, the more concentrated pool carrying roughly half the relative cushion, stated as relative size only since that bucket is pool-owned strategy positions rather than idle cash. ⚠️ **Unre-verified rather than refuted:** whether the named cross-pool borrowers are the same legal entities has not been checked — the overlap claim stands unchecked, not disproved. `last_verified` is not bumped; only the concentration metrics were read.*
-
-> **2026-09-24 (corrected) — the earlier change today is withdrawn. Backing returns to 6.0,
-> Dependencies to 5.0, Overall to 6.0.** Earlier today this page reported that the largest borrower had
-> grown from 24.19% to 37.79% of the pool. Both figures are accurate, but they are shares of **different
-> books**, and comparing them was a mistake.
->
-> **The pool's loan book has contracted, from about $392.7M to about $244.0M — a 37.9% reduction in
-> eighteen days.** That is verified directly on-chain: the pool's total assets read $252.6M, so the book
-> cannot be $392.7M today. The largest borrower's *share* rose largely because the denominator fell, and
-> because a different borrower now sits at the top — **the previous largest borrower repaid roughly
-> $70M.** No borrower increased their position.
->
-> **The contraction is the fact worth reporting, and this page had not stated it.** Alongside it: the
-> number of borrowers fell from nine to eight, and the concentration index rose from 1,876 to 2,498. No
-> loan is impaired, called or in default. Whether the shrinkage reflects healthy repayment or weaker
-> demand is not established here.
->
-> Separating a genuine concentration change from the effect of a shrinking book requires the
-> borrower-level detail from the earlier reading, which we do not hold. Until the book stabilises, the
-> score stays where it was.
->
-> **2026-09-24 — Backing 6.0 → 5.5, Dependencies 5.0 → 4.5, Overall 6.0 → 5.5.** Borrower
-> concentration in this pool has widened past the range the September 6 assessment rested on.
-> Re-measured against the same fully-enumerated denominator ($244.0M, 100% coverage, zero residual):
-> **the largest borrower is now 37.79% of the book, up from 24.19%, and the top three are 80.9%, up
-> from 66.8%.** There are eight borrowers, and the concentration index sits in the "moderate" band.
->
-> The September 6 pass had called a 38.3% figure "wrong-harsh" and corrected it to 24.19%. That
-> correction was right at the time — the earlier number came from too small a denominator. What has
-> changed since is the book itself, not the arithmetic. The score moves back because the reason it was
-> raised no longer holds.
->
-> **Not cut further, and the reasons are on the record:** no loan is impaired, called or in default —
-> this is concentration, not credit deterioration. Free liquidity is 3.34%, better than the sibling
-> pool's. The largest collateral type is BTC at 54% of the book, posted at 125–160% initial levels.
->
-> Volatility, Liquidity & Exit, Contract & Admin, Issuer and Redemption are unchanged; this review did
-> not re-examine them. The Pool Delegate arrangement was re-verified on-chain and is unchanged.
