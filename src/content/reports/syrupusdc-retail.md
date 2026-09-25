@@ -14,8 +14,8 @@ date: "2026-04-25"
 # and the admin/authority topology; it did NOT re-read the NAV mechanism, yield,
 # the depth ladders, the audit corpus or the withdrawal-queue mechanics. The
 # 2026-09-24 pass re-measured the same three again (book $992,257,778.84, both
-# concentration bases, topology unchanged) and ALSO did not re-read them, nor
-# per-loan collateral visibility, which still dates from 2026-09-06. So the
+# concentration bases, topology unchanged) and ALSO re-measured per-loan
+# collateral, now priced on 100% of positions, but did not re-read them. So the
 # 2026-08-18 hold still covers exactly what it covered before. The body states
 # that split at the top. ⚠️ riskAnalyst moved THEIR copy to
 # 2026-09-07 under their own rule (last_verified moves when SOMETHING was
@@ -33,11 +33,19 @@ market_cap_approx: 1066000000
 # policy. ⚠️ backing_score was MISSING ENTIRELY and could not render on the old
 # vault-share rubric — adding it without the frame would have been schema-legal
 # and invisible.
-#   backing_score 6.5 is NEW. ⚠️ Capped by COLLATERAL VISIBILITY, not by the
-#     collateral ratio: per-loan collateral comes from Maple GraphQL, which
-#     returns nothing for the loans recovered in the 2026-09-06 reconciliation,
-#     and OpenTermLoan carries no on-chain collateral field. Existence and
-#     principal are fully verified; collateral is not.
+#   backing_score 6.5. ⚠️ CAPPED BY COLLATERAL CONCENTRATION, NOT VISIBILITY.
+#     The old visibility cap (90.8% coverage) is VOID: the 2026-09-24 read
+#     prices collateral on 100% of positions, nine rows summing to
+#     principal_total to the cent. The cap is that BTC + WBTC is 84.27% of
+#     principal_loans_only_usd. ⚠️ WBTC carries payload category "unknown"
+#     but IS BTC exposure — reading the category field literally gives 81.70%
+#     and understates the correlated share by 2.57pp. Trigger: 6.5 -> 6.0 if
+#     BTC+WBTC exceeds 88% of lending, or any loan level falls below 120%.
+#     ⚠️ OPEN, not a defect: this pool is MORE collateral-concentrated than
+#     syrupUSDT (84.27% vs 70.48%) while scoring HIGHER on backing (6.5 vs
+#     6.0), because it has 16 borrowers against 6. The two measures order the
+#     pools oppositely and the 0.5 gap reflects only borrower spread. Awaiting
+#     a deliberate absolute-level review; do NOT close it by averaging.
 #   underlying_score 7.0 -> 5.5 renders as DEPENDENCIES.
 #   ⚠️ structural_score 6.5 -> 4.5 IS A RE-SCOPE, NOT A DETERIORATION.
 #     The old number spanned THREE axes — it also priced per-pool loan
@@ -77,7 +85,7 @@ overall_score: 6.5
 
 *Live pool backing, peg deviation, and exit-liquidity tiers are on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc).*
 
-> ⚠️ **What is current and what is not, because this page carries several dates.** **Re-measured 2026-09-24:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **$992,257,778.84**, of which **$972,257,768.84 is lending across 36 loans and 16 borrowers** and **$20,000,010.00 sits in an 8-position Liquidity bucket** — every concentration figure below computed on one of those two denominators and labelled with which, and the **admin and authority topology**, re-walked on-chain and unchanged, which is what sets Contract & Admin. **Dating from 2026-09-06 and not re-measured since:** per-loan collateral visibility. **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the oldest date deliberately** — the concentration and authority material is current; the description of how the vault works is August's.
+> ⚠️ **What is current and what is not, because this page carries several dates.** **Re-measured 2026-09-24:** the loan book, enumerated from the loan manager's own payment events and reconciling to deployed principal with zero residual — **$992,257,778.84**, of which **$972,257,768.84 is lending across 36 loans and 16 borrowers** and **$20,000,010.00 sits in an 8-position Liquidity bucket** — every concentration figure below computed on one of those two denominators and labelled with which, and the **admin and authority topology**, re-walked on-chain and unchanged, which is what sets Contract & Admin. **Also re-measured 2026-09-24:** per-loan collateral, priced on **100% of positions**. **Still dating from 2026-08-18 and not re-read:** the NAV mechanism, yield and APY, the liquidity depth ladders, the audit corpus, and the withdrawal-queue mechanics. ⚠️ **So `verified through` is the oldest date deliberately** — the concentration and authority material is current; the description of how the vault works is August's.
 
 > *What's pinned in this report is structural risk — architecture, the issuer menu, the risk axes, and the scores. Current magnitudes (pool split, per-issuer allocation, collateral ratio, concentration, exit tiers) drift weekly and are live on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc). This report is written to stay correct across that drift.*
 
@@ -101,7 +109,7 @@ The "overcollateralized at all times" framing in Maple's marketing applies to th
 | Dimension | Score | Notes |
 |---|---|---|
 | Stability | 8.5 | NAV-accruing share, organic yield from loan interest, no rebase, and zero principal losses to date across the Syrup product line. The share price only climbs in normal operation; the path to a drawdown is a credit loss on the loan book, which is scored under Underlying. |
-| Backing | 6.5 | The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — **$992,257,778.84** at 2026-09-24, of which $972,257,768.84 is lending across 36 loans and 16 borrowers — with zero impaired, called or defaulted. ⚠️ **The cap on this axis is collateral VISIBILITY, not the collateral ratio.** Per-loan collateral comes from Maple's GraphQL API, which returns nothing for part of the book, and the loan contracts carry no on-chain collateral field. ⚠️ **The coverage figure dates from 2026-09-06 and has not been re-measured:** collateral was priced over about **90.8%** of the book at that read. Existence and principal are verified; collateral is not. |
+| Backing | 6.5 | The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — **$992,257,778.84** at 2026-09-24, of which $972,257,768.84 is lending across 36 loans and 16 borrowers — with zero impaired, called or defaulted, and collateral priced on **100% of positions**. ⚠️ **The cap on this axis is collateral CONCENTRATION: BTC and WBTC together are 84.27% of the lending book.** Argued under [2 · Backing](#2--backing--65) |
 | Liquidity & Exit | 6.5 | **Scored on the worse of the two legs.** Primary redemption: permissionless mint and redeem at the vault layer, no KYC, processed at NAV from free pool USDC — the one leg that is structural and verified. ⚠️ **But free liquidity is 1.08% of the pool at 2026-09-24 — below the 2% level where our monitor flags exits as forced into the queue, and under a third of syrupUSDT's cushion** — so the direct route is queued at any size that matters. ⚠️ **And the venue-depth leg is unmeasured:** the aggregator slippage this report cites carries no source, date or trade size in our records, and the "queue clears in under five minutes" figure is the issuer's own claim, never independently tested. **A measurement is commissioned.** |
 | Dependencies | 5.5 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: three borrowers here also borrow from syrupUSDT, $304.3M between them and 26.25% of family lending** — an exposure neither pool's standalone view shows. |
 | Contract & Admin | 4.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
@@ -204,7 +212,19 @@ DeFi-comfortable users who want yield well above stablecoin-savings rates and ar
 
 ⚠️ **Concentration, measured 2026-09-24.** On the **inclusive** basis — the full $992,257,778.84 book — the largest borrower is **21.57%**, the **top three are 51.80%**, and the Herfindahl index is **1,287**, across **17 entities**. On the **loans-only** basis, which excludes the **$20,000,010.00** Liquidity bucket and divides by $972,257,768.84, the largest is **22.01%**, the top three **52.87%**, and the index **1,336**, across **16 borrowers** and 36 loans. Both readings land **"unconcentrated" to "moderate"** on the standard bands. **Quote either figure with its basis**; the two differ because the Liquidity bucket is in one and not the other.
 
-⚠️ **And the reconciliation fixed existence and principal, not collateral.** Per-loan collateral comes from Maple's GraphQL API, which **returns no records for the four recovered loans**, and the loan contracts carry no on-chain collateral field. **So per-loan collateral is priced over about 90.8% of syrupUSDC's book — and only 63.2% of syrupUSDT's**, which is worth knowing before the two pools' collateral ratios are compared. The uncovered portion is now *seen and healthy on the on-chain risk flags but unpriced for collateral*, rather than unknown to exist: all four recovered loans read `isImpaired=false`, `isCalled=false`, `isInDefault=false`.
+⚠️ **Collateral is priced on 100% of positions at 2026-09-24**, the per-asset rows summing to deployed principal to the cent, and every loan reads `isImpaired=false`, `isCalled=false`, `isInDefault=false`. **What the full view shows is that the collateral is concentrated rather than incomplete:**
+
+| Collateral | Amount | Share of lending |
+|---|---:|---:|
+| BTC | $794,373,651 | **81.70%** |
+| XRP | $96,610,014 | 9.94% |
+| ETH | $50,774,099 | 5.22% |
+| WBTC | $25,000,000 | 2.57% |
+| HYPE | $5,500,000 | 0.57% |
+
+⚠️ **BTC and WBTC together are 84.27% of the lending book**, and they are the same price exposure — a wrapped bitcoin moves with bitcoin. **Reading the two rows separately understates the correlated share by 2.57 points.** The lending book is essentially entirely crypto-collateralised; the whole non-crypto residue is a **$5** Treasury-bill position.
+
+⚠️ **What would move this score.** Backing goes to 6.0 if **BTC and WBTC together exceed 88%** of the lending book, or **any loan's current level falls below 120%**. Neither is met at this read.
 
 ⚠️ **Say which denominator, always.** These figures divide by the principal the pool has actually deployed, reconciled to the loan manager's own accounting with zero residual. **A concentration ratio computed over part of a book looks exactly like one computed over all of it** — the arithmetic gives no sign that the denominator is short.
 
@@ -240,6 +260,7 @@ Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ 
 
 ## Revision history
 
+- **2026-09-25 — collateral re-measured across the whole book; no score changed.** Per-loan collateral is priced on **100% of positions**, the nine per-asset rows summing to deployed principal to the cent, superseding the partial-coverage figure carried before. ⚠️ **The fuller view shows concentration rather than incompleteness:** **BTC $794,373,651 (81.70% of lending) and WBTC $25,000,000 (2.57%) are the same price exposure, 84.27% together**, with XRP 9.94%, ETH 5.22% and HYPE 0.57% behind them. The lending book is essentially entirely crypto-collateralised — the non-crypto residue is a **$5** Treasury-bill position. ⚠️ **The Backing axis is therefore capped by collateral concentration, not by collateral visibility**, and the cap now has a stated trigger: 6.5 → 6.0 if BTC and WBTC together exceed **88%** of the lending book, or any loan's current level falls below **120%**. Neither is met. ⚠️ **Whether 6.5 is the right absolute level given full collateral visibility is an open question awaiting a deliberate review.**
 - **2026-09-24 — Liquidity & Exit 7.5 → 6.5, Overall 6.75 → 6.5.** The axis rested on three claims and only one is established. ⚠️ **The slippage figure it cited — single-digit to low-double-digit basis points on aggregator routes — carries no source, date or trade size anywhere in our records**, and the "redemption queue clears in under five minutes" figure is **the issuer's own claim**, never independently tested and hard to credit against a pool holding 1.08% of its assets as free cash. Only the permissionless deposit and redemption access is structural and verified. **Free liquidity is 1.08%** — about $10.8 million against $1.00 billion in assets — below the level at which our own monitoring flags a pool as forcing exits into a queue, so the direct route out is queued at any size that matters, and the venue-depth route the score actually rested on has never been measured. **A measurement has been commissioned.** ✅ **The score stays above the sibling pool's 6.0** because scale plausibly does buy real depth — this pool is four times larger. **It is lowered because the evidence for that depth does not yet exist, not because the exit is known to be poor.** It returns to 7.5 if the measurement supports the original claim, and falls further if it does not.
 - **2026-09-24 — the loan book grew and concentration eased slightly; no score changed.** Deployed principal rose to **$992,257,778.84** from $958.76M, with **36 loans across 16 borrowers** and a Liquidity bucket of **$20,000,010.00** across 8 positions. Concentration moved marginally in the safer direction on both bases: inclusive top-1 **21.57%** and HHI **1,287**; loans-only top-1 **22.01%**, top-three **52.87%** and HHI **1,336**. ✅ **The conditions this report published for revisiting its hold were checked and none fired** — the loans-only index is nowhere near the 2,500 band, the loans-only top-three fell rather than rose, and impaired, called and defaulted remain zero. The authority topology was re-walked on-chain and is unchanged. ⚠️ **Free liquidity is 1.08% of the pool — below the 2% level at which our monitor flags exits as forced into the queue.** Liquidity & Exit was subsequently cut to 6.5 on that finding. ⚠️ **No comparison is drawn with syrupUSDT at this read:** the two pools' figures are built on different constructions and would not be like-for-like.
 - **2026-09-06 — the authority topology is walked, and the 3-day governance delay is a detection window rather than a gate.** ⚠️ **The `pause` layer is the Pool Delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption, and it needs no compromise to bite: inaction is enough.** ⚠️ **The multisig path is the faster one:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. A role update is the one class the canceller may not cancel. ✅ Upgrades are capped to Maple-published implementations (`registerImplementation` is `onlyGovernor`), which with 8+ audits and a $1M+ bounty is what holds Contract & Admin at 4.5 rather than lower. **Both pools measure the same on this axis — same six paths, same thresholds, same delay flags.** Dependencies moves to 5.5 and Backing is scored for the first time at 6.5, capped by collateral visibility rather than by the collateral ratio.
