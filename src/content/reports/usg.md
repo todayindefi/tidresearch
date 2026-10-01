@@ -32,7 +32,15 @@ liquidity_score: 3.5
 # each collateral LP scored at its WORSE LEG — ⚠️ that rule is not a convention
 # we picked, it is USG's own oracle arithmetic (`virtual_price × MIN(coin
 # price)`), so the weaker constituent sets the mark and therefore sets
-# liquidation. Weighted result 5.44.
+# liquidation. ⚠️ NO POINT VALUE IS QUOTED for the weighted result. The figure
+# previously carried here (5.44) was computed 2026-09-06 on 2026-08-05 per-market
+# debt, which does NOT match the debt column in the Live CDP Markets table below
+# (2026-09-11) — recomputing from that table gives 5.35, so the page could not be
+# reproduced from its own data. ⚠️ AND THE PRECISION WAS FALSE ANYWAY: every
+# score in this corpus is on a 0.5 grid, and 5.33 / 5.35 / 5.36 / 5.44 all round
+# to 5.5 — one grid cell, from inputs that are half-point judgements. A fresh
+# per-market debt pull across all 12 markets is needed before any value returns,
+# and the honest form is the INTERVAL (previously 5.2–6.0), not a point.
 # ⚠️ SCORED BELOW THE LOOKTHROUGH, DELIBERATELY: constituent quality is not the
 # binding constraint, the structure is. 3-4 layers deep across 12+ external
 # protocols, and the MIN() oracle removes the diversification a pair would
@@ -67,7 +75,7 @@ USG is a crvUSD fork issued by Tangent Finance on Ethereum. Users mint it agains
 | Stability | 5.0 | CDP + PegKeeper is proven in crvUSD, but keeper capacity is $0 and pools are 73.6% skewed |
 | Backing | 5.0 | Fully on-chain and verifiable, zero bad debt — but 74.9% of the book is within 10% of liquidation |
 | Liquidity & Exit | 3.5 | One venue, no quoted depth, about $1.0M counter-side inventory against $4.34M supply |
-| Dependencies | 4.0 | Debt-weighted lookthrough across the 12 live markets scores **5.44**, each LP taken at its worse leg. Scored below that on purpose: every position is 3–4 layers deep across 12+ external protocols, and `MIN(coin price)` removes the diversification a pair would otherwise give. Weakest named constituent is Resupply reUSD at 3.5 — 9.1% of debt, and in two of the four thinnest markets |
+| Dependencies | 4.0 | Debt-weighted lookthrough across the 12 live markets, each LP taken at its worse leg; no point value is quoted, since the per-market debt and the constituent scores are from different reads. Scored below that on purpose: every position is 3–4 layers deep across 12+ external protocols, and `MIN(coin price)` removes the diversification a pair would otherwise give. Weakest named constituent is Resupply reUSD at 3.5 — 9.1% of debt, and in two of the four thinnest markets |
 | Contract & Admin | 3.5 | Asset permissioning, parameter setting and governance all terminate at one 3-of-5 Safe with no execution delay; repointing `collatOracle` moves every position's health in one transaction, against a book where 74.9% sits within 10% of liquidation. The only 3-day delay covers replacing the PegKeeper admin, not the risk setters |
 | Issuer | 4.0 | Transparent data, unreviewed parameters, young sub-$5M protocol |
 | **Overall** | **4.0** | Unchanged. Axis 5 makes an authority surface explicit that was previously priced inside the Issuer row — it is a re-scoping of where the fact sits, not a new adverse read of the asset |
@@ -137,7 +145,7 @@ One qualification that runs against the borrower: these are **market-wide aggreg
 
 ## 4 · Dependencies — 4.0
 
-Scoring the upstream exposure is a lookthrough rather than a judgement. Across the 12 live markets, debt-weighted, with **each collateral LP taken at its worse leg**, the constituents score **5.44**. Sixteen of the eighteen constituents already carry their own assessments; the weakest named one is **Resupply reUSD at 3.5**, which is **9.1% of debt** and sits in two of the four thinnest markets.
+Scoring the upstream exposure is a lookthrough rather than a judgement: across the 12 live markets, debt-weighted, with **each collateral LP taken at its worse leg**. ⚠️ **No single point value is quoted for the result** — the per-market debt figures and the constituent scores come from different reads, and the book has moved materially between them. Sixteen of the eighteen constituents already carry their own assessments; the weakest named one is **Resupply reUSD at 3.5**, which is **9.1% of debt** and sits in two of the four thinnest markets.
 
 ⚠️ **The worse-leg rule is not a convention imposed from outside — it is USG's own oracle arithmetic.** The market oracle is `virtual_price × MIN(coin price)`, so the weaker constituent of a pair sets the mark, and the mark is what sets liquidation. **You take the worse leg's risk without the benefit of holding two assets**, which is the opposite of what holding an LP position normally buys you.
 
