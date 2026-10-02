@@ -7,7 +7,7 @@ category: "wrapped-token"
 underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-08-13"
-last_revised: "2026-09-12"
+last_revised: "2026-10-02"
 last_verified: "2026-08-23"
 featured: false
 production: true
@@ -27,11 +27,11 @@ chain_overrides:
     redemption_score: 6.0
     overall_score: 6.0
   arbitrum:
-    liquidity_score: 5.5
+    liquidity_score: 4.0
     structural_score: 6.0
     overall_score: 6.0
   optimism:
-    liquidity_score: 5.0
+    liquidity_score: 2.0
     structural_score: 6.0
     redemption_score: 6.0
     overall_score: 6.0
@@ -45,7 +45,7 @@ chain_overrides:
 
 | Backing | What it earns | Exit methods | Age | Chains |
 |---|---|---|---|---|
-| ETH staked on the beacon chain by ether.fi (1.102072 eETH per weETH, verified 2026-08-23) | Ethereum consensus rewards only, accrued into the exchange rate | Unwrap to eETH then withdraw (validator exit queue), or sell on Curve / Balancer / Uniswap / Pendle | Live since 2023, no major exploit | Ethereum (canonical) plus Base, Arbitrum, Optimism and other L2s (bridged) |
+| ETH staked on the beacon chain by ether.fi (1.102072 eETH per weETH, verified 2026-08-23) | Ethereum consensus rewards only, accrued into the exchange rate | Unwrap to eETH then withdraw (validator exit queue), or sell on Curve / Balancer / Uniswap | Live since 2023, no major exploit | Ethereum (canonical) plus Base, Arbitrum, Optimism and other L2s (bridged) |
 
 ## Summary
 
@@ -87,7 +87,9 @@ Three steps, and one of them is out of anyone's hands:
 
 The improvement this period is real but narrow: the restaking-withdrawal delay — where restaked ETH could not be freed until its restaking commitments unwound — **no longer applies** to weETH. The beacon-chain queue is untouched by that and remains the binding constraint.
 
-The faster exit is the secondary market: Curve, Balancer and Uniswap pools plus an unusually large Pendle PT/YT market. In calm conditions that trades close to the underlying value. In a redemption wave it does not, which is the next section.
+The faster exit is the secondary market: Curve, Balancer and Uniswap pools. In calm conditions that trades close to the underlying value. In a redemption wave it does not, which is the next section.
+
+⚠️ **Pendle is not part of that.** All eight weETH Pendle markets had matured before 2026-10-02. Redeeming a matured PT is a different mechanism from selling into a pool — it belongs with the redemption steps above, not in the depth you can hit on the way out.
 
 ## The discount that can still happen
 
@@ -95,7 +97,22 @@ In April 2024, after the EIGEN airdrop, weETH traded roughly 2–3% below ETH-pa
 
 Removing restaking removes one *cause* of that kind of repricing. It does not remove the *mechanism*. Any large redemption wave can reopen a discount, and the weETH-to-weETHs split is itself a plausible trigger for unwind flow. If you need to exit inside a day during stress, expect to pay for it.
 
-Liquidity is deep by any standard except the very top of the category — weETH is still thinner than Lido's stETH and wstETH, more limited on centralised exchanges, and materially shallower on L2s. That is why liquidity scores 6.5 and did not move this period: the restaking removal changed the risk model, not the order book.
+## How deep the exit is, chain by chain
+
+Measured 2026-10-02. The figures are **ETH-denominated** and **marginal** — the cost of the next ETH sold, with the first rung subtracted — because this is an ETH-denominated asset and an average struck across a whole trade hides the point where it breaks.
+
+| Chain | Depth | Standing cost | Pools | Pool TVL |
+|---|---|---|---|---|
+| Ethereum | **floor of ≥5,000 ETH** (~$13.5M) | −6.9bp | 70 | $50.29M |
+| Base | crossing between **500 and 1,000 ETH** | −6.2bp | 93 | $6.61M |
+| Arbitrum | crossing between **50 and 100 ETH** | −16.6bp | 66 | $0.58M |
+| Optimism | crossing between **1 and 5 ETH** (~$3–14K) | −10.7bp | 43 | $20.9K |
+
+⚠️ **Ethereum's number is a floor, not a limit.** 5,000 ETH is the largest size the measurement reached and cleared; the depth above it was not located. Read it as *at least this much*, never as *this is where it runs out*. The three L2 rows are the opposite kind of figure — a bracket the crossing sits inside, and so a real ceiling on what that chain absorbs.
+
+⚠️ **Standing cost is a separate measurement from the depth beside it**, not the price of clearing the bracket. Base is where the gap shows: **500 ETH costs about 11bp, and 1,000 ETH costs about 1,598bp.** That is a cliff rather than a slope — size that looks affordable right up to the point it is not.
+
+So the shape is a deep mainnet book and L2 books running from thin to negligible. Mainnet liquidity scores **6.5**: deep on the measure above, but behind Lido's stETH and wstETH and limited on centralised venues. The L2s score on their own depth — **Base 5.0**, **Arbitrum 4.0** at roughly a tenth of Base's depth and 2.7 times its standing cost, and **Optimism 2.0**, where the whole book crosses between one and five ETH.
 
 ## Who can change the contracts
 
@@ -171,9 +188,9 @@ If a confirmed on-chain reading shows EigenLayer exposure at "under 1% and falli
 | Dimension | Score | Notes |
 |---|---|---|
 | Volatility | 7.5 | Value-accruing against ETH via `getRate()`; tracks ETH plus yield and stays tight in calm markets. Raised half a point because the AVS-slashing tail — a slashing event socialising into the token's value — is being retired. Held below where we would put stETH/wstETH because of the documented April 2024 discount episode and the redemption-wave mechanism that outlives restaking. |
-| Liquidity | 6.5 | Deep on Curve, Balancer and Pendle at roughly 1.93M ETH-equivalent scale, but thinner than the Lido pair, limited on centralised venues, shallow on L2s. **Unchanged** — the restaking removal changed the risk model, not the order book. (Base 5.0, Arbitrum 5.5, Optimism 5.0.) |
+| Liquidity | 6.5 | Mainnet depth measured 2026-10-02 at a **floor of ≥5,000 ETH (~$13.5M)**, −6.9bp standing, across 70 pools holding $50.29M — a floor, not a located limit. Behind the Lido pair, limited on centralised venues, and thin to negligible on L2s, where the crossing runs from 500–1,000 ETH on Base down to 1–5 ETH on Optimism. (Base 5.0, Arbitrum 4.0, Optimism 2.0.) |
 | Structural | 7.0 | 6-of-10 Safe into a 10-day timelock on upgrades, `PROPOSER_ROLE` confirmed on-chain, Certora formal verification, about three years clean at multi-billion scale. Capped because the unwind is unfinished (EigenPod credentials until Q4 2026) and because **the bridge layer is a separate 4-of-7 into a two-day timelock, measured 2026-08-27.** ⚠️ **Held at 7.0, and the reason for the cap has changed from unverified to measured:** the bridge exposure this axis was already discounting is now quantified and lands roughly where the cap anticipated — real delay, self-administered, with an independent canceller, but shorter and thinner than the headline. ⚠️ **The delegate path is now measured and clean on all five walked legs — delegate equals owner, so no undelayed configuration route exists there.** Ten of fifteen deployments remain unmeasured, which is breadth rather than an open door. (L2s 6.0.) |
-| Redemption | 7.0 | Permissionless and ungated: unwrap to eETH, request withdrawal, wait for a validator exit; or sell into deep DEX and Pendle markets. Raised half a point because the restaking-withdrawal delay no longer applies. Still slower and less battle-tested than stETH's queue. (L2s 6.0 — you must bridge to mainnet to redeem.) |
+| Redemption | 7.0 | Permissionless and ungated: unwrap to eETH, request withdrawal, wait for a validator exit; or sell into the mainnet DEX book, measured at a floor of ≥5,000 ETH. ⚠️ **Pendle is not a sale venue here — all eight weETH Pendle markets had matured before 2026-10-02**, and redeeming a matured PT is a different mechanism from selling into a pool. Raised half a point because the restaking-withdrawal delay no longer applies. Still slower and less battle-tested than stETH's queue. (L2s 6.0 — you must bridge to mainnet to redeem.) |
 | Underlying | 6.0 | ⚠️ **weETH is four upgrade arrangements, not one asset with a bridge attached.** Ethereum is the 6-of-10 Safe into a 10-day timelock. **Base and Optimism are one configuration deployed twice** — different ProxyAdmins answering to the same timelock `0x851Dd540f4D2Ec78120De0a0cc87B21EdE5Df5C6`, both at three days. ⚠️ **On Arbitrum the token is a BeaconProxy behind a beacon shared with WBTC**, so an Arbitrum holder's upgrade counterparty is the bridge operator rather than ether.fi. ✅ **Against that, the exposure itself is ordinary:** ETH consensus staking, with the residual EigenLayer dependency sitting at the validator layer while EigenPod withdrawal credentials remain until Q4 2026. |
 | Issuer | 7.5 | ✅ **ether.fi removed restaking from weETH on 2026-08-06**, moving it to a separate opt-in token — an issuer deleting a yield source to shrink a risk surface its holders were carrying, which is rare enough to credit. About three years at multi-billion scale with no incident, Certora formal verification, and a mainnet admin posture stronger than any protocol in this database. ⚠️ **Capped at 7.5 because the removal is press-reported rather than proven on-chain by us**, and because the L2 deployments are administered to a weaker standard than the mainnet contracts. |
 | **Overall** | **7.0** | Moderate risk, materially improved — and improved for a structural reason rather than a market one. Deliberately kept a notch below where we would place Rocket Pool's rETH: the EigenLayer exit is press-reported rather than verified, and the bridge configuration is unaudited by us. |
@@ -185,7 +202,7 @@ Holders who want ETH staking exposure in the form DeFi is built around, who valu
 ## Who should avoid
 
 - Anyone who needs a guaranteed same-day exit at full value. The fast exit is the secondary market, and the secondary market is exactly where a discount appears under stress.
-- Anyone holding primarily on Base, Arbitrum or Optimism who has not accepted the bridge trust. That is a 6.0 position, not a 7.0 one.
+- Anyone holding primarily on Base, Arbitrum or Optimism who has not accepted the bridge trust. That is a 6.0 position, not a 7.0 one — and on Optimism the book crosses between one and five ETH, so beyond a few thousand dollars your exit on that chain is the bridge, not the order book.
 - Anyone who bought weETH *for* restaking yield. That product is now weETHs, it carries an unassessed credit chain rather than a slashing risk, and it is not covered here.
 - Anyone who needs issuer-confirmed, primary-sourced facts before acting. The central claim in this report is currently secondary-sourced.
 
@@ -194,7 +211,7 @@ Holders who want ETH staking exposure in the form DeFi is built around, who valu
 - **EigenPod withdrawal credentials.** The clean end of the unwind, expected by Q4 2026. Until then the EigenLayer dependency is reduced, not gone.
 - **Primary confirmation from ether.fi.** A documentation rewrite or a proper post describing the 2026-08-06 change would close the largest open item in this report.
 - **`getRate()` and the implementation address.** The rate is the honest read on yield. The implementation changed once this period without an event we could date — re-check both each time you re-size.
-- **Pendle PT/YT weETH depth and the Curve pools.** Where a redemption wave would show up first, as a widening discount.
+- **The Curve and Balancer pools.** Where a redemption wave would show up first, as a widening discount. Pendle is no longer one of these places — its weETH markets have matured.
 - **weETHs adoption.** A large migration into weETHs is unwind flow through weETH's secondary markets before it is anything else.
 - **The Ethereum exit queue.** It sets your real time-to-cash on primary redemption, and it is congestion-dependent.
 
@@ -204,5 +221,6 @@ Holders who want ETH staking exposure in the form DeFi is built around, who valu
 
 ## Revision history
 
+- **2026-10-02 — exit ladder measured; Arbitrum Liquidity 5.5 → 4.0, Optimism 5.0 → 2.0.** Ethereum depth is a **floor of ≥5,000 ETH (~$13.5M)** at −6.9bp standing, 70 pools holding $50.29M. Base crosses between **500 and 1,000 ETH** — −6.2bp standing, but about 11bp at 500 ETH against about 1,598bp at 1,000, a cliff rather than a slope — 93 pools, $6.61M. Arbitrum crosses between **50 and 100 ETH** at −16.6bp, 66 pools, $0.58M: roughly a tenth of Base's depth at 2.7 times the standing cost. Optimism crosses between **1 and 5 ETH** at −10.7bp, 43 pools, $20.9K. Mainnet Liquidity held at 6.5. ⚠️ **All eight weETH Pendle markets had matured before this date**, so Pendle is no longer a live venue on either the depth or the exit-method leg. Ethereum depth was published as roughly 1.93M ETH-equivalent until 2026-10-02; that figure is the token's own supply, and the measured floor is ≥5,000 ETH.
 - **2026-08-27 — bridge layer measured; Structural held at 7.0.** The **10-day timelock governs upgrades**. The Ethereum OFT adapter — a lockbox holding real weETH — is owned by a **different `TimelockController` at two days**, with a **4-of-7 Safe** as proposer that shares exactly one owner of seven with the 6-of-10 upgrade Safe. Gate-tested: `setPeer` succeeds from the two-day timelock and reverts from the 6-of-10 Safe. ⚠️ **The delay is real, self-administered so it cannot be shortened, and there is a genuine independent veto — a 4-of-6 canceller sharing zero owners with the proposer.** **The LayerZero delegate equals the owner on all five walked legs**, so no undelayed configuration path exists there. **L2 legs run a three-day timelock that also governs upgrades**, so bridge and upgrade share one authority on Base, Optimism, BSC and Scroll while remaining separate on Ethereum. Ten of fifteen deployments remain unwalked.
 - **2026-08-13 — initial publication.** Reflects the 2026-08-06 removal of restaking from weETH.
