@@ -13,6 +13,8 @@ last_revised: "2026-08-23"
 live_dashboard_url: "https://tidresearch.com/dashboards/thbill/"
 production: true
 issuer: "Theo Protocol Corporation"
+# PARKED: backing_score 4.5 exists internally and renders nowhere here — absent from frontmatter AND the body table. Needs the six-axis frame, as weETH did; not blocked [owner: riskAnalyst] [since: 2026-09-12]
+# PARKED: five truncated addresses in the body, none given in full anywhere — unfalsifiable under docs/contract-admin-axis.md section 5 [owner: riskAnalyst] [since: 2026-10-03]
 volatility_score: 8.0
 structural_score: 3.5
 redemption_score: 2.0
@@ -206,7 +208,7 @@ Strong asset quality undermined by a young, unlicensed, non-bankruptcy-remote is
 |---|---|---|
 | **Overall Risk** | **3.5/10 — Elevated** | was 4.0 |
 | Stability | 8.0/10 | new axis |
-| Contract & Admin | 4.5/10 | new axis |
+| Contract & Admin | 3.5/10 | new axis |
 | Redemption | 2.0/10 | new axis |
 | Underlying | 4.0/10 | was 5.0 |
 | Liquidity | 2.0/10 | was 3.5 |

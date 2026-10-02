@@ -64,6 +64,8 @@ volatility_score: 8.5
 backing_score: 6.0
 structural_score: 4.5
 redemption_score: 6.5
+# PARKED: Dependencies 5.0 here vs 4.0 internal (riskAnalyst b304eb0, owner ruling 2026-10-03) — bound by USDT axis-4 4.0 since this counterparty set CONTAINS USDT's. Awaiting our owner before syncing [owner: owner] [since: 2026-10-03]
+# PARKED: six borrower addresses rendered as Borrower A-F — the truncated forms were unfalsifiable and no full forms are held [owner: riskAnalyst] [since: 2026-10-03]
 underlying_score: 5.0
 liquidity_score: 6.0
 issuer_score: 5.5
@@ -108,8 +110,8 @@ The catch: **syrupUSDT's lending is highly concentrated, AND it shares borrowers
 | Backing | 6.0 | Loan book fully enumerated and reconciling to deployed principal exactly, with zero impaired or defaulted, and collateral priced on **100% of positions**. ⚠️ **The cap is collateral CONCENTRATION: the lending book stands on two crypto assets, BTC 70.48% and XRP 29.49%.** Argued under [2 · Backing](#2--backing--60) |
 | Liquidity & Exit | 6.0 | **Scored on the worse of the two legs.** The primary leg — permissionless mint and redeem at the vault layer, no KYC — scores 6.5 and is not what sets the axis. Venue depth is the binding one at 6.0. ⚠️ **Measured 2026-10-01, the exit is expensive at every size: all-in cost runs −16.50 bps at $1,000 and −20.52 bps at $1,000,000**, against syrupUSDC's +0.90 and −7.68 on the same convention in the same minute — roughly **six times costlier** at mid notional. ⚠️ **The cost barely responds to size** (about 4 bps across a 1000x range, better than syrupUSDC's 8.6), **so the binding problem is the execution level, not depth** — 2% and 50bps depth both floor at $1,000,000. ⚠️ **Every rung routes through a single Uniswap v4 pool** of roughly $5.0M reserve whose hook has not been inspected. ⚠️ **The cushion runs thin and variable:** a median of **0.89%** across 352 readings since 2026-09-11, under 2% in **61% of hours**, and **0.18% at the most recent reading**. **The 6.0 is unchanged** — the ladder confirmed what this axis already said rather than revising it. |
 | Dependencies | 5.0 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: three of this pool's six borrowers also borrow from syrupUSDC, $304.3M between them and 26.25% of family lending** — an exposure neither pool's standalone view shows. |
-| Contract & Admin | 4.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
-| Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, same audit profile, ~3-year clean record across the Syrup product line. This axis scores the **entity**, so it is deliberately identical to [syrupUSDC](/reports/syrupusdc/); per-pool differences belong under Contract & Admin. |
+| Contract & Admin | 4.5 | ERC-4626 standard. ⚠️ **The audit record does not reach this pool as deployed** — see below; **Trail of Bits should not be cited here**, having reviewed the V2 upgrade mechanism only to understand it and stating it did not look for security flaws. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
+| Issuer | 5.5 | Same Maple Labs Cayman entity as syrupUSDC, ~3-year clean record across the Syrup product line. ⚠️ **Audits and the bounty are not credited here** — they are assurance about the code and belong to Contract & Admin. This axis scores the **entity**, so it is deliberately identical to [syrupUSDC](/reports/syrupusdc/); per-pool differences belong under Contract & Admin. |
 | **Overall** | **6.0** | ⚠️ **Held, and under review.** The Contract & Admin re-scope lowered the axis mean to **5.92**, so this number now sits **+0.08 above its own axes** — contrary to the at-or-below convention applied elsewhere in this coverage. **It is held rather than adjusted because no one has re-derived it, and inventing a figure here would publish something nobody computed.** The axes above are current; this cell is the one to treat as pending |
 
 **A note on the axes.** This report scores on the six-axis core — **Stability · Backing · Liquidity & Exit · Dependencies · Contract & Admin · Issuer** — the same frame as every other vault-share report on this site.
@@ -136,7 +138,7 @@ The loan book is fully enumerated and reconciles to the pool's deployed principa
 | XRP | $55,176,780 | **29.49%** |
 | US T-bills | $34,500 | 0.02% |
 
-⚠️ **There is no third collateral asset**, so these loans do not fail independently — a BTC drawdown stresses six borrowers at once. ⚠️ **And the XRP leg is a single borrower:** the entire XRP collateral base is `0x8669F318…f1e9`, whose lending share is the same 29.50%. **The second-largest borrower and the whole non-BTC collateral base are one exposure**, which neither a per-borrower nor a per-asset view reveals on its own.
+⚠️ **There is no third collateral asset**, so these loans do not fail independently — a BTC drawdown stresses six borrowers at once. ⚠️ **And the XRP leg is a single borrower:** the entire XRP collateral base is **Borrower C**, whose lending share is the same 29.50%. **The second-largest borrower and the whole non-BTC collateral base are one exposure**, which neither a per-borrower nor a per-asset view reveals on its own.
 
 ✅ **This is also why a 49.30% single borrower sits under a 6.0 rather than something lower.** That borrower's **$92,230,000 is fully BTC-collateralised at 157.9%** across three loans — 1,294.83 + 370.37 + 58.69 BTC, worth $145,636,426, at current levels of 156.3%, 156.4% and 222.3%. A default there is a liquidation of $145.6M of BTC, not a $92.2M credit loss, and **BTC would have to fall about 37% before the position is bare.** Borrower concentration is not loss concentration in a secured book.
 
@@ -164,7 +166,7 @@ For sizing above the low retail range (~$50K+), you'll likely use the queue. Str
 
 **What these pools depend on, as distinct from what backs them.** The operator is **Maple Labs**; origination is at the **Pool Delegate's discretion**; the **Liquidity-layer custody addresses are shared across both pools**; and **Maple's GraphQL is the only source of per-loan collateral data**, so collateral visibility depends on a single off-chain endpoint.
 
-⚠️ **The cross-pool exposure is the part neither pool's standalone view shows.** Three of this pool's six borrowers also borrow from syrupUSDC — **$304,296,502 between them, 26.25% of family lending.** The largest, `0x8669F318…f1e9`, is **29.50% of this pool's lending and 9.94% of syrupUSDC's**, which is **13.09% of the family book** as one counterparty.
+⚠️ **The cross-pool exposure is the part neither pool's standalone view shows.** Three of this pool's six borrowers also borrow from syrupUSDC — **$304,296,502 between them, 26.25% of family lending.** The largest, **Borrower C**, is **29.50% of this pool's lending and 9.94% of syrupUSDC's**, which is **13.09% of the family book** as one counterparty.
 
 ### Cross-pool concentration: one product, two denominations
 
@@ -176,18 +178,18 @@ That makes the right sizing unit the **family loan book**, not the per-pool numb
 
 | Family borrower | syrupUSDT | syrupUSDC | Family total | % of family lending | In both pools |
 |---|---:|---:|---:|---:|:---:|
-| `0x198aEC3c…529A` | — | $214.0M | **$214.0M** | **18.46%** | |
-| `0x09b845bb…6B8a` | — | $200.0M | **$200.0M** | **17.25%** | |
-| `0x8669F318…f1e9` | $55.19M | $96.61M | **$151.80M** | **13.09%** | ⚠️ **yes** |
-| `0x8fee157C…2628` | $92.23M | — | $92.23M | 7.96% | |
-| `0xB62446A8…D505` | $12.0M | $65.5M | $77.5M | 6.68% | ⚠️ yes |
-| `0xb99a2c4C…bcF5` | $25.0M | $50.0M | $75.0M | 6.47% | ⚠️ yes |
+| **Borrower A** | — | $214.0M | **$214.0M** | **18.46%** | |
+| **Borrower B** | — | $200.0M | **$200.0M** | **17.25%** | |
+| **Borrower C** | $55.19M | $96.61M | **$151.80M** | **13.09%** | ⚠️ **yes** |
+| **Borrower D** | $92.23M | — | $92.23M | 7.96% | |
+| **Borrower E** | $12.0M | $65.5M | $77.5M | 6.68% | ⚠️ yes |
+| **Borrower F** | $25.0M | $50.0M | $75.0M | 6.47% | ⚠️ yes |
 
 **The family's top three borrowers are 48.80% of family lending and the single largest is 18.46%** — both far above the 10%-per-counterparty limit common in institutional credit frameworks.
 
-⚠️ **Three of syrupUSDT's six borrowers also borrow from syrupUSDC — $304,296,502 between them, 26.25% of family lending.** The largest is `0x8669F318…f1e9` at **$151.80M across both pools, 13.09% of the family book**: per-pool sizing reads that as a 29.50% exposure in one pool and a 9.94% exposure in the other, when it is one counterparty at 13.09% of everything. **Holding both pools does not diversify these three — it doubles them.**
+⚠️ **Three of syrupUSDT's six borrowers also borrow from syrupUSDC — $304,296,502 between them, 26.25% of family lending.** The largest is **Borrower C** at **$151.80M across both pools, 13.09% of the family book**: per-pool sizing reads that as a 29.50% exposure in one pool and a 9.94% exposure in the other, when it is one counterparty at 13.09% of everything. **Holding both pools does not diversify these three — it doubles them.**
 
-⚠️ **Do not merge this with the concentration figures above.** syrupUSDT's largest borrower — the one at **49.30%** of its lending — is `0x8fee157C…2628`, and it is **syrupUSDT-only**. The most concentrated borrower and the largest cross-pool borrower are different entities, and so are the two risks.
+⚠️ **Do not merge this with the concentration figures above.** syrupUSDT's largest borrower — the one at **49.30%** of its lending — is **Borrower D**, and it is **syrupUSDT-only**. The most concentrated borrower and the largest cross-pool borrower are different entities, and so are the two risks.
 
 The Liquidity layer (PYUSD/AMM custody) is also shared across the family — a Maple-firm-level custody event affects both pools.
 
@@ -205,7 +207,7 @@ The Pool Delegate is a single externally-owned address (`0x93aA06F8a7bB4da3Eb0DD
 
 ### Audits & security
 
-Same audit profile as syrupUSDC: 8+ audits, Spearbit + Trail of Bits on the v2/Syrup contracts, $1M+ Immunefi bounty, ERC-4626 standard architecture. Both pools run on the same audited contract codebase.
+Both pools run on the same contract codebase, and the audit record is the same — ⚠️ **including the same limits.** "8+ audits" is a count of **Maple protocol** reviews, not of engagements covering this pool: the December 2022 and June 2023 reviews predate syrupUSDC entirely, and ⚠️ **the temporal argument binds harder here, because syrupUSDT is the newer pool.** Which engagements post-date it has not been established. ⚠️ **Trail of Bits does not belong on the list** — it reviewed the V2 upgrade mechanism only to understand it and states it did not look for security flaws. ⚠️ **The bug bounty is the Immunefi MAPLE program — a $500,000 maximum, read at its 2026-04-21 version across 43 listed assets — not $1M**, and its terms do not make it a mitigant for the authority paths this axis scores.
 
 ## Who it's for
 
