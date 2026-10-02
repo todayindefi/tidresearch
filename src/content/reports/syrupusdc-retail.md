@@ -64,8 +64,13 @@ market_cap_approx: 1066000000
 #     That is the opposite state from "untested", not an improvement on it.
 #     ⚠️ CAPPED AT 7.0, NOT RESTORED TO 7.5, because the queue leg is untouched:
 #     "under 5 minutes" is still the ISSUER'S claim, never measured; cushion
-#     median is 1.19% across 352 paired reads; and the $150K-$1M rungs are n=1,
-#     one afternoon.
+#     median is 1.19% across 352 paired reads.
+#     ⚠️ UPDATED 2026-10-02 (later): the $150K-$1M rungs are no longer n=1 --
+#     23 reads across 2 days, medians -3.80/-4.70/-6.20/-8.60 bps, worst -9.20
+#     at $1M. EVERY RUNG IS INSIDE THE 50bps TIER, so the restore is gated by
+#     SAMPLE DURATION, not depth: 23 of 30 reads but only 2 of 14 days, and the
+#     rungs began recording 2026-10-01, so the earliest clear is 2026-10-15.
+#     The queue leg is still unowned and is NOT satisfied by the depth leg.
 #     ⚠️ DATA TRAPS, all four cost a wrong answer this week:
 #     (a) THREE key paths for the same ladder -- live asset_specific.liquidity
 #         .quotes, per-asset history exit_mark.rungs, combined history
@@ -82,11 +87,14 @@ market_cap_approx: 1066000000
 #     ⚠️ fair_value is basis "market", NOT NAV -- do not divide through it on a
 #     NAV-accruing share. Restore/cut conditions are on the page, two legs,
 #     and they fire BOTH ways.
-# ⚠️ OVERALL 6.5 SITS ABOVE ITS OWN AXIS MEAN (6.17, +0.33), contrary to the
-# corpus at-or-below convention. It was adjusted alongside the Liquidity cut,
-# NOT re-derived from the axes, so the gap narrowed rather than closed. Do not
-# "fix" it by averaging: inventing a number here publishes something nobody
-# computed.
+# ⚠️ OVERALL 6.5 SITS ABOVE ITS OWN AXIS MEAN. It was adjusted alongside the
+# Liquidity cut, NOT re-derived from the axes, so the gap narrowed rather than
+# closed. Do not "fix" it by averaging: inventing a number here publishes
+# something nobody computed.
+# ⚠️ THE FIGURES IN THIS NOTE GO STALE ON EVERY AXIS MOVE AND DID. It read
+# "6.17, +0.33", computed when liquidity_score was 6.5. With liquidity at 7.0
+# the mean is 6.25 and the gap is +0.25. Recompute from the axis block above
+# rather than trusting a number written beside it.
 axis_frame: six
 volatility_score: 8.5
 backing_score: 6.5
