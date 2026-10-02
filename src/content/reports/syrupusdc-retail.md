@@ -105,6 +105,7 @@ structural_score: 4.5
 redemption_score: 7.5
 underlying_score: 5.5
 liquidity_score: 7.0
+# PARKED: issuer_score 5.5 has never been independently derived — the audit/bounty facts removed from this row were never permitted to bear on it under the anti-halo rule, so withdrawing them exposed that the number itself is unsourced [owner: riskAnalyst] [since: 2026-10-03]
 issuer_score: 5.5
 overall_score: 6.5
 ---

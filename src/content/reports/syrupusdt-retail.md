@@ -68,6 +68,7 @@ redemption_score: 6.5
 # PARKED: six borrower addresses rendered as Borrower A-F — the truncated forms were unfalsifiable and no full forms are held [owner: riskAnalyst] [since: 2026-10-03]
 underlying_score: 5.0
 liquidity_score: 6.0
+# PARKED: issuer_score 5.5 has never been independently derived — the audit/bounty facts removed from this row were never permitted to bear on it under the anti-halo rule, so withdrawing them exposed that the number itself is unsourced [owner: riskAnalyst] [since: 2026-10-03]
 issuer_score: 5.5
 overall_score: 6.0
 ---
