@@ -17,6 +17,8 @@ volatility_score: 6.5
 backing_score: 6.5
 underlying_score: 6.0
 issuer_score: 7.0
+# PARKED: DOLA/sUSDe is 82.8% of published exit depth and $64.9M is a TWO-SIDED pool figure — which leg carries it is unmeasured, and needs a coins()/balances() read [owner: riskAnalyst] [since: 2026-10-02]
+# PARKED: our DOLA assessment (last_verified 2026-07-01, staging-only) is the source for "roughly half of DOLA backing is sUSDe" — Tier 4 in the refresh queue [owner: riskAnalyst] [since: 2026-10-02]
 axis_frame: six
 liquidity_score: 7.0
 structural_score: 5.5

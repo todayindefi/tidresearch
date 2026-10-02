@@ -13,6 +13,10 @@ featured: false
 production: true
 issuer: "ether.fi"
 yield_bearing: true
+# PARKED: ten of fifteen LayerZero deployments unmeasured — setPeer owners and delegates [owner: riskAnalyst] [since: 2026-08-27]
+# PARKED: the mainnet implementation upgrade is undated; free-tier RPCs reject the archive reads that would date it [owner: riskAnalyst] [since: 2026-08-13]
+# PARKED: Q3 2026 EigenLayer residual milestone passed unverified — needs a validator/EigenPod inventory reconciled against withdrawal credentials, which no contract read can answer [owner: riskAnalyst] [since: 2026-10-02]
+# PARKED: Arbitrum has no ether.fi contract assurance and no bridge audit was located for the current beacon implementation [owner: riskAnalyst] [since: 2026-10-03]
 axis_frame: six
 # redemption_score is RETAINED as a legacy supplemental field: it renders nowhere
 # under the frame (SIX_AXES has no Redemption row) but is read by riskAnalyst's
