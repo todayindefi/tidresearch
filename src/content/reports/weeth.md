@@ -110,7 +110,7 @@ Measured 2026-10-02. The figures are **ETH-denominated** and **marginal** — th
 
 ⚠️ **Ethereum's number is a floor, not a limit.** 5,000 ETH is the largest size the measurement reached and cleared; the depth above it was not located. Read it as *at least this much*, never as *this is where it runs out*. The three L2 rows are the opposite kind of figure — a bracket the crossing sits inside, and so a real ceiling on what that chain absorbs.
 
-⚠️ **Standing cost is a separate measurement from the depth beside it**, not the price of clearing the bracket. Base is where the gap shows: **500 ETH costs about 11bp, and 1,000 ETH costs about 1,598bp.** That is a cliff rather than a slope — size that looks affordable right up to the point it is not.
+⚠️ **Standing cost is the cost at the smallest quoted size, before any size impact** — the price of the asset, not the price of your trade. It is measured separately from the depth beside it, and the two do not add. Base is where the gap shows: standing cost is 6.2bp, but **500 ETH costs about 11bp and 1,000 ETH costs about 1,598bp.** That is a cliff rather than a slope — size that looks affordable right up to the point it is not.
 
 So the shape is a deep mainnet book and L2 books running from thin to negligible. Mainnet liquidity scores **6.5**: deep on the measure above, but behind Lido's stETH and wstETH and limited on centralised venues. The L2s score on their own depth — **Base 5.0**, **Arbitrum 4.0** at roughly a tenth of Base's depth and 2.7 times its standing cost, and **Optimism 2.0**, where the whole book crosses between one and five ETH.
 
