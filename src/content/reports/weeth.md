@@ -4,13 +4,6 @@ slug: "weeth"
 aliases: ["weETH", "Wrapped eETH", "ether.fi weETH", "etherfi weETH"]
 chains: ["eth", "base", "arbitrum", "optimism"]
 category: "wrapped-token"
-# ⚠️ UNMIGRATED, and this IS outstanding work — not a deliberate exemption.
-# Three wrapped-token reports already run `axis_frame: six` (strcx, wylds in
-# production; tsm-rh staged), each KEEPING redemption_score as a legacy field and
-# rendering a backing_score. wylds is the worked recipe: Redemption is retained
-# and folded into Liquidity & Exit as an H3, not deleted. So migrating here does
-# NOT cost the 7.0 Redemption axis, and backing_score 8.0 has no structural
-# blocker. Needs riskAnalyst for the Dependencies re-base and a new Overall.
 underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-08-13"
@@ -20,9 +13,15 @@ featured: false
 production: true
 issuer: "ether.fi"
 yield_bearing: true
+axis_frame: six
+# redemption_score is RETAINED as a legacy supplemental field: it renders nowhere
+# under the frame (SIX_AXES has no Redemption row) but is read by riskAnalyst's
+# publish_feed / portfolio_risk. Its content is folded into Liquidity & Exit as
+# an H3, per the wylds pattern. Do not delete it.
 volatility_score: 7.5
 liquidity_score: 6.5
-underlying_score: 6.0
+backing_score: 8.0
+underlying_score: 5.5
 issuer_score: 7.5
 structural_score: 6.5
 redemption_score: 7.0
@@ -64,27 +63,31 @@ Until 2026-08-06 weETH answered a harder set of questions than that, because eth
 
 What is left is ordinary LST risk plus a thin wrapping layer, and one genuine standout: ether.fi's mainnet admin setup is unusually strong. Every privileged action **on the mainnet contracts** — including contract upgrades — runs through a **6-of-10 Gnosis Safe into a 10-day timelock**, re-verified on-chain for this report. ⚠️ **That is the mainnet set, and it is not the whole asset.** The L2 upgrade paths have now been measured and they are weaker and, on Arbitrum, not ether.fi's at all — see **L2 weETH is a different asset** below. So "every privileged action" describes **the set that was measured on Ethereum**, and an L2 holder is not covered by it. Against that sit three things: the EigenLayer unwind is **not finished**, the restaking removal is **press-reported rather than proven on-chain by us**, and weETH on L2s is a bridged token carrying bridge trust that mainnet weETH does not.
 
-## The number that misleads people: use ETH, not dollars
+## 1 · Stability — 7.5
 
-This is the trap most weETH commentary falls into right now. Between 2026-05-26 and 2026-08-13:
+weETH has no peg to defend. It is **value-accruing against ETH** through an exchange rate readable on-chain as `getRate()`, so it is *supposed* to trade at a rising multiple of ETH rather than at parity with anything. In calm markets it tracks ETH plus accrued yield and stays tight.
 
-- ETH-equivalent supply **grew 9.3%**, from about 1.61M to **1,933,335 ETH-equivalent** (1,755,436 weETH at a rate of 1.101341).
-- ✅ **Re-measured 2026-08-23, and it kept going: ETH-equivalent has crossed 2,000,000 — now 2,009,656** (1,823,525 weETH at a rate of 1.102072), a further **+3.95%** in ten days. The wrapped share of eETH rose again, 95.8% → **96.15%**.
-- The dollar figure **fell**, from the $5–6B recorded in May to roughly **$3.6B** at an ETH price near $1,882 — **both as at 2026-08-13; the USD line has not been re-measured since**, and per this section's own argument it is the figure least worth chasing.
+⚠️ **The AVS-slashing tail is retired.** While weETH was a restaking token, a slashing event at a third-party service could socialise back into the token's value. That path no longer exists in plain weETH.
 
-Both are true. The dollar decline is the ETH price, not people leaving. If you read weETH's risk off a USD chart you will conclude there was a large outflow through a period of structural change, and you will be wrong — more ETH is in this token than there was in May, and the share of eETH that is wrapped rose from roughly 93% to 95.8%, and again to 96.15% by 2026-08-23. **Denominate this position in ETH.** A USD-framed narrative on an ETH-denominated asset invents an event that did not happen.
+What remains is a secondary-market mechanism, and it has fired once. In April 2024, after the EIGEN airdrop, weETH traded roughly 2–3% below ETH-parity for a stretch as points farmers unwound. Nothing was broken — the underlying stake was intact and holders who waited redeemed at full value. It was more people wanting out quickly than the pools could absorb at par, while the primary exit ran at the speed of the validator queue. ⚠️ **Removing restaking removes one *cause* of that repricing; it does not remove the *mechanism*.** Any large redemption wave can reopen a discount, and the weETH-to-weETHs split is itself a plausible trigger for unwind flow.
 
-## What you actually earn
+That episode, and the mechanism behind it, are why this sits below stETH and wstETH on discount history.
 
-weETH accrues value through its exchange rate, readable on-chain as `getRate()`. It does not rebase, and it does not pay anything out.
+## 2 · Backing — 8.0
 
-- **Rate on 2026-08-23: 1.102072 eETH per weETH** (1.101341 on 08-13). Accrual now measures **consistent across two independent, non-overlapping windows**: the 79 days from 2026-05-26 to 08-13 annualise to about **2.5%**, and the 10 days from 08-13 to 08-23 annualise to **2.45%** — agreement within 5 basis points, net of ether.fi's fee. **Two windows is better evidence than one, and it is still two windows:** this is a rate that can change with validator performance, fee policy or network conditions, so treat it as an observed range rather than a yield the token promises.
-- That is consensus yield only now. Restaking rewards moved to weETHs, so post-2026-08-06 the return is Ethereum staking and nothing else. Anyone quoting a weETH yield that includes restaking or points incentives is describing the old product.
-- Staking yield is not fixed. It moves with validator counts and network activity, so treat the figure above as an observed window, not a quote.
+Each weETH is a claim on **ETH staked on the beacon chain by ether.fi**. There is no reserve to attest to and no off-chain custodian in the backing path: the collateral is validator stake, and the claim on it is expressed as a rate rather than a balance.
 
-**Do not follow this asset into weETHs looking for the missing yield.** We have not assessed weETHs, and it is not simply "weETH plus slashing risk." Its collateral reportedly routes through Cap Protocol into M11 Credit and a Pareto vault supplying FalconX's prime brokerage — that is a **credit chain**, a different risk class entirely from validator slashing, and it needs its own analysis before anyone sizes it. Adoption so far has been thin: roughly 9,000 weETHs, on the order of half a percent of ether.fi's staking base, in the first days after the split. This report covers plain weETH.
+- **`getRate()` was 1.102072 eETH per weETH on 2026-08-23** (1.101341 on 08-13), and the rate is **monotonic** — it accrues and does not step down.
+- **eETH `totalSupply()` was 2,018,015** at the 2026-08-13 read, against 1,823,525 weETH wrapped at that rate — **2,009,656 ETH-equivalent**.
+- ✅ **The wrapped share was re-derived at 96.499% on 2026-10-02**, on unit-matched operands — weETH-denominated against weETH-denominated, rather than mixing wrapped units with ETH-equivalent ones. It has risen steadily: roughly 93% in May, 95.8% at 2026-08-13, 96.15% at 08-23.
 
-## How exit works
+⚠️ **What this axis does not cover.** Whether any of that stake is still restaked with EigenLayer is **not establishable from contract state** — see *What we could not verify*. That is recorded on Dependencies as an unmeasured residual, not discounted here, so the same fact is not charged twice.
+
+## 3 · Liquidity & Exit — 6.5
+
+This axis covers **both** exit paths — the secondary order book and primary redemption — and is scored on whichever binds. ⚠️ **On all four chains the binding leg is the market, not the gate:** primary redemption is permissionless and ungated, while each L2's order book is worse than simply bridging to mainnet and redeeming there.
+
+### How exit works
 
 Three steps, and one of them is out of anyone's hands:
 
@@ -94,17 +97,11 @@ Three steps, and one of them is out of anyone's hands:
 
 The improvement this period is real but narrow: the restaking-withdrawal delay — where restaked ETH could not be freed until its restaking commitments unwound — **no longer applies** to weETH. The beacon-chain queue is untouched by that and remains the binding constraint.
 
-The faster exit is the secondary market: Curve, Balancer and Uniswap pools. In calm conditions that trades close to the underlying value. In a redemption wave it does not, which is the next section.
+The faster exit is the secondary market: Curve, Balancer and Uniswap pools. In calm conditions that trades close to the underlying value. In a redemption wave it does not.
 
 ⚠️ **Pendle is not part of that.** All eight weETH Pendle markets had matured before 2026-10-02. Redeeming a matured PT is a different mechanism from selling into a pool — it belongs with the redemption steps above, not in the depth you can hit on the way out.
 
-## The discount that can still happen
-
-In April 2024, after the EIGEN airdrop, weETH traded roughly 2–3% below ETH-parity for a stretch as points farmers unwound. Nothing was broken — the underlying stake was intact and holders who waited redeemed at full value. It was a secondary-market event: more people wanting out quickly than the pools could absorb at par, while the primary exit ran at the speed of the validator queue.
-
-Removing restaking removes one *cause* of that kind of repricing. It does not remove the *mechanism*. Any large redemption wave can reopen a discount, and the weETH-to-weETHs split is itself a plausible trigger for unwind flow. If you need to exit inside a day during stress, expect to pay for it.
-
-## How deep the exit is, chain by chain
+### How deep the exit is, chain by chain
 
 Measured 2026-10-02. The figures are **ETH-denominated** and **marginal** — the cost of the next ETH sold, with the first rung subtracted — because this is an ETH-denominated asset and an average struck across a whole trade hides the point where it breaks.
 
@@ -121,9 +118,31 @@ Measured 2026-10-02. The figures are **ETH-denominated** and **marginal** — th
 
 So the shape is a deep mainnet book and L2 books running from thin to negligible. Mainnet liquidity scores **6.5**: deep on the measure above, but behind Lido's stETH and wstETH and limited on centralised venues. The L2s score on their own depth — **Base 5.0**, **Arbitrum 4.0** at roughly a tenth of Base's depth and 2.7 times its standing cost, and **Optimism 2.0**, where the whole book crosses between one and five ETH.
 
-## Who can change the contracts
+### What the depth above costs you under stress
 
-This is weETH's strongest feature, and it was re-verified directly on-chain for this report rather than taken from ether.fi's documentation. At block 25,743,010 (2026-08-13):
+Those figures are calm-market figures. A redemption wave is the condition under which a discount opens — the mechanism is described under **Stability** above, where it is priced — and the practical consequence for exiting is simple: **if you need out inside a day during stress, expect to pay for it.** The primary path runs at the speed of the validator queue regardless of what the book is doing, so the two exits do not rescue each other on the same timescale.
+
+### Redemption — 7.0 (retained, folded into Liquidity & Exit)
+
+Permissionless and ungated: unwrap to eETH, request withdrawal, wait for a validator exit. No KYC and no gating at any step. The restaking-withdrawal delay no longer applies. Still slower and less battle-tested than stETH’s queue, and on an L2 you must bridge to mainnet before you can redeem at all.
+
+## 4 · Dependencies — 5.5
+
+This axis prices **the counterparty set** — who weETH relies on to exist and stay redeemable — not the quality of what sits underneath.
+
+⚠️ **ether.fi is the sole counterparty and there is no substitution path.** It operates the staking protocol, the withdrawal queue and the eETH→weETH wrapper. A holder cannot change issuer while continuing to hold the claim: exiting ether.fi and exiting the position are the same action.
+
+⚠️ **The diversification that exists is the wrong kind.** Many node operators sit under ether.fi, and the whole beacon chain sits under them. So the **asset** is diversified while the **counterparty** is not — and a good counterparty at 100% is still 100%. Quality is an argument for that counterparty's own standing, never for the dependent's.
+
+⚠️ **The EigenLayer residual is recorded as UNMEASURED, not as small.** Under 1% of ether.fi's assets were reported restaked, with the residual reaching zero in Q3 2026 — but Q3 has passed, the milestone is unverified, and today's walk established that the fraction is not readable from contract state at all. **Missing, unmeasured and zero are three different states**, and this axis holds the second.
+
+✅ **The upstream leg is clean:** the chain weETH's value ultimately passes through is Ethereum itself.
+
+⚠️ **weETH is not a pure wrapper**, so the convention that a wrapper scores equal to its underlying does not reach it: staking transforms the claim and inserts an operator between the holder and the ETH.
+
+## 5 · Contract & Admin — 6.5
+
+The mainnet arrangement is strong, and it was read directly on-chain rather than taken from ether.fi's documentation. At block 25,743,010 (2026-08-13):
 
 | Contract | Address | Verified |
 |---|---|---|
@@ -154,7 +173,7 @@ weETH is upgradeable rather than immutable, which is the trade-off that buys you
 
 The code has been audited by Certora (formal verification) and Nethermind, there is an active Immunefi bounty, and about three years at multi-billion scale have passed without an exploit.
 
-## L2 weETH is a different asset
+### L2 weETH is a different asset
 
 ⚠️⚠️ **weETH is not one asset with a bridge attached — it is four separate upgrade arrangements, and one of them is not ether.fi's at all.** Measured on each chain 2026-09-12, with a fabricated address as control:
 
@@ -179,6 +198,34 @@ ether.fi published a post on 2026-05-29 describing bridge hardening in direct re
 
 **We have not verified any of it on-chain.** It is an issuer statement and carries no score credit — the L2 scores (6.0 overall, versus 7.0 on mainnet) still treat bridged weETH as carrying trust that mainnet weETH does not. Hold size on Ethereum; treat L2 balances as the convenience position.
 
+## 6 · Issuer — 7.5
+
+✅ **ether.fi removed restaking from weETH on 2026-08-06**, moving it to a separate opt-in token — an issuer deleting a yield source in order to shrink a risk surface its holders were carrying, which is rare enough to credit.
+
+Behind that: about three years at multi-billion scale with no exploit, Certora formal verification and a Nethermind audit, an active Immunefi bounty, and an unusually strong mainnet admin posture.
+
+⚠️ **Capped at 7.5** because the removal is **press-reported rather than proven on-chain by us**, and because the L2 deployments are administered to a weaker standard than the mainnet contracts.
+
+## The number that misleads people: use ETH, not dollars
+
+This is the trap most weETH commentary falls into right now. Between 2026-05-26 and 2026-08-13:
+
+- ETH-equivalent supply **grew 9.3%**, from about 1.61M to **1,933,335 ETH-equivalent** (1,755,436 weETH at a rate of 1.101341).
+- ✅ **Re-measured 2026-08-23, and it kept going: ETH-equivalent has crossed 2,000,000 — now 2,009,656** (1,823,525 weETH at a rate of 1.102072), a further **+3.95%** in ten days. The wrapped share of eETH rose again, 95.8% → **96.15%**.
+- The dollar figure **fell**, from the $5–6B recorded in May to roughly **$3.6B** at an ETH price near $1,882 — **both as at 2026-08-13; the USD line has not been re-measured since**, and per this section's own argument it is the figure least worth chasing.
+
+Both are true. The dollar decline is the ETH price, not people leaving. If you read weETH's risk off a USD chart you will conclude there was a large outflow through a period of structural change, and you will be wrong — more ETH is in this token than there was in May, and the share of eETH that is wrapped rose from roughly 93% to 95.8%, and again to 96.15% by 2026-08-23. **Denominate this position in ETH.** A USD-framed narrative on an ETH-denominated asset invents an event that did not happen.
+
+## What you actually earn
+
+weETH accrues value through its exchange rate, readable on-chain as `getRate()`. It does not rebase, and it does not pay anything out.
+
+- **Rate on 2026-08-23: 1.102072 eETH per weETH** (1.101341 on 08-13). Accrual now measures **consistent across two independent, non-overlapping windows**: the 79 days from 2026-05-26 to 08-13 annualise to about **2.5%**, and the 10 days from 08-13 to 08-23 annualise to **2.45%** — agreement within 5 basis points, net of ether.fi's fee. **Two windows is better evidence than one, and it is still two windows:** this is a rate that can change with validator performance, fee policy or network conditions, so treat it as an observed range rather than a yield the token promises.
+- That is consensus yield only now. Restaking rewards moved to weETHs, so post-2026-08-06 the return is Ethereum staking and nothing else. Anyone quoting a weETH yield that includes restaking or points incentives is describing the old product.
+- Staking yield is not fixed. It moves with validator counts and network activity, so treat the figure above as an observed window, not a quote.
+
+**Do not follow this asset into weETHs looking for the missing yield.** We have not assessed weETHs, and it is not simply "weETH plus slashing risk." Its collateral reportedly routes through Cap Protocol into M11 Credit and a Pareto vault supplying FalconX's prime brokerage — that is a **credit chain**, a different risk class entirely from validator slashing, and it needs its own analysis before anyone sizes it. Adoption so far has been thin: roughly 9,000 weETHs, on the order of half a percent of ether.fi's staking base, in the first days after the split. This report covers plain weETH.
+
 ## What we could not verify
 
 Being specific about this matters more than usual here, because the reclassification that drives the whole report rests on secondary sourcing.
@@ -195,11 +242,11 @@ If a validator-level inventory shows EigenLayer exposure at "under 1% and fallin
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Volatility | 7.5 | Value-accruing against ETH via `getRate()`; tracks ETH plus yield and stays tight in calm markets. ⚠️ **The AVS-slashing tail is retired** — no path remains for a slashing event to socialise into the token's value. Does not match stETH or wstETH on discount history: the documented April 2024 episode and the redemption-wave mechanism both outlive restaking. |
-| Liquidity | 6.5 | Mainnet depth measured 2026-10-02 at a **floor of ≥5,000 ETH (~$13.5M)**, −6.9bp standing, across 70 pools holding $50.29M — a floor, not a located limit. Behind the Lido pair, limited on centralised venues, and thin to negligible on L2s, where the crossing runs from 500–1,000 ETH on Base down to 1–5 ETH on Optimism. (Base 5.0, Arbitrum 4.0, Optimism 2.0.) |
-| Structural | 6.5 | 6-of-10 Safe into a 10-day timelock on upgrades — threshold and owner set read directly, not inferred — plus Certora formal verification and about three years clean at multi-billion scale. ⚠️ **Signer independence is now measured rather than assumed, and it is partly adverse.** The upgrade Safe and the 4-of-7 bridge proposer **share two owners**, and the 4-of-6 canceller shares one with the upgrade Safe, so the layers this report describes separately overlap in practice — and the bridge layer is a lockbox holding **111,251.67 weETH**. ⚠️ **Address-set overlap only:** organisational independence, custody and key co-location are unmeasured, so this is a floor on dependence rather than proven concentration. **The cap is discounted, not withdrawn** — a 4-of-6 veto still needs three owners from outside the upgrade set, and both delays are real and self-administered. ⚠️ **The delegate path is clean on all five walked legs — delegate equals owner, so no undelayed configuration route exists there.** Ten of fifteen deployments remain unmeasured and are named as such. (L2s 6.0.) |
-| Redemption | 7.0 | Permissionless and ungated: unwrap to eETH, request withdrawal, wait for a validator exit; or sell into the mainnet DEX book, measured at a floor of ≥5,000 ETH. ⚠️ **Pendle is not a sale venue here — all eight weETH Pendle markets had matured before 2026-10-02**, and redeeming a matured PT is a different mechanism from selling into a pool. The restaking-withdrawal delay no longer applies. Still slower and less battle-tested than stETH's queue. (L2s 6.0 — you must bridge to mainnet to redeem.) |
-| Underlying | 6.0 | ⚠️ **weETH is four upgrade arrangements, not one asset with a bridge attached.** Ethereum is the 6-of-10 Safe into a 10-day timelock. **Base and Optimism are one configuration deployed twice** — different ProxyAdmins answering to the same timelock `0x851Dd540f4D2Ec78120De0a0cc87B21EdE5Df5C6`, both at three days. ⚠️ **On Arbitrum the token is a BeaconProxy behind a beacon shared with WBTC**, so an Arbitrum holder's upgrade counterparty is the bridge operator rather than ether.fi. ✅ **Against that, the exposure itself is ordinary:** ETH consensus staking, with the residual EigenLayer dependency sitting at the validator layer while EigenPod withdrawal credentials remain until Q4 2026. |
+| Stability | 7.5 | Value-accruing against ETH via `getRate()`; tracks ETH plus yield and stays tight in calm markets. ⚠️ **The AVS-slashing tail is retired** — no path remains for a slashing event to socialise into the token's value. Does not match stETH or wstETH on discount history: the documented April 2024 episode and the redemption-wave mechanism both outlive restaking. |
+| Backing | 8.0 | Claim on ETH staked on the beacon chain — validator stake, not a reserve, so there is nothing to attest. `getRate()` is **monotonic** and read 1.102072 on 2026-08-23. ✅ **Wrapped share re-derived at 96.499% on 2026-10-02 on unit-matched operands.** Whether any stake remains restaked is not establishable from contract state and is carried on Dependencies as unmeasured, so it is not charged twice. |
+| Liquidity & Exit | 6.5 | Mainnet depth measured 2026-10-02 at a **floor of ≥5,000 ETH (~$13.5M)**, −6.9bp standing, across 70 pools holding $50.29M — a floor, not a located limit. Behind the Lido pair, limited on centralised venues, and thin to negligible on L2s, where the crossing runs from 500–1,000 ETH on Base down to 1–5 ETH on Optimism. (Base 5.0, Arbitrum 4.0, Optimism 2.0.) ⚠️ **Scored on the binding leg, and on all four chains that is the market rather than the gate** — primary redemption is permissionless and ungated, and each L2's book is worse than bridging to mainnet to redeem. |
+| Dependencies | 5.5 | ⚠️ **ether.fi is the sole counterparty and there is no substitution path** — it runs the staking protocol, the withdrawal queue and the wrapper, and a holder cannot change issuer while holding the claim. The diversification beneath it is the wrong kind: many node operators and the whole beacon chain sit under ether.fi, so the **asset** is diversified while the **counterparty** is not, and a good counterparty at 100% is still 100%. ⚠️ **The EigenLayer residual is recorded UNMEASURED rather than small** — Q3 2026 passed unverified and the fraction is not readable from contract state. ✅ The upstream chain is Ethereum itself. |
+| Contract & Admin | 6.5 | 6-of-10 Safe into a 10-day timelock on upgrades — threshold and owner set read directly, not inferred — plus Certora formal verification and about three years clean at multi-billion scale. ⚠️ **Signer independence is now measured rather than assumed, and it is partly adverse.** The upgrade Safe and the 4-of-7 bridge proposer **share two owners**, and the 4-of-6 canceller shares one with the upgrade Safe, so the layers this report describes separately overlap in practice — and the bridge layer is a lockbox holding **111,251.67 weETH**. ⚠️ **Address-set overlap only:** organisational independence, custody and key co-location are unmeasured, so this is a floor on dependence rather than proven concentration. **The cap is discounted, not withdrawn** — a 4-of-6 veto still needs three owners from outside the upgrade set, and both delays are real and self-administered. ⚠️ **The delegate path is clean on all five walked legs — delegate equals owner, so no undelayed configuration route exists there.** Ten of fifteen deployments remain unmeasured and are named as such. (L2s 6.0.) |
 | Issuer | 7.5 | ✅ **ether.fi removed restaking from weETH on 2026-08-06**, moving it to a separate opt-in token — an issuer deleting a yield source to shrink a risk surface its holders were carrying, which is rare enough to credit. About three years at multi-billion scale with no incident, Certora formal verification, and an unusually strong mainnet admin posture. ⚠️ **Capped at 7.5 because the removal is press-reported rather than proven on-chain by us**, and because the L2 deployments are administered to a weaker standard than the mainnet contracts. |
 | **Overall** | **7.0** | Moderate risk, materially improved — and improved for a structural reason rather than a market one. Two things hold it here: the EigenLayer exit is press-reported rather than verified, and the bridge configuration is unaudited by us. |
 
@@ -230,6 +277,7 @@ Holders who want ETH staking exposure in the form DeFi is built around, who valu
 ## Revision history
 
 - **2026-10-02 — exit ladder measured; Arbitrum Liquidity 5.5 → 4.0, Optimism 5.0 → 2.0.** Ethereum depth is a **floor of ≥5,000 ETH (~$13.5M)** at −6.9bp standing, 70 pools holding $50.29M. Base crosses between **500 and 1,000 ETH** — −6.2bp standing, but about 11bp at 500 ETH against about 1,598bp at 1,000, a cliff rather than a slope — 93 pools, $6.61M. Arbitrum crosses between **50 and 100 ETH** at −16.6bp, 66 pools, $0.58M: roughly a tenth of Base's depth at 2.7 times the standing cost. Optimism crosses between **1 and 5 ETH** at −10.7bp, 43 pools, $20.9K. Mainnet Liquidity held at 6.5. ⚠️ **All eight weETH Pendle markets had matured before this date**, so Pendle is no longer a live venue on either the depth or the exit-method leg. Ethereum depth was published as roughly 1.93M ETH-equivalent until 2026-10-02; that figure is the token's own supply, and the measured floor is ≥5,000 ETH.
+- **2026-10-02 — migrated to the six-axis frame; Backing published at 8.0, Dependencies re-based 6.0 → 5.5.** ⚠️ **The asset did not get worse.** Under the previous rubric the Underlying row argued five things, and **three of them were upgrade-authority facts** — Arbitrum's beacon, the shared Base/Optimism timelock, the strength of the Ethereum leg. Contract & Admin already prices those, so the same three facts were being charged on two axes at once. Dependencies is now argued on counterparty-set content alone: ether.fi is the sole counterparty with **no substitution path**, the diversification beneath it is the wrong kind, and the EigenLayer residual is carried as **unmeasured** rather than small. **Backing appears for the first time at 8.0** — a claim on beacon-chain validator stake, `getRate()` monotonic, wrapped share re-derived at **96.499%** on unit-matched operands. **Redemption 7.0 is retained but no longer rendered as its own axis**, since the frame folds exit into Liquidity & Exit; its content remains there as that axis's evidence. Liquidity & Exit holds at 6.5, scored on the binding leg — **the market, not the gate, on all four chains**. Overall held at 7.0.
 - **2026-10-02 — signer independence measured; Structural 7.0 → 6.5.** Thresholds and owner sets were read directly with `getThreshold()` and `getOwners()` rather than inferred from owner counts, at block 26,103,414. ⚠️ **The upgrade layer and the bridge layer share owners.** The 6-of-10 upgrade Safe and the 4-of-7 OFT proposer have **two owners in common** — `0xde3bf1fa3b3829342bc4356592bb7cf3baad8264` and `0x5c8c76f2e990f194462dc5f8a8c76ba16966ed42` — and the bridge layer is a lockbox holding **111,251.67 weETH**. The 4-of-6 canceller `0x055a8b2b65d0ab4e0c17a0168d032464b7e97bdf` shares **one** owner with the upgrade Safe, `0xa195d4a57c4802651f67fb56349e10a7addadd82`, while remaining address-disjoint from the OFT proposer `0x2aca71020de61bb532008049e1bd41e451ae8adc` and the Base/Optimism proposer `0x7a00657a45420044bc526b90ad667affaee0a868`. Every threshold and owner set above was re-read and the sets intersected independently. ⚠️ **Address-set overlap only** — organisational independence, shared custody and key co-location are unmeasured, so this is a floor on dependence rather than proven concentration. Half a point rather than more because a 4-of-6 veto still needs three owners outside the upgrade set and both delays remain real and self-administered. Overall held at 7.0. The OFT gate test reproduces: `setPeer` returns `0x` from the two-day timelock and reverts `OwnableUnauthorizedAccount` from the upgrade Safe and from a burn address used as a negative control.
 - **2026-08-27 — bridge layer measured; Structural held at 7.0.** The **10-day timelock governs upgrades**. The Ethereum OFT adapter — a lockbox holding real weETH — is owned by a **different `TimelockController` at two days**, with a **4-of-7 Safe** as proposer. Gate-tested: `setPeer` succeeds from the two-day timelock and reverts from the 6-of-10 Safe. ⚠️ **The delay is real and self-administered so it cannot be shortened, and a separate 4-of-6 Safe holds the canceller role.** (Owner sets were inferred at this pass; they were read directly on 2026-10-02 — see above.) **The LayerZero delegate equals the owner on all five walked legs**, so no undelayed configuration path exists there. **L2 legs run a three-day timelock that also governs upgrades**, so bridge and upgrade share one authority on Base, Optimism, BSC and Scroll while remaining separate on Ethereum. Ten of fifteen deployments remain unwalked.
 - **2026-08-13 — initial publication.** Reflects the 2026-08-06 removal of restaking from weETH.
