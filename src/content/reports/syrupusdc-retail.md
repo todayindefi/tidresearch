@@ -56,26 +56,32 @@ market_cap_approx: 1066000000
 #     thresholds and the same delay flags on both. Do not split axis 5 per pool.
 # ⚠️ `redemption_score: 7.5` is RETAINED but no longer rendered: it is the
 # evidence for axis 3, scored on the WORSE leg. Both legs are named in prose.
-# ⚠️ liquidity_score 7.5 -> 6.5 on 2026-09-25: the axis rested on three claims
-#     and the cut rests on the INSTITUTIONAL-NOTIONAL GAP. ⚠️ An exit ladder
-#     DOES exist -- PegTracker liquidity.exit_mark, kyberswap/ethereum, four
-#     rungs -- so any claim that the slippage figure has no source or date is
-#     FALSE. What is absent is size: largest rung $100,000, total_2pct_depth
-#     null, two_pct_depth_bracket_basis "none". ⚠️ QUOTE fill_ratio, NOT
-#     slippage_bps: per slippage_bps_basis it is price impact struck AGAINST
-#     the venue's own smallest rung and excluding that rung's spread, so the
-#     SMALLEST rung reads 0.0 BY CONSTRUCTION and the rest read about
-#     0.0/-0.3/-1.4/-2.9. It is not the holder's cost.
-#     ⚠️⚠️ THE SOURCE FILE IS A ROLLING SNAPSHOT, overwritten every few hours.
-#     Three reads (09-24 07:35, 09-25 13:33, 09-25 16:31) gave all-in ranges
-#     of 1.8-11.1 bps across $1K-$100K, monotonic in TWO of three; the 13:33
-#     read was non-monotonic and is not reproducible from the file now.
-#     PUBLISH THE RANGE, never a single rung: a published rung cannot be
-#     checked by a reader after the next overwrite. The "queue clears in under five minutes"
-#     figure is still the ISSUER'S own claim, never independently tested.
-#     ⚠️ fair_value 1.1838605621460765 is basis "market", NOT NAV -- do not
-#     divide through it on a NAV-accruing share. 7.5 returns only on a
-#     measurement AT INSTITUTIONAL SIZE; the retail ladder is not one.
+# ⚠️ liquidity_score 6.5 -> 7.0 on 2026-10-02. The 2026-09-25 cut to 6.5 rested
+#     on an INSTITUTIONAL-NOTIONAL GAP that no longer exists: on 2026-10-01 the
+#     ladder extended to EIGHT rungs to $1,000,000, and total_2pct_depth AND
+#     depth_50bps BOTH read 1000000.0 with is_floor true, status
+#     ladder_exhausted -- $1M clears inside 50bps with no crossing found below.
+#     That is the opposite state from "untested", not an improvement on it.
+#     ⚠️ CAPPED AT 7.0, NOT RESTORED TO 7.5, because the queue leg is untouched:
+#     "under 5 minutes" is still the ISSUER'S claim, never measured; cushion
+#     median is 1.19% across 352 paired reads; and the $150K-$1M rungs are n=1,
+#     one afternoon.
+#     ⚠️ DATA TRAPS, all four cost a wrong answer this week:
+#     (a) THREE key paths for the same ladder -- live asset_specific.liquidity
+#         .quotes, per-asset history exit_mark.rungs, combined history
+#         liquidity.quotes. A check written against one finds nothing in the others.
+#     (b) TWO stores. Per-asset <asset>_backing_history.json retains ladders only
+#         from 2026-10-01; the 124.9-day series is in peg_tracker_history.json
+#         under assets.<Asset>.history. Neither file says the other exists, and
+#         three consumers concluded "no history" from the younger one.
+#     (c) DERIVE all-in from output_usd, do NOT filter on fill_ratio -- that field
+#         is present in only 116 of 932 rows and the subset gives a different
+#         distribution (median -8.13, worst -13.51, premium 4.3%).
+#     (d) slippage_bps SIGN FLIPPED mid-series: old rows read +12.3 for a -12.33
+#         bps cost. Never build a series on it.
+#     ⚠️ fair_value is basis "market", NOT NAV -- do not divide through it on a
+#     NAV-accruing share. Restore/cut conditions are on the page, two legs,
+#     and they fire BOTH ways.
 # ⚠️ OVERALL 6.5 SITS ABOVE ITS OWN AXIS MEAN (6.17, +0.33), contrary to the
 # corpus at-or-below convention. It was adjusted alongside the Liquidity cut,
 # NOT re-derived from the axes, so the gap narrowed rather than closed. Do not
@@ -87,7 +93,7 @@ backing_score: 6.5
 structural_score: 4.5
 redemption_score: 7.5
 underlying_score: 5.5
-liquidity_score: 6.5
+liquidity_score: 7.0
 issuer_score: 5.5
 overall_score: 6.5
 ---
@@ -123,11 +129,11 @@ The "overcollateralized at all times" framing in Maple's marketing applies to th
 |---|---|---|
 | Stability | 8.5 | NAV-accruing share, organic yield from loan interest, no rebase, and zero principal losses to date across the Syrup product line. The share price only climbs in normal operation; the path to a drawdown is a credit loss on the loan book, which is scored under Underlying. |
 | Backing | 6.5 | The loan book is fully enumerated and reconciles to the pool's deployed principal exactly — **$992,257,778.84** at 2026-09-24, of which $972,257,768.84 is lending across 36 loans and 16 borrowers — with zero impaired, called or defaulted, and collateral priced on **100% of positions**. ⚠️ **The cap on this axis is collateral CONCENTRATION: BTC and WBTC together are 84.27% of the lending book.** Argued under [2 · Backing](#2--backing--65) |
-| Liquidity & Exit | 6.5 | **Scored on the worse of the two legs.** Primary redemption: permissionless mint and redeem at the vault layer, no KYC, processed at NAV from free pool USDC — the one leg that is structural and verified. ⚠️ **But free liquidity sits below the 2% level where our monitor flags exits as forced into the queue** — 1.08% at 2026-09-24, a median of **1.19%** across 352 hour-bucketed readings since 2026-09-11, and under 2% in **90% of hours** — so the direct route is queued at any size that matters. ⚠️ **And the venue-depth leg is measured only to $100,000 of notional:** the aggregator ladder is dated and sourced, but no 2%-depth figure is computed, so nothing tests this leg at institutional sizing. The "queue clears in under five minutes" figure is the issuer's own claim, never independently tested. **A measurement at institutional notional is commissioned.** |
+| Liquidity & Exit | 7.0 | **Scored on the worse of the two legs.** ✅ **Venue depth now measures to $1,000,000**, and both the 2% and 50bps depth thresholds floor at that size — the deepest rung still clears inside half a percent, with no crossing found below it. Over 932 quotes across 124.9 days the all-in cost at $100,000 runs a median of **−7.98 bps**, interquartile **−9.95 to −5.76**, worst observed **−16.30**, with 1.6% executing at a premium. ⚠️ **The queue leg is what caps this at 7.0 rather than higher:** free liquidity runs a median of **1.19%** across 352 readings and sits under 2% in **90% of hours**, so in stress the direct route is queued — and the "queue clears in under five minutes" figure remains the issuer's own claim, never measured. ⚠️ **The $150,000–$1,000,000 rungs are a single reading**, enough to retire "untested" and not enough to state a typical institutional cost. |
 | Dependencies | 5.5 | Maple Labs as operator, the Pool Delegate's discretion over origination, the shared Liquidity-layer custody addresses common to both pools, and Maple's GraphQL as the only source of per-loan collateral. ⚠️ **Cross-pool: three borrowers here also borrow from syrupUSDT, $304.3M between them and 26.25% of family lending** — an exposure neither pool's standalone view shows. |
 | Contract & Admin | 4.5 | ERC-4626 standard, 8+ audits including Spearbit and Trail of Bits, $1M+ Immunefi bounty. ⚠️ **The 3-day governance delay is a detection window, not a gate, and two faster paths sit beside it.** A hand-walk of the authority topology returns six Ethereum paths. **The `pause` layer is the pool delegate's own EOA — threshold 1, no delay — over the contract that processes every redemption**, and it does not need to be compromised to bite: **inaction is enough.** ⚠️ **The multisig path is the fast one, which is the opposite of the usual shape:** the `securityAdmin` Safe (3-of-6) upgrades the PoolManager **undelayed**, while the single-key route waits 7 days. And a role update is the one class the canceller may not cancel, so the 3-day delay tells you a change is coming rather than stopping it. ✅ **What holds this at 4.5 rather than lower: upgrades are capped to Maple-published implementations** — registering a new one is `onlyGovernor` — alongside 8+ audits and a $1M+ bug bounty. ⚠️ **The code half does not lift it. Audits do not offset an authority path**; they reduce the chance the code is wrong, not the chance someone with a key uses it. |
 | Issuer | 5.5 | Maple Labs Cayman, doxxed team, 8+ audits, $1M bounty. ~3-year clean record on the Syrup product line. This axis scores the **entity**, so it is deliberately identical to [syrupUSDT](/reports/syrupusdt/) — Maple curates both. Per-pool differences belong under Contract & Admin. |
-| **Overall** | **6.5** | ⚠️ **This sits +0.33 above its own axis mean of 6.17** — contrary to the at-or-below convention applied elsewhere in this coverage. **It has not been re-derived from the axes**, and inventing a figure here would publish something nobody computed. The axes above are current; this cell is the one to treat as pending |
+| **Overall** | **6.5** | ⚠️ **This sits +0.25 above its own axis mean of 6.25** — contrary to the at-or-below convention applied elsewhere in this coverage. **It has not been re-derived from the axes**, and inventing a figure here would publish something nobody computed. The axes above are current; this cell is the one to treat as pending |
 
 **A note on the axes.** This report scores on the six-axis core — **Stability · Backing · Liquidity & Exit · Dependencies · Contract & Admin · Issuer** — the same frame as every other vault-share report on this site.
 
@@ -157,17 +163,19 @@ That matters for how you read the rest of this report and the August rubric chan
 
 **One live indicator is worth naming.** A single loan of about $25M — under 3% of the book — sat in the 100–120% collateralization range at the August check. That is the "tightest loan approaching par" signal working as designed at small size against a 175% book. It is the indicator firing, not a credit event; what would matter is many loans compressing toward par at once.
 
-## 3 · Liquidity & Exit — 6.5
+## 3 · Liquidity & Exit — 7.0
 
 Two paths, both permissionless (no KYC required for either):
 
-**1. DEX aggregator (preferred for retail):** Use KyberSwap, 1inch, or any DEX aggregator. Empirical exit cost is **single-digit-to-low-double-digit bps** at retail-to-low-institutional notional, measured on KyberSwap selling into USDC. ⚠️ **Across three dated reads on 2026-09-24 and 2026-09-25 the all-in cost ran between 1.8 and 11.1 bps over the $1,000 to $100,000 range**, rising with size in two of the three. ⚠️ **These are rolling point reads — the source snapshot is overwritten every few hours and a given read cannot be reproduced afterwards — so the range is the durable figure and no single rung is.** ⚠️ **The largest rung measured is $100,000**, and no 2%-depth figure is computed, so none of this speaks to institutional sizing. Live tiered slippage on the dashboard. Sub-minute settlement. Aggregators route across Uniswap v3/v4, Balancer, and other listed pools — significantly more depth than the strict "Uniswap+Balancer pool TVL" headline implies.
+**1. DEX aggregator (preferred for retail):** Use KyberSwap, 1inch, or any DEX aggregator. Empirical exit cost is **single-digit-to-low-double-digit bps** at retail-to-low-institutional notional, measured on KyberSwap selling into USDC. ⚠️ **Across 932 quotes over 124.9 days the all-in cost at $100,000 runs a median of −7.98 bps**, interquartile **−9.95 to −5.76**, worst observed **−16.30**, with **1.6% of reads executing at a premium.** ⚠️ **That is the distribution of quotes that returned, not of attempts** — failed quotes are not recorded, so the failure rate over those months is not recoverable and the range is plausibly flattering. ⚠️ **Quote the all-in cost, not the venue's price-impact field**, which excludes the smallest rung's own spread and reads near zero at every size. Live tiered slippage on the dashboard. Sub-minute settlement. Aggregators route across Uniswap v3/v4, Balancer, and other listed pools — significantly more depth than the strict "Uniswap+Balancer pool TVL" headline implies.
 
 **2. Direct redemption:** Submit a redemption request to the vault contract; the WithdrawalManager processes it. Maple claims average withdrawal time under 5 minutes during normal markets. This is the path for sizes that exceed aggregator-route depth.
 
 ⚠️ **The cushion behind the queue is thin, and persistently so.** Measured 2026-09-24, uncommitted cash is **$10,834,816.82 against $1,003,092,595.66 of total assets — 1.08%**, which sits **below the 2% level where our monitor flags exits as forced into the queue.** The Liquidity bucket is not counted here: at $20,000,010.00 it is pool-owned strategy positions rather than cash that can settle a redemption. ⚠️ **That is the pattern rather than the day:** across **352 hour-bucketed readings since 2026-09-11** the median cushion is **1.19%**, the pool sits under 2% in **90% of hours**, and the range runs 0.38% to 11.72%. **A single hour cannot carry a claim about the cushion in either direction**, and no ordering against the sibling pool holds — the two swap places depending on which statistic is used.
 
-⚠️ **What is untested on the venue-depth leg is size, not existence.** The exit ladder above stops at **$100,000** and no 2%-depth figure is computed, so the leg that sets this score has never been measured at the notional a large holder would move.
+✅ **Venue depth is now measured at institutional size.** On 2026-10-01 the ladder extended to **eight rungs to $1,000,000**, and both the 2% and 50bps depth thresholds **floor at $1,000,000** — the deepest size quoted still clears inside half a percent, so the crossing is somewhere above where anyone has looked. All-in cost at $1,000,000 was **−7.68 bps**. ⚠️ **But that is one reading, taken in a single afternoon**, and the rungs above $100,000 have no history at all because the ladder did not include them before that date.
+
+⚠️ **What would move this score, stated so it can be checked rather than trusted — and it fires both ways.** The depth leg returns above 7.0 on **30 or more readings of the $150,000–$1,000,000 rungs over at least 14 days**, with a **median all-in cost at $250,000 inside −10 bps** and an interquartile width under 10 bps; at the observed rate of roughly seven readings a day the earliest that window can close is **mid-October 2026**, and none of it has elapsed yet. The queue leg needs the "under five minutes" claim **measured** — a timed redemption at size, or a fill-latency series — and **nobody currently owns that work.** ⚠️ **It cuts back** if the median at $250,000 is worse than −25 bps, if the range exceeds 50 bps, or if a redemption is observed queueing beyond 24 hours.
 
 The honest qualifier: aggregator routing is excellent in normal market conditions but less reliable during stress. If many holders try to exit at once (a credit event, a crypto-cycle drawdown that hits institutional borrowers simultaneously), aggregator slippage widens and the redemption queue becomes the binding constraint. Queue speed depends on free USDC in the pool versus outstanding loan principal — if loans are fully deployed, the queue lengthens until borrowers repay or get margin-called.
 
@@ -275,6 +283,7 @@ Maple v1 (2021–2022) lent on an undercollateralized basis and lost LPs ~$50M+ 
 
 ## Revision history
 
+- **2026-10-02 — Liquidity & Exit 6.5 → 7.0; Overall held at 6.5.** ✅ **Venue depth is now measured at institutional size.** The ladder extended to eight rungs to **$1,000,000** on 2026-10-01, and both the 2% and 50bps depth thresholds **floor at $1,000,000** — the deepest size quoted still clears inside half a percent, so the crossing lies above where anyone has looked. All-in cost at $1,000,000 was **−7.68 bps**. Over **932 quotes across 124.9 days** the cost at $100,000 runs a median of **−7.98 bps**, interquartile **−9.95 to −5.76**, worst **−16.30**, with 1.6% at a premium — ⚠️ **the distribution of quotes that returned, not of attempts**, since failures are not recorded. ⚠️ **Capped at 7.0 rather than higher because the queue leg is unchanged:** free liquidity runs a median of 1.19% and sits under 2% in 90% of hours, and the "under five minutes" figure is still the issuer's own claim. ⚠️ **The $150,000–$1,000,000 rungs are a single reading** and have no history, because the ladder did not include them before that date. The conditions for moving this axis again are on the page, in two separately-owned legs that fire in both directions.
 - **2026-09-26 — the exit ladder is sourced and the cushion is restated on its series; no score changed.** ⚠️ **An aggregator exit ladder does exist for this pool and this report had described it as unsourced.** Measured on KyberSwap into USDC across four rungs: over three reads on 2026-09-24 and 2026-09-25 the all-in cost ran **between 1.8 and 11.1 bps across $1,000 to $100,000**, rising with size in two of the three. ⚠️ **The source snapshot is rolling and is overwritten every few hours**, so a single read cannot be reproduced afterwards and the range is what is quotable. ⚠️ **The headline `slippage_bps` field is not the holder's cost and must not be quoted** — it is price impact struck against the venue's own smallest rung, which therefore reads 0.0 by construction; the all-in figure is the fill ratio. ⚠️ **What is genuinely absent is size:** the largest rung is $100,000 and no 2%-depth figure is computed, so the venue-depth leg is untested at institutional notional. That, not the absence of a figure, is what holds Liquidity & Exit at 6.5. ⚠️ **The cushion is now stated on its series rather than one reading:** median **1.19%** across 352 hour-bucketed readings since 2026-09-11, under 2% in **90% of hours**, range 0.38% to 11.72%. **The cross-pool cushion comparison is withdrawn** — the ordering flips with the statistic chosen.
 - **2026-09-25 — collateral re-measured across the whole book; no score changed.** Per-loan collateral is priced on **100% of positions**, the nine per-asset rows summing to deployed principal to the cent, superseding the partial-coverage figure carried before. ⚠️ **The fuller view shows concentration rather than incompleteness:** **BTC $794,373,651 (81.70% of lending) and WBTC $25,000,000 (2.57%) are the same price exposure, 84.27% together**, with XRP 9.94%, ETH 5.22% and HYPE 0.57% behind them. The lending book is essentially entirely crypto-collateralised — the non-crypto residue is a **$5** Treasury-bill position. ⚠️ **The Backing axis is therefore capped by collateral concentration, not by collateral visibility**, and the cap now has a stated trigger: 6.5 → 6.0 if BTC and WBTC together exceed **88%** of the lending book, or any loan's current level falls below **120%**. Neither is met. ⚠️ **Whether 6.5 is the right absolute level given full collateral visibility is an open question awaiting a deliberate review.**
 - **2026-09-24 — Liquidity & Exit 7.5 → 6.5, Overall 6.75 → 6.5.** The axis rested on three claims and only one is fully established. The **"redemption queue clears in under five minutes"** figure is **the issuer's own claim**, never independently tested and hard to credit against a pool holding 1.08% of its assets as free cash. **Free liquidity is 1.08%** — about $10.8 million against $1.00 billion in assets — below the level at which our own monitoring flags a pool as forcing exits into a queue, so the direct route out is queued at any size that matters. ⚠️ **And the venue-depth route the score rested on is measured only to $100,000 of notional**, with no 2%-depth figure computed, so it is untested at institutional size. Only the permissionless deposit and redemption access is structural and verified. **It is lowered because the evidence does not reach the sizes that matter, not because the exit is known to be poor.** It returns to 7.5 on a measurement at institutional notional.
