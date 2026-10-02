@@ -4,11 +4,13 @@ slug: "weeth"
 aliases: ["weETH", "Wrapped eETH", "ether.fi weETH", "etherfi weETH"]
 chains: ["eth", "base", "arbitrum", "optimism"]
 category: "wrapped-token"
-# ⚠️ DELIBERATELY NOT on `axis_frame: six`, and this is not migration backlog.
-# Owner ruling 2026-09-12 ("keep redemption"): SIX_AXES has no Redemption row,
-# so migrating this report would DELETE a 7.0 Redemption axis in order to render
-# a Backing score — which is also why backing_score 8.0 stays unpublished here.
-# Changing the rubric is the owner's call, not a refresh task. Do not "fix" this.
+# ⚠️ UNMIGRATED, and this IS outstanding work — not a deliberate exemption.
+# Three wrapped-token reports already run `axis_frame: six` (strcx, wylds in
+# production; tsm-rh staged), each KEEPING redemption_score as a legacy field and
+# rendering a backing_score. wylds is the worked recipe: Redemption is retained
+# and folded into Liquidity & Exit as an H3, not deleted. So migrating here does
+# NOT cost the 7.0 Redemption axis, and backing_score 8.0 has no structural
+# blocker. Needs riskAnalyst for the Dependencies re-base and a new Overall.
 underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-08-13"
