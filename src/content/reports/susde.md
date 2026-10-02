@@ -2,12 +2,12 @@
 asset: "sUSDe"
 slug: "susde"
 aliases: ["sUSDe", "Staked USDe", "Ethena Staked USDe"]
-chains: ["eth", "arbitrum", "base", "optimism", "bsc", "mantle", "blast", "fraxtal"]
+chains: ["eth", "arbitrum", "base", "optimism", "bsc", "mantle", "blast", "fraxtal", "monad"]
 category: "vault-share"
 underlying_assets: ["USDe"]
 assessment_type: "full"
 date: "2026-05-22"
-last_revised: "2026-09-11"
+last_revised: "2026-10-02"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -22,6 +22,26 @@ liquidity_score: 7.0
 structural_score: 5.5
 redemption_score: 6.5
 overall_score: 6.5
+# Venue-derived (TVL + pool count per chain, enumerated 2026-10-02), NOT
+# ladder-derived — the depth ladder was measured on Ethereum only. These render
+# nowhere in this repo; the numbers reach a reader through §3 prose.
+chain_overrides:
+  arbitrum:
+    liquidity_score: 5.0
+  blast:
+    liquidity_score: 4.0
+  base:
+    liquidity_score: 2.5
+  bsc:
+    liquidity_score: 2.5
+  fraxtal:
+    liquidity_score: 2.0
+  optimism:
+    liquidity_score: 2.0
+  mantle:
+    liquidity_score: 2.0
+  monad:
+    liquidity_score: 2.0
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susde"
 ---
 
@@ -33,7 +53,7 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susde"
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
-| ~3.72% APY (Q1-2026 anchor — verify live) | Dynamic 1–7-day cooldown (1 day today) OR secondary (Curve, Pendle) | Dynamic cooldown silo to USDe | ~29 months | Ethereum + 7 L2s/sidechains |
+| ~3.72% APY (Q1-2026 anchor — verify live) | Dynamic 1–7-day cooldown (1 day today) OR secondary (Curve — 95.5% of DEX depth) | Dynamic cooldown silo to USDe | ~29 months | Ethereum + 8 L2s/sidechains |
 
 ## Summary
 
@@ -43,7 +63,7 @@ Following the Q1 2026 architecture pivot in the underlying USDe (perp share drop
 
 Redemption to USDe runs through a **cooldown silo** — sUSDe holders cannot exit instantly to the primary path. The big change since this report's last revision: **Ethena has shipped the dynamic cooldown** (proposal #759). The fixed 7-day wait is gone, replaced by a **coverage-tiered 1 / 3 / 5 / 7-day** duration that tracks USDe's liquid backing — short when coverage is comfortable, longer when it thins — plus an auto-extend safeguard for stress. **Verified on-chain 2026-07-15, the live duration is 1 day**, the mechanism's floor. During whatever cooldown applies, the position stays non-transferable; it cannot be sold or used as collateral. This materially relaxes the wrapper's binding constraint and is why the Redemption score moves from 5.5 to 6.5 in this revision.
 
-Secondary markets are deep: Curve sUSDe/USDe and sUSDe/USDC pools, plus Pendle PT-sUSDe and YT-sUSDe markets. Historical secondary discount data is small: **mean -0.168% from fair value, maximum -1.270%** (per LlamaRisk Aave-forum analysis). The October 10, 2025 stress event produced brief sUSDe secondary detachment but no structural NAV loss; the cooldown silo functioned as designed under $1B+ unstaking pressure.
+Secondary markets on Ethereum are deep, and they are concentrated: **$2M clears inside 50bps** as a measured floor, Curve holds **95.5%** of $78.39M of indexed DEX depth, and one pool — **DOLA/sUSDe** — is 82.8% of it. ⚠️ **There is no Curve sUSDe/USDe pool.** The pair usually cited under that name is Synthetix's **sUSD/sUSDe**: one letter apart, a different issuer. Historical secondary discount data is small: **mean -0.168% from fair value, maximum -1.270%** (per LlamaRisk Aave-forum analysis). The October 10, 2025 stress event produced brief sUSDe secondary detachment but no structural NAV loss; the cooldown silo functioned as designed under $1B+ unstaking pressure.
 
 The 6.5/10 score matches USDe (which is the floor — sUSDe cannot meaningfully be safer than its underlying) and reflects (a) the improved post-pivot profile, (b) successful navigation of October 2025, and (c) deep, well-functioning secondary markets — counterbalanced by (a) a cooldown that, while now much shorter, can still step back toward 7 days if coverage thins and (b) massive Aave / Morpho / Pendle loop concentration that structurally exceeds USDe's float on a leveraged basis.
 
@@ -96,12 +116,30 @@ What this means practically: in a normal regime like today's, exiting to primary
 
 **2. Secondary market.**
 
-The deeper secondary market is the alternative to waiting out the cooldown:
+The deeper secondary market is the alternative to waiting out the cooldown. Enumerated 2026-10-02 across 140 indexed Ethereum pools holding **$78.39M**:
 
-- **Curve** sUSDe/USDe pool (deep)
-- **Curve** sUSDe/USDC pool
-- **Pendle** PT-sUSDe markets (multiple maturities) — the highest-leverage sUSDe wrapper, used for fixed-yield exposure and loop strategies
-- **Pendle** YT-sUSDe markets — pure yield-token exposure
+| Venue | Pools | TVL | Share |
+|---|---|---|---|
+| Curve | 19 | $74,858,412 | 95.5% |
+| Uniswap v4 | 88 | $2,061,896 | 2.6% |
+| Fluid | 2 | $1,356,881 | 1.7% |
+| Uniswap v2/v3 | 17 | $76,047 | 0.1% |
+
+**Curve is the venue — but not the pair most people name.** ⚠️ **There is no Curve sUSDe/USDe pool.** The pool routinely cited under that name is Synthetix's **sUSD/sUSDe**; `sUSD` and `USDe` are one letter apart and belong to different issuers. A **Curve sUSDe/USDC** pool does exist and holds **$723.26** — dust, not a venue. The pools that actually carry the depth:
+
+- **DOLA/sUSDe — $64.9M**, which is **82.8%** of all indexed Ethereum depth
+- Then, on Curve: sDAI $3.74M · reUSD $2.30M · scrvUSD $1.67M · frxUSD $822K · crvUSD $697K · reUSDe $564K
+- Direct dollar pairs away from Curve: **sUSDe/USDT** on Uniswap v4 ($894K and $594K) and on Fluid ($576K), plus **GHO/sUSDe** on Fluid ($781K)
+
+⚠️ **The DOLA concentration is a fact worth knowing and it is not a reason the score is lower.** About **$13.5M of non-DOLA depth** sits across the pairs above; the direct sUSDe/USDT pairs are a clean one-hop exit into dollars rather than a second swap; and the measured ladder below routes across all venues rather than through DOLA alone.
+
+**Measured depth, 2026-10-02.** USD-denominated and marginal, with the first rung subtracted: ⚠️ **$2M clears inside 50bps, as a FLOOR** — $2M is the largest size the measurement reached and cleared, not a located limit. Read it as *at least this much*, never as *this is where it runs out*. ⚠️ **The 50bps gate is set by the unit of account, not the category:** a dollar-denominated, par-or-accruing NAV asset is measured against a tighter threshold than an ETH-denominated one, so this floor is not comparable with one quoted at a looser tier.
+
+⚠️ **Coverage: this is a DEX census, not a market census.** Enumeration runs over GeckoTerminal and DexScreener, and **centralised venues are deliberately uncounted**. Every figure here is therefore a floor on coverage — real tradeable depth is at least this much, and the shares between venues are exact only within DEX.
+
+Alongside the spot book:
+
+- **Pendle** — ⚠️ **2 of 17 markets are live; 15 have matured.** The two live are **Ethereum $4.02M, maturing 2026-11-26** and **Monad $20.92M, maturing 2026-10-22**. ⚠️ **For a PT, maturity is binding**, and the Monad market is twenty days out — larger on its own than every non-Ethereum chain's spot venues combined, on a chain whose own spot pool holds **$247**. PT-sUSDe remains the highest-leverage sUSDe wrapper, used for fixed-yield exposure and loop strategies; YT-sUSDe is pure yield-token exposure.
 - Various Morpho / Euler / Aave LP-style positions
 
 Historical secondary discount (per LlamaRisk March 2026 Aave-forum analysis):
@@ -113,6 +151,26 @@ Historical secondary discount (per LlamaRisk March 2026 Aave-forum analysis):
 The ~17bps mean discount reflects the time-value of waiting through the cooldown — a holder willing to wait it out earns NAV; a holder needing immediate exit pays a small premium for liquidity. Note that this discount history was accumulated under the old fixed 7-day regime; a 1-day cooldown gives holders less reason to pay up for immediacy, so the mean discount may compress from here. That's a reasonable expectation, not an observed fact yet.
 
 **Important — exit asymmetry note.** sUSDe has time-asymmetric exit (instant via secondary at small discount, primary at NAV after the dynamic 1–7-day cooldown — 1 day today) but **no access-asymmetric exit** — no KYC, no gating, no jurisdictional restriction on holding or staking. This is structurally better than tokenized RWAs that have gated primary redemption (like the cousin product reUSDe from Re Protocol, which is non-U.S. KYC only — see that report for the contrast).
+
+**3. Chain by chain — the mainnet score does not travel.**
+
+sUSDe is deployed on nine chains and essentially all of the depth is on one. Venue TVL by chain, enumerated 2026-10-02:
+
+| Chain | Liquidity | Venue TVL | Pools |
+|---|---|---|---|
+| Ethereum | **7.0** | $78.39M | 140 |
+| Arbitrum | 5.0 | $1.04M | 15 |
+| Blast | 4.0 | $200K | 8 |
+| Base | 2.5 | $33.8K | 17 |
+| BSC | 2.5 | $18.5K | 8 |
+| Fraxtal | 2.0 | $4.9K | 3 |
+| Optimism | 2.0 | $2.3K | 4 |
+| Mantle | 2.0 | $424 | 6 |
+| Monad | 2.0 | $247 | 1 |
+
+⚠️ **The eight non-Ethereum scores are venue-derived, not ladder-derived.** The depth ladder was measured on Ethereum only; the other chains were enumerated for venue TVL and pool count and are **explicitly unmeasured for crossing size**. They describe what is deployed there, not an exit anyone has tested.
+
+The practical reading: away from Ethereum the secondary route is not an exit for size. On the four chains scoring 2.0 the entire local book is four figures or less, and the honest exit is the bridge or the cooldown, not the pool.
 
 ## 4 · Dependencies — 6.0
 
@@ -171,14 +229,14 @@ Inherits the USDe audit stack:
 
 Plus multiple competitive audits. Among the most-reviewed ERC-4626 implementations in production. No known exploits across 27+ months.
 
-Live monitoring: the same Risk Committee infrastructure that monitors USDe covers sUSDe — **Chaos Labs Edge Proof of Reserves**, **LlamaRisk Risk Monitor Portal**, **Chainlink Proof of Reserves**, **HT Digital** monthly attestation, **Kraken Custody** weekly PoR (since January 2026). The sUSDe-specific metrics worth tracking are cooldown queue depth, vault TVL, and the live secondary discount on Curve / Pendle — all visible on the dashboards above.
+Live monitoring: the same Risk Committee infrastructure that monitors USDe covers sUSDe — **Chaos Labs Edge Proof of Reserves**, **LlamaRisk Risk Monitor Portal**, **Chainlink Proof of Reserves**, **HT Digital** monthly attestation, **Kraken Custody** weekly PoR (since January 2026). The sUSDe-specific metrics worth tracking are cooldown queue depth and vault TVL — both on the dashboards above — plus the live secondary discount, which in practice means **Curve, and specifically DOLA/sUSDe**, the pool holding 82.8% of indexed Ethereum depth. ⚠️ **Pendle is a thinner watch than it was: 2 of its 17 sUSDe markets are live, and the larger of the two matures 2026-10-22.**
 
 ## Score breakdown
 
 | Dimension | Score | Notes |
 |---|---|---|
 | Volatility | 6.5 | NAV-accruing share with no directional peg. Architecture pivot in underlying USDe materially reduces tail risk of yield going negative — basis trade no longer dominant return engine. Current ~3.72% APY is compressed vs pre-pivot range but with much lower variance. Survived October 2025 without share-price loss; secondary discount peaked at -127bps and resolved within hours. |
-| Liquidity | 7.0 | Deep Curve sUSDe/USDe and sUSDe/USDC pools + Pendle PT/YT markets. Retail can exit secondary at near-NAV in normal conditions (-17bps mean, -127bps max historical discount). Time-asymmetric exit (instant secondary vs the dynamic 1–7-day primary, 1 day today) but no access-asymmetric gating. |
+| Liquidity | 7.0 | Measured 2026-10-02: **$2M clears inside 50bps on Ethereum, as a floor** rather than a located limit. Curve holds **95.5%** of $78.39M indexed Ethereum DEX depth across 140 pools, concentrated in **DOLA/sUSDe at 82.8%**, with about $13.5M outside it including direct sUSDe/USDT pairs on Uniswap v4 and Fluid. ⚠️ **No Curve sUSDe/USDe pool exists** — the pair cited under that name is Synthetix's sUSD/sUSDe. **Pendle is 2 of 17 markets live.** Retail can exit secondary at near-NAV in normal conditions (-17bps mean, -127bps max historical discount). Time-asymmetric exit (instant secondary vs the dynamic 1–7-day primary, 1 day today) but no access-asymmetric gating. ⚠️ **Scored on Ethereum. L2 depth runs from $1.04M on Arbitrum to $247 on Monad** — Arbitrum 5.0, Blast 4.0, Base and BSC 2.5, Fraxtal, Optimism, Mantle and Monad 2.0, all venue-derived rather than ladder-measured. Enumeration is DEX-only; centralised venues uncounted. |
 | Contract & Admin | **5.5** | ✅ **sUSDe's own surface is genuinely strong** — an ERC-4626 vault plus cooldown silo, audited by Spearbit, Cantina, Quantstamp, Pashov and ChainSecurity alongside competitive audits, making it among the most-reviewed ERC-4626 implementations in production. ⚠️ **But this axis scores the authority a holder is actually exposed to, and sUSDe wraps USDe** — a wrapper is scored equal to its underlying on the underlying's own axis rather than above it, so the wrapper's audit quality cannot lift it past what it wraps. ✅ **USDe has no upgrade path at all:** its three EIP-1967 slots read zero against **7,567 bytes** of deployed code, with `totalSupply()` answering **4,464,043,236** in the same pass — a measured absence rather than an unread contract, and rarer than any delay. ⚠️ **Two distinct authority paths sit beneath it and must not be merged into one:** `owner → setMinter` has **full reach behind a real 24-hour timelock floor**, while `minter → EthenaMintingV2` is **undelayed but bounded**. **Neither path is both full-reach and undelayed**, and a summary that composes the worst half of each describes a shape that does not exist. ⚠️ **The Dev Safe is 5-of-10 and holds proposer, executor and canceller** — the party that schedules is the party that executes and the only party that could cancel. ⚠️ **Scored on Ethereum.** USDe declares eight chains and sUSDe nine, and neither publishes supply by chain, so the share left unread cannot be stated as a number |
 | Redemption | 6.5 | **The dynamic cooldown is live** (proposal #759; verified on-chain 2026-07-15 at `cooldownDuration()` = 1 day). The fixed 7-day silo is replaced by a coverage-tiered 1/3/5/7-day duration with a stress auto-extend safeguard (daily unstaking > 2× 14d-avg *and* 3-day coverage < 1.5× → +1 day). No gating, no KYC, no fees. The wrapper's dominant binding constraint is now much smaller. Capped at 6.5 rather than 7.0 because the duration can still step back to 7 days under thin coverage, and sUSDe stays floored by USDe. |
 | **Overall** | **6.5** | Moderate risk — matches USDe floor; cannot meaningfully be safer than its underlying ⚠️ **Held, and it sits +0.08 above its own axis mean of 6.42** — against the at-or-below convention applied elsewhere in this coverage. **Not re-derived since the sixth axis was authored**, so this cell is the one to treat as pending; the axes above are current. |
@@ -258,6 +316,7 @@ PT-sUSDe instruments themselves (specific maturities, fixed-yield discounts) are
 
 ## Revision history
 
+- **2026-10-02 — venues enumerated and Ethereum depth measured; no score moves.** Ethereum depth is a **floor of $2M inside 50bps**, marginal with the first rung subtracted. Curve holds **95.5% of $78.39M** across 140 indexed Ethereum pools; **DOLA/sUSDe alone is $64.9M, 82.8%** of it, with about $13.5M outside DOLA including direct sUSDe/USDT pairs on Uniswap v4 ($894K, $594K) and Fluid ($576K). ⚠️ **There is no Curve sUSDe/USDe pool** — the pair commonly cited under that name is Synthetix's sUSD/sUSDe, a different issuer's asset; a Curve sUSDe/USDC pool exists at **$723.26**. ⚠️ **Pendle has 2 of 17 markets live and 15 matured** — Ethereum $4.02M to 2026-11-26, Monad $20.92M to 2026-10-22. Per-chain liquidity, **venue-derived rather than ladder-measured**: Arbitrum 5.0, Blast 4.0, Base 2.5, BSC 2.5, Fraxtal 2.0, Optimism 2.0, Mantle 2.0, Monad 2.0. Nine chains, Monad included. Liquidity & Exit held at 7.0, Overall at 6.5. Enumeration is DEX-only — centralised venues uncounted, so every venue figure is a floor on coverage.
 - **2026-08-29 — fee switch recorded; no score change.** Ethena tokenholders have approved directing **95% of the Ethena Foundation's net revenue** to ENA buybacks once a USDe supply milestone is reached — **$22.5m against $450m of gross protocol revenue, 5%, at the first milestone.** **It is dormant: supply is **$4,468,386,035** against a first milestone of **$7.5B — 67.8% away**.** ⚠️ **The schedule replaces the Risk Committee parameters that previously governed it** — a monthly adequacy assessment gating activation, and an ordering of Reserve Fund capitalization first, then sUSDe yields, then sENA. **The replacement text carries no reserve-fund condition.** The milestone table is an IPFS-embedded image and the supporting analysis sits in unretrieved replies; press-reported tiers are second-hand.
 - **2026-08-25 — re-verified; scores held at 6.5.**
 - **2026-08-23 — cooldown silo address corrected.**
