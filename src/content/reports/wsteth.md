@@ -8,12 +8,19 @@ underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-10-03"
 last_verified: "2026-10-03"
+last_revised: "2026-10-04"
 featured: false
 production: false
 issuer: "Lido DAO"
 yield_bearing: true
-# PARKED: Monad Liquidity and Redemption are UNMEASURED — no venue enumeration and no depth ladder exists for that chain. Both commissioned 2026-10-03, neither returned. Do not inherit the Ethereum values [owner: riskAnalyst] [since: 2026-10-03]
-# PARKED: promotion to production is gated on those two measurements landing — a reader sizing a Monad position needs a measured exit, not an absent one [owner: owner] [since: 2026-10-03]
+# ⚠️ PARKED: Monad's measured DEX ladder describes a path nobody uses — wstETH is
+# bridged in, not traded in locally — so it is published explicitly NOT as an exit
+# cost. The real exit is the CCIP bucket (2,000 wstETH, 0.02315/s). Liquidity 9.0 and
+# Redemption 8.5 still carry no Monad-specific derivation [owner: riskAnalyst] [since: 2026-10-03]
+# PARKED: promotion to production — a reader sizing a Monad position now has the
+# bridge capacity, which was the gap. Remaining question is whether axis 3 should
+# carry a Monad-specific number at all given the local book is not the exit
+# [owner: owner] [since: 2026-10-03]
 axis_frame: six
 volatility_score: 9.0
 backing_score: 9.0
@@ -73,7 +80,11 @@ The risk this axis prices is **secondary-market detachment**, not the rate. A la
 
 **Ethereum: 9.0.** Each wstETH is a claim on stETH, which is a claim on ETH staked by Lido's validator set. There is no off-chain custodian in the backing path and nothing to attest to — the collateral is validator stake, and the claim on it is expressed as a rate rather than a balance.
 
-⚠️ **Monad: 6.5, and the reason is that a verifiable reserve is not the same as a reserve that is yours.** The mainnet lock pool behind the bridged supply holds **32,358.118 wstETH**, read twice on separate RPC providers. That figure is real and checkable. But **Monad's leg is not siloed** — `isSiloed` reads **false** — so it draws on a **32,320 wstETH unsiloed portion shared with five other chains**, and **Monad's mint is 97.7% of that shared portion.**
+⚠️ **Monad: 6.5, and the reason is that a verifiable reserve is not the same as a reserve that is yours.** The mainnet lock pool behind the bridged supply held **21,353.231 wstETH** on 2026-10-03, down about 34% from 32,358 in August. ✅ **And the reconciliation against it is exact, not a bound:** unsiloed balance **21,305.268** against a shared mint total of **21,305.145**, a residual of **0.1227 wstETH**. The collateral is there and it is countable.
+
+⚠️ **But Monad's leg is not siloed** — `isSiloed` reads **false** — so it draws on that shared unsiloed claim rather than on a reserve of its own, and **Monad's mint is 99.45% of it**, up from 97.7% in August. The other legs on the same claim are **megaeth at 117.126 wstETH** and four chains holding dust (abstract, ink, plasma, jovay). Three of the nine deployments *are* siloed: bitlayer, 0g and robinhood.
+
+⚠️ **The pool shrank while Monad's share of it rose**, so the gap between "shared in principle" and "shared in practice" has narrowed rather than widened. A verifiable reserve is still not a reserve that is ring-fenced to your chain.
 
 ⚠️ **What that means for a holder.** The reserve can be verified and is still **not ring-fenced to your chain**. Monad's claim and five other chains' claims sit against one pool, and Monad's share of it is almost the whole thing. Being able to see the collateral and having an exclusive claim on it are different properties, and only the first is established here.
 
@@ -83,9 +94,13 @@ This axis covers **both** exit paths — secondary venue depth and primary redem
 
 **Ethereum: 9.0.** wstETH is the deepest liquid-staking token by secondary depth and the default collateral across major lending markets, and the primary route is Lido's own withdrawal queue: unwrap wstETH to stETH, request withdrawal, wait for a validator to exit. That wait is congestion-dependent and outside Lido's control, which is what keeps the primary leg from scoring higher.
 
-⚠️⚠️ **Monad: UNMEASURED, and it is published that way deliberately.** The 9.0 above is an Ethereum figure. **No venue enumeration and no depth ladder has ever been run for wstETH on Monad** — both were commissioned on 2026-10-03 and neither has returned. The usual sentence about wstETH — *deepest LST liquidity, the DeFi-standard collateral* — is **true of Ethereum and is an assumption about Monad.**
+⚠️⚠️ **Monad has a local DEX ladder now, and it is not the exit.** Measured 2026-10-03, local depth is about **$1,000** at the 2% crossing, bracketed between $1,000 and $10,000, and the cost curve collapses from −69 bps at $1,000 to **−9,984 bps at $500,000** — half a million dollars in returns roughly eight hundred out.
 
-⚠️ **Do not read the absence as thin, and do not read it as deep.** It is not known. An unmeasured leg is a third state, distinct from "measured and good" and from "measured and bad", and treating it as inheriting Ethereum's number is the specific error this section exists to avoid.
+⚠️ **Published as a figure a reader must not use as an exit cost.** wstETH has never had local Monad liquidity: holders bridge it in from elsewhere, so a venue ladder there measures **a path essentially nobody takes.** Quoting it as the cost of leaving would describe a route that is not how anyone arrives or departs.
+
+✅ **The real Monad exit is the CCIP bridge, and it has a measured capacity.** Binding outbound capacity is **2,000 wstETH**, refilling at **0.02315 per second**. That was negative-controlled — an invalid chain selector returns a disabled, all-zero bucket at both ends — with every selector confirmed present in the deployed bytecode.
+
+⚠️ **So size a Monad position against the bridge bucket, not against the order book.** Beyond 2,000 wstETH in flight you are waiting on a refill, and the local market cannot absorb the difference.
 
 ### Redemption — 8.5 (retained, folded into Liquidity & Exit)
 
@@ -98,6 +113,16 @@ This axis prices **the counterparty set** — who the asset relies on to exist a
 **Ethereum: 6.0.** The counterparty is Lido: its validator set, its node-operator curation, and the DAO that governs both. The diversification beneath it is real — many node operators, and the beacon chain under them — but ⚠️ **the asset is diversified while the counterparty is not.** A holder cannot change issuer while continuing to hold the claim.
 
 ⚠️ **Monad: 4.0**, because the Monad deployment adds a second counterparty that the Ethereum one does not have: **the bridge and its administrator**, discussed below. The claim passes through Chainlink's CCIP infrastructure and a Chainlink-controlled admin before it reaches anything Lido operates.
+
+### An operator was compromised, and the design absorbed it
+
+On **2026-09-30** Lido disclosed that **MetaMask Staking** suffered an infrastructure compromise and is precautionarily exiting its entire Lido validator set, with final exits by **2026-10-07**.
+
+⚠️⚠️ **Three figures are in circulation and only one of them is stETH's. The headline overstates the exposure by roughly 2.3×.** MetaMask Staking's whole business is 33,000+ validators and about 1M ETH. Its whole exit is about **17,000 validators and ~523,000 ETH — roughly $1.4 billion**, and that is the number most coverage carries. ✅ **But only about 7,204 validators and ~230,000 ETH sit in Lido's registry — around 2.3–2.5% of Lido's ~9.79M stETH.** If you take one thing from this, take the distinction.
+
+✅ **No principal was reachable, and the reason is structural.** Staking here is non-custodial: withdrawal credentials point at the protocol, not at the operator. The cost is foregone rewards plus possible downtime penalties on about 2.4% of the stake. **No slashing is alleged**, and Lido's own statement is that **no action is required from stETH holders**. The stake re-enters over roughly 45 days through the extended entry queue, and Lido holds an ad hoc reserve of more than 6,750 stETH for disruptions of this kind.
+
+⚠️ **This reads as the Dependencies thesis confirmed rather than threatened.** The axis sits where it does because operator entry is permissionless and the set is replaceable from below — **an operator lost and absorbed with no holder action required is that design working**, not a warning about it.
 
 ## 5 · Contract & Admin — 8.0
 
@@ -134,13 +159,15 @@ Holders who want ETH staking exposure in the form DeFi is built around, and who 
 - ⚠️ **Anyone holding on Monad who believes Lido governs their token.** It does not. Every privileged path there runs to a Chainlink CCIP administrator, and a Lido DAO vote cannot reach it.
 - Anyone who needs a guaranteed same-day exit at full value. The primary route runs at the speed of Ethereum's validator exit queue, and the fast route is the secondary market, where a redemption wave opens a discount.
 - ⚠️ **Anyone sizing a Monad position off wstETH's reputation for depth.** That reputation is an Ethereum fact. Monad's secondary depth has never been measured.
-- Anyone who needs a reserve ring-fenced to their own chain. Monad's claim shares an unsiloed pool with five other chains and is 97.7% of it.
+- Anyone who needs a reserve ring-fenced to their own chain. Monad's claim shares an unsiloed pool and is **99.45%** of it.
 
 ## What to watch
 
 - **The Monad venue enumeration and depth ladder**, both commissioned 2026-10-03 and unreturned. They are what would turn two inherited numbers into measured ones.
 - **The `RBACTimelock` on Monad** — whether its role set changes, and whether Lido ever acquires on-chain authority over the deployment.
-- **`isSiloed` on Monad's leg, and Monad's share of the unsiloed pool.** At 97.7% there is very little room between "shared in principle" and "shared in practice".
+- **`isSiloed` on Monad's leg, and Monad's share of the unsiloed pool.** At **99.45%** there is almost no room left between "shared in principle" and "shared in practice", and the share rose as the pool shrank.
+- **The CCIP outbound bucket — 2,000 wstETH and a 0.02315/s refill.** It is the real constraint on leaving Monad, and it is a capacity rather than a price.
+- ⚠️ **The rate of node-operator incident disclosures, not any single one.** Three appeared on Lido's forum in two months: the MetaMask compromise (2026-09-30), a Stakefish connectivity-loss post-mortem (09-20) and a Gateway.fm network incident (09-21). ⚠️ **Treat that as something to watch and not as a trend** — two are voluntary retrospectives on months-old events, and **a rise in disclosures is not a rise in incidents.** Reading it the other way charges Lido for its own transparency.
 - **`stEthPerToken()`.** It is the honest read on accrual, and it should only ever rise.
 - **Ethereum's validator exit queue**, which sets the real time-to-cash on the primary route.
 
@@ -150,4 +177,5 @@ Holders who want ETH staking exposure in the form DeFi is built around, and who 
 
 ## Revision history
 
+- **2026-10-04 — backing re-read, Monad exit reframed, an operator compromise absorbed. No score moves.** ⚠️ **The mainnet lock pool fell about 34%, 32,358 → 21,353.231 wstETH**, while **Monad's share of the shared unsiloed claim rose 97.7% → 99.45%** — the pool shrank and the concentration tightened. ✅ **Backing 9.0 is confirmed by an exact reconciliation**, not a bound: unsiloed balance 21,305.268 against a shared mint total of 21,305.145, residual 0.1227 wstETH. The other legs on that claim are megaeth at 117.126 wstETH and four dust chains; three of nine deployments are siloed. ⚠️ **Monad now has a measured local DEX ladder and it is published as NOT the exit** — about $1,000 at the 2% crossing, collapsing to −9,984 bps at $500,000. wstETH has never had local Monad liquidity; holders bridge in, so that ladder measures a path essentially nobody takes. ✅ **The real constraint is the CCIP outbound bucket: 2,000 wstETH, refilling 0.02315/s**, negative-controlled against an invalid chain selector at both ends. ⚠️ **An operator compromise was disclosed 2026-09-30** — MetaMask Staking exiting its Lido set by 2026-10-07. ⚠️ **The widely-quoted ~$1.4B is its whole business exit, not its Lido exposure: about 7,204 validators and ~230,000 ETH are in Lido's registry, roughly 2.3–2.5% of stETH.** ✅ **Non-custodial staking meant no principal was reachable** and Lido states no holder action is required. Dependencies holds at 6.0 — an operator absorbed without holder action is the thesis working.
 - **2026-10-03 — first publication, staged.** Six axes authored across two chains. ⚠️ **Four of the six differ by chain:** Backing 9.0 / 6.5, Dependencies 6.0 / 4.0, Contract & Admin 8.0 / 6.5, Issuer 7.0 / 6.0, giving Overall **8.0 on Ethereum and 7.0 on Monad**. The driving finding is that **every privileged path on Monad terminates at a Chainlink `RBACTimelock`** that also owns CCIP's Router there and predates the token by about 19 million blocks, so **Lido DAO holds no on-chain authority over the Monad deployment**. Backing on Monad is verifiable but **not ring-fenced**: the mainnet lock pool holds **32,358.118 wstETH**, Monad's leg reads `isSiloed = false`, and its mint is **97.7%** of a **32,320 wstETH** portion shared with five other chains. ⚠️ **Liquidity and Redemption are published as UNMEASURED on Monad** rather than carried over from Ethereum — no venue enumeration and no depth ladder exists for that chain; both were commissioned on this date and neither has returned.
