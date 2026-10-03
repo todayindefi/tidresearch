@@ -39,7 +39,7 @@ backing_score: 5.5
 liquidity_score: 3.5
 underlying_score: 4.0
 structural_score: 5.0
-issuer_score: 5.0
+issuer_score: 4.5
 redemption_score: 4.5
 overall_score: 5.0
 ---
@@ -129,7 +129,7 @@ The vault's value passes through **Gains Network's own protocol contracts** and,
 
 ⚠️ **It is the same mechanism in both directions, and it is not an exploit.** Closing at the peak is simply better than withdrawing and being liquidated, and **no intent is established on either side** — this is a property of how the payout rule is written. ✅ **The consequence a reader can act on is that the vault structurally advantages monitored positions over unmonitored ones.** Someone watching epochs and rollovers is better placed than someone who deposited and left.
 
-## 6 · Issuer — 5.0
+## 6 · Issuer — 4.5
 
 ⚠️⚠️ **Start with what you could actually do if something went wrong, because it is the sharpest fact on this axis.** The terms of service bind a user to **confidential, binding arbitration, seated in Panama, in English, before a single arbitrator**, under the AAA's Commercial Arbitration Rules, with the award final and **appeal rights expressly waived**. **No court, no class action, and no public record of the proceeding.** That is close to the least recourse a named counterparty can offer.
 
@@ -143,7 +143,9 @@ The vault's value passes through **Gains Network's own protocol contracts** and,
 
 ⚠️ **Two inputs remain unverified: any financial audit of the foundation, and the governance path over this vault** — who can change its parameters, and by what process.
 
-**Against the adverse findings: no conduct event, no regulatory action, and no loss of principal on the gToken line.**
+⚠️ **The recourse terms are what set this score rather than colour it.** Confidential arbitration, a single arbitrator, a Panamanian seat and **no appeal** compose into about the least a holder can do about anything — and they sit on top of a counterparty with no known principals behind a vehicle built not to disclose them. **Accountability and recourse are what this axis measures, and both are near their floor.**
+
+✅ **What keeps it from going lower:** about four clean years, no conduct event, no regulatory action, no loss of principal on the gToken line — and disclosure quality that was **measured rather than claimed**, in the 21-second reconciliation above.
 
 ⚠️ **Audits and the audit bench belong to Contract & Admin and are deliberately not counted here** — a reviewed contract says nothing about whether the operator behaves well.
 
@@ -181,4 +183,4 @@ Depositors who understand they are **taking the other side of a leveraged tradin
 
 ## Revision history
 
-- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer is 5.0.** The operator is **Ingenium Labs Foundation, a Panamanian foundation of private interests**, read from the terms of service on 2026-10-03 — ⚠️ **a non-disclosure vehicle whose beneficiaries are not public, with no registration number or registered address given.** Recourse is **confidential single-arbitrator arbitration seated in Panama, AAA Commercial Rules, appeal waived.** Set against a pseudonymous team, about four years with no major exploit, and documentation matching chain behaviour to 21 seconds. ⚠️ **A named counterparty exists; an accountable principal does not.** The two unverified inputs are a financial audit and the vault's governance path.
+- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer is 4.5.** The operator is **Ingenium Labs Foundation, a Panamanian foundation of private interests**, read from the terms of service on 2026-10-03 — ⚠️ **a non-disclosure vehicle whose beneficiaries are not public, with no registration number or registered address given.** Recourse is **confidential single-arbitrator arbitration seated in Panama, AAA Commercial Rules, appeal waived.** Set against a pseudonymous team, about four years with no major exploit, and documentation matching chain behaviour to 21 seconds. ⚠️ **A named counterparty exists; an accountable principal does not**, and the appeal waiver puts the recourse stack near its floor — which is what sets the score rather than qualifying it. Held off a lower mark by four clean years and by disclosure quality measured rather than claimed. **Overall holds at 5.0: the six-axis mean is 4.750, an exact tie between 5.0 and 4.5, and a tie is not a reason to move an authored number.** The two unverified inputs are a financial audit and the vault's governance path.
