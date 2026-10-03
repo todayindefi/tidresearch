@@ -44,6 +44,7 @@ async function main() {
   await mkdir(TARGET_DIR, { recursive: true });
 
   let copied = 0;
+  let skipped = 0;
 
   // ⚠️ COPYING IS ALSO OPT-IN, and for the same reason as pruning. The four allowlisted
   // slugs are all LIVE, INDEPENDENTLY AUTHORED published reports, and the sources are
@@ -71,7 +72,28 @@ async function main() {
       console.error(`  ✗ ${slug}: missing frontmatter`);
       process.exit(1);
     }
-    await writeFile(join(TARGET_DIR, `${slug}.md`), body);
+    // ⚠️ REFUSE TO OVERWRITE A DIVERGED TARGET. Measured 2026-10-04: NONE of the four
+    // allowlisted slugs is in verbatim sync — crvusd differs by 779 lines, frax 506,
+    // usdd 116, ousd 88. So a copy here never refreshes; it always REPLACES authored
+    // work with a document written for a different audience.
+    // ⚠️ Divergence means the ALLOWLIST is wrong, not that the published report is.
+    // Same reasoning as MAX_PRUNE: a large destructive diff is evidence of a stale
+    // config, never an instruction. --force is the deliberate override.
+    const dst = join(TARGET_DIR, `${slug}.md`);
+    if (existsSync(dst) && (await readFile(dst, "utf8")) !== body) {
+      if (!process.argv.includes("--force")) {
+        console.error(
+          `  ✗ ${slug}: target has DIVERGED from source — refusing to overwrite.\n` +
+            `      The published report is independently authored; the source is an internal\n` +
+            `      document. Remove ${slug} from reports.allowlist.json, or pass --force if you\n` +
+            `      genuinely mean to discard the authored version.`,
+        );
+        skipped++;
+        continue;
+      }
+      console.warn(`  ! ${slug}: overwriting a diverged target under --force`);
+    }
+    await writeFile(dst, body);
     console.log(`  ✓ ${slug}`);
     copied++;
   }
@@ -106,7 +128,12 @@ async function main() {
     }
   }
 
-  console.log(`\nSynced ${copied} report(s)${pruned ? `, pruned ${pruned}` : ""}.`);
+  console.log(
+    `\nSynced ${copied} report(s)` +
+      (skipped ? `, SKIPPED ${skipped} diverged` : "") +
+      (pruned ? `, pruned ${pruned}` : "") +
+      `.`,
+  );
 }
 
 main().catch((e) => {
