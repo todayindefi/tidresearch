@@ -163,7 +163,7 @@ The shared stack is the reinsurance book — off-chain contracts and trust asset
 ## 5 · Contract & Admin
 
 - **Token contract:** ERC-1967 upgradeable proxy at `0xdDC0f880ff6e4e22E4B74632fBb43Ce4DF6cCC5a`, Ethereum only.
-- **Same implementation logic as reUSD** (`0xb5276c43…DEb4a21D4`) — shared codebase, shared risk surface.
+- **Same implementation logic as reUSD** (`0xb5276c436f65913cd5332de745d04fedeb4a21d4`) — shared codebase, shared risk surface.
 - **Upgrade authority:** gated by AccessControl roles. The admin role on both the reUSD and reUSDe proxies is held by an OpenZeppelin `TimelockController` at [`0x69dDEa33…7FCA93`](https://etherscan.io/address/0x69dDEa332723cF5407151aAF68B9b076557FCA93) with a 172,800-second minimum delay — **a real 48-hour delay.** ⚠️ **A single Safe holds the proposer, executor and canceller roles, so it is a public notice window, not an independent second approval.**
 - **Custody:** Fireblocks MPC multisig plus the U.S. trust bank §114 account — the same stack as reUSD, with the same day-to-day controller wallets.
 

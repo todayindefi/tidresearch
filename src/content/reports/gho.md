@@ -64,9 +64,9 @@ GHO is Aave DAO's overcollateralized stablecoin. It is minted by a set of author
 
 ```
 0x0d8eFfC11dF3F229AA1EA0509BC9DFa632A13578   getIsSeized() TRUE   getIsFrozen() FALSE
-   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xa0b86991…eb48 = USDC
+   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 = USDC
 0x686F8D21520f4ecEc7ba577be08354F4d1EB8262   getIsSeized() TRUE   getIsFrozen() FALSE
-   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xdac17f95…31ec7 = USDT
+   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xdAC17F958D2ee523a2206206994597C13D831ec7 = USDT
 GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
 ```
 

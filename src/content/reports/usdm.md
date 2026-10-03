@@ -119,7 +119,7 @@ USDm-on-Monad now sits in the ≈40% gross / ≈65% ex-POL Reserve-coverage rang
 
 ## 1 · Stability — 7.0
 
-✅ **Measured 2026-09-10.** USDm's combined supply is **16,719,242.43** — **14,272,199.65 on Celo** and **2,447,042.78 on Monad** — and it trades at **$0.999774**, 0.023% below par. ⚠️ **One identity trap worth naming, because a price feed is easy to take on the ticker:** the market data for this asset is published under **"Mento Dollar"** against the Celo contract `0x765DE816…1282a`, **which is the same ERC-20 that previously carried the cUSD ticker.** A separate asset also trades as *USDM* — Mountain Protocol's — and quoting it here would price the wrong token. **The figure above is tied to the contract, not to the symbol.**
+✅ **Measured 2026-09-10.** USDm's combined supply is **16,719,242.43** — **14,272,199.65 on Celo** and **2,447,042.78 on Monad** — and it trades at **$0.999774**, 0.023% below par. ⚠️ **One identity trap worth naming, because a price feed is easy to take on the ticker:** the market data for this asset is published under **"Mento Dollar"** against the Celo contract `0x765DE816845861e75A25fCA122bb6898B8B1282a`, **which is the same ERC-20 that previously carried the cUSD ticker.** A separate asset also trades as *USDM* — Mountain Protocol's — and quoting it here would price the wrong token. **The figure above is tied to the contract, not to the symbol.**
 
 USDm uses **oracle-priced pricing, not arbitrage-defended pricing**. Mento V3's Functional Polynomial Market Maker (FPMM) quotes the Chainlink oracle rate ± fees directly. The pool maintains an invariant of "value per LP share at the oracle price" rather than a curve.
 

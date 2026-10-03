@@ -24,7 +24,7 @@ featured: false
 
 **High risk · 2.5/10 · Wind-down asset, existing holders should exit**
 
-> **This report covers Legacy Frax Dollar (FRAX, `0x853d955a…1b99e`), NOT frxUSD.** They are separate assets with separate balance sheets and separate contracts. The 1:1 FRAX→frxUSD migration path was closed in April 2025 (FIP-430). frxUSD is Frax Finance's current flagship; L-FRAX is deprecated.
+> **This report covers Legacy Frax Dollar (FRAX, `0x853d955aCEf822Db058eb8505911ED77F175b99e`), NOT frxUSD.** They are separate assets with separate balance sheets and separate contracts. The 1:1 FRAX→frxUSD migration path was closed in April 2025 (FIP-430). frxUSD is Frax Finance's current flagship; L-FRAX is deprecated.
 
 Legacy FRAX is the original Frax stablecoin (launched Dec 2020), now in wind-down. Following the April 2025 "North Star" upgrade, Frax Finance separated the L-FRAX balance sheet from frxUSD and stopped offering the 1:1 swap that used to exit legacy holders into the successor. Today L-FRAX sits with **~$132M circulating supply, a 91% collateral ratio, a -$16M deficit, and only $24M of real (non-FRAX-denominated) backing** — the rest of the "backing" is the protocol holding its own token.
 

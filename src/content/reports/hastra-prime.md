@@ -193,7 +193,7 @@ Two things had moved against this axis and the more recent read splits them: one
 
 | leg | address | supply | shape |
 |---|---|---:|---|
-| PRIME, Ethereum | `0x19ebb35279A16207Ec4ba82799CC64715065F7F6` | **426,496,242.51** | ERC-1967 proxy → impl `0x881fe0e5…d4c5` |
+| PRIME, Ethereum | `0x19ebb35279A16207Ec4ba82799CC64715065F7F6` | **426,496,242.51** | ERC-1967 proxy → impl `0x881fe0e5e91c54fabbf0198a1bb2fc6e5747d4c5` |
 | PRIME, Solana | `3b8X44fLF9ooXaUm3hhSgjpmVs6rZZ3pPoGnGahc3Uu7` | **130,931,344.68** | SPL Token mint, 6 decimals |
 
 ✅ **The relationship to wYLDS is established by the contract rather than asserted:** PRIME's `asset()` returns `0x6aD038cA6C04e885630851278ca0a856Ad9a66Cc`, which is wYLDS. **PRIME is an ERC-4626 vault whose only asset is wYLDS**, and the contract says so itself.

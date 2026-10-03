@@ -177,7 +177,7 @@ Residual risks explain why this does not score still higher. **About 50% of qual
 
 | leg | address | supply | shape |
 |---|---|---:|---|
-| Ethereum | `0x6aD038cA6C04e885630851278ca0a856Ad9a66Cc` | **454,494,951.73** | ERC-1967 proxy → impl `0x06e0b915…9723` |
+| Ethereum | `0x6aD038cA6C04e885630851278ca0a856Ad9a66Cc` | **454,494,951.73** | ERC-1967 proxy → impl `0x06e0b9155a3cf07f41ac826ccfee7ef8413a9723` |
 | Solana | `8fr7WGTVFszfyNWRMXj6fRjZZAnDwmXwEpCrtzmUkdih` | **152,180,128.76** | SPL Token mint, 6 decimals |
 
 **Total supply 606,675,080.49**, 74.9% on Ethereum. ⚠️ **The Ethereum leg is a proxy and the EIP-1967 admin slot is empty** — upgrade authority runs through **AccessControl roles on the implementation**, not through a proxy admin. `UPGRADER_ROLE` and `PAUSER_ROLE` both exist, and their role IDs are the standard OpenZeppelin keccak values, checked against the contract rather than assumed.

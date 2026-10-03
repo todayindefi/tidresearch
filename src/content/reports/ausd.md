@@ -77,7 +77,7 @@ The caveat: secondary market depth on DEXes is **thin on most chains** (moderate
 | read | result |
 |---|---|
 | token `0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a` | identical 5,937-byte proxy on all eight |
-| EIP-1967 admin slot | `0xb8fcc66d…4dedee` — the same ProxyAdmin on all eight |
+| EIP-1967 admin slot | `0xb8fcc66d613e5f54ee6a425ddbf4a2fdbe4dedee` — the same ProxyAdmin on all eight |
 | `ProxyAdmin.owner()` | `0x68898B77EbF7b55dCA8A2e62d6Fd74959a2930e2` on all eight |
 | `getMinDelay()` on that admin | **reverts on all eight — there is no TimelockController** |
 | `eth_getCode` on the owner | **`0x` on all eight — no contract, so no on-chain quorum** |
@@ -132,7 +132,7 @@ AUSD's canonical token has been audited by top-tier firms — Cantina/Spearbit, 
 
 ⚠️ **Correction, 2026-08-24 — this report published the opposite of the truth on the containment question, and the correction is not in Agora's favour.**
 
-Until today this section said Agora used *"a different key per chain, which is genuine containment: a single compromise reaches one deployment rather than all nine."* **That is false.** Read across every chain reachable in one batch on 2026-08-24, **six of six return the same ProxyAdmin (`0xb8fcc66d…dedee`) and the same owner (`0x68898B77…30e2`), with zero bytes of code at the owner**: Ethereum, Arbitrum, Base, Polygon, Fraxtal **and Avalanche**.
+Until today this section said Agora used *"a different key per chain, which is genuine containment: a single compromise reaches one deployment rather than all nine."* **That is false.** Read across every chain reachable in one batch on 2026-08-24, **six of six return the same ProxyAdmin (`0xb8fcc66d613e5f54ee6a425ddbf4a2fdbe4dedee`) and the same owner (`0x68898B77…30e2`), with zero bytes of code at the owner**: Ethereum, Arbitrum, Base, Polygon, Fraxtal **and Avalanche**.
 
 ⚠️ **Scope that precisely: six chains measured on one key, not nine.** Gnosis, BNB and Monad were not reached in that batch, so their owner is not confirmed to be the same key — the separate finding that *every* measured chain lacks a timelock rests on the earlier nine-chain read and is unaffected.
 
@@ -189,6 +189,6 @@ Holders who value backing transparency — on-chain PoR, clean cash + T-bills re
 
 ## Revision history
 
-- **2026-08-24 — chain reach measured.** ⚠️ **Six of six chains measured share the owner `0x68898B77…30e2`** via ProxyAdmin `0xb8fcc66d…dedee`, which holds no code. **A single compromise reaches at least six deployments**, and Gnosis, BNB and Monad were not reached in that batch. **The upgrade path has no timelock on every chain measured.**
+- **2026-08-24 — chain reach measured.** ⚠️ **Six of six chains measured share the owner `0x68898B77…30e2`** via ProxyAdmin `0xb8fcc66d613e5f54ee6a425ddbf4a2fdbe4dedee`, which holds no code. **A single compromise reaches at least six deployments**, and Gnosis, BNB and Monad were not reached in that batch. **The upgrade path has no timelock on every chain measured.**
 - **2026-08-23 — Issuer 7.0 → 6.5, Overall 7.0 → 6.5** on admin-cohort recalibration.
 - **2026-07-08 — Issuer and Overall 7.5 → 7.0** on cohort anchoring. Initial production publication.
