@@ -36,6 +36,34 @@ for (const file of readdirSync(DIR).filter((f) => f.endsWith(".md"))) {
   if (end === -1) continue;
   const fm = text.slice(0, end);
   const body = text.slice(end);
+  /**
+   * ⚠️ AN AXIS HEADING THAT DOES NOT CONFORM USED TO BE SILENTLY SKIPPED, which
+   * made it indistinguishable from a heading that passed. Writing wstETH on
+   * 2026-10-03 I used `## 2 · Backing — 9.0 on Ethereum, 6.5 on Monad` to carry a
+   * per-chain split; the match below is end-anchored, so FIVE of that report's six
+   * headings were never validated and a deliberately corrupted 3.0 passed clean.
+   *
+   * ✅ So anything axis-SHAPED that the strict pattern rejects is now an error
+   * rather than a skip. The per-chain detail belongs in the prose under the
+   * heading — which is where it has to be anyway, since `chain_overrides` renders
+   * nowhere in this repo. "Unchecked" must never read the same as "clean".
+   */
+  for (const m of body.matchAll(/^## \d · (.+)$/gm)) {
+    const h = m[1];
+    const strict = /^[A-Za-z &]+ — [\d.]+\s*$/.test(h);
+    // ⚠️ ONLY the dangerous case: the heading SHOWS a number but is not in a form
+    // this check can verify. Two legitimate conventions must keep passing —
+    // `## 1 · Stability` with the score in the prose (reusd-re, yzusd, tsm-rh,
+    // yzpp, syzusd), and `## 4 · Dependencies — Not separately scored`
+    // (msusd-metronome). Neither asserts a figure, so neither can misstate one.
+    const showsNumber = h.includes("—") && /\d/.test(h.split("—").slice(1).join("—"));
+    if (!strict && showsNumber && LABELS[h.split("—")[0].trim()]) {
+      errors.push(
+        `${file}: axis heading "## ${m[0].slice(3).trim()}" shows a score but is not in the form ` +
+          `"## N · Label — S", so the score is unverifiable. Put the detail in the prose below the heading.`,
+      );
+    }
+  }
   for (const m of body.matchAll(/^## \d · ([A-Za-z &]+?) — ([\d.]+)\s*$/gm)) {
     const label = m[1].trim();
     const shown = m[2];
