@@ -21,11 +21,11 @@ axis_frame: six
 # the six Contract-half items is established. docs/contract-admin-axis.md says we
 # decline to publish without them; the owner overrode that on 2026-10-03 and the page
 # states the gap in terms. The walk is the unblocker [owner: owner] [since: 2026-10-03]
-# ⚠️ PARKED: Issuer 5.5 is not independently derived. TWO inputs ARE established —
-# team not doxxed / pseudonymous lead (adverse), ~4 years no major exploit (positive).
-# FOUR remain unverified: legal entity, jurisdiction, financial audit, and the
-# governance path over this vault. ⚠️ Audits belong to axis 5 and must not lift this
-# when the walk returns [owner: riskAnalyst] [since: 2026-10-03]
+# PARKED: Issuer 5.0 — four inputs still unverified: legal entity, jurisdiction,
+# financial audit, and the governance path over this vault. ⚠️ "No identifiable legal
+# entity" is NOT claimed, because nobody has looked; a measured absence would likely
+# cut further. ⚠️ Audits belong to axis 5 and must not lift this when the walk returns
+# [owner: riskAnalyst] [since: 2026-10-03]
 # PARKED: "no meaningful secondary market" is INHERITED from the 2026-06-30 pass and
 # has never been re-established. ⚠️ It is the one input that could LIFT axis 3, and
 # nobody has enumerated gUSDC venues [owner: riskAnalyst] [since: 2026-10-03]
@@ -37,7 +37,7 @@ backing_score: 5.5
 liquidity_score: 3.5
 underlying_score: 4.0
 structural_score: 5.0
-issuer_score: 5.5
+issuer_score: 5.0
 redemption_score: 4.5
 overall_score: 5.0
 ---
@@ -127,7 +127,7 @@ The vault's value passes through **Gains Network's own protocol contracts** and,
 
 ⚠️ **It is the same mechanism in both directions, and it is not an exploit.** Closing at the peak is simply better than withdrawing and being liquidated, and **no intent is established on either side** — this is a property of how the payout rule is written. ✅ **The consequence a reader can act on is that the vault structurally advantages monitored positions over unmonitored ones.** Someone watching epochs and rollovers is better placed than someone who deposited and left.
 
-## 6 · Issuer — 5.5
+## 6 · Issuer — 5.0
 
 **Two inputs to this axis are established, and they point in opposite directions.**
 
@@ -136,7 +136,13 @@ The vault's value passes through **Gains Network's own protocol contracts** and,
 
 ⚠️ **Four inputs remain genuinely unverified: the legal entity, its jurisdiction, any financial audit, and the governance path over this vault** — specifically, who can change the vault's parameters and by what process.
 
-⚠️ **So the number itself has still not been independently derived.** It rests on the two findings above and four open questions, which is thinner than a score on this page should be. ⚠️ **Audits and the audit bench belong to Contract & Admin and are deliberately not counted here** — a reviewed contract says nothing about whether the operator behaves well.
+✅ **And one measured positive about the operator rather than the code.** The published withdrawal rules reconcile with on-chain behaviour **to 21 seconds** — the same epoch-close measurement cited under Liquidity & Exit, read here for a different question: **the documentation describes what the contract actually does.** That is uncommon enough to count, and it is the only input on this axis measured directly rather than inherited.
+
+⚠️ **What holds the score down is that there is nobody to hold to account.** Four years without an exploit is a substantive record, and a longer one than many venues can claim — but **an extra year of uneventful operation does not offset the absence of an identifiable counterparty.** Against that: no adverse conduct event, no regulatory action, and no loss of principal on the gToken line.
+
+⚠️ **"No identifiable legal entity" is NOT a claim this report makes.** Nobody has looked. The entity question is **unverified**, not answered in the negative — and if it were answered, a measured absence would likely weigh heavier than an unexamined one.
+
+⚠️ **Audits and the audit bench belong to Contract & Admin and are deliberately not counted here** — a reviewed contract says nothing about whether the operator behaves well.
 
 ## Managing a position
 
@@ -168,8 +174,8 @@ Depositors who understand they are **taking the other side of a leveraged tradin
 
 ---
 
-*This report is based on contract-behaviour measurements of the redemption path taken on 2026-10-03 — `previewRedeem` at three sizes, `maxRedeem` through settlement, and the epoch-327 close — together with the collateralization read of the same date. ⚠️ **Contract & Admin is published without an established basis**, as stated in that section. **The Issuer score rests on two established findings — a pseudonymous team and roughly four years without a major exploit — against four unverified inputs, and has not been independently derived.** The secondary-market input is inherited from 2026-06-30 and has not been re-established. The deployment set shown is unconfirmed. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report is based on contract-behaviour measurements of the redemption path taken on 2026-10-03 — `previewRedeem` at three sizes, `maxRedeem` through settlement, and the epoch-327 close — together with the collateralization read of the same date. ⚠️ **Contract & Admin is published without an established basis**, as stated in that section. **The Issuer score rests on three established findings — a pseudonymous team, roughly four years without a major exploit, and published withdrawal rules that reconcile with on-chain behaviour to 21 seconds — against four unverified inputs.** The secondary-market input is inherited from 2026-06-30 and has not been re-established. The deployment set shown is unconfirmed. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
-- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer 5.5 rests on two established findings**, a pseudonymous team and about four years with no major exploit, **against four unverified inputs** (legal entity, jurisdiction, financial audit, governance path over the vault); it has not been independently derived.
+- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer is 5.0**, derived from three established findings — a pseudonymous team, about four years with no major exploit, and published withdrawal rules reconciling with on-chain behaviour to 21 seconds — **against four unverified inputs** (legal entity, jurisdiction, financial audit, governance path over the vault). ⚠️ **The absence of an identifiable counterparty is what holds it down**, and "no legal entity exists" is explicitly not claimed: nobody has looked.
