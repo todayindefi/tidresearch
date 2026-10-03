@@ -17,6 +17,7 @@ market_cap_approx: 822000
 peg_mechanism_score: 5.5
 backing_score: 5.5
 underlying_score: 4.5
+# PARKED: supply rose 821,855 -> 1,323,765 and the depth definition changed (clamped to supply, distribution split out, 2% crossing now $3,373,047). The page's float-as-depth framing and every supply-derived figure need one re-author — NOT two. ⚠️ Trigger is DexTracker's minter attribution for the +501,910: whether it is protocol-owned or genuine issuance decides what the new float MEANS, and the backing ratio cannot be recomputed until the collateral side is re-read [owner: riskAnalyst] [since: 2026-10-03]
 liquidity_score: 5.5
 structural_score: 5.0
 issuer_score: 4.5
@@ -30,6 +31,12 @@ production: false
 **Moderate risk · 5.0/10**
 
 **Category:** Stablecoin | **Peg Mechanism:** Treasury-operated 1:1 frxUSD stability module (88% of supply) plus over-collateralized CDP mint markets (12%) | **Issuer:** Alto Foundation
+
+> ⚠️ **What is current and what is not.** Every supply, backing, float and depth figure on this page was measured at **2026-09-20/21** and describes the asset as it was on that date. **Total supply has since risen to 1,323,765 DUSD**, an increase of about 502,000.
+>
+> ⚠️ **Do not divide that newer supply into the collateral figures below.** The collateral side has **not** been re-read, so the two belong to different dates and the quotient would be an artifact of mixing them rather than a measurement. **The 110.7% ratio in the backing table is a 2026-09-21 reading, and no current ratio has been established.**
+>
+> ⚠️ **The depth figures are also argued on a definition that has been superseded.** They treat the float — supply outside the Curve pool — as the ceiling on what can be sold. The measured depth is now clamped to total supply, with distribution reported separately, and the located 2% crossing is **$3,373,047**. **What the page concludes is unaffected: exit *cost* is excellent and the exit *market* barely exists.** That split is what the newer figures state structurally.
 
 ## Summary
 
@@ -60,6 +67,8 @@ Every DUSD in existence is attributable to a named minter with an on-chain ceili
 | Stability module (frxUSD) | 722,605 | 722,604.611770924639631386 frxUSD | **100.00%** |
 | CDP mint markets | 99,251 | about $186,806 in wstETH, WETH, frxUSD, rETH, sUSDe and syrupUSDC | **188%** |
 | **Total** | **821,855** | **about $909,388** | **110.7%** |
+
+⚠️ **This table is a 2026-09-21 reading.** Supply has risen since; the collateral column has not been re-read, so the ratio cannot be carried forward.
 
 Collateral is valued with the markets' own oracles at block 26,017,854. The CDP book is mostly wstETH ($101,114 against 45,434 DUSD), WETH ($40,541 against 21,227 DUSD) and frxUSD ($37,270 against 29,199 DUSD); the other markets held dust.
 
