@@ -21,11 +21,13 @@ axis_frame: six
 # the six Contract-half items is established. docs/contract-admin-axis.md says we
 # decline to publish without them; the owner overrode that on 2026-10-03 and the page
 # states the gap in terms. The walk is the unblocker [owner: owner] [since: 2026-10-03]
-# PARKED: Issuer 5.0 — four inputs still unverified: legal entity, jurisdiction,
-# financial audit, and the governance path over this vault. ⚠️ "No identifiable legal
-# entity" is NOT claimed, because nobody has looked; a measured absence would likely
-# cut further. ⚠️ Audits belong to axis 5 and must not lift this when the walk returns
-# [owner: riskAnalyst] [since: 2026-10-03]
+# PARKED: Issuer 5.0 — TWO inputs still unverified: any financial audit of Ingenium
+# Labs Foundation, and the governance path over this vault. Entity and jurisdiction
+# are established from the terms of service, read 2026-10-03. ⚠️ Audits belong to
+# axis 5 and must not lift this when the walk returns [owner: riskAnalyst] [since: 2026-10-03]
+# ⚠️ RULED OUT, do not re-file: "GAINS Ventures LLC" (St Vincent and the Grenadines,
+# reg. 3663, gains-associates.com) is a DIFFERENT COMPANY — a separate crypto
+# fundraising platform on a separate domain, not Gains Network's entity.
 # PARKED: "no meaningful secondary market" is INHERITED from the 2026-06-30 pass and
 # has never been re-established. ⚠️ It is the one input that could LIFT axis 3, and
 # nobody has enumerated gUSDC venues [owner: riskAnalyst] [since: 2026-10-03]
@@ -129,18 +131,19 @@ The vault's value passes through **Gains Network's own protocol contracts** and,
 
 ## 6 · Issuer — 5.0
 
-**Two inputs to this axis are established, and they point in opposite directions.**
+⚠️⚠️ **Start with what you could actually do if something went wrong, because it is the sharpest fact on this axis.** The terms of service bind a user to **confidential, binding arbitration, seated in Panama, in English, before a single arbitrator**, under the AAA's Commercial Arbitration Rules, with the award final and **appeal rights expressly waived**. **No court, no class action, and no public record of the proceeding.** That is close to the least recourse a named counterparty can offer.
 
-- ⚠️ **The team is not doxxed.** The lead developer is pseudonymous and the team is small. That is a settled finding rather than an open question, and it is adverse: there is no named party to hold to account for the vault's operation.
-- ✅ **About four years of live operation with no major exploit.** For a perpetuals venue carrying leveraged flow continuously, that is a substantive record and the strongest thing supporting this score.
+**There is a named counterparty, and it is a non-disclosure vehicle.** The site's operator is **"Ingenium Labs Foundation, a foundation of private interests formed under the laws of the Republic of Panama"**, and a user contracts with it as the Site Operator under Panamanian governing law. ⚠️ **A Panamanian foundation of private interests has a founder, a council and beneficiaries rather than shareholders, and the beneficiaries are not public.** ⚠️ **No registration number and no registered address appear in the terms.**
 
-⚠️ **Four inputs remain genuinely unverified: the legal entity, its jurisdiction, any financial audit, and the governance path over this vault** — specifically, who can change the vault's parameters and by what process.
+⚠️ **So the entity question resolves without resolving the accountability question.** A named party now exists; an accountable principal still does not — which is consistent with the pseudonymous team rather than a correction to it:
 
-✅ **And one measured positive about the operator rather than the code.** The published withdrawal rules reconcile with on-chain behaviour **to 21 seconds** — the same epoch-close measurement cited under Liquidity & Exit, read here for a different question: **the documentation describes what the contract actually does.** That is uncommon enough to count, and it is the only input on this axis measured directly rather than inherited.
+- ⚠️ **The team is not doxxed.** The lead developer is pseudonymous and the team is small — a settled finding, and adverse.
+- ✅ **About four years of live operation with no major exploit.** For a perpetuals venue carrying leveraged flow continuously that is a substantive record, and it is the strongest thing supporting this score.
+- ✅ **The published withdrawal rules reconcile with on-chain behaviour to 21 seconds** — the same epoch-close measurement cited under Liquidity & Exit, read here for a different question: **the documentation describes what the contract actually does.** It is the only input on this axis measured directly rather than inherited.
 
-⚠️ **What holds the score down is that there is nobody to hold to account.** Four years without an exploit is a substantive record, and a longer one than many venues can claim — but **an extra year of uneventful operation does not offset the absence of an identifiable counterparty.** Against that: no adverse conduct event, no regulatory action, and no loss of principal on the gToken line.
+⚠️ **Two inputs remain unverified: any financial audit of the foundation, and the governance path over this vault** — who can change its parameters, and by what process.
 
-⚠️ **"No identifiable legal entity" is NOT a claim this report makes.** Nobody has looked. The entity question is **unverified**, not answered in the negative — and if it were answered, a measured absence would likely weigh heavier than an unexamined one.
+**Against the adverse findings: no conduct event, no regulatory action, and no loss of principal on the gToken line.**
 
 ⚠️ **Audits and the audit bench belong to Contract & Admin and are deliberately not counted here** — a reviewed contract says nothing about whether the operator behaves well.
 
@@ -174,8 +177,8 @@ Depositors who understand they are **taking the other side of a leveraged tradin
 
 ---
 
-*This report is based on contract-behaviour measurements of the redemption path taken on 2026-10-03 — `previewRedeem` at three sizes, `maxRedeem` through settlement, and the epoch-327 close — together with the collateralization read of the same date. ⚠️ **Contract & Admin is published without an established basis**, as stated in that section. **The Issuer score rests on three established findings — a pseudonymous team, roughly four years without a major exploit, and published withdrawal rules that reconcile with on-chain behaviour to 21 seconds — against four unverified inputs.** The secondary-market input is inherited from 2026-06-30 and has not been re-established. The deployment set shown is unconfirmed. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report is based on contract-behaviour measurements of the redemption path taken on 2026-10-03 — `previewRedeem` at three sizes, `maxRedeem` through settlement, and the epoch-327 close — together with the collateralization read of the same date. ⚠️ **Contract & Admin is published without an established basis**, as stated in that section. **The Issuer section additionally draws on the Gains terms of service, retrieved 2026-10-03, for the operating entity, the governing law and the dispute-resolution terms; two inputs to that axis — a financial audit and the vault's governance path — remain unverified.** The secondary-market input is inherited from 2026-06-30 and has not been re-established. The deployment set shown is unconfirmed. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
-- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer is 5.0**, derived from three established findings — a pseudonymous team, about four years with no major exploit, and published withdrawal rules reconciling with on-chain behaviour to 21 seconds — **against four unverified inputs** (legal entity, jurisdiction, financial audit, governance path over the vault). ⚠️ **The absence of an identifiable counterparty is what holds it down**, and "no legal entity exists" is explicitly not claimed: nobody has looked.
+- **2026-10-03 — first publication, staged.** Six axes. ⚠️ **Liquidity & Exit is 3.5 and absorbs the former separate Redemption axis**, which had scored a 6.0 secondary against a 4.5 primary and reported the better of the two; under the worse-link rule the primary governs. The exit is a **72-hour epoch cycle with a 48-hour request window**, maturing **1–3 epochs later by collateralization** — about 3 days above 120%, 6 days at 110–120%, 9 days below 110% — **plus up to 24 hours** before a request window opens. ⚠️ **The wait triples exactly as the buffer fails**, which is the finding; at the **96.57%** read of this date the effective exit is about ten days. ✅ **No price haircut: `previewRedeem` is exact at three sizes, 0 bps** — collateralization below par gates quantity and timing, not price. ✅ `maxRedeem` returns 0 globally once settlement begins; epoch 327 closed 21 seconds after `epoch_start + 48h`. ⚠️ **Contract & Admin 5.0 is published without an established basis** — no authority walk exists — and says so on the page. **Issuer is 5.0.** The operator is **Ingenium Labs Foundation, a Panamanian foundation of private interests**, read from the terms of service on 2026-10-03 — ⚠️ **a non-disclosure vehicle whose beneficiaries are not public, with no registration number or registered address given.** Recourse is **confidential single-arbitrator arbitration seated in Panama, AAA Commercial Rules, appeal waived.** Set against a pseudonymous team, about four years with no major exploit, and documentation matching chain behaviour to 21 seconds. ⚠️ **A named counterparty exists; an accountable principal does not.** The two unverified inputs are a financial audit and the vault's governance path.
