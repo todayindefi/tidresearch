@@ -80,11 +80,18 @@ The risk this axis prices is **secondary-market detachment**, not the rate. A la
 
 **Ethereum: 9.0.** Each wstETH is a claim on stETH, which is a claim on ETH staked by Lido's validator set. There is no off-chain custodian in the backing path and nothing to attest to — the collateral is validator stake, and the claim on it is expressed as a rate rather than a balance.
 
-⚠️ **Monad: 6.5, and the reason is that a verifiable reserve is not the same as a reserve that is yours.** The mainnet lock pool behind the bridged supply held **21,353.231 wstETH** on 2026-10-03, down about 34% from 32,358 in August. ✅ **And the reconciliation against it is exact, not a bound:** unsiloed balance **21,305.268** against a shared mint total of **21,305.145**, a residual of **0.1227 wstETH**. The collateral is there and it is countable.
+⚠️ **Monad: 6.5, and the reason is that a verifiable reserve is not the same as a reserve that is yours.** Both figures below carry their own read date, and the movement between them is the point:
 
-⚠️ **But Monad's leg is not siloed** — `isSiloed` reads **false** — so it draws on that shared unsiloed claim rather than on a reserve of its own, and **Monad's mint is 99.45% of it**, up from 97.7% in August. The other legs on the same claim are **megaeth at 117.126 wstETH** and four chains holding dust (abstract, ink, plasma, jovay). Three of the nine deployments *are* siloed: bitlayer, 0g and robinhood.
+| | 2026-08-22 | 2026-10-03 |
+|---|---:|---:|
+| mainnet lock pool | 32,358 wstETH | **21,353.231** |
+| Monad's share of the shared unsiloed claim | 97.7% | **99.45%** |
 
-⚠️ **The pool shrank while Monad's share of it rose**, so the gap between "shared in principle" and "shared in practice" has narrowed rather than widened. A verifiable reserve is still not a reserve that is ring-fenced to your chain.
+⚠️ **The pool shrank about 34% while Monad's share of it rose**, so the gap between "shared in principle" and "shared in practice" narrowed rather than widened — the opposite of what a reader would guess from either figure alone.
+
+✅ **The reconciliation is exact, not a bound.** Unsiloed balance **21,305.268** against a shared mint total of **21,305.145** at 2026-10-03, a residual of **0.1227 wstETH**. The collateral is there and it is countable.
+
+⚠️ **But Monad's leg is not siloed** — `isSiloed` reads **false** — so it draws on that shared claim rather than on a reserve of its own. The other legs on it are **megaeth at 117.126 wstETH** and four chains holding dust (abstract, ink, plasma, jovay). Three of the nine deployments *are* siloed: bitlayer, 0g and robinhood.
 
 ⚠️ **What that means for a holder.** The reserve can be verified and is still **not ring-fenced to your chain**. Monad's claim and five other chains' claims sit against one pool, and Monad's share of it is almost the whole thing. Being able to see the collateral and having an exclusive claim on it are different properties, and only the first is established here.
 
