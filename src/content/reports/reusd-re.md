@@ -11,7 +11,7 @@ last_verified: "2026-08-25"
 # metrics endpoint and the report re-framed onto the six-axis core. The
 # structural material was re-scoped, not re-read, so `last_verified` HOLDS at
 # 2026-08-25 deliberately — do not bump it on a sweep.
-last_revised: "2026-09-06"
+last_revised: "2026-10-04"
 featured: false
 # MOVED BACK TO STAGING 2026-08-31, deliberately — do not re-promote on a
 # freshness or completeness sweep. ⚠️ The site owner's rule is that THIS REPORT
@@ -22,7 +22,8 @@ featured: false
 # asset-attributed denominator, so no collateral ratio is derivable for reUSD
 # alone. ⚠️ That is an honest PERMANENT blank, not a pending measurement, so
 # the gate stays shut and this report stays staged.
-# `?asset=reusde-re` is registered but still awaiting its producer feed.
+# ⚠️ `?asset=reusde-re` feed LANDED 2026-10-04 01:11; rendering unconfirmed —
+# see the note on reusde-re.md. Do not claim 'live' until bm confirms.
 # TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
 # both reports together. Checked before demoting: no `production: true` report
 # links here, so nothing 404s on prod (only frax.md links in, and it is staged).
@@ -44,15 +45,22 @@ market_cap_approx: 181000000
 #   backing_score 5.0 is NEW. Collateral is good in QUALITY and NOT
 #     diversified — measured 99.05% sUSDe, T-Bills $0. The concentration is
 #     priced on axis 4, not here, or it would be double-counted.
-#     ⚠️ 5.0 rather than 5.5 on the attachment point, which is 7.94% measured
-#     2026-09-06 against 11.06% on 08-11, both all-chain. ⚠️ The 08-24 9.66%
-#     is NOT in that series: it divided by the ETHEREUM LEG alone, which
-#     overstates attachment. DILUTION BY GROWTH, NOT A WORSE BOOK:
-#     no claim event, combined ratio still 92%, and the junior layer is
-#     measurably FLAT (+0.4%) while the senior grew. It is now basis-
-#     INDEPENDENT — the point falls on the $20M waterfall basis AND on the
-#     $72.97M balance-sheet basis — which is why it moves a score where three
-#     earlier readings of the same finding did not.
+#     ⚠️⚠️ THE ATTACHMENT-POINT BASIS FOR THIS SCORE IS WITHDRAWN (2026-10-04,
+#     riskAnalyst retirement of 2026-09-20). The 9.66% / 7.94% / 11.06% ratios
+#     are RETIRED as current metrics: Re publishes NO current contractual
+#     numerator for capital subordinated ahead of the senior tranche, so no
+#     attachment percentage is computable today.
+#     ⚠️ AND THE TWO JUNIOR FIGURES ARE NON-INTERCHANGEABLE, not merely
+#     unreconciled: ~$77M is a JUNE 2026 BALANCE-SHEET figure, ~$20M is a
+#     LOSS-WATERFALL SCENARIO LAYER. They measure different quantities, so
+#     "size to the smaller one" is a CATEGORY ERROR rather than conservatism —
+#     it yields a precise number for a quantity nobody publishes.
+#     ⚠️ 5.0 is therefore a PROVISIONAL HOLD, not a derivation. What survives
+#     is the DIRECTION through 2026-09-06 — the cushion thinned on both bases
+#     — and the cause: DILUTION BY GROWTH, NOT A WORSE BOOK. No claim event,
+#     combined ratio still 92%, junior layer measurably FLAT (+0.4%) while the
+#     senior grew. ⚠️ Our 5.0 and riskAnalyst's 5.0 agree; the published BASIS
+#     was what diverged, which a score-sync check cannot see.
 #   underlying_score 5.0 is NEW and renders as DEPENDENCIES: three-channel
 #     Ethena exposure plus the off-chain stack.
 #   issuer_score 5.5 is NEW and is SHARED WITH reusde-re — same entity, so two
@@ -126,13 +134,17 @@ Two pools sit behind the token. The **off-chain leg** is fully-collateralised re
 
 **Verification of the off-chain leg is genuine but is attestation, not proof.** The Network Firm publishes daily reserve attestations; **Chainlink Proof of Funds** publishes hashed trust balances and premium/claim flow on-chain 24/7; Grant Thornton (Cayman) audits annually.
 
-⚠️ **The subordination beneath the senior tranche has thinned, and the reason is growth rather than loss.** On the sizing basis this report recommends — the smaller of Re's two published junior-capital figures — **the first-loss layer is 7.94% of the senior tranche, measured 2026-09-06**, against the 10% level conventionally treated as the institutional norm. Both operands are measured the same day: the senior tranche at **$251.8M**, and a live junior proxy of **$72.97M** from Re's own reserve arithmetic.
+⚠️⚠️ **There is no current attachment point for this tranche, and that is the finding — not a gap in the reading.** Re publishes **no current contractual figure** for the capital subordinated ahead of the senior, so the cushion protecting a reUSD holder **cannot be expressed as a percentage today.** Any such ratio would need a contractual numerator that does not exist.
+
+⚠️ **The two junior-capital figures Re does publish are not two estimates of one thing.** The **~$77M** is a **June 2026 balance-sheet** figure from its product pages. The **~$20M** is a **loss-waterfall scenario layer**. ⚠️ **They measure different quantities, so neither can stand in for the other, and a ratio built from either is not an attachment point.** Choosing the smaller would produce a precise number for something nobody is measuring — which is worse than publishing none, because it reads as measured.
+
+⚠️ **What is established is the direction, through 2026-09-06: the cushion thinned, on both of Re's bases, and the cause was growth rather than loss.**
 
 ⚠️ **This is dilution by growth, and it is not a deterioration in the reinsurance book.** There has been no claim event; the combined ratio is still 92%, no treaty has finished above 99%, and collateral quality is unchanged. **The junior layer is measurably flat — about +0.4% — while the senior tranche grew.** What got thinner is the cushion relative to a tranche that outgrew it. **Re raising more senior money than junior is the ordinary consequence of selling the senior product well**, which is exactly why it goes unnoticed: growth reads as health. **When a ratio moves, check which side moved.**
 
-✅ **Two things make this worth acting on rather than watching.** It is now **basis-independent** — the attachment point falls on the conservative **$20M waterfall basis (7.94%)** *and* on the **$72.97M balance-sheet basis (28.98%)** — so it no longer depends on resolving Re's own $77M-versus-$20M ambiguity. And the junior layer is now **measured rather than assumed**: earlier readings of this finding divided a June junior figure by an August senior read and had to be flagged indicative.
+✅ **The decline was visible on both of Re's bases, which is why it is worth carrying even without a level.** Whichever junior figure the series was run against, it fell through 2026-09-06 — so the direction does not depend on resolving the $77M-versus-$20M question. **The trend is established; the current level is not.**
 
-**5.0** on that attachment point and on the NAV being issuer-written, against collateral that is otherwise high-grade.
+⚠️ **Backing 5.0 is a provisional hold, and it is deliberately not justified by any attachment percentage.** It rests on the NAV being issuer-written against collateral that is otherwise high-grade, and on a cushion whose direction is known and whose size is not. **A score can be right while its stated reason is wrong, and the reason here is the thing that was corrected.**
 
 ## 3 · Liquidity & Exit
 
@@ -196,7 +208,7 @@ Resilience BVI Ltd. is a named, licensed entity operating under a **BVI securiti
 - **NAV vs market price spread.** Target under 50bps in calm conditions; over 200bps is a stress signal.
 - **Sleeve composition.** ⚠️ **A rotation into T-Bills would be the single most meaningful de-risking event available to this asset**, because it is the only permitted holding that reduces Ethena concentration. It has not happened.
 - **Ethena sUSDe basis health.** It reaches the yield, the reserve and the Mainnet exit asset at once.
-- **Whether Re reconciles its two junior-capital figures**, and attests the junior layer. A Grant Thornton confirmation, a Chainlink proof-of-funds line item or a BVI filing would turn the $77M from an assertion into evidence. Until then, size to the smaller number. **This is the single most useful question to put to the issuer.**
+- ⚠️ **Whether Re publishes a current contractual subordination figure at all.** Not a reconciliation of the two it already publishes — those measure different things — but **a stated amount contractually subordinated ahead of the senior tranche, as of a date.** That single number would restore the attachment point. **It is the most useful question to put to the issuer**, and until it is answered no cushion percentage for this tranche is computable.
 - **Mezzanine capacity.** [reUSDe](/reports/reusde-re/) stands at **$19.85M**, or **9.14% of the senior tranche** (14,094,070 tokens at NAV 1.408519, measured 2026-08-27). It came through its first-ever redemption window in July 2026 in an orderly way. If it contracts relative to the underwriting book, reUSD's loss buffer thins.
 
 ## A note on the tranche structure
@@ -209,9 +221,11 @@ reUSD is the **senior** layer in a three-tier waterfall: Re Protocol's own equit
 | Mezzanine — [reUSDe](/reports/reusde-re/) (second loss) | **$19.85M** | 14,094,070 × NAV 1.408519, measured on-chain 2026-08-27 |
 | Senior — reUSD (last loss) | **$251.8M** | measured 2026-09-06; the Ethereum leg alone read $217.2M on-chain at 2026-08-27 |
 
-Taken at face value that is roughly **$96M sitting beneath the senior tranche**. But **Re publishes two different junior-capital numbers.** The product pages say $77M; a page walking through loss scenarios says "about $20M of Re capital and $15M of reUSDe." **These are not competing snapshots** — Re's own published history rules that out, since its non-tokenised capital has never been below $55.1M and no date in the record pairs those two figures. The reading that fits is that **the $77M is Re's balance-sheet depth, while about $20M of it is contractually subordinated ahead of reUSDe in the attachment schedule.** Balance-sheet depth and waterfall thickness are not the same number.
+⚠️ **Do not add that column into a cushion.** Re publishes two junior-capital numbers and **they are not competing snapshots of one quantity.** The product pages say **$77M**, dated June 2026, which is **balance-sheet depth**. A loss-scenario page says "about $20M of Re capital and $15M of reUSDe", which is a **waterfall layer**. ⚠️ **Balance-sheet depth and contractual subordination are different things, and neither substitutes for the other.**
 
-**Size to the smaller one.** Loss absorption follows what the reinsurance treaties subordinate, not what the balance sheet happens to hold. Equity above the attachment point may well absorb losses — Re has every commercial incentive to protect its tokens — but nothing published *obliges* it to before reUSDe is impaired.
+⚠️ **So there is no current attachment point, and "take the smaller figure" is not the conservative answer — it is a category error.** It yields a precise percentage for a quantity nobody publishes, and a precise number reads as a measured one. **What is honest is that the size of the cushion is unknown and its direction through 2026-09-06 was downward.**
+
+**And the distinction that remains true regardless:** loss absorption follows what the reinsurance treaties subordinate, not what the balance sheet happens to hold. Equity above the attachment point may well absorb losses — Re has every commercial incentive to protect its tokens — but nothing published *obliges* it to before reUSDe is impaired.
 
 In the unit reinsurance actually uses: a **combined ratio** is claims plus expenses as a percentage of premiums collected, so below 100% the book is profitable. Re's book is about **$358M of premium**, and premiums plus buffer absorb claims up to a **105%** combined ratio before any capital layer is touched. From there:
 
@@ -229,6 +243,7 @@ Re Protocol runs a loyalty points program surfaced on the asset dashboard; curre
 
 ## Revision history
 
+- **2026-10-04 — the attachment-point basis is withdrawn; Backing held at 5.0.** ⚠️ **The 9.66% / 7.94% / 11.06% ratios are retired as current metrics.** Re publishes **no current contractual figure** for capital subordinated ahead of the senior tranche, so **no attachment percentage is computable for this tranche today** — the numerator does not exist as a published quantity. ⚠️ **And the two junior-capital figures are non-interchangeable rather than unreconciled:** ~$77M is a **June 2026 balance-sheet** figure, ~$20M is a **loss-waterfall scenario layer**. They measure different quantities, so the previous instruction to size to the smaller one is withdrawn — it produces a precise number for something nobody measures, which reads as measured. ✅ **What survives is the direction and its cause:** through 2026-09-06 the cushion thinned on both of Re's bases, by **dilution through growth rather than any loss** — no claim event, combined ratio still 92%, junior layer flat at +0.4% while the senior grew. **Backing 5.0 is a provisional hold resting on the issuer-written NAV against otherwise high-grade collateral, explicitly not on an attachment percentage.**
 - **2026-09-06 — Backing 5.5 → 5.0. The first-loss attachment point is 7.94% of the senior tranche, against 11.06% on 08-11** — both readings on the same all-chain basis, and both with operands measured on their own date. Today's: senior **$251.8M**, junior proxy **$72.97M**. ⚠️ **Dilution by growth, not a worse book** — no claim event, combined ratio still 92%, and the junior layer is flat at about +0.4% while the senior grew 39.3% in 26 days. The finding is now **basis-independent**, falling below norm on the $20M waterfall basis and on the balance-sheet basis alike.
 - **2026-09-06 — the on-chain sleeve is 99.05% sUSDe and holds no T-Bills.** Measured from Re's metrics endpoint: sUSDe 99.05%, reUSD/sUSDe LP 0.87%, USDe 0.06%, USDC 0.01%, T-Bills $0 — **99.98% Ethena-derived.** The T-Bill strategy is a permitted rotation that has not occurred, so the sleeve is one synthetic dollar rather than a diversified book.
 - **2026-08-27 — senior and mezzanine re-measured.** The Ethereum leg reads **198,103,604 reUSD at NAV 1.096411, about $217.2M**; Re's `/tvl` reports **$233.7M all-chain**, issuer-reported. The mezzanine is **14,094,070 reUSDe at NAV 1.408519 = $19.85M, or 9.14% of the senior** — NAV corroborated by Re's endpoint and CoinGecko to 0.03%.

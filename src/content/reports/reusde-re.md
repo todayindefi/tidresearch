@@ -20,7 +20,12 @@ featured: false
 # See reusd-re.md for the full gate. The reUSD monitor's axis 5 now renders,
 # but its collateral ratio is a permanent honest blank (Re publishes combined
 # reUSD + reUSDe reserves with no asset-attributed denominator), and
-# `?asset=reusde-re` is registered but still awaiting its producer feed.
+# ⚠️ `?asset=reusde-re` feed LANDED 2026-10-04 01:11 — nine payloads, verified
+# non-empty by direct fetch. Whether the dashboard RENDERS them is unconfirmed:
+# bm's registry carries report_status 'unavailable' for this slug, and every
+# entry carrying that field is a staged report of ours, which suggests it tracks
+# OUR report's availability rather than their rendering — but that is inference,
+# not bm's answer. Do not claim 'live' until bm confirms.
 # TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
 # both reports together. Checked before demoting: no `production: true` report
 # links here, so nothing 404s on prod (only frax.md links in, and it is staged).
@@ -74,10 +79,12 @@ issuer_score: 5.5
 redemption_score: 2.0
 overall_score: 3.0
 # ⚠️ POINTS AT OUR OWN MONITOR, not the issuer's — see reusd-re.md for the
-# reasoning. ⚠️ This target is not merely unfinished, it is EMPTY: registered
-# and reachable but awaiting its producer feed, so it renders a staged
-# placeholder. The body says so plainly. Acceptable only while this report is
-# staged alongside it; the two promote together.
+# reasoning. ⚠️ No longer EMPTY: the producer feed landed 2026-10-04 01:11 and
+# the payloads are non-empty (verified by direct fetch). ⚠️ But whether the
+# page RENDERS them is unconfirmed, so the body claims a work in progress
+# rather than a live monitor. Acceptable only while this report is staged
+# alongside it; the two promote together. ⚠️ Confirm rendering with
+# backing-monitor BEFORE promotion — a live page must not link to a blank one.
 live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusde-re"
 ---
 
@@ -89,7 +96,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusde
 
 > **Issuer-published dashboard:** [app.re.xyz/reusde](https://app.re.xyz/reusde) — **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, historical charts, capital tranching diagram, and Chainlink Proof of Reserves links. It is the canonical source for live metrics on this asset.
 >
-> **Independent monitor (staged, no data yet):** [tidresearch backing monitor — reUSDe](https://todayindefi.github.io/backing-monitor/?asset=reusde-re) — the page is registered and reachable but is **awaiting its producer feed**, so it currently renders a staged placeholder rather than figures. ⚠️ **There is nothing to read there yet.** It is linked because this report and that monitor promote together, and the link is what makes the pairing checkable while both are unfinished. The sibling [reUSD monitor](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) does carry data, with its own stated gaps.
+> **Independent monitor (staged):** [tidresearch backing monitor — reUSDe](https://todayindefi.github.io/backing-monitor/?asset=reusde-re) — our own read of the same asset, built to sit **beside** the issuer's page rather than replace it. ⚠️ **Its data feed landed 2026-10-04**; whether the page renders that data yet is not confirmed, so treat the link as a work in progress rather than a live monitor.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
