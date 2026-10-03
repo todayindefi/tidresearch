@@ -36,6 +36,11 @@ axis_frame: six
 volatility_score: 3.5
 backing_score: 2.5
 structural_score: 4.0
+# ⚠️ `redemption_score` fold status is UNDECLARED. It renders nowhere under the
+# frame (SIX_AXES has no Redemption row), but whether the SCORE was folded into
+# axis 3 under the worse-link rule, or is retained as a legacy supplemental
+# component, is riskAnalyst's call and has not been stated. Do not infer either
+# from this silence — 17 of our 20 six-axis reports state it and this one does not.
 redemption_score: 3.5
 liquidity_score: 2.0
 issuer_score: 5.0

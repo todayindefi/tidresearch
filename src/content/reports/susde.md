@@ -22,6 +22,11 @@ issuer_score: 7.0
 axis_frame: six
 liquidity_score: 7.0
 structural_score: 5.5
+# `redemption_score` is a LEGACY SUPPLEMENTAL component, NOT folded into axis 3 here.
+# Axis 3 holds on its own measured basis (secondary depth measured, primary leg
+# permissionless and deliberately not measured as depth) rather than on
+# min(liquidity, redemption) — that minimum would cross two rubrics. It renders
+# nowhere under the frame; riskAnalyst's publish_feed / portfolio_risk read it.
 redemption_score: 6.5
 overall_score: 6.5
 # Venue-derived (TVL + pool count per chain, enumerated 2026-10-02), NOT
