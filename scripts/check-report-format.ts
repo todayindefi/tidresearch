@@ -90,7 +90,7 @@ const SELF_REF_RATCHET: [RegExp, string][] = [
 ];
 
 /**
- * ⚠️ A BURN-DOWN LIST, NOT AN EXEMPTION. Counted 2026-10-02: 62 violations across
+ * ⚠️ A BURN-DOWN LIST, NOT AN EXEMPTION. Counted 2026-10-02: 61 violations across
  * 26 in-scope reports. Failing the build on all of them would have forced a
  * 26-file sweep nobody asked for, and a bulk pass is itself a source of error —
  * the syzUSD self-reference regression came from a restructure, not from drafting.
@@ -124,7 +124,7 @@ const SELF_REF_BACKLOG: Record<string, number> = {
   "susdai.md": 1,
   "susdat.md": 1,
   "syrupusdc-retail.md": 3,
-  "syrupusdt-retail.md": 2,
+  "syrupusdt-retail.md": 1,
   "thbill-retail.md": 1,
   "usdai.md": 1,
   "usdat.md": 3,
