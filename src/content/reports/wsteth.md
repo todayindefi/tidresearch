@@ -146,7 +146,7 @@ Holders who want ETH staking exposure in the form DeFi is built around, and who 
 
 ---
 
-*This report is based on direct reads of the mainnet wstETH contract on 2026-10-03 (`symbol()`, `stEthPerToken()`, `totalSupply()`), and on riskAnalyst's 2026-10-03 authority walk of the Monad deployment and its backing reconciliation. ⚠️ Liquidity and Redemption on Monad are **not measured** and are published as such rather than inherited from Ethereum. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report is based on direct reads of the mainnet wstETH contract on 2026-10-03 (`symbol()`, `stEthPerToken()`, `totalSupply()`), and on a 2026-10-03 authority walk of the Monad deployment and a reconciliation of the mainnet lock pool behind it. ⚠️ Liquidity and Redemption on Monad are **not measured** and are published as such rather than inherited from Ethereum. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
