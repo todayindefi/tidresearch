@@ -153,3 +153,17 @@ what the page says and can contradict the prose beside it.
 Axis 5 has requirements the other axes do not, because it is the axis where an on-chain read looks most conclusive and is most easily over-read. **See [contract-admin-axis.md](contract-admin-axis.md).**
 
 In short: derive every address from a call that returns it rather than from a display string; read slots and role IDs off the contract rather than from their names; **reconcile the measurement against the issuer's own docs and repositories, and record whether they agree, disagree, or are silent**; check whether any audit or bug bounty actually covers the privileged-role surface; and state the chains not read. **`eth_getCode` returning `0x` proves there is no on-chain quorum — it never proves one private key.**
+
+## 8 · Issuer carries its own evidence rules too
+
+Axis 6 has the opposite failure mode to axis 5: nothing about it can be read off a
+contract, so a number can be authored with no basis at all and look exactly like one
+that was derived. **See [issuer-axis.md](issuer-axis.md).**
+
+In short: the entity outcome is three-state — named, looked-for-and-not-identifiable, or
+**not looked for** — and only the middle one is a result; state **recourse**, not just
+the name, because governing law and dispute terms are what a holder can act on; name
+which inputs are established and which are not, individually rather than as a hedge;
+**nothing from axis 5 may appear here**, including relabelled as entity conduct; and say
+whether the number was **derived from the current inputs or carried across a change**.
+⚠️ **A named entity is not accountability, and an unexamined absence is not a measured one.**
