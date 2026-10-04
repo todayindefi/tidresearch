@@ -17,7 +17,19 @@ volatility_score: 6.5
 backing_score: 6.5
 underlying_score: 6.0
 issuer_score: 7.0
-# PARKED: DOLA/sUSDe is 82.8% of published exit depth and $64.9M is a TWO-SIDED pool figure — which leg carries it is unmeasured, and needs a coins()/balances() read [owner: riskAnalyst] [since: 2026-10-02]
+# ✅ 2026-10-04 MEASURED by our own read of pool 0x744793b5110f6ca9cc7cdfe1ce16677c3eb192ef:
+# coins(0)=DOLA, coins(1)=sUSDe, two coins only, so DexTracker's pair label is correct.
+# balances: DOLA 48,555,836.38 | sUSDe 14,382,947.61 shares x 1.251308 USDe/share =
+# 17,997,504.59. At $1 per leg that is $66,553,341 total — DOLA 72.96%, sUSDe 27.04%.
+# (+0.13% vs DexTracker's $66,468,390; +2.55% vs the $64.9M published below.)
+# ⚠️ PARKED: SO ONLY ~$18.0M OF THAT POOL IS sUSDe, AND WHAT ABSORBS AN sUSDe SELLER IS
+# THE $48.6M DOLA LEG. The body publishes $64.9M as "82.8% of indexed Ethereum depth",
+# which counts the sUSDe side as sUSDe exit capacity. ⚠️ If the same two-sided
+# convention runs through the $78.39M denominator then the 82.8% is also not an
+# exit-capacity share. ⚠️ ADVERSE on a production page and the 82.8% is a scoring
+# input, so nothing is changed here: with the owner, and riskAnalyst to rule on whether
+# the convention is deliberate — if it is, the fix is a LABEL on "depth", not a number
+# [owner: riskAnalyst] [since: 2026-10-02]
 # PARKED: our DOLA assessment (last_verified 2026-07-01, staging-only) is the source for "roughly half of DOLA backing is sUSDe" — Tier 4 in the refresh queue [owner: riskAnalyst] [since: 2026-10-02]
 axis_frame: six
 liquidity_score: 7.0
