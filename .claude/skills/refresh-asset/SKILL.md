@@ -160,5 +160,10 @@ surface that contradicts us and saying nothing** — see `feedback_a_pointer_is_
 ## Finish
 
 `npm run build` must exit 0. Verify the claim on the rendered page or the live URL, not in
-the frontmatter you just wrote. Report what moved, what did not, and what you declined to
+the frontmatter you just wrote.
+
+⚠️ **Resolve the URL from the file's `slug:`, never from its filename** — five reports
+override it (`syrupusdc-retail.md` → `/reports/syrupusdc/`). A poll built from the filename
+404s forever and reads exactly like a slow deploy. ✅ Print `%{http_code}`; `curl -s | grep -q`
+makes a 404 and a stale page the same observation. Report what moved, what did not, and what you declined to
 publish and why.
