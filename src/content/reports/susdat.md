@@ -36,16 +36,48 @@ axis_frame: six
 volatility_score: 3.5
 backing_score: 2.5
 structural_score: 4.0
-# ⚠️ `redemption_score` fold status is UNDECLARED. It renders nowhere under the
-# frame (SIX_AXES has no Redemption row), but whether the SCORE was folded into
-# axis 3 under the worse-link rule, or is retained as a legacy supplemental
-# component, is riskAnalyst's call and has not been stated. Do not infer either
-# from this silence — 17 of our 20 six-axis reports state it and this one does not.
+# ✅ FOLD STATUS DECLARED 2026-10-04 (riskAnalyst, owner ruling): redemption folds
+# into axis 3, and `redemption_score` is RETIRED on this asset rather than re-scored.
+# No number moved on the fold itself — liquidity 2.0 was already worse than
+# redemption 3.5, so the worse link was already on axis 3.
+# ⚠️ NOT YET DROPPED, AND IT CANNOT BE DROPPED ALONE. `category: vault-share`
+# resolves to `wrappedAxes`, where `redemption_score: score` is REQUIRED, not
+# optional. Measured 2026-10-04: deleting this line fails the build with
+# `redemption_score: Required` (exit 1). Retiring it needs the schema relaxed to
+# `score.optional()` in src/content.config.ts — which relaxes it for all 31 reports
+# carrying the field, while riskAnalyst's own migration is incomplete (108 of theirs
+# still carry it) and they asked us NOT to generalise from this asset.
+# PARKED: retire `redemption_score` here once the schema change is scoped — it is a
+# shared constraint, not a per-report edit [owner: tidr] [since: 2026-10-04]
 redemption_score: 3.5
 liquidity_score: 2.0
 issuer_score: 5.0
 underlying_score: 2.5
 overall_score: 3.0
+# PARKED: riskAnalyst reports liquidity 2.0 -> 1.5 (2026-10-04) — the $100,000 rung
+# deteriorated about 4.7x, returning $64,416 against the $92,446 the 09-12 cut was set
+# on. ADVERSE CHANGE ON A LIVE PAGE: held for owner confirmation, not published
+# [owner: tidr] [since: 2026-10-04]
+# PARKED: the on-chain buffer RECOVERED to 6.23% ($4,155,240 / $66,688,698, read
+# 2026-10-04) — about 5.6x off the $742,960 low. Several rows on this page still argue
+# the ~1.45% level dated 2026-08-24, and line "near-empty on-chain buffer" is undated
+# and now wrong. Correction pending with the score decision, since both land in the
+# same rows [owner: tidr] [since: 2026-10-04]
+# ⚠️ PARKED: OUR OWN BASIS COLLISION — "1.45%" is printed on this page for TWO
+# different ratios: "around 1.45% of assets ($1.16M)" and a table row labelled
+# "Buffer / off-chain STRC 11.98% -> 1.45%" ($1.13M). Different denominators cannot
+# both give 1.45%. Raised with riskAnalyst; do not resolve by recency
+# [owner: riskAnalyst] [since: 2026-10-04]
+# ⚠️ PARKED: our "1.4%-2.3% band it has held all summer" is contradicted by the
+# dashboard THIS PAGE LINKS, which reports 698 observations ranging 0.21%-8.85%,
+# median 3.46%. Our stated band is too narrow [owner: tidr] [since: 2026-10-04]
+# ⚠️ PARKED: unprocessed CRIT from riskAnalyst — implementation drifted to
+# 0x2b7074CF...4E0A since 2026-09-30 against the recorded 0x2005E0CA... Feed says the
+# admin role holder is a timelock, so it reads as a governed upgrade, but duration,
+# proposer and the implementation diff are ALL UNREAD and the walk is queued, not
+# commissioned. `structural_score: 4.0` is HELD, NOT CONFIRMED — holding it states
+# that no measurement exists, not that one came back clean. ⚠️ Publish NO contract
+# claim until the walk lands [owner: securityAnalyst] [since: 2026-10-04]
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
 
