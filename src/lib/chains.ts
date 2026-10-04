@@ -42,6 +42,12 @@ const ALIASES: Record<string, string> = {
   // "Ethereum · xrpl" on rlusd and "…Solana · sui" on ausd. check-chain-slugs.ts
   // now fails the build on any unmapped slug so this cannot recur silently.
   celo: "celo",
+  // Added 2026-10-04 for reUSD's 13-chain footprint; all four appear in Re
+  // Protocol's own contract table and were absent from this registry.
+  megaeth: "megaeth",
+  katana: "katana",
+  bera: "berachain",
+  tempo: "tempo",
   fantom: "fantom",
   stellar: "stellar",
   sui: "sui",
@@ -50,6 +56,9 @@ const ALIASES: Record<string, string> = {
 
 const LABELS: Record<string, string> = {
   monad: "Monad",
+  megaeth: "MegaETH",
+  katana: "Katana",
+  tempo: "Tempo",
   sei: "Sei",
   pharos: "Pharos",
   berachain: "Berachain",
