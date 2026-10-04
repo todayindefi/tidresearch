@@ -22,14 +22,21 @@ issuer_score: 7.0
 # balances: DOLA 48,555,836.38 | sUSDe 14,382,947.61 shares x 1.251308 USDe/share =
 # 17,997,504.59. At $1 per leg that is $66,553,341 total — DOLA 72.96%, sUSDe 27.04%.
 # (+0.13% vs DexTracker's $66,468,390; +2.55% vs the $64.9M published below.)
-# ⚠️ PARKED: SO ONLY ~$18.0M OF THAT POOL IS sUSDe, AND WHAT ABSORBS AN sUSDe SELLER IS
-# THE $48.6M DOLA LEG. The body publishes $64.9M as "82.8% of indexed Ethereum depth",
-# which counts the sUSDe side as sUSDe exit capacity. ⚠️ If the same two-sided
-# convention runs through the $78.39M denominator then the 82.8% is also not an
-# exit-capacity share. ⚠️ ADVERSE on a production page and the 82.8% is a scoring
-# input, so nothing is changed here: with the owner, and riskAnalyst to rule on whether
-# the convention is deliberate — if it is, the fix is a LABEL on "depth", not a number
-# [owner: riskAnalyst] [since: 2026-10-02]
+# ✅ 2026-10-04 RULED by riskAnalyst: the convention is NOT deliberate — their
+# specs/liquidity-ladder-spec.md §94 forbids it outright ("Pool TVL is NEVER substituted
+# for depth, and a field's NAME may not claim more than its basis"). So it was relabelled,
+# not labelled. TVL now reads as TVL in all three places, and the measured DOLA/sUSDe
+# split is published. ⚠️ Their Liquidity 7.0 does not move and neither does ours — both
+# rest on the routed $2M-inside-50bps ladder, with the pool figure recorded as a fact and
+# never priced as a deduction.
+# ⚠️ PARKED: the "$13.5M of non-DOLA" clause is the stated basis for withdrawing the
+# DOLA-concentration deduction, and it is TVL — the absorbing side of those pools is
+# necessarily smaller and NONE has been read leg by leg. The withdrawal may still be
+# right (the sUSDe/USDT pairs absorb in USDT, unaffected in kind) but the reason as
+# written is weaker than it reads [owner: riskAnalyst] [since: 2026-10-02]
+# ⚠️ PARKED: one-sided absorbing-side capacity is the correct quantity for this axis and
+# NO page in either corpus carries it for any asset. Unmeasured here: sDAI, reUSD,
+# scrvUSD, frxUSD, crvUSD, reUSDe [owner: riskAnalyst] [since: 2026-10-04]
 # PARKED: our DOLA assessment (last_verified 2026-07-01, staging-only) is the source for "roughly half of DOLA backing is sUSDe" — Tier 4 in the refresh queue [owner: riskAnalyst] [since: 2026-10-02]
 axis_frame: six
 liquidity_score: 7.0
@@ -82,7 +89,7 @@ Following the Q1 2026 architecture pivot in the underlying USDe (perp share drop
 
 Redemption to USDe runs through a **cooldown silo** — sUSDe holders cannot exit instantly to the primary path. **Ethena has shipped the dynamic cooldown** (proposal #759). The fixed 7-day wait is gone, replaced by a **coverage-tiered 1 / 3 / 5 / 7-day** duration that tracks USDe's liquid backing — short when coverage is comfortable, longer when it thins — plus an auto-extend safeguard for stress. **Verified on-chain 2026-07-15, the live duration is 1 day**, the mechanism's floor. During whatever cooldown applies, the position stays non-transferable; it cannot be sold or used as collateral. This materially relaxes the wrapper's binding constraint.
 
-Secondary markets on Ethereum are deep, and they are concentrated: **$2M clears inside 50bps** as a measured floor, Curve holds **95.5%** of $78.39M of indexed DEX depth, and one pool — **DOLA/sUSDe** — is 82.8% of it. ⚠️ **There is no Curve sUSDe/USDe pool.** The pair usually cited under that name is Synthetix's **sUSD/sUSDe**: one letter apart, a different issuer. Historical secondary discount data is small: **mean -0.168% from fair value, maximum -1.270%** (per LlamaRisk Aave-forum analysis). The October 10, 2025 stress event produced brief sUSDe secondary detachment but no structural NAV loss; the cooldown silo functioned as designed under $1B+ unstaking pressure.
+Secondary markets on Ethereum are deep, and they are concentrated: **$2M clears inside 50bps** as a measured floor, Curve holds **95.5%** of $78.39M of indexed DEX **swap TVL**, and one pool — **DOLA/sUSDe** — is 82.8% of it. ⚠️ **TVL is not exit depth and is not used as it here** — a pool counts both its legs, and only the leg opposite sUSDe can absorb an sUSDe seller. ⚠️ **There is no Curve sUSDe/USDe pool.** The pair usually cited under that name is Synthetix's **sUSD/sUSDe**: one letter apart, a different issuer. Historical secondary discount data is small: **mean -0.168% from fair value, maximum -1.270%** (per LlamaRisk Aave-forum analysis). The October 10, 2025 stress event produced brief sUSDe secondary detachment but no structural NAV loss; the cooldown silo functioned as designed under $1B+ unstaking pressure.
 
 The 6.5/10 score matches USDe (which is the floor — sUSDe cannot meaningfully be safer than its underlying) and reflects (a) the improved post-pivot profile, (b) successful navigation of October 2025, and (c) deep, well-functioning secondary markets — counterbalanced by (a) a cooldown that, while now much shorter, can still step back toward 7 days if coverage thins and (b) massive Aave / Morpho / Pendle loop concentration that structurally exceeds USDe's float on a leveraged basis.
 
@@ -146,13 +153,13 @@ The deeper secondary market is the alternative to waiting out the cooldown. Enum
 
 **Curve is the venue — but not the pair most people name.** ⚠️ **There is no Curve sUSDe/USDe pool.** The pool routinely cited under that name is Synthetix's **sUSD/sUSDe**; `sUSD` and `USDe` are one letter apart and belong to different issuers. A **Curve sUSDe/USDC** pool does exist and holds **$723.26** — dust, not a venue. The pools that actually carry the depth:
 
-- **DOLA/sUSDe — $64.9M**, which is **82.8%** of all indexed Ethereum depth
+- **DOLA/sUSDe — $66.55M**, which is **82.8%** of all indexed Ethereum swap TVL. ⚠️ **Read directly on 2026-10-04, and only $18.0M of it is sUSDe:** `coins(0)` is DOLA at **48,555,836** and `coins(1)` is sUSDe at **14,382,947 shares** (×1.251308 USDe/share = **$18.00M**), two coins and no more. ✅ **So the side that can absorb an sUSDe seller is the DOLA leg, $48.56M — 72.96% of the pool** — and the sUSDe already in it is inventory on the seller's own side.
 - Then, on Curve: sDAI $3.74M · reUSD $2.30M · scrvUSD $1.67M · frxUSD $822K · crvUSD $697K · reUSDe $564K
 - Direct dollar pairs away from Curve: **sUSDe/USDT** on Uniswap v4 ($894K and $594K) and on Fluid ($576K), plus **GHO/sUSDe** on Fluid ($781K)
 
-⚠️ **The DOLA concentration is a fact worth knowing and it is not a reason the score is lower.** About **$13.5M of non-DOLA depth** sits across the pairs above; the direct sUSDe/USDT pairs are a clean one-hop exit into dollars rather than a second swap; and the measured ladder below routes across all venues rather than through DOLA alone.
+⚠️ **The DOLA concentration is a fact worth knowing and it is not a reason the score is lower.** About **$13.5M of non-DOLA swap TVL** sits across the pairs above — ⚠️ **and the absorbing side of those pools is necessarily smaller than $13.5M, because none of them has been read leg by leg.** The direction of the argument survives that, because the direct sUSDe/USDT pairs are a clean one-hop exit into dollars rather than a second swap, and their absorbing side is USDT — unaffected in kind, though not in magnitude; and the measured ladder below routes across all venues rather than through DOLA alone. ⚠️ **But the $13.5M as written is the weaker half of that case, and it is stated here rather than relied on.**
 
-⚠️ **But the counter-asset in that pool is not independent of sUSDe.** Our own DOLA assessment — a light review, **last verified 2026-07-01 and not re-verified since** — finds roughly half of DOLA's backing is sUSDe, and that DOLA/sUSDe is also DOLA's own deepest exit pool. If that still holds, the largest venue in the table above is partly a claim on the same underlying, so under correlated stress it is not independent exit capacity. **Two things keep this stated rather than priced into the score.** The 7.0 rests on a **routed** ladder, which measures what actually clears across all venues regardless of which one supplies the depth. And **$64.9M is a two-sided pool figure** — a Curve pool's TVL counts both legs, and against DOLA's reported supply near $39M the sUSDe side is likely the larger one, so the DOLA-side depth is smaller than the headline. **Neither figure has been re-measured at this date.**
+⚠️ **But the counter-asset in that pool is not independent of sUSDe.** Our own DOLA assessment — a light review, **last verified 2026-07-01 and not re-verified since** — finds roughly half of DOLA's backing is sUSDe, and that DOLA/sUSDe is also DOLA's own deepest exit pool. If that still holds, the largest venue in the table above is partly a claim on the same underlying, so under correlated stress it is not independent exit capacity. **Two things keep this stated rather than priced into the score.** The 7.0 rests on a **routed** ladder, which measures what actually clears across all venues regardless of which one supplies the depth. And **the headline is a two-sided pool figure** — a Curve pool's TVL counts both legs. ✅ **That is now measured rather than inferred, and the measurement runs the other way:** the **DOLA** side is the larger one at **$48.56M against $18.00M** of sUSDe, so the absorbing side is bigger than a reading from DOLA's supply would suggest, not smaller. ⚠️ **One pool's DOLA balance alone exceeds the roughly $39M figure circulating for DOLA's total supply**, so that supply figure is stale or wrong, and nothing here rests on it.
 
 **Measured depth, 2026-10-02.** USD-denominated and marginal, with the first rung subtracted: ⚠️ **$2M clears inside 50bps, as a FLOOR** — $2M is the largest size the measurement reached and cleared, not a located limit. Read it as *at least this much*, never as *this is where it runs out*. ⚠️ **The 50bps gate is set by the unit of account, not the category:** a dollar-denominated, par-or-accruing NAV asset is measured against a tighter threshold than an ETH-denominated one, so this floor is not comparable with one quoted at a looser tier.
 
