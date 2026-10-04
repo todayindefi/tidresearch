@@ -15,7 +15,7 @@ date: "2026-05-20"
 last_verified: "2026-08-24"
 # ⚠️ 2026-09-09: backing_score authored, Dependencies cut from an unsourced 3.5,
 # underlying_assets corrected, score breakdown added. `last_verified` HOLDS.
-last_revised: "2026-09-09"
+last_revised: "2026-10-04"
 featured: false
 production: true
 issuer: "Saturn Labs"
@@ -54,23 +54,6 @@ liquidity_score: 2.0
 issuer_score: 5.0
 underlying_score: 2.5
 overall_score: 3.0
-# PARKED: riskAnalyst reports liquidity 2.0 -> 1.5 (2026-10-04) — the $100,000 rung
-# deteriorated about 4.7x, returning $64,416 against the $92,446 the 09-12 cut was set
-# on. ADVERSE CHANGE ON A LIVE PAGE: held for owner confirmation, not published
-# [owner: tidr] [since: 2026-10-04]
-# PARKED: the on-chain buffer RECOVERED to 6.23% ($4,155,240 / $66,688,698, read
-# 2026-10-04) — about 5.6x off the $742,960 low. Several rows on this page still argue
-# the ~1.45% level dated 2026-08-24, and line "near-empty on-chain buffer" is undated
-# and now wrong. Correction pending with the score decision, since both land in the
-# same rows [owner: tidr] [since: 2026-10-04]
-# ⚠️ PARKED: OUR OWN BASIS COLLISION — "1.45%" is printed on this page for TWO
-# different ratios: "around 1.45% of assets ($1.16M)" and a table row labelled
-# "Buffer / off-chain STRC 11.98% -> 1.45%" ($1.13M). Different denominators cannot
-# both give 1.45%. Raised with riskAnalyst; do not resolve by recency
-# [owner: riskAnalyst] [since: 2026-10-04]
-# ⚠️ PARKED: our "1.4%-2.3% band it has held all summer" is contradicted by the
-# dashboard THIS PAGE LINKS, which reports 698 observations ranging 0.21%-8.85%,
-# median 3.46%. Our stated band is too narrow [owner: tidr] [since: 2026-10-04]
 # ⚠️ PARKED: unprocessed CRIT from riskAnalyst — implementation drifted to
 # 0x2b7074CF...4E0A since 2026-09-30 against the recorded 0x2005E0CA... Feed says the
 # admin role holder is a timelock, so it reads as a governed upgrade, but duration,
@@ -78,6 +61,19 @@ overall_score: 3.0
 # commissioned. `structural_score: 4.0` is HELD, NOT CONFIRMED — holding it states
 # that no measurement exists, not that one came back clean. ⚠️ Publish NO contract
 # claim until the walk lands [owner: securityAnalyst] [since: 2026-10-04]
+# ✅ 2026-10-04 PASS, axis 3 + the buffer only. riskAnalyst cut liquidity to 1.5 and
+# then REVERSED it the same day (their 9eb8e31 then 1a79582, verified in their git):
+# the cut priced the SECONDARY route and ignored the PRIMARY one, which had improved.
+# liquidity_score HOLDS at 2.0 — a measured-worse fallback against a primary whose
+# `gated_basis` is `unmeasured`, and an unmeasured route cannot lift a score however
+# well capitalised it looks. NOTHING adverse was published at any point.
+# ⚠️ The "1.45%" basis collision resolved by RETIRING the non-canonical row, not by
+# picking a number: `onchain_buffer_usd / total_assets_usd` is canonical (it is what
+# the producer emits, what the alert fires on, and what the 698-reading series
+# measures). The `/ off-chain STRC` basis is emitted by nobody. ⚠️ Arithmetic on that
+# row's own figures ($1.13M / $78.67M = 1.44%) suggests the LABEL was wrong rather
+# than the number — flagged to riskAnalyst, not acted on here, because the number is theirs.
+# ⚠️ `last_verified` HOLDS at 2026-08-24 — this was a partial pass, not a whole-body re-read.
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
 
@@ -172,16 +168,24 @@ Three paths, each with material trade-offs:
 |---|---|
 | that redemption | **0.52% of the vault** |
 | it consumed | **33.9% of the on-chain buffer** |
-| buffer today | **$742,960** — **2.0× that single exit** |
-| refill rate | ~$21,300/day, so **~18 days to restore one** |
+| buffer at that date | **$742,960** — **2.0× that single exit** |
+| buffer at 2026-10-04 | **$4,155,240** — **11.1× that single exit** |
 
-⚠️⚠️ **One observation is not a distribution.** **The ratio says how deep the pocket is against the only withdrawal that has been measured — not how large the next one will be, nor how many are coming.** ⚠️ **What the pair of measurements does support: a half-percent redemption took a third of the buffer, and replacing that one draw at the observed refill rate would take about eighteen days.** **The pocket refills far more slowly than that single exit emptied it.** ✅ **This is exit capacity and must not be read as solvency: backing is intact, NAV is above par, the vault is not paused** — `paused()` returns false, verified 2026-09-14 alongside every figure above. **What it bounds is how many holders can leave through the on-chain route before the off-chain leg has to be realised.**
+⚠️⚠️ **One observation is not a distribution.** **The ratio says how deep the pocket is against the only withdrawal that has been measured — not how large the next one will be, nor how many are coming.** ⚠️ **What the pair of measurements does support: a half-percent redemption took a third of the buffer.** ⚠️ **No refill rate is published here, and the reason is the finding.** Between those two dates the buffer rose about 5.6×, but the series it sits in is **not monotonic** — across 698 readings from 2026-09-04 it has ranged **0.21% to 8.85% of assets**, so two endpoints divided by the days between them describes an arithmetic path the buffer did not take. ✅ **Read the level against its own distribution, never as a trend:** the 2026-10-04 reading of **6.23%** sits at the **78th percentile** of that history. ✅ **This is exit capacity and must not be read as solvency: backing is intact, NAV is above par, the vault is not paused** — `paused()` returns false, verified 2026-09-14 alongside every figure above. **What it bounds is how many holders can leave through the on-chain route before the off-chain leg has to be realised.**
 
-**Withdrawal queue (ERC-4626 unstake).** The standard 4626 queue-based unstake into USDat, with a 10 USDat minimum. Saturn documents an expectation of **about 3–7 days, executed when market conditions permit**, with an improvement flagged for a future vault version. Read that phrasing carefully: it is a discretionary settlement window, not a contractual deadline, and the discretion exists because filling the queue at size means selling STRC at the custodian.
+**Withdrawal (ERC-4626 unstake).** Unstake into USDat, with a 10 USDat minimum. ⚠️ **Describing this as a queue overstates the friction, and the distinction is the one that matters for exit.** On the only redemption measured end to end — **$426,972 on 2026-08-23** — the holder was paid **on demand, at NAV, with no fee and no queue**, and NAV per share did not fall (0.993850 → 0.993863). ✅ **There is no queue while the on-chain buffer covers the ticket; the queue is what the request reaches once the buffer does not.** Saturn documents **about 3–7 days, executed when market conditions permit**, for that case. Read that phrasing carefully: it is a discretionary settlement window, not a contractual deadline, and the discretion exists because filling it at size means selling STRC at the custodian.
 
 **Onboarded primary redemption.** Onboarded users redeem 1:1 against USDC through Saturn's app — the strongest path, but only available to KYC'd holders. For everyone else it does not exist.
 
-The on-chain USDat buffer is designed to be the instant-exit cushion: if secondary depth thins during stress, the queue can service redemptions from the buffer without liquidating STRC. **With that buffer running around 1.45% of assets — about $1.16M at 2026-08-24 — the cushion is close to nominal**, and a coordinated exit still depends almost entirely on selling STRC at the custodian into whatever market exists that week. The dashboard surfaces the current buffer ratio, and it is one of the two or three numbers on this asset actually worth checking.
+The on-chain USDat buffer is designed to be the instant-exit cushion: if secondary depth thins during stress, the queue can service redemptions from the buffer without liquidating STRC. **That cushion has moved a long way, and in the holder's favour:**
+
+| | 2026-08-24 | 2026-10-04 |
+|---|---|---|
+| On-chain buffer | $1,160,494 | **$4,155,240** |
+| Share of total assets | 1.45% | **6.23%** |
+| Percentile of its own 698-reading history | — | **78th** |
+
+⚠️ **A coordinated exit still depends on selling STRC at the custodian** once the buffer is through, and that has not changed. **What has changed is how far away that point is.** The dashboard surfaces the current buffer ratio, and it is one of the two or three numbers on this asset actually worth checking.
 
 **Exits are being paid out of that buffer, and that concentrates whoever stays.** This is the one genuinely new thing to report, and it is not visible in the headline figures. Between 2026-07-28 and 08-17:
 
@@ -191,13 +195,12 @@ The on-chain USDat buffer is designed to be the instant-exit cushion: if seconda
 | NAV per share | 0.9063 | **0.9795** (+8.08%) |
 | On-chain buffer | $8.65M | **$1.13M** (−86.98%) |
 | Total assets | $80.80M | **$78.67M** (−2.64%) |
-| Buffer ÷ off-chain STRC | 11.98% | **1.45%** |
 
 **Total assets barely moved — down 2.6% — because the 8.08% rise in share value almost exactly offset a 9.91% outflow of shares.** If you were watching total assets alone, you would have seen a vault holding steady through a recovery. What actually happened is that roughly a tenth of the shares left, and they were paid from the instantly-liquid slice.
 
 That is the mechanism that matters. Redemptions are served from the on-chain buffer first, because it is the only part of the vault that can pay immediately. So **every exit leaves the remaining holders more concentrated in the off-chain STRC leg, with less cushion behind them** — the people who go first take the liquid part, and the people who stay are left holding a higher proportion of the illiquid part. This is the classic first-mover dynamic in any fund with a liquidity sleeve, and it is operating here in plain sight.
 
-Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient spike**, not a normal level — measured against earlier readings (about 1.8% in July, about 2.3% in August) the 08-17 reading of 1.4% is a modest move within the band this vault has oscillated in for months, not a collapse. And the off-chain STRC figure is a **residual** — total assets minus the on-chain buffer — not an independently attested number. It confirms that the buffer fell; it is not evidence of what was bought with it.
+Two things to keep in proportion. The 2026-07-28 reading was a **high one**, and the 08-17 fall is real. ⚠️ **What cannot be said is how unusual either is**: the continuous history of this ratio begins **2026-09-04**, after both of these dates, so neither reading can be placed against a distribution. ✅ **Within that later window the ratio has ranged 0.21% to 8.85%**, which is wide enough that a move from 10.71% to 1.44% is not self-evidently a collapse — but the window does not cover these two readings and is not evidence about them. And the off-chain STRC figure is a **residual** — total assets minus the on-chain buffer — not an independently attested number. It confirms that the buffer fell; it is not evidence of what was bought with it.
 
 ⚠️ **A rebuild that looked real reversed within hours, and the way it reversed is the finding.** On 2026-08-23 the buffer read about **1.93% of assets**, up from a 1.45% low and apparently rebuilding rather than draining further. **Every figure was accurate when taken. The direction reversed the same evening.**
 
@@ -219,7 +222,7 @@ Two things to keep in proportion. The 2026-07-28 buffer peak was a **transient s
 
 ✅ **And the same event produced a genuinely good result that is worth more than the buffer number: the redemption cleared at NAV, on demand, with no fee and no queue.** The naive arithmetic looks like a penalty — $425,927 across 429,610 shares is 0.991426 against a NAV of 0.993850, about −0.245% — **but that silently assumes the vault accrued nothing during the hour it was redeeming.** Re-run against the accrual rate observed either side and the estimate straddles zero. **A per-share price computed across an accrual interval is not a price**, and the careless version invents an exit penalty that did not happen and would read as evidence of stress.
 
-**So the sharper statement of the risk is a capacity one, and it is measured rather than characterised: redemption works, immediately and at NAV, for as long as the on-chain buffer covers the ticket.** At $1,160,494 remaining, that is **roughly 2.7 more redemptions the size of the one just filled** before the buffer is gone and the queue has to reach the off-chain STRC. The structural point is unchanged — exits are still served from the liquid slice first.
+**So the sharper statement of the risk is a capacity one, and it is measured rather than characterised: redemption works, immediately and at NAV, for as long as the on-chain buffer covers the ticket.** At the $1,160,494 then remaining, that was **roughly 2.7 more redemptions the size of the one just filled**. ✅ **Measured again at 2026-10-04 the buffer stands at $4,155,240, which is about 9.7 such tickets** — so the deposits whose stopping is flagged above did resume, and the capacity question that reading posed has been answered in the holder's favour. ⚠️ **The structural point is unchanged: exits are still served from the liquid slice first**, and once the buffer is through, the queue still has to reach the off-chain STRC.
 
 ## 4 · Dependencies — 2.5
 
@@ -279,14 +282,14 @@ The Issuer axis scores Saturn Labs the company, so it is deliberately identical 
 ## Who this is NOT for
 
 - **Anyone needing verifiable backing.** Only about 1–2% of value is directly on-chain-verifiable; the rest is off-chain STRC plus T-bills, reported by the vault itself. The attestation pipeline is designed, not live.
-- **Core stable allocations.** This is a speculative yield sleeve, not a substitute for sDAI, scrvUSD, or sUSDe in a defensive position. Single cash-flow source, near-empty on-chain buffer, thin secondary, gated primary redemption, and a share price that has spent months below par.
-- **Anyone who needs a predictable exit date.** The queue settles in a documented 3–7 days *when market conditions permit*, and the buffer that would otherwise absorb a rush is about **$1.16M**, roughly 1.45% of assets — **around 2.7 redemptions the size of the one filled on 2026-08-23**, after which the queue has to reach the off-chain STRC.
+- **Core stable allocations.** This is a speculative yield sleeve, not a substitute for sDAI, scrvUSD, or sUSDe in a defensive position. Single cash-flow source, thin secondary, a primary redemption path open only to onboarded holders, and a share price that has spent months below par. **The on-chain buffer is not among the reasons** — at 2026-10-04 it covers roughly 9.7 tickets the size of the largest redemption yet observed.
+- **Anyone who needs a predictable exit date.** ⚠️ **Not because the buffer is thin — it is not, at 2026-10-04** — but because the date is **discretionary once the buffer is through**: settlement is documented at 3–7 days *when market conditions permit*, which is a window Saturn judges, not a deadline it owes. **The buffer covers roughly 9.7 redemptions the size of the one filled on 2026-08-23**, after which a request reaches the off-chain STRC and that window governs.
 - **Anyone wanting indirect Bitcoin exposure** — STRC is Strategy's preferred-equity layer, not its common stock. This is fixed-income-shaped exposure to the Strategy capital stack, with Bitcoin risk arriving through the issuer's balance sheet rather than through a price link.
 
 ## What to watch
 
 - **Share value against par, and the direction of travel.** Under normal accrual the 30-day vesting design lifts it steadily; a flat or falling figure means an STRC mark is being absorbed. The recovery from the July trough is real but incomplete, and it is driven by a buyback with a finite budget.
-- **⚠️ The on-chain buffer, read as a level rather than a trend.** About **1.45% of assets ($1.16M)** at 2026-08-24, inside the 1.4%–2.3% band it has held all summer. **Do not read direction into it at daily resolution:** on 2026-08-23 it went 1.98% → 1.45% in a single hour on one redemption, and in the eleven hours since it has recovered **$367** — in two discrete credits, with the deposit flow that had been rebuilding it apparently stopped. **No refill time is given here, because the pre- and post-event windows imply figures roughly sixty-five times apart and the quantity is therefore not projectable.** **The useful reading is capacity — how many tickets the buffer still covers — not whether it rose or fell this week.** Whether Saturn rebuilds it to a level that survives a few redemptions is the real signal about how seriously it treats stress-period exit.
+- **⚠️ The on-chain buffer, read against its own distribution rather than as a trend.** **6.23% of assets ($4,155,240) at 2026-10-04**, which is the **78th percentile** of the 698 readings taken since 2026-09-04 — a series whose range is **0.21% to 8.85%**. ⚠️ **Do not read direction into it at daily resolution:** on 2026-08-23 it fell 1.98% → 1.45% in a single hour on one redemption. **No refill time is given here, and none should be:** two observation windows of the same quantity implied figures roughly sixty-five times apart, and a range that wide is the evidence that the quantity is not projectable. ⚠️ **An alert on this metric fires on an absolute floor, so it can read as a warning while the level sits at the 78th percentile — severity is not direction.** **The useful reading is capacity — how many tickets the buffer covers — not whether it rose or fell this week.**
 - **Share supply, separately from total assets.** Total assets can sit flat while a tenth of the shares leave, because a rising share value offsets the outflow. Supply is the number that shows you whether holders are exiting; assets alone will not.
 - **The Accountable proof-of-reserves feed going live.** That would convert the 98% off-chain leg from self-reported to attested, and is the single change that would most improve this asset's structural score.
 - **⚠️ Strategy's buyback runway, and what now gates it.** **$1.05B remained at 2026-09-13**, above the $653.0M that remained on 08-17 — the board expanded the authorisation, so **the runway is no longer a countdown and no exhaustion date is derivable.** **The bid is no longer Bitcoin-funded:** the most recent week's repurchases came from common-stock issuance, with no Bitcoin sold. **So the constraint to watch is mNAV and the market's appetite for that issuance, not the size of the Bitcoin stack** — the stack being flat no longer tells a holder anything about the floor. What STRC does after the bid stops is still the real test of the recovery.
