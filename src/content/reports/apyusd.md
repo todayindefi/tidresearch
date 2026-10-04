@@ -25,7 +25,8 @@ production: true
 #     below par — 101.5602% netted, continuously at or above par since 2026-09-17. roughly 74% STRC family net of inventory,
 #     ~13% reflexive POL. ⚠️ This report had no backing axis at all, so the one
 #     thing actually driving the 3.0 was scored nowhere.
-#     ⚠️ PREMISE CHANGED 2026-09-11 — apxUSD's collateral ratio crossed back
+#     ⚠️ PREMISE CHANGED — apxUSD's collateral ratio crossed back above par and
+#     HOLDS since 2026-09-17 (NOT 09-11: it crossed 21 times between 09-04 and 09-17)
 #     ABOVE par and has held since, on the netted basis, the gross basis and an
 #     independent conservative re-mark. The score has NOT been re-derived: the
 #     concentration half of the rationale is unchanged, and the margin is thin
@@ -89,7 +90,7 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 **On the headline yield:** NAV jumped **≈33% in week 1** (Feb 20-27, 2026) from a one-time launch-seed event — donation-pattern apxUSD inflows from a small set of addresses. Since week 2 it has grown smoothly at roughly **13% APY**. ⚠️ **A new buyer earns the ongoing rate and does not capture the launch jump**, and at the current collateral ratio that 13% does not compensate for the backing and exit risk underneath it.
 
 ## 2 · Backing — 3.0
-⚠️ **The vault is 100% collateralized by construction and that fact is meaningless.** It is denominated in apxUSD, so shares always equal the assets they represent. **The collateral ratio that matters to an apyUSD holder is apxUSD's**, and through the period below it ran below par from June until 2026-09-11. **It has been above par since, at roughly 25 basis points of median surplus.**
+⚠️ **The vault is 100% collateralized by construction and that fact is meaningless.** It is denominated in apxUSD, so shares always equal the assets they represent. **The collateral ratio that matters to an apyUSD holder is apxUSD's**, and it ran below par from June until the autumn. **It has held at or above par continuously since 2026-09-17, now attesting a 1.56% surplus** — ⚠️ **while apxUSD itself still trades about 1.10% below $1.**
 
 **Two ratios circulate and they are the same book measured two ways — both the issuer's:**
 

@@ -108,10 +108,11 @@ Treat the specific discount and collateral ratio as a **moving event, not a fixe
 
 | basis | ratio | what it excludes |
 |---|---:|---|
-| **netted** — the headline attestation | **98.0177%** | protocol-owned liquidity ($50.20M) and minted-but-unsold inventory ($39.92M), removed from *both* sides |
-| **gross** | **98.5901%** | nothing — reserves over supply |
+| **netted** — the headline attestation | **101.5602%** (2026-10-04) | protocol-owned liquidity and minted-but-unsold inventory, removed from *both* sides |
+| **netted**, earlier reading | 98.0177% (2026-08-23) | same basis — both ends dated, so the move is the comparison |
+| **gross** | 98.5901% (2026-08-23) | nothing — reserves over supply. ⚠️ Not re-read on this pass |
 
-⚠️ **This is not a disagreement, and not a gap between the issuer and us.** Both figures are published by Accountable, and the netted one reconciles exactly: `(reserves − POL − inventory) / (supply − POL − inventory)` returns 98.017743%, matching the attested headline to four decimal places.
+⚠️ **This is not a disagreement, and not a gap between the issuer and us.** Both figures are published by Accountable, and the netted one reconciles exactly: `(reserves − POL − inventory) / (supply − POL − inventory)` reproduces the attested headline from the raw bucket split, to within 2.6e-05 pp across **723 of 723 readings**. ⚠️ **That tests the arithmetic, not the inputs** — it is an internal-consistency check on a single feed, not a second source, which is why the trust banner above still stands.
 
 **Our independent lower bound is 98.5289%**, computed gross after stripping the roughly **$190,970** premium at which on-chain STRCx trades over the underlying STRC NAV. Against the issuer's **gross** figure that is **0.06pp stricter** — exactly what a conservative bound should be, and exactly the size of the premium removed. ✅ **Compared like for like — gross against gross — our bound is stricter than the issuer's netted headline, which is how it is designed to behave.**
 
