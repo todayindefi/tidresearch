@@ -70,9 +70,14 @@ overall_score: 3.0
 # ⚠️ The "1.45%" basis collision resolved by RETIRING the non-canonical row, not by
 # picking a number: `onchain_buffer_usd / total_assets_usd` is canonical (it is what
 # the producer emits, what the alert fires on, and what the 698-reading series
-# measures). The `/ off-chain STRC` basis is emitted by nobody. ⚠️ Arithmetic on that
-# row's own figures ($1.13M / $78.67M = 1.44%) suggests the LABEL was wrong rather
-# than the number — flagged to riskAnalyst, not acted on here, because the number is theirs.
+# measures). The `/ off-chain STRC` basis is emitted by nobody. ✅ SETTLED 2026-10-04 (riskAnalyst
+# adopted this reading): the LABEL was wrong and BOTH figures were sound.
+# $1.13M/$78.67M = 1.4364% and $1.16M/$80.00M = 1.4500% — both `buffer / total_assets`,
+# a few hours apart. There was never a contradiction and there is no bad number to hunt.
+# The row stays retired because it was REDUNDANT once correctly labelled, not wrong.
+# ⚠️ Keep the reasoning, not just the outcome: a coincidence as precise as two
+# independently-wrong figures both landing on 1.45% is evidence AGAINST the reading
+# that requires it. One mislabel beats two coincidences.
 # ⚠️ `last_verified` HOLDS at 2026-08-24 — this was a partial pass, not a whole-body re-read.
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
