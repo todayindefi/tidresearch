@@ -27,8 +27,8 @@ featured: false
 # asset-attributed denominator, so no collateral ratio is derivable for reUSD
 # alone. ⚠️ That is an honest PERMANENT blank, not a pending measurement, so
 # the gate stays shut and this report stays staged.
-# ⚠️ `?asset=reusde-re` feed LANDED 2026-10-04 01:11; rendering unconfirmed —
-# see the note on reusde-re.md. Do not claim 'live' until bm confirms.
+# ✅ `?asset=reusde-re` renders (bm confirmed in-browser 2026-10-04). Reachable
+# by direct link only — not on their index grid, which needs `published: true`.
 # TO PROMOTE: both dashboards complete and verified IN A BROWSER, then flip
 # both reports together. Checked before demoting: no `production: true` report
 # links here, so nothing 404s on prod (only frax.md links in, and it is staged).
@@ -84,10 +84,6 @@ axis_frame: six
 # 10-char stub exists and this TimelockController is not AccessControlEnumerable, so the
 # holder set cannot be derived on-chain either. Needs the full address re-sourced
 # [owner: riskAnalyst] [since: 2026-10-04]
-# ⚠️ PARKED: backing-monitor's tile renders Healthy 10/10 for Liquidity & Exit, which we
-# and riskAnalyst both score 4.5 — the band computes from venue depth alone and depth is
-# not the binding leg. We LINK to that surface. Raised with bm 2026-10-04; if it is not
-# corrected the pointer needs a caveat or removal [owner: tidr] [since: 2026-10-04]
 # PARKED: SEI is a 14th deployment per Re's contract table plus an on-chain symbol()
 # read, deliberately NOT added — "declared" is a stronger claim than "exists" and no Re
 # announcement has been read [owner: riskAnalyst] [since: 2026-10-03]
@@ -116,7 +112,7 @@ live_dashboard_url: "https://todayindefi.github.io/backing-monitor/?asset=reusd-
 
 > **Issuer-published dashboard:** [app.re.xyz/reusd](https://app.re.xyz/reusd) — this is **Re Protocol's own** real-time dashboard (not a third-party monitor), with current APY, TVL, supply, yield/price/TVL history charts, capital tranching diagram, and links to Chainlink Proof of Reserves. It is the canonical source for live metrics on this asset.
 >
-> **Independent monitor (staged, unfinished):** [tidresearch backing monitor — reUSD](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) — our own read of the same asset, on the six-axis frame, built to sit **beside** the issuer's page rather than replace it. ⚠️ **It is not finished and should not be cited.** One gap is worth knowing before you open it, and it is permanent rather than pending: **there is no collateral ratio at all** — Re publishes combined reUSD + reUSDe reserves with **no asset-attributed denominator**, so no CR can honestly be derived for reUSD alone. ⚠️ **A blank there is an honest blank, not a missing number.**
+> **Independent monitor:** [tidresearch backing monitor — reUSD](https://todayindefi.github.io/backing-monitor/?asset=reusd-re) — our own read of the same asset, on the six-axis frame, built to sit **beside** the issuer's page rather than replace it. It now renders the authored Liquidity & Exit score of 4.5 rather than a depth-derived band. ⚠️ **Reachable by direct link only — it is not listed on the monitor's index.** One gap is worth knowing before you open it, and it is permanent rather than pending: **there is no collateral ratio at all** — Re publishes combined reUSD + reUSDe reserves with **no asset-attributed denominator**, so no CR can honestly be derived for reUSD alone. ⚠️ **A blank there is an honest blank, not a missing number.**
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
