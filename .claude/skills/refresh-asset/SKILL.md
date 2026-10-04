@@ -105,6 +105,36 @@ asset in their tier 3 may never be reached, and then our sweep is the only one t
   finding.
 - Never place figures of different vintages where a reader can divide them.
 
+## 8 · Check the surfaces our page points at
+
+⚠️ **A refresh is not finished when our page agrees with the internal. Our page also makes
+claims about surfaces we do not control**, and those age silently — nothing in our build
+sees them.
+
+**If the report carries `live_dashboard_url` or links a monitor, check what that surface
+actually says against our published axes.**
+
+⚠️ **The reUSD case, 2026-10-02: backing-monitor's public tile rendered `Healthy · 10/10`
+for an axis riskAnalyst and we both score 4.5** — a 5.5-point gap, on a page we link to
+from a report on a held asset. The band is computed from **venue depth alone**, and depth is
+not the binding leg; redemption is, because a U.S. person has no primary channel. **So the
+tile accurately measures the non-binding leg and renders it as the axis rating.**
+
+⚠️⚠️ **Note the direction, because the usual caution inverts here.** Overstating risk is
+normally the error to guard against. **A linked surface that is more flattering than our own
+score is the dangerous one** — a reader sees Healthy on an axis we rate below the midpoint,
+and our link lends it our credibility.
+
+**Also check the pointer still points at something that renders.** Both Re reports claimed a
+monitor was *"awaiting its producer feed"* for a month after the feed had landed. ⚠️ **And
+do not take a file listing as proof a page renders** — the serving directory having payloads
+is not a reader seeing them. Confirm with the producer, or publish the honest intermediate
+state ("feed landed, rendering unconfirmed") rather than either "awaiting" or "live".
+
+✅ **Outcomes, in order of preference:** get the surface corrected by its owner; or state the
+divergence and why on our page; or drop the pointer. **What is not acceptable is linking a
+surface that contradicts us and saying nothing** — see `feedback_a_pointer_is_a_claim_about_another_surface`.
+
 ## Traps that have actually bitten
 
 - ⚠️ **Check the exit code, never a grep of build output.** `npm run build`, then `$?`.
