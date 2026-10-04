@@ -131,6 +131,16 @@ do not take a file listing as proof a page renders** — the serving directory h
 is not a reader seeing them. Confirm with the producer, or publish the honest intermediate
 state ("feed landed, rendering unconfirmed") rather than either "awaiting" or "live".
 
+✅ **Raise it as a CLASS, not as an instance.** The reUSD tile was one asset, but the
+mechanism — *a band computed from venue depth alone reads high on every asset whose
+binding leg is redemption* — names the population to sweep. Framed that way, the owner
+fixed our tile **and found a second unfiled instance (fxusd, identical 5.5-point gap)**.
+An instance gets one tile corrected; the mechanism gets the backlog found.
+
+⚠️ **Renders ≠ reachable.** backing-monitor's pages render but are not on their index
+grid — visibility there is a separate flag. "The page works" and "a reader will find it"
+are two claims; our pointer has to be honest about which one it is making.
+
 ✅ **Outcomes, in order of preference:** get the surface corrected by its owner; or state the
 divergence and why on our page; or drop the pointer. **What is not acceptable is linking a
 surface that contradicts us and saying nothing** — see `feedback_a_pointer_is_a_claim_about_another_surface`.
