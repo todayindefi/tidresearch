@@ -26,6 +26,11 @@ market_cap_approx: 36232343
 #     against. Deriving this means first establishing frxUSD's OWN dependency
 #     set, which has never been done. ⚠️ IF YOU ARE REFRESHING EITHER ASSET,
 #     THAT IS THE PREREQUISITE — this axis has no other scheduled moment.
+# PARKED: underlying_score 4.5 is authored here and NOT derived, and it cannot be
+# inherited the way backing 6.5 and issuer 5.0 were — frxUSD carries no Dependencies
+# axis, so there is no parent value to check against. ⚠️ Deriving it requires
+# establishing frxUSD's OWN dependency set first, which has never been done — so this
+# blocks on another asset, not on effort here [owner: riskAnalyst] [since: 2026-08-29]
 #     It renders as DEPENDENCIES and is the lowest axis
 #     here on purpose. 100% through frxUSD, and the concentration runs BOTH
 #     ways — this vault holds 35.58% of all frxUSD, so the two are one

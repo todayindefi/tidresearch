@@ -13,9 +13,12 @@ production: false
 issuer: "Gains Network"
 yield_bearing: true
 axis_frame: six
-# PARKED: "Arbitrum ONLY" is declared, not measured — nobody has swept for a gUSDC on
-# another chain. The address and its Arbitrum deployment are verified; the exclusivity
-# is a field value [owner: riskAnalyst] [since: 2026-10-03]
+# ✅ 2026-10-04: PARTIALLY CLOSED by an own `eth_getCode` sweep. This address has code on
+# arbitrum only (symbol() = gUSDC); `0x` on ethereum, optimism, base, polygon, bsc,
+# avalanche, gnosis. Published with its limit stated.
+# ⚠️ PARKED: the sweep is ADDRESS-BASED, so a gUSDC at a DIFFERENT address on another
+# chain is not excluded — that needs an issuer or registry enumeration, which is a
+# source read rather than a contract read [owner: riskAnalyst] [since: 2026-10-03]
 # ⚠️ PARKED: Contract & Admin 5.0 is UNANCHORED and publishes anyway. No
 # security_analyst walk exists for this asset (no topology file at all), so none of
 # the six Contract-half items is established. docs/contract-admin-axis.md says we
@@ -58,7 +61,7 @@ overall_score: 5.0
 >
 > ⚠️⚠️ **gToken is a family, not a single product — one vault per collateral — and these scores transfer to none of the others.** gDAI was the original; a GNS-collateral vault is also live on Arbitrum. **Every axis below describes the USDC vault at the address above.** A sibling vault has a different collateral, a different book and a different score, and carrying this one's number across would be the error the shared "gToken" label invites.
 >
-> ⚠️ **"Arbitrum" is verified for this address; "Arbitrum only" is not.** No sweep for a gUSDC deployment on another chain has been run.
+> ✅ **"Arbitrum only" is now measured rather than declared, within a stated limit.** `eth_getCode` at this address returned **`0x` on ethereum, optimism, base, polygon, bsc, avalanche and gnosis**, and contract code on **arbitrum**, where `symbol()` returns **gUSDC** (read 2026-10-04). ⚠️ **What that does NOT establish:** the sweep tests **this address** on those eight chains. A gUSDC deployed at a **different** address on another chain would not appear in it, and no registry or issuer enumeration has been read. **So: no second deployment of this contract exists on the eight chains checked; "nowhere else at all" remains unproven.**
 
 ## Summary
 

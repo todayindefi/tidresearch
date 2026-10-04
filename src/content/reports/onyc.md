@@ -41,6 +41,9 @@ yield_bearing: true
 #     just as easily, so consistency is not derivation. ⚠️ IF YOU ARE
 #     REFRESHING THIS ASSET, DERIVE THIS AXIS PROPERLY — it is the open item
 #     that has no other scheduled moment.
+# PARKED: backing_score 4.0 is CHECKED, NOT DERIVED — riskAnalyst found it consistent
+# with the body, which is weaker than agreeing with it; a rationale for 3.5 or 4.5 is
+# equally constructible. Derive it on the next refresh [owner: riskAnalyst] [since: 2026-09-11]
 #     This report had no backing axis, which was a real
 #     hole on an asset whose reserve is an underwriting book. It prices a
 #     genuine institutional wrapper — Bermuda SAC, Class IIGB/F licensing,

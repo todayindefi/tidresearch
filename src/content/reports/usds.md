@@ -36,6 +36,11 @@ market_cap_approx: 8411000000
 # on Backing fires or clears around 2026-09-20/22 and will force a re-derivation
 # of the whole set, and sUSDS is equalised to USDS so any move propagates to a
 # second asset. Stated on the page rather than carried silently.
+# ⚠️ PARKED: ...AND THAT DEFERRAL HAS NOW EXPIRED. It was deferred to the vow-deficit
+# trigger firing or clearing "around 2026-09-20/22", which would force a re-derivation
+# of the whole set. That window passed and no re-derivation has been recorded, so the
+# +0.17 gap above the axis mean is now carried for no stated reason. ⚠️ Any move
+# propagates to sUSDS, which is equalised to USDS [owner: riskAnalyst] [since: 2026-08-25]
 # ⚠️ `last_verified` HOLDS at 2026-08-25 — this pass authored two axes from a
 # hand-walk observed 2026-08-23; it did not re-read the peg, backing or issuer
 # material.

@@ -33,6 +33,11 @@ last_verified: "2026-09-10"
 # ⚠️ Price on the entity question: one lookup each in MAS' Financial Institutions
 # Directory. A third-party register returned HTTP 403 on riskAnalyst's attempt —
 # a REFUSED read, not an absence, and it must not settle the question by default.
+# PARKED: Issuer 7.5 rests on two unresolved questions — which Paxos Singapore entity
+# holds the MPI licence, and whether the MAS stablecoin framework is in force over USDG.
+# ⚠️ Cheap to close: one lookup each in MAS' Financial Institutions Directory. The 403
+# from a third-party register is a REFUSED read, not an absence, and must not settle it
+# by default [owner: riskAnalyst] [since: 2026-09-09]
 # ⚠️ `last_verified` HOLDS at 2026-07-08 DELIBERATELY. Backing 7.5 and Issuer 7.5
 # are still 63 days unverified, and Liquidity 6.5 is explicitly NOT re-derived —
 # a fresh stamp over an unmeasured axis is the false-fresh signal the field

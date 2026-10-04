@@ -18,6 +18,11 @@ featured: false
 # holders — so a strict reading of the set condition holds this page
 # indefinitely. ⚠️ That is an OPEN QUESTION referred to the owner and still
 # unanswered, not an oversight and not a decision anyone else may take.
+# PARKED: promotion is held by a set condition — every dashboard tile filled — that
+# yzPP cannot meet, having no dashboard and, on riskAnalyst's own assessment, probably
+# not warranting one at $4.73M / 133 holders. ⚠️ So a strict reading holds this page
+# indefinitely, which is a decision by default rather than a decision. Referred to the
+# owner 2026-08-29 and unanswered [owner: owner] [since: 2026-08-29]
 production: false
 issuer: "Yuzu Money"
 underlying_assets: ["USDT0"]
