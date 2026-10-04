@@ -36,8 +36,18 @@ const DIR = "src/content/reports";
  *  how a check teaches people to scroll past it. Run with no flag for the list. */
 const SUMMARY = process.argv.includes("--summary");
 
-/** Explicit, zero-ambiguity marker. Everything else is a guess. */
-const TAGGED = /^#\s*PARKED:\s*(.+)$/;
+/**
+ * Explicit, zero-ambiguity marker. Everything else is a guess.
+ *
+ * ⚠️ THE GLYPH PREFIX IS PART OF THE MARKER, AND LEAVING IT OUT HID THREE REAL ITEMS.
+ * The first version required `PARKED:` immediately after `#`, so every item written as
+ * `# ⚠️ PARKED: …` — the natural form when the item is a warning, which is most of them —
+ * was silently skipped. Measured 2026-10-04: 23 matched, 3 invisible, and the three had
+ * been written that same day by someone who believed they were tracked.
+ * ⚠️ A backlog scanner that misses items reports a SHORTER backlog, which reads as
+ * progress. That is the failure direction to design against.
+ */
+const TAGGED = /^#\s*(?:[⚠✅🚧❗️]|\uFE0F|\s)*PARKED:\s*(.+)$/u;
 
 /**
  * Legacy phrasings that USUALLY mean a parked item, matched in frontmatter comments
