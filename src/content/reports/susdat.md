@@ -54,13 +54,16 @@ liquidity_score: 2.0
 issuer_score: 5.0
 underlying_score: 2.5
 overall_score: 3.0
-# ⚠️ PARKED: unprocessed CRIT from riskAnalyst — implementation drifted to
-# 0x2b7074CF...4E0A since 2026-09-30 against the recorded 0x2005E0CA... Feed says the
-# admin role holder is a timelock, so it reads as a governed upgrade, but duration,
-# proposer and the implementation diff are ALL UNREAD and the walk is queued, not
-# commissioned. `structural_score: 4.0` is HELD, NOT CONFIRMED — holding it states
-# that no measurement exists, not that one came back clean. ⚠️ Publish NO contract
-# claim until the walk lands [owner: securityAnalyst] [since: 2026-10-04]
+# ✅ 2026-10-04: the drift is now PUBLISHED as fact, because our page had been asserting
+# the opposite — "the implementation contract has been stable… verified unchanged
+# on-chain" was false, and the contract table carried the superseded 0x2005E0CA address.
+# We read the EIP-1967 slot ourselves (ethereum-rpc.publicnode.com, 2026-10-04):
+# 0x2b7074cf6681382b70e239063931ebe83c0f4e0a. Retracting a false claim is not the same
+# as publishing a risk assessment of the upgrade, and only the first was done.
+# ⚠️ PARKED: the upgrade's CONTENTS are unread — no diff compared, no audit of the new
+# implementation identified, duration and proposer unread, walk queued not commissioned.
+# `structural_score: 4.0` stays HELD, NOT CONFIRMED. ⚠️ Publish no claim about WHAT was
+# deployed until the walk lands [owner: securityAnalyst] [since: 2026-10-04]
 # ✅ 2026-10-04 PASS, axis 3 + the buffer only. riskAnalyst cut liquidity to 1.5 and
 # then REVERSED it the same day (their 9eb8e31 then 1a79582, verified in their git):
 # the cut priced the SECONDARY route and ignored the PRIMARY one, which had improved.
@@ -243,7 +246,7 @@ Two things to keep in proportion. The 2026-07-28 reading was a **high one**, and
 | its `asset()` — USDat | `0x23238f20b894f29041f48D88eE91131C395Aaa71` | returned by the vault's own `asset()`; `symbol()` = USDat |
 | SaturnTimelock | `0xfD5782E3BFF366601da3973aE30C583dE4F08A67` | holds `DEFAULT_ADMIN_ROLE` on **both** the vault and the token |
 | USDat ProxyAdmin | `0xcf1072da5f0d127aef99136489bad08bfa3d1a7d` | USDat's EIP-1967 admin slot; its `owner()` returns the timelock |
-| sUSDat implementation | `0x2005e0ca201a37694125ff267ae57872bea0a0ce` | the vault's EIP-1967 implementation slot |
+| sUSDat implementation | `0x2b7074cf6681382b70e239063931ebe83c0f4e0a` | the vault's EIP-1967 implementation slot, read 2026-10-04 |
 
 ✅ **Every role read was paired with a control that came back different:** `DEFAULT_ADMIN_ROLE` returns **true** for the timelock and **false** for a burn address on both contracts, so a false here means absence rather than a check that could only ever answer one way. ⚠️ **The vault's own EIP-1967 admin slot is zero** — there is no ProxyAdmin standing in front of it, and upgrade authority runs through the role above rather than through a separate contract.
 
@@ -269,7 +272,7 @@ For a holder, the practical benefit is an observation window: an admin action ag
 
 ## 6 · Issuer — 5.0
 
-**Audits:** shared with USDat — Three Sigma (Audit #1) and Certora (Audits #2 and #3). The ERC-4626 implementation includes Pausable and ReentrancyGuard alongside the 30-day linear yield vesting. Pause is itself an admin power. The implementation contract has been stable since the post-launch upgrade, verified unchanged on-chain.
+**Audits:** shared with USDat — Three Sigma (Audit #1) and Certora (Audits #2 and #3). The ERC-4626 implementation includes Pausable and ReentrancyGuard alongside the 30-day linear yield vesting. Pause is itself an admin power. ⚠️ **The implementation contract is NOT stable, and the audits above were not performed against the code running today.** The vault's EIP-1967 implementation slot moved from `0x2005e0ca201a37694125ff267ae57872bea0a0ce` to `0x2b7074cf6681382b70e239063931ebe83c0f4e0a` after 2026-09-30; we read the current slot directly on 2026-10-04. ⚠️ **What this does NOT establish:** the upgrade's contents are unread, no diff has been compared, and no audit of the new implementation has been identified. **Upgrade authority runs through the timelock role described above, so this reads as a governed upgrade rather than a key compromise** — but that is the authority path, not an assessment of what was deployed through it. ✅ **The Contract & Admin score below is HELD, NOT CONFIRMED:** holding it states that no measurement of the new implementation exists, not that one came back clean.
 
 The Issuer axis scores Saturn Labs the company, so it is deliberately identical to the one on [USDat](/reports/usdat/): the same entity, the same timelock, the same custody representation, and the same KYC-permissioned holder universe, which sUSDat inherits by wrapping a permissioned token. It is the one axis on this report that does not describe the vault itself.
 
