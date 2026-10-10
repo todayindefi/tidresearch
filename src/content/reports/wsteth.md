@@ -8,7 +8,7 @@ underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-10-03"
 last_verified: "2026-10-03"
-last_revised: "2026-10-04"
+last_revised: "2026-10-10"
 featured: false
 production: false
 issuer: "Lido DAO"
@@ -62,7 +62,7 @@ chain_overrides:
 
 ## Summary
 
-wstETH is Lido's wrapped, non-rebasing form of **stETH**. Deposit ETH with Lido and it is staked across Lido's validator set; stETH is the receipt, and its *balance* grows as rewards accrue. wstETH is the same claim expressed the other way round: the **quantity stays fixed and the value rises**, which is the form lending markets, AMMs and most DeFi integrations can actually handle.
+wstETH is Lido's wrapped, non-rebasing form of **[stETH](/reports/steth/)**. Deposit ETH with Lido and it is staked across Lido's validator set; stETH is the receipt, and its *balance* grows as rewards accrue. wstETH is the same claim expressed the other way round: the **quantity stays fixed and the value rises**, which is the form lending markets, AMMs and most DeFi integrations can actually handle. The companion stETH report is the canonical page for pooled-ETH composition, the direct withdrawal queue and the measured operator distribution; this page covers what wrapping and bridging add.
 
 If the category is new to you: a **liquid staking token** is a receipt for ETH that somebody else is running validators with. You keep a tradeable token, they run the infrastructure, and you earn Ethereum's consensus yield minus a fee. There is no peg to defend — wstETH is *supposed* to trade at a rising multiple of ETH, and on 2026-10-03 that multiple read **1.2454018786985979 stETH per wstETH** against a total supply of **3,668,624.12 wstETH**, both read directly from the mainnet contract. So the questions worth asking are whether the stake is really there, whether you can get out, and **who can change the contracts** — which is where the two chains stop being the same asset.
 
@@ -78,7 +78,7 @@ The risk this axis prices is **secondary-market detachment**, not the rate. A la
 
 ## 2 · Backing — 9.0
 
-**Ethereum: 9.0.** Each wstETH is a claim on stETH, which is a claim on ETH staked by Lido's validator set. There is no off-chain custodian in the backing path and nothing to attest to — the collateral is validator stake, and the claim on it is expressed as a rate rather than a balance.
+**Ethereum: 9.0.** Each wstETH is a claim on [stETH](/reports/steth/), which is a claim on ETH staked by Lido's validator set. There is no off-chain custodian in the backing path and nothing to attest to — the collateral is validator stake, and the claim on it is expressed as a rate rather than a balance. The underlying report carries the direct composition read: 99.904% beacon balance at block 26,155,953, with a 0.0710% residual named but not assigned a cause.
 
 ⚠️ **Monad: 6.5, and the reason is that a verifiable reserve is not the same as a reserve that is yours.** Both figures below carry their own read date, and the movement between them is the point:
 
@@ -127,13 +127,13 @@ On **2026-09-30** Lido disclosed that **MetaMask Staking** suffered an infrastru
 
 ⚠️⚠️ **Three figures are in circulation and only one of them is stETH's. The headline overstates the exposure by roughly 2.3×.** MetaMask Staking's whole business is 33,000+ validators and about 1M ETH. Its whole exit is about **17,000 validators and ~523,000 ETH — roughly $1.4 billion**, and that is the number most coverage carries. ✅ **But only about 7,204 validators and ~230,000 ETH sit in Lido's registry — around 2.3–2.5% of Lido's ~9.79M stETH.** If you take one thing from this, take the distinction.
 
-✅ **No principal was reachable, and the reason is structural.** Staking here is non-custodial: withdrawal credentials point at the protocol, not at the operator. The cost is foregone rewards plus possible downtime penalties on about 2.4% of the stake. **No slashing is alleged**, and Lido's own statement is that **no action is required from stETH holders**. The stake re-enters over roughly 45 days through the extended entry queue, and Lido holds an ad hoc reserve of more than 6,750 stETH for disruptions of this kind.
+✅ **No principal was reachable, and the reason is structural.** Staking here is non-custodial: withdrawal credentials point at the protocol, not at the operator. The cost is foregone rewards plus possible downtime penalties on about 2.4% of the stake. **No slashing is alleged**, and Lido's own statement is that **no action is required from stETH holders**. The stake re-enters over roughly 45 days through the extended entry queue. ⚠️ **An earlier version also claimed Lido held an ad hoc reserve of more than 6,750 stETH for disruptions of this kind. That figure is withdrawn as unverified.** The Locator-resolved DAO treasury held 22,735.5123 stETH at block 26,155,953, which does not establish a separately designated 6,750-stETH reserve; the nearby 0.0710% backing residual is likewise not evidence of one.
 
 ⚠️ **This reads as the Dependencies thesis confirmed rather than threatened.** The axis sits where it does because operator entry is permissionless and the set is replaceable from below — **an operator lost and absorbed with no holder action required is that design working**, not a warning about it.
 
 ## 5 · Contract & Admin — 8.0
 
-**Ethereum: 8.0.** The mainnet wstETH contract is a long-lived, heavily integrated wrapper around stETH, live since 2021 with no exploit, under Lido DAO governance.
+**Ethereum: 8.0.** The mainnet wstETH contract is a long-lived, heavily integrated wrapper around stETH, live since 2021 with no exploit, under Lido DAO governance. Lido's delayed governance path, holder veto signalling and rage-quit protection are shared with stETH and materially stronger than a bare multisig or ordinary timelock. The score remains 8.0 on both public pages because the system is DAO-upgradeable, systemically concentrated and still completing its Curated Module v2 migration; any future re-rating should move both Ethereum claims together.
 
 ⚠️⚠️ **Monad: 6.5, and this is the finding that should change how a holder reads the ticker.** Five separate authority layers were walked on Monad, and **they all terminate at the same place**:
 
@@ -178,11 +178,16 @@ Holders who want ETH staking exposure in the form DeFi is built around, and who 
 - **`stEthPerToken()`.** It is the honest read on accrual, and it should only ever rise.
 - **Ethereum's validator exit queue**, which sets the real time-to-cash on the primary route.
 
+## Related
+
+- [stETH](/reports/steth/) — the rebasing underlying, including pooled-ETH composition, direct withdrawal-queue state and Curated Module operator distribution
+
 ---
 
 *This report is based on direct reads of the mainnet wstETH contract on 2026-10-03 (`symbol()`, `stEthPerToken()`, `totalSupply()`), and on a 2026-10-03 authority walk of the Monad deployment and a reconciliation of the mainnet lock pool behind it. ⚠️ Liquidity and Redemption on Monad are **not measured** and are published as such rather than inherited from Ethereum. Corrections, primary sources, or additional disclosures welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
+- **2026-10-10 — canonical stETH companion linked; shared Ethereum scores held.** The new [stETH report](/reports/steth/) now carries the underlying pooled-ETH composition, direct queue state and operator-distribution evidence. Ethereum wstETH remains 9.0 / 9.0 / 9.0 / 6.0 / 8.0 / 7.0, Overall 8.0. ⚠️ The previously repeated claim that Lido held an ad hoc reserve of more than 6,750 stETH is withdrawn as unverified: the DAO treasury held 22,735.5123 stETH, and neither that balance nor the underlying report's 0.0710% reconciliation residual establishes a separately designated reserve.
 - **2026-10-04 — backing re-read, Monad exit reframed, an operator compromise absorbed. No score moves.** ⚠️ **The mainnet lock pool fell about 34%, 32,358 → 21,353.231 wstETH**, while **Monad's share of the shared unsiloed claim rose 97.7% → 99.45%** — the pool shrank and the concentration tightened. ✅ **Backing 9.0 is confirmed by an exact reconciliation**, not a bound: unsiloed balance 21,305.268 against a shared mint total of 21,305.145, residual 0.1227 wstETH. The other legs on that claim are megaeth at 117.126 wstETH and four dust chains; three of nine deployments are siloed. ⚠️ **Monad now has a measured local DEX ladder and it is published as NOT the exit** — about $1,000 at the 2% crossing, collapsing to −9,984 bps at $500,000. wstETH has never had local Monad liquidity; holders bridge in, so that ladder measures a path essentially nobody takes. ✅ **The real constraint is the CCIP outbound bucket: 2,000 wstETH, refilling 0.02315/s**, negative-controlled against an invalid chain selector at both ends. ⚠️ **An operator compromise was disclosed 2026-09-30** — MetaMask Staking exiting its Lido set by 2026-10-07. ⚠️ **The widely-quoted ~$1.4B is its whole business exit, not its Lido exposure: about 7,204 validators and ~230,000 ETH are in Lido's registry, roughly 2.3–2.5% of stETH.** ✅ **Non-custodial staking meant no principal was reachable** and Lido states no holder action is required. Dependencies holds at 6.0 — an operator absorbed without holder action is the thesis working.
 - **2026-10-03 — first publication, staged.** Six axes authored across two chains. ⚠️ **Four of the six differ by chain:** Backing 9.0 / 6.5, Dependencies 6.0 / 4.0, Contract & Admin 8.0 / 6.5, Issuer 7.0 / 6.0, giving Overall **8.0 on Ethereum and 7.0 on Monad**. The driving finding is that **every privileged path on Monad terminates at a Chainlink `RBACTimelock`** that also owns CCIP's Router there and predates the token by about 19 million blocks, so **Lido DAO holds no on-chain authority over the Monad deployment**. Backing on Monad is verifiable but **not ring-fenced**: the mainnet lock pool holds **32,358.118 wstETH**, Monad's leg reads `isSiloed = false`, and its mint is **97.7%** of a **32,320 wstETH** portion shared with five other chains. ⚠️ **Liquidity and Redemption are published as UNMEASURED on Monad** rather than carried over from Ethereum — no venue enumeration and no depth ladder exists for that chain; both were commissioned on this date and neither has returned.
