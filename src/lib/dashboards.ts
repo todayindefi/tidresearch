@@ -46,6 +46,7 @@ export const DASHBOARD_EMBED_SLUGS = new Set<string>([
   "susde",
   "usdai",
   "susdai",
+  "wsteth",
 ]);
 
 export function hasDashboardEmbed(slug: string): boolean {
