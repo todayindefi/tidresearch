@@ -34,9 +34,9 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usde"
 
 ## Summary
 
-USDe is Ethena's dollar-pegged claim on a managed reserve portfolio. The current structure combines liquid assets, institutional custody and credit, tokenized real-world assets and a derivatives overlay. The live feed classifies **79.61%** of backing as liquid or unallocated and **20.39%** as CEX delta-hedge collateral. That split does not reveal the current allocation among loans, individual RWAs and cash, or equate hedge collateral with derivatives notional.
+USDe is Ethena's dollar-pegged claim on a managed reserve portfolio. The current structure combines liquid assets, institutional custody and credit, tokenized real-world assets and a derivatives overlay. The live feed classifies **79.55%** of backing as liquid or unallocated and **20.45%** as CEX delta-hedge collateral. That split does not reveal the current allocation among loans, individual RWAs and cash, or equate hedge collateral with derivatives notional.
 
-The September 27 attestation reported **$4.953 billion of backing** against **$4.949 billion of USDe**, plus a **$62.095 million Reserve Fund**. The October 11 live feed measured **99.4781% coverage before** and **100.7690% after** the Reserve Fund. USDe therefore remains above full coverage only after including its loss-absorption fund.
+The September 27 attestation reported **$4.953 billion of backing** against **$4.949 billion of USDe**, plus a **$62.095 million Reserve Fund**. The October 11 live feed measured **99.1682% coverage before** and **100.4590% after** the Reserve Fund: backing was **$40.00 million below supply** before the fund and **$21.79 million above** after it. USDe therefore remains above full coverage only after including its loss-absorption fund.
 
 The 6.5 overall score reflects a stable peg, active institutional arbitrage and measured secondary liquidity. It is limited by permissioned primary redemption, incomplete portfolio look-through, overlapping counterparties and concentrated administrative authority.
 
@@ -65,7 +65,9 @@ The September attestation reconciled the following custody-level totals:
 
 These figures establish custody totals but not the complete current instrument mix. Institutional-credit terms, borrower concentrations, actual JAAA holdings and current derivatives notional are not fully disclosed in the integrated feed. JAAA's approved position cap is not treated as an asset holding.
 
-The seven disclosed wallets not yet covered by TIDR's wallet tracker are a monitoring-coverage gap, not missing backing. Current coverage and the reconciled attestation support 6.5; reliance on the Reserve Fund and incomplete asset-level transparency prevent a higher score.
+TIDR's live reserve tracker covers **12 of 13 disclosed accounts**. The remaining untracked account is the Solana address `4FaQc6QZ5skFjcDF64mKcXRhtCCsnArZcr1xumPNrbtN`. Six recently added EVM accounts lack a September 27 historical reading, so the attestation-date comparison still covers six accounts and measures monitoring scope rather than portfolio drift.
+
+The live Ethena Reserve 2 total is **$1,106,750,659.92** across nine processed protocol positions, including **$152,576,842.34 in Aave Horizon RLUSD** and **$5,931,261.35 in Aave V4**. Current coverage and the reconciled attestation support 6.5; reliance on the Reserve Fund and incomplete asset-level transparency prevent a higher score.
 
 ## 3 · Liquidity & Exit — 7.0
 
@@ -123,6 +125,7 @@ ENA governance approved a fee-switch schedule that begins at a **$7.5 billion** 
 
 ## Revision history
 
+- **2026-10-11 — reserve monitoring correction.** Expanded live account coverage from 6 of 13 to 12 of 13 and restored Aave Horizon RLUSD and Aave V4 positions. Live coverage replaced 99.4781% / 100.7690% with 99.1682% / 100.4590%; scores held.
 - **2026-10-11 — comprehensive refresh.** Added the September attestation, October live coverage, current peg and liquidity measurements, multichain scope, mint/redeem state and authority topology. Scores held.
 - **2026-10-11 — reserve classification corrected.** JAAA's approved cap is no longer presented as a USDe holding, and the former 11% derivatives figure is retained only as a historical measurement rather than a current allocation.
 - **2026-09-10 — fee-switch review.** Verified the adopted supply milestones and gross-revenue basis; Issuer held at 7.0.
