@@ -107,14 +107,14 @@ const SELF_REF_RATCHET: [RegExp, string][] = [
  * indistinguishable from a deliberate one.
  *
  * weeth.md and susde.md are deliberately ABSENT — both were brought to zero on
- * 2026-10-02. usde.md joined them on 2026-10-11. Do not re-add them.
+ * 2026-10-02. usde.md joined them on 2026-10-11 and frxusd.md on 2026-10-12.
+ * Do not re-add them.
  */
 const SELF_REF_BACKLOG: Record<string, number> = {
   "apxusd.md": 1,
   "apyusd.md": 1,
   "ausd.md": 2,
   "crvusd.md": 1,
-  "frxusd.md": 2,
   "mstr.md": 5,
   "onyc.md": 1,
   "pyusd.md": 2,

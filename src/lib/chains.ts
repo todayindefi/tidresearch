@@ -42,6 +42,16 @@ const ALIASES: Record<string, string> = {
   aptos: "aptos",
   ethereal: "ethereal",
   zircuit: "zircuit",
+  abstract: "abstract",
+  hyperliquid: "hyperliquid",
+  mode: "mode",
+  movement: "movement",
+  plume: "plume",
+  polygon_zkevm: "polygon_zkevm",
+  somnia: "somnia",
+  unichain: "unichain",
+  worldchain: "worldchain",
+  zksync: "zksync",
   // Added 2026-09-09. These five were present in report frontmatter and absent
   // here, so chainLabel() fell through to the raw lowercase slug and rendered
   // "Ethereum · xrpl" on rlusd and "…Solana · sui" on ausd. check-chain-slugs.ts
@@ -94,6 +104,16 @@ const LABELS: Record<string, string> = {
   aptos: "Aptos",
   ethereal: "Ethereal",
   zircuit: "Zircuit",
+  abstract: "Abstract",
+  hyperliquid: "Hyperliquid",
+  mode: "Mode",
+  movement: "Movement",
+  plume: "Plume",
+  polygon_zkevm: "Polygon zkEVM",
+  somnia: "Somnia",
+  unichain: "Unichain",
+  worldchain: "World Chain",
+  zksync: "ZKsync Era",
   celo: "Celo",
   // ⚠️ Fantom is NOT aliased to Sonic even though the network rebranded, because
   // `sonic` already exists here as its own slug and silently merging two keys
