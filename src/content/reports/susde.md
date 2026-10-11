@@ -71,6 +71,8 @@ The 6.5 score reflects consistent accrual and close NAV tracking. It remains bou
 
 sUSDe's vault accounting reconciles exactly, but that is share coverage rather than an independent solvency cushion. Every asset in the vault is USDe. Economic coverage therefore inherits USDe's latest **99.1682% before** and **100.4590% after** its Reserve Fund.
 
+USDe's current reserve-account monitoring is complete at 13 of 13 disclosed accounts. Its September 27 historical comparison remains incomplete for six added EVM accounts and the Solana wallet; sUSDe inherits that historical monitoring limit, not a live coverage gap.
+
 The wrapper cannot diversify or improve the underlying reserve. Backing remains equal to USDe at 6.5.
 
 ## 3 · Liquidity & Exit — 7.0
@@ -156,6 +158,7 @@ These are realized exchange-rate changes, not an advertised forward APY. Returns
 
 ## Revision history
 
+- **2026-10-11 — inherited monitoring scope synchronized.** USDe live reserve-account coverage moved from 12 of 13 to 13 of 13; the incomplete September 27 historical comparison remains explicitly inherited. Scores held.
 - **2026-10-11 — inherited coverage synchronized.** Updated the USDe coverage pair from 99.4781% / 100.7690% to 99.1682% / 100.4590% after reserve-account monitoring expanded; scores held.
 - **2026-10-11 — comprehensive refresh.** Added exact vault reconciliation, realized NAV growth, the 90-day contract maximum, the located $3.30 million Ethereum exit boundary, Plasma coverage, current DeFi concentration and multichain authority. Scores held.
 - **2026-10-11 — exit descriptions corrected.** Replaced the former seven-day-cap description with the contract's 90-day maximum and replaced pool-TVL-as-depth language with executable ladder and counter-inventory measurements.

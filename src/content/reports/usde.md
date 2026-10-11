@@ -65,7 +65,9 @@ The September attestation reconciled the following custody-level totals:
 
 These figures establish custody totals but not the complete current instrument mix. Institutional-credit terms, borrower concentrations, actual JAAA holdings and current derivatives notional are not fully disclosed in the integrated feed. JAAA's approved position cap is not treated as an asset holding.
 
-TIDR's live reserve tracker covers **12 of 13 disclosed accounts**. The remaining untracked account is the Solana address `4FaQc6QZ5skFjcDF64mKcXRhtCCsnArZcr1xumPNrbtN`. Six recently added EVM accounts lack a September 27 historical reading, so the attestation-date comparison still covers six accounts and measures monitoring scope rather than portfolio drift.
+TIDR's live reserve tracker covers **all 13 disclosed accounts**. The Solana wallet `4FaQc6QZ5skFjcDF64mKcXRhtCCsnArZcr1xumPNrbtN` holds approximately **$261.21 million**: about **$82.67 million of JAAA**, **$178.52 million of STAC** and **$11,300 of USDG**. JAAA and STAC are priced from hourly NAV inputs accepted only when their status is current and valid; missing or stale NAVs remain unpriced rather than falling back to zero or one dollar.
+
+Current monitoring is complete. The September 27 historical comparison remains incomplete because balances have not been reconstructed for six added EVM accounts or the Solana wallet. That comparison measures historical monitoring scope rather than portfolio drift.
 
 The live Ethena Reserve 2 total is **$1,106,750,659.92** across nine processed protocol positions, including **$152,576,842.34 in Aave Horizon RLUSD** and **$5,931,261.35 in Aave V4**. Current coverage and the reconciled attestation support 6.5; reliance on the Reserve Fund and incomplete asset-level transparency prevent a higher score.
 
@@ -125,6 +127,7 @@ ENA governance approved a fee-switch schedule that begins at a **$7.5 billion** 
 
 ## Revision history
 
+- **2026-10-11 — live account coverage completed.** Added the Solana reserve wallet and moved current monitoring from 12 of 13 to 13 of 13 disclosed accounts. Its JAAA, STAC and USDG positions total approximately $261.21 million; the September 27 historical comparison remains incomplete. Scores held.
 - **2026-10-11 — reserve monitoring correction.** Expanded live account coverage from 6 of 13 to 12 of 13 and restored Aave Horizon RLUSD and Aave V4 positions. Live coverage replaced 99.4781% / 100.7690% with 99.1682% / 100.4590%; scores held.
 - **2026-10-11 — comprehensive refresh.** Added the September attestation, October live coverage, current peg and liquidity measurements, multichain scope, mint/redeem state and authority topology. Scores held.
 - **2026-10-11 — reserve classification corrected.** JAAA's approved cap is no longer presented as a USDe holding, and the former 11% derivatives figure is retained only as a historical measurement rather than a current allocation.
