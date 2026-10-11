@@ -2,17 +2,17 @@
 asset: "USDe"
 slug: "usde"
 aliases: ["USDe", "Ethena USDe", "Ethena Synthetic Dollar"]
-chains: ["eth", "arbitrum", "base", "optimism", "bsc", "mantle", "blast", "fraxtal"]
+chains: ["eth", "arbitrum", "optimism", "bsc", "avalanche", "solana", "mantle", "base", "blast", "fraxtal", "xlayer", "zircuit", "morph", "ink", "ton", "berachain", "hyperevm", "plasma", "monad", "megaeth", "aptos", "ethereal"]
 category: "stablecoin"
-peg_mechanism: "Hybrid (institutional credit + RWA + 11% residual basis trade)"
+peg_mechanism: "Hybrid managed reserve with derivatives overlay"
 assessment_type: "full"
 date: "2026-06-10"
-last_revised: "2026-08-29"
-last_verified: "2026-08-25"
+last_revised: "2026-10-11"
+last_verified: "2026-10-11"
 featured: false
 production: true
 issuer: "Ethena Labs"
-market_cap_approx: 4480000000
+market_cap_approx: 4809000000
 peg_mechanism_score: 6.5
 backing_score: 6.5
 liquidity_score: 7.0
@@ -28,206 +28,101 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usde"
 
 **Moderate risk · 6.5/10**
 
-> **Issuer-published dashboard:** [app.ethena.fi/dashboards/transparency](https://app.ethena.fi/dashboards/transparency) — Ethena's own real-time transparency page, with backing composition, custodian breakdown, supply, and Reserve Fund. Verified by **Chaos Labs Edge Proof of Reserves**, **LlamaRisk**, **Chainlink Proof of Reserves**, and **HT Digital** (monthly attestation). For independent risk monitoring, see [LlamaRisk's Ethena portal](https://portal.llamarisk.com/ethena/overview). **tidresearch also runs an independent on-chain tracker of Ethena's reserve wallets** ([live dashboard](https://tidresearch.com/dashboards/?asset=usde)) — the issuer transparency page and Risk Committee feeds above remain the backing source of record.
-
-| Yield | Exit method | Primary redemption | Age | Chains |
+| Yield | Exit methods | Primary redemption | Reserve model | Chains |
 |---|---|---|---|---|
-| None (stake to sUSDe for yield) | Deep DEX/CEX secondary at $1 | Mint/burn at $1 NAV (whitelisted institutions only) | ~28 months | Ethereum + 7 L2s/sidechains |
+| None; stake to sUSDe for yield | Secondary markets or institutional mint/redeem | Onboarded counterparties only | Managed liquid, credit and RWA portfolio with CEX hedge collateral | Ethereum plus 21 peers |
 
 ## Summary
 
-USDe is Ethena's USD-pegged stablecoin. It launched in February 2024 as a **pure delta-neutral basis trade** — long crypto collateral, short CEX perpetuals, with the funding-rate spread paying yield to stakers of the sister token sUSDe. That framing is now about 90% out of date.
+USDe is Ethena's dollar-pegged claim on a managed reserve portfolio. The current structure combines liquid assets, institutional custody and credit, tokenized real-world assets and a derivatives overlay. The live feed classifies **79.61%** of backing as liquid or unallocated and **20.39%** as CEX delta-hedge collateral. That split does not reveal the current allocation among loans, individual RWAs and cash, or equate hedge collateral with derivatives notional.
 
-Following the **October 10, 2025 flash crash** — when a Binance internal oracle error briefly wicked USDe to $0.97 and triggered $5.7B of redemptions in a single month — Ethena materially restructured the backing portfolio. As of Q1 2026, **perpetual futures account for only ~11% of USDe backing (down from ~93% at the start of 2025)**, with the remaining ~89% allocated to liquid stablecoin reserves, institutional overcollateralized loans (Anchorage Digital, Maple Institutional, Coinbase Asset Management), and tokenized real-world assets (BlackRock's BUIDL fund via the USDtb wrapper, plus — new in June 2026 — Janus Henderson's JAAA AAA-rated CLO fund).
+The September 27 attestation reported **$4.953 billion of backing** against **$4.949 billion of USDe**, plus a **$62.095 million Reserve Fund**. The October 11 live feed measured **99.4781% coverage before** and **100.7690% after** the Reserve Fund. USDe therefore remains above full coverage only after including its loss-absorption fund.
 
-USDe total supply has contracted from a $14.7B September 2025 peak to **~$4.5B** (June 2026), reflecting the post-stress risk-off rotation. The **Reserve Fund** (the loss-absorption buffer that sits between adverse events and USDe holders) currently holds $62M — and the independent Risk Committee (LlamaRisk + Blockworks Advisory + Chaos Labs) considers it **~9× overcapitalized** versus current tail-risk requirements, because the dramatic reduction in funding-rate exposure has removed the dominant source of historical volatility.
-
-The 6.5/10 score reflects (a) the legitimate de-risking from the pivot, (b) successful navigation of the October 2025 stress event (the system absorbed $1.5B+ in single-event outflows without operational losses, peg pauses, or redemption gates), and (c) genuinely deep DEX and CEX secondary liquidity. It is counterbalanced by (a) limited operating history of the new institutional credit layer (~6 months), (b) ongoing CEX and perpetuals exposure on the residual 11%, and (c) the Aave-Ethena loop concentration, which structurally exceeds 100% of USDe's float on a leveraged basis and remains a systemic spillover risk for the broader DeFi ecosystem.
-
-If you held a "USDe is a synthetic dollar / unproven basis trade" mental model from 2024 or early 2025, this is the right time to refresh it. The system as of Q1 2026 behaves more like a managed credit portfolio with a derivatives overlay than its original design.
+The 6.5 overall score reflects a stable peg, active institutional arbitrage and measured secondary liquidity. It is limited by permissioned primary redemption, incomplete portfolio look-through, overlapping counterparties and concentrated administrative authority.
 
 ## 1 · Stability — 6.5
 
-**USDe holds its dollar target through a delta-neutral position rather than a reserve**, and what it survived is the better evidence than what it targets. The October 2025 episode is set out below.
+USDe targets one dollar through institutional minting and redemption supported by its reserve portfolio. Over the latest 30-day Chainlink window, it ranged from **-7.79 to +0.22 basis points**, with no observation below -50 basis points. The series updates roughly daily, so it measures price stability rather than executable intraday depth.
 
-### What October 10, 2025 actually proved
-
-The defining stress event in USDe's history. Sequence:
-
-1. **Trigger.** Binance internal oracle error during a broader crypto-market flash crash
-2. **Wick.** USDe briefly traded to **$0.97** on Binance specifically — secondary venues less affected
-3. **Redemptions.** $1B+ within hours, eventually $5.7B across October, $8.3B over two months
-4. **Reserve Fund response.** $1.5B+ in single-event outflows serviced; no operational losses, no peg pause, no redemption gate
-5. **Recovery.** USDe back to $1.00 within hours on all venues
-6. **Post-mortem (LlamaRisk + Blockworks).** The $0.97 print was venue-specific oracle artifact, not a structural redemption-mechanism break. Backing held; the issue was Binance-internal.
-
-This is the strongest single empirical signal in USDe's favor since launch. The system absorbed a real $1.5B+ single-event run without any of the failure modes that have brought down algorithmic or hybrid stables in the past.
+EthenaMintingV2 supports multiple settlement assets and uses signed RFQ terms. The October measurement found 611 whitelisted benefactors and 20 minter and 20 redeemer role holders. Thirty-day executed USDC orders had a median mint spread of **+0.03 bps** and median redemption spread of **-0.09 bps**. Retail holders cannot use this primary rail directly and rely on secondary markets and institutional arbitrage.
 
 ## 2 · Backing — 6.5
 
-### What backs it, and where it sits
+The September attestation reconciled the following custody-level totals:
 
-USDe is a standard ERC-20 token with mint/burn primitives at `0x4c9EDD5852cd905f086C759E8383e09bff1E68B3` on Ethereum, with LayerZero OFT (Omnichain Fungible Token) deployments on Arbitrum, Base, Optimism, BSC, Mantle, Blast, and Fraxtal. The token contract itself is intentionally simple — the complexity lives in Ethena's reserve management contracts and the off-chain operational stack.
+| Component | Amount |
+|---|---:|
+| Copper | $668.0m |
+| Ceffu | $675.0m |
+| Anchorage Digital Bank | $657.0m |
+| Kraken Custody | $0.042m |
+| Ethena × FalconX SPV | $236.0m |
+| Ethena onchain-wallet bucket | $2.620bn |
+| Ripple Prime FCM margin | $7.9m |
+| Mint/redeem inventory | $89.23m |
+| **Total backing** | **$4.953bn** |
+| Reserve Fund | $62.095m |
 
-What sits behind the token:
+These figures establish custody totals but not the complete current instrument mix. Institutional-credit terms, borrower concentrations, actual JAAA holdings and current derivatives notional are not fully disclosed in the integrated feed. JAAA's approved position cap is not treated as an asset holding.
 
-- **Liquid stablecoin reserves** — USDC at Coinbase and OES-custodied stables
-- **Institutional overcollateralized loans** (new April 2026) — Ethena lends stables from USDe reserves to Anchorage Digital, Maple Institutional (the OTC institutional desk, not the Syrup retail pools), and Coinbase Asset Management. Borrowers post BTC/ETH collateral in secured triparty custody.
-- **Tokenized RWAs** — BlackRock's BUIDL via the USDtb wrapper, and — new in June 2026 — **JAAA**, Janus Henderson's AAA-rated CLO fund, tokenized via Centrifuge on Solana and approved by Ethena's Risk Committee with a position cap of roughly $310M (about $200M live initially). JAAA is USDe's **first corporate-credit exposure** — it adds two new vectors: corporate-credit cyclicality and a Centrifuge/Solana tokenization layer (the token is on-chain readable on Solana; the underlying CLO NAV is fund-attested off-chain). Still planned beyond these: investment-grade corporate bond funds, short-duration and structured credit, gold futures.
-- **Residual basis trade (~11%)** — BTC/ETH perpetual short positions on Binance, Bybit, OKX, Deribit, Bitfinex, executed via Off-Exchange Settlement (OES) custody through Copper, Ceffu, Cobo, Anchorage, and (since January 2026) Kraken.
-
-The Reserve Fund — a separate $62M loss-absorption buffer — is held entirely in USDtb (about $41.98M) and a USDtb/USDC liquidity pool position (about $20.02M). Because USDtb is >90% BUIDL-backed, the Reserve Fund's stability now depends on BlackRock BUIDL's continued health. This is a structural improvement over the pre-pivot setup (which held the fund in a USDe/USDT Uniswap V3 LP — a circular dependency that LlamaRisk's pre-pivot addendum flagged as a material risk).
+The seven disclosed wallets not yet covered by TIDR's wallet tracker are a monitoring-coverage gap, not missing backing. Current coverage and the reconciled attestation support 6.5; reliance on the Reserve Fund and incomplete asset-level transparency prevent a higher score.
 
 ## 3 · Liquidity & Exit — 7.0
 
-Two paths:
+USDe has permissionless secondary markets and a permissioned institutional mint/redeem rail. The primary path is enabled, and realized USDC orders have priced close to zero cost.
 
-**1. Secondary market (the path for retail and most institutions).** USDe is among the deepest-liquidity non-fiat-backed stablecoins in DeFi:
+On Ethereum, the measured USDe→USDC ladder cleared the full tested **$5 million** inside 50 basis points. At $5 million, it returned **$4,995,181.58**. Because the test ended before locating the 50-bps crossing, $5 million is a floor rather than a depth limit.
 
-- **Curve** USDe/USDC and USDe/USDT pools
-- **Uniswap V3** and **Balancer**
-- **CEX listings:** Binance, Bybit, OKX
-- Typical daily volume: $100M+ in calm conditions
-- Retail-size exits clear at sub-10bps slippage in normal markets
-
-The catch: supply has contracted about 70% from the $14.7B September 2025 peak to the ~$4.5B recorded in June 2026. Absolute liquidity depth has shrunk in lockstep. **On how current that figure is:** USDe's Ethereum leg alone read 4,094,723,705 on 2026-08-23, and USDe's satellite deployments sit at *different* addresses on other chains rather than at the mainnet address, so an Ethereum read is a floor rather than a total. The June figure has therefore not been shown to be stale — any further contraction since is at most single-digit percent and may be nil. Still genuinely deep — but the cushion has thinned.
-
-**2. Primary mint/burn at $1 NAV (whitelisted institutions only).** Ethena operates a direct mint/burn flow against the reserve portfolio for KYC'd institutional counterparties. Retail and non-whitelisted holders cannot access this path directly. Critically, **this is not a §II.4 access-asymmetry penalty in the framework sense** — the arbitrage mechanism (institutions buying discounted USDe on DEX, redeeming at $1 with Ethena) is what keeps the secondary peg tight. Retail benefits from the same peg pressure even without direct primary access.
-
-This is the same pattern used by USDC (Circle's primary is institutional; retail uses Coinbase or DEX).
-
-**Update (July 9, 2026):** Ethena made this primary mint/redeem **free (0bps) and settled in USDC** for its onboarded institutional counterparties. This doesn't open the door any wider — retail still can't redeem directly, and it's still whitelisted/KYC'd counterparties only — but it makes the arbitrage that holds the peg *frictionless*: a market maker can now buy discounted USDe and redeem it at $1 for essentially just gas, instead of eating fees plus slippage. In practice that means the peg should hold a little tighter in normal conditions. The caveats: it only helps while those market makers are willing and capitalized, it runs specifically through USDC (so a USDC disruption would degrade this rail), and Ethena can pause it — so it doesn't add protection in a genuine stress event.
+The venue inventory identified 55 dollar-exit pools across ten chains. Venue TVL is not executable depth, and only Ethereum has the current measured ladder. The 7.0 score rests on that Ethereum result and the functioning institutional rail, not an assumption of equal liquidity across every deployment.
 
 ## 4 · Dependencies — 6.0
 
-**This axis scores the counterparty set — how many, how concentrated, how substitutable.** Whether the backing can be *verified* is priced under Backing above, so the two do not charge for one fact twice.
+USDe relies on stablecoin settlement assets, institutional custodians, off-exchange settlement providers, credit managers, tokenization platforms and CEX venues. Several firms occupy more than one role, reducing effective diversification even where the list of counterparties is long.
 
-⚠️ **The concentration that matters is one name in three roles, not the number of names.** **Coinbase is simultaneously the largest custodian, the primary perpetuals venue, and — through the Base savings product — a distribution channel.** ⚠️ **And the lending book is not independent of the custody set:** the three institutional borrowers are **Coinbase Asset Management, Anchorage Digital and Maple Institutional**, and the first two are the two largest custodians. **"Three lenders plus five custodians" is fewer distinct counterparties than it reads as.**
-
-**Custody split, from Ethena's twenty-first monthly attestation (26 August 2026, published 3 September):**
-
-| custodian | 23 Jul | 26 Aug |
-|---|---:|---:|
-| Coinbase Onchain Wallets | 73.09% | **57.19%** |
-| Anchorage Digital Bank | 17.18% | 16.77% |
-| Copper | 9.05% | **13.94%** |
-| Ceffu | 0.68% | **9.62%** |
-| Anchorage + BitGo / FalconX SPV | — | **2.48%** |
-| Kraken Custody | ~0 | ~0 |
-
-✅ **Read the direction, because it runs against the intuition.** The set is **re-diversifying**, not concentrating: the largest custodian fell **15.9 points in five weeks**, and a sixth arrangement appeared. ⚠️ **Figures are Ethena's own attestation as at 26 August and are not independently measured here** — the transparency page is client-rendered, so a static fetch returns nothing.
-
-✅ **The majority of this axis argues upward**, and that should not be lost under the concentration point: genuinely institutional counterparties, backing held **off-exchange** rather than at a trading venue, **twenty-one consecutive monthly attestations**, and a counterparty set that measurably improved over five weeks.
+The September attestation identifies the custody set, but current exposure weights within loans, RWAs, cash and derivatives remain incomplete. USDe also has 21 configured LayerZero peers beyond Ethereum. Some remote supplies and in-flight balances remain unmeasured rather than assumed to be zero. The named but overlapping and only partly substitutable dependency set supports 6.0.
 
 ## 5 · Contract & Admin — 5.5
 
-### Audits, and what the contracts allow
+Ethereum USDe is immutable: its implementation, admin and beacon slots are zero, and verified code exposes no upgrade path. Full-reach ownership and EthenaMintingV2 administration pass through a **24-hour TimelockController**.
 
-Among the most thoroughly audited token contracts in DeFi:
-
-| Firm | Tier |
-|---|---|
-| Spearbit | Top-tier |
-| Cantina | Top-tier |
-| Quantstamp | Mid-tier |
-| Pashov Audit Group | Mid-tier |
-| ChainSecurity | Mid-tier |
-
-Plus multiple competitive audits. No known exploits across 27+ months in production. The smart-contract layer is not where the risk lives — risk lives in counterparty + RWA + residual basis layers.
-
-**Live monitoring infrastructure** (this is the unusual strength):
-
-- **Chaos Labs Edge Proof of Reserves** — oracle that continuously verifies total reserve $, coverage ratio, delta-neutral positioning, and governance approval. Automated threshold alerts. Published to Ethena's transparency page.
-- **LlamaRisk Risk Monitor Portal** — independent real-time dashboard; LlamaRisk has been a Risk Committee member since day 1
-- **Chainlink Proof of Reserves** — reserve totals as an on-chain feed
-- **HT Digital (Harris & Trotter Digital)** — monthly attestation
-- **Kraken Custody PoR** — weekly on-chain proof of reserves from a US state-chartered bank (added January 2026)
-- **Reserve Fund Subcommittee** — monthly governance posts on Reserve Fund size, composition, recommended floor
-
-The Risk Committee structure (LlamaRisk + Blockworks Advisory + Chaos Labs + Chainlink) provides ongoing independent governance review. ENA-token voting on protocol parameters remains absent, which LlamaRisk's pre-pivot addendum flagged as a gap — the Risk Committee mechanism is the de facto governance even without it.
+The same **5-of-10 Dev Safe** is both proposer and sole canceller. The delay provides notice but no independent veto. The Safe also has an immediate execution route limited to specified operational selectors, while minting roles act within supported collateral, signed orders, tolerances and caps. The immutable token and bounded immediate paths support the score; concentrated governance and control over the reserve operation cap it at 5.5.
 
 ## 6 · Issuer — 7.0
 
-### The issuer, and its institutional footprint
+Ethena has a public team, institutional partners, repeated attestations and independent monitoring through LlamaRisk, Chaos Labs and Chainlink. Its operating record includes servicing major redemptions during the October 2025 market disruption without a reserve loss or prolonged peg failure.
 
-Two June 2026 developments brought meaningful TradFi and CeFi credibility — though neither changes the score, and the most consumer-facing pieces are not yet live:
+ENA governance approved a fee-switch schedule that begins at a **$7.5 billion** USDe supply threshold. The measured 14-day average was **$4.890 billion**, so it remains dormant. The schedule starts by directing 5% of gross protocol revenue to ENA buybacks and contains no Reserve-Fund-first condition. USDe holders do not vote directly in this governance process. The operating record supports 7.0; concentrated token voting and holder/governance misalignment prevent a higher score.
 
-- **Janus Henderson** (about $480B AUM) took a strategic ENA stake, will hold USDe as treasury cash, and supplied the JAAA AAA-CLO fund now sitting in USDe's reserves (see "What the contracts are doing"). Janus Henderson and Ethena are also co-developing **USDe/ENA ETFs and ETPs targeted for H2 2026** — these are not yet live, and a regulated product on the horizon is not the same as a regulated product in hand.
-- **Coinbase** (via Coinbase Ventures) bought ENA and is rolling out a **Base savings product that distributes USDe/sUSDe yield to Coinbase's 100M+ users**. For retail this is the largest distribution channel USDe has had.
-
-The retail takeaway: these expand distribution reach and lend institutional credibility, and the JAAA sleeve diversifies the credit book. **None of it moves the risk score** — the issuer axis already reflected Ethena's maturity, the ETFs/ETPs are still ahead, and adoption headlines are not a substitute for backing quality. One caveat worth holding: Coinbase now spans **custody, perpetuals venue, and yield distribution** for Ethena — a single-counterparty concentration to watch as that relationship deepens.
-
-## What you actually earn
-
-**Nothing on USDe itself** — yield is intentionally diverted to the staked sibling token, **sUSDe**. USDe holders accept zero yield in exchange for the $1 peg and broader DeFi compatibility. If you want yield exposure to Ethena's reserve portfolio, sUSDe is the relevant product — see the companion [sUSDe report](/reports/susde/) (separate cooldown risk on exit — a dynamic 1–7-day wait, 1 day as of 2026-07-15; ~3.72% APY as of Q1 2026, materially lower than the 8–40% range of the pre-pivot era).
-
-For USDe specifically: this is a $1-peg stablecoin you hold for the peg and DeFi composability, not for yield.
-## Score breakdown
-
-| Dimension | Score | Notes |
-|---|---|---|
-| Peg mechanism | 6.5 | Hybrid backing — 89% conventional credit-style assets + 11% residual perps. Mint/burn primary path with arb-driven secondary peg, similar to USDC/USDT; mint/redeem for whitelisted counterparties moved to 0bps in USDC on 2026-07-09, tightening the normal-conditions arb band (score unchanged — MM-only, USDC-specific, pausable). Survived October 2025 ($1.5B+ single-event outflow) without peg failure. The $0.97 wick was venue-specific oracle artifact, not redemption-mechanism break. |
-| Backing | 6.5 | Reserve Fund ~9× overcapitalized vs Risk Committee floor (LlamaRisk $5–7M / Blockworks $6.3M / actual $62M). Chaos Labs Edge PoR continuously verifies reserves; Kraken Custody added weekly PoR Jan 2026. Counter-pressure: institutional loan book is new and not operationally seasoned through stress; the June 2026 JAAA AAA-CLO sleeve (first realized non-BUIDL RWA, ~$310M cap) adds credit diversification but also corporate-credit cyclicality + a Centrifuge/Solana tokenization layer — net score-neutral at current size. |
-| Liquidity | 7.0 | Still genuinely deep — Curve, Uniswap V3, Balancer on DEX; Binance, Bybit, OKX on CEX; $100M+ daily volume. About 70% supply contraction from $14.7B peak to ~$4.5B current has compressed absolute depth in lockstep. Retail and mid-institutional exit at fair value remains unproblematic. |
-| Issuer | 7.0 | Doxxed team (Guy Young, ex-Cerberus Capital), top-tier investors (Dragonfly, Wintermute, Maelstrom, Bybit, Deribit, OKX), regulatory engagement via Ethena GmbH (Germany), **proven through October 2025 stress**. Mature Risk Committee (LlamaRisk + Blockworks + Chaos Labs + Chainlink) + monthly Reserve Fund subcommittee posts. |
-| **Overall** | **6.5** | Moderate risk ⚠️ **Held, and it sits +0.08 above its own axis mean of 6.42** — against the at-or-below convention applied elsewhere in this coverage. **Not re-derived since the sixth axis was authored**, so this cell is the one to treat as pending; the axes above are current. |
 ## Who it's for
 
-DeFi users who want a high-quality non-fiat-backed stablecoin and have refreshed their mental model to the post-pivot system. Comfortable with (a) reading external dashboards (Ethena transparency, LlamaRisk portal, Chaos Labs Edge PoR) rather than direct on-chain reserve verification, (b) institutional credit risk on the new Anchorage / Maple / Coinbase AM loan book, (c) BlackRock BUIDL dependency through the Reserve Fund, and (d) the systemic spillover dimension via the $6.4B+ Aave-Ethena loop concentration.
+- Users seeking a liquid dollar asset backed by a diversified managed portfolio rather than a bank deposit.
+- DeFi users comfortable relying on institutional custodians, credit managers and CEX hedging.
+- Holders who can use secondary markets rather than requiring direct issuer redemption.
 
-For yield exposure, the relevant product is sUSDe (separate report), not USDe.
 ## Who should avoid
 
-- Anyone who treats "the original delta-neutral basis trade" as the binding risk frame — that's ~10% of the system now and is no longer the dominant concern
-- Anyone who needs atomic, retail-accessible primary redemption at $1 NAV — that's institution-only; retail uses secondary
-- Anyone whose tolerance for "off-chain credit + RWA + residual perps" is below what the post-pivot architecture actually contains
-- Anyone uncomfortable with the systemic exposure that USDe stress would cascade through Aave / Morpho / Pendle loops
-## The fee switch, and what it replaced
+- Anyone requiring direct, permissionless redemption at one dollar.
+- Anyone requiring complete current look-through into every loan, RWA and derivatives position.
+- Anyone unwilling to accept off-chain custody, credit and exchange-counterparty exposure.
 
-Ethena tokenholders have approved a **fee switch**: once USDe supply reaches a stated milestone, **95% of the Ethena Foundation's net revenue** — the Foundation's own cut, not the protocol's — is directed to **ENA buybacks**.
-
-⚠️ **The denominator is the whole story here, and the proposal's own milestone table supplies it.** The schedule is expressed as a take rate against **gross** protocol revenue, and it reconciles with the 95% figure exactly:
-
-| USDe supply | $7.5B | $10B | $15B | $20B | $25B+ |
-|---|---:|---:|---:|---:|---:|
-| Gross protocol APY (assumed) | 6.0% | 6.0% | 6.0% | 6.0% | 6.0% |
-| Annualized gross revenue | $450m | $600m | $900m | $1,200m | — |
-| **Net revenue take rate for buybacks** | **5%** | 10% | 15% | 20% | 25% |
-| Annualized buyback volume | **$22.5m** | $60m | $135m | $240m | — |
-
-✅ **So at the first milestone the buyback is $22.5m against $450m of gross protocol revenue — 5%.** The Foundation's net is about **5.3%** of protocol revenue, and 95% of *that* is what goes to buybacks. ⚠️ **Read without the denominator, "95% of net revenue" suggests almost all protocol economics leave. They do not** — the figure a USDe holder forgoes at that milestone is about **0.50% of a $4.47B book per year.**
-
-⚠️ **Two limits the table states about itself.** It holds protocol APY constant at **6.0%**, which the proposal says is **below** Ethena's realised gross APY since inception, *"in order to isolate the effect of the supply milestones"* — so it is a schedule illustration, not a revenue forecast. And it calls the figures **illustrative**, varying with realised rewards and the composition of the USDe backing.
-
-⚠️ **It is dormant, and this report is not treating it as a deterioration.** USDe supply is **$4,468,386,035** — read on-chain today — against a first milestone of **$7.5B**, so activation needs **+67.8%** growth from here. ⚠️ **That gap has narrowed: supply is up 9.86% in twelve days.** ✅ **Stated as arithmetic on a single window rather than as a forecast** — at that trailing rate the milestone is roughly two months out, and a twelve-day window is not a trend. **Nothing is being diverted today**, and a reader should not take this as a change to current yield or current backing.
-
-⚠️ **The part worth knowing is what the schedule displaced.** The proposal's own text states that these milestones *"would replace any suggested parameters previously suggested by the Risk Committee"* — **and the Risk Committee thread is where the reserve-fund protections lived**: a monthly adequacy assessment gating activation, and a stated priority ordering of **Reserve Fund capitalization first**, then competitive sUSDe yields, then sENA.
-
-**Those are explicitly superseded, and the replacement text carries no reserve-fund condition of its own.** So the commitment that revenue would top up the loss-absorption buffer before being routed elsewhere has been replaced by a supply schedule that does not restate it.
-
-⚠️ **Two things this report has not read, and does not source to itself.** The milestone table is an **IPFS-embedded image**, and the Risk Committee's supporting analysis sits in the proposal's replies — **either could reinstate a reserve-fund test as a gate on activation, and neither has been retrieved.** Tier figures circulating in press coverage (5% above $7.5B, 10% at $10B, 15% at $15B) are **second-hand and are used here for no judgement.**
-
-**The honest summary is structural rather than immediate, and smaller than the headline percentage suggests: the protocol has committed by tokenholder vote to routing a rising share of revenue outward as it scales — 5% of gross at the first milestone, stepping to 25% above $25B — and the reserve-fund-first ordering that previously governed that decision no longer applies in the text that replaced it.**
 ## What to watch
 
-- **Reserve Fund composition.** Currently $62M = $41.98M USDtb + $20.02M USDtb/USDC LP. Any draw, composition change, or restructuring (especially the active proposal to redirect USDtb interest earnings to sUSDe holders) is a material signal. Tracked monthly on the [Ethena governance forum](https://gov.ethenafoundation.com).
-- **Institutional loan book seasoning.** Anchorage Digital / Maple Institutional / Coinbase Asset Management loans are new. A borrower default or triparty custodian event would test the new structure. Per-borrower detail isn't publicly disclosed; the Risk Committee monthly posts are the lens.
-- **RWA expansion.** BUIDL plus the now-live JAAA AAA-CLO sleeve (first realized step) — track its growth against the ~$310M position cap. Still planned beyond it: IG corporate bond funds, short-duration credit, structured credit, gold futures. Each addition is a new verification surface.
-- **Aave / Morpho / Pendle concentration.** $6.4B+ exposure against ~$4.5B USDe float — the gap widening as supply contracts (more than 100% of supply on a leveraged basis, mostly via Pendle PT-sUSDe loops). Chaos Labs publishes ongoing analysis on Aave governance forums.
-- **Funding regime on the residual 11% basis trade.** Sustained negative funding regimes would draw down the Reserve Fund — though at 9× overcapitalization the buffer is currently very large relative to plausible draws.
-## A note on the architecture pivot
+- **Coverage before and after the Reserve Fund.** The fund currently converts a sub-100% live ratio into an above-par result.
+- **The asset-level reserve split.** Current loan, RWA, cash and derivatives weights remain incomplete.
+- **Ethereum and chain-local exit depth.** The measured Ethereum floor is $5 million; other deployments lack executable ladders.
+- **The $7.5 billion fee-switch threshold.** Activation changes how protocol revenue is allocated.
+- **Administrative roles and LayerZero peers.** New deployments or role changes can alter the control surface.
 
-USDe is one of the few major stablecoins to **substantively change its backing architecture in production**, in response to a real stress event. Most stables either survive incidents with their original model intact (USDC's SVB recovery in March 2023) or fail entirely (UST in May 2022). The October 10, 2025 event triggered a different response: Ethena kept the mint/burn primary path and the broad design, but rebalanced the reserve portfolio away from its original basis-trade dominance toward conventional credit-style assets.
+## Related
 
-Whether this is more or less risky than the original design is genuinely debatable. The pivot reduces tail risk from funding-rate stress and CEX failure but expands the verification surface into institutional credit, off-chain triparty custody, and a growing RWA layer. The Risk Committee floors collapsed by ~70% (LlamaRisk $23M → $7M conservative, Feb → Mar 2026) because the math on the dominant historical tail risk genuinely changed.
-
-The retail framing: **the system has been stress-tested at $1.5B+ single-event scale and held, with a Reserve Fund now 9× overcapitalized vs that experience**. That's a stronger empirical position than most stables of comparable scale can claim.
-## A note on sUSDe
-
-If you're reading this and considering the staked sibling sUSDe: it's the yield-bearing wrapper (~3.72% APY as of Q1 2026, down from 8–40% in the basis-trade era but with much lower variance). Exit to the primary path runs through a **cooldown silo** — there is no instant primary exit. Ethena has since shipped a **dynamic cooldown** (proposal #759) keyed on liquid backing coverage: the old fixed 7-day wait is now a coverage-tiered **1 / 3 / 5 / 7 days**, verified on-chain at **1 day** as of 2026-07-15, with an auto-extend safeguard under stress. Secondary markets are deep (Curve, Pendle) with historical mean discount of just -17bps and max -127bps. See the companion [sUSDe report](/reports/susde/) for the wrapper-specific risk profile.
+- [sUSDe](/reports/susde/) — the yield-bearing vault share, including cooldown, NAV and wrapper-liquidity risks
 
 ---
 
-*This report is based on Ethena Labs' public documentation, the Ethena transparency dashboard, third-party Risk Committee analysis (LlamaRisk, Blockworks Advisory, Chaos Labs), on-chain reads, and reporting through 2026-07-14. Some information depends on Ethena's self-disclosures (institutional loan book composition, OES margining state, off-chain trade execution) that are continuously verified by the Risk Committee but not atomically reconcilable on-chain. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*Based on Ethena's September 2026 custodian attestation, the October 11 live backing feed, market and on-chain measurements, venue and ladder data, and the Ethereum authority walk. Live readings are available on the [USDe dashboard](https://tidresearch.com/dashboards/?asset=usde). Corrections or additional primary evidence are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
-*Revision history: 2026-08-29 — **fee switch added; no score change, and deliberately not written as a downgrade.** Ethena tokenholders have approved directing **95% of the Ethena Foundation's net revenue** to **ENA buybacks** once a USDe supply milestone is reached — **which the proposal's own table puts at $22.5m against $450m of gross protocol revenue, 5%, at the first milestone.** ⚠️ **It is dormant: supply is **$4,468,386,035** against a first milestone of $7.5B, so activation needs **+67.8%** growth.** Nothing is diverted today, and treating a dormant commitment as present deterioration would be the harsh-direction error this coverage has hit repeatedly this week. ⚠️ **The finding is what the schedule displaced.** The proposal's own text says the milestones *"would replace any suggested parameters previously suggested by the Risk Committee"* — **and that thread is where the reserve-fund protections lived**: a monthly adequacy assessment gating activation, and an ordering of **Reserve Fund capitalization first**, then sUSDe yields, then sENA. **The replacement text carries no reserve-fund condition.** **Recorded as structural and forward-looking:** the protocol has committed by vote to routing **an escalating share of GROSS protocol revenue** outward as it scales — **5% at the $7.5B milestone, rising to 25% above $25B** — and the reserve-fund-first ordering that governed that no longer applies in the text replacing it. ⚠️ **Two inputs were not retrieved and are not sourced to this report: the milestone table is an IPFS-embedded image, and the Risk Committee's supporting analysis sits in the proposal's replies.** Either could reinstate a reserve-fund gate. **Press-reported tiers are second-hand and used for no judgement here.** **Written to describe the schedule and the supersession rather than an in-flight vote**, so it does not go stale when voting closes. 2026-08-25 — **re-verified; nothing moved; scores held at 6.5.** Recorded as a result rather than a date move: a re-read that finds the thesis intact is information, and bumping a stamp without one converts an honest staleness signal into a false freshness signal. USDe's coverage reproduces exactly at **103.27%**. ⚠️ **Also carried, because the flag names invite the wrong reading:** our monitoring records two Ethena reserve-account gaps — one attested account on **Solana** outside our tracking, and an on-chain wallet read covering **6 of 7** disclosed accounts. **These are record gaps, not exposure gaps** — nothing is missing from Ethena's backing; something is missing from our view of it. Conflating the two once overstated the apparent shortfall by about seventeen times. `last_verified` bumped to 2026-08-25 for the coverage and reserve-account material. *Revision history: 2026-07-15 — updated the sUSDe cross-references for Ethena's shipped dynamic cooldown (1–7-day coverage-tiered, 1 day on-chain); USDe scores unchanged. 2026-07-14 — synced the 2026-07-09 0bps USDC mint/redeem change (frictionless peg arbitrage, still whitelisted-only); scores unchanged. Initial production publish.*
+## Revision history
+
+- **2026-10-11 — comprehensive refresh.** Added the September attestation, October live coverage, current peg and liquidity measurements, multichain scope, mint/redeem state and authority topology. Scores held.
+- **2026-10-11 — reserve classification corrected.** JAAA's approved cap is no longer presented as a USDe holding, and the former 11% derivatives figure is retained only as a historical measurement rather than a current allocation.
+- **2026-09-10 — fee-switch review.** Verified the adopted supply milestones and gross-revenue basis; Issuer held at 7.0.
