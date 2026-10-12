@@ -21,6 +21,7 @@ issuer: "Frax Finance / Frax Inc"
 market_cap_approx: 105479359
 featured: false
 production: true
+live_dashboard_url: "https://tidresearch.com/dashboards/?asset=frxusd"
 ---
 
 # Frax USD (frxUSD) — Risk Report
