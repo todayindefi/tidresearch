@@ -38,7 +38,7 @@ frxUSD is Frax's current dollar stablecoin, distinct from [Legacy FRAX](/reports
 
 At **2026-10-11T16:03:47Z**, Frax Facts reported **$108.46 million of assets** against **$105.48 million of circulating liabilities**, equal to **102.82% coverage**. The reserve comprised **62.22% WTGXX**, **21.32% USTB**, **14.61% BUIDL** and **1.85% cash at Erebor Bank**; AUSD, USDC and USDB were immaterial.
 
-The peg is tight and the measured Ethereum market exit is efficient through $100,000. The main constraints are reserve concentration in WTGXX, asset-selective redemption, incomplete dependency coverage and administrative powers that can affect balances without enforced delay.
+The peg is tight and the measured Ethereum market exit is efficient through $100,000. A fixed-block onchain reconciliation independently matched the reported token quantities representing 98.15% of issuer-reported assets. The main constraints are reserve concentration in WTGXX, asset-selective redemption, incomplete global liability coverage and administrative powers that can affect balances without enforced delay.
 
 ## 1 · Stability — 6.5
 
@@ -61,7 +61,9 @@ The latest issuer balance sheet reported:
 
 Reported assets exceeded circulating liabilities by **$2.98 million**. The reserve consists primarily of high-quality Treasury products, but WTGXX alone represents almost two-thirds of the total.
 
-Frax produces the consolidated balance sheet. This report has not independently reconciled every line to its fund statement, and the bank-cash balance remains off-chain. The machine-readable composition and reported surplus support 6.5; issuer-controlled aggregation, concentration and limited independent reserve assurance cap the score.
+At Ethereum block **26,173,067** on October 12, backing-monitor independently matched Frax's reported quantities for both WTGXX accounts, USTB, BUIDL and USDC. An independent Superstate price valued USTB only **$63.76** above Frax's mark. The observable token balances represented **$106.454 million, or 98.15% of issuer-reported assets**. This materially strengthens the reserve evidence beyond relying on Frax's API alone.
+
+The reconciliation does not establish independent global coverage. The dominant **$52.890 million WTGXX balance** at Frax's stated BitGo address lacks independent evidence that Frax is the beneficial owner; the **$2.004 million Erebor cash balance** remains off-chain and unverified; most non-USTB values still use par conventions; and remote OFT liabilities were not completely enumerated. Comparing the observed onchain assets with issuer-reported liabilities would produce 100.92%, but that hybrid figure is not independent proof of coverage. These ownership, valuation, completeness and concentration limits keep Backing at 6.5.
 
 ## 3 · Liquidity & Exit — 5.5
 
@@ -116,6 +118,7 @@ The 5.0 score reflects gaps in governance transparency. The August 2026 zero-ove
 ## What to watch
 
 - **WTGXX concentration.** Its 62.22% reserve share is the dominant backing dependency.
+- **Independent reserve coverage.** Beneficial-ownership evidence for the BitGo WTGXX account, eligible evidence for Erebor cash and complete remote OFT liabilities would close the main reconciliation gaps.
 - **Reported coverage.** A decline toward 100% would reduce the current $2.98 million cushion.
 - **Ethereum exit depth above $100,000.** The present ladder has not located the 50-bps boundary.
 - **Mint, freeze, pause and OFT-peer events.** These matter even when the proxy implementation is unchanged.
@@ -129,10 +132,11 @@ The 5.0 score reflects gaps in governance transparency. The August 2026 zero-ove
 
 ---
 
-*Based on Frax Facts at 2026-10-11T16:03:47Z, Frax redemption and deployment documentation, the canonical peg series and Ethereum exit ladder through October 11, Zellic reviews, and direct authority measurements. Frax Facts is issuer-produced, and unwalked networks remain unmeasured. Corrections or additional primary evidence are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+*Based on Frax Facts at 2026-10-11T16:03:47Z, backing-monitor's fixed-block reconciliation at Ethereum block 26,173,067, Frax redemption and deployment documentation, the canonical peg series and Ethereum exit ladder through October 11, Zellic reviews, and direct authority measurements. Independent global coverage remains withheld because remote liabilities are incomplete. Corrections or additional primary evidence are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
+- **2026-10-12 — backing reconciliation added.** Recorded backing-monitor's independent match of public reserve quantities representing 98.15% of issuer-reported assets. Backing remains 6.5 because remote liabilities are incomplete, BitGo WTGXX beneficial ownership and Erebor cash remain unverified, and independent NAV coverage is limited.
 - **2026-10-12 — whole-body refresh.** Replaced the revision-led report with a six-axis current-state assessment; refreshed peg, backing, supply, liquidity, network scope, audit coverage and authority evidence. Scores held.
 - **2026-10-12 — reserve and audit claims corrected.** Replaced incompatible legacy reserve shares with the live 62.22% WTGXX / 21.32% USTB / 14.61% BUIDL / 1.85% cash composition, and retired the claim that no public third-party contract review existed.
 - **2026-09-21 — authority path measured.** Established the 24-hour configured upgrade delay, two-hour floor and undelayed mint, freeze, pause and peer paths; scores held.
