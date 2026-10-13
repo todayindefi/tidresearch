@@ -14,7 +14,7 @@ date: "2026-05-07"
 # 25,877,589 (2026-08-31). The 08-25 measurement was CORRECT WHEN WRITTEN; the
 # asset moved under it. ⚠️ The custody Safe is STILL 3-of-6 on the same six as
 # token governance, so the quorum gap survives there. `last_verified` HOLDS.
-last_revised: "2026-10-04"
+last_revised: "2026-10-13"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -135,7 +135,7 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 - **STRC family** — roughly **74% of the reserve** net of inventory, and about **60% on the issuer's own live figure**, above the 55% single-issuer threshold flagged elsewhere in this coverage.
 - **MSTR, then BTC** — STRC is a preferred instrument junior to MSTR's convertible debt. **A severe BTC drawdown compresses MSTR equity, which compresses the dividend stream this vault exists to pass through.**
 
-**Strategy's 2026-06-29 "Digital Credit Capital Framework"** converts STRC's par defence from a reflexive sub-$95 dividend ratchet into a **discretionary soft floor** — a $1.0B STRC-priority buyback plus a near-doubled $2.55B reserve. ⚠️ **That is a bid under STRC, not a peg**, and it stabilises the trajectory at the root without restoring par or restocking Apyx's reserve.
+**Strategy's discretionary soft floor remains active, but finite.** The October 12 disclosure records **$192.4M for 1,932,145 STRC shares at about $99.58**, leaving **$354.8M** authorized; STRC closed at **$99.88**. ⚠️ **That is a bid under STRC, not a peg, redemption right, or contractual floor.** It reinforces the near-par mark without restocking Apyx's reserve; meanwhile USD Cash fell **$833.4M → $640.5M**, only $140.5M above the nearest trigger, and the restricted USD Reserve held at $4.88B. apyUSD inherits that two-sided update only through apxUSD; none of its wrapper mechanics changed. The issuer release is live, but EDGAR still ends at the October 5 8-K; no October 12 accession is cited.
 
 ⚠️ **Holding apxUSD and apyUSD together does not diversify.** They are two claims against the same Apyx and STRC backing.
 

@@ -12,10 +12,10 @@ yield_bearing: true
 assessment_type: "light"
 companion_report: "usdat"
 date: "2026-05-20"
-last_verified: "2026-08-24"
+last_verified: "2026-10-13"
 # ⚠️ 2026-09-09: backing_score authored, Dependencies cut from an unsourced 3.5,
 # underlying_assets corrected, score breakdown added. `last_verified` HOLDS.
-last_revised: "2026-10-04"
+last_revised: "2026-10-13"
 featured: false
 production: true
 issuer: "Saturn Labs"
@@ -35,7 +35,7 @@ issuer: "Saturn Labs"
 axis_frame: six
 volatility_score: 3.5
 backing_score: 2.5
-structural_score: 4.0
+structural_score: 3.5
 # ✅ FOLD STATUS DECLARED 2026-10-04 (riskAnalyst, owner ruling): redemption folds
 # into axis 3, and `redemption_score` is RETIRED on this asset rather than re-scored.
 # No number moved on the fold itself — liquidity 2.0 was already worse than
@@ -62,8 +62,9 @@ overall_score: 3.0
 # as publishing a risk assessment of the upgrade, and only the first was done.
 # ⚠️ PARKED: the upgrade's CONTENTS are unread — no diff compared, no audit of the new
 # implementation identified, duration and proposer unread, walk queued not commissioned.
-# `structural_score: 4.0` stays HELD, NOT CONFIRMED. ⚠️ Publish no claim about WHAT was
-# deployed until the walk lands [owner: securityAnalyst] [since: 2026-10-04]
+# `structural_score` CUT 4.0 -> 3.5 on 2026-10-13. The five-day timelock still
+# governs upgrades, but the live implementation differs from Saturn's published
+# address and has not been source-matched or independently reviewed.
 # ✅ 2026-10-04 PASS, axis 3 + the buffer only. riskAnalyst cut liquidity to 1.5 and
 # then REVERSED it the same day (their 9eb8e31 then 1a79582, verified in their git):
 # the cut priced the SECONDARY route and ignored the PRIMARY one, which had improved.
@@ -111,11 +112,11 @@ Every axis now states its reason.
 | **Backing** | **2.5** | ⚠️ **New axis, and it exists because sUSDat's reserve is not USDat's reserve.** USDat is **100.00% PYUSDx**; sUSDat is **98.96% an off-chain STRC claim ($70.58M) plus 1.04% on-chain USDat ($742,960)** — total **$71.32M**, re-read on-chain 2026-09-14. ⚠️ **Slightly more concentrated than before, not less.** ⚠️ **And the split has held near 99/1 for a reason that is not stability: the on-chain leg is almost unchanged in dollars while the total fell, so the buffer is pinned near its own floor rather than tracking assets.** ⚠️ **The producer tags the 99% leg `oracle_unverified` itself**, so the honest reading is *attested, not measured*. **The name, the ticker and the `underlying_assets` field all implied the vault wraps USDat; the balance sheet says it holds 1% of it** — that field is corrected in this pass |
 | Liquidity & Exit | **2.0** | ⚠️ **Scored on what it costs to leave.** Exiting **$100,000 costs about 7.5% — roughly $7,600** — and at **$500,000 the pool is exhausted rather than expensive: $500,000 in returns $96,268.57.** The on-chain buffer has run in the low single digits as a share of assets, so redemption at size depends on the off-chain leg being realised rather than on anything a holder can execute |
 | **Dependencies** | **2.5** | **The chain is **sUSDat → USDat → STRC → MSTR → bitcoin**, and 99% of the reserve sits at the STRC link — a preferred claim on a bitcoin treasury company, whose buyback support is discretionary and currently clears [about 2.6% below par](/reports/strc/). **Saturn Labs is the second dependency and the operator of the first.** ⚠️ **Concentration here is not a tail case, it is the design** |
-| Contract & Admin | **4.0** | **Set equal to [USDat](/reports/usdat/), which shares the same SaturnTimelock, delay, roles and `DEFAULT_ADMIN`.** ✅ **A genuine five-day self-administered delay with permissionless execution and no zero-delay path** — ⚠️ **but `PROPOSER` and `CANCELLER` are one EOA, so the cancel power belongs to whoever compromises the proposer**, and it is unestablished whether five days is exit-usable. Argued under [5 · Contract & Admin](#5--contract--admin--40) |
+| Contract & Admin | **3.5** | The live implementation differs from Saturn's published address and has not been source-matched or independently reviewed. Upgrade authority still terminates at a genuine five-day timelock, so this is a verification failure—not evidence of malicious code. Argued under [5 · Contract & Admin](#5--contract--admin--35) |
 | Issuer | 5.0 | Unchanged, and deliberately identical to [USDat](/reports/usdat/) — this axis scores Saturn Labs the company |
-| **Overall** | **3.0** | ⚠️ **Cut, and the reason is a fact about the wrapper rather than about the collateral.** The composite had been derived by looking through to STRC, which prices what backs the vault but is **silent on whether the vault's own exit works** — and that exit is exhausted at $500,000. **A look-through cannot see a wrapper-level constraint**, so the old figure was set before this one was known |
+| **Overall** | **3.0** | **Held through the Contract & Admin cut.** The score already reflects a wrapper whose secondary exit fails at size and whose backing is concentrated and mostly off-chain. The unmatched live implementation adds a critical verification gap, but the five-day timelock remains intact and no malicious behavior or loss has been observed. |
 
-**On where this sits against its own axes.** 3.0 is **0.25 below the mean of 3.25**, which is the direction most of this corpus runs. ⚠️ **The cut is not arithmetic catching up** — the composite was authored by looking through to STRC, and that derivation still reproduces on its own terms. ✅ **What changed is that a wrapper-level fact arrived that basket math structurally cannot price:** the exit is exhausted at $500,000, and no amount of reasoning about the collateral would have surfaced it.
+**On where this sits against its own axes.** 3.0 is below the six-axis mean of **3.17**. The Overall score holds through the Contract & Admin cut because it already prices the wrapper's severe exit constraint and concentrated, largely off-chain backing; the implementation mismatch sharpens a known structural weakness rather than creating a new loss event.
 
 ## 1 · Stability — 3.5
 
@@ -129,7 +130,7 @@ Every axis now states its reason.
 
 **The upstream cash flow is stronger than the mark suggests, with a caveat.** Strategy's ability to *pay* the STRC dividend improved materially through 2026: its Q2 filing confirmed a large and growing cash reserve — on the order of several billion dollars, covering years of preferred dividends — and a discretionary buyback program has been supporting the STRC price directly. ⚠️ **The caveat is that this bid is finite — and as of 2026-08-24 it is no longer funded the way this report described.** The repurchases are not paid for by selling Bitcoin, and the programme is not on course to exhaust around late September. **The funding flipped.** Per the 2026-08-17 filing, **no Bitcoin was bought or sold** in the week to 08-16 — holdings flat at 840,447 — and the $132.2M of STRC repurchases came from about **$333.7M of common-stock issuance**. Cumulatively $347.0M is spent with **$653.0M remaining** of the $1.0B authorisation.
 
-⚠️ **On timing there is no longer a date to give, and the reason is that the authorisation grew rather than that the pace changed.** Per the **2026-09-14 filing (period 09-08 → 09-13, accession `0001193125-26-389858`), $1.05 billion remains available** — **more than the $653.0M that remained on 08-17, after five further weeks of buying.** ✅ **A remaining balance that rises while spending continues can only mean the board expanded the programme**, which is what happened. ⚠️ **So no exhaustion date is derivable from this series, and none should be inferred from an earlier one.** See the [STRC report](/reports/strc/) for the full derivation.
+⚠️ **The latest terminal STRC read is near par, but still finite.** Strategy's October 12 disclosure records **1,932,145 STRC shares repurchased for $192.4M at about $99.58**, leaving **$354.8M** authorized; STRC closed at **$99.88**. The direct instrument evidence improved, but the bid is not a contractual floor, redemption right, or peg. **USD Cash fell $833.4M → $640.5M**, only **$140.5M above** the nearest trigger, while the restricted USD Reserve held at $4.88B. Nothing in Saturn custody, redemption, governance, or wrapper mechanics changed. See the [STRC report](/reports/strc/) for the full derivation. The issuer disclosure is live, but EDGAR still ends at the October 5 8-K; no October 12 accession is cited.
 
 ✅ **What the same filing does show is the discount compressing.** The week's **1,420,467 shares cost $139.3M — an average of about $98.07, roughly 1.93% below par**, against about 2.6% a week earlier. **The programme is buying back a smaller discount than it was**, which is the more informative number than the dollar total. ⚠️ **Week-to-week dollar totals are not compared here on purpose: consecutive filings cover different period lengths**, so a decline in the headline can be a calendar artifact rather than a change in the bid.
 
@@ -141,7 +142,7 @@ A price recovery driven by an expiring issuer bid is still not the same thing as
 
 This is the dimension where sUSDat differs most sharply from its sibling — **only a fraction of vault value is directly verifiable on-chain.**
 
-⚠️ **The vault's own accounting proves the point before any oracle is involved.** Read 2026-09-14, `totalAssets()` returns **$71,324,416** denominated in USDat — while **the entire supply of USDat is $68,155,049** (2026-09-12). ⚠️ **A vault cannot hold more of an asset than exists**, so that figure is a *valuation* of something else, not a holding. **The USDat it actually holds is $742,960 — about 1.0% of its stated assets**, read with a single `balanceOf` against the addresses in [5 · Contract & Admin](#5--contract--admin--40). ✅ **This is checkable by anyone in two calls and does not depend on trusting the producer's split.**
+⚠️ **The vault's own accounting proves the point before any oracle is involved.** Read 2026-09-14, `totalAssets()` returns **$71,324,416** denominated in USDat — while **the entire supply of USDat is $68,155,049** (2026-09-12). ⚠️ **A vault cannot hold more of an asset than exists**, so that figure is a *valuation* of something else, not a holding. **The USDat it actually holds is $742,960 — about 1.0% of its stated assets**, read with a single `balanceOf` against the addresses in [5 · Contract & Admin](#5--contract--admin--35). ✅ **This is checkable by anyone in two calls and does not depend on trusting the producer's split.**
 
 The vault holds USDat as an on-chain "liquidity buffer" that anyone can read with a single `balanceOf` call. That buffer has been running in the low single digits as a share of assets since midsummer. ⚠️ **Quote it as a band rather than a level, and use the full series rather than a calm stretch of it: across 661 observations from 2026-08-15 to 09-14 the range is 0.87% to 4.66%, median 1.95%** — **today's 1.04% sits near the bottom of that**, not in the middle. ✅ **A narrower band read off a recent stretch describes that stretch, not the series.** The buffer stood at roughly one-fifth of assets back in May, and has fallen as the reserve rotated further into STRC. The remaining **about 98–99% is held off-chain as STRC plus T-bills at the custodian**. The contract's `totalAssets()` reports the combined value, but the off-chain leg currently rests on the contract's own reporting rather than on the Accountable attestation and Chainlink NAV oracle the documentation describes.
 
@@ -236,7 +237,7 @@ Two things to keep in proportion. The 2026-07-28 reading was a **high one**, and
 
 **sUSDat's exposure is almost entirely to something it cannot read on-chain.** ⚠️ **About 99% of the vault's claim is an off-chain STRC position and roughly 1% is an on-chain USDat buffer**, so the dependency chain runs **sUSDat → USDat → STRC → Strategy Inc.** ✅ **The USDat leg is verifiable with a single call; the STRC leg is not**, and that asymmetry is the axis. **Composition is argued under Backing above** — this axis prices who is at the far end of it. See [MSTR](/reports/mstr) for the Strategy analysis and [STRC](/reports/strc) for the instrument itself.
 
-## 5 · Contract & Admin — 4.0
+## 5 · Contract & Admin — 3.5
 
 **The contracts this section describes, each identified by what it answers rather than by the name attached to it** (read 2026-09-12):
 
@@ -272,7 +273,9 @@ For a holder, the practical benefit is an observation window: an admin action ag
 
 ## 6 · Issuer — 5.0
 
-**Audits:** shared with USDat — Three Sigma (Audit #1) and Certora (Audits #2 and #3). The ERC-4626 implementation includes Pausable and ReentrancyGuard alongside the 30-day linear yield vesting. Pause is itself an admin power. ⚠️ **The implementation contract is NOT stable, and the audits above were not performed against the code running today.** The vault's EIP-1967 implementation slot moved from `0x2005e0ca201a37694125ff267ae57872bea0a0ce` to `0x2b7074cf6681382b70e239063931ebe83c0f4e0a` after 2026-09-30; we read the current slot directly on 2026-10-04. ⚠️ **What this does NOT establish:** the upgrade's contents are unread, no diff has been compared, and no audit of the new implementation has been identified. **Upgrade authority runs through the timelock role described above, so this reads as a governed upgrade rather than a key compromise** — but that is the authority path, not an assessment of what was deployed through it. ✅ **The Contract & Admin score below is HELD, NOT CONFIRMED:** holding it states that no measurement of the new implementation exists, not that one came back clean.
+**Audits:** shared with USDat — Three Sigma (Audit #1) and Certora (Audits #2 and #3). The ERC-4626 implementation includes Pausable and ReentrancyGuard alongside the 30-day linear yield vesting. Pause is itself an admin power.
+
+⚠️ **The deployed implementation is not the implementation Saturn publishes.** The vault's EIP-1967 slot resolves to `0x2b7074cf6681382b70e239063931ebe83c0f4e0a`, while Saturn's published implementation is `0x2005e0ca201a37694125ff267ae57872bea0a0ce`. Upgrade authority still runs through the binding five-day timelock described above, so this reads as a governed deployment rather than evidence of key compromise. But the live code has **not** been source-matched, diffed against the published implementation, or independently reviewed. **That verification gap—not the October STRC filing—is why Contract & Admin moves 4.0 → 3.5.** Reversion requires a verified source match and implementation diff.
 
 The Issuer axis scores Saturn Labs the company, so it is deliberately identical to the one on [USDat](/reports/usdat/): the same entity, the same timelock, the same custody representation, and the same KYC-permissioned holder universe, which sUSDat inherits by wrapping a permissioned token. It is the one axis on this report that does not describe the vault itself.
 
@@ -300,7 +303,8 @@ The Issuer axis scores Saturn Labs the company, so it is deliberately identical 
 - **⚠️ The on-chain buffer, read against its own distribution rather than as a trend.** **6.23% of assets ($4,155,240) at 2026-10-04**, which is the **78th percentile** of the 698 readings taken since 2026-09-04 — a series whose range is **0.21% to 8.85%**. ⚠️ **Do not read direction into it at daily resolution:** on 2026-08-23 it fell 1.98% → 1.45% in a single hour on one redemption. **No refill time is given here, and none should be:** two observation windows of the same quantity implied figures roughly sixty-five times apart, and a range that wide is the evidence that the quantity is not projectable. ⚠️ **An alert on this metric fires on an absolute floor, so it can read as a warning while the level sits at the 78th percentile — severity is not direction.** **The useful reading is capacity — how many tickets the buffer covers — not whether it rose or fell this week.**
 - **Share supply, separately from total assets.** Total assets can sit flat while a tenth of the shares leave, because a rising share value offsets the outflow. Supply is the number that shows you whether holders are exiting; assets alone will not.
 - **The Accountable proof-of-reserves feed going live.** That would convert the 98% off-chain leg from self-reported to attested, and is the single change that would most improve this asset's structural score.
-- **⚠️ Strategy's buyback runway, and what now gates it.** **$1.05B remained at 2026-09-13**, above the $653.0M that remained on 08-17 — the board expanded the authorisation, so **the runway is no longer a countdown and no exhaustion date is derivable.** **The bid is no longer Bitcoin-funded:** the most recent week's repurchases came from common-stock issuance, with no Bitcoin sold. **So the constraint to watch is mNAV and the market's appetite for that issuance, not the size of the Bitcoin stack** — the stack being flat no longer tells a holder anything about the floor. What STRC does after the bid stops is still the real test of the recovery.
+- **⚠️ Strategy's buyback runway, and what now gates it.** **$354.8M remained at 2026-10-11** after a $192.4M near-par repurchase. USD Cash is **$640.5M**, only **$140.5M above** the nearest trigger. Watch authorization, Cash and Reserve together: a working issuer bid can support STRC while still consuming finite liquidity. Exhaustion alone is not an automatic score trigger.
+- **The implementation mismatch.** The live `0x2b70…E0A` implementation needs a published source match, code diff and independent review against Saturn's `0x2005…0Ce` address. Until then, the five-day timelock provides notice but not code assurance.
 - **Anything queued in the shared timelock.** Scheduled admin actions are visible for five days before they can execute — for this vault that includes pause, upgrade, and share-accounting changes.
 
 ## Live dashboard
@@ -317,6 +321,7 @@ Live reserve composition, share-value trajectory against the 11% APY target, dis
 
 ## Revision history
 
+- **2026-10-13 — Contract & Admin 4.0 → 3.5; Overall held at 3.0.** The live implementation differs from Saturn's published address and has not been source-matched or independently reviewed. The five-day timelock remains intact. This is a verification failure, not a finding of malicious code, and is unrelated to the STRC filing.
 - **2026-08-24 — upstream funding source changed; no score change.** Strategy's 2026-08-17 filing shows STRC repurchases funded from common-stock issuance rather than Bitcoin sales, moving the binding constraint to appetite for common issuance, watched through mNAV.
 - **2026-08-23 — Issuer 5.5 → 5.0; Overall held at 3.5.** Figures refreshed against the wrapper-pair equality with [USDat](/reports/usdat/).
 - **2026-08-11 — Issuer 5.0 → 5.5; Overall held at 3.5.**

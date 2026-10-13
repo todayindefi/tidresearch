@@ -16,7 +16,7 @@ last_verified: "2026-08-25"
 # ⚠️ 2026-09-09: bridge Safe re-read on-chain — 3-of-6 -> 4-of-7 at block
 # 25,877,589 (2026-08-31). The 08-25 owner-set-identity finding was CORRECT WHEN
 # WRITTEN; the asset moved under it. `last_verified` HOLDS.
-last_revised: "2026-10-04"
+last_revised: "2026-10-13"
 featured: false
 production: true
 # issuer: withheld pending review — this report states the issuing entity is
@@ -210,7 +210,7 @@ The durable finding on this axis is that secondary depth is **variable and issue
 ## What to watch
 
 - **Collateral ratio back to ≥100%, sustained.** The single most important recovery signal — live on the dashboard's Backing panel. A sustained return to par (not a one-snapshot blip) is what would justify re-rating.
-- **STRC price + the soft-floor bid — but no longer as a countdown.** apxUSD's backing recovers if STRC re-rates up, now via Strategy's discretionary buyback/reserve soft floor rather than the old forced sub-$95 dividend hike. ⚠️ **The exhaustion horizon this report tracked is void rather than reached:** the programme was re-authorised to **$2.0B on 2026-09-08**, now covering STRC/STRF/STRK/STRD, with **$723.5M remaining at 09-28** and funding drawn from USD cash. ⚠️ **The funding mechanism has changed twice — BTC sales, then common-equity ATM, now USD cash — so the signal to watch is which source is paying, not how many weeks are left.** A week funded from preferred issuance rather than cash would be the thing that matters.
+- **STRC price + the soft-floor bid.** STRC closed at **$99.88 on October 12**, while Strategy repurchased **1,932,145 shares for $192.4M at about $99.58**. The direct collateral mark improved, but **only $354.8M of authorization remains** and USD Cash fell to **$640.5M**, $140.5M above the nearest trigger. Exhaustion alone is not automatic, since the board can re-authorize, but no Apyx reserve was restocked by this disclosure. The issuer release is live; EDGAR still ends at the October 5 8-K, so no October 12 accession is cited.
 - **Wolf attestations — whether cash ever returns to scope.** The June 2026 examination (signed 07-22) again covered securities only. Each further securities-only report leaves the cash sleeve without CPA coverage for longer; a return to the March full-balance scope would restore the disclosure stack to its high-water mark.
 - **Curve apxUSD/USDC pool depth and discount** (live on dashboard). Recovering depth and a narrowing discount = healing; widening = renewed stress.
 - **MSTR / BTC drawdowns.** A severe BTC crash compresses MSTR equity → threatens STRC dividends → degrades apxUSD backing further.
