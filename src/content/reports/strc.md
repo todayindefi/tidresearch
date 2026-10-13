@@ -6,20 +6,12 @@ chains: []
 category: "tradfi-equity"
 assessment_type: "light"
 date: "2026-08-24"
-last_verified: "2026-08-24"
-# Scope-limited pass on the 2026-08-31 Strategy 8-K. ⚠️ `last_verified` is
-# deliberately NOT bumped — it stamps a whole-body re-read and this was the
-# buyback/runway material only.
-# 2026-09-21 8-K (accession 0001193125-26-396093, period 09-14 -> 09-20): read
-# directly from EDGAR by this desk. STRC buyback $174.0M / 1,771,238 sh ~$98.24,
-# $875.1M remaining; USD Reserve fell for the first time $5.10B -> $5.04B ($57.4M
-# drawn for dividends + interest); USD Cash $1.30B -> $1.05B; 950 BTC bought from
-# cash; common ATM idle a third filing. Owner ruling 2026-09-22 (riskAnalyst 67210c9):
-# Counterparty 4.5 -> 4.0 on the reserve-drawn-for-dividend trigger; Overall HELD 4.0.
-# tradfi-equity: per-axis scores live in the body table, not frontmatter. Watch-list bullet 1 (mid-September
-# exhaustion) was a fossil the body had already voided on 09-08 — rewritten.
-# Earlier: 2026-09-08 8-K (0001193125-26-384402) DCS authorisation doubled to $2.0B.
-last_revised: "2026-09-22"
+last_verified: "2026-10-12"
+# 2026-10-12 issuer disclosure (period 10-05 -> 10-11): STRC buyback $192.4M /
+# 1,932,145 shares at ~$99.58; $354.8M remaining; Reserve held $4.88B; Cash
+# fell $833.4M -> $640.5M. EDGAR still ended at the 10-05 8-K, so no 10-12
+# accession is asserted. Scores HELD per owner ruling.
+last_revised: "2026-10-13"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strc"
 featured: false
 production: true
@@ -41,7 +33,7 @@ overall_score: 4.0
 
 | Instrument | Dividend | Par | Trading | Issuer |
 |---|---|---|---|---|
-| Perpetual preferred stock, no maturity | 12.00% annual, paid semi-monthly, **variable and discretionary** | $100 stated amount | About **$96.18**, roughly 3.8% below par (2026-08-24) | Strategy Inc. |
+| Perpetual preferred stock, no maturity | 12.00% annual, paid semi-monthly, **variable and discretionary** | $100 stated amount | **$99.88**, 0.12% below par (2026-10-12) | Strategy Inc. |
 
 ## Why this report exists
 
@@ -73,9 +65,9 @@ overall_score: 4.0
 
 ## What STRC actually is
 
-A **perpetual preferred stock**: no maturity date, no repayment obligation, and a dividend Strategy declares rather than owes in the way it owes bond interest. The stated amount is $100 and the current rate is **12.00% annually, paid semi-monthly**, on roughly **93,162,208 shares — about $9.32B of par** at 2026-09-20. That count is derived, not disclosed: 104,895,000 shares on Strategy's STRC dashboard at 2026-06-08, less the 11,732,792 shares the issuer's weekly filings record as repurchased since, with no preferred issued in any filing over that span. Strategy has not published a post-buyback count.
+A **perpetual preferred stock**: no maturity date, no repayment obligation, and a dividend Strategy declares rather than owes in the way it owes bond interest. The stated amount is $100 and the current rate is **12.00% annually, paid semi-monthly**, on roughly **88,954,899 shares — about $8.90B of par** at 2026-10-11. That count is derived, not disclosed: 104,895,000 shares on Strategy's STRC dashboard at 2026-06-08, less 15,940,101 cumulative repurchases, with no preferred issued over that span. Strategy has not published a post-buyback count.
 
-That makes STRC's annual dividend obligation roughly **$1.12B**, about **69% of Strategy's entire ~$1.63B annual preferred-and-interest bill** (both derived on the count above; before the buybacks retired par they were $1.23B of $1.74B, so the repurchases have cut the bill by about 6.5%). STRC is not one instrument among several; it is the dominant claim.
+That makes STRC's annual dividend obligation roughly **$1.07B**, about **68% of Strategy's entire ~$1.57B annual preferred-and-interest bill** (both derived on the count above). The latest 1,932,145-share repurchase alone removes about **$23.2M a year** of STRC dividends at 12%. STRC is not one instrument among several; it is the dominant claim.
 
 ## ⚠️ The dividend is a discretionary soft floor, not a peg
 
@@ -107,8 +99,10 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 | 2026-09-07 | $176.3M | ~$97.36 |
 | 2026-09-13 | $139.3M | ~$98.07 |
 | **2026-09-20** | **$174.0M** | **~$98.24** |
+| **2026-10-04 filing periods** | **$176.3M** | **~$99.39** |
+| **2026-10-11** | **$192.4M** | **~$99.58** |
 
-⚠️ **$875.1M remained at 2026-09-20** under the doubled $2.0B authorisation — still more than the $364.8M that remained on 08-31, because the board expanded the programme rather than because the pace fell. ✅ **The discount being harvested keeps compressing: ~$98.24 is about 1.76% below par, against ~$98.07 (1.93%) the week before and roughly 2.6% the week before that.** The 09-20 week was the sixth consecutive week of repurchases and the highest price paid yet. ⚠️ **Week-to-week dollar totals are not compared here — consecutive filings cover different period lengths (eight calendar days against six), so a change in the headline can be a calendar artifact rather than a change in the bid.** *(Share counts: 1,431,212 and 1,557,177 for the 08-23 and 08-30 weeks; **1,810,885** for 09-07, **1,420,467** for 09-13 and **1,771,238** for 09-20.)*
+⚠️ **$354.8M remained at 2026-10-11** under the doubled $2.0B authorisation. Strategy repurchased **1,932,145 shares for $192.4M**, about **$99.58/share**. STRC itself closed at **$99.88 on October 12**, so the direct instrument evidence improved. But the issuer bid is demonstrably large, discretionary and finite—not a contractual floor, redemption right, or peg—and is now being funded against a rapidly declining USD Cash balance.
 
 ⚠️ **The last two rows are stated as a weekly move rather than an absolute average, because that is what the filings support.** The 8-K gives an implied repurchase price of **$97.48** for the most recent week; the intermediate figure is a delta from the week before it.
 
@@ -124,9 +118,9 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 
 **What survives unchanged is the shape of the question, only on a longer horizon:** the programme is still finite by construction, and ⚠️ **a price recovery riding an issuer bid is still not a re-rating.** The distinction simply stops being decided in September.
 
-⚠️ **And the funding source changed.** Through early August the buybacks were funded by **selling Bitcoin** — the 2026-08-10 filing earmarked the entire net proceeds of a $108.6M BTC sale for STRC repurchases. In the week to 2026-08-16, **no Bitcoin was sold at all**; the $132.2M of buybacks and $52.4M of dividends came from about **$333.7M of common-stock issuance**. Common-equity funding held for two weeks after that, and then the ATM went idle: the 09-07, 09-13 and 09-20 filings each record zero common shares sold, with the buyback paid from USD Cash instead. Holdings stand at **846,000 BTC** after 950 were bought from the same cash pocket in the week to 09-20.
+⚠️ **And the funding source changed again.** Through early August the buybacks were funded by Bitcoin sales; common equity then funded them before USD Cash took over. In the week to 10-11, Strategy sold **125,183 MSTR shares for $21.0M**, bought **250 BTC for $21.5M**, and spent **$192.4M** repurchasing STRC. USD Reserve held at **$4.88B**, but separate USD Cash fell **$833.4M → $640.5M**. The bid works near par while its most immediate funding pocket shrinks.
 
-⚠️ **And a question this page cannot answer, which is the most interesting thing in the 2026-08-31 filing: STRC sold ZERO on its own ATM against $17,510.8M of available capacity — while common equity funded the buyback.** Read across every weekly filing rather than one: **no preferred stock — STRF, STRC, STRK or STRD — has been sold in any of the 17 weekly 8-Ks from 2026-05-26 through 2026-09-21**, and the available-capacity column is frozen at the same four figures ($1,619.3M / $17,510.8M / $2,100.0M / $4,014.8M) in every filing that prints it, which cannot coexist with issuance. The preferred pause is a full quarter old. The common ATM is the opposite shape: active every week through 08-30 (18,261,118 shares in the week to 08-23 alone), then zero in the 09-08, 09-14 and 09-21 filings.
+⚠️ **And a question this page cannot answer, first exposed by the 2026-08-31 filing: STRC sold ZERO on its own ATM against $17,510.8M of available capacity — while common equity funded the buyback.** No preferred issuance occurred in the 2026-10-05 filing either, while the common ATM resumed. That is not shelf exhaustion: capacity exists and remains unused. It is either a choice not to issue preferred stock or an absence of demand at current terms, and the filing does not distinguish them.
 
 **That is not shelf exhaustion.** The capacity is there and unused. **It is either a choice not to issue the preferred, or an absence of demand for it at current terms, and the filing does not say which.** ⚠️ **The two readings point in opposite directions** — a deliberate pause is a funding decision, while an absent bid on a $17.5B shelf is a demand signal about the instrument this report is about. **It is filed here as an open question rather than resolved in either direction**, and what the next filings show on that line is worth more than another week of buyback totals.
 
@@ -146,9 +140,9 @@ Strategy authorised **$1.0B** for repurchasing its digital-credit securities, wi
 
 ## Ability to pay, and what it rests on
 
-**The near-term picture is strong.** The USD reserve reached about **$4.80B** at 2026-08-16, its sixth consecutive weekly build, then **$5.10B** where it held for four weeks, under a Board policy requiring a minimum twelve months of forward preferred-dividend and interest coverage, restricted to that use. On 09-20 it read **$5.04B** after the first week in which dividends and interest ($57.4M) were paid out of it rather than refilled through it.
+**The restricted Reserve remains substantial at $4.88B, but the liquid direction is adverse.** USD Cash has fallen to **$640.5M**, only **$140.5M above the report's $500M trigger**, while the issuer continues spending close to $200M a week on the near-par STRC bid.
 
-On the $5.04B reserve at 2026-09-20, and assuming **zero new issuance inflow**, that is roughly **54 months** of STRC dividends alone, or about **37 months** of the entire preferred-and-interest bill — on the derived ~$1.63B obligation above. ⚠️ **The figures this replaces (45 and 32 months, computed on the 08-09 reserve and the 10-Q's pre-buyback $10.489B of STRC par) overstated the burden**: the buybacks had already retired par the denominator still counted, so the correction lengthens the runway rather than shortening it. Those are stress-scenario watermarks rather than forecasts — in practice Strategy continuously refills cash through issuance — but they establish that the dividend is not close to being unfundable.
+On the $4.88B Reserve at 2026-10-11, and assuming **zero new issuance inflow**, that is roughly **55 months** of STRC dividends alone, or about **37 months** of the entire preferred-and-interest bill—on the derived ~$1.57B obligation above. Those are stress-scenario watermarks rather than forecasts, but they establish that the dividend is not close to being unfundable even as unrestricted Cash approaches its trigger.
 
 **Beneath the cash sits the Bitcoin.** At the roughly $79,670 Strategy paid for bitcoin in the week to 09-20, the ~$1.63B preferred-and-interest obligation is about **2.4% of the 846,000-BTC stack per year**, and STRC alone about **1.7%**. On frozen assumptions that is decades of runway.
 
@@ -174,11 +168,11 @@ Preferred dividends rank behind debt service. Strategy's convertible notes there
 
 | Axis | Score | Why |
 |---|---:|---|
-| Volatility | 5.0 | Traded from $76.16 at the June 2026 low to about $96 today — a 26% range in ten weeks on an instrument with a $100 stated amount. Perpetual preferreds with discretionary dividends are not low-volatility instruments, and this one has demonstrated it. |
+| Volatility | 5.0 | Traded from $76.16 at the June 2026 low to **$99.88 on October 12**—a large recovery, but still a roughly 31% range on an instrument with a $100 stated amount. The direct evidence improved; the demonstrated volatility remains. |
 | Liquidity | 7.0 | NASDAQ-listed with real secondary depth — the strongest axis, and the reason a downstream holder can mark it at all. Note this is the *instrument's* liquidity, not the wrapper's: the on-chain STRCx venue is thin, covered in [that report](/reports/strcx/). |
-| Counterparty | 4.0 | The binding axis. The dividend is discretionary, the price support is finite, and the whole instrument depends on a single issuer whose funding model is itself reflexive. The condition set for this axis was the USD Reserve falling while buybacks continue, or a week funded by preferred issuance; the 2026-09-21 filing printed the first — the reserve fell $5.10B → $5.04B, drawn $57.4M to pay preferred dividends and interest, in the same week as $174.0M of STRC repurchases, with nothing refilling it since the common ATM went idle. A reserve drawn to pay the dividend is what this axis scores. The counter-case is real and two-directional: the instrument itself strengthened in the same week, executing at about $98.24 (1.76% below par) against a June low near $76 on a six-week uninterrupted bid. Offset by a reserve that still covers about three years of the preferred obligation, a stated coverage policy, and demonstrated willingness to spend real money defending the price. |
+| Counterparty | 4.0 | The binding axis. The dividend is discretionary, price support is finite, and the instrument depends on one issuer. Direct evidence improved—STRC closed at **$99.88**—but Strategy spent **$192.4M** on the weekly bid while USD Cash fell to **$640.5M**. The Reserve still covers about three years of the preferred-and-interest obligation, but Cash is only **$140.5M above** the nearest trigger. |
 | Redemption | 5.0 | **Perpetual — there is no redemption right.** A holder's only exit is the secondary market at whatever price prevails. The mitigation is that the market is liquid and the issuer is buying; neither is a contractual claim. |
-| **Overall** | **4.0** | **Elevated.** A real, dividend-paying, exchange-listed instrument with genuine ability to pay in the near term — sitting on discretionary terms, a finite price floor, and one issuer. Held at 4.0 through the Counterparty cut because the instrument's recovery toward par offsets the issuer notch rather than compounding it: the funding loop behind the dividend opened while the price of the thing it funds improved. Appropriate as a *disclosed* backing asset; not appropriate as an assumed-stable one. |
+| **Overall** | **4.0** | **Held.** The $99.88 market price is stronger direct instrument evidence, but the near-par price coincides with a **$192.4M issuer bid**, only **$354.8M** of authorization remaining, and USD Cash at **$640.5M**. The recovery offsets rather than erases the finite-support risk. Appropriate as a *disclosed* backing asset; not as an assumed-stable one. |
 
 ## Who should care about this report
 
@@ -192,13 +186,14 @@ Preferred dividends rank behind debt service. Strategy's convertible notes there
 
 ## What to watch
 
-- ⚠️ **The buyback authorisation running out — on the doubled programme, now $875.1M at 2026-09-20**, about **5 weeks** at the most recent week's $174.0M. **What STRC does after the bid stops is the real test**, and it is the single event most likely to move the downstream assets — but the board has already expanded the programme once rather than let it lapse, so the date is a moving target rather than a deadline. The nearer constraint is the pocket it is paid from: USD Cash of **$1.05B**, which at this week's $249.7M of outflow (buyback plus bitcoin) lasts about **4.2 weeks**, or about 5.6 weeks at the three-week average — **both assuming no capital formation at all**, which has held for three weeks and could stop holding on any Monday.
+- ⚠️ **USD Cash below $500M—the nearest live trigger.** Cash is **$640.5M**, only **$140.5M away**. The $4.88B restricted Reserve is a different pocket and must not be merged with it.
+- **Buyback capacity: $354.8M remaining.** Exhaustion alone is not an automatic score trigger, because the board can re-authorize as it did before. What STRC does without—or after renewal of—the bid is still the clean test of organic support.
 - ⚠️ **Whether STRC issues anything on its own ATM.** Zero preferred sold in all 17 weekly filings since 2026-05-26 against roughly **$17.5B** of frozen capacity; the common ATM went idle much later, in the last three filings. USD Cash now funds the buyback. **A resumption reads as a funding choice; continued zeroes read as a demand signal**, and the filings do not distinguish them.
 - **⚠️ mNAV, which is now the floor's binding constraint.** With the buyback funded by common issuance rather than Bitcoin sales, the gate is whether the market keeps absorbing that issuance — not whether Bitcoin remains to sell. At 0.9952 (2026-08-24) mNAV sits at parity, where issuance is roughly neutral. **Watching the Bitcoin stack for early warning now watches the wrong thing.**
-- **Which pocket funds the bid.** Bitcoin sales through early August, common equity from the week to 08-16, and USD Cash since the ATM went idle on 09-07. The first spends collateral, the second dilution capacity, the third a finite balance with nothing refilling it.
+- **Which pocket funds the bid.** Bitcoin sales through early August, common equity next, and USD Cash most recently. The 10-05 filing assigns $154.1M of Cash to repurchases while the common ATM resumed separately. The first spends collateral, the second dilution capacity, and the third a finite balance; none is free.
 - **The dividend rate.** Held at 12.00% and forward-disclaimed until sustained trading near $100. A rise signals the discretion being spent; a suspension is the tail.
-- **STRC's discount to par.** About 3.8% at 2026-08-24, against roughly 24% at the June low.
-- **The reserve direction.** ⚠️ **The build has stopped and reversed: flat at $5.10B for four weeks, then $5.04B on 09-20 after $57.4M was drawn to pay dividends and interest** — the condition on which the issuer's Funding axis was cut to 4.0 on the [MSTR report](/reports/mstr/). **Nothing is feeding it — the ATM is idle — and the buyback draws on general USD cash, which fell $1.44B → $1.30B → $1.05B.** Combined liquid (reserve plus cash) fell $6.40B → $6.09B, the largest weekly decline of the series. A sustained drawdown alongside sub-par trading is the combination that matters, not either alone; one week of draw is the first print, not the trend.
+- **STRC's discount to par.** Just **0.12% at the October 12 close ($99.88)**, against roughly 24% at the June low. Read that improvement beside the size of the issuer bid.
+- **The two cash pockets.** Reserve held at **$4.88B** while USD Cash fell **$833.4M → $640.5M**. The stable Reserve is constructive for dividend service; declining Cash is the immediate constraint on continued buybacks.
 
 ## Live dashboard
 
@@ -212,10 +207,12 @@ Instrument price, dividend-rate history, the cash-service waterfall, and the dow
 
 ---
 
-*This report is based on Strategy Inc. SEC filings, most recently the 2026-09-21 weekly 8-K (accession 0001193125-26-396093, period 09-14 → 09-20), together with the Q2 2026 Form 10-Q (accession 0001050446-26-000044) and the 2026-06-29 Digital Credit Capital Framework 8-K (accession 0001193125-26-286871). **Quarterly filings are unaudited** — reviewed, not audited. Instrument price, mNAV and downstream exposure are live reads at 2026-08-24; the buyback, reserve and Bitcoin figures are dated to the filing that disclosed them, which is up to a week older. This is dependency-analysis scope: it explains STRC's mechanics for holders of downstream assets, and is not investment guidance on STRC. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).*
+*This report uses Strategy's 2026-10-12 issuer disclosure for the 10-05→10-11 period, the 2026-10-05 Form 8-K (accession 0001193125-26-413164), the Q2 2026 Form 10-Q (accession 0001050446-26-000044), and the 2026-06-29 Digital Credit Capital Framework 8-K (accession 0001193125-26-286871). ⚠️ **EDGAR's CIK feed still ended at the October 5 8-K when checked, so no October 12 accession is cited or implied.** Quarterly filings are unaudited—reviewed, not audited. This is dependency-analysis scope, not investment guidance on STRC. Corrections welcome: [info@tidresearch.com](mailto:info@tidresearch.com).*
 
 ## Revision history
 
+- **2026-10-13 — October 12 issuer disclosure synced; scores held.** Strategy repurchased **1,932,145 STRC shares for $192.4M at ~$99.58**, leaving **$354.8M** authorized; STRC closed at **$99.88**. USD Reserve held at **$4.88B**, while USD Cash fell **$833.4M → $640.5M**, leaving **$140.5M** to the below-$500M trigger. Volatility 5.0 / Liquidity 7.0 / Counterparty 4.0 / Redemption 5.0 / Overall 4.0 held. The issuer release is live; EDGAR still ends at the October 5 8-K, so no October 12 accession is cited.
+- **2026-10-06 — 10-05 8-K synced; scores held.** Strategy repurchased **1,773,802 STRC shares for $176.3M at about $99.39**, leaving **$547.2M** under the $2.0B authorization. At 12%, those shares remove about **$21.3M/year** of dividends. USD Reserve fell **$5.02B → $4.88B**, USD Cash ended at **$833.4M**, and common issuance resumed while preferred issuance remained zero. The bid works near par, but remains discretionary and finite.
 - **2026-09-22 — Counterparty 4.5 → 4.0; Overall held at 4.0.** The condition set for the axis on 09-08 — the USD Reserve falling while buybacks continue — printed on the 09-21 filing: $57.4M drawn from the reserve for dividends and interest in the same week as $174.0M of STRC repurchases. One axis, not the headline: STRC executed at ~$98.24 in the same week, and the recovery offsets the issuer notch. Volatility 5.0 / Liquidity 7.0 / Redemption 5.0 unchanged.
 - **2026-09-22 — 09-21 weekly 8-K synced (accession 0001193125-26-396093, read at source); upstream issuer's Funding axis cut 4.5 → 4.0 on the [MSTR report](/reports/mstr/), MSTR Overall held 4.5.** STRC par and the dividend obligation restated on a derived 93,162,208-share count (104,895,000 at 06-08 less 11,732,792 repurchased): about **$9.32B par and $1.12B/yr**, replacing $10.25B and $1.23B, which had overstated the burden by about 6.5%; coverage on the $5.04B reserve about 54 months on STRC alone and 37 on the whole preferred bill. STRC buyback **$174.0M for 1,771,238 shares at ~$98.24 (1.76% below par)**, a sixth consecutive week and the highest price yet; **$875.1M remains** of the $2.0B programme. **The USD Reserve fell for the first time, $5.10B → $5.04B**, with $57.4M used to pay preferred dividends and interest; USD Cash **$1.30B → $1.05B**; 950 BTC bought from cash (holdings 846,000); common ATM idle for a third filing; preferred ATM untouched in all 17 weekly filings since 2026-05-26. Watch-list item on the mid-September buyback exhaustion restated on the doubled programme.
 - **2026-08-24 — initial publication at Overall 4.0** (Volatility 5.0 / Liquidity 7.0 / Counterparty 4.5 / Redemption 5.0). ⚠️ **Exposure splits into $66.63M measured on-chain as STRCx and about $197.8M inferred by subtraction** — the roughly 75% that is raw and the roughly 75% that is unmeasured are the same 75%. The 2026-08-17 filing shows **no Bitcoin sold** and STRC repurchases funded from common-stock issuance, so **the binding constraint moved from the depth of the Bitcoin stack to the market's appetite for common issuance**.
