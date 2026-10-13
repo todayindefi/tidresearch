@@ -9,8 +9,8 @@ assessment_type: "full"
 production: true
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susds"
 date: "2026-05-27"
-last_verified: "2026-08-25"
-last_revised: "2026-09-24"
+last_verified: "2026-10-13"
+last_revised: "2026-10-13"
 featured: false
 issuer: "Sky Protocol (formerly MakerDAO)"
 yield_bearing: true
@@ -57,7 +57,7 @@ overall_score: 7.0
 
 **Live data:** [sUSDS Backing Dashboard](https://tidresearch.com/dashboards/?asset=susds) — hourly peg, liquidity depth, NAV accrual, and sUSDS/USDS coverage from two independent reads, with the dependency chain through to [USDS](/reports/usds/) shown alongside. **The collateral look-through behind that USDS layer is on its dashboard** — this report covers the wrapper; what ultimately backs it sits one link upstream.
 
-> **The permissionless one.** Of the on-chain ways to earn a Treasury-style yield on dollars, sUSDS is the one with no KYC, no geographic gate, no minimum, and no lockup — anyone can hold, transfer, and redeem it instantly. That accessibility, deep liquidity, and a battle-tested codebase are what make it the most usable option in its category. Two caveats keep it from scoring higher: the USDS dollar it's built on is upgradeable (with a freeze function Sky could switch on by governance vote), and about a third of USDS's backing is USDC, so sUSDS carries real USDC depeg correlation. Its score is now set **equal to** the [USDS](/reports/usds/) dollar it wraps, not above it — see the note below.
+> **The permissionless one.** Of the on-chain ways to earn a Treasury-style yield on dollars, sUSDS is the one with no KYC, no geographic gate, no minimum, and no lockup — anyone can hold, transfer, and redeem it instantly. That accessibility, deep liquidity, and a battle-tested codebase are what make it the most usable option in its category. The main caveats are USDS's upgradeable contract, its **35.95% raw-USDC concentration**, and allocator concentration: Spark directly holds **~$1.050B of sUSDS**, a reflexive claim on USDS rather than independent backing. Its score is set **equal to** the [USDS](/reports/usds/) dollar it wraps, not above it.
 
 | Yield (current) | Exit method | Primary redemption | Age | Chains |
 |---|---|---|---|---|
@@ -67,16 +67,18 @@ overall_score: 7.0
 
 sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the team behind DAI. You deposit **[USDS](/reports/usds/)** (Sky's stablecoin, a successor to DAI that converts 1:1 with it) and receive sUSDS, an ERC-4626 vault share whose redemption value rises over time as it accrues the **Sky Savings Rate (SSR)**, currently around **3.75% APY**.
 
-**The reason sUSDS matters for a retail holder is access.** It is a DeFi savings position, not a securities wrapper: no KYC, no allowlist, no non-US restriction, no minimum, no waiting period. At around $6 billion in size with deep on-chain liquidity, exiting at fair value is essentially frictionless under normal conditions. That is the opposite of tokenized money-market tokens like USYC (allowlisted, non-US, $100k minimum — retail cannot hold it at all) or Ondo's USDY (non-US only, a 40-50 day lockup on fresh mints, fiat-wire-only primary redemption).
+**The reason sUSDS matters for a retail holder is access.** It is a DeFi savings position, not a securities wrapper: no KYC, no allowlist, no non-US restriction, no minimum, no waiting period. The vault currently reports **$4.835B of USDS assets**, with deep on-chain liquidity and near-frictionless exit at fair value under normal conditions.
 
-**Two things hold the score at 7.5 rather than higher**, and both are covered under the axes below: **USDS is upgradeable with a governance-addable freeze function** (axis 5), and **about a third of its backing is USDC**, so this is correlated to USDC rather than diversified away from it (axis 4).
+**Three things hold the score at 7.0 rather than higher:** USDS is upgradeable with a governance-addable freeze function; **35.95% of supply is raw USDC**; and nearly half of Sky vat debt sits with Spark and Grove, including a large reflexive sUSDS position inside Spark.
 
-**A note on why this is 7.5 and not higher.** sUSDS cannot rank above the **7.5** we publish for [USDS](/reports/usds/), the dollar it wraps: its entire value is a claim on USDS, so every risk in that report is also a risk here. The correct treatment is **equal, not lower** — the ERC-4626 wrapper sits on the same battle-tested codebase and adds no material risk of its own. If USDS re-rates in either direction, expect this to move with it.
+**A note on why this is 7.0.** sUSDS cannot rank above the **7.0** we publish for [USDS](/reports/usds/), the dollar it wraps: its entire value is a claim on USDS, so every risk in that report is also a risk here. The correct treatment is **equal, not lower** — the ERC-4626 wrapper sits on the same battle-tested codebase and adds no material risk of its own. If USDS re-rates in either direction, expect this to move with it.
 
 ## 1 · Stability — 9.0
 **Reference: NAV.** sUSDS pays yield by appreciating against USDS — there is no rebasing and nothing to claim. Your balance stays constant while each sUSDS becomes redeemable for slightly more USDS. **The redemption value only climbs**, so there is no meaningful price volatility at this layer.
 
 **The one path to a drawdown here is a USDS depeg**, which is a question about collateral rather than about this vault — axes 2 and 4.
+
+The latest reconciliation is tight: sUSDS reports **$4.835B of USDS assets**, while the vault balance is only **$205.86 lower (-0.000004%)**, consistent with read/accrual timing. sUSDS now represents **69.51% of Ethereum USDS supply**.
 
 **What you actually earn, and the two things to understand about the rate:**
 
@@ -88,20 +90,21 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 | Component | Share | |
 |---|---|---|
-| **Star allocators** — Spark, Grove, Obex | ≈52% | Tokenized short-term T-bills, other stablecoins (USDT, PYUSD, RLUSD), on-chain crypto lending, OTC lending, private credit, AAA-rated corporate debt (Grove routes into a Janus Henderson CLO) |
-| **Raw USDC in the PSM** | ≈33% | Fixed 1:1 swap liquidity — about $4.3 billion |
-| **Overcollateralized crypto vaults** | ≈7% | Once a co-equal pillar, now a tail |
+| **Stablecoins** | 51.04% | Includes **35.95% raw USDC** and $4.134B in LitePSM exit inventory |
+| **On-chain crypto lending** | 28.23% | Largest non-stablecoin look-through category |
+| **OTC lending + AAA corporate debt** | 15.23% | Less transparent credit and counterparty exposure |
+| **Treasury bills + other** | 5.50% | T-bills, private credit, basis trade and smaller sleeves |
 
 **This diversification is a genuine strength versus any product backed by one off-chain fund.** Short-term Treasuries, heavily overcollateralized crypto loans, and cash — well above the STRC-backed yield wrappers.
 
-⚠️ **The axis is 7.0, inherited from [USDS](/reports/usds/) rather than judged separately** — the same reserve, so the same score. **A wrapper cannot hold better collateral than the asset whose collateral it is.** What holds it below a Treasury-pure score is the USDC concentration and the newer, less-transparent credit sleeve (OTC lending + private credit + CLO, ≈14% combined) — both of which are scored as concentration under axis 4.
+⚠️ **The axis is 6.0, inherited from [USDS](/reports/usds/) rather than judged separately** — the same reserve, so the same score. **A wrapper cannot hold better collateral than the asset whose collateral it is.** Spark's direct **943.3M-share sUSDS position, worth ~$1.050B**, is especially important here: it is a recursive claim on USDS, not a new asset backing sUSDS or USDS.
 
 ## 3 · Liquidity & Exit — 8.5
 **Both exit paths, and the axis takes the worse one. Here they agree, and this is the asset's strongest dimension.**
 
 **Primary redemption — instant, atomic, permissionless.** Redeem sUSDS → USDS in the vault at any time, then USDS → USDC 1:1 through the Peg Stability Module. **No cooldown, no redemption fee, no gatekeeper, no fiat rails, no KYC, no minimum.** Getting in is the same: deposit USDS at [sky.money](https://sky.money/susds) or through Spark, or swap USDC → USDS 1:1 through the PSM first.
 
-**Secondary — deepest in its category.** Around $6B in size with deep permissionless DEX liquidity, plus 1:1 USDS↔DAI convertibility. **No KYC or geographic gate on either path.**
+**Secondary — deepest in its category.** The vault reports about **$4.835B of assets**, with deep permissionless DEX liquidity plus 1:1 USDS↔DAI convertibility. **No KYC or geographic gate on either path.**
 
 ⚠️ **The one thing to watch on exit is PSM USDC liquidity under extreme stress.** The 1:1 USDS↔USDC swap depends on USDC sitting in the module; in a severe USDC-specific crisis that liquidity could be drawn down and the clean 1:1 exit would lean on the DEX market instead. **A tail consideration, not a normal-conditions concern** — and the reason this is 8.5 rather than a perfect score, alongside a small reservation for cross-chain reliance on the Spark PSM off Ethereum.
 
@@ -112,13 +115,13 @@ sUSDS is the savings token of **Sky Protocol** — the rebranded MakerDAO, the t
 
 **1. The whole position depends on [USDS](/reports/usds/).** There is no diversification at this layer and none is possible. Every risk in the USDS report is a risk here.
 
-**2. ⚠️ About a third of USDS backing is raw USDC, so sUSDS is correlated to USDC — not diversified away from it.** Roughly $4.3 billion sits in the PSM at a fixed 1:1 swap, with further USDC-denominated exposure inside the allocator deployments on top. **That is excellent for redemption liquidity and it is exactly what makes axis 3 strong** — the two are the same fact read from opposite ends.
+**2. ⚠️ 35.95% of USDS supply is raw USDC, so sUSDS is correlated to USDC—not diversified away from it.** The LitePSM holds **$4.134B** at a fixed 1:1 swap, with further USDC-denominated exposure inside allocator deployments. **That is excellent for redemption liquidity and it is exactly what makes axis 3 strong**—the two are the same fact read from opposite ends.
 
 **The precedent is March 2023:** when USDC briefly depegged during the Silicon Valley Bank failure, **DAI followed it down** because of heavy USDC backing through the same kind of module. ⚠️ **So treat sUSDS as roughly "two-thirds diversified collateral plus one-third USDC", not as something safer than USDC.** If you already hold a lot of USDC elsewhere, **this adds to that exposure rather than diversifying it.**
 
-**3. A newer, less-transparent credit sleeve.** OTC lending, private credit and a AAA CLO now total ≈14% of backing. High-grade on paper, and materially harder to look through than a T-bill.
+**3. Allocator concentration is now 48.41% across Spark and Grove.** Their vat-debt shares are **33.51% and 14.91%**. Spark also holds about **$1.050B of sUSDS** directly. That balance helps reconcile Spark's **$3.853B allocator debt** with BlockAnalitica's **$3.094B external-principal** look-through, but it is reflexive exposure—not external backing. The remaining **+$290.5M** is unattributed and must not be read as profit, surplus or extra collateral.
 
-**The axis sits at 7.0 — level with Backing, not below it.** The dependencies are high quality; what the axis records is that they are **concentrated rather than diverse**, and that the concentration is in the one name whose failure mode has already been observed once.
+**The axis sits at 6.5.** The dependencies are generally high quality, but they are concentrated, and part of the largest allocator's position loops back into the same asset whose backing is being assessed.
 
 ## 5 · Contract & Admin — 7.0
 **The contracts are the lowest-risk part of the story.** sUSDS is a standard ERC-4626 vault on Ethereum at `0xa3931d71877c0e7a3148cb7eb4463524fec27fbd`, with native deployments on Base (`0x5875eee1…`), Optimism (`0xb5b2dc7f…`) and Arbitrum (`0xddb46999…`), plus Solana. The savings module, PSM and vault all descend from **MakerDAO's codebase, live and heavily audited since 2017**, with the savings-rate mechanism specifically running since 2019 as the DAI Savings Rate and sDAI. It has been battle-tested through Black Thursday in March 2020 and the March 2023 USDC depeg. **There are no known unresolved contract vulnerabilities in the savings / PSM / vault path.**
@@ -160,10 +163,11 @@ Holders who want a simple, liquid, permissionless way to earn a roughly money-ma
 - **Cross-chain PSM health** if you hold sUSDS on Base / Optimism / Arbitrum / Solana rather than Ethereum (axis 5).
 ---
 
-*This report is based on Sky Protocol's public documentation, Spark documentation, public reporting on the USDS freeze-function debate, and on-chain reads of the sUSDS vault, through 2026-05-27. The Sky Savings Rate is governance-set and subject to change, and USDS's upgrade/freeze capability is a governance decision, not a fixed contract guarantee. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
+*This report is based on Sky Protocol's public documentation, Spark documentation, BlockAnalitica look-through data, public reporting on the USDS freeze-function debate, and on-chain reads of the sUSDS vault and Spark ALM proxy through 2026-10-13. The Sky Savings Rate is governance-set and subject to change, and USDS's upgrade/freeze capability is a governance decision, not a fixed contract guarantee. Corrections, attestation links, or additional disclosures welcome at info@tidresearch.com.*
 
 ## Revision history
 
+- **2026-10-13 — vault and USDS backing snapshot refreshed; scores unchanged.** sUSDS assets are **$4.835B USDS**, vault reconciliation is **-$205.86 (-0.000004%)**, and sUSDS is **69.51% of Ethereum USDS supply**. Inherited USDS figures now show **35.95% raw USDC**, **$4.134B LitePSM USDC**, and **48.41% combined Spark/Grove vat debt**. Spark's **~$1.050B direct sUSDS** position is explicitly treated as recursive exposure, not independent backing; the **+$290.5M residual remains unattributed**.
 - **2026-08-25 — admin path re-verified; no score change.** The GSM delay reads **172,800 seconds — 48 hours** — with `owner()` at zero, and ⚠️ **`plot()` and `drop()` answer to the same DSAuth authority**, so there is no independent canceller.
 - **2026-08-18 — Overall held at 7.5**, level with [USDS](/reports/usds/) rather than above it, since a wrapper cannot outrank the dollar it wraps.
 - **2026-07-09 — collateral model refreshed.** Star-allocator system about 52%, crypto CDPs about 7%.
