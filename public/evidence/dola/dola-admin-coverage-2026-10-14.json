@@ -1,0 +1,683 @@
+{
+  "block_number": 26188001,
+  "calls": [
+    {
+      "name": "fed_chair",
+      "address": "0x8f97cca30dbe80e7a8b462f1dd1a51c32accdfc8",
+      "signature": "getThreshold()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000002"
+      }
+    },
+    {
+      "name": "fed_chair",
+      "address": "0x8f97cca30dbe80e7a8b462f1dd1a51c32accdfc8",
+      "signature": "getOwners()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000060000000000000000000000002723723fdd3db8ba2d6f0e1b333e90a7e60a04110000000000000000000000009f3614afb3df9f899cadbffaa05c6c908059f726000000000000000000000000962228a90eac69238c7d1f216d80037e61ea92550000000000000000000000003fcb35a1cbfb6007f9bc638d388958bc4550cb280000000000000000000000006535020cceb810bdb3f3ca5e93de2460ff7989bb00000000000000000000000052f63971afd2a32524c859c29943f9bea38ca907"
+      },
+      "decoded_owners": [
+        "0x2723723fdd3db8ba2d6f0e1b333e90a7e60a0411",
+        "0x9f3614afb3df9f899cadbffaa05c6c908059f726",
+        "0x962228a90eac69238c7d1f216d80037e61ea9255",
+        "0x3fcb35a1cbfb6007f9bc638d388958bc4550cb28",
+        "0x6535020cceb810bdb3f3ca5e93de2460ff7989bb",
+        "0x52f63971afd2a32524c859c29943f9bea38ca907"
+      ]
+    },
+    {
+      "name": "junior_operator",
+      "address": "0x9d5df30f475cea915b1ed4c0cca59255c897b61b",
+      "signature": "getThreshold()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000003"
+      }
+    },
+    {
+      "name": "junior_operator",
+      "address": "0x9d5df30f475cea915b1ed4c0cca59255c897b61b",
+      "signature": "getOwners()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000060000000000000000000000002723723fdd3db8ba2d6f0e1b333e90a7e60a041100000000000000000000000052f63971afd2a32524c859c29943f9bea38ca9070000000000000000000000009f3614afb3df9f899cadbffaa05c6c908059f726000000000000000000000000962228a90eac69238c7d1f216d80037e61ea92550000000000000000000000006535020cceb810bdb3f3ca5e93de2460ff7989bb0000000000000000000000003fcb35a1cbfb6007f9bc638d388958bc4550cb28"
+      },
+      "decoded_owners": [
+        "0x2723723fdd3db8ba2d6f0e1b333e90a7e60a0411",
+        "0x52f63971afd2a32524c859c29943f9bea38ca907",
+        "0x9f3614afb3df9f899cadbffaa05c6c908059f726",
+        "0x962228a90eac69238c7d1f216d80037e61ea9255",
+        "0x6535020cceb810bdb3f3ca5e93de2460ff7989bb",
+        "0x3fcb35a1cbfb6007f9bc638d388958bc4550cb28"
+      ]
+    },
+    {
+      "name": "rwg",
+      "address": "0xe3ed95e130ad9e15643f5a5f232a3dae980784cd",
+      "signature": "getThreshold()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "rwg",
+      "address": "0xe3ed95e130ad9e15643f5a5f232a3dae980784cd",
+      "signature": "getOwners()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000004000000000000000000000000962228a90eac69238c7d1f216d80037e61ea925500000000000000000000000052f63971afd2a32524c859c29943f9bea38ca9070000000000000000000000003fcb35a1cbfb6007f9bc638d388958bc4550cb280000000000000000000000002723723fdd3db8ba2d6f0e1b333e90a7e60a0411"
+      },
+      "decoded_owners": [
+        "0x962228a90eac69238c7d1f216d80037e61ea9255",
+        "0x52f63971afd2a32524c859c29943f9bea38ca907",
+        "0x3fcb35a1cbfb6007f9bc638d388958bc4550cb28",
+        "0x2723723fdd3db8ba2d6f0e1b333e90a7e60a0411"
+      ]
+    },
+    {
+      "name": "policy",
+      "address": "0x4b6c63e6a94ef26e2df60b89372db2d8e211f1b7",
+      "signature": "getThreshold()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000004"
+      }
+    },
+    {
+      "name": "policy",
+      "address": "0x4b6c63e6a94ef26e2df60b89372db2d8e211f1b7",
+      "signature": "getOwners()",
+      "argument": "",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000700000000000000000000000052f63971afd2a32524c859c29943f9bea38ca9070000000000000000000000007efe8e14ecfcb3ff349253a9925a8818a8ce54800000000000000000000000003fcb35a1cbfb6007f9bc638d388958bc4550cb28000000000000000000000000962228a90eac69238c7d1f216d80037e61ea92550000000000000000000000009f3614afb3df9f899cadbffaa05c6c908059f7260000000000000000000000006535020cceb810bdb3f3ca5e93de2460ff7989bb0000000000000000000000002723723fdd3db8ba2d6f0e1b333e90a7e60a0411"
+      },
+      "decoded_owners": [
+        "0x52f63971afd2a32524c859c29943f9bea38ca907",
+        "0x7efe8e14ecfcb3ff349253a9925a8818a8ce5480",
+        "0x3fcb35a1cbfb6007f9bc638d388958bc4550cb28",
+        "0x962228a90eac69238c7d1f216d80037e61ea9255",
+        "0x9f3614afb3df9f899cadbffaa05c6c908059f726",
+        "0x6535020cceb810bdb3f3ca5e93de2460ff7989bb",
+        "0x2723723fdd3db8ba2d6f0e1b333e90a7e60a0411"
+      ]
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "00000000000000000000000063df5e23db45a2066508318f172ba45b9cd37035",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "00000000000000000000000063df5e23db45a2066508318f172ba45b9cd37035",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000003474ad0e3a9775c9f68b415a7a9880b0cab9397a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000003474ad0e3a9775c9f68b415a7a9880b0cab9397a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000b516247596ca36bf32876199fbdcad6b3322330b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000b516247596ca36bf32876199fbdcad6b3322330b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "00000000000000000000000027b6c301fd441f3345d61b7a4245e1f823c3f9c4",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "00000000000000000000000027b6c301fd441f3345d61b7a4245e1f823c3f9c4",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000dc2265cbd15bed67b5f2c0b82e23fce4a07ddf6b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000dc2265cbd15bed67b5f2c0b82e23fce4a07ddf6b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000003fd3dabb9f9480621c8a111603d3ba70f17550bc",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000003fd3dabb9f9480621c8a111603d3ba70f17550bc",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "00000000000000000000000048ba574edf0bc4e2e40b529863aaa6a67c264e7c",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "00000000000000000000000048ba574edf0bc4e2e40b529863aaa6a67c264e7c",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "00000000000000000000000079ef6d28c41e47a588e2f2ffb4140eb6d952aec4",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "00000000000000000000000079ef6d28c41e47a588e2f2ffb4140eb6d952aec4",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000002a256306d8ba899e33b01e495982656884ac77ff",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000002a256306d8ba899e33b01e495982656884ac77ff",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000b427fc22561f3963b04202f9bb5bcebd76c14a99",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000b427fc22561f3963b04202f9bb5bcebd76c14a99",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000004e264618dc015219cd83dbc53b31251d73c2db1a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000004e264618dc015219cd83dbc53b31251d73c2db1a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000d68d3a44d46dd50bfeba8cca544717b76e7c4b29",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000d68d3a44d46dd50bfeba8cca544717b76e7c4b29",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000004a33bafa8a31e4ec9649f65646022cad1957808b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000004a33bafa8a31e4ec9649f65646022cad1957808b",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a52f597"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000c45e9c231ab5d9bd3f1131e7901b100d8d236c4d",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000c45e9c231ab5d9bd3f1131e7901b100d8d236c4d",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a5bd227"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000f9287c29cb888f4834b7d2757a833d509e7f9d9a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000f9287c29cb888f4834b7d2757a833d509e7f9d9a",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a8e1443"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000001fd4985cdd57bdb1ed646b10b7952fcd58946916",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000001fd4985cdd57bdb1ed646b10b7952fcd58946916",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006a8e156f"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "0000000000000000000000003542b39dcedc01f82c6e7af0eec424726d019eaa",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "0000000000000000000000003542b39dcedc01f82c6e7af0eec424726d019eaa",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006ad27d9b"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "allowedMarkets(address)",
+      "argument": "000000000000000000000000a95605313eb4544f784e699de93e9232dbfcf02d",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationTime(address)",
+      "argument": "000000000000000000000000a95605313eb4544f784e699de93e9232dbfcf02d",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000006ad68db7"
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "slashingModules(address)",
+      "argument": "000000000000000000000000316a01f878aa6d5a4c7ea2080d64d364f9538aa2",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "sell(uint256)",
+      "argument": "0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "from": "0x000000000000000000000000000000000000dEaD",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted: panic: arithmetic underflow or overflow (0x11)",
+          "data": "0x4e487b710000000000000000000000000000000000000000000000000000000000000011"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "sell(uint256)",
+      "argument": "0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "from": "0x000000000000000000000000000000000000dEaD",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted: arithmetic underflow or overflow",
+          "data": "0x4e487b710000000000000000000000000000000000000000000000000000000000000011"
+        }
+      }
+    },
+    {
+      "name": "psm_controller",
+      "address": "0xe3475728673eabaec90a37aa3ae2ced9f0db5ff2",
+      "signature": "onBuy(address,address,uint256)",
+      "argument": "000000000000000000000000000000000000000000000000000000000000dead000000000000000000000000000000000000000000000000000000000000dead0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "psm_controller",
+      "address": "0xe3475728673eabaec90a37aa3ae2ced9f0db5ff2",
+      "signature": "onSell(address,address,uint256)",
+      "argument": "000000000000000000000000000000000000000000000000000000000000dead000000000000000000000000000000000000000000000000000000000000dead0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "from": null,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "fed_chair",
+      "signature": "eth_getCode",
+      "address": "0x8f97cca30dbe80e7a8b462f1dd1a51c32accdfc8",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea2646970667358221220d1429297349653a4918076d650332de1a1068c5f3e07c5c82360c277770b955264736f6c63430007060033"
+      }
+    },
+    {
+      "name": "junior_operator",
+      "signature": "eth_getCode",
+      "address": "0x9d5df30f475cea915b1ed4c0cca59255c897b61b",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea2646970667358221220d1429297349653a4918076d650332de1a1068c5f3e07c5c82360c277770b955264736f6c63430007060033"
+      }
+    },
+    {
+      "name": "rwg",
+      "signature": "eth_getCode",
+      "address": "0xe3ed95e130ad9e15643f5a5f232a3dae980784cd",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea2646970667358221220d1429297349653a4918076d650332de1a1068c5f3e07c5c82360c277770b955264736f6c63430007060033"
+      }
+    },
+    {
+      "name": "policy",
+      "signature": "eth_getCode",
+      "address": "0x4b6c63e6a94ef26e2df60b89372db2d8e211f1b7",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea2646970667358221220d1429297349653a4918076d650332de1a1068c5f3e07c5c82360c277770b955264736f6c63430007060033"
+      }
+    },
+    {
+      "name": "sdola",
+      "address": "0xb45ad160634c528cc3d2926d9807104fa3157305",
+      "signature": "convertToAssets(uint256)",
+      "argument": "000000000000000000000000000000000000000000001b4dad8a1ec8b0667a62",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000026d92222706c121c8786"
+      }
+    }
+  ]
+}

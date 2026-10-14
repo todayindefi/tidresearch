@@ -2,95 +2,231 @@
 asset: "DOLA"
 slug: "dola"
 aliases: ["DOLA", "Dola USD", "Inverse Finance DOLA"]
-chains: ["eth", "base", "arb", "optimism", "bsc", "fantom"]
+chains: ["eth", "base", "arb", "op", "bsc", "fantom", "polygon", "avax", "mode", "blast"]
 category: "stablecoin"
-peg_mechanism: "Debt-backed CDP (FiRM) + Peg Stability Module"
-assessment_type: "light"
+peg_mechanism: "hybrid"
+assessment_type: "full"
 date: "2026-07-01"
-last_verified: "2026-07-01"
-featured: false
-issuer: "Inverse Finance DAO"
-market_cap_approx: 39000000
-peg_mechanism_score: 5.5
+last_revised: "2026-10-14"
+last_verified: "2026-10-14"
+peg_mechanism_score: 5.0
 backing_score: 4.5
 liquidity_score: 4.5
+underlying_score: 4.5
+structural_score: 5.0
 issuer_score: 5.0
 overall_score: 4.5
+issuer: "Inverse Finance DAO"
+audited_reserves: false
+market_cap_approx: 72573072
+axis_frame: six
+production: false
+featured: false
+# Source: /home/danger/riskAnalyst/assets/dola.md, 2026-10-14.
+# Issuer inputs and remote topology remain incomplete; stage pending review.
 ---
 
 # DOLA — Risk Report
 
-**Moderate risk · 4.5/10**
+**Significant risk · 4.5/10**
 
-> **A small, DeFi-native dollar with one concentrated dependency.** DOLA is Inverse Finance's decentralized stablecoin. It isn't backed by a bank account — it's *borrowed into existence*: people post crypto collateral and mint DOLA against it. It has held its dollar peg through past crises, including the 2023 USDC scare. But two things keep it in the middle of the range: about half of everything backing DOLA is a single asset — Ethena's sUSDe — and that same sUSDe pool is also the main place you'd sell DOLA, so your backing and your exit are the same bet. On top of that, the protocol still carries about $3.4M of old bad debt from 2022 exploits. It trades slightly under a dollar (around $0.995) most of the time.
-
-| Yield | Exit method | Primary redemption | Age | Chains |
-|---|---|---|---|---|
-| None on DOLA (stake to sDOLA for yield) | Sell on a DEX (mostly Curve DOLA/sUSDe or Uniswap DOLA/USDC) | No direct fiat redemption; peg held by a Peg Stability Module + DAO operations | Live since 2021 | Ethereum + Base / Arbitrum / Optimism / BSC / Fantom |
+Debt-backed USD stablecoin · FiRM lending and Fed supply management · Inverse Finance DAO. Scores run from 1 to 10, with higher scores indicating greater safety.
 
 ## Summary
 
-DOLA is the stablecoin of **Inverse Finance**, a long-running DeFi DAO. Unlike USDC or USDT, no company holds dollars in a bank for it. Instead, more than 97% of DOLA is created through **FiRM**, Inverse's fixed-rate lending market: a borrower locks up crypto collateral (Ethena's sUSDe, Sky's sUSDS, staked ETH, wrapped BTC, and others) and mints DOLA against it — always worth less than the collateral behind it. The clever part is how the "interest" works: instead of paying a rate that ticks up every block, borrowers hold a separate token called **DBR** ("DOLA Borrowing Rights"), where one DBR lets you borrow one DOLA for a year. A smaller slice of DOLA comes from a Peg Stability Module that swaps it against other stablecoins.
+DOLA pays no yield; [sDOLA](/reports/sdola/) is its separate savings wrapper. DOLA is principally backed by loans on Inverse Finance's FiRM. It has useful current Ethereum trading liquidity, but the lending book is dominated by collateral containing DOLA or sDOLA itself, known bad debt remains, and the PSM has no collateral reserves at the verified snapshot. Holding DOLA depends on loan recovery, secondary-market demand and governance rather than a presently funded near-par redemption facility.
 
-DOLA is small — about $39M in circulation, with light daily trading volume — and it typically sits a touch below $1 (around $0.995). It has a real track record of holding the peg through stress, but its size and its collateral concentration are what put it at 4.5/10.
+The judgment is **a specialized DeFi stablecoin with material concerns, suitable for controlled transactional use more readily than a core cash holding**. For sUSDe or ysyBOLD leverage, borrowing DOLA and converting it promptly differs from holding a large DOLA balance. A discount can help repayment; a premium or disappearing routes can make closing the loan expensive.
 
-## What you actually earn
+**Overall 4.5 is below the six-axis mean of 4.75.** The overall judgment is provisional and reflects recovery and exit constraints; it is not an arithmetic average. Backing, exit-score derivation, remote controls and issuer recourse remain incomplete.
 
-**Nothing on DOLA itself.** Plain DOLA pays no yield. To earn Inverse's savings rate, you stake DOLA into **sDOLA**, the yield-bearing version — see the companion [sDOLA report](/reports/sdola/). Holding DOLA is for people who want the DeFi-native dollar, not the yield.
+## 1 · Stability — 5.0
 
-## How exit works
+DOLA targets $1 through borrowing, repayment and supply management. Below par, borrowers can buy discounted DOLA to repay DOLA-denominated debt. Above par, borrowing or PSM purchases can increase supply, subject to capacity and costs. These incentives support a soft peg; they do not give every holder a right to redeem against FiRM collateral. [Issuer's mechanism description](https://docs.inverse.finance/inverse-finance/inverse-finance/products/tokens/dola/dola-peg-mechanism)
 
-There is **no "give it back for a dollar" redemption** the way Circle redeems USDC. Your exit is the open market:
+### PSM design and current capacity
 
-- **Sell on a DEX.** The deepest pools are **Curve DOLA/sUSDe** (the single largest, around 44% of volume) and **Uniswap DOLA/USDC**, with smaller Curve DOLA/sUSDS and some liquidity on Arbitrum, Optimism, Base, BSC and Fantom.
-- The peg itself is defended behind the scenes by a **Peg Stability Module** and Inverse's DAO "Fed" operations — automated and governance-run minting/swapping that leans against the peg. That keeps DOLA near $1 in normal conditions, but it is a protocol mechanism, not a personal redemption right.
+The documented mechanism swaps USDS for DOLA with no buy fee and DOLA for USDS with a 20-basis-point sell fee. Reserves are invested in sUSDS. The current app uses `0x1d02f2841afa3cc20435a8c804c24deac5f30dfa`; documentation still identifies `0x4dfd662622d766304cb539e66f893c4defa19398`. [PSM documentation](https://docs.inverse.finance/inverse-finance/inverse-finance/products/peg-stability-module)
 
-**The catch worth understanding:** DOLA's deepest exit pool is DOLA/sUSDe — the *same* asset that backs most of DOLA. If sUSDe were ever under stress, the thing backing DOLA and the main pool you'd escape through would be stressed at the same moment.
+Both contracts return `supply() = 0` and `getTotalReserves() = 0`. The current PSM holds 200,000 DOLA but no invested USDS reserve. A one-DOLA sale from an ordinary test address reverts with arithmetic underflow. The bytecode-matched source subtracts the sale from supplied collateral before token-transfer checks, so this failure identifies the empty reserve rather than the test address's missing allowance. [Simulations](/evidence/dola/dola-admin-coverage-2026-10-14.json), [verified source](/evidence/dola/dola-source-verification-2026-10-14.json)
 
-## What backs it — and the sUSDe question
+The deployed controller returns true for tested ordinary-address buy and sell hooks. Eligibility is not the binding constraint in that test; capacity is. Governance can replace the controller, alter fees or migrate the vault. A nominal fee quote therefore does not prove redemption succeeds. No universal DOLA holder shutdown-and-settlement right was verified.
 
-Every DOLA in circulation is backed by an overcollateralized crypto loan on FiRM. That's a genuinely solid design — positions are always worth more than the DOLA borrowed against them. But the *mix* is heavily concentrated:
+The latest observations put DOLA about 30–48 basis points below $1. A complete historical peg series was not reconstructed, so no fresh claim is made about worst-depeg duration or uninterrupted par through past crises. The 5.0 stability score reflects repayment incentives alongside the absence of funded PSM support.
 
-- **About 51% of all DOLA is backed by a single collateral: Ethena's sUSDe** (the sUSDe-DOLA market). That is the dominant risk. sUSDe is itself a yield-bearing synthetic dollar with its own backing and its own risks; DOLA effectively carries a large, direct dose of Ethena exposure.
-- The next largest is **Sky's sUSDS**, then staked ETH, wrapped BTC, and a tail of others.
-- **INV**, Inverse's own governance token, is also accepted collateral — so a slice of DOLA is backed by the value of the protocol that issues it (a reflexive loop that can amplify a downturn).
+## 2 · Backing — 4.5
 
-Separately, the protocol carries roughly **$3.4M of legacy bad debt** — unbacked DOLA left over from 2022 oracle-manipulation exploits on Inverse's now-retired "Frontier" product. That's about 9% of current supply. It's walled off in a winding-down legacy contract and is being paid down out of DAO revenue, and it does **not** sit inside the healthy overcollateralized FiRM loans — but it is real structural slack the protocol is still working off. DOLA also took roughly $340K of indirect damage from the March 2026 USR stablecoin depeg, which the team pledged to cover.
+DOLA is supported mainly by collateralized FiRM loans. The October 14 official API snapshot reports 69.688M DOLA of FiRM debt against $87.379M of oracle-valued collateral. Most loans are secured by liquidity-pool shares containing DOLA or sDOLA, so the headline collateral value does not measure independent dollar backing.
 
-There is no third-party audited proof-of-reserves in the traditional sense; instead, Inverse runs a public **transparency portal** showing FiRM markets, backing sources, and bad-debt repayment in real time. That's good on-chain transparency — but it's self-published protocol data, not an independent attestation.
+### Loan sources and concentration
 
-## Track record
+| FiRM debt source | DOLA debt | Share of FiRM debt |
+| --- | ---: | ---: |
+| Convex DOLA/sUSDe | 41.565M | 59.64% |
+| Yearn DOLA/sUSDe | 11.323M | 16.25% |
+| Convex DOLA/sUSDS | 4.907M | 7.04% |
+| Stake DAO scrvUSD/sDOLA | 4.133M | 5.93% |
+| reUSD/sDOLA and Yearn version | 4.282M | 6.14% |
+| Yearn DOLA/sUSDS | 0.945M | 1.36% |
+| All remaining markets | 2.532M | 3.64% |
+| **Total** | **69.688M** | **100%, before displayed rounding** |
 
-Two things pull in opposite directions here. On the plus side, DOLA **held its $1 peg through the March 2023 USDC depeg** while USDC itself fell toward $0.87 — a genuine stress test passed. On the minus side, Inverse Finance was **exploited twice in 2022** (a roughly $15.6M price-oracle manipulation in April and about $5.8M in June), and had to raise capital to plug the hole. FiRM was rebuilt afterward with simplicity and safety as the explicit goal, and there's been no repeat on the core protocol — but the history includes real losses, and the bad debt above is the residue.
+The full API list sums to reported FiRM debt. Including standalone sUSDe yields 53.326M DOLA debt in Ethena-linked markets, or 76.52%. This measures shared issuer/pool dependencies, not ultimate reserve weights. [Market snapshot](/evidence/dola/dola-api-snapshot-2026-10-14.json)
 
-## Score breakdown
+### LP look through and internal claims
 
-| Dimension | Score | Notes |
-|---|---|---|
-| Peg Mechanism | 5.5 | Overcollateralized borrow-to-mint (CDP) plus a Peg Stability Module; held peg through prior stress. Held back by small scale, a mild persistent discount (around −0.5%), and an unusual DBR interest model. |
-| Backing | 4.5 | Always overcollateralized, but about 51% of backing is a single asset (sUSDe), plus a reflexive INV slice and roughly $3.4M (≈9% of supply) of legacy bad debt still being repaid. |
-| Liquidity | 4.5 | About $39M supply and light daily volume; the deepest exit pool (DOLA/sUSDe) is correlated with the dominant collateral, so exit and backing can stress together. |
-| Issuer | 5.0 | Long-running, transparent DAO with a solid public transparency portal — but exploit-scarred (two 2022 hacks) and still servicing old bad debt. |
-| **Overall** | **4.5** | A small, well-designed, overcollateralized DeFi dollar that has earned some peg credibility — but the sUSDe collateral-and-exit double-dependency and the legacy bad debt are the binding constraints. Fine as a modest DeFi-native position for users who understand the Ethena coupling; not a place to park size expecting a deep, independent exit. |
+The largest DOLA/sUSDe pool is reported at $59.974M: approximately $44.870M DOLA equivalent and $15.104M sUSDe, or 74.82% DOLA. DOLA/sUSDS is about 77.05% DOLA by its reported valuation. These compositions change with trading.
 
-## Who it's for
+DOLA inside its own collateral is not independent dollar backing. Recovered DOLA can extinguish debt, but cannot also be counted as an external reserve. sDOLA is a wrapper over the same liability. Conversely, these loops do not prove insolvency: liability cancellation matters. Proper coverage requires netting internal claims, attributing external collateral to loans and accounting for realization costs.
 
-DeFi-native users who want a decentralized, overcollateralized dollar and understand that they're taking on a large, concentrated dose of Ethena/sUSDe risk plus Inverse's protocol risk. It's also the on-ramp to sDOLA if you want the savings yield.
+Displayed FiRM TVL/debt is approximately 125.39%. That is **not an independently verified DOLA collateralization ratio**: it includes self-referential collateral and excess value in individual positions that cannot simply be moved to cover another borrower's loss.
 
-## Who should avoid
+### Bad debt and junior capital
 
-- Anyone wanting a deep, independent exit — DOLA is small and its main exit pool overlaps with its main collateral.
-- Anyone trying to avoid Ethena/sUSDe exposure — about half of DOLA's backing *is* sUSDe.
-- Anyone who wants an independently attested, off-chain-reserve dollar — DOLA is a crypto-collateralized CDP with self-published (if transparent) reporting.
-- Anyone wanting yield from holding the token itself — that's sDOLA, not DOLA.
+The official API reports **2,764,795 DOLA** bad debt: 2,764,707 Frontier and 88 FiRM. It also records about 766,052 DOLA of historical FiRM bad-debt repayments. Separate escrows do not remove realized shortfalls from the common stablecoin's economic backing. The API's debt calculation was not independently rebuilt borrower by borrower.
+
+The junior vault's assets are denominated in **sDOLA**, not DOLA. Converting its verified 128,937 sDOLA through the actual sDOLA contract gives about **183,455 DOLA**, approximately 0.26% of FiRM debt. The module is authorized by the vault and sampled established markets are enabled. ysyBOLD coverage activates **October 19, 2026 at 21:37:59 UTC**, after this snapshot. [Coverage and capacity reads](/evidence/dola/dola-admin-coverage-2026-10-14.json)
+
+The module's 100-DOLA `maxCollateralValue` refers to **remaining collateral when slashing is attempted**, not the original position size. Deployed source requires largely completed liquidation, residual debt above collateral, and at least 5 DOLA debt. Coverage remains bounded by capital and eligibility. [Slashing implementation](https://github.com/InverseFinance/JuniorDola/blob/main/src/FiRMSlashingModule.sol)
+
+**Risks and limitations.** Backing remains provisionally scored at 4.5 because external collateral has not been reconciled after netting internal DOLA and sDOLA claims. Recovery-dependent receivables, known shortfalls and endogenous collateral prevent a verified reserve-quality calculation. A smaller bad-debt percentage caused by supply growth does not repair a shortfall.
+
+## 3 · Liquidity & Exit — 4.5
+
+Ethereum holders can sell DOLA through secondary markets. The primary PSM route offers DOLA-to-USDS swaps when reserves are available, but both inspected PSMs had zero reserves and a one-DOLA sale simulation failed. **Primary redemption is the binding exit constraint**; the 4.5 score is carried from the source assessment and remains provisional pending a derivation under the combined exit rubric. Borrowers can use DOLA to repay their own debt; ordinary holders cannot redeem directly against other borrowers' collateral.
+
+### Ethereum DOLA to USDC estimates
+
+These read-only KyberSwap router estimates include route swap effects and fees, exclude gas from the output comparison, and measure proceeds against one-dollar face value. They are not executed trades, guaranteed fills or proof of the globally optimal route.
+
+| DOLA sold | Quoted USDC received | Proceeds / face value | Discount to $1 |
+| --- | ---: | ---: | ---: |
+| 10,000 | 9,970.06 | 99.7006% | 0.2994% |
+| 100,000 | 99,695.84 | 99.6958% | 0.3042% |
+| 1,000,000 | 996,629.36 | 99.6629% | 0.3371% |
+| 1,500,000 | 1,494,541.28 | 99.6361% | 0.3639% |
+| 2,000,000 | 1,991,968.45 | 99.5984% | 0.4016% |
+| 3,000,000 | 2,983,522.92 | 99.4508% | 0.5492% |
+| 5,000,000 | 3,867,850.20 | 77.3570% | 22.6430% |
+
+The ladder supports usable current mainnet exits through 3M DOLA. The poor 5M quote is not a hard market ceiling; routing and depth need independent simulation before sizing near that amount. A 2% crossing was not located. Existing discount to par is included, so these discounts are not entirely incremental price impact. [Raw estimates](/evidence/dola/dola-usdc-quotes-2026-10-14.json)
+
+Larger routes use DOLA/sUSDe and DOLA/sUSDS before reaching USDC through additional venues or wrapper redemption. This is stronger evidence than valuing received sUSDe at an assumed dollar, but depends on multiple exits functioning together. Mainnet estimates establish no equivalent capacity on other chains.
+
+### Inventory and source quality
+
+The largest pool's $15.10M non-DOLA inventory is not guaranteed USDC exit capacity: sellers first receive sUSDe and need a further route. Total pool TVL includes the DOLA being sold, so it cannot all absorb sellers.
+
+The issuer's liquidity endpoint contains an unrelated INV/WETH row with a field named `dolaBalance`. The report therefore does not add every endpoint balance or pairing-depth field into a global total. Membership must be verified against token addresses, and sDOLA routes must include its wrapper step. **Liquidity score: 4.5**, recognizing useful present estimates alongside concentration and untested stressed execution.
+
+## 4 · Dependencies — 4.5
+
+DOLA's value depends on FiRM escrows, prices, liquidation execution and governance. The largest markets add Ethena, Curve, Convex and Yearn; other collateral adds Sky, Stake DAO, Curve savings assets, reUSD, and crypto custody/staking exposure. Multiple wrappers of one pool do not diversify its underlying failure mode.
+
+A verified 1-of-4 Safe can change sUSDe LP pricing with zero switch delay. Prices held too high can delay recovery; switching can create sudden liquidations. This applies to the LP configuration, not automatically to standalone sUSDe. [FiRM documentation](https://docs.inverse.finance/inverse-finance/inverse-finance/products/firm)
+
+The PSM adds USDS/sUSDS and controller risk when funded. Remote DOLA adds local token, bridge custody, messaging and upgrade authority. **Dependencies score: 4.5.** Correlated collateral recovery and market exit matter more than simply counting integrations. Metadata lists major dependencies, not a complete graph or reserve partition.
+
+## 5 · Contract & Admin — 5.0
+
+Ethereum DOLA is an immutable token whose operator can mint and appoint minters. Core authority passes through a 48-hour governance timelock, while separate working-group Safes operate supply and market controls without an established operational delay. State was read at block **26,188,001, October 14, 2026 at 03:18:35 UTC**; separate API observations are dated 03:14–03:15 UTC and remote-chain reads use their own recorded blocks.
+
+### Intrinsic contract risk
+
+Mainnet DOLA is a simple ERC20 with permit, operator and minter functions. Its deployed bytecode matches explorer-verified source. That source has no proxy upgrade, blacklist or transfer-pause mechanism. The operator can mint directly and appoint minters; token-level minting does **not** enforce collateralization or Fed ceilings. Those checks live in issuing contracts and governance. [Source and bytecode matches](/evidence/dola/dola-source-verification-2026-10-14.json)
+
+The current PSM and slashing module also match verified bytecode. Matching source establishes identity, not absence of bugs. Published FiRM audits concern the lending core and cannot be treated as blanket coverage of all collateral, bridges or helpers. [Audit registry](https://docs.inverse.finance/inverse-finance/inverse-finance/technical/audits)
+
+PSM governance can migrate the reserve vault, replace the controller, set swap fees as high as 100%, and sweep ERC20 balances, including reserve-vault shares. These are reserve and exit controls under the verified governance path, not merely maintenance settings. The current zero reserve limits the amount exposed there today. [PSM source](/evidence/dola/dola-source-verification-2026-10-14.json)
+
+### Verified authority topology
+
+| Address | Role | Type | Threshold or delay | Signers |
+| --- | --- | --- | --- | --- |
+| `0x926df14a23be491164dcf93f4c468a50ef659d5b` | Token operator; sampled Fed/PSM/module governance | Treasury timelock | 48 hours | Admin is Governor Mills |
+| `0xbeccb6bb0aa4ab551966a7e4b97cec74bb359bf6` | Timelock admin | Token governor | Voting threshold | Concentration not fully quantified |
+| `0x8f97cca30dbe80e7a8b462f1dd1a51c32accdfc8` | FiRM, Frontier and PSM Fed chair | Safe | 2-of-6 | Six owners listed below |
+| `0x9d5df30f475cea915b1ed4c0cca59255c897b61b` | Junior operator / treasury working group | Safe | 3-of-6 | Same six owners |
+| `0xe3ed95e130ad9e15643f5a5f232a3dae980784cd` | Market pause and sUSDe LP switch | Safe | 1-of-4; switch delay zero | Four-owner subset of Fed chair |
+| `0x4b6c63e6a94ef26e2df60b89372db2d8e211f1b7` | Slashing guardian / governance guardian RWG role | Safe | 4-of-7 | Includes all six Fed-chair owners |
+
+The main path is **Governor Mills → 48-hour treasury timelock → token operator and issuing-contract governance**. **Timelock present: yes, 172,800 seconds.** No intervening delay was established for operational Fed expansion/contraction or authorized oracle switching. After the governance process, the token operator can bypass Fed-specific ceilings through its direct mint function.
+
+The Fed-chair owners are:
+
+- `0x2723723fdd3db8ba2d6f0e1b333e90a7e60a0411`
+- `0x9f3614afb3df9f899cadbffaa05c6c908059f726`
+- `0x962228a90eac69238c7d1f216d80037e61ea9255`
+- `0x3fcb35a1cbfb6007f9bc638d388958bc4550cb28`
+- `0x6535020cceb810bdb3f3ca5e93de2460ff7989bb`
+- `0x52f63971afd2a32524c859c29943f9bea38ca907`
+
+Safe owners are decoded in the [admin evidence](/evidence/dola/dola-admin-coverage-2026-10-14.json). The 2-of-6 chair can act with two approvals, and its six owners also control the treasury working-group Safe. Its constrained Fed functions matter, but overlapping owners do not constitute independent oversight. Safe modules/guards and every upstream authority remain incompletely inspected.
+
+### Documentation, audits and coverage
+
+The issuer's peg documentation agrees with the borrowing/repayment design and Fed supply management. Its PSM documentation disagrees with the current app on the active PSM address: the documented and app contracts are identified in Stability above, and both were measured with empty reserves. Full reconciliation of the published governance model with every deployed privilege remains incomplete. No audit-to-deployment mapping establishes coverage of all privileged roles, and current bug-bounty coverage of admin-key compromise was not verified.
+
+### Cross chain deployment and authority
+
+Positive local supply was verified on ten chains. These supplies cannot be summed without bridge-custody reconciliation.
+
+| Chain | Local supply | Authority or token observation |
+| --- | ---: | --- |
+| Ethereum | 113,058,118 | Operator is the 48-hour timelock |
+| Arbitrum | 1,924,094 | Supply verified; full bridge/admin chain unresolved |
+| BNB Chain | 1,793,864 | Owner/vault `0xf7da4bc9b7a6bb3653221ae333a9d2a2c2d5bda7` is a 3-of-6 Safe |
+| Fantom | 463,779 | Owner/vault/MPC `0xc564ee9f21ed8a2d8e7e76c085740d5e4c5fafbe` has zero EVM code; off-chain quorum and recovery unresolved |
+| Base | 419,728 | Remote token is Ethereum DOLA; bridge `0x4200000000000000000000000000000000000010` |
+| Optimism | 110,001 | `l1Token()` identifies Ethereum DOLA; full bridge/admin chain unresolved |
+| Avalanche | 62,152 | Owner/vault `0x1a927b237a57421c414eb511a33c4b82c2718677` is a 3-of-4 Safe |
+| Polygon | 3,558 | Supply verified; full bridge/admin chain unresolved |
+| Blast | 1,871 | Remote token is Ethereum DOLA; bridge `0x4200000000000000000000000000000000000010` |
+| Mode | 397 | Remote token is Ethereum DOLA; bridge `0x4200000000000000000000000000000000000010` |
+
+BNB Chain and Avalanche Safe classification used separately labelled later `latest` reads because public RPCs did not retain the initial state. Bridge proxy admins, custody and exit status remain partial. **Remote admin topology not fully on-chain verified — high uncertainty.** A matching token name is insufficient to extend mainnet safety to a bridge. [Chain reads](/evidence/dola/dola-chain-supply-admin-2026-10-14.json)
+
+The Fantom EOA-format role is a critical chain-specific concern. An MPC address need not mean one human key, but no signing quorum is inspectable as a Safe on this chain. The exact mint powers, custody coverage and bridge exit require source and backing verification.
+
+**Structural score: provisional 5.0.** Immutable token simplicity and delayed core governance are positives. Mint authority, immediate economic controls, common signers and incomplete bridge topology constrain the combined contract/admin assessment.
+
+## 6 · Issuer — 5.0
+
+Inverse publishes detailed debt and Fed data and has made substantial repayments. These are positive disclosures. Data definitions still need checking: supply measures differ, liquidity includes unrelated rows, and PSM documentation identifies an older contract. Successful reads at current addresses take precedence over labels.
+
+The issuer's adverse history includes the April 2022 Anchor/Frontier oracle attack and the June 2022 incident causing a reported 5.83M DOLA loss. These were deprecated-system incidents, not evidence that the sampled FiRM contracts were exploited. Continuing bad debt and FiRM shortfall repayments remain economically relevant. [Issuer incident history](https://docs.inverse.finance/inverse-finance/inverse-finance/legacy-products/frontier-anchor)
+
+**Issuer inputs and recourse.** Inverse Finance DAO is the disclosed governance organization. A legal operating entity, its jurisdiction and accountable legal principals were not verified in the available evidence. Governing law, dispute-resolution terms and an enforceable holder claim against an identified counterparty were not established. This is incomplete entity diligence, rather than a finding that no entity exists. No independently verified holder right gives direct access to FiRM collateral, and revenue-funded repayment remains a plan rather than funded redemption cash.
+
+**Risks and limitations.** Public debt disclosures, reported repayments and the legacy loss history are inherited from the dated source assessment. A financial audit of an operating entity and the identities of accountable principals remain unverified. Disclosure quality is mixed: data is extensive, but supply definitions differ, the liquidity endpoint includes an unrelated pool, and PSM documentation names an older address. **Issuer 5.0 is carried from the source assessment, not derived from a complete current entity-and-recourse input set.** Contract audits and Safe thresholds contribute to Contract & Admin rather than issuer accountability.
+
+## Implications for Direct Stablecoin Leverage
+
+For direct sUSDe or ysyBOLD collateral, DOLA is the debt and settlement asset. Prompt conversion avoids a large long DOLA balance but leaves future repayment exposure. A 3% dollar premium in DOLA would add about 6% of initial equity to repayment cost at 3× leverage, where debt is twice equity, before other position changes or costs.
+
+Liquidators still need DOLA and must recover the posted asset. Lending-market availability does not guarantee affordable exits. The empty PSM cannot be counted as funded lower-peg support; its 200,000 DOLA inventory offers only finite capacity in the opposite direction.
+
+Size a DOLA holding against chain-specific exits and assess sDOLA/jrDOLA separately. For borrowing, test the entry and repayment routes at the intended size, maintain external repayment liquidity, and monitor DBR, governance and price premiums. Temporary collateral incentives do not improve DOLA's asset safety.
 
 ## What to watch
 
-- **Ethena / sUSDe.** This is the main channel to a DOLA problem. A sUSDe wobble is your early-warning signal — it would hit DOLA's backing and its deepest exit pool at once.
-- **The sUSDe share of backing.** Track it on Inverse's transparency portal; a further rise means rising concentration.
-- **Bad-debt repayment.** Watch the legacy bad-debt figure trend down (or not) on the transparency portal.
-- **The peg discount.** A mild sub-$1 discount is normal for DOLA; a widening one is the signal to pay attention.
+The binding unresolved measurement is a complete economic balance sheet netting internal DOLA/sDOLA claims and bridge custody, assigning recoverable external collateral to loans and reconciling supply with shortfalls. The conservative backing score remains provisional pending that calculation.
 
----
+An upgrade would require materially lower known shortfalls, funded and successfully simulated redemption, less correlated recovery and exit dependence, and stronger operational controls. Higher circulation or a larger LP TVL alone would not qualify.
 
-*This report is based on Inverse Finance's public documentation and transparency portal, CoinGecko market data, and public on-chain information, through 2026-07-01. DOLA is a crypto-collateralized stablecoin whose backing mix and bad-debt balance shift over time; figures here are point-in-time. Corrections, attestations, or additional disclosures welcome at info@tidresearch.com.*
+Further diligence should independently simulate large router quotes, reconstruct historical peg behavior, complete remote bridge walks, map deployed components to audits and monitor junior capital and activation. The [FiRM app](https://firm.inverse.finance/) provides borrowing interfaces; this assessment concerns holding DOLA itself.
+
+## Evidence
+
+- [Ethereum state and PSM reserves](/evidence/dola/dola-onchain-2026-10-14.json)
+- [Admin reads, redemption simulations and junior coverage](/evidence/dola/dola-admin-coverage-2026-10-14.json)
+- [Verified source and deployed bytecode](/evidence/dola/dola-source-verification-2026-10-14.json)
+- [Official API snapshots](/evidence/dola/dola-api-snapshot-2026-10-14.json)
+- [DOLA to USDC router estimates](/evidence/dola/dola-usdc-quotes-2026-10-14.json)
+- [Remote supply and authority reads](/evidence/dola/dola-chain-supply-admin-2026-10-14.json)
+
+Evidence consists of read-only contract calls, source comparisons, official API snapshots and indicative router estimates collected October 14. The retained evidence has not been independently rerun for this adaptation. Historical peg reconstruction, complete reserve reconciliation, remote bridge exits and entity recourse remain incomplete.
+
+## Revision history
+
+- **2026-10-14 — staged refresh.** Provisional six-axis assessment based on dated Ethereum state, ten-chain supply observations, official debt data and Ethereum USDC exit estimates.

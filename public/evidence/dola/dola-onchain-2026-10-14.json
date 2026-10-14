@@ -1,0 +1,1338 @@
+{
+  "block_number": 26188001,
+  "block_timestamp_utc": "2026-10-14T03:18:35+00:00",
+  "addresses": {
+    "dola": "0x865377367054516e17014ccded1e7d814edc9ce4",
+    "psm": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+    "documented_psm": "0x4dfd662622d766304cb539e66f893c4defa19398",
+    "psm_fed": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+    "firm_fed": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+    "frontier_fed": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+    "junior": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+    "slashing": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+    "treasury": "0x926df14a23be491164dcf93f4c468a50ef659d5b",
+    "governor": "0xbeccb6bb0aa4ab551966a7e4b97cec74bb359bf6"
+  },
+  "calls": [
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000008f97cca30dbe80e7a8b462f1dd1a51c32accdfc8"
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000008f97cca30dbe80e7a8b462f1dd1a51c32accdfc8"
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000008f97cca30dbe80e7a8b462f1dd1a51c32accdfc8"
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000009d5df30f475cea915b1ed4c0cca59255c897b61b"
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "operator()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "gov()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000926df14a23be491164dcf93f4c468a50ef659d5b"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "owner()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "chair()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000004b6c63e6a94ef26e2df60b89372db2d8e211f1b7"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "collateral()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "vault()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000a3931d71877c0e7a3148cb7eb4463524fec27fbd"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "controller()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000e3475728673eabaec90a37aa3ae2ced9f0db5ff2"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "fed()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000067fc21332d24fc5250a3b7fc988191ad7f38f9cc"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "supply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "getTotalReserves()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "buyFeeBps()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "sellFeeBps()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000014"
+      }
+    },
+    {
+      "name": "psm",
+      "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+      "signature": "minTotalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000000000000000000000000152d02c7e14af6800000"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "collateral()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "vault()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000a3931d71877c0e7a3148cb7eb4463524fec27fbd"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "controller()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000e3475728673eabaec90a37aa3ae2ced9f0db5ff2"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "fed()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000400510611bcbf9171f0e548f1c3dca7159e60d28"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "supply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "getTotalReserves()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "buyFeeBps()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "sellFeeBps()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000014"
+      }
+    },
+    {
+      "name": "documented_psm",
+      "address": "0x4dfd662622d766304cb539e66f893c4defa19398",
+      "signature": "minTotalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000000000000000000000000152d02c7e14af6800000"
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "supply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "globalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000005ac95b4af29a0413af8a6f"
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "supplyCeiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000001431e0fae6d7217caa0000000"
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "supplyCap()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "firm_fed",
+      "address": "0x2b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "signature": "ceiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "supply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000000000000000000000002907356344813d9800000"
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "globalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "supplyCeiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "supplyCap()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "frontier_fed",
+      "address": "0x5E075E40D01c82B6Bf0B0ecdb4Eb1D6984357EF7",
+      "signature": "ceiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "supply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000002a5a058fc295ed000000"
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "globalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "supplyCeiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "supplyCap()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000084595161401484a000000"
+      }
+    },
+    {
+      "name": "psm_fed",
+      "address": "0x67FC21332D24FC5250a3B7fc988191ad7F38f9cC",
+      "signature": "ceiling()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "asset()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000b45ad160634c528cc3d2926d9807104fa3157305"
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "totalAssets()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000001b4dad8a1ec8b0667a62"
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "maxCollateralValue()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "minDebt()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted",
+          "data": "0x"
+        }
+      }
+    },
+    {
+      "name": "junior",
+      "address": "0x6f80a22a57C7F0257094eA8D426AF3F747defbC7",
+      "signature": "activationDelay()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "asset()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "totalAssets()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "error": {
+          "code": 3,
+          "message": "execution reverted"
+        }
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "maxCollateralValue()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000056bc75e2d63100000"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "minDebt()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000004563918244f40000"
+      }
+    },
+    {
+      "name": "slashing",
+      "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+      "signature": "activationDelay()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000093a80"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "totalSupply()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000005d84fcdee607515c6b6407"
+      }
+    },
+    {
+      "name": "treasury",
+      "address": "0x926df14a23be491164dcf93f4c468a50ef659d5b",
+      "signature": "delay()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000000002a300"
+      }
+    },
+    {
+      "name": "treasury",
+      "address": "0x926df14a23be491164dcf93f4c468a50ef659d5b",
+      "signature": "admin()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000beccb6bb0aa4ab551966a7e4b97cec74bb359bf6"
+      }
+    },
+    {
+      "name": "governor",
+      "address": "0xbeccb6bb0aa4ab551966a7e4b97cec74bb359bf6",
+      "signature": "guardian()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000941c2699ec7e55a50bde030d8e1e70649839259d"
+      }
+    },
+    {
+      "name": "governor",
+      "address": "0xbeccb6bb0aa4ab551966a7e4b97cec74bb359bf6",
+      "signature": "quorumVotes()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000005150ae84a8cdf000000"
+      }
+    },
+    {
+      "name": "governor",
+      "address": "0xbeccb6bb0aa4ab551966a7e4b97cec74bb359bf6",
+      "signature": "proposalThreshold()",
+      "argument": "",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x00000000000000000000000000000000000000000000018a1b8471e3a1d80000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "balanceOf(address)",
+      "argument": "0000000000000000000000001d02f2841afa3cc20435a8c804c24deac5f30dfa",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000002a5a058fc295ed000000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "balanceOf(address)",
+      "argument": "0000000000000000000000004dfd662622d766304cb539e66f893c4defa19398",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "balanceOf(address)",
+      "argument": "0000000000000000000000002b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "balanceOf(address)",
+      "argument": "0000000000000000000000005e075e40d01c82b6bf0b0ecdb4eb1d6984357ef7",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "balanceOf(address)",
+      "argument": "00000000000000000000000067fc21332d24fc5250a3b7fc988191ad7f38f9cc",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "minters(address)",
+      "argument": "0000000000000000000000002b34548b865ad66a2b046cb82e59ee43f75b90fd",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "minters(address)",
+      "argument": "0000000000000000000000005e075e40d01c82b6bf0b0ecdb4eb1d6984357ef7",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "name": "dola",
+      "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "signature": "minters(address)",
+      "argument": "00000000000000000000000067fc21332d24fc5250a3b7fc988191ad7f38f9cc",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    }
+  ]
+}

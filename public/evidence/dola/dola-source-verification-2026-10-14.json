@@ -1,0 +1,1706 @@
+[
+  {
+    "name": "dola",
+    "address": "0x865377367054516e17014ccded1e7d814edc9ce4",
+    "block_number": 26188001,
+    "explorer": "https://eth.blockscout.com/api/v2/smart-contracts/0x865377367054516e17014ccded1e7d814edc9ce4",
+    "verified": true,
+    "source_name": "ERC20",
+    "bytecode_matches": true,
+    "onchain_code_bytes": 3967,
+    "source_code": "pragma solidity ^0.5.16;\n\nimport \"./SafeMath.sol\";\n\ncontract ERC20 {\n    using SafeMath for uint;\n\n    string public name;\n    string public symbol;\n    uint8 public decimals;\n    uint  public totalSupply;\n    address public operator;\n    address public pendingOperator;\n    mapping(address => uint) public balanceOf;\n    mapping(address => mapping(address => uint)) public allowance;\n    mapping (address => bool) public minters;\n\n    bytes32 public DOMAIN_SEPARATOR;\n    // keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");\n    bytes32 public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;\n    mapping(address => uint) public nonces;\n\n    event Approval(address indexed owner, address indexed spender, uint value);\n    event Transfer(address indexed from, address indexed to, uint value);\n    event AddMinter(address indexed minter);\n    event RemoveMinter(address indexed minter);\n    event ChangeOperator(address indexed newOperator);\n\n    modifier onlyOperator {\n        require(msg.sender == operator, \"ONLY OPERATOR\");\n        _;\n    }\n\n    constructor(string memory name_, string memory symbol_, uint8 decimals_) public {\n        name = name_;\n        symbol = symbol_;\n        decimals = decimals_;\n        operator = msg.sender;\n        uint chainId;\n        assembly {\n            chainId := chainid\n        }\n        DOMAIN_SEPARATOR = keccak256(\n            abi.encode(\n                keccak256('EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'),\n                keccak256(bytes(name)),\n                keccak256(bytes('1')),\n                chainId,\n                address(this)\n            )\n        );\n    }\n\n    function setPendingOperator(address newOperator_) public onlyOperator {\n        pendingOperator = newOperator_;\n    }\n\n    function claimOperator() public {\n        require(msg.sender == pendingOperator, \"ONLY PENDING OPERATOR\");\n        operator = pendingOperator;\n        pendingOperator = address(0);\n        emit ChangeOperator(operator);\n    }\n\n    function addMinter(address minter_) public onlyOperator {\n        minters[minter_] = true;\n        emit AddMinter(minter_);\n    }\n\n    function removeMinter(address minter_) public onlyOperator {\n        minters[minter_] = false;\n        emit RemoveMinter(minter_);\n    }\n\n    function mint(address to, uint amount) public {\n        require(minters[msg.sender] == true || msg.sender == operator, \"ONLY MINTERS OR OPERATOR\");\n        _mint(to, amount);\n    }\n\n    function burn(uint amount) public {\n        _burn(msg.sender, amount);\n    }\n\n    function _mint(address to, uint value) internal {\n        totalSupply = totalSupply.add(value);\n        balanceOf[to] = balanceOf[to].add(value);\n        emit Transfer(address(0), to, value);\n    }\n\n    function _burn(address from, uint value) internal {\n        balanceOf[from] = balanceOf[from].sub(value);\n        totalSupply = totalSupply.sub(value);\n        emit Transfer(from, address(0), value);\n    }\n\n    function _approve(address owner, address spender, uint value) private {\n        allowance[owner][spender] = value;\n        emit Approval(owner, spender, value);\n    }\n\n    function _transfer(address from, address to, uint value) private {\n        balanceOf[from] = balanceOf[from].sub(value);\n        balanceOf[to] = balanceOf[to].add(value);\n        emit Transfer(from, to, value);\n    }\n\n    function approve(address spender, uint value) external returns (bool) {\n        _approve(msg.sender, spender, value);\n        return true;\n    }\n\n    function transfer(address to, uint value) external returns (bool) {\n        _transfer(msg.sender, to, value);\n        return true;\n    }\n\n    function transferFrom(address from, address to, uint value) external returns (bool) {\n        if (allowance[from][msg.sender] != uint(-1)) {\n            allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);\n        }\n        _transfer(from, to, value);\n        return true;\n    }\n\n    function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {\n        require(deadline >= block.timestamp, 'EXPIRED');\n        bytes32 digest = keccak256(\n            abi.encodePacked(\n                '\\x19\\x01',\n                DOMAIN_SEPARATOR,\n                keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline))\n            )\n        );\n        address recoveredAddress = ecrecover(digest, v, r, s);\n        require(recoveredAddress != address(0) && recoveredAddress == owner, 'INVALID_SIGNATURE');\n        _approve(owner, spender, value);\n    }\n}",
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "name_",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol_",
+            "type": "string"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimals_",
+            "type": "uint8"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "minter",
+            "type": "address"
+          }
+        ],
+        "name": "AddMinter",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Approval",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOperator",
+            "type": "address"
+          }
+        ],
+        "name": "ChangeOperator",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "minter",
+            "type": "address"
+          }
+        ],
+        "name": "RemoveMinter",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "DOMAIN_SEPARATOR",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "PERMIT_TYPEHASH",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "minter_",
+            "type": "address"
+          }
+        ],
+        "name": "addMinter",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "allowance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "approve",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "burn",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "claimOperator",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "mint",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "minters",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "nonces",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "operator",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "pendingOperator",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deadline",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "name": "permit",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "minter_",
+            "type": "address"
+          }
+        ],
+        "name": "removeMinter",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newOperator_",
+            "type": "address"
+          }
+        ],
+        "name": "setPendingOperator",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "transfer",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ]
+  },
+  {
+    "name": "psm",
+    "address": "0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+    "block_number": 26188001,
+    "explorer": "https://eth.blockscout.com/api/v2/smart-contracts/0x1d02f2841afA3Cc20435a8c804C24dEaC5F30DFa",
+    "verified": true,
+    "source_name": "PSM",
+    "bytecode_matches": true,
+    "onchain_code_bytes": 7731,
+    "source_code": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\nimport \"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol\";\nimport \"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\";\nimport \"@openzeppelin/contracts/interfaces/IERC4626.sol\";\nimport {PSMFed} from \"src/PSMFed.sol\";\n\ninterface IController {\n    function onBuy(address user, address to, uint256 amount) external returns (bool);\n    function onSell(address user, address to, uint256 amount) external returns (bool);\n}\n\ncontract PSM {\n    using SafeERC20 for IERC20;\n\n    IERC20 public immutable collateral;\n    IERC20 public immutable DOLA;\n    address public immutable fed; // PSMFed contract address\n\n    address public gov;\n    address public pendingGov;\n    IController public controller; // Controller contract address\n    uint256 public buyFeeBps; // e.g., 50 = 0.5%\n    uint256 public sellFeeBps; // e.g., 50 = 0.5%\n    uint256 public constant BPS_DENOMINATOR = 10_000;\n    uint256 public supply; // Collateral supplied in the PSM (excluding fees and profit)\n    IERC4626 public vault;\n    uint256 public minTotalSupply;\n\n    event GovChanged(address indexed oldGov, address indexed newGov);\n    event PendingGovUpdated(address indexed pendingGov);\n    event ControllerChanged(address indexed oldController, address indexed newController);\n    event VaultMigrated(address indexed oldVault, address indexed newVault);\n    event BuyFeeUpdated(uint256 oldFee, uint256 newFee);\n    event SellFeeUpdated(uint256 oldFee, uint256 newFee);\n    event SupplyCapUpdated(uint256 newSupplyCap);\n    event Buy(address indexed user, uint256 purchased, uint256 spent);\n    event Sell(address indexed user, uint256 sold, uint256 received);\n    event ProfitTaken(uint256 profit);\n    event MinTotalSupplyUpdated(uint256 oldMinTotalSupply, uint256 newMinTotalSupply);\n\n    constructor(address _collateral, address _vault, address _DOLA, address _gov, address _controller, address _chair) {\n        collateral = IERC20(_collateral);\n        vault = IERC4626(_vault);\n        DOLA = IERC20(_DOLA);\n        gov = _gov;\n        controller = IController(_controller);\n        fed = address(new PSMFed(address(this), _gov, _chair, _DOLA));\n        DOLA.approve(fed, type(uint256).max);\n    }\n\n    modifier onlyGov() {\n        require(msg.sender == gov, \"Not gov\");\n        _;\n    }\n\n    /**\n     * @notice Allows to buy DOLA minus fee using collateral.\n     * @param collateralAmountIn Amount of collateral to sell for DOLA.\n     */\n    function buy(uint256 collateralAmountIn) external {\n        buy(msg.sender, collateralAmountIn);\n    }\n\n    /**\n     * @notice Allows to buy DOLA minus fee using collateral.\n     * @param to DOLA receiver.\n     * @param collateralAmountIn Amount of collateral to sell for DOLA.\n     */\n    function buy(address to, uint256 collateralAmountIn) public {\n        require(collateralAmountIn > 0, \"Amount must be > 0\");\n        require(vault.totalSupply() >= minTotalSupply, \"Min total supply not met\");\n        require(controller.onBuy(msg.sender, to, collateralAmountIn), \"Denied by controller\");\n        uint256 amountOut = collateralAmountIn;\n\n        if (buyFeeBps > 0) {\n            uint256 fee = (collateralAmountIn * buyFeeBps) / BPS_DENOMINATOR;\n            amountOut -= fee;\n        }\n        supply += amountOut;\n\n        collateral.safeTransferFrom(msg.sender, address(this), collateralAmountIn);\n        collateral.approve(address(vault), collateralAmountIn);\n        uint256 shares = vault.deposit(collateralAmountIn, address(this));\n        require(shares > 0, \"Deposit failed\");\n        DOLA.safeTransfer(to, amountOut);\n        emit Buy(msg.sender, amountOut, collateralAmountIn);\n    }\n\n    /**\n     * @notice Allows to sell DOLA for collateral minus fee.\n     * @param dolaAmountIn Amount of DOLA to sell.\n     */\n    function sell(uint256 dolaAmountIn) external {\n        sell(msg.sender, dolaAmountIn);\n    }\n\n    /**\n     * @notice Allows to sell DOLA for collateral minus fee.\n     * @param to Address to receive the collateral.\n     * @param dolaAmountIn Amount of DOLA to sell.\n     */\n    function sell(address to, uint256 dolaAmountIn) public {\n        require(dolaAmountIn > 0, \"Amount must be > 0\");\n        require(controller.onSell(msg.sender, to, dolaAmountIn), \"Denied by controller\");\n        supply -= dolaAmountIn;\n        DOLA.safeTransferFrom(msg.sender, address(this), dolaAmountIn);\n\n        uint256 amountOut = dolaAmountIn;\n\n        if (sellFeeBps > 0) {\n            uint256 fee = (dolaAmountIn * sellFeeBps) / BPS_DENOMINATOR;\n            amountOut -= fee;\n        }\n\n        vault.withdraw(amountOut, to, address(this));\n        emit Sell(msg.sender, dolaAmountIn, amountOut);\n    }\n\n    /**\n     * @notice Takes profit from the vault and transfers it to the governance address.\n     * @dev Can be called by anyone to transfer profits and fees to governance.\n     */\n    function takeProfit() public {\n        uint256 profit = getProfit();\n        if (profit > 0) {\n            vault.withdraw(profit, gov, address(this));\n        }\n        emit ProfitTaken(profit);\n    }\n\n    /**\n     * @notice Returns the total collateral reserves in the vault, including profit and fees.\n     * @return Total reserves in the vault.\n     */\n    function getTotalReserves() public view returns (uint256) {\n        return vault.previewRedeem(vault.balanceOf(address(this)));\n    }\n\n    /**\n     * @notice Returns the total profit made by the PSM.\n     * @return Total profit in the PSM.\n     */\n    function getProfit() public view returns (uint256) {\n        uint256 totalReserves = getTotalReserves();\n        return totalReserves > supply ? totalReserves - supply : 0;\n    }\n\n    /**\n     * @notice Returns the amount of DOLA that can be obtained for a given amount of collateral.\n     * @param collateralIn Amount of collateral to convert to DOLA.\n     * @return Amount of DOLA that will be received after fees.\n     */\n    function getDolaOut(uint256 collateralIn) external view returns (uint256) {\n        uint256 fee = (collateralIn * buyFeeBps) / BPS_DENOMINATOR;\n        return collateralIn - fee;\n    }\n\n    /**\n     * @notice Returns the amount of collateral that can be obtained for a given amount of DOLA.\n     * @param dolaIn Amount of DOLA to convert to collateral.\n     * @return Amount of collateral that will be received after fees.\n     */\n    function getCollateralOut(uint256 dolaIn) external view returns (uint256) {\n        uint256 fee = (dolaIn * sellFeeBps) / BPS_DENOMINATOR;\n        return dolaIn - fee;\n    }\n\n    /**\n     * @notice Migrate the vault to a new IERC4626 vault.\n     * @dev Can only be called by governance and will take profit before migration.\n     * @param newVault Address of the new vault to migrate to.\n     * @param minCollateralAmount Minimum amount of collateral to be deposited in the new vault.\n     * @param minSharesOut Minimum amount of shares to receive from the new vault.\n     */\n    function migrate(address newVault, uint256 minCollateralAmount, uint256 minSharesOut) external onlyGov {\n        require(newVault != address(0), \"Zero address\");\n        require(IERC4626(newVault).asset() == address(collateral), \"New vault must accept collateral\");\n\n        takeProfit();\n\n        if (vault.balanceOf(address(this)) != 0) {\n            vault.redeem(vault.balanceOf(address(this)), address(this), address(this));\n        }\n\n        address oldVault = address(vault);\n        vault = IERC4626(newVault);\n        require(vault.totalSupply() >= minTotalSupply, \"New vault does not meet min total supply\");\n\n        uint256 collateralBalance = collateral.balanceOf(address(this));\n        require(collateralBalance >= minCollateralAmount, \"Insufficient collateral balance for migration\");\n        if (collateralBalance > 0) {\n            collateral.approve(address(vault), collateralBalance);\n            uint256 sharesOut = vault.deposit(collateralBalance, address(this));\n            require(sharesOut >= minSharesOut, \"Insufficient shares received from new vault\");\n        }\n        emit VaultMigrated(oldVault, newVault);\n    }\n\n    /**\n     * @notice Allows governance to sweep any ERC20 tokens from the contract.\n     * @dev Can only be called by governance.\n     * @param token The ERC20 token to sweep.\n     */\n    function sweep(IERC20 token) external onlyGov {\n        token.safeTransfer(gov, token.balanceOf(address(this)));\n    }\n\n    /**\n     * @notice Allows governance to set the buy fee.\n     * @dev The fee is specified in basis points (bps), where 100 bps = 1%.\n     */\n    function setBuyFeeBps(uint256 newFee) external onlyGov {\n        require(newFee <= BPS_DENOMINATOR, \"Fee too high\");\n        emit BuyFeeUpdated(buyFeeBps, newFee);\n        buyFeeBps = newFee;\n    }\n\n    /**\n     * @notice Allows governance to set the sell fee.\n     * @dev The fee is specified in basis points (bps), where 100 bps = 1%.\n     */\n    function setSellFeeBps(uint256 newFee) external onlyGov {\n        require(newFee <= BPS_DENOMINATOR, \"Fee too high\");\n        emit SellFeeUpdated(sellFeeBps, newFee);\n        sellFeeBps = newFee;\n    }\n\n    /**\n     * @notice Allows governance to set the minimum vault total supply.\n     * @dev This is used to ensure that the vault has enough shares before allowing buy operations.\n     * @param _minTotalSupply Minimum total supply that must have been already minted in the vault.\n     */\n    function setMinTotalSupply(uint256 _minTotalSupply) external onlyGov {\n        require(_minTotalSupply > 0, \"Min total supply must be > 0\");\n        emit MinTotalSupplyUpdated(minTotalSupply, _minTotalSupply);\n        minTotalSupply = _minTotalSupply;\n    }\n\n    /**\n     * @notice Allows governance to set a new pending governance.\n     * @dev The pending governance must accept the role.\n     * @param _pendingGov Address of the new pending governance.\n     */\n    function setPendingGov(address _pendingGov) external onlyGov {\n        pendingGov = _pendingGov;\n        emit PendingGovUpdated(_pendingGov);\n    }\n\n    /**\n     * @notice Allows the pending governance to claim the governance role.\n     * @dev Can only be called by the pending governance.\n     */\n    function claimPendingGov() external {\n        require(msg.sender == pendingGov, \"Not pending gov\");\n        emit GovChanged(gov, pendingGov);\n        gov = pendingGov;\n        pendingGov = address(0);\n    }\n\n    /**\n     * @notice Allows governance to set a new controller.\n     * @dev The new controller must not be the zero address.\n     * @param newController Address of the new controller.\n     */\n    function setController(address newController) external onlyGov {\n        require(newController != address(0), \"Zero address\");\n        emit ControllerChanged(address(controller), newController);\n        controller = IController(newController);\n    }\n}\n",
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_collateral",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_vault",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_DOLA",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_gov",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_controller",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_chair",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          }
+        ],
+        "name": "SafeERC20FailedOperation",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "purchased",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "spent",
+            "type": "uint256"
+          }
+        ],
+        "name": "Buy",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldFee",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "BuyFeeUpdated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldController",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newController",
+            "type": "address"
+          }
+        ],
+        "name": "ControllerChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldGov",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newGov",
+            "type": "address"
+          }
+        ],
+        "name": "GovChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldMinTotalSupply",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newMinTotalSupply",
+            "type": "uint256"
+          }
+        ],
+        "name": "MinTotalSupplyUpdated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "pendingGov",
+            "type": "address"
+          }
+        ],
+        "name": "PendingGovUpdated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "profit",
+            "type": "uint256"
+          }
+        ],
+        "name": "ProfitTaken",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "sold",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "received",
+            "type": "uint256"
+          }
+        ],
+        "name": "Sell",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldFee",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "SellFeeUpdated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newSupplyCap",
+            "type": "uint256"
+          }
+        ],
+        "name": "SupplyCapUpdated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "oldVault",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newVault",
+            "type": "address"
+          }
+        ],
+        "name": "VaultMigrated",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "BPS_DENOMINATOR",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "DOLA",
+        "outputs": [
+          {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "collateralAmountIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "buy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "collateralAmountIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "buy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "buyFeeBps",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "claimPendingGov",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "collateral",
+        "outputs": [
+          {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "controller",
+        "outputs": [
+          {
+            "internalType": "contract IController",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "fed",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "dolaIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "getCollateralOut",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "collateralIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "getDolaOut",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getProfit",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getTotalReserves",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "gov",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newVault",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minCollateralAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minSharesOut",
+            "type": "uint256"
+          }
+        ],
+        "name": "migrate",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "minTotalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "pendingGov",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dolaAmountIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "sell",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "dolaAmountIn",
+            "type": "uint256"
+          }
+        ],
+        "name": "sell",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "sellFeeBps",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "setBuyFeeBps",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newController",
+            "type": "address"
+          }
+        ],
+        "name": "setController",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_minTotalSupply",
+            "type": "uint256"
+          }
+        ],
+        "name": "setMinTotalSupply",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_pendingGov",
+            "type": "address"
+          }
+        ],
+        "name": "setPendingGov",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "setSellFeeBps",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "supply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "contract IERC20",
+            "name": "token",
+            "type": "address"
+          }
+        ],
+        "name": "sweep",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "takeProfit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "vault",
+        "outputs": [
+          {
+            "internalType": "contract IERC4626",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+  },
+  {
+    "name": "slashing",
+    "address": "0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+    "block_number": 26188001,
+    "explorer": "https://eth.blockscout.com/api/v2/smart-contracts/0x316a01f878AA6d5A4C7ea2080D64D364F9538aa2",
+    "verified": true,
+    "source_name": "FiRMSlashingModule",
+    "bytecode_matches": true,
+    "onchain_code_bytes": 8348,
+    "source_code": "pragma solidity ^0.8.21;\n\ninterface IJuniorPool {\n    function slash(uint amount) external returns(uint slashed);\n}\n\ninterface IDBR {\n    function markets(address) external view returns(bool);\n}\n\ninterface IERC20 {\n    function approve(address pender, uint amount) external;\n}\n\ninterface IMarket {\n    function debts(address borrower) external view returns(uint);\n    function getCollateralValue(address borrower) external view returns(uint);\n    function repay(address borrower, uint amount) external;\n}\n\ncontract FiRMSlashingModule {\n    \n    IJuniorPool public immutable JUNIOR_POOL;\n    IDBR public immutable DBR;\n    IERC20 public immutable DOLA;\n    address public gov;\n    address public pendingGov;\n    address public guardian;\n    uint public maxCollateralValue = 200e18;\n    uint public minDebt = 50e18;\n    uint public activationDelay = 14 days;\n    uint public constant MIN_ACTIVATION_DELAY = 7 days;\n\n\n    mapping(address => bool) public allowedMarkets;\n    mapping(address => uint) public activationTime;\n\n    constructor(address _slashingPool, address _dbr, address _dola, address _gov){\n        require(_gov != address(0), \"Zero address\");\n        JUNIOR_POOL = IJuniorPool(_slashingPool);\n        DBR = IDBR(_dbr);\n        DOLA = IERC20(_dola);\n        gov = _gov;\n    }\n\n    modifier onlyRole(address role, string memory errMsg) {\n        require(msg.sender == role, errMsg);\n        _;\n    }\n\n    event NewPendingGov(address);\n    event NewGov(address);\n    event NewGuardian(address);\n    event NewMarket(address, uint activationTime);\n    event MarketRemoved(address);\n    event Slash(address indexed market, address indexed borrower, uint amount, uint debt, uint collateralValue);\n    event MaxCollateralValueSet(uint oldValue, uint newValue);\n    event MinDebtSet(uint oldValue, uint newValue);\n    event ActivationDelaySet(uint oldValue, uint newValue);\n\n\n    /**\n     * @notice Repays up to the total bad debt incurred by `borrower` in FiRM `market`\n     * @dev Bad debt is not guaranteed to be repaid, as their may not be enough funds in the JUNIOR_POOL\n     * @param market The FiRM market contract with bad debt\n     * @param borrower The borrower that has incurred bad debt\n     * @return The amount of repaid bad debt\n     */\n    function slash(address market, address borrower) public returns(uint) {\n        require(allowedMarkets[market], \"Market not allowed\"); \n        require(DBR.markets(market), \"Market not active FiRM market\");\n        require(activationTime[market] <= block.timestamp && activationTime[market] > 0, \"Market protection not activated\");\n        uint collateralValue = IMarket(market).getCollateralValue(borrower);\n        uint debt = IMarket(market).debts(borrower);\n        require(debt > collateralValue, \"No bad debt\");\n        //We require debt to be above a minDebtValue to avoid unliquidateable debt being used to drain jDOLA depositors\n        require(debt >= minDebt, \"Debt too low\");\n        //We want positions to be liquidated before repaying bad debt, so we enforce a max collateral value\n        require(collateralValue <= maxCollateralValue, \"Collateral value too high\");\n        uint slashed = JUNIOR_POOL.slash(debt - collateralValue);\n        DOLA.approve(market, slashed);\n        IMarket(market).repay(borrower, slashed);\n        emit Slash(market, borrower, slashed, debt, collateralValue);\n        return slashed;\n    }\n\n    /// ADMIN METHODS\n\n    /**\n     * @notice Adds a market to the protected pool of markets after an activation delay, allowing bad debt repayments\n     * @dev WARNING: MAKE SURE MARKET CONTRACT ISN'T A TROJAN CONTRACT THAT CAN STEAL BAD DEBT REPAYMENTS\n     * @param market New market to add to protected pool\n     */\n    function allowMarket(address market) onlyRole(gov, \"ONLY GOV\") external {\n        allowedMarkets[market] = true;\n        activationTime[market] = block.timestamp + activationDelay;\n        emit NewMarket(market, block.timestamp + activationDelay);\n    }\n\n    /**\n     * @notice Removes a market from the protected pool of markets.\n     * @dev Guardian role can disallow market during the activation delay\n     * @param market Market to have protections removed\n     */\n    function disallowMarket(address market) external {\n        require(msg.sender == guardian || msg.sender == gov, \"ONLY GUARDIAN OR GOV\");\n        if(msg.sender == guardian){\n            require(block.timestamp < activationTime[market], \"GUARDIAN CANNOT REMOVE ACTIVE MARKET\");\n        }\n        allowedMarkets[market] = false;\n        activationTime[market] = 0;\n        emit MarketRemoved(market);\n    }\n\n    /**\n     * @notice Sets the max collateral value for slashings\n     * @dev Repayment of bad debt should only happen after liquidations have taken place\n     * @param _maxCollateralValue The new max collateral value\n     */\n    function setMaxCollateralValue(uint _maxCollateralValue) external onlyRole(gov, \"ONLY GOV\") {\n        require(_maxCollateralValue > 0, \"Max collateral value must be > 0\");\n        emit MaxCollateralValueSet(maxCollateralValue, _maxCollateralValue);\n        maxCollateralValue = _maxCollateralValue;\n    }\n\n    /**\n     * @notice Sets the min debt value for slashings\n     * @dev Min debt value avoids tiny unliquidateable positions to rack up debt and incur losses for jDOLA depositors\n     * @param _minDebt The new min debt\n     */\n    function setMinDebt(uint _minDebt) external onlyRole(gov, \"ONLY GOV\") {\n        emit MinDebtSet(minDebt, _minDebt);\n        minDebt = _minDebt;\n    }\n\n    /**\n     * @notice Sets the activation delay.\n     * @param _activationDelay The new activation delay. Must be above the hardcoded min activation delay.\n     */\n    function setActivationDelay(uint _activationDelay) external onlyRole(gov, \"ONLY GOV\") {\n        require(_activationDelay >= MIN_ACTIVATION_DELAY, \"ACTIVATION DELAY BELOW MIN\");\n        emit ActivationDelaySet(activationDelay, _activationDelay);\n        activationDelay = _activationDelay;\n    }\n\n    /**\n     * @notice Sets the pending gov\n     * @dev Contract uses set-accept pattern for governance change\n     * @param _pendingGov The new pending gov\n     */\n    function setPendingGov(address _pendingGov) onlyRole(gov, \"ONLY GOV\") external {\n        pendingGov = _pendingGov;\n        emit NewPendingGov(pendingGov);\n    }\n\n    /**\n     * @notice Sets the guardian role. Guardian may cancel the inclusion of new markets in the activation period.\n     * @param _guardian Address of the new guardian\n     */\n    function setGuardian(address _guardian) onlyRole(gov, \"ONLY GOV\") external {\n        guardian = _guardian;\n        emit NewGuardian(guardian);\n    }\n\n    /**\n     * @notice Callable by pending gov to accept gov role\n     * @dev Contract uses set-accept pattern for governance\n     */\n    function acceptGov() onlyRole(pendingGov, \"ONLY PENDING GOV\") external {\n        gov = pendingGov;\n        pendingGov = address(0);\n        emit NewGov(gov);\n    }\n}\n",
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_slashingPool",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_dbr",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_dola",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_gov",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldValue",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "ActivationDelaySet",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "MarketRemoved",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldValue",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "MaxCollateralValueSet",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "oldValue",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "MinDebtSet",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "NewGov",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "NewGuardian",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "activationTime",
+            "type": "uint256"
+          }
+        ],
+        "name": "NewMarket",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "NewPendingGov",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "borrower",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "debt",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "collateralValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "Slash",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "DBR",
+        "outputs": [
+          {
+            "internalType": "contract IDBR",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "DOLA",
+        "outputs": [
+          {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "JUNIOR_POOL",
+        "outputs": [
+          {
+            "internalType": "contract IJuniorPool",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "MIN_ACTIVATION_DELAY",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "acceptGov",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "activationDelay",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "activationTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+          }
+        ],
+        "name": "allowMarket",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "allowedMarkets",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+          }
+        ],
+        "name": "disallowMarket",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "gov",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "guardian",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "maxCollateralValue",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "minDebt",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "pendingGov",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_activationDelay",
+            "type": "uint256"
+          }
+        ],
+        "name": "setActivationDelay",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_guardian",
+            "type": "address"
+          }
+        ],
+        "name": "setGuardian",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_maxCollateralValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "setMaxCollateralValue",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_minDebt",
+            "type": "uint256"
+          }
+        ],
+        "name": "setMinDebt",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_pendingGov",
+            "type": "address"
+          }
+        ],
+        "name": "setPendingGov",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "borrower",
+            "type": "address"
+          }
+        ],
+        "name": "slash",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ]
+  }
+]
