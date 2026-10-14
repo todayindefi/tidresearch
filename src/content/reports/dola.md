@@ -20,15 +20,15 @@ issuer: "Inverse Finance DAO"
 audited_reserves: false
 market_cap_approx: 72573072
 axis_frame: six
-production: false
+production: true
 featured: false
 # Source: /home/danger/riskAnalyst/assets/dola.md, 2026-10-14.
-# Issuer inputs and remote topology remain incomplete; stage pending review.
+# Issuer inputs and remote topology remain incomplete; published provisionally.
 ---
 
 # DOLA — Risk Report
 
-**Significant risk · 4.5/10**
+**Moderate-elevated risk · 4.5/10** · Provisional
 
 Debt-backed USD stablecoin · FiRM lending and Fed supply management · Inverse Finance DAO. Scores run from 1 to 10, with higher scores indicating greater safety.
 
@@ -71,7 +71,7 @@ DOLA is supported mainly by collateralized FiRM loans. The October 14 official A
 | All remaining markets | 2.532M | 3.64% |
 | **Total** | **69.688M** | **100%, before displayed rounding** |
 
-The full API list sums to reported FiRM debt. Including standalone sUSDe yields 53.326M DOLA debt in Ethena-linked markets, or 76.52%. This measures shared issuer/pool dependencies, not ultimate reserve weights. [Market snapshot](/evidence/dola/dola-api-snapshot-2026-10-14.json)
+DOLA/sDOLA-containing LP markets account for **96.37% of FiRM debt**. This is a share of loan sources, not a reserve-asset partition. The full API list sums to reported FiRM debt. Including standalone sUSDe yields 53.326M DOLA debt in Ethena-linked markets, or 76.52%. This measures shared issuer/pool dependencies, not ultimate reserve weights. [Market snapshot](/evidence/dola/dola-api-snapshot-2026-10-14.json)
 
 ### LP look through and internal claims
 
@@ -218,6 +218,8 @@ Further diligence should independently simulate large router quotes, reconstruct
 
 ## Evidence
 
+[Committed snapshot provenance](/evidence/dola/provenance-2026-10-14.json).
+
 - [Ethereum state and PSM reserves](/evidence/dola/dola-onchain-2026-10-14.json)
 - [Admin reads, redemption simulations and junior coverage](/evidence/dola/dola-admin-coverage-2026-10-14.json)
 - [Verified source and deployed bytecode](/evidence/dola/dola-source-verification-2026-10-14.json)
@@ -229,4 +231,4 @@ Evidence consists of read-only contract calls, source comparisons, official API 
 
 ## Revision history
 
-- **2026-10-14 — staged refresh.** Provisional six-axis assessment based on dated Ethereum state, ten-chain supply observations, official debt data and Ethereum USDC exit estimates.
+- **2026-10-14 — production refresh.** Provisional six-axis assessment based on dated Ethereum state, ten-chain supply observations, official debt data and Ethereum USDC exit estimates.
