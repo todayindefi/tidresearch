@@ -374,5 +374,12 @@
     ]
   },
   "measurement_scope": "Retained dashboard observations. Contract calls, independent bytecode/source matching and primary redemption simulations were not rerun for this editorial refresh.",
-  "block_number": 26188131
+  "block_number": 26188131,
+  "interpretation_notes": {
+    "date": "2026-10-14",
+    "totalAssets": "Alternative assets only, excluding primary PYUSDx. Zero and isAllowedAsset(PYUSDx)=false are expected for an all-PYUSDx reserve.",
+    "accounting_divergence_fields": "Archived producer calculations compare different scopes and do not establish an accounting defect or reserve shortfall.",
+    "implementation_published_baseline": "Archived expected address is obsolete; the current repository names the live implementation and technical reassessment verifies source/runtime matching.",
+    "current_verification_reference": "/evidence/saturn/usdat-reassessment-2026-10-14.json"
+  }
 }

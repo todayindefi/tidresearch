@@ -1,0 +1,54 @@
+{
+  "ethereum_block": 26188755,
+  "ethereum_supply": 97317230.62541,
+  "ethereum_PYUSDX_balance": 97317230.62541,
+  "ethereum_alt_assets": 0,
+  "bnb_supply": 189630.998121,
+  "monad_supply": 54103498.044431,
+  "ethereum_locked_bridge_balance": 54289416.956525,
+  "implementation": "0x496a4A33b6181F4536203488d9a05AC1429E702c",
+  "sourcify_runtime_match": "exact_match",
+  "audit_final_USDat_source_exact_match": true,
+  "audit_final_PYUSDX_pin": "b3f0c911287f8792c7682bc0383f52c1a93b3649",
+  "verification_date": "2026-10-14",
+  "main_source_sha256": "2516c78e3cb6ce0eacd4322855fd0da1bcfe7841e1bafa06c194e7a5f17ca862",
+  "audit_final_commit": "26507265ea099ebe807a27144e73352510e9e076",
+  "live_runtime_equal_sourcify": true,
+  "accounting_semantics": {
+    "totalAssets": "Non-PYUSDx alternative assets only; excludes primary PYUSDx.",
+    "isAllowedAsset_PYUSDx_false": "Expected for the primary backing asset.",
+    "ordinary_transfers": "Not whitelist-gated; freeze and pause controls still apply."
+  },
+  "monad_bridge": {
+    "pool": "0x8ab40e2dabcd24dcff0a06a68eb59990405270f0",
+    "pool_owner": "0x0c43bb1a15a1ff1cbddff2b8f9518c1b0d3b17e2",
+    "owner_block": 113248592,
+    "owner_delay_seconds": 10800,
+    "token_timelock": "0xf0237a1cb794ea830129966049ef99243082ff0c",
+    "token_delay_seconds": 172800,
+    "bypasser_members": [
+      "0xfb8c97bd8a6bc3646a478ba9b8dba5c923a0f225",
+      "0xfa546248c54939aa6c48279cdc1eaf9a1125c411"
+    ],
+    "role_scan_scope": "Monad pool owner only; bypass powers and holder thresholds not fully mapped."
+  },
+  "cross_chain_scope": "Supply reads are asynchronous. Escrow and remote supply require aligned timestamp/message reconciliation.",
+  "sources": [
+    "https://github.com/saturn-organization/saturn-dollar",
+    "https://github.com/saturn-organization/saturn-dollar/blob/main/audits/Adevar-PYUSDx-migration-audit-report.pdf",
+    "https://docs.m0.org/pyusdx/overview"
+  ],
+  "verification_scope": "Reviewed supplied October 14 read-only technical evidence and source comparisons. Upstream custody, eligible-holder redemption, dependency audit parity and complete bridge authority remain unresolved.",
+  "bnb_token_delay_seconds": 172800,
+  "liquidity_ruling_snapshot_as_of": "2026-10-14T04:45:42Z",
+  "reassessed_axes": {
+    "stability": 6.5,
+    "backing": 5.5,
+    "liquidity_exit": 5.0,
+    "dependencies": 5.0,
+    "contract_admin": 4.5,
+    "issuer": 5.0
+  },
+  "overall_score": 4.5,
+  "overall_status": "provisional"
+}

@@ -99,7 +99,7 @@ Historically observed withdrawals of approximately $0.37M–$0.43M were paid fro
 
 ## 4 · Dependencies — 2.5
 
-The dominant economic path is **sUSDat → Saturn's STRC position → Strategy Inc.** Strategy's Bitcoin balance sheet affects its ability to service preferred claims, but STRC is not a direct claim on Bitcoin or a contractual Bitcoin redemption instrument. The separate liquid-buffer path is **sUSDat → USDat → PYUSDx → PYUSD**. These are parallel reserve exposures, not one serial chain through USDat into STRC.
+The dominant economic path is **sUSDat → Saturn's STRC position → Strategy Inc.** Strategy's Bitcoin balance sheet affects its ability to service preferred claims, but STRC is not a direct claim on Bitcoin or a contractual Bitcoin redemption instrument. The separate liquid-buffer path is **sUSDat → USDat → PYUSDx → PYUSD**. USDat's reassessed implementation matches verified source, and its zero alternative-asset accessor is valid. Upstream custody and eligible-holder conversion still require verification; those constraints apply when realizing this buffer. These are parallel reserve exposures, not one serial chain through USDat into STRC.
 
 The October 12 Strategy disclosure incorporated in the [STRC assessment](/reports/strc/) records **$192.4M of STRC repurchases**, **$354.8M remaining authorization** and a **$99.88 closing price**. Separate USD Cash fell to **$640.5M**, while the restricted USD Reserve remained **$4.88B**. The cash pockets have different uses and cannot be combined into freely available buyback funds.
 
