@@ -60,7 +60,7 @@ The economic backing is DOLA. Its October 14 assessment reports **2.765M DOLA kn
 
 The intended Ethereum exit has two legs: redeem sDOLA into DOLA, then sell DOLA. The issuer describes no lock-up. Reviewed upstream source requires at least **one sDOLA share** and **0.01 DOLA** to remain in the vault after withdrawal; these are system residual minima, not a one-share minimum ticket. [Source review](/evidence/dola/sdola-wrapper-review-2026-10-14.json)
 
-DOLA's indicative USDC ladder supports near-par proceeds through 3M DOLA, followed by a poor 5M quote. It does not establish sDOLA redemption or a combined route. The DOLA-to-cash leg constrains the provisional 4.5 exit assessment.
+DOLA's October 14 indicative USDC ladder supports near-par proceeds through 3M DOLA, followed by a poor 5M quote. It does not establish sDOLA redemption or a combined route. The DOLA-to-cash leg constrains the provisional 4.5 exit assessment.
 
 **Risks and limitations.** Live withdrawals, a direct sDOLA quote ladder and stressed combined exits were not simulated. Remote balances and recovery routes remain unverified. Documented no-lock-up mechanics are not verified unlimited instant liquidity.
 
