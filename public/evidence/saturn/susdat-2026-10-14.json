@@ -1,0 +1,208 @@
+{
+  "source_url": "https://todayindefi.github.io/backing-monitor/data/susdat_backing.json",
+  "as_of": "2026-10-14T03:45:41Z",
+  "chain": "ethereum",
+  "summary": {
+    "total_assets_usd": 59324065.46,
+    "share_supply": 56675995.406223,
+    "nav_per_share": 1.046723,
+    "buffer_ratio": 0.046664,
+    "onchain_buffer_usd": 2768317.35,
+    "offchain_strc_usd_implied": 56555748.11,
+    "peg_curve_usdc": 1.036051,
+    "discount_to_nav_pct": 1.0196,
+    "paused": false,
+    "implementation": "0x2b7074CF6681382b70E239063931ebE83C0f4E0A",
+    "admin_role_holder": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+    "admin_role_holder_kind": "timelock",
+    "buffer_standing_30d": {
+      "window_days": 30,
+      "n": 697,
+      "window_start": "2026-09-14T03:47:12Z",
+      "percentile": 35,
+      "median": 0.052073,
+      "min": 0.002074,
+      "max": 0.127746,
+      "below_warn_floor_since": "2026-10-13T16:45:40Z",
+      "below_warn_floor_whole_window": false,
+      "warn_floor": 0.1,
+      "crit_floor": 0.05
+    }
+  },
+  "asset_specific": {
+    "reserve_split": {
+      "onchain_usdat": {
+        "value_usd": 2768317.35,
+        "pct": 0.046664,
+        "verifiable": "onchain"
+      },
+      "offchain_strc": {
+        "value_usd": 56555748.11,
+        "pct": 0.953336,
+        "verifiable": "oracle_unverified"
+      }
+    },
+    "ltv_band": {
+      "current_strc_target_pct": null,
+      "comment": "LTV-band data requires a Strategy NAV input; defer until that source is identified",
+      "published_thresholds": [
+        {
+          "max_ltv": 0.2857,
+          "strc_pct": 1.0
+        },
+        {
+          "max_ltv": 0.3333,
+          "strc_pct": 0.8
+        },
+        {
+          "max_ltv": 0.4,
+          "strc_pct": 0.6
+        },
+        {
+          "max_ltv": 0.5,
+          "strc_pct": 0.4
+        },
+        {
+          "max_ltv": 0.6667,
+          "strc_pct": 0.2
+        },
+        {
+          "max_ltv": 1.0,
+          "strc_pct": 0.0
+        }
+      ]
+    },
+    "self_consistency": {
+      "nav_supply_product_usd": 59324067.94,
+      "reported_total_assets_usd": 59324065.46,
+      "delta_bps": 0.0004
+    },
+    "asset_address": "0x23238f20b894f29041f48D88eE91131C395Aaa71",
+    "asset_matches_usdat": true,
+    "secondary": {
+      "curve_susdat_usdc": {
+        "address": "0x6206ca315c2fcdd2a857b47efb285aa12c529a7a",
+        "tvl_usd": 29867.05,
+        "vol_24h_usd": 13889.3555731369,
+        "implied_price": 1.036051,
+        "discount_to_nav_pct": 1.0196
+      },
+      "curve_susdat_frxusd": {
+        "address": "0xcaf1969e9ba98c05113b75d8633a17196e2d02a5",
+        "tvl_usd": 29818.79
+      }
+    },
+    "trust_stack": {
+      "proxy_type": "ERC1967Proxy",
+      "implementation": "0x2b7074CF6681382b70E239063931ebE83C0f4E0A",
+      "implementation_published": "0x2005E0CA201A37694125Ff267ae57872BEa0a0Ce",
+      "proxy_admin_contract": null,
+      "proxy_admin_owner": null,
+      "proxy_admin_owner_expected_absent": true,
+      "upgrade_authority_path": "uups_default_admin_role",
+      "admin_role_holder": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+      "admin_role_holder_label": "timelock",
+      "admin_role_holder_kind": "timelock",
+      "admin_role_held": true,
+      "admin_role_holder_resolved": true,
+      "admin_role_holder_unresolved": false,
+      "admin_role_holder_probe_incomplete": false,
+      "admin_role_multiple_holders": false,
+      "admin_role_holders": [
+        {
+          "label": "timelock",
+          "address": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67"
+        }
+      ],
+      "admin_role_candidates_tested": [
+        "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+        "0x610182581C93687Ca03F4a8E7f124f8cEC616820",
+        "0xcf1072da5f0d127aef99136489bad08bfa3d1a7d"
+      ],
+      "admin_role_holder_is_eoa": false,
+      "published_eoa_still_holds_admin": false,
+      "timelock": true,
+      "multisig": false,
+      "admin_controller": {
+        "kind": "timelock",
+        "address": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+        "code_size": 5497,
+        "min_delay_seconds": 432000,
+        "min_delay_days": 5.0,
+        "self_administered": true,
+        "operator_holds_timelock_admin": false,
+        "execution_permissionless": true,
+        "delay_binding": true,
+        "operator_is_proposer": true,
+        "operator_is_canceller": true,
+        "operator_address": "0x610182581C93687Ca03F4a8E7f124f8cEC616820",
+        "role_membership_enumerable": false
+      },
+      "timelock_min_delay_seconds": 432000,
+      "timelock_min_delay_days": 5.0,
+      "timelock_delay_binding": true,
+      "timelock_sole_operator_risk": true,
+      "audits": "shared_with_usdat",
+      "vesting_period_days": 30,
+      "deposit_fee_bps": 10,
+      "min_withdrawal_usdat": 10
+    }
+  },
+  "liquidity": {
+    "total_tvl": 59685.84,
+    "total_2pct_depth": 10000.0,
+    "two_pct_depth_status": "bracketed",
+    "two_pct_depth_bracket": [
+      10000.0,
+      100000.0
+    ],
+    "exit_mark": {
+      "source": "kyberswap",
+      "sell_into": "USDC",
+      "fair_value": 1.036051,
+      "fair_value_basis": "market",
+      "quotes": {
+        "1000": {
+          "slippage_bps": 5.19,
+          "output_usd": 1000.52,
+          "fill_ratio": 1.00052
+        },
+        "10000": {
+          "slippage_bps": 3.23,
+          "output_usd": 10003.23,
+          "fill_ratio": 1.000323
+        },
+        "100000": {
+          "slippage_bps": -4862.59,
+          "output_usd": 51374.06,
+          "fill_ratio": 0.513741
+        },
+        "500000": {
+          "slippage_bps": -8558.62,
+          "output_usd": 72069.23,
+          "fill_ratio": 0.144138
+        }
+      },
+      "slippage_bps_basis": "ALL-IN COST against notional: (output_usd - size) / size. Includes the venue's base spread, so it is not comparable rung-for-rung with a price-impact figure measured against a venue's own spot rung."
+    },
+    "pools": [
+      {
+        "venue": "curve",
+        "chain": "ethereum",
+        "pair": "sUSDat/USDC",
+        "address": "0x6206ca315c2fcdd2a857b47efb285aa12c529a7a",
+        "depth_usd": 29867.05,
+        "volume_24h": 13889.3555731369,
+        "implied_price": 1.036051
+      },
+      {
+        "venue": "curve",
+        "chain": "ethereum",
+        "pair": "sUSDat/frxUSD",
+        "address": "0xcaf1969e9ba98c05113b75d8633a17196e2d02a5",
+        "depth_usd": 29818.79
+      }
+    ]
+  },
+  "measurement_scope": "Retained dashboard observations. Contract calls, independent bytecode/source matching and primary redemption simulations were not rerun for this editorial refresh."
+}

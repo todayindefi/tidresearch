@@ -1,0 +1,378 @@
+{
+  "source_url": "https://todayindefi.github.io/backing-monitor/data/usdat_backing.json",
+  "as_of": "2026-10-14T03:45:41Z",
+  "chain": "ethereum",
+  "summary": {
+    "supply_usd": 97317230.63,
+    "backing_total_usd": 97317230.63,
+    "backing_ratio": 1.0,
+    "net_buffer_usd": 0.0,
+    "backing_basis": "raw_token_holdings",
+    "supply_scope": "ethereum_only",
+    "supply_scope_note": "Supply and backing are both read on Ethereum. The rated ratio is an Ethereum statement. Global supply and the chains it spans are in asset_specific.multi_chain; the BSC leg exposes no backing accessor, so its backing is UNREAD, not absent.",
+    "global_supply_usd": null,
+    "global_supply_note": "Ethereum bridges by LockRelease and BSC by BurnMint, so Ethereum's totalSupply already contains the bridged portion and summing chains would double-count. See asset_specific.multi_chain for the locked balance and the per-chain figures that ARE measured.",
+    "contract_total_assets_usd": 0.0,
+    "accounting_divergence_usd": 97317230.63,
+    "accounting_divergence_pct_of_supply": 100.0,
+    "backing_assets_unpriceable": [],
+    "peg_curve_usdc": 0.999832,
+    "peg_deviation_pct": -0.0168,
+    "paused": false,
+    "implementation": "0x496a4A33b6181F4536203488d9a05AC1429E702c",
+    "admin_role_holder": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+    "admin_role_holder_kind": "timelock",
+    "admin_eoa_nonce": 39
+  },
+  "asset_specific": {
+    "composition": {
+      "M": {
+        "balance": 0.0,
+        "pct_of_supply": 0.0,
+        "address": "0x866A2BF4E572CbcF37D5071A7a58503Bfb36be1b",
+        "verifiable": "onchain",
+        "par_assumed": true,
+        "declared_by_contract": true,
+        "allowed_by_contract": false,
+        "contract_asset_balance": 0.0
+      },
+      "PYUSDx": {
+        "balance": 97317230.63,
+        "pct_of_supply": 1.0,
+        "address": "0xeBDB0942cE16386Ab90718C7BD10C91CDb66b14d",
+        "verifiable": "onchain",
+        "par_assumed": true,
+        "declared_by_contract": true,
+        "allowed_by_contract": false,
+        "contract_asset_balance": 0.0
+      },
+      "USDC": {
+        "balance": 0.0,
+        "pct_of_supply": 0.0,
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "verifiable": "onchain",
+        "par_assumed": true,
+        "declared_by_contract": false,
+        "allowed_by_contract": true,
+        "contract_asset_balance": 0.0
+      },
+      "OTHER": [
+        {
+          "symbol": "AIMevBot.com",
+          "address": "0x06B9A0cf7dAEAEC447a36BE7b90baDA4B8c96EFE",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "AIFreeUse.cc",
+          "address": "0x13F52241B2B6829401f459aE7219483D25fd96e2",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "AIFreeUse.cc",
+          "address": "0x4A3f71219508B3b9033D21e99bA0443d691bbE8D",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "yRise",
+          "address": "0x6051C1354Ccc51b4d561e43b02735DEaE64768B8",
+          "units": 9e-05,
+          "flagged": false
+        },
+        {
+          "symbol": "AIFreeUse.cc",
+          "address": "0xb1c719FB5687e221f165AE617802FB6b7317Fd37",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "AIFreeUse.pro",
+          "address": "0xd26B998b876dfdc12F1Ba486Ab06F8598FE27587",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "FiFaAI.cc",
+          "address": "0xdf40b862465cB3C963FEab7e235519e37D9eB347",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "WorldCupAI.pro",
+          "address": "0xE03ca22ee8EaF4FD1eF97286F2aD4F671e0aa1bF",
+          "units": 1000.0,
+          "flagged": false
+        },
+        {
+          "symbol": "AIMevBot.cc",
+          "address": "0xf6D59AF673D6aa277e31d6FA765C6f3Bd0A74CB5",
+          "units": 1000.0,
+          "flagged": false
+        }
+      ]
+    },
+    "secondary": {
+      "curve_usdat_usdc": {
+        "address": "0xf4d0cf32908b2c7f1021339c43df0f77f06896d7",
+        "tvl_usd": 6670113.81,
+        "vol_24h_usd": 533086.967568252,
+        "implied_price": 0.999832,
+        "deviation_pct": -0.0168
+      }
+    },
+    "trust_stack": {
+      "proxy_type": "TransparentUpgradeableProxy",
+      "implementation": "0x496a4A33b6181F4536203488d9a05AC1429E702c",
+      "implementation_published": "0x17cAC25c6d6bbcB592837feA083A5C8EB4d1E52E",
+      "proxy_admin_contract": "0xcf1072DA5f0D127AEf99136489BAd08bFa3D1A7D",
+      "proxy_admin_owner": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+      "proxy_admin_owner_kind": "timelock",
+      "proxy_admin_owner_is_eoa": false,
+      "proxy_admin_owner_is_saturn_eoa": false,
+      "upgrade_authority_path": "proxy_admin_owner",
+      "admin_role_holder": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+      "admin_role_holder_label": "timelock",
+      "admin_role_holder_kind": "timelock",
+      "admin_role_held": true,
+      "admin_role_holder_resolved": true,
+      "admin_role_holder_unresolved": false,
+      "admin_role_holder_probe_incomplete": false,
+      "admin_role_multiple_holders": false,
+      "admin_role_holders": [
+        {
+          "label": "timelock",
+          "address": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67"
+        }
+      ],
+      "admin_role_candidates_tested": [
+        "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+        "0x610182581C93687Ca03F4a8E7f124f8cEC616820",
+        "0xcf1072da5f0d127aef99136489bad08bfa3d1a7d"
+      ],
+      "admin_role_holder_is_eoa": false,
+      "published_eoa_still_holds_admin": false,
+      "timelock": true,
+      "multisig": false,
+      "admin_controller": {
+        "kind": "timelock",
+        "address": "0xfD5782E3BFF366601da3973aE30C583dE4F08A67",
+        "code_size": 5497,
+        "min_delay_seconds": 432000,
+        "min_delay_days": 5.0,
+        "self_administered": true,
+        "operator_holds_timelock_admin": false,
+        "execution_permissionless": true,
+        "delay_binding": true,
+        "operator_is_proposer": true,
+        "operator_is_canceller": true,
+        "operator_address": "0x610182581C93687Ca03F4a8E7f124f8cEC616820",
+        "role_membership_enumerable": false
+      },
+      "timelock_min_delay_seconds": 432000,
+      "timelock_min_delay_days": 5.0,
+      "timelock_delay_binding": true,
+      "timelock_sole_operator_risk": true,
+      "audits": [
+        {
+          "firm": "Three Sigma",
+          "id": "Audit #1"
+        },
+        {
+          "firm": "Certora",
+          "id": "Audit #2"
+        },
+        {
+          "firm": "Certora",
+          "id": "Audit #3"
+        }
+      ]
+    },
+    "multi_chain": {
+      "ethereum": {
+        "address": "0x23238f20b894f29041f48d88ee91131c395aaa71",
+        "supply": 97317230.63,
+        "backing_usd": 97317230.63,
+        "backing_readable_on_chain": true
+      },
+      "bsc": {
+        "supply": 189630.998121,
+        "implementation": "0x65458213bb2398f968ca1760b806956966b9adac",
+        "address": "0x0bB150dFA86ea5D7742f07feFcd8e8EdA81d64EF",
+        "bridge": "ccip_burn_mint",
+        "backing_readable_on_chain": false,
+        "implementation_matches_baseline": true
+      },
+      "ethereum_locked_in_bridge_pool": 54289416.96,
+      "ethereum_locked_pct_of_supply": 55.786,
+      "global_supply": null
+    },
+    "holder_concentration": {
+      "top_holders": [
+        {
+          "address": "0xa0de671eb84de9dee1d311d996d25c41f63a0d86",
+          "balance": 54289416.96,
+          "pct_of_supply": 55.786,
+          "role": "CCIP LockRelease bridge pool",
+          "is_contract": true,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0x7a7de491e1be5287874904e2b7c8488249a4d0a9",
+          "balance": 28807243.75,
+          "pct_of_supply": 29.6014,
+          "role": "Pendle SY-USDat wrapper",
+          "is_contract": true,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0xecf9dea79f1df6fc4c28ed47e4b86f0d7cd4b4c3",
+          "balance": 5000017.0,
+          "pct_of_supply": 5.1379,
+          "role": null,
+          "is_contract": false,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0xf4d0cf32908b2c7f1021339c43df0f77f06896d7",
+          "balance": 3391809.17,
+          "pct_of_supply": 3.4853,
+          "role": "Curve USDC/USDat pool",
+          "is_contract": true,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0xd166337499e176bbc38a1fbd113ab144e5bd2df7",
+          "balance": 2768317.35,
+          "pct_of_supply": 2.8446,
+          "role": "sUSDat vault",
+          "is_contract": true,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0xb3c29aa9196785f0aa5eca6cb0bcf1e92d83a468",
+          "balance": 706251.73,
+          "pct_of_supply": 0.7257,
+          "role": null,
+          "is_contract": false,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0x8e3dc4ba65e37f759cb170fb91b1c334718c4ba0",
+          "balance": 699305.16,
+          "pct_of_supply": 0.7186,
+          "role": null,
+          "is_contract": false,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0x4bc9fec04f0f95e9b42a3ef18f3c96fb57923d2e",
+          "balance": 381610.4,
+          "pct_of_supply": 0.3921,
+          "role": null,
+          "is_contract": true,
+          "unlabelled_contract": true
+        },
+        {
+          "address": "0x0c944ef7ba8f75da6ae4499c5d1754fbc8bd5133",
+          "balance": 352585.76,
+          "pct_of_supply": 0.3623,
+          "role": null,
+          "is_contract": false,
+          "unlabelled_contract": false
+        },
+        {
+          "address": "0x3dc0aa75a6fd01c3dcf9f6fdaf08308b6489f5b5",
+          "balance": 247347.14,
+          "pct_of_supply": 0.2542,
+          "role": null,
+          "is_contract": false,
+          "unlabelled_contract": false
+        }
+      ],
+      "holder_count": 1644,
+      "top_1_pct": 5.1379,
+      "top_5_pct": 7.3366,
+      "top_10_pct": 7.5908,
+      "structural_holders_excluded": [
+        "0xa0de671eb84de9dee1d311d996d25c41f63a0d86",
+        "0x7a7de491e1be5287874904e2b7c8488249a4d0a9",
+        "0xf4d0cf32908b2c7f1021339c43df0f77f06896d7",
+        "0xd166337499e176bbc38a1fbd113ab144e5bd2df7"
+      ],
+      "unlabelled_contracts": [
+        {
+          "address": "0x4bc9fec04f0f95e9b42a3ef18f3c96fb57923d2e",
+          "pct_of_supply": 0.3921
+        }
+      ]
+    }
+  },
+  "liquidity": {
+    "total_tvl": 6670113.81,
+    "total_2pct_depth": 2000000.0,
+    "two_pct_depth_status": "bracketed",
+    "two_pct_depth_bracket": [
+      2000000.0,
+      5000000.0
+    ],
+    "exit_mark": {
+      "source": "kyberswap",
+      "sell_into": "USDC",
+      "fair_value": 0.999832,
+      "fair_value_basis": "market",
+      "quotes": {
+        "1000": {
+          "slippage_bps": -1.69,
+          "output_usd": 999.83,
+          "fill_ratio": 0.99983
+        },
+        "10000": {
+          "slippage_bps": -1.74,
+          "output_usd": 9998.26,
+          "fill_ratio": 0.999826
+        },
+        "100000": {
+          "slippage_bps": -2.28,
+          "output_usd": 99977.18,
+          "fill_ratio": 0.999772
+        },
+        "500000": {
+          "slippage_bps": -4.78,
+          "output_usd": 499760.82,
+          "fill_ratio": 0.999522
+        },
+        "1000000": {
+          "slippage_bps": -8.43,
+          "output_usd": 999157.42,
+          "fill_ratio": 0.999157
+        },
+        "2000000": {
+          "slippage_bps": -21.39,
+          "output_usd": 1995722.83,
+          "fill_ratio": 0.997861
+        },
+        "5000000": {
+          "slippage_bps": -3417.68,
+          "output_usd": 3291161.93,
+          "fill_ratio": 0.658232
+        }
+      },
+      "slippage_bps_basis": "ALL-IN COST against notional: (output_usd - size) / size. Includes the venue's base spread, so it is not comparable rung-for-rung with a price-impact figure measured against a venue's own spot rung."
+    },
+    "pools": [
+      {
+        "venue": "curve",
+        "chain": "ethereum",
+        "pair": "USDat/USDC",
+        "address": "0xf4d0cf32908b2c7f1021339c43df0f77f06896d7",
+        "depth_usd": 6670113.81,
+        "volume_24h": 533086.967568252,
+        "implied_price": 0.999832
+      }
+    ]
+  },
+  "measurement_scope": "Retained dashboard observations. Contract calls, independent bytecode/source matching and primary redemption simulations were not rerun for this editorial refresh.",
+  "block_number": 26188131
+}
