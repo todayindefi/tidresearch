@@ -1,0 +1,40 @@
+{
+  "note": "Approximately 7/30-day windows using 7200 blocks/day, annualized using actual header timestamps. PPS is USG-denominated, not dollar performance.",
+  "observations": [
+    {
+      "nominal_days_ago": 0,
+      "block": "0x18fb93d",
+      "timestamp": 1792047683,
+      "utc": "2026-10-15T07:01:23+00:00",
+      "pps_usg": 1.0501790297059506
+    },
+    {
+      "nominal_days_ago": 7,
+      "block": "0x18ef45d",
+      "timestamp": 1791440879,
+      "fallback_errors": [
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)"
+        }
+      ],
+      "pps_usg": 1.0482826731418755,
+      "elapsed_days": 7.023194444444444,
+      "growth_pct": 0.18090125999996598,
+      "annualized_apy_pct": 9.848354200483978
+    },
+    {
+      "nominal_days_ago": 30,
+      "block": "0x18c6d7d",
+      "timestamp": 1789444247,
+      "fallback_errors": [
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)"
+        }
+      ],
+      "pps_usg": 1.0423115913095302,
+      "elapsed_days": 30.132361111111113,
+      "growth_pct": 0.7548067643127654,
+      "annualized_apy_pct": 9.536548681232615
+    }
+  ]
+}

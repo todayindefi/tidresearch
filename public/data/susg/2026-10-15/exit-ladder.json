@@ -1,0 +1,167 @@
+{
+  "block": "0x18fb931",
+  "sUSG_pps_usg": 1.0501785775500585,
+  "basis": "Redeem sUSG to USG; equal split into two keeper Curve pools. USDC and frxUSD outputs at face value, not a single cash asset or optimized router quote. Gas excluded.",
+  "quotes": [
+    {
+      "usg_input": 1000,
+      "equivalent_susg_shares": 952.2190048219045,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 497.824133
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 497.8840112146582
+        }
+      ],
+      "total_at_face_value": 995.7081442146582,
+      "cost_bps_vs_usg_face": 42.91855785341747
+    },
+    {
+      "usg_input": 10000,
+      "equivalent_susg_shares": 9522.190048219045,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 4977.971776
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 4978.611653964829
+        }
+      ],
+      "total_at_face_value": 9956.58342996483,
+      "cost_bps_vs_usg_face": 43.416570035169634
+    },
+    {
+      "usg_input": 25000,
+      "equivalent_susg_shares": 23805.475120547613,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 12443.776984
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 12445.55588874201
+        }
+      ],
+      "total_at_face_value": 24889.33287274201,
+      "cost_bps_vs_usg_face": 44.266850903196264
+    },
+    {
+      "usg_input": 50000,
+      "equivalent_susg_shares": 47610.95024109523,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 24883.539502
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 24887.742764896102
+        }
+      ],
+      "total_at_face_value": 49771.2822668961,
+      "cost_bps_vs_usg_face": 45.743546620780066
+    },
+    {
+      "usg_input": 100000,
+      "equivalent_susg_shares": 95221.90048219045,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 49749.567726
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 49760.97654453693
+        }
+      ],
+      "total_at_face_value": 99510.54427053692,
+      "cost_bps_vs_usg_face": 48.94557294630842
+    },
+    {
+      "usg_input": 250000,
+      "equivalent_susg_shares": 238054.75120547615,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 124202.709975
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 124266.62722896851
+        }
+      ],
+      "total_at_face_value": 248469.33720396852,
+      "cost_bps_vs_usg_face": 61.22651184125915
+    },
+    {
+      "usg_input": 500000,
+      "equivalent_susg_shares": 476109.5024109523,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 247244.048961
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 247737.75746169614
+        }
+      ],
+      "total_at_face_value": 494981.8064226961,
+      "cost_bps_vs_usg_face": 100.3638715460775
+    },
+    {
+      "usg_input": 750000,
+      "equivalent_susg_shares": 714164.2536164284,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 363074.657071
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 368199.6571046141
+        }
+      ],
+      "total_at_face_value": 731274.3141756142,
+      "cost_bps_vs_usg_face": 249.6758109918118
+    },
+    {
+      "usg_input": 1000000,
+      "equivalent_susg_shares": 952219.0048219046,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 413652.657792
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 461684.14562778664
+        }
+      ],
+      "total_at_face_value": 875336.8034197866,
+      "cost_bps_vs_usg_face": 1246.6319658021341
+    },
+    {
+      "usg_input": 1246382.7155033406,
+      "equivalent_susg_shares": 1186829.308983814,
+      "outputs": [
+        {
+          "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "amount": 418995.072474
+        },
+        {
+          "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+          "amount": 480889.9694669632
+        }
+      ],
+      "total_at_face_value": 899885.0419409631,
+      "cost_bps_vs_usg_face": 2780.0263053427166
+    }
+  ]
+}

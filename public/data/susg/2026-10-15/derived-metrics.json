@@ -1,0 +1,504 @@
+{
+  "core_block": "0x18fb921",
+  "assets_usg": 1246382.7155033406,
+  "supply_susg": 1186829.9903049346,
+  "pps_usg": 1.0501779746761413,
+  "idle_pct": 100.0,
+  "strategy_debt_usg": 0.0,
+  "wrapper_share_of_real_usg_pct": 33.020678721257454,
+  "parent_conservative_cr_pct": 129.14232594189028,
+  "parent_conservative_surplus_usd": 1099992.2699999996,
+  "debt_under_5pct_headroom_pct": 25.175001095295524,
+  "reports": [
+    {
+      "block": 25173227,
+      "utc": "2026-05-25T15:30:59+00:00",
+      "transaction": "0x59ffd6a4fdb1b2b083afe105bf4382882d5f9e90eff49cc4a21fd8f945d43343",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 100.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 200.0,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25175025,
+      "utc": "2026-05-25T21:31:59+00:00",
+      "transaction": "0x59f7420ee273c87fa7562a89da1e9edec22ad3bd56512e60e942acfb4dafee9c",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 895.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 20664.170386100588,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25223213,
+      "utc": "2026-06-01T14:46:35+00:00",
+      "transaction": "0x5cec7e058353f759a523abd138444bce7ac562b8a2857a5022cab23d0233e7c7",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 750.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 355641.3011384199,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25228807,
+      "utc": "2026-06-02T09:29:35+00:00",
+      "transaction": "0x7131b81795c8cd32a20eddf8e49732dfbdee8c6dcac698fbee4426bd90baa1cd",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 750.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 362103.81924097904,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25245460,
+      "utc": "2026-06-04T17:17:23+00:00",
+      "transaction": "0x9105b63b060e58f3f20c82596cca282d4ed776e83e542ad957567500e095f536",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 1000.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 507134.84514576895,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25295144,
+      "utc": "2026-06-11T15:34:23+00:00",
+      "transaction": "0xa61776e8abe7dd919cd664d8b899d8cb56e6d47a107f5677407a23b6ed815675",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2579.0000000000005,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 998890.7600081123,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25345371,
+      "utc": "2026-06-18T15:33:59+00:00",
+      "transaction": "0x7a29dc2a461d94f16720983f24bc2be1dda90bffe6789883d19bd5251c44ee4d",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2223.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 987695.0129608929,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25395561,
+      "utc": "2026-06-25T15:32:47+00:00",
+      "transaction": "0x672f0ee6903efa6fe73204bf1336f51317003de7413b8d0df63c671acb908d37",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 1750.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 795276.832211172,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25445767,
+      "utc": "2026-07-02T15:37:23+00:00",
+      "transaction": "0xe021de2a3c3cf3d4b0509aad164d6f0b52e379ebaa97f3e156843eadd5f57b1e",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 1850.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 865896.0958737999,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25495965,
+      "utc": "2026-07-09T15:37:23+00:00",
+      "transaction": "0xaa3a91a28c9c7cde2d18f6433e5063168c4f9c269ef4a7a5a25b1e87d8e1a596",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 1750.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 707490.8040208854,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25546180,
+      "utc": "2026-07-16T15:39:23+00:00",
+      "transaction": "0xdf59de904668e1d7668158bcf5685c7934345b587910352cc265e3af571caf00",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 1550.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 778954.3284971137,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25596365,
+      "utc": "2026-07-23T15:36:35+00:00",
+      "transaction": "0x4d6944ac142047de286433fec9e58becdce594ea6c654987d41af0541ae2bb3d",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 3500.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1067793.0333780004,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25647058,
+      "utc": "2026-07-30T17:06:23+00:00",
+      "transaction": "0x9756d397a2d8897aba2da61d4ac8023956eb7d8a1845767c51f40b86f4ffda22",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2400.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1295526.2131393119,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25697357,
+      "utc": "2026-08-06T17:18:23+00:00",
+      "transaction": "0x5e986c8d8168080dc0251712d7ed92507e75bfdb6e7afdcaf03b657d667511e5",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2200.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1059814.4673355534,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25747591,
+      "utc": "2026-08-13T17:27:23+00:00",
+      "transaction": "0x52e99fb480227bfa78a7181913a2aebd8f96c90f0f1bbc27d4c1338576332c50",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2100.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1165962.8605496536,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25798129,
+      "utc": "2026-08-20T18:28:59+00:00",
+      "transaction": "0x6c476ba593ac8132865c56658236899cc72a4726a2da7281240542552ee9a258",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2100.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1170266.5283785441,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25847358,
+      "utc": "2026-08-27T15:08:11+00:00",
+      "transaction": "0x2d7ad642f20aaf6a85c9739d34090694bf2b2dbe30ae6d06fbccd0ed26d1f0b6",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2067.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1066220.7602149704,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25897596,
+      "utc": "2026-09-03T15:11:59+00:00",
+      "transaction": "0x597838f1f8fb3573f6f5b8cb22c031de1e8b5ed5cd3b2b6678d76ac5dab07e8b",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2250.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1162720.2948315018,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25947811,
+      "utc": "2026-09-10T15:13:35+00:00",
+      "transaction": "0x95ae97001ffb78116ef22370877473069e7cfb7af79cf0b669bece8aed165269",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2300.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1239764.0924014503,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 25998094,
+      "utc": "2026-09-17T15:25:59+00:00",
+      "transaction": "0x353832dfcb4046db41607dd28eca4a79f31972cbbe30e34222aa0cb54784d693",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2000.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1169173.1979811878,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 26048330,
+      "utc": "2026-09-24T15:52:59+00:00",
+      "transaction": "0x433b0ebbb459120d2a82f04c8184ccad8c1e37bf5df799c409a20f46c608b2d0",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2000.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1142199.591462346,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 26098487,
+      "utc": "2026-10-01T15:53:23+00:00",
+      "transaction": "0x51810e985349f00d7805a0502d50c72a8012b43045443433ce23e2293163b7c9",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2100.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1191849.5144946622,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    },
+    {
+      "block": 26148923,
+      "utc": "2026-10-08T16:37:59+00:00",
+      "transaction": "0xa3c106fdc122e9e9db3c037915ebd5640db26ce95db7e8a43b0733327d79a033",
+      "strategy": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "gain_usg": 2250.0,
+      "loss_usg": 0.0,
+      "reported_current_debt_usg": 1225898.8468693967,
+      "protocol_fees_usg": 0.0,
+      "total_fees_usg": 0.0,
+      "refunds_usg": 0.0
+    }
+  ],
+  "successful_simulation": {
+    "holder": "0x3fE2461f7CB328629F2924993c6218748c740C83",
+    "block": "0x18fb931",
+    "shares": 158644.68678562567,
+    "usg_returned": 166605.25150440296,
+    "broadcast": false
+  },
+  "exit_quotes": {
+    "block": "0x18fb931",
+    "sUSG_pps_usg": 1.0501785775500585,
+    "basis": "Redeem sUSG to USG; equal split into two keeper Curve pools. USDC and frxUSD outputs at face value, not a single cash asset or optimized router quote. Gas excluded.",
+    "quotes": [
+      {
+        "usg_input": 1000,
+        "equivalent_susg_shares": 952.2190048219045,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 497.824133
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 497.8840112146582
+          }
+        ],
+        "total_at_face_value": 995.7081442146582,
+        "cost_bps_vs_usg_face": 42.91855785341747
+      },
+      {
+        "usg_input": 10000,
+        "equivalent_susg_shares": 9522.190048219045,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 4977.971776
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 4978.611653964829
+          }
+        ],
+        "total_at_face_value": 9956.58342996483,
+        "cost_bps_vs_usg_face": 43.416570035169634
+      },
+      {
+        "usg_input": 25000,
+        "equivalent_susg_shares": 23805.475120547613,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 12443.776984
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 12445.55588874201
+          }
+        ],
+        "total_at_face_value": 24889.33287274201,
+        "cost_bps_vs_usg_face": 44.266850903196264
+      },
+      {
+        "usg_input": 50000,
+        "equivalent_susg_shares": 47610.95024109523,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 24883.539502
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 24887.742764896102
+          }
+        ],
+        "total_at_face_value": 49771.2822668961,
+        "cost_bps_vs_usg_face": 45.743546620780066
+      },
+      {
+        "usg_input": 100000,
+        "equivalent_susg_shares": 95221.90048219045,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 49749.567726
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 49760.97654453693
+          }
+        ],
+        "total_at_face_value": 99510.54427053692,
+        "cost_bps_vs_usg_face": 48.94557294630842
+      },
+      {
+        "usg_input": 250000,
+        "equivalent_susg_shares": 238054.75120547615,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 124202.709975
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 124266.62722896851
+          }
+        ],
+        "total_at_face_value": 248469.33720396852,
+        "cost_bps_vs_usg_face": 61.22651184125915
+      },
+      {
+        "usg_input": 500000,
+        "equivalent_susg_shares": 476109.5024109523,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 247244.048961
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 247737.75746169614
+          }
+        ],
+        "total_at_face_value": 494981.8064226961,
+        "cost_bps_vs_usg_face": 100.3638715460775
+      },
+      {
+        "usg_input": 750000,
+        "equivalent_susg_shares": 714164.2536164284,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 363074.657071
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 368199.6571046141
+          }
+        ],
+        "total_at_face_value": 731274.3141756142,
+        "cost_bps_vs_usg_face": 249.6758109918118
+      },
+      {
+        "usg_input": 1000000,
+        "equivalent_susg_shares": 952219.0048219046,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 413652.657792
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 461684.14562778664
+          }
+        ],
+        "total_at_face_value": 875336.8034197866,
+        "cost_bps_vs_usg_face": 1246.6319658021341
+      },
+      {
+        "usg_input": 1246382.7155033406,
+        "equivalent_susg_shares": 1186829.308983814,
+        "outputs": [
+          {
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "amount": 418995.072474
+          },
+          {
+            "token": "0xcacd6fd266af91b8aed52accc382b4e165586e29",
+            "amount": 480889.9694669632
+          }
+        ],
+        "total_at_face_value": 899885.0419409631,
+        "cost_bps_vs_usg_face": 2780.0263053427166
+      }
+    ]
+  },
+  "pps_history": {
+    "note": "Approximately 7/30-day windows using 7200 blocks/day, annualized using actual header timestamps. PPS is USG-denominated, not dollar performance.",
+    "observations": [
+      {
+        "nominal_days_ago": 0,
+        "block": "0x18fb93d",
+        "timestamp": 1792047683,
+        "utc": "2026-10-15T07:01:23+00:00",
+        "pps_usg": 1.0501790297059506
+      },
+      {
+        "nominal_days_ago": 7,
+        "block": "0x18ef45d",
+        "timestamp": 1791440879,
+        "fallback_errors": [
+          {
+            "error": "Expecting value: line 1 column 1 (char 0)"
+          }
+        ],
+        "pps_usg": 1.0482826731418755,
+        "elapsed_days": 7.023194444444444,
+        "growth_pct": 0.18090125999996598,
+        "annualized_apy_pct": 9.848354200483978
+      },
+      {
+        "nominal_days_ago": 30,
+        "block": "0x18c6d7d",
+        "timestamp": 1789444247,
+        "fallback_errors": [
+          {
+            "error": "Expecting value: line 1 column 1 (char 0)"
+          }
+        ],
+        "pps_usg": 1.0423115913095302,
+        "elapsed_days": 30.132361111111113,
+        "growth_pct": 0.7548067643127654,
+        "annualized_apy_pct": 9.536548681232615
+      }
+    ]
+  }
+}

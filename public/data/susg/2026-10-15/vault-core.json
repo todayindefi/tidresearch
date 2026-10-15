@@ -1,0 +1,272 @@
+{
+  "block": "0x18fb921",
+  "retrieved_at": "2026-10-15T06:55:56.147150+00:00",
+  "records": [
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "name()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b536176696e677320555347000000000000000000000000000000000000000000",
+      "decoded": [
+        "Savings USG"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "asset()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1c2db5d6ca03fce73dbd304d320bf76c55ae1b1",
+      "decoded": [
+        "0xb1c2db5d6ca03fce73dbd304d320bf76c55ae1b1"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "totalSupply()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000fb522ec4f78dc6408b21",
+      "decoded": [
+        1186829990304934600411937
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "totalAssets()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000107ee8ada63a4ae873a90",
+      "decoded": [
+        1246382715503340675349136
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "pricePerShare()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000e92fb4dcb82b517",
+      "decoded": [
+        1050177974676141335
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "totalIdle()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000107ee8ada63a4ae873a90",
+      "decoded": [
+        1246382715503340675349136
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "totalDebt()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        0
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "symbol()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000047355534700000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "sUSG"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "role_manager()",
+      "args": [],
+      "raw": "0x000000000000000000000000461b62cb3a7e9df8f800ae058ae92f855f2c27ca",
+      "decoded": [
+        "0x461b62cb3a7e9df8f800ae058ae92f855f2c27ca"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "pending_role_manager()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "profitMaxUnlockTime()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000093a80",
+      "decoded": [
+        604800
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "deposit_limit_module()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "0x0000000000000000000000000000000000000000"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "fullProfitUnlockDate()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000006ad10167",
+      "decoded": [
+        1792082279
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "lastProfitUpdate()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000006ac7c6e7",
+      "decoded": [
+        1791477479
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "profitUnlockingRate()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000b774a29992e477621b763f1",
+      "decoded": [
+        3548547503043014313029100529
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "deposit_limit()",
+      "args": [],
+      "raw": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "decoded": [
+        115792089237316195423570985008687907853269984665640564039457584007913129639935
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "withdraw_limit_module()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "0x0000000000000000000000000000000000000000"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "accountant()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "0x0000000000000000000000000000000000000000"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "shutdown()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "use_default_queue()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        false
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "default_queue()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000006b842ca2a3363e86f",
+      "decoded": [
+        123957861376298575983
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xB1c2Db5d6cA03FCe73dBd304d320bF76C55Ae1B1",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000107ee8ada63a4ae873a90",
+      "decoded": [
+        1246382715503340675349136
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "apiVersion()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000005332e302e34000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "3.0.4"
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        1000000000000000000
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000000e92fb4dcb82b517",
+      "decoded": [
+        1050177974676141335
+      ]
+    },
+    {
+      "block": "0x18fb921",
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "signature": "maxRedeem(address)",
+      "args": [
+        "0x461B62CB3A7e9Df8f800aE058AE92F855F2c27Ca"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        0
+      ]
+    },
+    {
+      "to": "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+      "block": "0x18fb921",
+      "method": "eth_getCode",
+      "bytes": 45,
+      "code": "0x363d3d373d3d3d363d73d8063123bba3b480569244ae66bfe72b6c84b00d5af43d82803e903d91602b57fd5bf3"
+    }
+  ]
+}

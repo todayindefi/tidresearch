@@ -1,0 +1,47 @@
+{
+  "block": "0x18fb939",
+  "pool": "0xc6ac08424ee6d1373f03611b96f5da849594b6d8",
+  "coins": [
+    "0xf17d6f98a5c6eaa99d149079984119e0a4ef6900",
+    "0x5086bf358635b81d8c47c66d1c8b9e567db70c72"
+  ],
+  "pps_usg": 1.0501788789872766,
+  "quotes": [
+    {
+      "input_nav_usg": 1000,
+      "sUSG_input": 952.2187315025171,
+      "reUSD_output": 899.7022160055221
+    },
+    {
+      "input_nav_usg": 10000,
+      "sUSG_input": 9522.187315025172,
+      "reUSD_output": 8995.705603325943
+    },
+    {
+      "input_nav_usg": 100000,
+      "sUSG_input": 95221.87315025172,
+      "reUSD_output": 89750.77377670244
+    },
+    {
+      "input_nav_usg": 250000,
+      "sUSG_input": 238054.68287562925,
+      "reUSD_output": 215562.5547075662
+    },
+    {
+      "input_nav_usg": 500000,
+      "sUSG_input": 476109.3657512585,
+      "reUSD_output": 233393.1810543496
+    },
+    {
+      "input_nav_usg": 750000,
+      "sUSG_input": 714164.0486268878,
+      "reUSD_output": 233827.49221556445
+    },
+    {
+      "input_nav_usg": 1000000,
+      "sUSG_input": 952218.731502517,
+      "reUSD_output": 233947.39782730982
+    }
+  ],
+  "basis": "Direct pool quote delivers reUSD, not USDC; no reUSD final-exit leg measured here."
+}

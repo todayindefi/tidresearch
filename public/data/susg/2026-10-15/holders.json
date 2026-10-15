@@ -1,0 +1,1145 @@
+{
+  "url": "https://eth.blockscout.com/api/v2/tokens/0xf17d6f98a5c6eaa99d149079984119e0a4ef6900/holders",
+  "retrieved_at": "2026-10-15T06:58:31.067046+00:00",
+  "status": 200,
+  "body": {
+    "items": [
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xC6ac08424eE6D1373F03611b96f5Da849594B6D8",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "CurveStableSwapNG",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "714543596670635775179127"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x3fE2461f7CB328629F2924993c6218748c740C83",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "158644686785625669507967"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xe31b01cE6F29107CF8870599911703fA2aa36e1c",
+          "implementations": [
+            {
+              "address_hash": "0x987BD39Ec177ca118f68D8BCA6Fa04e688742757",
+              "name": "PendleERC4626WithAdapterSY"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "SY Savings USG",
+          "private_tags": [],
+          "proxy_type": "eip1967",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "157132203391325420138263"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xaDA66e3d530FB2FEbAB1Da1e6a1B0404b922A6E2",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "77671606853120795829937"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x3e258AAe11D7eA394b2eb1176CcD54D9EB83861b",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "59608483382893168141632"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xeaB5B236d05545ef7E1671902CA8fffa194c1d3a",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "8678364982195753540090"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xf7e9CAaaEEb6cC9657E1Dd490F044114AecC31B2",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "7032112826333004142744"
+      },
+      {
+        "address": {
+          "ens_domain_name": "0xdrvv.eth",
+          "hash": "0x31632636D664895f1BD9D03f5F7c162A2A6980EB",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1832967359059827090029"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xfbFbd96130af4A33cf7CAa4a299270832080d244",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "977424960518353201327"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xF17D6f98A5C6EAA99d149079984119e0A4EF6900",
+          "implementations": [
+            {
+              "address_hash": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
+              "name": "Yearn V3 Vault"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "Savings USG",
+          "private_tags": [],
+          "proxy_type": "eip1167",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "590747994116588850776"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xC0fC3dDfec95ca45A0D2393F518D3EA1ccF44f8b",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "Provided by OLI",
+                  "tooltipUrl": "https://www.curve.finance/"
+                },
+                "name": "Curve: Cow Swap Burner",
+                "ordinal": 10,
+                "slug": "curve-cow-swap-burner",
+                "tagType": "name"
+              },
+              {
+                "meta": {},
+                "name": "Router",
+                "ordinal": 0,
+                "slug": "router",
+                "tagType": "generic"
+              },
+              {
+                "meta": {
+                  "appActionButtonText": "Curve",
+                  "appID": "curve"
+                },
+                "name": "Curve",
+                "ordinal": 0,
+                "slug": "curve",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "CowSwapBurner",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "159257056679295260044"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x316F61a5B02118B37230814e008b547de671e505",
+          "implementations": [
+            {
+              "address_hash": "0xB3D020963816Bce6BD34A241409959B0840C4B44",
+              "name": "PrincipalToken"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "BeaconProxy",
+          "private_tags": [],
+          "proxy_type": "eip1967_beacon",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "146270358771399775555"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xF1e73F7d7656b9b00d970b58aaB3Bb19b5518060",
+          "implementations": [
+            {
+              "address_hash": "0xD2e28229F6f2c235e57De2EbC727025A1D0530FB",
+              "name": "Biz"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "104623093960607863872"
+      },
+      {
+        "address": {
+          "ens_domain_name": "akl79.eth",
+          "hash": "0x3273dc17FEcb1e8e7E7276bf936364aF9AF88c2d",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "99541454881492976127"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x712669c7EB146053A15F21BF93C9e6E2d3b0f96A",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "21797551224750892392"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xE6d79731bDBb20C3bA0Ca83aD50B049Bb0db0d0a",
+          "implementations": [
+            {
+              "address_hash": "0x80296FF8D1ED46f8e3C7992664D13B833504c2Bb",
+              "name": "WalletCore"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "15023147210950932184"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xBDaCa39ea91F9b8Ff0f9aB743e9cc2871b56847a",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "13220923503429456512"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xbA1333333333a1BA1108E8412f11850A5C319bA9",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "Provided by OLI",
+                  "tooltipUrl": "https://balancer.fi/"
+                },
+                "name": "Balancer V3: Vault ",
+                "ordinal": 10,
+                "slug": "balancer-v3-vault",
+                "tagType": "name"
+              },
+              {
+                "meta": {},
+                "name": "DEX",
+                "ordinal": 0,
+                "slug": "dex",
+                "tagType": "generic"
+              },
+              {
+                "meta": {
+                  "appID": "balancer"
+                },
+                "name": "Balancer V3",
+                "ordinal": 0,
+                "slug": "balancer-v3",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "Vault",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "4876885733694459849"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "appID": "morpho",
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "An efficient, secure & flexible lending protocol on Base.",
+                  "tooltipUrl": "https://morpho.org/"
+                },
+                "name": "Morpho: Morpho Blue",
+                "ordinal": 10,
+                "slug": "morpho-morpho-blue",
+                "tagType": "name"
+              },
+              {
+                "meta": {
+                  "appActionButtonText": "Morpho Aave App",
+                  "appID": "morpho-aave-app"
+                },
+                "name": "Morpho",
+                "ordinal": 0,
+                "slug": "morpho",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "Morpho",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "3553729706571837281"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x8288Ba381e07EA5E9Fc4053a97545161D7d4683C",
+          "implementations": [
+            {
+              "address_hash": "0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4",
+              "name": "SmartWalletEntry"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "2410008180690127085"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x66d615eD69679508e4644f5EdDdc632a43B1d95d",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "959414632476469818"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xe821426eDbb3D981156492131eBE4ed5bD387B0a",
+          "implementations": [
+            {
+              "address_hash": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+              "name": "Safe"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "SafeProxy",
+          "private_tags": [],
+          "proxy_type": "master_copy",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "885318644226174539"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xa88e98bBD2Af6DDD642407cB5455f956f0C553F0",
+          "implementations": [
+            {
+              "address_hash": "0x3d512C1b1DBdA46A80e5B2F77A27c6b4AF6f20C1",
+              "name": null
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "836639991173594487"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x9008D19f58AAbD9eD0D60971565AA8510560ab41",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "projectName": "CoW Protocol",
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tagUrl": "https://scout-app.kleros.io/single-tags/0x3370d2d146360737876986ca06e966ed74c55b5702395e672919b96d7f303cc3",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "Contract of CoW's Protocol Gnosis Protocol V2 Settlement",
+                  "tooltipUrl": "https://cowswap.exchange/",
+                  "verifiedDomains": [
+                    "app.ploutos.money",
+                    "app.shapeshift.com",
+                    "private.shapeshift.com",
+                    "houdiniswap.com",
+                    "v4.houdiniswap.com",
+                    "swap.cow.fi",
+                    "app.aave.com",
+                    "oku.trade"
+                  ]
+                },
+                "name": "GP V2 Settlement",
+                "ordinal": 10,
+                "slug": "gp-v2-settlement-1",
+                "tagType": "name"
+              },
+              {
+                "meta": {},
+                "name": "DEX",
+                "ordinal": 0,
+                "slug": "dex",
+                "tagType": "generic"
+              },
+              {
+                "meta": {
+                  "appActionButtonText": "CoW Swap",
+                  "appID": "cow-swap"
+                },
+                "name": "CoW Protocol",
+                "ordinal": 0,
+                "slug": "cow-protocol",
+                "tagType": "protocol"
+              },
+              {
+                "meta": {
+                  "appActionButtonText": "CoW Swap",
+                  "appID": "cow-swap",
+                  "appLogoURL": "https://blockscout-content.s3.amazonaws.com/cow-action-btn.svg",
+                  "bgColor": "#052B65",
+                  "textColor": "#FFFFFF"
+                },
+                "name": "CoW Swap",
+                "ordinal": 0,
+                "slug": "cow-swap",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "GPv2Settlement",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "738090209848175983"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xd2C2B5BBe66036d27E403eaA230E2fd30Ea2Aa70",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "295362443103538457"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x214500612407afdc9377d36203cf14dFD4265928",
+          "implementations": [
+            {
+              "address_hash": "0xcac727176156d5AE584Ac2011dCCBff77EDA98Dd",
+              "name": null
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "192844751109037323"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x3e7136AE020c9C311dEaE1A1F8849A7b560ecC8b",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "95327578752097944"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x0C70bE04fDB5f4dF8C5fF3573624Cb76676CfDc4",
+          "implementations": [
+            {
+              "address_hash": "0xB3D020963816Bce6BD34A241409959B0840C4B44",
+              "name": "PrincipalToken"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "BeaconProxy",
+          "private_tags": [],
+          "proxy_type": "eip1967_beacon",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "27414845721470953"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x16fdA3E759c5fF8d34198abf453a7F8F043515D5",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": null,
+          "name": "CurveStableSwapNG",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "26620269276872394"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x22D39C5774b67f450b2F5E2dD6DA99b035F6077E",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "10721937778457198"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0xcD6b980029E6E6e0733ac8eC3E02be9410D09799",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "4789752331532941"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x7fC8Fd8bB3192E2d62A3d8D97d9A7924D4BaE58B",
+          "implementations": [],
+          "is_contract": false,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "2303366946092517"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x000000000004444c5dc75cB358380D2e3dE08A90",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "main_entity": "Uniswap",
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "Provided by OLI",
+                  "tooltipUrl": "https://app.uniswap.org/"
+                },
+                "name": "Uniswap V4: Pool Manager",
+                "ordinal": 10,
+                "slug": "uniswap-v4-pool-manager",
+                "tagType": "name"
+              },
+              {
+                "meta": {},
+                "name": "Liquidity Pool",
+                "ordinal": 0,
+                "slug": "liquidity-pool",
+                "tagType": "generic"
+              },
+              {
+                "meta": {},
+                "name": "DEX",
+                "ordinal": 0,
+                "slug": "dex",
+                "tagType": "generic"
+              },
+              {
+                "meta": {
+                  "appActionButtonText": "Uniswap",
+                  "appID": "uniswap"
+                },
+                "name": "Uniswap V4",
+                "ordinal": 0,
+                "slug": "uniswap-v4",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "PoolManager",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1868982511263095"
+      },
+      {
+        "address": {
+          "ens_domain_name": "agrislis.eth",
+          "hash": "0x354d4D759c49094f60D537bfD7177c05b70c20cC",
+          "implementations": [
+            {
+              "address_hash": "0x612373D7003d694220f7800EeaF8E3924c0951D3",
+              "name": "CaliburEntry"
+            }
+          ],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "tooltipDescription": "Deployer address for Memories."
+                },
+                "name": "Memories: Deployer",
+                "ordinal": 10,
+                "slug": "memories-deployer",
+                "tagType": "name"
+              },
+              {
+                "meta": {
+                  "bgColor": "#8465CB",
+                  "tagIcon": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20viewBox%3D%220%200%2032%2029%22%3E%3Cpath%20d%3D%22M%205.507%200.072%20L%2026.097%200.072%20L%2026.097%204.167%20L%2031.952%204.167%20L%2030.725%208.263%20L%2029.686%208.263%20L%2029.686%2024.833%20C%2030.207%2024.833%2030.63%2025.249%2030.63%2025.763%20L%2030.63%2026.88%20L%2030.819%2026.88%20C%2031.341%2026.88%2031.764%2027.297%2031.764%2027.811%20L%2031.764%2028.928%20L%2021.185%2028.928%20L%2021.185%2027.811%20C%2021.185%2027.297%2021.608%2026.88%2022.13%2026.88%20L%2022.319%2026.88%20L%2022.319%2025.763%20C%2022.319%2025.316%2022.639%2024.943%2023.065%2024.853%20L%2023.045%2015.71%20C%2022.711%2012.057%2019.596%209.194%2015.802%209.194%20C%2012.008%209.194%208.893%2012.057%208.559%2015.71%20L%208.539%2024.845%20C%209.043%2024.919%209.663%2025.302%209.663%2025.763%20L%209.663%2026.88%20L%209.852%2026.88%20C%2010.373%2026.88%2010.796%2027.297%2010.796%2027.811%20L%2010.796%2028.928%20L%200.218%2028.928%20L%200.218%2027.811%20C%200.218%2027.297%200.641%2026.88%201.162%2026.88%20L%201.351%2026.88%20L%201.351%2025.763%20C%201.351%2025.249%201.774%2024.833%202.296%2024.833%20L%202.296%208.263%20L%201.257%208.263%20L%200.029%204.167%20L%205.507%204.167%20L%205.507%200.072%20Z%22%20fill%3D%22rgb(255%2C%20255%2C%20255)%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M%2026.097%200.072%20L%2026.166%200.072%20L%2026.166%200.004%20L%2026.097%200.004%20Z%20M%205.507%200.072%20L%205.507%200.004%20L%205.438%200.004%20L%205.438%200.072%20Z%20M%2026.097%204.167%20L%2026.028%204.167%20L%2026.028%204.235%20L%2026.097%204.235%20Z%20M%2031.952%204.167%20L%2032.019%204.187%20L%2032.045%204.099%20L%2031.952%204.099%20L%2031.952%204.167%20Z%20M%2030.725%208.263%20L%2030.725%208.331%20L%2030.776%208.331%20L%2030.791%208.282%20Z%20M%2029.686%208.263%20L%2029.686%208.195%20L%2029.617%208.195%20L%2029.617%208.263%20Z%20M%2029.686%2024.833%20L%2029.617%2024.833%20L%2029.617%2024.901%20L%2029.686%2024.901%20Z%20M%2030.63%2026.88%20L%2030.561%2026.88%20L%2030.561%2026.948%20L%2030.63%2026.948%20Z%20M%2031.764%2028.928%20L%2031.764%2028.996%20L%2031.832%2028.996%20L%2031.832%2028.928%20Z%20M%2021.185%2028.928%20L%2021.116%2028.928%20L%2021.116%2028.996%20L%2021.185%2028.996%20Z%20M%2022.319%2026.88%20L%2022.319%2026.948%20L%2022.388%2026.948%20L%2022.388%2026.88%20Z%20M%2023.065%2024.853%20L%2023.08%2024.919%20L%2023.134%2024.908%20L%2023.134%2024.853%20Z%20M%2023.045%2015.71%20L%2023.114%2015.71%20L%2023.114%2015.707%20L%2023.113%2015.704%20Z%20M%208.559%2015.71%20L%208.49%2015.704%20L%208.49%2015.707%20L%208.49%2015.71%20Z%20M%208.539%2024.845%20L%208.47%2024.845%20L%208.469%2024.904%20L%208.528%2024.913%20Z%20M%209.663%2026.88%20L%209.594%2026.88%20L%209.594%2026.948%20L%209.663%2026.948%20Z%20M%2010.796%2028.928%20L%2010.796%2028.996%20L%2010.865%2028.996%20L%2010.865%2028.928%20Z%20M%200.218%2028.928%20L%200.149%2028.928%20L%200.149%2028.996%20L%200.218%2028.996%20Z%20M%201.351%2026.88%20L%201.351%2026.948%20L%201.42%2026.948%20L%201.42%2026.88%20Z%20M%202.296%2024.833%20L%202.296%2024.901%20L%202.365%2024.901%20L%202.365%2024.833%20Z%20M%202.296%208.263%20L%202.365%208.263%20L%202.365%208.195%20L%202.296%208.195%20Z%20M%201.257%208.263%20L%201.191%208.282%20L%201.205%208.331%20L%201.257%208.331%20Z%20M%200.029%204.167%20L%200.029%204.1%20L%20-0.063%204.1%20L%20-0.037%204.187%20L%200.029%204.167%20Z%20M%205.507%204.167%20L%205.507%204.235%20L%205.576%204.235%20L%205.576%204.167%20Z%20M%2026.097%200.004%20L%205.507%200.004%20L%205.507%200.139%20L%2026.097%200.139%20Z%20M%2026.166%204.167%20L%2026.166%200.072%20L%2026.028%200.072%20L%2026.028%204.167%20L%2026.166%204.167%20Z%20M%2031.952%204.099%20L%2026.097%204.099%20L%2026.097%204.235%20L%2031.952%204.235%20Z%20M%2030.791%208.282%20L%2032.019%204.187%20L%2031.886%204.148%20L%2030.658%208.244%20Z%20M%2029.686%208.331%20L%2030.725%208.331%20L%2030.725%208.195%20L%2029.686%208.195%20Z%20M%2029.755%2024.833%20L%2029.755%208.263%20L%2029.617%208.263%20L%2029.617%2024.833%20Z%20M%2030.699%2025.763%20C%2030.699%2025.212%2030.245%2024.765%2029.686%2024.765%20L%2029.686%2024.9%20C%2030.169%2024.9%2030.561%2025.287%2030.561%2025.763%20Z%20M%2030.699%2026.88%20L%2030.699%2025.763%20L%2030.561%2025.763%20L%2030.561%2026.88%20Z%20M%2030.819%2026.813%20L%2030.63%2026.813%20L%2030.63%2026.948%20L%2030.819%2026.948%20Z%20M%2031.832%2027.811%20C%2031.832%2027.26%2031.379%2026.813%2030.819%2026.813%20L%2030.819%2026.948%20C%2031.303%2026.948%2031.695%2027.335%2031.695%2027.811%20Z%20M%2031.832%2028.928%20L%2031.832%2027.811%20L%2031.695%2027.811%20L%2031.695%2028.928%20Z%20M%2026.097%2028.996%20L%2031.764%2028.996%20L%2031.764%2028.86%20L%2026.097%2028.86%20Z%20M%2023.074%2028.996%20L%2026.097%2028.996%20L%2026.097%2028.86%20L%2023.074%2028.86%20Z%20M%2021.185%2028.996%20L%2023.074%2028.996%20L%2023.074%2028.86%20L%2021.185%2028.86%20Z%20M%2021.116%2027.811%20L%2021.116%2028.928%20L%2021.254%2028.928%20L%2021.254%2027.811%20Z%20M%2022.13%2026.813%20C%2021.57%2026.813%2021.116%2027.26%2021.116%2027.811%20L%2021.254%2027.811%20C%2021.254%2027.335%2021.646%2026.948%2022.13%2026.948%20Z%20M%2022.319%2026.813%20L%2022.13%2026.813%20L%2022.13%2026.948%20L%2022.319%2026.948%20Z%20M%2022.25%2025.763%20L%2022.25%2026.88%20L%2022.388%2026.88%20L%2022.388%2025.763%20Z%20M%2023.051%2024.787%20C%2022.593%2024.883%2022.25%2025.284%2022.25%2025.763%20L%2022.388%2025.763%20C%2022.388%2025.349%2022.684%2025.003%2023.08%2024.919%20Z%20M%2022.976%2015.71%20L%2022.996%2024.853%20L%2023.134%2024.853%20L%2023.114%2015.71%20Z%20M%2015.802%209.262%20C%2019.559%209.262%2022.645%2012.098%2022.976%2015.716%20L%2023.113%2015.704%20C%2022.776%2012.016%2019.632%209.126%2015.802%209.126%20Z%20M%208.628%2015.716%20C%208.959%2012.098%2012.044%209.262%2015.802%209.262%20L%2015.802%209.126%20C%2011.972%209.126%208.828%2012.016%208.49%2015.704%20Z%20M%208.608%2024.845%20L%208.628%2015.71%20L%208.49%2015.71%20L%208.47%2024.845%20Z%20M%209.732%2025.763%20C%209.732%2025.502%209.557%2025.273%209.331%2025.105%20C%209.104%2024.935%208.812%2024.817%208.549%2024.778%20L%208.528%2024.912%20C%208.769%2024.948%209.039%2025.057%209.248%2025.213%20C%209.459%2025.37%209.594%2025.563%209.594%2025.763%20Z%20M%209.732%2026.88%20L%209.732%2025.763%20L%209.594%2025.763%20L%209.594%2026.88%20Z%20M%209.852%2026.813%20L%209.663%2026.813%20L%209.663%2026.948%20L%209.852%2026.948%20Z%20M%2010.865%2027.811%20C%2010.865%2027.26%2010.411%2026.813%209.852%2026.813%20L%209.852%2026.948%20C%2010.335%2026.948%2010.727%2027.335%2010.727%2027.811%20Z%20M%2010.865%2028.928%20L%2010.865%2027.811%20L%2010.727%2027.811%20L%2010.727%2028.928%20Z%20M%208.529%2028.996%20L%2010.796%2028.996%20L%2010.796%2028.86%20L%208.529%2028.86%20Z%20M%208.372%2028.996%20L%208.529%2028.996%20L%208.529%2028.86%20L%208.372%2028.86%20Z%20M%205.507%2028.996%20L%208.372%2028.996%20L%208.372%2028.86%20L%205.507%2028.86%20Z%20M%200.218%2028.996%20L%205.507%2028.996%20L%205.507%2028.86%20L%200.218%2028.86%20Z%20M%200.149%2027.811%20L%200.149%2028.928%20L%200.287%2028.928%20L%200.287%2027.811%20Z%20M%201.162%2026.813%20C%200.603%2026.813%200.149%2027.26%200.149%2027.811%20L%200.287%2027.811%20C%200.287%2027.335%200.679%2026.948%201.162%2026.948%20Z%20M%201.351%2026.813%20L%201.162%2026.813%20L%201.162%2026.948%20L%201.351%2026.948%20Z%20M%201.282%2025.763%20L%201.282%2026.88%20L%201.42%2026.88%20L%201.42%2025.763%20Z%20M%202.296%2024.765%20C%201.736%2024.765%201.282%2025.212%201.282%2025.763%20L%201.42%2025.763%20C%201.42%2025.287%201.812%2024.9%202.296%2024.9%20Z%20M%202.227%208.263%20L%202.227%2024.833%20L%202.365%2024.833%20L%202.365%208.263%20Z%20M%201.257%208.331%20L%202.296%208.331%20L%202.296%208.195%20L%201.257%208.195%20Z%20M%20-0.037%204.187%20L%201.191%208.282%20L%201.323%208.244%20L%200.095%204.148%20Z%20M%205.507%204.099%20L%200.029%204.099%20L%200.029%204.235%20L%205.507%204.235%20L%205.507%204.099%20Z%20M%205.438%200.072%20L%205.438%204.167%20L%205.576%204.167%20L%205.576%200.072%20Z%22%20fill%3D%22rgb(255%2C255%2C255)%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E",
+                  "tagUrl": "https://warpcast.com/agrislis.eth",
+                  "textColor": "#FFFFFF",
+                  "tooltipDescription": "This address is linked to a Farcaster account",
+                  "warpcastHandle": "agrislis.eth"
+                },
+                "name": "Farcaster",
+                "ordinal": 0,
+                "slug": "warpcast-account",
+                "tagType": "classifier"
+              },
+              {
+                "meta": {},
+                "name": "Contract Deployer",
+                "ordinal": 0,
+                "slug": "contract-deployer",
+                "tagType": "generic"
+              },
+              {
+                "meta": {},
+                "name": "Memories",
+                "ordinal": 0,
+                "slug": "memories",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": null,
+          "private_tags": [],
+          "proxy_type": "eip7702",
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "707350694107751"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x9b1303EBf09BC51b7fac376c9E421E8daAe63B82",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x99719e434eC7e5BF587599E4ca55817B3bAceb8A",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x950fD558f47E234A2fDe23B7d61f7Ccdbcb4A86F",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x8Faa0000C10015610005CA010Ee000d006E0e820",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x8F10B468b06c6FD214B65F87778827F7D113f996",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x6f0538001f90d0A5F0000060d01D34C002030900",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x45312ea0eFf7E09C83CBE249fa1d7598c4C8cd4e",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": true,
+          "metadata": {
+            "tags": [
+              {
+                "meta": {
+                  "projectName": "Curve Finance",
+                  "tagIcon ": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tagUrl": "https://scout-app.kleros.io/single-tags/0x64e51407f96fdc0f999acbb5774860cb1928e1b6e74f345fb9a32f34df8ba240",
+                  "textColor": "#C163D4",
+                  "tooltipAttribution": "https://www.openlabelsinitiative.org?utm_source=blockscout",
+                  "tooltipAttributionIcon": "https://blockscout-icons.s3.us-east-1.amazonaws.com/OLI_tag_logo.svg",
+                  "tooltipDescription": "Official Curve Router v1.2 on Ethereum; performs multi-hop swaps and estimations via get_dy/get_dx.",
+                  "tooltipUrl": "https://www.curve.finance/",
+                  "verifiedDomains": [
+                    "www.curve.finance"
+                  ]
+                },
+                "name": "Router v1.2",
+                "ordinal": 10,
+                "slug": "router-v12-1",
+                "tagType": "name"
+              },
+              {
+                "meta": {},
+                "name": "Router",
+                "ordinal": 0,
+                "slug": "router",
+                "tagType": "generic"
+              },
+              {
+                "meta": {
+                  "alertStatus": "info",
+                  "data": "This nametag was submitted by Kleros Scout."
+                },
+                "name": "note_0",
+                "ordinal": 0,
+                "slug": "note0",
+                "tagType": "note"
+              },
+              {
+                "meta": {},
+                "name": "Curve Finance",
+                "ordinal": 0,
+                "slug": "curve-finance",
+                "tagType": "protocol"
+              }
+            ]
+          },
+          "name": "CurveRouterv1.2",
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      },
+      {
+        "address": {
+          "ens_domain_name": null,
+          "hash": "0x082738D007001080A00099A000004f3006152085",
+          "implementations": [],
+          "is_contract": true,
+          "is_scam": false,
+          "is_verified": false,
+          "metadata": null,
+          "name": null,
+          "private_tags": [],
+          "proxy_type": null,
+          "public_tags": [],
+          "reputation": "ok",
+          "watchlist_names": []
+        },
+        "token_id": null,
+        "value": "1"
+      }
+    ],
+    "next_page_params": null
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "as_of": "2026-10-15",
+  "description": "Archived evidence supporting sUSG. Original blocks, timestamps and failed-read records retained; public RPC endpoint fields removed.",
+  "files": [
+    {
+      "file": "derived-metrics.json",
+      "source_sha256": "805281da008d6284e62c66e31e54991f63486e7b44a402c8f45904ea8fae656e",
+      "published_sha256": "85c5b2f8a56a2d4f4154e833bb12aff047c48234b21b00ccecbd88ebb9a93811"
+    },
+    {
+      "file": "vault-core.json",
+      "source_sha256": "fce5c8dcd03e1e7d8d52aafa9ec9f6e937eaac9d278137eefa430a01529f2d57",
+      "published_sha256": "95e54b552ef679d32c8804d16774d76b94aa288f775133bcb2e855cf31eeff91"
+    },
+    {
+      "file": "roles-and-strategies.json",
+      "source_sha256": "575be55a70830bed7ee13d64ef207e4f632eff53d378f4abf443b929c9776de8",
+      "published_sha256": "058ef609a6b2983692bb268a1e9a18ead8d9f480fccc0b2feb076370045bfa14"
+    },
+    {
+      "file": "further-controls.json",
+      "source_sha256": "ad40f690ba9323e99005c699e3f820718ca42e53c67b54bd00946f2b3cacd38d",
+      "published_sha256": "62df8bfed76a0c290df874170d656b0bca16c281ec8906cd794e0ba7a7c248cc"
+    },
+    {
+      "file": "last-profit-report-receipt.json",
+      "source_sha256": "ace5a164e80260767240925498dbaa37832b20c8874aba840983132cfc15d826",
+      "published_sha256": "6569df5e510c0b03179d571f1118e58ffd4cfcdc2e52b47cd8119ef0690ebbd6"
+    },
+    {
+      "file": "pps-history.json",
+      "source_sha256": "92cd532e9b45eddd634480a6532144b9aa56012a78575b4757236ac1bc97ae47",
+      "published_sha256": "e1cf3d790d3116c53441cc5a7d000fecc42f06c78ac44f2ce395723960cd77b7"
+    },
+    {
+      "file": "exit-ladder.json",
+      "source_sha256": "b3ee1741bc54f83cc3e231fbb59ada11ee734da3d4c64848d6c1f5109360b006",
+      "published_sha256": "b3ee1741bc54f83cc3e231fbb59ada11ee734da3d4c64848d6c1f5109360b006"
+    },
+    {
+      "file": "direct-susg-reusd-quotes.json",
+      "source_sha256": "79d86c9a3f67a6e420229c939ae6c257a4c3030a4f5cda1c1d727574373b64c9",
+      "published_sha256": "79d86c9a3f67a6e420229c939ae6c257a4c3030a4f5cda1c1d727574373b64c9"
+    },
+    {
+      "file": "events-RoleSet.json",
+      "source_sha256": "8d620d6de3cc9a5686650eb1690a3e20a1aa92e4fd089a4f85a37a0a6c8e722e",
+      "published_sha256": "8d620d6de3cc9a5686650eb1690a3e20a1aa92e4fd089a4f85a37a0a6c8e722e"
+    },
+    {
+      "file": "events-StrategyChanged.json",
+      "source_sha256": "388db62716b7015f811fc02d0f6b568173cea57eb6c0727accf78bcd7e6a6970",
+      "published_sha256": "388db62716b7015f811fc02d0f6b568173cea57eb6c0727accf78bcd7e6a6970"
+    },
+    {
+      "file": "events-StrategyReported.json",
+      "source_sha256": "6a33e9f40060681cab521c7244bb6c5836b8ca34ec28bd7139954a82fdab78e6",
+      "published_sha256": "6a33e9f40060681cab521c7244bb6c5836b8ca34ec28bd7139954a82fdab78e6"
+    },
+    {
+      "file": "usg-backing-feed.json",
+      "source_sha256": "9d2d1b51842313048469c9ab34e98d4cd199e5df5de1e3778102b5a40b61ff0e",
+      "published_sha256": "9d2d1b51842313048469c9ab34e98d4cd199e5df5de1e3778102b5a40b61ff0e"
+    },
+    {
+      "file": "holders.json",
+      "source_sha256": "be3816e9fff458c4b2ba82a7765bdfaad5a7cd8d51520f6a8b5ac33bf1032b21",
+      "published_sha256": "be3816e9fff458c4b2ba82a7765bdfaad5a7cd8d51520f6a8b5ac33bf1032b21"
+    }
+  ]
+}
