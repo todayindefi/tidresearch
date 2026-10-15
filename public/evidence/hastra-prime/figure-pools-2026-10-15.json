@@ -1,0 +1,833 @@
+{
+  "retrieved_at": "2026-10-15T04:54:14.236572+00:00",
+  "source": "https://www.figuremarkets.com/service-lending/api/v1/leverage-pools/summary?location=US&include_cbl_pools=true",
+  "pools": [
+    {
+      "leveragePool": {
+        "id": "c21c2e5d-a831-4128-b2a4-5e77e20bed82",
+        "name": "Automobile",
+        "description": "Automobile YLDS pool",
+        "marginRate": 0.95,
+        "marginCallRate": 0.98,
+        "liquidationRate": 1,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.04,
+        "maxIntRate": 0.15,
+        "leverageType": "AUTO",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1S",
+        "asset": "YLDS",
+        "createdAt": "2026-06-10T14:15:47.436262Z",
+        "minimumOffer": 10,
+        "minimumLoan": 10,
+        "collateralAssets": [
+          "auto.forge"
+        ],
+        "loansOutstanding": 168690157.08595434,
+        "rate": 0.08908672482529699,
+        "feeRate": 0.005,
+        "defaultRate": 0.116,
+        "totalRate": 0.11098236539134394,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Automobile",
+          "description": "Auto loans are secured by vehicle loans as collateral. By lending into this pool, you tap into the returns for the interest paid back on these loans.",
+          "type": "LOAN",
+          "borrowerDemandType": "COLLATERAL",
+          "riskParameters": "Democratized Prime manages the risk of accounts who borrow against their auto loans. Loans are pledged to a warehouse facility for use as collateral in Democratized Prime. Borrowing in this pool is over-collateralized by the unpaid balances of these automobile loans discounted at an advance rate.\nLoans with higher levels of delinquency have reduced borrowing power within the facility. Loans that become 60+ days delinquent are expected to be cured or removed, and loans that reach 91+ days delinquent are removed from the collateral pool entirely.",
+          "collateralDescription": "The collateral consists of eligible auto loans originated in accordance with established underwriting and servicing standards, together with all related rights, payment streams, and security interests in the underlying vehicles.\nAll loans offered on Democratized Prime are performing at the time of inclusion. Loans that deteriorate in performance may have reduced borrowing capacity and are subject to removal from the collateral pool if delinquency thresholds are exceeded, in line with the facility\u2019s risk parameters.",
+          "collateralStats": [
+            {
+              "name": "Avg. loan amount",
+              "value": "$20,971",
+              "categoryId": 1
+            },
+            {
+              "name": "Loan count",
+              "value": "9512",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA credit score",
+              "value": "581.39",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA vehicle age",
+              "value": "5.74",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA term",
+              "value": "68.59",
+              "categoryId": 1
+            },
+            {
+              "name": "CHEVROLET",
+              "value": "15.80%",
+              "categoryId": 2
+            },
+            {
+              "name": "NISSAN",
+              "value": "9.65%",
+              "categoryId": 2
+            },
+            {
+              "name": "FORD",
+              "value": "8.61%",
+              "categoryId": 2
+            },
+            {
+              "name": "TOYOTA",
+              "value": "8.25%",
+              "categoryId": 2
+            },
+            {
+              "name": "JEEP",
+              "value": "6.94%",
+              "categoryId": 2
+            }
+          ],
+          "footnotes": [
+            "*WA (weighted average): Averages are weighted by current unpaid principal balance, so loans with more outstanding count for more. A handful of large balances can pull a weighted average well away from the typical loan."
+          ],
+          "categories": [
+            {
+              "categoryId": 1,
+              "name": "",
+              "description": ""
+            },
+            {
+              "categoryId": 2,
+              "name": "Top 5 Vehicle Manufacturers",
+              "description": ""
+            }
+          ]
+        },
+        "poolImplementation": "SMART_CONTRACT",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 200682895.2491713,
+        "utilization": 0.840580642792231,
+        "smartContract": {
+          "poolContractAddress": "pb1gqw3m5ftuu0hdcj646ppgmrp7ual3kkjj2wq6usqsfe0ntfmsc7s8fh70c",
+          "priceOracleAddress": "pb10mwflnqhtleqhka4n8kzm0rwknjcsew63fge4h579avm369tgq6sy2t9v2",
+          "repoTokenCw20Address": "pb1679uh4ukeq7rdq6gkl4r3avdnmkh9st05ud6g0ymq03mq8ns6zuqgdk6xw",
+          "kinkUtilization": 0.9,
+          "commitMarketId": 1,
+          "operationalState": "ACTIVE",
+          "targetRate": 0.116,
+          "poolUtilization": 0.840580642792231,
+          "totalCollateralValueUsd": 193900173.117903,
+          "feeModel": "FLAT_BORROW_SPREAD",
+          "reserveFactor": 0,
+          "yldsRatesResponse": {
+            "lenderTotalEstimatedApr": 0.09473,
+            "yldsBaseRate": 0.005643,
+            "yldsAnnualInterestRate": 0.0354
+          }
+        },
+        "currentLendRate": 0.08908672482529699,
+        "currentBorrowRate": 0.11098236539134394,
+        "sortOrder": 0
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 400
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "6bf20245-3583-4f3f-922f-df04e997bd74",
+        "name": "Margin USD",
+        "description": "Trade Margin Leverage Pool for USD in US",
+        "marginRate": 0.8,
+        "marginCallRate": 0.85,
+        "liquidationRate": 0.9,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.01,
+        "maxIntRate": 0.3,
+        "leverageType": "TRADE",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US"
+        ],
+        "termDuration": "PT1H",
+        "asset": "USD",
+        "createdAt": "2024-07-31T16:23:06.107675Z",
+        "minimumOffer": 10,
+        "minimumLoan": 1e-06,
+        "collateralAssets": [
+          "FGRS",
+          "USDT",
+          "USD",
+          "USDC",
+          "ETH",
+          "HASH",
+          "SOL",
+          "BTC",
+          "YLDS",
+          "UNI",
+          "LINK",
+          "XRP"
+        ],
+        "loansOutstanding": 2513630.229482,
+        "rate": 0.074,
+        "feeRate": 0.005,
+        "defaultRate": 0.06,
+        "totalRate": 0.079,
+        "offPlatformEligible": true,
+        "tearSheet": {
+          "name": "Margin",
+          "description": "Lend your USD to margin traders. Figure Markets customers with margin accounts will borrow USD to take a long position on assets fully collateralized by their portfolio.",
+          "type": "MARGIN",
+          "borrowerDemandType": "LOAN",
+          "riskParameters": "Figure Markets manages risk of accounts who trade on margin. The following rates are used for risk management and liquidation.",
+          "collateralDescription": "The following assets can be used as collateral for margin loans based on a percentage of market value.",
+          "collateralStats": [],
+          "footnotes": [],
+          "categories": []
+        },
+        "poolImplementation": "DATABASE",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 2692719.361,
+        "utilization": 0.933491,
+        "currentLendRate": 0.074,
+        "currentBorrowRate": 0.079,
+        "sortOrder": 1
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 2692719.361,
+        "totalLoanAmount": 2513608.960211,
+        "rate": 0.074,
+        "rateChangeBps": 0
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 2692740.630271,
+        "totalLoanAmount": 2513630.229482,
+        "rate": 0.074,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "8e662ebb-c592-4840-9f9d-1e5453168e65",
+        "name": "Margin USDC",
+        "description": "Trade Margin Leverage Pool for USDC in US",
+        "marginRate": 0.8,
+        "marginCallRate": 0.85,
+        "liquidationRate": 0.9,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.01,
+        "maxIntRate": 0.3,
+        "leverageType": "TRADE",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US"
+        ],
+        "termDuration": "PT1H",
+        "asset": "USDC",
+        "createdAt": "2024-07-31T16:23:07.763546Z",
+        "minimumOffer": 10,
+        "minimumLoan": 1e-06,
+        "collateralAssets": [
+          "FGRS",
+          "USDT",
+          "USD",
+          "USDC",
+          "ETH",
+          "HASH",
+          "SOL",
+          "BTC",
+          "YLDS",
+          "UNI",
+          "LINK",
+          "XRP"
+        ],
+        "loansOutstanding": 174779.062164,
+        "rate": 0.09,
+        "feeRate": 0.005,
+        "defaultRate": 0.06,
+        "totalRate": 0.095,
+        "offPlatformEligible": true,
+        "tearSheet": {
+          "name": "Margin",
+          "description": "Lend your USDC to margin traders. Figure Markets customers with margin accounts will borrow USDC to take a long position on assets fully collateralized by their portfolio.",
+          "type": "MARGIN",
+          "borrowerDemandType": "LOAN",
+          "riskParameters": "Figure Markets manages risk of accounts who trade on margin. The following rates are used for risk management and liquidation.",
+          "collateralDescription": "The following assets can be used as collateral for margin loans based on a percentage of market value.",
+          "collateralStats": [],
+          "footnotes": [],
+          "categories": []
+        },
+        "poolImplementation": "DATABASE",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 185012.018325,
+        "utilization": 0.94469,
+        "currentLendRate": 0.09,
+        "currentBorrowRate": 0.095,
+        "sortOrder": 1
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 185012.018325,
+        "totalLoanAmount": 174777.263309,
+        "rate": 0.09,
+        "rateChangeBps": 0
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 185013.81718,
+        "totalLoanAmount": 174779.062164,
+        "rate": 0.09,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "87cdceaf-e947-49df-bfd5-7e094ecb9f6d",
+        "name": "Margin YLDS",
+        "description": "Trade Margin Leverage Pool for YLDS",
+        "marginRate": 0.8,
+        "marginCallRate": 0.85,
+        "liquidationRate": 0.9,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.01,
+        "maxIntRate": 0.3,
+        "leverageType": "TRADE",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1H",
+        "asset": "YLDS",
+        "createdAt": "2026-02-18T14:34:52.359339Z",
+        "minimumOffer": 10,
+        "minimumLoan": 1e-06,
+        "collateralAssets": [
+          "FGRS",
+          "USDT",
+          "USD",
+          "USDC",
+          "ETH",
+          "HASH",
+          "SOL",
+          "BTC",
+          "YLDS",
+          "UNI",
+          "LINK",
+          "XRP"
+        ],
+        "loansOutstanding": 3369364.633653,
+        "rate": 0.07,
+        "feeRate": 0.005,
+        "defaultRate": 0.06,
+        "totalRate": 0.075,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Margin",
+          "description": "Lend your YLDS to margin traders. Figure Markets customers with margin accounts will borrow YLDS to take a long position on assets fully collateralized by their portfolio.",
+          "type": "MARGIN",
+          "borrowerDemandType": "LOAN",
+          "riskParameters": "Figure Markets manages risk of accounts who trade on margin. The following rates are used for risk management and liquidation.",
+          "collateralDescription": "The following assets can be used as collateral for margin loans based on a percentage of market value.",
+          "collateralStats": [],
+          "footnotes": [],
+          "categories": []
+        },
+        "poolImplementation": "DATABASE",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 4008928.989922,
+        "utilization": 0.840465,
+        "currentLendRate": 0.07,
+        "currentBorrowRate": 0.075,
+        "sortOrder": 1
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 4008928.989922,
+        "totalLoanAmount": 3369337.667614,
+        "rate": 0.07,
+        "rateChangeBps": 0
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 4008955.955961,
+        "totalLoanAmount": 3369364.633653,
+        "rate": 0.07,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "5d7b494b-7b3a-4319-83dc-c8ca52374558",
+        "name": "Margin FGRD",
+        "description": "Trade Margin Leverage Pool for FGRD",
+        "marginRate": 0.8,
+        "marginCallRate": 0.85,
+        "liquidationRate": 0.9,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.01,
+        "maxIntRate": 0.3,
+        "leverageType": "TRADE",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1H",
+        "asset": "FGRS",
+        "createdAt": "2026-02-18T15:03:21.182828Z",
+        "minimumOffer": 1,
+        "minimumLoan": 1,
+        "collateralAssets": [
+          "FGRS",
+          "USDT",
+          "USD",
+          "USDC",
+          "ETH",
+          "HASH",
+          "SOL",
+          "BTC",
+          "YLDS",
+          "UNI",
+          "LINK",
+          "XRP"
+        ],
+        "loansOutstanding": 1566.392903765,
+        "rate": 0.01,
+        "feeRate": 0.005,
+        "defaultRate": 0.06,
+        "totalRate": 0.015,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Margin",
+          "description": "Lend your FGRS to margin traders. Figure Markets customers with margin accounts will borrow FGRS to take a short position on FGRS fully collateralized by their portfolio.",
+          "type": "MARGIN",
+          "borrowerDemandType": "LOAN",
+          "riskParameters": "Figure Markets manages risk of accounts who trade on margin. The following rates are used for risk management and liquidation.",
+          "collateralDescription": "The following assets can be used as collateral for margin loans based on a percentage of market value.",
+          "collateralStats": [],
+          "footnotes": [],
+          "categories": []
+        },
+        "poolImplementation": "DATABASE",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 9514.186099014,
+        "utilization": 0.164638,
+        "currentLendRate": 0.01,
+        "currentBorrowRate": 0.015,
+        "sortOrder": 1
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 9514.186099014,
+        "totalLoanAmount": 1566.391110017,
+        "rate": 0.01,
+        "rateChangeBps": 0
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 9514.187892762,
+        "totalLoanAmount": 1566.392903765,
+        "rate": 0.01,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "9c5f4fc2-04f6-46c7-972e-ed07d6f30fdb",
+        "name": "Home Equity",
+        "description": "Home Equity YLDS pool",
+        "marginRate": 0.95,
+        "marginCallRate": 0.98,
+        "liquidationRate": 1,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.04,
+        "maxIntRate": 0.15,
+        "leverageType": "HELOC",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1S",
+        "asset": "YLDS",
+        "createdAt": "2026-05-20T23:14:45.172115Z",
+        "minimumOffer": 10,
+        "minimumLoan": 10,
+        "collateralAssets": [
+          "nq.heloc.forge",
+          "heloc.forge",
+          "rtl.forge",
+          "dscr.forge"
+        ],
+        "loansOutstanding": 403802790.94344777,
+        "rate": 0.05198900634992005,
+        "feeRate": 0.005,
+        "defaultRate": 0.095,
+        "totalRate": 0.0815199622467367,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Home Equity",
+          "description": "Lend YLDS against real estate-backed loans, including Home Equity Lines of Credit (HELOCs), Residential Transition Loans (RTLs), and Debt Service Coverage Ratio (DSCR) loans. These loans allow homeowners and real estate investors to borrow against residential property. A portion of borrower interest payments is used to cover interest on matched lending offers.",
+          "type": "LOAN",
+          "borrowerDemandType": "COLLATERAL",
+          "riskParameters": "Figure Portfolio Manager manages risk of accounts secured by real estate-backed loans pledged to this pool. Loans are pledged to a warehouse facility for use as collateral in Democratized Prime. Borrowing in this pool is over-collateralized by the unpaid balances of these loans discounted at an advance rate. All loans 60+ days delinquent will be removed from the collateral pool.",
+          "collateralDescription": "Figure Lending LLC (\"Figure\") is the largest U.S. non-bank HELOC originator ($25bn+ originated since 2018). Figure regularly holds these loans on its balance sheet, sells loans to institutional whole loan partners, and securitizes them. All loans offered on Democratized Prime are performing loans. Eligible collateral types and their underwriting standards are detailed below and may expand over time as new real estate-backed loan types are introduced. Current collateral composition and loan-level characteristics are available for review in this section.",
+          "collateralStats": [
+            {
+              "name": "Avg. loan amount",
+              "value": "$120,054",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA coupon",
+              "value": "9.05%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA credit score",
+              "value": "749.5",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA CLTV (post)",
+              "value": "59.81%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA DTI (post)",
+              "value": "26.36%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA PTI",
+              "value": "9.57%",
+              "categoryId": 1
+            },
+            {
+              "name": "1st lien / 2nd lien / 3rd lien",
+              "value": "56.92% / 41.70% / 1.38%",
+              "categoryId": 1
+            },
+            {
+              "name": "NOO concentration",
+              "value": "15.94%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA income",
+              "value": "$172,183",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA home value (adj)",
+              "value": "$809,694",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA term",
+              "value": "241.02",
+              "categoryId": 1
+            }
+          ],
+          "footnotes": [
+            "*WA (weighted average): Averages are weighted by current unpaid principal balance, so loans with more outstanding count for more. A handful of large balances can pull a weighted average well away from the typical loan."
+          ],
+          "categories": [
+            {
+              "categoryId": 1,
+              "name": "",
+              "description": ""
+            }
+          ]
+        },
+        "poolImplementation": "SMART_CONTRACT",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 594336697.0730159,
+        "utilization": 0.6794175640375096,
+        "smartContract": {
+          "poolContractAddress": "pb1lgdznp6dyljdq40xvcknkzcgelh2es0udwnx9rzn7c5q55435l3sx6v5a6",
+          "priceOracleAddress": "pb10mwflnqhtleqhka4n8kzm0rwknjcsew63fge4h579avm369tgq6sy2t9v2",
+          "repoTokenCw20Address": "pb14e346xp7mxdyk2cffd36gcyxpggya9yztpnt73dwjceqkeu3x8esg39ydy",
+          "kinkUtilization": 0.9,
+          "commitMarketId": 1,
+          "operationalState": "ACTIVE",
+          "targetRate": 0.095,
+          "poolUtilization": 0.6794175640375096,
+          "totalCollateralValueUsd": 424377735.2631981,
+          "feeModel": "FLAT_BORROW_SPREAD",
+          "reserveFactor": 0,
+          "yldsRatesResponse": {
+            "lenderTotalEstimatedApr": 0.063338,
+            "yldsBaseRate": 0.011349,
+            "yldsAnnualInterestRate": 0.0354
+          }
+        },
+        "currentLendRate": 0.05198900634992005,
+        "currentBorrowRate": 0.0815199622467367,
+        "sortOrder": 2
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 400
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "602b12fe-3836-4489-99f0-c434ca7d6b7c",
+        "name": "Crypto-Backed Loan",
+        "description": "Crypto-backed loans are secured by underlying crypto collateral (BTC and ETH). By lending into this pool, you tap into the returns for the interest paid back on these loans.",
+        "marginRate": 0.95,
+        "marginCallRate": 0.98,
+        "liquidationRate": 1,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.04,
+        "maxIntRate": 0.15,
+        "leverageType": "CBL",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1S",
+        "asset": "YLDS",
+        "createdAt": "2026-05-11T21:38:55.079585Z",
+        "minimumOffer": 10,
+        "minimumLoan": 10,
+        "collateralAssets": [
+          "cbl.forge.figure"
+        ],
+        "loansOutstanding": 467787.24688974617,
+        "rate": 0.09700462594678051,
+        "feeRate": 0.005,
+        "defaultRate": 0.05,
+        "totalRate": 0.1064242629590559,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Crypto-Backed Loan",
+          "description": "Crypto-backed loans are secured by underlying crypto collateral (BTC, ETH, and SOL). By lending into this pool, you tap into the returns for the interest paid back on these loans.",
+          "type": "LOAN",
+          "borrowerDemandType": "COLLATERAL",
+          "riskParameters": "Crypto-backed loans in the pool are originated at or below an LTV of 50% or 75%. If LTV grows too high (for example if crypto prices drop precipitously), the underlying loans could be liquidated. Borrowing in this pool is over-collateralized by the unpaid balances of these loans discounted at an advance rate. Past due loans are automatically liquidated and repaid.",
+          "collateralDescription": "Figure Lending LLC (\u201cFigure\u201d) is the largest U.S. non-bank HELOC originator ($19bn+ originated since 2018). Figure also originates crypto-backed loans where borrowers can use their Bitcoin, Ethereum, or Solana as collateral to secure loans. These loans are typically issued with a term length of up to 12 months.\u00a0All loans offered on Democratized Prime are performing loans.",
+          "collateralStats": [
+            {
+              "name": "Avg. loan amount",
+              "value": "$64,350",
+              "categoryId": 1
+            },
+            {
+              "name": "Avg. loan balance",
+              "value": "$59,156",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA coupon",
+              "value": "9.37%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA current LTV",
+              "value": "46.14%",
+              "categoryId": 1
+            },
+            {
+              "name": "*WA remaining term",
+              "value": "6.19",
+              "categoryId": 1
+            },
+            {
+              "name": "BTC collateral",
+              "value": "89.92%",
+              "categoryId": 1
+            },
+            {
+              "name": "ETH collateral",
+              "value": "5.75%",
+              "categoryId": 1
+            }
+          ],
+          "footnotes": [
+            "*WA (weighted average): Averages are weighted by current unpaid principal balance, so loans with more outstanding count for more. A handful of large balances can pull a weighted average well away from the typical loan."
+          ],
+          "categories": [
+            {
+              "categoryId": 1,
+              "name": "",
+              "description": ""
+            }
+          ]
+        },
+        "poolImplementation": "SMART_CONTRACT",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 489100.1462493972,
+        "utilization": 0.9564242629590559,
+        "smartContract": {
+          "poolContractAddress": "pb1msvy4f0vcdm9kx4x56lrk5ctlnh88ag84k4ggskywzwvf2nzlmtqnm5ged",
+          "priceOracleAddress": "pb10mwflnqhtleqhka4n8kzm0rwknjcsew63fge4h579avm369tgq6sy2t9v2",
+          "repoTokenCw20Address": "pb14wqf353xhl65rttqvd3jdk9fvc0dwhyxe7mg0xf2d7d8plpgaz2qw939yd",
+          "kinkUtilization": 0.9,
+          "commitMarketId": 1,
+          "operationalState": "ACTIVE",
+          "targetRate": 0.05,
+          "poolUtilization": 0.9564242629590559,
+          "totalCollateralValueUsd": 12836804.870999005,
+          "feeModel": "FLAT_BORROW_SPREAD",
+          "reserveFactor": 0,
+          "yldsRatesResponse": {
+            "lenderTotalEstimatedApr": 0.098547,
+            "yldsBaseRate": 0.001543,
+            "yldsAnnualInterestRate": 0.0354
+          }
+        },
+        "currentLendRate": 0.09700462594678051,
+        "currentBorrowRate": 0.1064242629590559,
+        "sortOrder": 3
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 400
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 0
+      }
+    },
+    {
+      "leveragePool": {
+        "id": "ac92a7a9-fd02-4fce-845e-e52298f58735",
+        "name": "SMB",
+        "description": "Small and Medium Business YLDS pool",
+        "marginRate": 0.95,
+        "marginCallRate": 0.98,
+        "liquidationRate": 1,
+        "liquidationFeeRate": 0.02,
+        "minIntRate": 0.04,
+        "maxIntRate": 0.15,
+        "leverageType": "SMB",
+        "marketLocationType": "US",
+        "marketLocationTypes": [
+          "US",
+          "CAYMAN"
+        ],
+        "termDuration": "PT1S",
+        "asset": "YLDS",
+        "createdAt": "2026-07-21T17:42:05.707457Z",
+        "minimumOffer": 10,
+        "minimumLoan": 10,
+        "collateralAssets": [
+          "smb.forge"
+        ],
+        "loansOutstanding": 16678939.231140539,
+        "rate": 0.0816156776143248,
+        "feeRate": 0.005,
+        "defaultRate": 0.085,
+        "totalRate": 0.09426957215251203,
+        "offPlatformEligible": false,
+        "tearSheet": {
+          "name": "Small and Medium Business",
+          "description": "The Small and Medium Business (SMB) pool gives you exposure to credit backed by thousands of real, vetted American small businesses. The receivables represent payments owed by operating U.S. businesses. By lending into the pool, you earn from the cash flows those businesses generate as they repay their financing obligations. Backed by institutional-grade small-business credit, the SMB pool provides yield generated by a tangible, collateralized asset class, and a new way to diversify your portfolio.",
+          "type": "LOAN",
+          "borrowerDemandType": "COLLATERAL",
+          "riskParameters": "Democratized Prime manages risk through a structured financing facility backed by a diversified pool of prime small business financing receivables. The facility benefits from multiple layers of credit enhancement ensuring the pool can absorb a variety of adverse conditions before depositor yield is affected.This is enabled by a variety of mechanisms, including a 95% advance rate cap, reserve account funding, overcollateralization, originator repurchase obligations, and full recourse provisions. \n\nAll receivables included in Democratized Prime must satisfy established eligibility requirements and be performing at the time of inclusion.",
+          "collateralDescription": "The collateral consists of eligible small business financing receivables originated and extended to operating U.S. businesses and are underwritten using proprietary cash-flow-based models, business verification processes, and personal guarantees from business owners. The portfolio has an average business owner FICO score of approximately 700, an average of 10 years in business, and spans more than 330 industries.",
+          "collateralStats": [
+            {
+              "name": "WA Factor Rate",
+              "value": "1.33",
+              "categoryId": 1
+            },
+            {
+              "name": "WA Personal Guarantor FICO",
+              "value": "711.09",
+              "categoryId": 1
+            },
+            {
+              "name": "WA Time in Business",
+              "value": "12.06",
+              "categoryId": 1
+            },
+            {
+              "name": "WA Collateral Amount",
+              "value": "$203,876",
+              "categoryId": 1
+            },
+            {
+              "name": "WA Term",
+              "value": "14.47",
+              "categoryId": 1
+            }
+          ],
+          "footnotes": [
+            "*WA (weighted average): Averages are weighted by current advance amount, so receivables with larger advance amounts count for more. A handful of large advance amounts can pull a weighted average well away from the typical advance amounts."
+          ],
+          "categories": [
+            {
+              "categoryId": 1,
+              "name": "",
+              "description": ""
+            }
+          ]
+        },
+        "poolImplementation": "SMART_CONTRACT",
+        "lifecycleStatus": "ACTIVE",
+        "totalSupply": 18243085.307182882,
+        "utilization": 0.9142608802346339,
+        "smartContract": {
+          "poolContractAddress": "pb10n4myppf5kwdzdquhfaf822eaavekejk08afj8wwx2vw4jszcwls82t2kx",
+          "priceOracleAddress": "pb10mwflnqhtleqhka4n8kzm0rwknjcsew63fge4h579avm369tgq6sy2t9v2",
+          "repoTokenCw20Address": "pb1erl7fxdz6srsela6yfng65q28pdccuzta6yppgl0v2q4xzjvc0uq682hdy",
+          "kinkUtilization": 0.9,
+          "commitMarketId": 1,
+          "operationalState": "ACTIVE",
+          "targetRate": 0.085,
+          "poolUtilization": 0.9142608802346339,
+          "totalCollateralValueUsd": 17403950.419987727,
+          "feeModel": "FLAT_BORROW_SPREAD",
+          "reserveFactor": 0,
+          "yldsRatesResponse": {
+            "lenderTotalEstimatedApr": 0.084651,
+            "yldsBaseRate": 0.003035,
+            "yldsAnnualInterestRate": 0.0354
+          }
+        },
+        "currentLendRate": 0.0816156776143248,
+        "currentBorrowRate": 0.09426957215251203,
+        "sortOrder": 5
+      },
+      "currentPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 400
+      },
+      "nextPeriod": {
+        "totalOfferAmount": 0,
+        "totalLoanAmount": 0,
+        "rate": 0.04,
+        "rateChangeBps": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "snapshot_as_of": "2026-10-15T03:52:38.327222Z",
+  "source_url": "https://todayindefi.github.io/backing-monitor/data/hastra_prime_backing.json",
+  "source_research_status": "Working research update reviewed October 15; not yet committed upstream at review time.",
+  "source_sha256": {
+    "backing-feed.json": "e59e05c8c466caa16a1cd21cd690771c4946e8b168254f013795bbedf95cedc7",
+    "figure-pools.json": "fe01aad671ef55ddbd50eb327133600f9d31599f884c7d5340119214de8a031c"
+  },
+  "freshness": {
+    "stale": false,
+    "failed_legs": []
+  },
+  "wylds_backing": {
+    "total_supply": 680683281.4606919,
+    "total_backing": 681950369.135496,
+    "collateral_ratio": 100.18614937509336,
+    "surplus_deficit": 1267087.6748040915,
+    "nav": 1.0
+  },
+  "prime": {
+    "supply": 550420202.450436,
+    "supply_by_chain": {
+      "solana": 118689678.053889,
+      "ethereum": 431730524.396547
+    },
+    "nav_wylds_per_prime": 1.0646117,
+    "ethereum_assets_per_share": 1.0646038383906822,
+    "indicative_nav_usd": 585983795,
+    "dollar_basis": "Supply times issuer-administered NAV times assumed $1 wYLDS; not measured secondary market capitalization."
+  },
+  "reserve_breakdown": [
+    {
+      "label": "Redeem vault AUTOYLDS receipt claim",
+      "value_usd": 90625610.162546,
+      "pct": 13.2892
+    },
+    {
+      "label": "Redeem vault HEYLDS receipt claim",
+      "value_usd": 585986622.413585,
+      "pct": 85.928
+    },
+    {
+      "label": "Redeem vault CBLYLDS receipt claim",
+      "value_usd": 0.0,
+      "pct": 0.0
+    },
+    {
+      "label": "Redeem vault SMBYLDS receipt claim",
+      "value_usd": 337.036067,
+      "pct": 0.0
+    },
+    {
+      "label": "Redeem vault",
+      "value_usd": 4695691.937879,
+      "pct": 0.6886
+    },
+    {
+      "label": "Democratized Prime sweep",
+      "value_usd": 642107.585419,
+      "pct": 0.0942
+    }
+  ],
+  "reserve_denominator": "All discovered receipt claims plus direct YLDS, divided by wYLDS supply. PRIME staking coverage is a separate measure.",
+  "yield": {
+    "nav_accrual_apy_7d": 6.128974309405022,
+    "nav_accrual_apy_30d": 6.171407979745758,
+    "target_apy": 5.659,
+    "target_apy_fetched_at": "2026-10-15T03:00:00Z",
+    "target_apy_basis": "wylds_per_prime",
+    "nav_is_issuer_administered": true,
+    "hastra_fee_bps": 50
+  },
+  "redemption": {
+    "liquid_buffer_usd": 4697083.7534799995,
+    "buffer": {
+      "redeem_vault_ylds": 4695691.937879,
+      "redeem_vault_usdc": 1391.815601,
+      "ylds_face_value_usd": 1.0
+    },
+    "issuer_pending_wylds": {
+      "value": 827397.649643,
+      "source": "por_page:hastra_account_card.wylds_pending_redemption",
+      "as_of": "2026-10-15T03:48:24.277365485Z",
+      "source_kind": "issuer_reported"
+    },
+    "issuer_pending_ylds_sale": {
+      "value": 710121.48,
+      "source": "por_page:hastra_account_card.ylds_pending_sale",
+      "as_of": "2026-10-15T03:48:24.277365485Z",
+      "source_kind": "issuer_reported"
+    },
+    "independently_verified_outstanding_queue": null,
+    "coverage_ratio": null,
+    "basis": "Persistent per-user Solana request records do not identify currently outstanding requests; issuer pending figures have independent source clocks."
+  },
+  "home_equity": {
+    "api_as_of": "2026-10-15T04:54:14.236572+00:00",
+    "api_source": "https://www.figuremarkets.com/service-lending/api/v1/leverage-pools/summary?location=US&include_cbl_pools=true",
+    "debt_usd": 403802790.94344777,
+    "collateral_usd": 424377735.2631981,
+    "cushion_pct": 4.848261963363787,
+    "debt_to_collateral_pct": 95.15173803663622,
+    "advance_reference_pct": 95,
+    "excess_above_95pct_reference_usd": 643942.4434096217,
+    "margin_call_pct": 98,
+    "liquidation_pct": 100,
+    "utilization_pct": 67.94175640375096,
+    "originator_stats": {
+      "avg_loan_amount_usd": 120194.0,
+      "wa_coupon_pct": 9.05,
+      "wa_credit_score": 749.49,
+      "wa_cltv_post_pct": 59.81,
+      "wa_dti_post_pct": 26.36,
+      "wa_pti_pct": 9.56,
+      "first_lien_pct": 56.93,
+      "second_lien_pct": 41.7,
+      "third_lien_pct": 1.38,
+      "noo_concentration_pct": 15.94,
+      "wa_income_usd": 172187.0,
+      "wa_home_value_adj_usd": 809721.0,
+      "wa_term_months": 241.01
+    },
+    "collateral_classes": [
+      "nq.heloc.forge",
+      "heloc.forge",
+      "rtl.forge",
+      "dscr.forge"
+    ]
+  },
+  "secondary": {
+    "capacity_ceiling_usd": 7399796.954169,
+    "capacity_ceiling_as_of": "2026-10-15T03:24:25Z",
+    "ceiling_scope": "ethereum_only",
+    "exit_mark": {
+      "source": "uniswap_v3_quoter_v2",
+      "sell_into": "USDC",
+      "fair_value": 1.06575997981621,
+      "fair_value_basis": "market",
+      "quotes": {
+        "1000": {
+          "slippage_bps": -2.0441000000004372,
+          "output_usd": 999.79559,
+          "output_capacity_used_pct": 0.013507949400901881,
+          "fill_ratio": 0.999796
+        },
+        "10000": {
+          "slippage_bps": -2.058075999998854,
+          "output_usd": 9997.941924,
+          "output_capacity_used_pct": 0.13507930518332015,
+          "fill_ratio": 0.999794
+        },
+        "50000": {
+          "slippage_bps": -2.1202216000004714,
+          "output_usd": 49989.398892,
+          "output_capacity_used_pct": 0.6753923277603541,
+          "fill_ratio": 0.999788
+        },
+        "100000": {
+          "slippage_bps": -2.197904400000894,
+          "output_usd": 99978.020956,
+          "output_capacity_used_pct": 1.350774160022006,
+          "fill_ratio": 0.99978
+        },
+        "500000": {
+          "slippage_bps": -2.8193247999996895,
+          "output_usd": 499859.03376,
+          "output_capacity_used_pct": 6.753451008534441,
+          "fill_ratio": 0.999718
+        },
+        "1000000": {
+          "slippage_bps": -3.5959918999994844,
+          "output_usd": 999640.40081,
+          "output_capacity_used_pct": 13.505852684586014,
+          "fill_ratio": 0.99964
+        },
+        "2000000": {
+          "slippage_bps": -5.148964154999547,
+          "output_usd": 1998970.207169,
+          "output_capacity_used_pct": 27.007509017267424,
+          "fill_ratio": 0.999485
+        },
+        "5000000": {
+          "slippage_bps": -9.80498719000078,
+          "output_usd": 4995097.506405,
+          "output_capacity_used_pct": 67.4873194520591,
+          "fill_ratio": 0.99902
+        },
+        "5990000": {
+          "slippage_bps": -11.340522979965684,
+          "output_usd": 5983207.026735,
+          "output_capacity_used_pct": 80.83738174145874,
+          "fill_ratio": 0.998866
+        },
+        "6100000": {
+          "slippage_bps": -11.511108927868552,
+          "output_usd": 6092978.223554,
+          "output_capacity_used_pct": 82.32046867156562,
+          "fill_ratio": 0.998849
+        },
+        "6700000": {
+          "slippage_bps": -12.441475189551854,
+          "output_usd": 6691664.211623,
+          "output_capacity_used_pct": 90.4091421111684,
+          "fill_ratio": 0.998756
+        },
+        "9500000": {
+          "slippage_bps": -2210.740048243158,
+          "output_usd": 7399796.954169,
+          "output_capacity_used_pct": 99.97651903411847,
+          "fill_ratio": 0.778926
+        },
+        "14000000": {
+          "slippage_bps": -4714.430747022144,
+          "output_usd": 7399796.954169,
+          "output_capacity_used_pct": 99.97651903411847,
+          "fill_ratio": 0.528557
+        }
+      },
+      "slippage_bps_basis": "ALL-IN COST against notional: (output_usd - size) / size. Includes the venue's base spread, so it is not comparable rung-for-rung with a price-impact figure measured against a venue's own spot rung."
+    }
+  },
+  "secondary_scope": "Retained producer estimates, not independently rerun quotes or an end-to-end exit test. Liquidity score is retained from September 12. Do not treat the inventory ceiling as 2%-slippage depth.",
+  "automobile_later_review": {
+    "api_debt_usd": 168691485.1058117,
+    "api_collateral_usd": 193900173.117903,
+    "api_raw_cushion_pct": 13.000858950632765,
+    "chain_oracle_gross_collateral_usd": 193900173.117903,
+    "chain_discount_factor": 0.9157,
+    "chain_adjusted_collateral_usd": 177554388.52406377,
+    "chain_debt_usd": 168691503.5093677,
+    "chain_receipt_supply_underlying_usd": 200683654.00332847,
+    "chain_adjusted_ltv_pct": 95.00835485488724,
+    "chain_gross_cushion_pct": 13.000849459379749,
+    "chain_idle_ylds": 32298337.623147,
+    "chain_accrued_protocol_reserve": 306187.126136,
+    "accounting_residual_usd": 0.003050242841709405,
+    "hastra_receipt_claim_ylds": 91495673.797761,
+    "hastra_share_pct": 45.59199116249073,
+    "idle_over_hastra_claim_pct": 35.30039867736061,
+    "idle_over_total_supply_pct": 16.094154645306244,
+    "implied_gross_max_advance_pct": 86.99149999999999,
+    "oracle_as_of_utc": "2026-10-15T05:17:19+00:00"
+  },
+  "automobile_scope": "Later sequential Provenance reads; Hastra share of the Automobile pool differs from Automobile share of aggregate wYLDS backing.",
+  "verification_scope": "No fresh recursive authority walk, full deployed-code audit parity, legal recovery assessment, primary redemption simulation or current loan-level performance verification.",
+  "automobile_code_history": {
+    "pool-history.json": {
+      "source_url": "https://api.provenance.io/cosmwasm/wasm/v1/contract/pb1gqw3m5ftuu0hdcj646ppgmrp7ual3kkjj2wq6usqsfe0ntfmsc7s8fh70c/history",
+      "retrieved_at": "2026-10-15T05:30:39.389853+00:00",
+      "source_sha256": "7f725336879da6e9b3afa3f64822c2b60fca909daa87a7734e08d9efae485f60",
+      "entries": [
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT",
+          "code_id": "52",
+          "block_height": "31567894"
+        },
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE",
+          "code_id": "59",
+          "block_height": "34047022"
+        }
+      ]
+    },
+    "receipt-history.json": {
+      "source_url": "https://api.provenance.io/cosmwasm/wasm/v1/contract/pb1679uh4ukeq7rdq6gkl4r3avdnmkh9st05ud6g0ymq03mq8ns6zuqgdk6xw/history",
+      "retrieved_at": "2026-10-15T05:30:39.593172+00:00",
+      "source_sha256": "336c2ac40c3208e69a158c87fe0fd7e1a7a5bc1954cec22eac6f7efc5df76176",
+      "entries": [
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT",
+          "code_id": "51",
+          "block_height": "31567894"
+        },
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE",
+          "code_id": "61",
+          "block_height": "34047022"
+        }
+      ]
+    },
+    "oracle-history.json": {
+      "source_url": "https://api.provenance.io/cosmwasm/wasm/v1/contract/pb10mwflnqhtleqhka4n8kzm0rwknjcsew63fge4h579avm369tgq6sy2t9v2/history",
+      "retrieved_at": "2026-10-15T05:30:39.762505+00:00",
+      "source_sha256": "6c6023f5126776a00d5c8ba61a660194ed367887872bc31b0abdcf1e831f510c",
+      "entries": [
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT",
+          "code_id": "50",
+          "block_height": "30977452"
+        },
+        {
+          "operation": "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE",
+          "code_id": "60",
+          "block_height": "33969782"
+        }
+      ]
+    }
+  }
+}
