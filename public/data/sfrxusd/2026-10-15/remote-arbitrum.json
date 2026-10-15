@@ -1,0 +1,99 @@
+{
+  "chain": "arbitrum",
+  "token": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+  "retrieved_at": "2026-10-15T06:35:38.218044+00:00",
+  "calls": [
+    {
+      "to": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+      "signature": "totalSupply()",
+      "decoded": [
+        250503043000000000000
+      ]
+    },
+    {
+      "to": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+      "signature": "owner()",
+      "decoded": [
+        "0x3da490b19f300e7cb2280426c8ad536db2df445c"
+      ]
+    },
+    {
+      "to": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+      "signature": "getThreshold()",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "to": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+      "signature": "getOwners()",
+      "decoded": [
+        [
+          "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0x381e2495e683868f693aa5b1414f712f21d34b40",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+        ]
+      ]
+    }
+  ],
+  "block": "0x1eb1fd49",
+  "code_bytes": 1945,
+  "supply": 250503043000000000000,
+  "owner": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+  "threshold": 3,
+  "signers": [
+    "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+    "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+    "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+    "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+    "0x381e2495e683868f693aa5b1414f712f21d34b40",
+    "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+  ],
+  "proxy_admin_slot": "0x000000000000000000000000223a681fc5c5522c85c96157c0efa18cd6c5405c",
+  "upgrade_admin": "0x223a681fc5c5522c85c96157c0efa18cd6c5405c",
+  "upgrade_admin_owner": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+  "upgrade_admin_owner_threshold": 3,
+  "upgrade_admin_owner_signers": [
+    "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+    "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+    "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+    "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+    "0x381e2495e683868f693aa5b1414f712f21d34b40",
+    "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+  ],
+  "admin_calls": [
+    {
+      "to": "0x223a681fc5c5522c85c96157c0efa18cd6c5405c",
+      "signature": "owner()",
+      "error": "'result'"
+    },
+    {
+      "to": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+      "signature": "getThreshold()",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x0000000000000000000000000000000000000000000000000000000000000003"
+      }
+    },
+    {
+      "to": "0x3da490b19f300e7cb2280426c8ad536db2df445c",
+      "signature": "getOwners()",
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000060000000000000000000000008da4e997e051605878c9c0b793c496556eacc2c0000000000000000000000000cbc616d595d38483e6adc45c7e426f44bf2309280000000000000000000000008d8290d49e88d16d81c6adf6c8774ed88762274a00000000000000000000000017e06ce6914e3969f7bd37d8b2a563890ca1c96e000000000000000000000000381e2495e683868f693aa5b1414f712f21d34b400000000000000000000000006e74053a3798e0fc9a9775f7995316b27f21c4d2"
+      }
+    },
+    {
+      "to": "0x223a681fc5c5522c85c96157c0efa18cd6c5405c",
+      "signature": "owner()",
+      "decoded": [
+        "0x3da490b19f300e7cb2280426c8ad536db2df445c"
+      ]
+    }
+  ]
+}

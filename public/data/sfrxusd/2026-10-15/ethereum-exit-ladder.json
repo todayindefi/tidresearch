@@ -1,0 +1,59 @@
+{
+  "block": "0x18fb882",
+  "pps_frxusd": 1.2155106427995388,
+  "quotes": [
+    {
+      "input_nav_usd": 1000,
+      "sfrxusd_input": 822.6995015829897,
+      "frxusd_output": 999.8988673452009,
+      "usdt_output": 1000.874179
+    },
+    {
+      "input_nav_usd": 10000,
+      "sfrxusd_input": 8226.995015829896,
+      "frxusd_output": 9998.987161099465,
+      "usdt_output": 10007.992028
+    },
+    {
+      "input_nav_usd": 100000,
+      "sfrxusd_input": 82269.95015829898,
+      "frxusd_output": 99989.7202728866,
+      "usdt_output": 100040.043935
+    },
+    {
+      "input_nav_usd": 1000000,
+      "sfrxusd_input": 822699.5015829897,
+      "frxusd_output": 999881.5272342439,
+      "usdt_output": 894058.079455
+    },
+    {
+      "input_nav_usd": 3000000,
+      "sfrxusd_input": 2468098.504748969,
+      "frxusd_output": 2999491.244633407,
+      "usdt_output": 894160.600227
+    },
+    {
+      "input_nav_usd": 5000000,
+      "sfrxusd_input": 4113497.5079149483,
+      "frxusd_output": 4998008.3816973185,
+      "usdt_output": 894158.215521
+    },
+    {
+      "input_nav_usd": 7000000,
+      "sfrxusd_input": 5758896.511080928,
+      "frxusd_output": 5915871.158494139,
+      "usdt_output": 894156.775066
+    },
+    {
+      "input_nav_usd": 10000000,
+      "sfrxusd_input": 8226995.015829897,
+      "frxusd_output": 5917045.371209928,
+      "usdt_output": 894156.773189
+    }
+  ],
+  "routes": [
+    "0xF292eB6c5dcb693Eaaf392D0562a01C3710E5978",
+    "0xD6937eA8D33B0C21348F36F7895FdE3054bA4927"
+  ],
+  "basis": "Read-only two-pool sequential get_dy; USDT units, gas excluded; no aggregate routing claim"
+}

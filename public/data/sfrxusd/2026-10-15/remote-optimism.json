@@ -1,0 +1,97 @@
+{
+  "chain": "optimism",
+  "token": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+  "retrieved_at": "2026-10-15T06:35:41.537821+00:00",
+  "calls": [
+    {
+      "to": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+      "signature": "totalSupply()",
+      "decoded": [
+        188269872000000000000
+      ]
+    },
+    {
+      "to": "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0",
+      "signature": "owner()",
+      "decoded": [
+        "0x419e672d625f998dd07a7ecf2e06b896f8717cb2"
+      ]
+    },
+    {
+      "to": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+      "signature": "getThreshold()",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "to": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+      "signature": "getOwners()",
+      "decoded": [
+        [
+          "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0x381e2495e683868f693aa5b1414f712f21d34b40",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+        ]
+      ]
+    }
+  ],
+  "block": "0x96e4d42",
+  "code_bytes": 1945,
+  "supply": 188269872000000000000,
+  "owner": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+  "threshold": 3,
+  "signers": [
+    "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+    "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+    "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+    "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+    "0x381e2495e683868f693aa5b1414f712f21d34b40",
+    "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+  ],
+  "proxy_admin_slot": "0x000000000000000000000000223a681fc5c5522c85c96157c0efa18cd6c5405c",
+  "upgrade_admin": "0x223a681fc5c5522c85c96157c0efa18cd6c5405c",
+  "upgrade_admin_owner": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+  "upgrade_admin_owner_threshold": 3,
+  "upgrade_admin_owner_signers": [
+    "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+    "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+    "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+    "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+    "0x381e2495e683868f693aa5b1414f712f21d34b40",
+    "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+  ],
+  "admin_calls": [
+    {
+      "to": "0x223a681fc5c5522c85c96157c0efa18cd6c5405c",
+      "signature": "owner()",
+      "decoded": [
+        "0x419e672d625f998dd07a7ecf2e06b896f8717cb2"
+      ]
+    },
+    {
+      "to": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+      "signature": "getThreshold()",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "to": "0x419e672d625f998dd07a7ecf2e06b896f8717cb2",
+      "signature": "getOwners()",
+      "decoded": [
+        [
+          "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x8d8290d49e88d16d81c6adf6c8774ed88762274a",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0x381e2495e683868f693aa5b1414f712f21d34b40",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+        ]
+      ]
+    }
+  ]
+}

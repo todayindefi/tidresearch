@@ -1,0 +1,260 @@
+{
+  "url": "https://docs.frax.com/frxusd/stake-and-unstake-supported-networks",
+  "retrieved_at": "2026-10-15T06:34:15.751332+00:00",
+  "tables": [
+    [
+      [
+        "Mainnet",
+        "Address"
+      ],
+      [
+        "Ethereum",
+        "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6 (opens in a new tab)"
+      ],
+      [
+        "Fraxtal",
+        "0xfc00000000000000000000000000000000000008 (opens in a new tab)"
+      ],
+      [
+        "Abstract",
+        "0x9F87fbb47C33Cd0614E43500b9511018116F79eE (opens in a new tab)"
+      ],
+      [
+        "Arbitrum",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Avalanche",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Base",
+        "0x91A3f8a8d7a881fBDfcfEcd7A2Dc92a46DCfa14e (opens in a new tab)"
+      ],
+      [
+        "BSC",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Hyperliquid",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Ink",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Katana",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Linea",
+        "0x592a48c0FB9c7f8BF1701cB0136b90DEa2A5B7B6 (opens in a new tab)"
+      ],
+      [
+        "Monad",
+        "0x137643f7b2c189173867b3391f6629cab46f0f1a (opens in a new tab)"
+      ],
+      [
+        "Optimism",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Plume",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Polygon",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Robinhood",
+        "0x00000000fD8C4B8A413A06821456801295921a71 (opens in a new tab)"
+      ],
+      [
+        "Sei",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Solana",
+        "DUvWQMyASSkLNJFwsMDA4kwxEvmfaqpPGrvUVKtitX45 (opens in a new tab)"
+      ],
+      [
+        "Somnia",
+        "0x00000000fD8C4B8A413A06821456801295921a71 (opens in a new tab)"
+      ],
+      [
+        "Sonic",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Stable",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Tempo",
+        "0x00000000fD8C4B8A413A06821456801295921a71 (opens in a new tab)"
+      ],
+      [
+        "Unichain",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "Worldchain",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "XLayer",
+        "0x5Bff88cA1442c2496f7E475E9e7786383Bc070c0 (opens in a new tab)"
+      ],
+      [
+        "zkSync",
+        "0x9F87fbb47C33Cd0614E43500b9511018116F79eE (opens in a new tab)"
+      ]
+    ],
+    [
+      [
+        "Mainnet",
+        "EID",
+        "Hop Address"
+      ],
+      [
+        "Ethereum",
+        "30101",
+        "0x99b5587ab54a49e3f827d10175caf69c0187bfa8 (opens in a new tab)"
+      ],
+      [
+        "Abstract",
+        "30324",
+        "0xa05e9f9b97c963b5651ed6a50fae46625a8c400b (opens in a new tab)"
+      ],
+      [
+        "Arbitrum",
+        "30110",
+        "0xa46A266dCBf199a71532c76967e200994C5A0D6d (opens in a new tab)"
+      ],
+      [
+        "Avalanche",
+        "30106",
+        "0x452420df4AC1e3db5429b5FD629f3047482C543C (opens in a new tab)"
+      ],
+      [
+        "Base",
+        "30184",
+        "0x73382eb28F35d80Df8C3fe04A3EED71b1aFce5dE (opens in a new tab)"
+      ],
+      [
+        "BSC",
+        "30102",
+        "0xdee45510b42Cb0678C8A61D043C698aF66b0d852 (opens in a new tab)"
+      ],
+      [
+        "Hyperliquid",
+        "30367",
+        "0xb85A8FDa7F5e52E32fa5582847CFfFee9456a5Dc (opens in a new tab)"
+      ],
+      [
+        "Ink",
+        "30339",
+        "0x452420df4AC1e3db5429b5FD629f3047482C543C (opens in a new tab)"
+      ],
+      [
+        "Katana",
+        "30375",
+        "0xF6f45CCB5E85D1400067ee66F9e168f83e86124E (opens in a new tab)"
+      ],
+      [
+        "Linea",
+        "30183",
+        "0xa71f2204EDDB8d84F411A0C712687FAe5002e7Fb (opens in a new tab)"
+      ],
+      [
+        "Monad",
+        "30390",
+        "0x92e6892706053ee85fc1178affcb3803118d2c4f (opens in a new tab)"
+      ],
+      [
+        "Optimism",
+        "30111",
+        "0x7a07D606c87b7251c2953A30Fa445d8c5F856C7A (opens in a new tab)"
+      ],
+      [
+        "Plume",
+        "30370",
+        "0xa71f2204EDDB8d84F411A0C712687FAe5002e7Fb (opens in a new tab)"
+      ],
+      [
+        "Polygon",
+        "30109",
+        "0x5658e82E330e094627D9b362ed0E137eA06673C4 (opens in a new tab)"
+      ],
+      [
+        "Robinhood",
+        "30416",
+        "0xEfb78823eDCB57d78975a33576A7361dBD154d64 (opens in a new tab)"
+      ],
+      [
+        "Sei",
+        "30280",
+        "0x0255a172d0a060F2bEab3e7c12334dD73cCC26ba (opens in a new tab)"
+      ],
+      [
+        "Somnia",
+        "30380",
+        "0xE9e53734D2b67Ae263089d7a5dE1F5d97ab8cBDD (opens in a new tab)"
+      ],
+      [
+        "Sonic",
+        "30332",
+        "0xf6115Bb9b6A4b3660dA409cB7afF1fb773efaD0b (opens in a new tab)"
+      ],
+      [
+        "Stable",
+        "30396",
+        "0xA27eCe4f3108655dCE7d8aD684B780a2163928A1 (opens in a new tab)"
+      ],
+      [
+        "Unichain",
+        "30320",
+        "0x983aF86c94Fe3963989c22CeeEb6eA8Eac32D263 (opens in a new tab)"
+      ],
+      [
+        "Worldchain",
+        "30319",
+        "0x111ddab65Af5fF96b674400246699ED40F550De1 (opens in a new tab)"
+      ],
+      [
+        "XLayer",
+        "30274",
+        "0x45c6852A5188Ce1905567EA83454329bd4982007 (opens in a new tab)"
+      ],
+      [
+        "zkSync",
+        "30165",
+        "0xa05e9f9b97c963b5651ed6a50fae46625a8c400b (opens in a new tab)"
+      ]
+    ],
+    [
+      [
+        "Mainnet",
+        "frxUSD Lockbox Address",
+        "sfrxUSD Lockbox Address"
+      ],
+      [
+        "Ethereum",
+        "0x566a6442a5a6e9895b9dca97cc7879d632c6e4b0 (opens in a new tab)",
+        "0x7311cea93ccf5f4f7b789ee31eba5d9b9290e126 (opens in a new tab)"
+      ]
+    ],
+    [
+      [
+        "Mainnet",
+        "frxUSD Stake & Unstake Contract"
+      ],
+      [
+        "Fraxtal",
+        "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55 (opens in a new tab)"
+      ]
+    ]
+  ]
+}

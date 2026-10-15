@@ -1,0 +1,408 @@
+{
+  "retrieved_at": "2026-10-15T06:30:11.922720+00:00",
+  "blocks": {
+    "ethereum": "0x18fb8a0",
+    "fraxtal": "0x28a4ac4"
+  },
+  "records": [
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "slot_name": "implementation",
+      "slot": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+      "raw": "0x000000000000000000000000aad4a1d92053a62ce7a787641d8b4e5883e96700",
+      "address": "0xaad4a1d92053a62ce7a787641d8b4e5883e96700"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "slot_name": "admin",
+      "slot": "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103",
+      "raw": "0x000000000000000000000000ea0a6ec8114a0af6cf74ca0036ab31d892df13cb",
+      "address": "0xea0a6ec8114a0af6cf74ca0036ab31d892df13cb"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "owner()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "timelockAddress()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': '0x'}"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getThreshold()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000003",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getOwners()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000006000000000000000000000000381e2495e683868f693aa5b1414f712f21d34b40000000000000000000000000cbc616d595d38483e6adc45c7e426f44bf2309280000000000000000000000006e74053a3798e0fc9a9775f7995316b27f21c4d200000000000000000000000017e06ce6914e3969f7bd37d8b2a563890ca1c96e0000000000000000000000006933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2000000000000000000000000c8de9f45601da8c76158b8caf3e56e8a037f2228",
+      "decoded": [
+        [
+          "0x381e2495e683868f693aa5b1414f712f21d34b40",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0x6933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2",
+          "0xc8de9f45601da8c76158b8caf3e56e8a037f2228"
+        ]
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getMinDelay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "delay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "method": "eth_getCode",
+      "bytes": 171,
+      "code": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea264697066735822122003d1488ee65e08fa41e58e888a9865554c535f2c77126a82cb4c0f917f31441364736f6c63430007060033"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "owner()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "timelockAddress()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getThreshold()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getOwners()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getMinDelay()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "delay()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "method": "eth_getCode",
+      "bytes": 0,
+      "code": "0x"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xfc00000000000000000000000000000000000008",
+      "slot_name": "implementation",
+      "slot": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+      "raw": "0x000000000000000000000000ba026e978eb1b11d72adabf33b7cf6f3e321ca83",
+      "address": "0xba026e978eb1b11d72adabf33b7cf6f3e321ca83"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xfc00000000000000000000000000000000000008",
+      "slot_name": "admin",
+      "slot": "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103",
+      "raw": "0x000000000000000000000000fc0000000000000000000000000000000000000a",
+      "address": "0xfc0000000000000000000000000000000000000a"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "owner()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "timelockAddress()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getThreshold()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000003",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getOwners()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000006000000000000000000000000381e2495e683868f693aa5b1414f712f21d34b40000000000000000000000000cbc616d595d38483e6adc45c7e426f44bf2309280000000000000000000000006e74053a3798e0fc9a9775f7995316b27f21c4d200000000000000000000000017e06ce6914e3969f7bd37d8b2a563890ca1c96e0000000000000000000000006933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2000000000000000000000000c8de9f45601da8c76158b8caf3e56e8a037f2228",
+      "decoded": [
+        [
+          "0x381e2495e683868f693aa5b1414f712f21d34b40",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0x6933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2",
+          "0xc8de9f45601da8c76158b8caf3e56e8a037f2228"
+        ]
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "getMinDelay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "signature": "delay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "method": "eth_getCode",
+      "bytes": 171,
+      "code": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea264697066735822122003d1488ee65e08fa41e58e888a9865554c535f2c77126a82cb4c0f917f31441364736f6c63430007060033"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x0000000000000000000000004b45d73b83686e69d08e61105fdb7f7b51f41bc1",
+      "decoded": [
+        "0x4b45d73b83686e69d08e61105fdb7f7b51f41bc1"
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "timelockAddress()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getThreshold()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getOwners()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "getMinDelay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "signature": "delay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': None}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "method": "eth_getCode",
+      "bytes": 2039,
+      "code": "0x60806040526004361061005d575f3560e01c80635c60da1b116100425780635c60da1b146100bc5780638f283970146100f5578063f851a440146101145761006c565b80633659cfe6146100745780634f1ef286146100935761006c565b3661006c5761006a610128565b005b61006a610128565b34801561007f575f80fd5b5061006a61008e3660046106c8565b610218565b6100a66100a13660046106e1565b61028a565b6040516100b3919061075f565b60405180910390f35b3480156100c7575f80fd5b506100d0610409565b60405173ffffffffffffffffffffffffffffffffffffffff90911681526020016100b3565b348015610100575f80fd5b5061006a61010f3660046106c8565b61049f565b34801561011f575f80fd5b506100d0610506565b5f6101517f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5490565b905073ffffffffffffffffffffffffffffffffffffffff81166101fb576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602560248201527f50726f78793a20696d706c656d656e746174696f6e206e6f7420696e6974696160448201527f6c697a656400000000000000000000000000000000000000000000000000000060648201526084015b60405180910390fd5b365f80375f80365f845af43d5f803e80610213573d5ffd5b503d5ff35b7fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035473ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161480610271575033155b156102825761027f81610591565b50565b61027f610128565b60606102b47fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035490565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614806102eb575033155b156103fa576102f984610591565b5f808573ffffffffffffffffffffffffffffffffffffffff1685856040516103229291906107b2565b5f60405180830381855af49150503d805f811461035a576040519150601f19603f3d011682016040523d82523d5f602084013e61035f565b606091505b5091509150816103f1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152603960248201527f50726f78793a2064656c656761746563616c6c20746f206e657720696d706c6560448201527f6d656e746174696f6e20636f6e7472616374206661696c65640000000000000060648201526084016101f2565b91506104029050565b610402610128565b9392505050565b5f6104327fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035490565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161480610469575033155b1561049457507f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5490565b61049c610128565b90565b7fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035473ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614806104f8575033155b156102825761027f816105f9565b5f61052f7fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035490565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161480610566575033155b1561049457507fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035490565b7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc81815560405173ffffffffffffffffffffffffffffffffffffffff8316907fbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b905f90a25050565b5f6106227fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61035490565b7fb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d61038381556040805173ffffffffffffffffffffffffffffffffffffffff80851682528616602082015292935090917f7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f910160405180910390a1505050565b803573ffffffffffffffffffffffffffffffffffffffff811681146106c3575f80fd5b919050565b5f602082840312156106d8575f80fd5b610402826106a0565b5f805f604084860312156106f3575f80fd5b6106fc846106a0565b9250602084013567ffffffffffffffff811115610717575f80fd5b8401601f81018613610727575f80fd5b803567ffffffffffffffff81111561073d575f80fd5b86602082840101111561074e575f80fd5b939660209190910195509293505050565b602081525f82518060208401528060208501604085015e5f6040828501015260407fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f83011684010191505092915050565b818382375f910190815291905056fea26469706673582212209e6ff30824121f584bc707de0ed52cd9e7f59f6809d85438cf1d04f7f1ee596064736f6c634300081a0033"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xea0a6ec8114a0af6cf74ca0036ab31d892df13cb",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xb1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "signature": "getThreshold()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000003",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xb1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "signature": "getOwners()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000050000000000000000000000006933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2000000000000000000000000cbc616d595d38483e6adc45c7e426f44bf23092800000000000000000000000017e06ce6914e3969f7bd37d8b2a563890ca1c96e000000000000000000000000c8de9f45601da8c76158b8caf3e56e8a037f22280000000000000000000000006e74053a3798e0fc9a9775f7995316b27f21c4d2",
+      "decoded": [
+        [
+          "0x6933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0xc8de9f45601da8c76158b8caf3e56e8a037f2228",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2"
+        ]
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xb1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "signature": "delay()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted', 'data': '0x'}"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb8a0",
+      "to": "0xb1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "signature": "admin()",
+      "args": [],
+      "error": "{'code': 3, 'message': 'execution reverted'}"
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xfc0000000000000000000000000000000000000a",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000c4eb45d80dc1f079045e75d5d55de8ed1c1090e6",
+      "decoded": [
+        "0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6"
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6",
+      "signature": "getThreshold()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000003",
+      "decoded": [
+        3
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6",
+      "signature": "getOwners()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000050000000000000000000000008da4e997e051605878c9c0b793c496556eacc2c00000000000000000000000006e74053a3798e0fc9a9775f7995316b27f21c4d20000000000000000000000006933bcc3e96f1c4d2cb73cb391d854b18ab7a4f200000000000000000000000017e06ce6914e3969f7bd37d8b2a563890ca1c96e000000000000000000000000cbc616d595d38483e6adc45c7e426f44bf230928",
+      "decoded": [
+        [
+          "0x8da4e997e051605878c9c0b793c496556eacc2c0",
+          "0x6e74053a3798e0fc9a9775f7995316b27f21c4d2",
+          "0x6933bcc3e96f1c4d2cb73cb391d854b18ab7a4f2",
+          "0x17e06ce6914e3969f7bd37d8b2a563890ca1c96e",
+          "0xcbc616d595d38483e6adc45c7e426f44bf230928"
+        ]
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6",
+      "signature": "delay()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4ac4",
+      "to": "0xc4eb45d80dc1f079045e75d5d55de8ed1c1090e6",
+      "signature": "admin()",
+      "args": [],
+      "error": "Tried to read 32 bytes, only got 0 bytes."
+    }
+  ]
+}

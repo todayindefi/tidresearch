@@ -1,0 +1,141 @@
+{
+  "as_of": "2026-10-15",
+  "description": "Archived issuer responses and read-only on-chain evidence supporting the sfrxUSD assessment. Per-record blocks and retrieval times are retained. Public RPC endpoint maps removed; no other transformations.",
+  "files": [
+    {
+      "file": "sfrx-balance-sheet.json",
+      "source_sha256": "4f316d34acf83d11e9f6f3adb6c72e6d25fd71cae7b1ee48b16fa5c62bbec8ed",
+      "published_sha256": "4f316d34acf83d11e9f6f3adb6c72e6d25fd71cae7b1ee48b16fa5c62bbec8ed"
+    },
+    {
+      "file": "sfrx-summary.json",
+      "source_sha256": "481e83a91a2c33c800321a6006c03ef7d9a406de008c26bf9007ad5d641f19cf",
+      "published_sha256": "481e83a91a2c33c800321a6006c03ef7d9a406de008c26bf9007ad5d641f19cf"
+    },
+    {
+      "file": "frx-balance-sheet.json",
+      "source_sha256": "fe67035017e7452e7879b23d68fcd6a42d4f5c98853ff75c0c7807190e74c73c",
+      "published_sha256": "fe67035017e7452e7879b23d68fcd6a42d4f5c98853ff75c0c7807190e74c73c"
+    },
+    {
+      "file": "frx-summary.json",
+      "source_sha256": "d825fe8f6dfbb728146d51c9eeca008777d9dc9e434e7147b169dacbe133367e",
+      "published_sha256": "d825fe8f6dfbb728146d51c9eeca008777d9dc9e434e7147b169dacbe133367e"
+    },
+    {
+      "file": "derived-metrics.json",
+      "source_sha256": "cd203279ce6b47cc260f1475dc43bc323b1c4479f6094e1e1f55445cd84998b3",
+      "published_sha256": "cd203279ce6b47cc260f1475dc43bc323b1c4479f6094e1e1f55445cd84998b3"
+    },
+    {
+      "file": "ethereum-exit-ladder.json",
+      "source_sha256": "511f1530b8ca515aa3cb0d58c20bb8e27e2733e6cd22980d3d54a59ee634e325",
+      "published_sha256": "511f1530b8ca515aa3cb0d58c20bb8e27e2733e6cd22980d3d54a59ee634e325"
+    },
+    {
+      "file": "verification.json",
+      "source_sha256": "4f477e16a31d2a515e520929fa5b1af4e5ab7aa3048b4a6e7b8590751851fa69",
+      "published_sha256": "db1846aa8abb4d32654557392a57686e073dc4441afcb6b463da1f2e12f10e13"
+    },
+    {
+      "file": "vault-core.json",
+      "source_sha256": "cfad7d50a1c4980435bdf90b7aedf84cf4db3f39d0324b713bd3c4cbb5fc8066",
+      "published_sha256": "945255beafc39d3661a09a4567aefb87de294a5d48c6ba468a5e72c70ec8da4b"
+    },
+    {
+      "file": "strategy-reads.json",
+      "source_sha256": "954f811cf91f152b5e9c0ce2bdf4ba50671fdf987f4740c0b62aa7ceef134068",
+      "published_sha256": "2114da22741e109b276a153db2696fe76d513f0e033a9979bca630123a7e1da9"
+    },
+    {
+      "file": "authority.json",
+      "source_sha256": "f3d1ef648208ee65871506062dcc8810160233098e5b7b7d0d6c14805be2f225",
+      "published_sha256": "edd71936855f0ebd44aa1280f17e92c8756aaef67f758bd9d586a4da88edcc6b"
+    },
+    {
+      "file": "aave-reads.json",
+      "source_sha256": "35ea7ee73311d7b87af18ccde7549b855e60e2a8537e675e7a37e4158e373b72",
+      "published_sha256": "485e1ad939492d53e969d8dff0bfde5f1a445c00470b7c65ab973e4c09b84cbe"
+    },
+    {
+      "file": "curve-reads.json",
+      "source_sha256": "172ddf83997e0961e676eef2e09ea4511a5b2564bfc82d4593900cf685977c74",
+      "published_sha256": "d364e675abd2ad7a133a6aa9b6d976ba5a3313e99e15631a03bc27a6cd32c258"
+    },
+    {
+      "file": "routes.json",
+      "source_sha256": "6d921f7622a32df50f4fef3b345699b8cd081be77f8dfb5e4a8136f0f58b45b4",
+      "published_sha256": "11d39f5664adac4aa44d9eb17740fdb31224f718ff3e9d0478474b20fce7aeee"
+    },
+    {
+      "file": "redeemer-and-controls.json",
+      "source_sha256": "a5a27cf926f4423ed3c7d1c40846db25b9d6ae892f69aa951a6bfb9594e3a2b1",
+      "published_sha256": "370dc6207660a7679a3525b499cee0e09f0db50bc9e70d134f3d202d99ebbaf4"
+    },
+    {
+      "file": "oracle-authority.json",
+      "source_sha256": "865a457c9cc1dcb42053046e3e2bb790594f34ac48241e04c13571481a52f32e",
+      "published_sha256": "689f6f4a98bc4a09aac7472f0297ffb094bea96dbb6889c57e1203c8546c2bd0"
+    },
+    {
+      "file": "oracle-writers.json",
+      "source_sha256": "22074354e74e5be91451cb0d3261fcf26d9d8a3c609f1097324fbdc8017efcd0",
+      "published_sha256": "d64aab2add72bf2d0f141364b42e1f40b0af40099ce89c39959e2054dd3f42a3"
+    },
+    {
+      "file": "oracle-writer-events.json",
+      "source_sha256": "94e53c541aefb50f8fbdabb9220401507771389aada522212a47742c764d6f1d",
+      "published_sha256": "94e53c541aefb50f8fbdabb9220401507771389aada522212a47742c764d6f1d"
+    },
+    {
+      "file": "supported-networks.json",
+      "source_sha256": "4f811e9a77b3dd220bc29e985a1f5ceda9997ebcba84a3e2d212a9c3ee7ae3da",
+      "published_sha256": "4f811e9a77b3dd220bc29e985a1f5ceda9997ebcba84a3e2d212a9c3ee7ae3da"
+    },
+    {
+      "file": "remote-arbitrum.json",
+      "source_sha256": "3ceea89e94efb6eb11db06a1a9ead8dadeb3afddf68109fe1c11485d748ac9ca",
+      "published_sha256": "dc9c4628331d293955206f591677d87f7f37616da2b327697df1aa6caeac4b0a"
+    },
+    {
+      "file": "remote-avalanche.json",
+      "source_sha256": "66e9a618dd9aa32628e19c70f3d3b582c48b6d42b5ebcc5ceaea7721f758108b",
+      "published_sha256": "7714a72e2a8bd49bfaab8ddcca7c8c2cfb7fa9d678e75531b89e57139a9e8000"
+    },
+    {
+      "file": "remote-base.json",
+      "source_sha256": "1430c7dc148716eb518d638227290626a315b34a867732d1d0ea5cb6027aaddc",
+      "published_sha256": "e315067380cd4fda9963d5f677417302220cd6608b483904dcaaf7614f4872d4"
+    },
+    {
+      "file": "remote-bsc.json",
+      "source_sha256": "e4828e6cb48525f2169896a04cc10aff0cae09c922eaf4f7d740a15c932d6a76",
+      "published_sha256": "4448b21fcfe79bee9556f7b722659cc0cf5ef39287cdd30d8c71e922996f3dbe"
+    },
+    {
+      "file": "remote-katana.json",
+      "source_sha256": "0e352c62ce8219d1b97f7625ad54bdfd9043624fdee32f0f286ae306368b808a",
+      "published_sha256": "e384660f6b5312bd84cfb377e0eff27071a1e5cd9616c2758aa18dcd22b80ce1"
+    },
+    {
+      "file": "remote-optimism.json",
+      "source_sha256": "8d86ae7e7008f7e40a4940031fa7de661684ab70bd8a07b34b7d52ef83037539",
+      "published_sha256": "11a9721789f5f0e747ee2dd7dbe43253ae75eb6252763ff3e2183f3a36c44bb9"
+    },
+    {
+      "file": "remote-polygon.json",
+      "source_sha256": "b6cd6160650e75df5f06c240af7986fe03c1aa87ff1240d0150ad360f86a3845",
+      "published_sha256": "1ace372c02c658d843a631d72c3ad3b47fa8aefd94b8038ae1aefd6654eb19a1"
+    },
+    {
+      "file": "remote-sei.json",
+      "source_sha256": "7a5fcbac127fee4e08b3195f9b82a8089c18d46dde55fa2efb4bafbcb0fbc59b",
+      "published_sha256": "697ffb5926f88406f9eb1e217cb4f1e2f1846cae211d2fc67f9f3e23766c5ea2"
+    },
+    {
+      "file": "remote-sonic.json",
+      "source_sha256": "b23a2348c5b38a906019d09bf267d9804090f25c77ca6b344ff7bcfd0142e145",
+      "published_sha256": "07f2cc47567116a61195c9ce010224595c040d8eda96da8fc1440efb5705272b"
+    }
+  ]
+}

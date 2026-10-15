@@ -1,0 +1,789 @@
+{
+  "retrieved_at": "2026-10-15T06:31:58.443912+00:00",
+  "blocks": {
+    "ethereum": "0x18fb882",
+    "fraxtal": "0x28a4a0e"
+  },
+  "records": [
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x206689DaEDd00c82870D616c2e49b9d601A3d292",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000098d239e77b0d349877849",
+      "decoded": [
+        11546843105448664121178185
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x206689DaEDd00c82870D616c2e49b9d601A3d292",
+      "signature": "stakingToken()",
+      "args": [],
+      "raw": "0x0000000000000000000000008f38eae1e57f6d86353c15be21b7491da6840ece",
+      "decoded": [
+        "0x8f38eae1e57f6d86353c15be21b7491da6840ece"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x18574c2047A2D4786567A2C31B4f25Ae291ed6bF",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000008b17ed75ec584935d3ea",
+      "decoded": [
+        656850327074799198000106
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x18574c2047A2D4786567A2C31B4f25Ae291ed6bF",
+      "signature": "stakingToken()",
+      "args": [],
+      "raw": "0x00000000000000000000000047fdb72ccc93bc9568a82917dff767fdbb4f2f5f",
+      "decoded": [
+        "0x47fdb72ccc93bc9568a82917dff767fdbb4f2f5f"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        0
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000267abe431935af1f1a8d",
+      "decoded": [
+        181714138955448091351693
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        0
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000036468cd7463af4ac381de",
+      "decoded": [
+        4100947373081997437272542
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        4100947373081997437272542
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000398d33df6103681633aed",
+      "decoded": [
+        4348473892013533181459181
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000fd12d8606f146587381e",
+      "decoded": [
+        1195106353143390361040926
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000fd12d8606f146587381e",
+      "decoded": [
+        1195106353143390361040926
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "totalAsset()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000003cf0ff8ad24c2188498cc000000000000000000000000000000000000000000039799fbc62555f7632e13",
+      "decoded": [
+        4604601940977918157297868,
+        4342695291829681574325779
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "totalBorrow()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000002d1fd204cb5adb2fd60ae0000000000000000000000000000000000000000000292fff1c2082513908e3e",
+      "decoded": [
+        3409495587834527796256942,
+        3112038485962286443826750
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "timelockAddress()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xaB3cb84c310186B2Fa4B4503624A5D90b5DcB22D",
+      "signature": "collateralContract()",
+      "args": [],
+      "raw": "0x000000000000000000000000ac3e018457b222d93114458476f3e3416abbe38f",
+      "decoded": [
+        "0xac3e018457b222d93114458476f3e3416abbe38f"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000836bcb724afa238db715",
+      "decoded": [
+        620618470733985688172309
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        620618470733985688172309
+      ],
+      "raw": "0x000000000000000000000000000000000000000000008440e1c9d31c718cd497",
+      "decoded": [
+        624549237126758549738647
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000006b06ba7930e4a67f90ec",
+      "decoded": [
+        505417330956216135815404
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xC045A53936D793839BFCA146058976ef4285161E"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000006b06ba7930e4a67f90ec",
+      "decoded": [
+        505417330956216135815404
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "totalAsset()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000845ba839ecb60b88ca1f00000000000000000000000000000000000000000000838c9c02109595929a1c",
+      "decoded": [
+        625043151429639403522591,
+        621223794992097375984156
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "totalBorrow()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000001954edc0bbd16509393300000000000000000000000000000000000000000000189d62a2a4c1f74feafc",
+      "decoded": [
+        119625820473423267707187,
+        116240041832758813649660
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "timelockAddress()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xC045A53936D793839BFCA146058976ef4285161E",
+      "signature": "collateralContract()",
+      "args": [],
+      "raw": "0x000000000000000000000000cf62f905562626cfcdd2261162a51fd02fc9c5b6",
+      "decoded": [
+        "0xcf62f905562626cfcdd2261162a51fd02fc9c5b6"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000fb117f11053898621b2",
+      "decoded": [
+        74102296122174504051122
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        74102296122174504051122
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000010110f6d964f929f45e2",
+      "decoded": [
+        75872570085118922671586
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000010110f6d964f929f45e2",
+      "decoded": [
+        75872570085118922671586
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x8E5f09de0cD7841239410F929A905E214443d9E0"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000015164078785458e1a9c8",
+      "decoded": [
+        99580170105203456059848
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "totalAsset()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000343f07b705e1bc4ec9a400000000000000000000000000000000000000000000330982eabedb8752835e",
+      "decoded": [
+        246725757905411341470116,
+        241016144885234850235230
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "totalBorrow()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000001f28c73e8d8d636d1fdc000000000000000000000000000000000000000000001d8e2278c9ed596a5e10",
+      "decoded": [
+        147145587800207885410268,
+        139570549618902206930448
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "timelockAddress()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x8E5f09de0cD7841239410F929A905E214443d9E0",
+      "signature": "collateralContract()",
+      "args": [],
+      "raw": "0x0000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "decoded": [
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000005f5d9ff1984af9eae925",
+      "decoded": [
+        450351888231840489335077
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        450351888231840489335077
+      ],
+      "raw": "0x000000000000000000000000000000000000000000005fd7f0920b91bf21fc99",
+      "decoded": [
+        452608200779100156198041
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000035e3fb7384e65079b120",
+      "decoded": [
+        254490953468673833677088
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x470c677AF6CCE089ac38245332BfA03b22b4caeD"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000035e3fb7384e65079b120",
+      "decoded": [
+        254490953468673833677088
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "totalAsset()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000005feb277e636f739bf366000000000000000000000000000000000000000000005f70cc19e9118bd271c8",
+      "decoded": [
+        452962646551282916782950,
+        450705558251191489688008
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "totalBorrow()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000002a072c0ade89232242460000000000000000000000000000000000000000000028e5be19a14423e50212",
+      "decoded": [
+        198471693082609083105862,
+        193132661864720952001042
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "timelockAddress()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x470c677AF6CCE089ac38245332BfA03b22b4caeD",
+      "signature": "collateralContract()",
+      "args": [],
+      "raw": "0x00000000000000000000000004acaf8d2865c0714f79da09645c13fd2888977f",
+      "decoded": [
+        "0x04acaf8d2865c0714f79da09645c13fd2888977f"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000014d039259cb71645cf5a",
+      "decoded": [
+        98288370294468957818714
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        98288370294468957818714
+      ],
+      "raw": "0x000000000000000000000000000000000000000000001579e296331288ba5c29",
+      "decoded": [
+        101418079466835179887657
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000001579e296331288ba5c29",
+      "decoded": [
+        101418079466835179887657
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000017518c29b61495d084e1",
+      "decoded": [
+        110118715179811197715681
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "totalAsset()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000030371ca7c50ed969d8ab000000000000000000000000000000000000000000002ebaf2b6578ed667ae28",
+      "decoded": [
+        227690226937418736064683,
+        220677441872187590422056
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "totalBorrow()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000018e5907e0efa439953ca00000000000000000000000000000000000000000000176520d974f40da01e63",
+      "decoded": [
+        117571511757607538349002,
+        110479917309117213974115
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "owner()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "timelockAddress()",
+      "args": [],
+      "raw": "0x000000000000000000000000b1748c79709f4ba2dd82834b8c82d4a505003f27",
+      "decoded": [
+        "0xb1748c79709f4ba2dd82834b8c82d4a505003f27"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x28Cdf6Ce79702AAeFbF217cF98cbD11f5639B9f1",
+      "signature": "collateralContract()",
+      "args": [],
+      "raw": "0x0000000000000000000000009d39a5de30e57443bff2a8307a4256c8797a3497",
+      "decoded": [
+        "0x9d39a5de30e57443bff2a8307a4256c8797a3497"
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xBd8Ec7444dB271635584Cc38F5d06C72eAB762f5",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000d3c21bcecceda1000000",
+      "decoded": [
+        1000000000000000000000000
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xBd8Ec7444dB271635584Cc38F5d06C72eAB762f5",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        1000000000000000000000000
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000d40bc42772814901a263",
+      "decoded": [
+        1001358742945030717153891
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xBd8Ec7444dB271635584Cc38F5d06C72eAB762f5",
+      "signature": "maxWithdraw(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000318f8cf10f38f363e446",
+      "decoded": [
+        234043997978525054526534
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xBd8Ec7444dB271635584Cc38F5d06C72eAB762f5"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000318f8cf10f38f363e446",
+      "decoded": [
+        234043997978525054526534
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000267abe431935af1f1a8d",
+      "decoded": [
+        181714138955448091351693
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4a0e",
+      "to": "0xFc00000000000000000000000000000000000001",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000152d02c7e14af6800000",
+      "decoded": [
+        100000000000000000000000
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4a0e",
+      "to": "0xfc00000000000000000000000000000000000008",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4b45D73b83686e69d08E61105FdB7F7b51f41Bc1"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000056bc75e2d63100000",
+      "decoded": [
+        100000000000000000000
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "block": "0x28a4a0e",
+      "to": "0xFc00000000000000000000000000000000000001",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000060b2f47bb18634cc57a12",
+      "decoded": [
+        7306373114722617601128978
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "signature": "pricePerShareStored()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000000010d2596c59bfceb7",
+      "decoded": [
+        1212129571613167287
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "signature": "pricePerShareIncPerSecond()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000005e03dc9a",
+      "decoded": [
+        1577311386
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "signature": "lastSync()",
+      "args": [],
+      "raw": "0x000000000000000000000000000000000000000000000000000000006ab57f23",
+      "decoded": [
+        1790279459
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6",
+      "signature": "version()",
+      "args": [],
+      "raw": "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000005332e302e30000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        "3.0.0"
+      ]
+    }
+  ]
+}

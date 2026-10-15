@@ -1,0 +1,13 @@
+{
+  "url": "https://api.frax.finance/v2/frxusd/summary-stats/latest",
+  "retrieved_at": "2026-10-15T06:28:18.089577+00:00",
+  "status": 200,
+  "body": {
+    "intervalTimestamp": "2026-10-15T06:27:35.000Z",
+    "blockNumberEthereum": 26196117,
+    "blockNumberFraxtal": 42617475,
+    "frxusdCirculatingSupply": 103849538.76725538,
+    "frxusdTotalSupply": 114334488.63075998,
+    "frxusdPrice": 0.99974122
+  }
+}

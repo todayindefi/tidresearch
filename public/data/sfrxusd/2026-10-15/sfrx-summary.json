@@ -1,0 +1,19 @@
+{
+  "url": "https://api.frax.finance/v2/sfrxusd/summary-stats/latest",
+  "retrieved_at": "2026-10-15T06:28:18.217119+00:00",
+  "status": 200,
+  "body": {
+    "intervalTimestamp": "2026-10-15T06:27:23.000Z",
+    "blockNumberEthereum": 26196116,
+    "blockNumberFraxtal": 42617474,
+    "sfrxusdCirculatingSupply": 31240350.01815891,
+    "sfrxusdCirculatingMarketCap": 37963164.218645446,
+    "sfrxusdTotalSupply": 48449097.25993613,
+    "sfrxusdTotalMarketCap": 58875173.75621499,
+    "sfrxusdPrice": 1.2151965069718744,
+    "sfrxusdApr": 4.977513969705548,
+    "sfrxusdApy": 5.103473353818,
+    "frxusdPerSfrxusd": 1.215511056923185,
+    "frxusdPrice": 0.99974122
+  }
+}

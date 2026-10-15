@@ -1,0 +1,209 @@
+{
+  "retrieved_at": "2026-10-15T06:36:22.998036+00:00",
+  "blocks": {
+    "ethereum": "0x18fb882",
+    "fraxtal": "0x28a4a0e"
+  },
+  "records": [
+    {
+      "chain": "ethereum",
+      "to": "0xaad4a1d92053a62ce7a787641d8b4e5883e96700",
+      "block": "0x18fb882",
+      "runtime_source_match": true,
+      "source_file": "ethereum-implementation-source.json"
+    },
+    {
+      "chain": "fraxtal",
+      "to": "0xba026e978eb1b11d72adabf33b7cf6f3e321ca83",
+      "block": "0x28a4a0e",
+      "runtime_source_match": true,
+      "source_file": "fraxtal-implementation-source.json"
+    },
+    {
+      "chain": "fraxtal",
+      "to": "0xc13d8e8668f5b54d492f5c3e37cf772206f7d0a6",
+      "block": "0x28a4a0e",
+      "runtime_source_match": true,
+      "source_file": "redeemer-implementation-source.json"
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+      "signature": "convertToAssets(uint256)",
+      "args": [
+        1000000000000000000
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000000000f66c663b91b54c1",
+      "decoded": [
+        1109792489803044033
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x1feCF3d9d4Fee7f2c02917A66028a48C6706c179",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000012",
+      "decoded": [
+        18
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x1feCF3d9d4Fee7f2c02917A66028a48C6706c179",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x860cc723935fc9a15ff8b1a94237a711dfef7857"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000000c133801274ae57f370c74",
+      "decoded": [
+        14597867899335668762348660
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000006",
+      "decoded": [
+        6
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x537bed9200Fc5a14AB56E554016753676eFf12B0"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000000000000173c3853d8",
+      "decoded": [
+        99794572248
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000006",
+      "decoded": [
+        6
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4F95C5bA0C7c69FB2f9340E190cCeE890B3bd87c"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000000000000000389cf66",
+      "decoded": [
+        59363174
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000006",
+      "decoded": [
+        6
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x5fbAa3A3B489199338fbD85F7E3D444dc0504F33"
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000000000001ba65163218",
+      "decoded": [
+        1900071498264
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x7712c34205737192402172409a8F7ccef8aA2AEc",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000006",
+      "decoded": [
+        6
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x7712c34205737192402172409a8F7ccef8aA2AEc",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0xE827ABf9F462Ac4f147753D86bc5f91E186E4E9c"
+      ],
+      "raw": "0x00000000000000000000000000000000000000000000000000000e6a8bba61d0",
+      "decoded": [
+        15850773570000
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x1feCF3d9d4Fee7f2c02917A66028a48C6706c179",
+      "signature": "decimals()",
+      "args": [],
+      "raw": "0x0000000000000000000000000000000000000000000000000000000000000012",
+      "decoded": [
+        18
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x1feCF3d9d4Fee7f2c02917A66028a48C6706c179",
+      "signature": "balanceOf(address)",
+      "args": [
+        "0x4FA39D8Bd268aa07A3C441F04E07c8825E2ab163"
+      ],
+      "raw": "0x0000000000000000000000000000000000000000002bbfd5b1a994f221821d09",
+      "decoded": [
+        52889724200072040325192969
+      ]
+    },
+    {
+      "chain": "ethereum",
+      "block": "0x18fb882",
+      "to": "0x52dfc2fcEA64A5Aa33c27Cd5aC10c1eB88E83E6e",
+      "signature": "getModulesPaginated(address,uint256)",
+      "args": [
+        "0x0000000000000000000000000000000000000001",
+        100
+      ],
+      "raw": "0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000",
+      "decoded": [
+        [],
+        "0x0000000000000000000000000000000000000001"
+      ]
+    },
+    {
+      "chain": "fraxtal",
+      "to": "0xBFc4D34Db83553725eC6c768da71D2D9c1456B55",
+      "block": "0x28a4a0e",
+      "slot_name": "admin",
+      "raw": "0x000000000000000000000000c4eb45d80dc1f079045e75d5d55de8ed1c1090e6"
+    }
+  ]
+}
