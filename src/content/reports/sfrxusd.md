@@ -7,6 +7,7 @@ category: "vault-share"
 assessment_type: "full"
 date: "2026-08-29"
 last_verified: "2026-10-15"
+last_revised: "2026-10-16"
 featured: false
 production: true
 issuer: "Frax Finance / Frax Inc"
@@ -17,7 +18,7 @@ axis_frame: six
 volatility_score: 6.5
 backing_score: 5.0
 liquidity_score: 5.0
-underlying_score: 4.5
+underlying_score: 4.0
 structural_score: 3.5
 issuer_score: 5.0
 # Legacy schema field; primary redemption is discussed within Liquidity & Exit.
@@ -39,7 +40,7 @@ Ethereum holders can use a cross-chain primary route through Fraxtal or sell on 
 
 The October 15 issuer balance sheet reports **$38.026M assets against $37.969M net circulating claims**, leaving **$57,119**, or **15.04 basis points**, of surplus. Most assets are deployed rather than held as readily available redemption cash. Three signatures can exercise several important pricing, minting, upgrade and asset-recovery powers without an intervening execution delay.
 
-The overall **4.5** sits below the six-axis arithmetic mean of **4.92** because correlated administration and conditional exits constrain the benefit of stronger individual axes. No exploit, default or realized strategy loss is established by these observations.
+The overall **4.5** sits below the six-axis arithmetic mean of **4.83** because correlated administration and conditional exits constrain the benefit of stronger individual axes. No exploit, default or realized strategy loss is established by these observations.
 
 **Evidence basis.** The issuer snapshot is **October 15, 2026, 06:23:47 UTC**, with Ethereum block **26,196,098** and Fraxtal block **42,617,358**. Strategy and exit quotes use that Ethereum block; nearby token, authority and remote-chain checks retain their own blocks and retrieval times in the [archived evidence](/data/sfrxusd/2026-10-15/manifest.json). Dollar figures use issuer marks, including frxUSD at $1, unless another mark is specified. These are dated observations rather than live quotes.
 
@@ -111,15 +112,17 @@ The low-cost route reaches $5M, approximately **13.2% of net circulating NAV cla
 
 ### Continuing into USDT
 
-Adding the frxUSD/USDT pool `0xD6937eA8D33B0C21348F36F7895FdE3054bA4927` gives a materially smaller dollar exit. A $100K NAV-sized input returns **100,040.04 USDT**, worth approximately **$99,931** at the snapshot mark of $0.99891, a **6.90bp** cost. A $1M input returns **894,058.08 USDT**, approximately **10.69% below** input value after that mark. Larger inputs flatten near 894K USDT. The controller owns approximately **99.9948%** of this pool's LP supply too. [Archived route quotes](/data/sfrxusd/2026-10-15/ethereum-exit-ladder.json).
+Adding the frxUSD/USDT pool `0xD6937eA8D33B0C21348F36F7895FdE3054bA4927` gives a materially smaller dollar exit. A $100K NAV-sized input returns **100,040.04 USDT**, worth approximately **$99,931** at the snapshot mark of $0.99891, a **6.90bp** cost. A $1M input returns **894,058.08 USDT**, approximately **10.69% below** input value after that mark. Larger inputs flatten near 894K USDT. The controller directly holds LP tokens representing approximately **99.9948%** of this pool's LP supply; this position is not Convex-staked. [Archived route quotes](/data/sfrxusd/2026-10-15/ethereum-exit-ladder.json).
 
 Strategy balances are not equivalent to immediately withdrawable cash. The largest Fraxlend position showed approximately **$4.348M** of claims but **$1.195M** withdrawable; Gearbox showed **$1.001M** versus **$0.234M**. Aave's approximately **$16.275M** supplied position faced a **$4.059M shared-hub liquidity bound**, not a reserved withdrawal allocation. These values and treasury-owned pool liquidity cannot simply be added as independent exit capacity.
 
 **Risks and limitations.** Treasury-owned depth can be withdrawn and can be needed by the same strategies supporting the token. A cheap frxUSD sale still leaves frxUSD's own dollar redemption and eligibility requirements. End-to-end primary-route latency and failure recovery were not tested. Sequential read-only pool quotes are not global router optimization; remote-chain exit ladders were not measured.
 
-## 4 · Dependencies — 4.5
+## 4 · Dependencies — 4.0
 
 The product relies on frxUSD reserves, lending protocols, liquidity pools, price administration and cross-chain settlement. Lending through Aave, Fraxlend and Gearbox accounts for approximately **60.17% of reported assets**; external liquidity-pool legs add approximately **19.88%**. Aave alone represents 42.80%.
+
+The **4.0 Dependencies score** reflects concentrated strategy, custody and settlement dependencies beyond frxUSD's reserve chain. A pass-through wrapper that holds only its underlying can share the parent's dependency score; sfrxUSD deploys capital into additional lending and pool venues, so that equal-score convention does not apply. Its 4.0 sits below frxUSD's 4.5 dependency score. Partly substitutable strategies limit the penalty. Strategy loss and valuation risk remain in Backing, while mutable pricing and privileged powers remain in Contract & Admin.
 
 Fraxlend collateral includes sfrxETH, sfrxUSD, WBTC, WFRAX and sUSDe. Lending against sfrxUSD creates a reflexive link between the token's own exit quality and the collateral securing part of its strategy. WFRAX adds Frax-correlated exposure; reUSD and scrvUSD introduce additional issuer and protocol dependencies. The checked Aave custody positions held supplied frxUSD without active frxUSD debt at those addresses.
 
@@ -166,6 +169,8 @@ The current evidence establishes the product's public identity, strategy disclos
 - Executed exit quotes into the desired final asset, rather than frxUSD-only depth or aggregate TVL.
 
 ## Revision history
+
+- **2026-10-16 — Editorial reconciliation.** Dependencies 4.5 → 4.0 for the additional concentrated strategy, custody and settlement layer beyond frxUSD; the equal-score convention for pure pass-through wrappers does not apply. Overall remains 4.5; the six-axis mean is 4.83. Clarified approximately 99.9998% ownership of sfrxUSD/frxUSD through Convex and 99.9948% of frxUSD/USDT through directly held LP tokens. October 15 observation clocks and verification date are unchanged; no fresh verification or dashboard/feed promotion is implied.
 
 - **2026-10-15 — Staging refresh.** Adopted the updated strategy, redemption, authority and multichain evidence. Overall 5.0 → 4.5; Stability 7.0 → 6.5; Backing 6.5 → 5.0; Contract & Admin 5.0 → 3.5. Liquidity & Exit remains 5.0, Dependencies 4.5 and Issuer 5.0. Replaced the hard-yield-ceiling and frxUSD-only vault rationale, incorporated actual lending/LP balances and measured exits, and replaced direct Ethereum redemption assumptions with the Fraxtal route. These are corrections to the assessment, not a dated exploit or loss event. Primary redemption is incorporated within Liquidity & Exit; its legacy field changes 6.5 → 5.0. Issuer remains explicitly carried with legal verification gaps stated.
 - **2026-08-29 — Initial publication.** First assessment of sfrxUSD; superseded assumptions are replaced in the current body.
