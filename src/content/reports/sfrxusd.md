@@ -8,7 +8,7 @@ assessment_type: "full"
 date: "2026-08-29"
 last_verified: "2026-10-15"
 featured: false
-production: false
+production: true
 issuer: "Frax Finance / Frax Inc"
 underlying_assets: ["frxUSD"]
 yield_bearing: true
