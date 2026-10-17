@@ -128,7 +128,6 @@ const SELF_REF_BACKLOG: Record<string, number> = {
   "usdai.md": 1,
   "usdc.md": 7,
   "usdg.md": 3,
-  "usdm.md": 3,
   "usds.md": 3,
   "usdt.md": 5,
   "wylds.md": 1,
