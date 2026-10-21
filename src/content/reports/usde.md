@@ -35,7 +35,9 @@ live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usde"
 
 USDe is Ethena's dollar-pegged claim on a managed reserve portfolio combining liquid assets, institutional custody and credit, real-world assets and a derivatives overlay. The [Risk Committee's quarterly update](https://gov.ethenafoundation.com/t/ethena-s-july-september-2026-governance-update/857) reports hedged BTC/ETH positions at **17% of backing on September 30**, alongside **74% liquid cash** and **6% JAAA/STAC RWAs**. Rounded categories do not sum to 100%; borrower-level and current instrument weights remain incomplete.
 
-The **September 27 attestation** reconciled $4.953bn backing against $4.949bn supply, plus a $62.095m Reserve Fund. Separately, the **October 12 Risk Committee snapshot** reported **101.43% coverage including a $62.57m fund**. These are dated snapshots with different sources and scopes. **Live supply, backing, coverage and Reserve Fund values are unmeasured while the hourly LlamaRisk overview returns HTTP 404.** An unavailable source does not establish a reserve loss.
+The **September 27 attestation** reconciled $4.953bn backing against $4.949bn supply, plus a $62.095m Reserve Fund. Separately, the **October 12 Risk Committee snapshot** reported **101.43% coverage including a $62.57m fund**. These are dated snapshots with different sources and scopes. **The LlamaRisk-backed hourly producer has unavailable supply, backing, coverage and Reserve Fund fields while its overview source returns HTTP 404.** An unavailable source does not establish a reserve loss.
+
+Ethena's [issuer dashboard API](https://app.ethena.fi/api/collateralization/status) reported a snapshot at **2026-10-21 05:59:44 UTC**: **$4.669751bn backing**, **$4.665188bn USDe supply** and a **$62.102m Reserve Fund**, implying **100.0978% coverage before / 101.4290% after the fund**. This is **issuer-reported**, not independent verification of offchain assets. It is separate from the September attestation and October 12 committee snapshot, and does not repair the LlamaRisk-backed hourly producer outage.
 
 The 6.5 overall score reflects a stable peg, active institutional arbitrage and measured secondary liquidity. It is limited by permissioned primary redemption, incomplete portfolio look-through, overlapping counterparties and concentrated administrative authority.
 
@@ -72,7 +74,7 @@ At **October 12**, the committee reported a **$62.57m Reserve Fund against a $45
 
 The October 11 reserve-account inventory covered **13 of 13 disclosed accounts**. Seven accounts still lack reconstructed September 27 balances, limiting historical comparisons. Account enumeration and status-gated asset marks are distinct from the integrated hourly supply/backing reconciliation; completing wallet tracking does not repair the LlamaRisk overview's **HTTP 404**.
 
-**Risks and limitations.** Live coverage remains unmeasured. Neither the September attestation nor October 12 committee snapshot substitutes for a restored, reconciled live source. Backing stays **6.5**; no new score is inferred from the outage.
+**Risks and limitations.** Independently checked live offchain coverage remains unavailable. The October 21 issuer-reported snapshot supplies a newer dated observation, but neither it nor the earlier attestation and committee snapshots substitutes for a restored, reconciled hourly producer. Backing stays **6.5**; no new score is inferred from the outage.
 
 ## 3 · Liquidity & Exit — 7.0
 
@@ -118,7 +120,7 @@ The [ENA fee-switch schedule](https://gov.ethenafoundation.com/t/ena-fee-switch-
 
 ## What to watch
 
-- **Coverage before and after the Reserve Fund.** Restore the hourly source before asserting current coverage; retain the September and October committee observations as dated snapshots.
+- **Coverage before and after the Reserve Fund.** Restore the hourly source before asserting independently checked current offchain coverage; distinguish the October 21 issuer-reported snapshot from the earlier attestation and committee readings.
 - **The asset-level reserve split.** Current loan, RWA, cash and derivatives weights remain incomplete.
 - **Ethereum and chain-local exit depth.** The measured Ethereum floor is $5 million; other deployments lack executable ladders.
 - **The $7.5 billion fee-switch threshold.** Activation changes how protocol revenue is allocated.
@@ -133,6 +135,8 @@ The [ENA fee-switch schedule](https://gov.ethenafoundation.com/t/ena-fee-switch-
 *Evidence refresh dated October 21; full asset verification remains October 11. Portfolio, oracle, execution and authority observations retain their stated measurement dates. The [USDe dashboard](https://tidresearch.com/dashboards/?asset=usde) is linked for monitoring; the hourly backing source is unavailable.*
 
 ## Revision history
+
+- **2026-10-21 — issuer-reported snapshot reconciliation.** Added the 05:59:44 UTC issuer-reported snapshot: $4.669751bn backing, $4.665188bn supply, $62.102m Reserve Fund; 100.0978% before / 101.4290% after the fund. Supersedes the blanket statement that no newer backing observation was available, without implying independent offchain verification or restoration of the hourly producer. All scores unchanged, including Overall 6.5; full verification remains October 11.
 
 - **2026-10-21 — evidence and editorial refresh; all scores unchanged.** The Q1 11% hedge weight is historical; September 30 hedged BTC/ETH was 17%. Replaced the obsolete roughly 9× fund-sizing claim with October 12's $62.57m / $45.7m, or 1.4×. October 11 coverage of 99.1682% before / 100.4590% after the fund and the 79.55% liquid/unallocated / 20.45% CEX-collateral classification are historical, with collateral distinct from hedge notional; account balances are also dated; the LlamaRisk overview returns HTTP 404. September attestation and October 12 committee coverage remain distinct dated snapshots. The October 2025 Binance low was about $0.65, not $0.97. Ethereum full-reach administration has a 24-hour delay, not no timelock. Fee-switch approval remains distinct from activation below $7.5bn. Overall remains 6.5.
 

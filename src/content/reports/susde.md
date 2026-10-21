@@ -75,7 +75,9 @@ sUSDe holds USDe and has no independent reserve portfolio. Share accounting reco
 
 The **September 27 USDe attestation** reconciled $4.953bn backing against $4.949bn supply plus a $62.095m fund. The separate **October 12 Risk Committee snapshot** reported **101.43% coverage including a $62.57m fund**. That fund was **1.4× the $45.7m recommended size**. Neither snapshot is live coverage.
 
-**Risks and limitations.** The hourly LlamaRisk overview returns **HTTP 404**, leaving current inherited supply, backing, coverage and Reserve Fund values unmeasured. The October 11 inventory covered all 13 disclosed reserve accounts, but seven accounts still lack September 27 history. Account tracking does not resolve the separate hourly reconciliation outage, and the wrapper adds no second loss cushion.
+Ethena's [issuer dashboard API](https://app.ethena.fi/api/collateralization/status) reported a snapshot at **2026-10-21 05:59:44 UTC**: **$4.669751bn backing**, **$4.665188bn USDe supply** and a **$62.102m Reserve Fund**, implying **100.0978% coverage before / 101.4290% after the fund**. This is **issuer-reported**, not independent verification of offchain assets. It is separate from the September attestation and October 12 committee snapshot, and does not repair the LlamaRisk-backed hourly producer outage.
+
+**Risks and limitations.** The hourly LlamaRisk overview returns **HTTP 404**, leaving the LlamaRisk-backed hourly producer's inherited supply, backing, coverage and Reserve Fund fields unavailable. The separate issuer-reported snapshot does not independently verify offchain assets. The October 11 inventory covered all 13 disclosed reserve accounts, but seven accounts still lack September 27 history. Account tracking does not resolve the separate hourly reconciliation outage, and the wrapper adds no second loss cushion.
 
 ## 3 · Liquidity & Exit — 7.0
 
@@ -154,7 +156,7 @@ These October 19 measurements are realized exchange-rate changes, not an adverti
 - **Aave, Morpho and Pendle holdings.** Concentration can turn leveraged unwinds into correlated selling.
 - **Pendle maturities.** Monad and Plasma markets mature on October 22; Ethereum follows on November 26.
 - **Bridged authority.** Blast and Fraxtal lack Ethereum's delay, while Monad's proposer remains unresolved.
-- **USDe coverage and Reserve Fund.** Live economic coverage is unmeasured during the hourly-source outage; dated attestations do not substitute for live data.
+- **USDe coverage and Reserve Fund.** The October 21 issuer-reported snapshot is available, but independently checked live offchain coverage remains unavailable during the hourly producer outage.
 
 ## Related
 
@@ -165,6 +167,8 @@ These October 19 measurements are realized exchange-rate changes, not an adverti
 *Evidence refresh dated October 21; full six-axis verification remains October 11. Vault readings are dated October 20, NAV history October 19 and executable liquidity/concentration October 11. The [sUSDe dashboard](https://tidresearch.com/dashboards/?asset=susde) is linked for monitoring; inherited hourly backing coverage is unavailable.*
 
 ## Revision history
+
+- **2026-10-21 — issuer-reported snapshot reconciliation.** Added the 05:59:44 UTC issuer-reported snapshot: $4.669751bn backing, $4.665188bn supply, $62.102m Reserve Fund; 100.0978% before / 101.4290% after the fund. Supersedes the blanket statement that no newer backing observation was available, without implying independent offchain verification or restoration of the hourly producer. All scores unchanged, including Overall 6.5; full verification remains October 11.
 
 - **2026-10-21 — evidence and editorial refresh; scores unchanged.** Updated October 20 vault state and October 19 NAV growth. Inherited hourly backing coverage is unmeasured during the LlamaRisk HTTP 404; October 11 coverage of 99.1682% before / 100.4590% after the fund is historical. September attestation and October 12 committee coverage are separate snapshots. Superseded seven-day-limit descriptions do not apply: the measured cooldown is one day with a 90-day contract maximum, controlled through Ethereum's 24-hour full-reach path. The October 2025 Binance USDe low was about $0.65, not $0.97; this is underlying venue risk inherited by sUSDe. October 12 fund sizing was 1.4×, not roughly 9×; the old 11% hedge weight is historical against September 30's 17%. Fee-switch passage is not activation. Overall remains 6.5.
 
