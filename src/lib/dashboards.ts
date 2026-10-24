@@ -29,6 +29,7 @@
  */
 export const DASHBOARD_EMBED_SLUGS = new Set<string>([
   "crvusd",
+  "fxusd",
   "usdd",
   "ousd",
   "thusd",
