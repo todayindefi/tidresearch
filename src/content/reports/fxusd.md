@@ -24,7 +24,7 @@ structural_score: 5.0
 issuer_score: 5.5
 overall_score: 5.0
 featured: false
-production: false
+production: true
 ---
 
 # fxUSD — Risk Report
@@ -39,7 +39,7 @@ fxUSD is f(x) Protocol's dollar stablecoin on Ethereum. Users mint it against ws
 
 The October 24 review marked fxUSD at **$0.999903**, with a **132.51% aggregate collateral ratio**. WBTC carried **87.61% of debt at 128.35% collateralization**, so the backing is predominantly exposed to bitcoin and its custodian. The October 23 routed sale crossed −50 bps between **$4.445m and $4.480m** of fxUSD input, much smaller than the 26.13m fxUSD leg previewed for a full Morpho Blue fxSAVE queued exit on October 21.
 
-Code upgrades and both collateral oracles' owner functions sit behind a **72-hour timelock**. The main 6-of-9 Safe and emergency 3-of-4 Safe can still change pool oracle pointers without waiting, and a public audit matching the later Ethereum pool rework has not been established. The **5.0/10** overall judgement weighs these remaining controls and exit constraints against the near-dollar peg and verified governance safeguards. This report remains staged.
+Code upgrades and both collateral oracles' owner functions sit behind a **72-hour timelock**. The main 6-of-9 Safe and emergency 3-of-4 Safe can still change pool oracle pointers without waiting, and a public audit matching the later Ethereum pool rework has not been established. The **5.0/10** overall judgement weighs these remaining controls and exit constraints against the near-dollar peg and verified governance safeguards.
 
 ## 1 · Stability — 5.5
 
