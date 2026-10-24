@@ -8,142 +8,123 @@ category: "stablecoin"
 peg_mechanism: "Overcollateralised CDP: wstETH and WBTC pledged against leveraged positions, with a Stability Pool; redemption opens only below $0.998"
 assessment_type: "full"
 date: "2026-09-22"
-last_verified: "2026-09-22"
-last_revised: "2026-10-21"
+last_verified: "2026-10-24"
+last_revised: "2026-10-24"
 issuer: "f(x) Protocol (AladdinDAO)"
 audited_reserves: false
-market_cap_approx: 85400000
-# Redemption refusal (axis 1/3) reproduced from this desk 2026-09-22: PoolManager
-# redeem(address,uint256,uint256) from the Stability Pool (77.3M fxUSD) on the
-# wstETH pool reverted 0x43ccee0a = ErrorRedeemNotAllowed(); the burn address on
-# the WBTC pool reverted 0x1e226974 = ErrorRedeemExceedBalance(), so the pair
-# discriminates. riskAnalyst reproduced the holder refusal on the WBTC pool too.
-# The re-enable condition is NOT established; "never used" is NOT measured.
-# Timelock role history shares the fxSAVE frontmatter note: end state verified
-# here; grant/revoke history per tx
-# 0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af.
+market_cap_approx: 78220000
+# October 24 review: source files are local reviewed drafts, not yet committed.
+# underlying_score retains the existing Dependencies assessment; no replacement
+# dependency score was authored in the October 24 source overlays.
 peg_mechanism_score: 5.5
 backing_score: 5.0
 liquidity_score: 4.5
 underlying_score: 5.0
-structural_score: 4.0
+structural_score: 5.0
 issuer_score: 5.5
-overall_score: 4.5
+overall_score: 5.0
 featured: false
 production: false
 ---
 
 # fxUSD — Risk Report
 
-**Elevated risk · 4.5/10**
+**Moderate risk · 5.0/10**
 
-**Category:** Stablecoin | **Peg Mechanism:** Overcollateralised CDP with a Stability Pool; redemption opens only below $0.998 | **Issuer:** f(x) Protocol (AladdinDAO)
+**Category:** Stablecoin | **Mechanism:** wstETH/WBTC-backed CDP with a Stability Pool | **Issuer:** f(x) Protocol (AladdinDAO)
 
 ## Summary
 
-fxUSD is the dollar stablecoin of f(x) Protocol, built by AladdinDAO and live on Ethereum since 2023. It is minted against wstETH and WBTC that users pledge to open leveraged long positions, so the collateral behind it is not idle but working — and the October 21 producer read puts 88.2% of the debt against WBTC, a custodial asset. Supply was 85,378,866 on 2026-09-22, up 8.6% in sixteen days, at a price of $0.99966 — a market capitalisation of about $85.4M — and 90.55% of it sat inside the protocol's own Stability Pool, leaving about 1.87M fxUSD of free float.
+fxUSD is f(x) Protocol's dollar stablecoin on Ethereum. Users mint it against wstETH or WBTC pledged to leveraged long positions. A Stability Pool supports the peg and absorbs liquidations; direct redemption for collateral opens only when the Curve EMA price falls below $0.998. Near par, holders depend on secondary-market liquidity.
 
-The design carries two peg defences. One is redemption: a holder may exchange fxUSD for collateral at one dollar, taking it from the most-leveraged positions first, for a 0.5% fee. The other is a Stability Pool that holds fxUSD — 77.3M of it on 2026-09-22 — and arbitrages the Curve market while absorbing liquidated collateral. The Stability Pool is active. Redemption is not an at-will exit: the protocol opens it only while fxUSD's Curve price sits below $0.998, so at $0.99966 it is closed on both pools. It is an arbitrage that caps the downside near $0.998, not a floor at par.
+The October 24 review marked fxUSD at **$0.999903**, with a **132.51% aggregate collateral ratio**. WBTC carried **87.61% of debt at 128.35% collateralization**, so the backing is predominantly exposed to bitcoin and its custodian. The October 23 routed sale crossed −50 bps between **$4.445m and $4.480m** of fxUSD input, much smaller than the 26.13m fxUSD leg previewed for a full Morpho Blue fxSAVE queued exit on October 21.
 
-Code upgrades sit behind a 72-hour timelock whose only proposer is a 6-of-9 Safe. What the code reads does not: the price oracles that decide liquidations and whether redemption opens can be repointed instantly by a Safe, and on the WBTC pool — nine-tenths of the debt — by a single deployer key. The contracts that custody the collateral also fall outside the published audit. The October 20 fxUSD→USDC route crossed −50 bps at $3.37m–$3.39m and −200 bps at $3.95m–$3.99m, with observed proceeds peaking near $4.27m. These dated quotes constrain the fxUSD leg of fxSAVE redemption; fxSP also returns USDC directly. The **4.5/10** overall score reflects an over-collateralised stablecoin at modest scale with a tight peg record, whose collateral's worst day is its own and whose delay protects the code but not the marks.
-
-This partial October 21 refresh records a **136.743% aggregate collateral ratio**, versus the corrected historical September 150.6%. All scores, including overall **4.5/10**, remain unchanged pending the FXSave concentration and direct exit-depth review; last_verified remains September 22. Morpho Blue now holds **24.370m fxSAVE (37.38%)**, whose queued redemption previews about **26.13m fxUSD + 1.29m USDC**, before market impact.
-
-> ⚠️ **Redemption is not an at-will exit.** On 2026-09-22, `redeem(address,uint256,uint256)` on the f(x) PoolManager (`0x250893CA4Ba5d05626C785e8da758026928FCD24`) reverted with `ErrorRedeemNotAllowed()` from the Stability Pool — a holder of 77.3M fxUSD — on both the wstETH pool (`0x6ecfa38fee8a5277b91efda204c235814f0122e8`) and the WBTC pool (`0xab709e26fa6b0a30c119d8c55b887ded24952473`); a control call from the burn address reverted with a different error, so the refusal is the protocol's. The gate is `isRedeemAllowed()` on the PoolConfiguration contract (`0x16b334f2644cc00b85DB1A1efF0C2C395e00C28d`), which opens redemption only while the Curve EMA price of fxUSD is below $0.998 — at $0.99883 it returned `false`, with borrowing open. There is no admin switch. **A holder cannot use redemption as a floor at par**: it is an arbitrage that becomes available once the price has already fallen about 20 basis points, and it caps the downside near $0.998 rather than at one dollar. f(x)'s public security page states that redemption is "enabled (as always)" — that page describes the protocol's first version and does not apply to fxUSD.
+Code upgrades and both collateral oracles' owner functions sit behind a **72-hour timelock**. The main 6-of-9 Safe and emergency 3-of-4 Safe can still change pool oracle pointers without waiting, and a public audit matching the later Ethereum pool rework has not been established. The **5.0/10** overall judgement weighs these remaining controls and exit constraints against the near-dollar peg and verified governance safeguards. This report remains staged.
 
 ## 1 · Stability — 5.5
 
-fxUSD is designed to hold one dollar through two mechanisms. Redemption lets any holder exchange fxUSD for collateral at par, drawing from the highest-leverage positions first, which both defends the peg from below and de-risks the protocol at the same time. The Stability Pool holds fxUSD deposited by users, absorbs collateral from positions that are liquidated, and arbitrages the Curve pool when fxUSD trades away from par. On 2026-09-22 fxUSD traded at $0.99966, about 3 basis points below par, and the Stability Pool held 77,309,256 fxUSD and was active. The record is tight: across 8,073 hourly observations from 2025-08-01 to 2026-09-22, 99.58% fell within ±1% of par and 99.93% within ±2%; the deepest excursion was −3.54% on 2026-07-01, lasting four hours; 24 episodes below −1% occurred, all short, and the distribution is symmetric (0.46% of readings above +1%). The mean over the last 90 days is 0.99981.
+fxUSD uses two peg mechanisms. The Stability Pool holds deposited fxUSD, arbitrages the Curve market and absorbs collateral from liquidated positions. Protocol redemption lets holders exchange fxUSD for collateral from the most leveraged positions, subject to a price gate and a configured 0.5% fee.
 
-The two defences operate in different price regions. The Stability Pool works continuously. Redemption is gated by `isRedeemAllowed()` on the PoolConfiguration contract, which opens it only while the Curve EMA price is below $0.998 — so above that line the peg rests on the Stability Pool and secondary-market arbitrage, and below it redemption at par becomes the mechanism that pulls the price back. That is a designed two-sided defence, and the refusal a holder sees at $0.9988 is the mechanism in its closed state rather than a switched-off feature.
+`isRedeemAllowed()` on [PoolConfiguration](https://etherscan.io/address/0x16b334f2644cc00b85DB1A1efF0C2C395e00C28d) opens redemption only when the Curve EMA is below $0.998. It remained **false on October 24**. September holder simulations on both collateral pools reverted with `ErrorRedeemNotAllowed()`; a no-balance control failed with a different error. The gate creates a conditional arbitrage opportunity, not an at-will redemption right or guaranteed price floor.
 
-**Risks and limitations.** That record describes a small market. 90.55% of supply sits inside the Stability Pool and 7.3% in Curve pools, so the free float is about 1.87M fxUSD — 2.2% of supply — and holding a band on that float is a far easier problem than the supply figure suggests; every ratio struck against supply overstates the tradeable asset by roughly 45 times. The observations are hourly aggregator prints, so a four-hour excursion is not trade-verified. And the record predates a regime change that cannot be dated: redemption is refused today and it is not known when that began, so the thirteen months may describe a system with two defences where today's has one. The regime change the record may span is therefore not an admin action but a price one — redemption has been closed whenever fxUSD traded above $0.998, which the record says is nearly always. Whether redemption has ever been used could not be determined — a sample of PoolManager logs and transactions showed no redemption, but a sample is not a history, and if the contract emits no dedicated event its absence carries no information.
+The October 24 price was $0.999903. Historical hourly observations from August 2025 through September 22, 2026 showed 99.58% within ±1% of par; the deepest reported excursion was −3.54%, lasting four hours.
+
+**Risks and limitations.** The historical peg series uses aggregator prints rather than trade-verified execution. At Ethereum block 26,259,353 on October 24, **90.12% of supply was in fxSP**. A tight peg on the smaller circulating float does not establish that a large release from the Stability Pool can exit near par.
 
 ## 2 · Backing — 5.0
 
-fxUSD is minted against wstETH and WBTC. Users deposit one of the two, open a leveraged long position on it, and receive fxUSD as the stable side of that position; the collateral stays pledged against the position for as long as the fxUSD exists. The October 21 producer read at Ethereum block **26,239,007** gives **136.743% aggregate collateral ratio**. The **WBTC pool is at 132.19% and carries 88.2% of debt**; wstETH is at 170.95%.
+Collateral remains pledged against leveraged positions in f(x)'s CDP markets. The October 24 producer snapshot at Ethereum block **26,259,353** gives:
 
-For historical comparison, the corrected September 22 calculation was:
+| Collateral pool | Share of debt | Collateral ratio |
+|---|---:|---:|
+| WBTC | **87.61%** | **128.35%** |
+| wstETH | 12.39% | 161.96% |
+| Aggregate | 100% | **132.51%** |
 
-| Pool | Collateral | Value | Debt (fxUSD) | Collateral ratio |
-|---|---:|---:|---:|---:|
-| wstETH `0x6ecfa38f…22e8` | 6,661.71 stETH-equivalent raw collateral at $2,748.68 | $18,310,916 | 8,786,912 | 208.4% |
-| WBTC `0xab709e26…2473` | 1,293.99 WBTC at $85,224.68 | $110,279,866 | 76,591,690 | 144.0% |
-| **Aggregate (September 22)** | | **$128,590,782** | **85,378,602** | **150.6%** |
+The aggregate ratio is collateral value divided by pool debt, with both legs marked at the observation. It compares with **136.743% on October 21** and the corrected **150.6% on September 22**. October 24 token supply was about 78.22m fxUSD, implying a market capitalization of about $78.22m at the near-dollar mark.
 
-The September raw wstETH collateral getter returns stETH-equivalent units; applying a wstETH price double-counted the wrap rate. The 155.4% aggregate figure was overstated. Debt reconciled within 264 fxUSD of supply, but that did not validate collateral valuation. The September WBTC share of debt was 89.7%; October 21's 88.2% replaces it for the current concentration read.
-
-**Risks and limitations.** fxUSD's worst day and its collateral's worst day are the same event, by construction, and that day is a bitcoin day far more than an ether day. The WBTC leg carries BitGo's custody as an off-chain counterparty behind nine-tenths of the debt. Public material disagrees on the collateral set — older sources describe stETH-only backing, current sources wstETH and WBTC — which is a version split rather than a contradiction, and the live PoolManager is the only reliable source. Supply grew 8.6% in sixteen days, so the ratios above are dated to the block they were read at.
+**Risks and limitations.** WBTC is a custodial asset and carries most debt at the lower collateral ratio. Falling BTC or ETH prices pressure leveraged borrowers and their backing together. The aggregate ratio conceals that concentration; wstETH's higher ratio protects a relatively small share of debt.
 
 ## 3 · Liquidity & Exit — 4.5
 
-A holder has, in principle, two exits: redeem against the protocol at par, or sell on a DEX. The first opens only below $0.998, so at par the second is the exit. Thirty-three Curve pools were enumerated by contract address, and no Uniswap V2, Uniswap V3, SushiSwap or Balancer venue for fxUSD exists. The pools with material TVL on 2026-09-22:
+A holder can sell fxUSD on a DEX or use protocol redemption when its price gate opens. While direct redemption remains gated, immediate dollar exits depend on market routes, principally the Curve USDC/fxUSD venue and additional stablecoin hops.
 
-| Pool | TVL |
-|---|---:|
-| **USDC/fxUSD** | **$10,003,381** |
-| reUSD/fxUSD | $1,386,719 |
-| USDnr/fxUSD | $711,153 |
-| msUSD/fxUSD | $431,309 |
-| fxUSD/frxUSD · alUSD/fxUSD · GHO/fxUSD · eUSD/fxUSD | $163,257 · $153,097 · $112,237 · $42,195 |
-| **Total** | **about $13.0M — 15.2% of market capitalisation** |
+The **October 23, 23:48 UTC fxUSD→USDC routed quote** crossed **−50 bps between $4.445m and $4.480m of input**, with observed USDC proceeds peaking near **$5.31m** across tested routes. These are indicative dated quotes, not guaranteed execution, a permanent market ceiling or settled proceeds. Pool TVL is not executable depth.
 
-The USDC pool is the only dollar exit of size; the rest pair fxUSD against other stablecoins, several of which are thinner than fxUSD itself.
+The concentrated stress case sits in [fxSAVE](/reports/fxsave/). On October 21, Morpho Blue held 24.370m fxSAVE, 37.38% of supply. A full queued redemption previewed roughly **26.13m fxUSD plus 1.29m USDC**, before market impact. The fxUSD leg alone materially exceeds the routed crossing. **fxSP returns USDC directly as a second leg**, so a route's fxUSD proceeds peak does not cap the complete fxSAVE payout.
 
-The **October 20 fxUSD→USDC routed quotes** crossed **−50 bps at $3.37m–$3.39m** and **−200 bps at $3.95m–$3.99m**, with observed USDC proceeds peaking near **$4.27m**. These are dated router observations, not a permanent market ceiling or settled proceeds. The September ladder and venue TVLs are historical.
-
-**Risks and limitations.** At October 21 block 26,239,340, Morpho Blue held **24.370m fxSAVE, 37.38% of supply**, above fxSAVE's 30% score-review trigger. Full queued redemption previews roughly **26.13m fxUSD + 1.29m USDC**, before market impact. The fxUSD leg far exceeds the quoted route size, but fxSP pays USDC directly as a second leg: the $4.27m observed route peak is **not a ceiling on all fxSAVE redemption proceeds**. The current direct fxSAVE exit ladder remains unmeasured (see the [fxSAVE report](/reports/fxsave/)); scores await the concentration and direct exit-depth review.
+**Risks and limitations.** Quotes change with balances and routing. The October 21 redemption preview and October 23 market ladder are separate observations, not an atomic full-position execution. A current direct fxSAVE exit ladder and a concentration review remain open; the fxUSD liquidity score stays 4.5.
 
 ## 4 · Dependencies — 5.0
 
-fxUSD's value passes through three things: the collateral it is minted against, the oracles that price it, and the Curve pool that carries its peg arbitrage. The collateral is wstETH (Lido's staked-ETH wrapper) and WBTC (BitGo's custodial wrapped bitcoin); both are priced by oracles for liquidation and redemption purposes. The Stability Pool that now carries the whole peg defence is the same contract whose deposits back fxSAVE.
+fxUSD depends on WBTC's custody, Lido's wstETH, collateral price oracles and Curve liquidity. The [USDC/fxUSD pool](https://etherscan.io/address/0x5018BE882DccE5E3F2f3B0913AE2096B9b3fB61f) is both a major exit venue and the source of the EMA used by the redemption gate. Market liquidity and the condition for protocol redemption therefore share a dependency.
 
-**Risks and limitations.** WBTC is custodial, so one of the two collateral legs carries an off-chain counterparty. Both legs are volatile assets under leverage, and stress in either reaches fxUSD through liquidation rather than being insulated from it. Because the Stability Pool backs fxSAVE and defends fxUSD at the same time, stress in fxSAVE and stress in fxUSD are not independent events.
+The Stability Pool also backs fxSAVE. Its redemption can release fxUSD into the market, and both assets share the same ProxyAdmin and timelock. They are correlated protocol and governance exposures.
 
-## 5 · Contract & Admin — 4.0
+**Risks and limitations.** The WBTC custodian dominates the collateral mix. Oracle or Curve disruption can affect marks, liquidations, redemption access and market exits at the same time. The Dependencies score is the existing authored 5.0; this review updates its factual basis without assigning a new score.
 
-fxUSD is an upgradeable proxy (implementation `0xf729422d68c2cf00574fb5712972454cf402a9b1`) whose admin slot resolves to a ProxyAdmin at `0x9b54b7703551d9d0ced177a78367560a8b2edda4`, owned by an OpenZeppelin TimelockController at `0x68863fb8855b04509a835082478D6E3D0bE4E61a` with a minimum delay of 259,200 seconds — 72 hours. These are the same two contracts that govern fxSAVE. The role table was read off the timelock: proposer and canceller authority is held solely by a Gnosis Safe v1.3.0 at `0x26b2ec4E02ebe2F54583af25b647b1D619e67BbF` requiring 6 of 9 signatures, all nine owners externally-owned accounts; the timelock is its own only administrator; and because the zero address holds the executor role alongside the Safe, a scheduled operation cannot be blocked once its delay elapses. The Safe and one deployer address held the timelock's own admin role from deployment on 2026-04-06 until both were revoked on 2026-04-20 (transaction `0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af`), in the same action that opened execution; that action tightened the timelock and nothing else. The delay protects itself — `updateDelay` succeeds only when called by the timelock, so shortening the 72 hours must itself be scheduled and wait the full 72 hours in public.
+## 5 · Contract & Admin — 5.0
 
-The delay covers code upgrades. It does not cover what the code reads, and four undelayed paths sit beside it, read at block 26,031,531 with live role checks and sender-pair simulations. The main Safe holds emergency and asset-manager roles directly on the PoolManager, both collateral pools and the Stability Pool. A second Safe, `0x28c921adac4c1072658eb01a28da06b5f651ef62`, a 3-of-4 whose owners are a subset of the nine, holds emergency roles across the same contracts, including `updatePriceOracle(address)` with no validation and no delay. The deployer key `0xa1d0027ca4c0cb79f9403d06a29470abc7b0a468` — a single externally-owned account — still holds `EMERGENCY_ROLE` on the WBTC pool, which carried 89.7% of debt in September (88.2% on October 21): a simulated `updatePriceOracle` to an arbitrary address succeeds from that key on the WBTC pool and reverts on the wstETH pool. And both live collateral oracles (`0x0C5C61025f047cB7e3e85852dC8eAFd7b9a4Abfb` for wstETH, `0xb3c90e64EB6f456A5F5C17Aa99b6aecA6f4a6390` for WBTC) are owned by the main Safe directly; a transfer to the timelock was scheduled as its first operation on 2026-04-20 and is the only scheduled operation never executed. The oracle decides what liquidates and whether redemption opens. Changing what the code reads is instant; changing the code takes three days.
+The [fxUSD proxy](https://etherscan.io/address/0x085780639CC2cACd35E474e71f4d000e2405d8f6) uses implementation `0xf729422d68c2cf00574fb5712972454cf402a9b1`. Its admin slot resolves to [ProxyAdmin](https://etherscan.io/address/0x9b54b7703551d9d0ced177a78367560a8b2edda4), owned by the [72-hour TimelockController](https://etherscan.io/address/0x68863fb8855b04509a835082478D6E3D0bE4E61a). The sole proposer and canceller is the [main 6-of-9 Safe](https://etherscan.io/address/0x26b2ec4E02ebe2F54583af25b647b1D619e67BbF). The timelock administers itself, execution is open, and shortening its delay must itself wait the full delay.
 
-A bug bounty is published at docs.aladdin.club, paying up to $500,000 for critical findings. Two audits are published, and the one serious finding on record — a double-flash-loan access-control bypass in the router peripheral, found by ChainSecurity in April 2025 with over $2M at risk — was responsibly disclosed, fixed and never exploited.
+The October 24 authority review distinguishes four paths:
 
-**Risks and limitations.** The oracle path compounds with an audit finding: OpenZeppelin's H-02 — price manipulation through a single low-TVL spot source — is acknowledged and not resolved, and M-06 is marked resolved while both live oracles were deployed on 2025-03-17, are not upgradeable, and carry the pre-fix formula. The audited perimeter is also not the machine. The fxUSD implementation differs from the May 2025 audited commit by three lines, matching a later published patch, and the fxSAVE implementation is byte-identical to it; but the PoolManager, both collateral pools, the Stability Pool and the PoolConfiguration contract were deployed between October 2025 and April 2026 and differ from the audited commit by roughly 1,500 lines. SECBIT's March 2026 report names two of them but scopes itself to a deployment on a different chain, so no published audit covers this rework — and those four contracts custody the collateral, run the liquidation logic, hold the Stability Pool and determine whether redemption is open. That is a statement about coverage, not about a defect: private review may exist, and nothing here says the code is wrong. Nine key-holders with no external governance check remain the ultimate authority, and the same authority governs fxSAVE, so the two are not independent legs. f(x)'s public v2 deployment manifest (AladdinDAO/fx-protocol-contracts) names the ProxyAdmin, the fxUSD token, the PoolManager and the base pool at the addresses measured here, and is silent on the TimelockController and the proposer Safe — the authority structure above the ProxyAdmin is verifiable on-chain but not documented by the issuer. Chains read: Ethereum only. Re-check by 2026-12-22, or on a new deployment of any of the four contracts, a published audit naming the rework, or the combined fxUSD-plus-USDC fxSP redemption basket marking below par or an output leg failing.
+| Path | Current control |
+|---|---|
+| Code upgrades | 72-hour timelock |
+| Owner-only configuration of both collateral oracles | Ownership transferred to the timelock on **October 5**, block 26,126,801; [ownership transaction](https://etherscan.io/tx/0x6d44a5bb025cf28b04ac093cb42a4f15bc0824e770de8fd09f044c75e6984d61) |
+| Deployer EOA emergency access to the WBTC pool | **Revoked October 10**, block 26,158,898; [revocation transaction](https://etherscan.io/tx/0x411a0c518e1f7ff73182081cf447c24fca08cf430eec9bc3db745249fc9dca17) |
+| Pool oracle-pointer replacement | Main 6-of-9 Safe and [emergency 3-of-4 Safe](https://etherscan.io/address/0x28c921adac4c1072658eb01a28da06b5f651ef62) retain undelayed `EMERGENCY_ROLE` on both pools |
+
+Archive boundary reads and current reads on two RPCs confirmed the ownership transfers and role revocation. The remaining `updatePriceOracle(address)` path has no address validation: either Safe can replace a pool's oracle immediately, affecting position marks, liquidations and the redemption gate. The emergency Safe also retains asset-management authority on PoolManager and fxSP; that role is not defined on the collateral pools.
+
+**Audit and documentation coverage.** The issuer's [v2 deployment manifest](https://github.com/AladdinDAO/fx-protocol-contracts/blob/main/ignition/deployments/ethereum/deployed_addresses.json) agrees with the measured token, PoolManager, fxSP and ProxyAdmin addresses. It is silent on the timelock and proposer Safe. The fxUSD implementation matches the audited generation plus a small published patch, but a public audit matching the later Ethereum PoolManager, pool, fxSP and PoolConfiguration rework has not been established. The OpenZeppelin review did not cover the ProxyAdmin, timelock or privileged-role configuration. A [self-hosted bounty](https://docs.aladdin.club/security-bounty) advertises up to $500,000 for critical findings; its text does not establish coverage of the privileged-role surface.
+
+**Risks and limitations.** Oracle ownership protections do not delay oracle-pointer replacement. OpenZeppelin H-02's single low-TVL price-source risk was acknowledged, and the non-upgradeable live oracles retain the pre-fix M-06 formula. The unmatched pool audit is a coverage gap, not evidence of a defect. This authority assessment covers Ethereum; other chains were not reviewed.
 
 ## 6 · Issuer — 5.5
 
-f(x) Protocol is built and operated by AladdinDAO and has run on Ethereum since 2023, with $134.3M of protocol TVL on 2026-09-22, two published audits and a self-hosted bug bounty paying up to $500,000. When ChainSecurity disclosed the router vulnerability in April 2025, the team fixed it under responsible disclosure and published the report on 2025-06-17. The distinction between a vulnerability that existed and funds that were lost is worth keeping; the first is often quoted as the second.
+f(x) Protocol is built and operated by AladdinDAO and has operated on Ethereum since 2023. Its response to the April 2025 ChainSecurity router finding provides a dated conduct example: the issue was responsibly disclosed, fixed and reported publicly on June 17, with no reported exploitation. The published $134.3m protocol TVL observation is from September 22, not a current figure.
 
-**Risks and limitations.** This is a small DAO with no external check on its governance, operating a complex multi-contract system with no regulated wrapper. The public security documentation still describes the first version of the protocol, and the audit record covers the wrapper contracts rather than the current collateral machinery. The disclosure response is evidence of engagement, not of the absence of further issues.
+**Risks and limitations.** Issuer 5.5 is carried from the existing assessment rather than re-derived from a new legal review. The operator's legal entity, jurisdiction, accountable principals, financial audit, governing law and holder dispute or recourse terms were not verified in this pass. The incident-response record is established; enforceable holder recourse remains unverified.
 
 ## Who this is for
 
-- Holders who understand fxUSD as the stable side of a leveraged ETH/BTC position, expect to exit through the Curve USDC pool, and accept that there is no protocol redemption floor beneath that market today.
-- Anyone assessing an asset that depends on fxUSD — fxSAVE holders, lenders against fxSAVE on Morpho, and holders of pools where fxUSD is the dominant leg — who need to assess dated routed depth and both fxSP payout legs. fxSP returns fxUSD plus USDC; market impact on fxUSD constrains only the larger leg.
+Holders who understand fxUSD as the stable side of leveraged crypto positions and can size an exit against dated market depth. The same constraints matter to fxSAVE holders and lenders against fxSAVE, who must assess both fxUSD and direct USDC payout legs.
 
-## Who should avoid it
-
-- Anyone who needs a redemption right at par. Redemption opens only below $0.998; above that line the exit is the DEX.
-- Anyone who reads "overcollateralised" as insulation from ETH and BTC. The collateral is pledged against leveraged positions, and its stress is fxUSD's stress.
-- Anyone counting fxUSD and fxSAVE as separate exposures. They share a Stability Pool, a ProxyAdmin, a timelock and the same undelayed emergency keys.
-- Anyone who reads the 72-hour timelock as covering the oracle. It covers the code; the price feed that decides liquidations can be repointed without delay, and on the WBTC pool by one key.
+Anyone needing unconditional redemption at par, a diversified collateral reserve or independently governed fxUSD/fxSAVE exposures should avoid relying on those properties here.
 
 ## What to watch
 
-- `isRedeemAllowed()` on the PoolConfiguration contract flipping to `true`, which happens when the Curve EMA price falls below $0.998 — the point at which the redemption arbitrage opens.
-- Any `updatePriceOracle` call on either collateral pool, and whether the deployer key `0xa1d0027ca4c0cb79f9403d06a29470abc7b0a468` is ever removed from `EMERGENCY_ROLE` on the WBTC pool, or the oracles' pending transfer to the timelock is ever accepted.
-- fxUSD's price against $1 and the Stability Pool's fxUSD balance (77.3M on 2026-09-22) — with redemption refused, the pool is the whole defence.
-- The fxUSD→USDC routed ladder: October 20 −50 bps at $3.37m–$3.39m, −200 bps at $3.95m–$3.99m and observed proceeds peak near $4.27m. Track the direct USDC payout separately.
-- Morpho Blue's 24.370m fxSAVE position (37.38% on October 21), above the 30% review trigger, and a new direct fxSAVE exit ladder.
-- Supply (85,378,866 on 2026-09-22), the share held by the Stability Pool (90.55%), and the current WBTC share of debt (88.2%, at 132.19% CR on October 21; aggregate CR 136.743%) — growth without a redemption path widens the gap between supply and exit, and the collateral mix is nine-tenths one custodial asset.
-- `MinDelayChange` on the timelock at `0x68863fb8855b04509a835082478D6E3D0bE4E61a`, any change to the proposer Safe's 6-of-9 owner set or threshold, and any implementation change on the fxUSD or fxSAVE proxies — one queue governs both.
+- WBTC's share of debt and pool collateral ratio, alongside the aggregate ratio.
+- The redemption gate, fresh routed USDC quotes and Morpho Blue's fxSAVE concentration.
+- Any pool `updatePriceOracle` call or change to the remaining Safe emergency roles.
+- Timelock delay, Safe threshold or implementation changes, and a public audit naming the deployed Ethereum pool rework.
 
 ## Revision history
 
-*2026-10-21 — Partial refresh from the producer draft: aggregate collateral ratio 136.743%, WBTC 132.19% with 88.2% of debt; corrected the historical September wrap-rate valuation to 150.6% aggregate. Replaced current route framing with October 20 quotes and Morpho Blue's 24.370m fxSAVE position, previewing 26.13m fxUSD + 1.29m USDC queued. fxSP pays two assets; routed fxUSD proceeds do not cap all fxSAVE proceeds. All scores and production: false unchanged pending FXSave concentration and direct exit-depth review; last_verified remains 2026-09-22.*
+*2026-10-24 — Overall 4.5 → 5.0 and Contract & Admin 4.0 → 5.0 after verification of the October 5 oracle-ownership transfers and October 10 WBTC deployer-role revocation. Other scores unchanged. Updated price, collateral mix, routed depth and redemption status from the reviewed local source files. Reorganized the body around current asset facts and consolidated historical corrections. Staging status preserved.*
 
-*2026-09-22 (latest) — Contract & Admin 6.0 → 4.0, Stability 5.0 → 5.5, Liquidity & Exit 4.0 → 4.5; overall 5.0 → 4.5. Redemption's gate located: `isRedeemAllowed()` on PoolConfiguration, opening below a $0.998 Curve EMA — a price mechanism, not an admin switch. Four undelayed authority paths read beside the timelock: main-Safe and 3-of-4-Safe emergency roles on the PoolManager, pools and Stability Pool with unvalidated `updatePriceOracle`; the deployer key's `EMERGENCY_ROLE` on the WBTC pool (simulated repoint succeeds); both oracles owned by the main Safe with the transfer to the timelock never accepted; a second fxSAVE admin. Exit scored on the full ladder profile. Bytecode matched: token implementations audited, the collateral machinery not covered by any published audit. Bounty confirmed at $500,000.*
+*2026-10-21 — Partial refresh corrected fxSP's two-output redemption model, added the larger Morpho Blue position and dated routed quotes. The supposed 2.4% fxSP shortfall and 4.3% fxSAVE instant gap were decoding errors caused by omitting USDC.*
 
-*2026-09-22 (later) — assessment widened to full; Liquidity & Exit 4.5 → 4.0, overall held at 5.0. Historical aggregate collateral ratio initially reported as 155.4% (superseded by the corrected 150.6%; WBTC 144.0%, 89.7% of debt), pool debts reconciled to supply within 264 fxUSD; peg record of 8,073 hourly observations since 2025-08-01 examined, with the 90.55% Stability Pool share and 2.2% free float stated beside it; USDC exit ladder measured — proceeds peak at $4,648,576, 2% crossing at $4.25M–$4.30M, 33 Curve pools enumerated and no Uniswap, SushiSwap or Balancer venue. Still open: the control that refuses redemption, and the deployed bytecode against the audited commit.*
-
-*2026-09-22 — first staged publication. Supply, price, Stability Pool balance, the redemption fee ratio and the redemption refusal on both pools established by on-chain read and `eth_call` simulation with a burn-address control; proxy implementation and admin slots, ProxyAdmin owner, timelock delay and role holders, and the proposer Safe's owners and threshold read on-chain; venue TVL from Curve's stable-ng factory listing. Admin addresses reconciled against the issuer's v2 deployment manifest and the OpenZeppelin audit scope. Not done at first publication: a depth ladder, the aggregate collateral ratio, a stress episode, the condition that re-enables redemption, and matching the deployed implementation to the audited commit.*
+*2026-09-22 — First staged assessment. Established the redemption gate, custody and authority paths, peg history and routed exit evidence. Historical aggregate collateral ratio corrected from 155.4% to 150.6% because raw wstETH collateral was already stETH-equivalent.*
