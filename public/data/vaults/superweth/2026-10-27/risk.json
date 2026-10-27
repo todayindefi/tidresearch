@@ -1,0 +1,132 @@
+{
+  "block": 26280873,
+  "snapshot_at": "2026-10-27T01:52:23+00:00",
+  "total_assets_weth": 904.604262098751,
+  "idle_weth": 47.45879499513038,
+  "idle_pct": 5.246359870671221,
+  "escrowed_assets_weth": 0.5863474856583097,
+  "accounting_residual_weth": 7.953229601298517e-05,
+  "markets": [
+    {
+      "market_id": "0x37e7484d642d90f14451f1910ba4b7b8e4c3ccdd0ec28f8b2bdb35479e472ba7",
+      "collateral": "weETH",
+      "lltv_pct": 94.5,
+      "exposure_weth": 113.92277856925577,
+      "weight_pct": 12.593659276482539,
+      "utilization_pct": 80.59594459871249,
+      "market_stored_liquidity_weth": 1024.0197360612667,
+      "min_accrued_hf": 1.0052196249518288,
+      "near_1_05_debt_weth": 3996.94493571111,
+      "near_1_05_pct_of_borrow": 93.97126465278805,
+      "liquidatable_debt_weth": 0.0,
+      "borrow_share_coverage": 1.0,
+      "oracle": "0xbdd2f2d473e8d63d1bfb0185b5bdb8046ca48a72",
+      "collateral_address": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee"
+    },
+    {
+      "market_id": "0xb8fc70e82bc5bb53e773626fcc6a23f7eefa036918d7ef216ecfb1950a94a85e",
+      "collateral": "wstETH",
+      "lltv_pct": 96.5,
+      "exposure_weth": 343.4155330841636,
+      "weight_pct": 37.963068213653266,
+      "utilization_pct": 84.08966695286783,
+      "market_stored_liquidity_weth": 4508.503250690062,
+      "min_accrued_hf": 1.0002798884541833,
+      "near_1_05_debt_weth": 12773.033871898058,
+      "near_1_05_pct_of_borrow": 53.60407704775986,
+      "liquidatable_debt_weth": 0.0,
+      "borrow_share_coverage": 1.0,
+      "oracle": "0xbd60a6770b27e084e8617335dde769241b0e71d8",
+      "collateral_address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
+    },
+    {
+      "market_id": "0xd0e50cdac92fe2172043f5e0c36532c6369d24947e40968f34a5e8819ca9ec5d",
+      "collateral": "wstETH",
+      "lltv_pct": 94.5,
+      "exposure_weth": 317.0106999041733,
+      "weight_pct": 35.044130697404,
+      "utilization_pct": 83.4948812482918,
+      "market_stored_liquidity_weth": 1575.9612177320491,
+      "min_accrued_hf": 1.0014731398649308,
+      "near_1_05_debt_weth": 7200.647580324891,
+      "near_1_05_pct_of_borrow": 90.31942977744556,
+      "liquidatable_debt_weth": 0.0,
+      "borrow_share_coverage": 1.0,
+      "oracle": "0xbd60a6770b27e084e8617335dde769241b0e71d8",
+      "collateral_address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
+    },
+    {
+      "market_id": "0x12dbf4937132ff2c6445212519295ce9afbee3c765ba626af5b197fe6c3941a0",
+      "collateral": "cbBTC",
+      "lltv_pct": 91.5,
+      "exposure_weth": 0.004223018154367719,
+      "weight_pct": 0.00046683597804082804,
+      "utilization_pct": 78.96453900712666,
+      "market_stored_liquidity_weth": 6.175243737077002,
+      "min_accrued_hf": 1.2994230423934192,
+      "near_1_05_debt_weth": 0.0,
+      "near_1_05_pct_of_borrow": 0.0,
+      "liquidatable_debt_weth": 0.0,
+      "borrow_share_coverage": 1.0,
+      "oracle": "0x998eaa364282ad9ac33f934e97bef3d660389366",
+      "collateral_address": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+    },
+    {
+      "market_id": "0x251b7cbc2c33ba4eabe3b7163ad0fdd3cfb97de80d8377f0f48b8d31aee7606f",
+      "collateral": "rETH",
+      "lltv_pct": 94.5,
+      "exposure_weth": 82.78820083794014,
+      "weight_pct": 9.151869420321455,
+      "utilization_pct": 89.99420356649424,
+      "market_stored_liquidity_weth": 28.850683427674646,
+      "min_accrued_hf": 3.639414110789125,
+      "near_1_05_debt_weth": 0.0,
+      "near_1_05_pct_of_borrow": 0.0,
+      "liquidatable_debt_weth": 0.0,
+      "borrow_share_coverage": 1.0,
+      "oracle": "0x837e3ced92aa5d045208a2fd292a1e2df9cffa14",
+      "collateral_address": "0xae78736cd615f374d3085123a210448e74fc6393"
+    }
+  ],
+  "collateral_aggregates": [
+    {
+      "collateral": "weETH",
+      "weth": 113.92277856925577,
+      "weight_pct": 12.593659276482539
+    },
+    {
+      "collateral": "wstETH",
+      "weth": 660.4262329883369,
+      "weight_pct": 73.00719891105726
+    },
+    {
+      "collateral": "cbBTC",
+      "weth": 0.004223018154367719,
+      "weight_pct": 0.00046683597804082804
+    },
+    {
+      "collateral": "rETH",
+      "weth": 82.78820083794014,
+      "weight_pct": 9.151869420321455
+    }
+  ],
+  "stress": [
+    {
+      "oracle_collateral_haircut_pct": 1.0,
+      "market_wide_debt_crossing_threshold_weth": 7781.072931189714,
+      "market_wide_unsecured_weth_no_liquidation": 0.0
+    },
+    {
+      "oracle_collateral_haircut_pct": 3.0,
+      "market_wide_debt_crossing_threshold_weth": 21527.815150731458,
+      "market_wide_unsecured_weth_no_liquidation": 0.0
+    },
+    {
+      "oracle_collateral_haircut_pct": 5.0,
+      "market_wide_debt_crossing_threshold_weth": 24464.059190563174,
+      "market_wide_unsecured_weth_no_liquidation": 59.13809614852393
+    }
+  ],
+  "method": "Pro-rata vault shares / source totalSupply times adapter expectedSupplyAssets; pooled exposure, not ownership of borrower collateral. Stored utilization/liquidity, accrued borrower health. No duplicate market liquidity counted.",
+  "coverage": "All funded sources; 205 candidate positions re-read at block and reconciled to 100% of borrow shares in all five markets."
+}

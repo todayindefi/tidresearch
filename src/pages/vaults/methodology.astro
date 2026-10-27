@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { sectionEnabled } from "@/lib/stage";
+if (!sectionEnabled("vaults")) return Astro.redirect("/404");
+---
+<BaseLayout title="How We Review Vaults | TID Research" description="Our vault methodology prioritizes funded backing, borrower health, withdrawal mechanics, control and return quality.">
+  <article class="container-page py-16 max-w-4xl">
+    <a class="text-sm text-primary" href="/vaults/">← Vault reports</a>
+    <div class="prose-report mt-8">
+      <h1>How we review vaults</h1>
+      <p>A vault is a strategy with a withdrawal process. Its report should explain the capital beneath the receipt and the actions needed to return it to a holder.</p>
+      <h2>Start with funded backing</h2><p>We reconcile the vault's accounting with its funded holdings, cash and escrow. We then trace material positions into loans or strategies and combine shared collateral, oracle and protocol exposures across managers. Approved-but-empty positions are permissions, not current exposure.</p>
+      <h2>Examine the credit</h2><p>For lending strategies, we inspect utilisation, borrower health, liquidation proximity and bad debt. Market-wide debt is distinguished from the vault's pro-rata exposure. A borrower crossing a liquidation threshold is not automatically a lender loss.</p>
+      <h2>Follow every withdrawal step</h2><p>We distinguish user-callable cash, manager-dependent releases, queues and rate limits. Accounting NAV and idle strategy cash do not establish instant redemption. Secondary-market ladders are included when they matter to the actual exit route.</p>
+      <h2>Verify control and execution</h2><p>We examine who changes allocations, strategy, fees and price inputs, who pauses or upgrades contracts, and who fulfils withdrawals. A protocol's general assessment does not replace the deployed vault's control analysis.</p>
+      <h2>Separate yield from return</h2><p>Organic interest, token incentives, advertised APY and fee-adjusted investor returns answer different questions. We report the fee layers and the available history instead of filling missing returns with zero.</p>
+      <h2>Make coverage visible</h2><p>Each report names its snapshot and evidence limits. An initial review may have no numeric overall rating while material control or withdrawal paths remain unresolved. Missing evidence is not a neutral or zero risk score. Dated snapshots do not imply a live monitor.</p>
+    </div>
+  </article>
+</BaseLayout>

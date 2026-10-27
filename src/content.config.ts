@@ -361,7 +361,25 @@ const protocolReport = z.object({
   fork_of: z.string().optional(),
 });
 
+const vaultReport = z.object({
+  vault: z.string(), symbol: z.string(), slug: z.string(),
+  protocol: z.string(), chain: z.string(),
+  vault_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/),
+  strategy_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/),
+  denomination: z.string(), assessment_status: z.enum(["partial", "reviewed"]),
+  risk_summary: z.string(), date: z.coerce.date(), last_verified: z.coerce.date(),
+  snapshot_block: z.number().int().positive(), snapshot_at: z.coerce.date(),
+  total_assets: z.number().nonnegative(), idle_assets: z.number().nonnegative(),
+  largest_allocation_pct: z.number().min(0).max(100),
+  overall_score: score.optional(),
+  published: z.boolean().default(true), production: z.boolean().default(false),
+});
+
 export const collections = {
+  vaults: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/vaults" }),
+    schema: vaultReport,
+  }),
   reports: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/reports" }),
     schema: z.discriminatedUnion("category", [

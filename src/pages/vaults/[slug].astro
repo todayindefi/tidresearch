@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import { sectionEnabled, visibleAtCurrentStage } from "@/lib/stage";
+export async function getStaticPaths() {
+  if (!sectionEnabled("vaults")) return [];
+  return (await getCollection("vaults"))
+    .filter((entry) => visibleAtCurrentStage(entry.data))
+    .map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const v = entry.data;
+const amount = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 3 });
+---
+<BaseLayout title={`${v.symbol} Vault Risk Report | TID Research`} description={v.risk_summary}>
+  <article class="container-page py-12">
+    <a class="text-sm text-primary" href="/vaults/">← Vault reports</a>
+    <header class="max-w-4xl mt-8 mb-10">
+      <p class="eyebrow mb-3">{v.protocol} / {v.chain} / Vault review</p>
+      <h1 class="text-3xl md:text-5xl font-bold mb-5">{v.vault}</h1>
+      <p class="text-xl text-muted-foreground mb-6">{v.risk_summary}</p>
+      <div class="border-l-2 border-primary pl-4 text-sm"><strong>{v.assessment_status === "partial" ? "Initial review — coverage gaps remain" : "Reviewed"}</strong><p class="text-muted-foreground mt-1">{v.overall_score === undefined ? "No numeric rating assigned. Read the measured findings and unresolved withdrawal/control paths." : `Overall ${v.overall_score.toFixed(1)}/10, where higher is safer.`}</p></div>
+      <p class="text-xs text-muted-foreground mt-5">Snapshot {v.snapshot_at.toISOString().replace("T", " ").replace(".000Z", " UTC")} · <a class="underline" href={`https://etherscan.io/block/${v.snapshot_block}`}>Block {v.snapshot_block.toLocaleString("en-US")}</a></p>
+    </header>
+    <dl class="grid sm:grid-cols-3 gap-4 mb-10 border-y border-border py-6"><div><dt class="text-sm text-muted-foreground">Reported assets</dt><dd class="text-xl font-mono mt-2">{amount(v.total_assets)} {v.denomination}</dd></div><div><dt class="text-sm text-muted-foreground">Largest allocation</dt><dd class="text-xl font-mono mt-2">{v.largest_allocation_pct.toFixed(2)}%</dd></div><div><dt class="text-sm text-muted-foreground">Idle strategy cash</dt><dd class="text-xl font-mono mt-2">{(v.idle_assets / v.total_assets * 100).toFixed(2)}%</dd><p class="text-xs text-muted-foreground mt-1">Not guaranteed instant redemption</p></div></dl>
+    <div class="grid lg:grid-cols-[minmax(0,1fr)_220px] gap-10">
+      <div class="prose-report min-w-0 overflow-x-auto"><Content /></div>
+      <aside class="hidden lg:block"><nav class="sticky top-28 text-sm" aria-label="Report contents"><h2 class="font-semibold mb-4">In this review</h2><ul class="space-y-3">{headings.filter((h) => h.depth === 2).map((h) => <li><a class="text-muted-foreground hover:text-primary" href={`#${h.slug}`}>{h.text}</a></li>)}</ul><a class="block text-primary mt-6" href="/vaults/methodology/">Vault methodology →</a></nav></aside>
+    </div>
+  </article>
+</BaseLayout>

@@ -5,6 +5,7 @@ import { sectionEnabled } from "@/lib/stage";
 const path = Astro.url.pathname;
 const nav = [
   { href: "/reports", label: "Assets" },
+  ...(sectionEnabled("vaults") ? [{ href: "/vaults", label: "Vaults" }] : []),
   ...(sectionEnabled("protocols") ? [{ href: "/protocols", label: "Protocols" }] : []),
   { href: "/dashboards", label: "Dashboards" },
   { href: "/services", label: "Services" },

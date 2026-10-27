@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { sectionEnabled, visibleAtCurrentStage } from "@/lib/stage";
+if (!sectionEnabled("vaults")) return Astro.redirect("/404");
+const vaults = (await getCollection("vaults"))
+  .filter((entry) => visibleAtCurrentStage(entry.data))
+  .sort((a, b) => b.data.last_verified.valueOf() - a.data.last_verified.valueOf());
+const amount = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 3 });
+---
+<BaseLayout title="Vault Risk Reports | TID Research" description="Where capital goes, what secures it, and how withdrawals work. Backing-first analysis of managed DeFi vaults.">
+  <section class="container-page py-16">
+    <p class="eyebrow mb-3">Research / Vaults</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-5">Follow the capital.</h1>
+    <p class="text-muted-foreground max-w-2xl text-lg mb-5">Where capital goes, what secures it, and how withdrawals work. Vault risk starts with the strategy and the loans beneath it.</p>
+    <a class="text-primary underline underline-offset-4" href="/vaults/methodology">How we review vaults →</a>
+    <div class="grid md:grid-cols-3 gap-5 my-10">
+      <div class="border border-border p-5"><h2 class="font-semibold mb-2">Backing & credit</h2><p class="text-sm text-muted-foreground">Funded positions, shared collateral, borrower health and loss transmission.</p></div>
+      <div class="border border-border p-5"><h2 class="font-semibold mb-2">Withdrawal reality</h2><p class="text-sm text-muted-foreground">Cash, managed releases, queues and the steps between NAV and a paid claim.</p></div>
+      <div class="border border-border p-5"><h2 class="font-semibold mb-2">Control & execution</h2><p class="text-sm text-muted-foreground">Who reallocates capital, changes the rules and processes withdrawals.</p></div>
+    </div>
+    <h2 class="text-2xl font-semibold mb-5">Vault reports</h2>
+    <div class="grid lg:grid-cols-2 gap-6">
+      {vaults.map(({ data: v }) => <a href={`/vaults/${v.slug}/`} class="block border border-border bg-card p-7 hover:border-primary transition-colors">
+        <div class="flex justify-between gap-4 mb-4 text-xs uppercase tracking-wider text-muted-foreground"><span>{v.protocol} / {v.chain}</span><span>{v.assessment_status === "partial" ? "Initial review" : "Reviewed"}</span></div>
+        <h3 class="text-2xl font-semibold mb-2">{v.symbol}</h3>
+        <p class="text-sm text-muted-foreground mb-5">{v.vault}</p>
+        <p class="mb-6">{v.risk_summary}</p>
+        <dl class="grid grid-cols-2 gap-4 border-t border-border pt-5 text-sm"><div><dt class="text-muted-foreground">Reported assets</dt><dd class="font-mono mt-1">{amount(v.total_assets)} {v.denomination}</dd></div><div><dt class="text-muted-foreground">Largest allocation</dt><dd class="font-mono mt-1">{v.largest_allocation_pct.toFixed(2)}%</dd></div></dl>
+        <div class="mt-6 text-xs text-muted-foreground">{v.overall_score === undefined ? "Numeric rating not assigned" : `Overall ${v.overall_score.toFixed(1)}/10`} · Snapshot {v.snapshot_at.toISOString().slice(0, 10)}</div>
+        <div class="mt-5 text-primary text-sm font-semibold">Read the vault report →</div>
+      </a>)}
+    </div>
+    {vaults.length === 0 && <p class="border border-border p-8 text-muted-foreground">Vault reports are being prepared.</p>}
+  </section>
+</BaseLayout>

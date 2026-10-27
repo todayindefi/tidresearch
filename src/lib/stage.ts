@@ -8,7 +8,7 @@ export const STAGE: "production" | "staging" =
 export const isProductionStage = STAGE === "production";
 
 // Sections not yet public. Delete the entry to launch the section.
-const HIDDEN_IN_PRODUCTION = new Set(["protocols"]);
+const HIDDEN_IN_PRODUCTION = new Set(["protocols", "vaults"]);
 
 export function sectionEnabled(name: string): boolean {
   return !(isProductionStage && HIDDEN_IN_PRODUCTION.has(name));
