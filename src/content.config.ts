@@ -165,15 +165,17 @@ const stablecoin = z.object({
   market_cap_approx: z.number().optional(),
 });
 
+// Missing wrapped/vault axes require explicit six-axis exemptions, validated below.
+// Redemption has no separate six-axis row and need not be invented for that frame.
 const wrappedAxes = {
-  volatility_score: score,
+  volatility_score: score.optional(),
   // Backing (axis 2) under `axis_frame: six`. Optional because the historical
   // wrapped/vault rubric had no reserve axis at all — a share whose entire
   // risk is a claim on someone else's reserve was scored on everything except
   // that reserve.
   backing_score: score.optional(),
-  structural_score: score,
-  redemption_score: score,
+  structural_score: score.optional(),
+  redemption_score: score.optional(),
   liquidity_score: score,
   issuer_score: score.optional(),
   // Optional 5th axis: collateral quality of the underlying asset(s), independent
@@ -369,7 +371,23 @@ export const collections = {
       tokenizedTreasury,
       lendingVault,
       tradfiEquity,
-    ]),
+    ]).superRefine((data, ctx) => {
+      if (data.category !== "wrapped-token" && data.category !== "vault-share") return;
+      const exemptions = new Set(
+        (data.axis_exemptions ?? []).filter((e) => e.reason.trim()).map((e) => e.axis),
+      );
+      for (const [key, axis] of [
+        ["volatility_score", "1 Stability"],
+        ["structural_score", "5 Contract & Admin"],
+      ] as const) {
+        if (data[key] === undefined && !(data.axis_frame === "six" && exemptions.has(axis))) {
+          ctx.addIssue({ code: z.ZodIssueCode.custom, path: [key], message: `Missing ${axis} requires an explicit six-axis exemption` });
+        }
+      }
+      if (data.redemption_score === undefined && data.axis_frame !== "six") {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["redemption_score"], message: "Legacy wrapped/vault reports require a redemption score" });
+      }
+    }),
   }),
   protocols: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/protocols" }),
