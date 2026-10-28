@@ -1,0 +1,42 @@
+{
+  "usg_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_backing.json",
+    "sha256": "0758b7c6e901ceb01690e76349af93731b9c4d9385572cc7b4f3089ed3a9282a",
+    "as_of": "2026-10-28T05:37:14Z"
+  },
+  "usg_backing_history.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_backing_history.json",
+    "sha256": "51643e678b30966e5ccb3c702821fd2c95d66fccdd12c4a9b1c40cbe33242ab4",
+    "as_of": null
+  },
+  "usg_liquidity.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_liquidity.json",
+    "sha256": "ed5a1a31fb70c62bfacaa67d69c24783da7b753fcf86b69c5062530391cb6764",
+    "as_of": "2026-10-27T23:51:16Z"
+  },
+  "usg_axis_basis.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_axis_basis.json",
+    "sha256": "25af0687cbe7531d514c09c046e25c9bb0e81b4baa8c891fa6916b2a9a248ca5",
+    "as_of": "2026-10-28T03:37:27Z"
+  },
+  "usg_dependencies.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_dependencies.json",
+    "sha256": "f895f52ea78162fd5a765fb19806619eb7a18f563c38c1712d5091b4d9bd96c9",
+    "as_of": "2026-10-28T03:37:27Z"
+  },
+  "usg_contract.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_contract.json",
+    "sha256": "ae50582cb00e839a22f16a6ae3e773c1b5985db885ad445ed52f5a4da96fe9f6",
+    "as_of": "2026-09-06"
+  },
+  "usg_contract_overlay.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_contract_overlay.json",
+    "sha256": "2b89427dc7c5b24e3cd70f189dea0b7024a2167371aa91641269581ca1d60219",
+    "as_of": "2026-10-28T03:37:27Z"
+  },
+  "usg_issuer.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/usg_issuer.json",
+    "sha256": "261fe8211b5882b11a1483dfb8d2eb50a41e4482cfcf2843a6d3749e1e3f57bd",
+    "as_of": "2026-10-28T03:37:27Z"
+  }
+}

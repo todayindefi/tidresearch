@@ -1,0 +1,49 @@
+{
+  "schema_version": "axis-basis/1",
+  "producer": "riskanalyst",
+  "asset": "usg",
+  "as_of": "2026-10-28T03:37:27Z",
+  "peg": {
+    "peg_mechanism_score": 5.0,
+    "peg_mechanism_score_source": "riskAnalyst:authored",
+    "peg_mechanism_score_generated_at": "2026-10-28T03:37:27Z",
+    "peg_mechanism_score_basis": "crvUSD-derived design at $3.89M circulating scale; persistent $0.995732 peg, no collateral redemption and zero keeper debt. HEC/LEC economics respond to price; FIR is fixed-rate. Held at 5.0. October 28 feed and block 26,288,820 keeper reads.",
+    "peg_mechanism_score_persistence": "filtered — mechanism design, not spot-responsive"
+  },
+  "backing": {
+    "backing_score": 5.0,
+    "backing_score_source": "riskAnalyst:authored",
+    "backing_score_generated_at": "2026-10-28T03:37:27Z",
+    "backing_score_basis": "$5,015,608 borrower collateral / $3,891,517 debt = 128.89% conservative CR. Excludes $904,621 LP-owned keeper-pool stables. Zero bad debt across all 19 controllers independently read at block 26,288,820. 36.7% of debt in markets below 5% aggregate liquidation headroom, 69.8% below 10%; these are not borrower-level distances. Maximum dangerous oracle overvaluation 0.1886%; BTC oracle is 1.3441% below independent NAV. Held at 5.0.",
+    "backing_score_persistence": "filtered — collateral composition, though the ratio itself is spot-responsive",
+    "backing_score_denominator": "✅ ASK WHAT THE RATIO DIVIDES BY — and here the answer is the good one: borrower collateral over borrower debt, two independently determined quantities. Contrast usdat, susds and the syrup pools, where backing is DEFINED as the supply and the ratio is an accounting identity."
+  },
+  "liquidity": {
+    "liquidity_score": 3.0,
+    "liquidity_score_source": "riskAnalyst:authored",
+    "liquidity_score_generated_at": "2026-10-28T03:37:27Z",
+    "liquidity_score_basis": "Held at 3.0 after the October 16 cut. October 28 inventory $904,621 (+1.9%); USDC/frxUSD pool USG shares 72.06%/72.65%, keeper defense $0. Fresh get_dy at block 26,288,820: equal-split exit cost 0.49% at 10K, 0.55% at 100K, 0.68% at 250K, 1.11% at 500K, 2.64% at 750K, 13.04% at 1M. Costs versus nominal $1, pool fees included, gas excluded, frxUSD valued at par. Read-only independent scenarios, not optimized or executed fills. sUSG holds 30.9% of supply and shares the underlying exit. Modest inventory recovery does not remove the cliff.",
+    "liquidity_score_persistence": "filtered — keeper inventory, pool imbalance and venue structure, not spot depth. Re-check on a further fall in counter-side stables, either pool crossing 75% USG, or the measured 250K rung exceeding ~2%.",
+    "liquidity_score_depth_caveat": "Fresh read-only get_dy at block 26,288,820. Independent quote scenarios, equal split is feasible not optimized, output stablecoins valued at par. See data/reviews/usg-2026-10-28/onchain-probe.json.",
+    "liquidity_score_band_divergence": "A dashboard depth band measures crossing size relative to supply. The authored 3.0 also prices persistent discount, reliance on two increasingly imbalanced pools, and the steep cost curve: 1.11% at 500K, 2.64% at 750K, 13.04% at 1M on the measured equal split.",
+    "liquidity_score_ladder": "Equal split across USDC/frxUSD keeper pools at Ethereum block 26,288,820: 10,000 USG -> 0.49% cost, 50,000 USG -> 0.51% cost, 100,000 USG -> 0.55% cost, 250,000 USG -> 0.68% cost, 500,000 USG -> 1.11% cost, 750,000 USG -> 2.64% cost, 1,000,000 USG -> 13.04% cost. Sampled 2% crossing bracketed 500K–750K. Nominal dollar basis; pool fees included, gas excluded.",
+    "liquidity_score_ladder_as_of": "2026-10-28T03:37:27Z"
+  },
+  "dependencies": {
+    "underlying_score": 4.0,
+    "underlying_score_source": "riskAnalyst:authored",
+    "underlying_score_generated_at": "2026-10-28T03:37:27Z",
+    "underlying_score_basis": "Held at 4.0. Layered wrapper/Curve LP/constituent exposure; Resupply reUSD-linked debt $758,794 (19.5%) across three markets, reUSD price $0.990568. Stable-LP minimum-price marking limits diversification. 69.8% of debt in markets below 10% aggregate headroom. Two new listed markets, frxUSD/DUSD and frxUSD/crvUSD, have zero debt and add no current exposure. No falsely precise weighted score published.",
+    "underlying_score_persistence": "filtered — book composition, not a daily balance",
+    "underlying_score_routing": "⚠️ Merges after 49d0b4ca2 but axis 4 renders no score today — source-of-record."
+  },
+  "issuer": {
+    "issuer_score": 4.0,
+    "issuer_score_source": "riskAnalyst:authored",
+    "issuer_score_generated_at": "2026-10-28T03:37:27Z",
+    "issuer_score_basis": "Held at 4.0. Approximately five-and-a-half-month operating history and sub-$5M supply; official USG docs still warn of beta status. Historical audit set retained, remediation unverified. Governance and audit pages returned headings without substantive content on October 28; current TGE/live-governance and new-audit status are not established. Contract authority is scored separately.",
+    "issuer_score_persistence": "filtered — entity, not spot-responsive",
+    "issuer_score_routing": "⚠️ UNROUTED — backing-monitor holding axis-6 registration."
+  },
+  "routing_note": "⚠️ ROUTING VERIFIED AGAINST backing-monitor/js/renderers/common.js. peg, backing and liquidity route and render; dependencies merges but renders no score; issuer unrouted. ⚠️ NO `contract` block — the contract overlay already carries a rendering structural_score_basis."
+}

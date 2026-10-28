@@ -1,0 +1,10 @@
+{
+  "schema_version": "issuer/1",
+  "producer": "riskanalyst",
+  "asset": "usg",
+  "as_of": "2026-10-28T03:37:27Z",
+  "issuer": {
+    "summary": "Held at 4.0. Approximately five-and-a-half-month operating history and sub-$5M supply; official USG docs still warn of beta status. Historical audit set retained, remediation unverified. Governance and audit pages returned headings without substantive content on October 28; current TGE/live-governance and new-audit status are not established. Contract authority is scored separately.",
+    "summary_source": "October 28 feed and official USG beta documentation; historical audits retain their prior verification dates. Current governance/audit pages were content-limited. See assets/usg.md and data/reviews/usg-2026-10-28/README.md."
+  }
+}
