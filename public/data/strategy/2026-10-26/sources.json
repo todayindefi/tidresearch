@@ -1,0 +1,30 @@
+{
+  "strc_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strc_backing.json",
+    "sha256": "d6df5c811eda935f3b3c9991f9f6b1c18fae60219668adfec5be45c65fe5abe9",
+    "as_of": "2026-10-26T15:32:26Z",
+    "reviewed_on": "2026-10-26",
+    "provenance": "Reviewed producer snapshot retained for the October 26 filing assessment; not a claim of current served bytes."
+  },
+  "apxusd_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/apxusd_backing.json",
+    "sha256": "ba1bc66867e882e823290120405c42496f581d8356c4a3525b7ef59cfc9e332f",
+    "as_of": "2026-10-26T14:52:29Z",
+    "reviewed_on": "2026-10-26",
+    "provenance": "Reviewed producer snapshot retained for the October 26 filing assessment; not a claim of current served bytes."
+  },
+  "apyusd_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/apyusd_backing.json",
+    "sha256": "d68f191e8d7a1c80eef88ab324326f92f37283b91d31763c44400c5b32dab1a8",
+    "as_of": "2026-10-26T14:52:29Z",
+    "reviewed_on": "2026-10-26",
+    "provenance": "Reviewed producer snapshot retained for the October 26 filing assessment; not a claim of current served bytes."
+  },
+  "susdat_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/susdat_backing.json",
+    "sha256": "ab9d30980d8b89b6f20a9798955ca3ea373d733f507d93d4c67bd02197d1618f",
+    "as_of": "2026-10-26T14:48:53Z",
+    "reviewed_on": "2026-10-26",
+    "provenance": "Reviewed producer snapshot retained for the October 26 filing assessment; not a claim of current served bytes."
+  }
+}

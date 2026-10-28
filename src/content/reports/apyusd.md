@@ -14,7 +14,7 @@ date: "2026-05-07"
 # 25,877,589 (2026-08-31). The 08-25 measurement was CORRECT WHEN WRITTEN; the
 # asset moved under it. ⚠️ The custody Safe is STILL 3-of-6 on the same six as
 # token governance, so the quorum gap survives there. `last_verified` HOLDS.
-last_revised: "2026-10-13"
+last_revised: "2026-10-26"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -72,13 +72,15 @@ overall_score: 4.0
 
 apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **≈13% APY**, within STRC's 11-15% indicated-rate range. Where apxUSD holders forgo yield for stablecoin functionality, apyUSD holders accept an exit window — a **3-to-20-day unlock with a declining fee** — in exchange for the dividend pass-through, or take a DEX two-hop for retail-scale exits in minutes.
 
-⚠️ **The vault's own mechanics are sound; the question is what sits underneath it.** ⚠️ **apxUSD has held at or above par continuously since 2026-09-17**, 393 consecutive hourly readings — ⚠️ **and not since 2026-09-11, which is what a headline reading suggests: the ratio crossed par 21 times between 09-04 and 09-17**, with 49% of readings in that window still below 100%. It is above 100% on the netted collateral ratio, on the gross basis, and on an independent conservative re-mark, with an attested surplus of **1.56%**. ⚠️ **That is a recovery and now also a thin buffer**, on a book that was in deficit through the summer. ✅ **What it removes is the realised undercollateralisation; it does not remove the backing concern**, which rests on concentration and on what the reserve is made of rather than on the ratio alone. apyUSD trades at a discount to its NAV. **Everything that makes this report a 3.0 comes from one layer down.**
+The October 26 parent reserve review reports **100.2146% netted / 100.1125% gross coverage**, with **$325,186.68 surplus**. Its **$127.437M STRC bucket** exposes the wrapper to a concentrated mark and funding risk. Overall remains **4.0**; the vault’s own coverage identity does not add a separate reserve cushion.
 
 | Yield | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
 | ≈13% APY ongoing | DEX two-hop (retail) or 3-to-20-day unlock window (institutional) | Minutes (sub-$1M via DEX) or 3–20 days (canonical) | ≈3 months | Ethereum, Base |
 
 ## 1 · Stability — 5.5
+
+*The peg-history measurements below retain their October 4 observation window. They are historical context; October 26 reserve and issuer facts are dated separately in Backing and Dependencies.*
 **Reference: NAV, denominated in apxUSD.** apyUSD has no $1 peg — it is a NAV-accruing vault share, and the NAV is the apxUSD-per-share ratio, growing as the STRC backing pays dividends.
 
 ⚠️ **Which is why a healthy NAV here is not a healthy position.** ⚠️ **The NAV is measured in apxUSD rather than in dollars, so the share can accrue perfectly while the unit it accrues in moves independently.** **Through the summer that unit was below par and the effect was real; apxUSD has been above par continuously since 2026-09-17**, now attesting a 1.56% surplus. ⚠️ **But the collateral ratio and the market price are different quantities and only one of them recovered: apxUSD still trades about 1.10% below $1, and has never traded at or above $1.00 in 722 readings.** **The unit this share accrues in is sound on the balance sheet and discounted in the market**, which is what an asset with no atomic redemption looks like.
@@ -90,29 +92,30 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 **On the headline yield:** NAV jumped **≈33% in week 1** (Feb 20-27, 2026) from a one-time launch-seed event — donation-pattern apxUSD inflows from a small set of addresses. Since week 2 it has grown smoothly at roughly **13% APY**. ⚠️ **A new buyer earns the ongoing rate and does not capture the launch jump**, and at the current collateral ratio that 13% does not compensate for the backing and exit risk underneath it.
 
 ## 2 · Backing — 3.0
-⚠️ **The vault is 100% collateralized by construction and that fact is meaningless.** It is denominated in apxUSD, so shares always equal the assets they represent. **The collateral ratio that matters to an apyUSD holder is apxUSD's**, and it ran below par from June until the autumn. **It has held at or above par continuously since 2026-09-17, now attesting a 1.56% surplus** — ⚠️ **while apxUSD itself still trades about 1.10% below $1.**
 
-**Two ratios circulate and they are the same book measured two ways — both the issuer's:**
+apyUSD holds apxUSD, so its own shares-times-NAV coverage is an accounting identity, not an independent solvency test. The parent reserve facts and mark sensitivities pass through unchanged.
 
-| basis | ratio | what it excludes |
-|---|---:|---|
-| **netted** — the headline attestation | **101.5602%** (2026-10-04) | protocol-owned liquidity and minted-but-unsold inventory, removed from *both* sides |
-| **netted**, earlier reading | 98.0177% (2026-08-23) | same basis — shown so the move is dated on both ends |
+The **October 26 14:47:09 UTC** Accountable snapshot reports **$289,398,701.50 reserves** against **$289,073,514.82 supply**, a **$325,186.68 surplus**. The two ratios use different, explicitly matched denominators:
 
-⚠️ **This is not a disagreement and not a gap between the issuer and us.** Both are published by Accountable, and the netted figure reconciles exactly: `(reserves − POL − inventory) / (supply − POL − inventory)` reproduces the attested headline from the raw bucket split, to within 2.6e-05 pp across **723 of 723 readings**. ⚠️ **That tests the arithmetic, not the inputs.** It is an internal-consistency check on a single feed, not a second source — which is why the trust banner above still stands.
+| Basis | Assets | Liabilities | Collateral ratio |
+|---|---:|---:|---:|
+| Gross | $289,398,701.50 | $289,073,514.82 | 100.1125% |
+| Attested, inventory and POL netted from both sides | $151,866,997.24 | $151,541,810.56 | 100.2146% |
 
-**Our independent lower bound is 98.5289%**, computed gross after stripping the roughly **$190,970** premium at which on-chain STRCx trades over the underlying STRC NAV. **Against the issuer's gross figure that is 0.06pp stricter** — what a conservative bound should be, and exactly the size of the premium removed.
+The netted basis removes **$70,086,365.30 inventory** and **$67,445,338.96 protocol-owned liquidity** from both assets and liabilities. The **$127,437,270.44 STRC bucket** is **44.04% of gross reserves**, **58.11% excluding inventory**, and approximately **83.91% of netted assets**. The tokenized slice is part of that bucket, not an additional reserve.
 
-**The shortfall is one number, not two: $4,399,857.64** against supply of **$312,073,514.82**, read 2026-08-23. That is Accountable's own `surplus_usd`, and it is simply supply minus reserves of $307,673,657.18.
+The custody Safe held **696,380.0148426428 STRCx**, market-valued at **$69,125,066.55** using $99.2634. The remaining **$58,312,203.89 raw STRC** is an implied residual, not an independently verified brokerage position. The multiplier was **1.0972861058** and underlying STRC mark **$99.17** at this snapshot; the later $99.4099 producer quote is a separate observation. The feed's **100.09% independent CR lower bound** does not verify the raw STRC mark or custody.
 
-⚠️ **The composition is worse than the ratio suggests.** Net of the Inventory line — minted-but-unsold apxUSD, an asset offset by a burnable liability rather than real backing — the reserve is roughly **three-quarters STRC family (≈74%)**, more concentrated than a gross reading implies, plus ≈13% cash and ≈13% **reflexive POL** deployed against Apyx's own assets and capped at 15% of reserves. **STRC currently sits at about 60% of reserves, above the 55% single-issuer threshold this coverage flags elsewhere.**
+On fixed netted liabilities and other reserve marks, **1% / 5% losses on the STRC bucket** produce collateral ratios of **99.3736% / 96.0099%**. A **0.2552%** loss on that bucket consumes the surplus. These are static mark sensitivities, not observed losses or guaranteed realizations. Netted starting coverage is never combined with gross liabilities. [Dated reserve evidence](/data/strategy/2026-10-26/apxusd_backing.json).
 
-**Backing is 2.0, inherited from [apxUSD](/reports/apxusd/) and the lowest axis here.** ⚠️ **The portion we can check independently marks better than the attestation; the portion we cannot check is the larger one.**
+**Backing 3.0** reflects the thin surplus, concentrated STRC exposure and incomplete independent verification. The October 26 snapshot establishes no realized backing deficit. Confirmed sub-100% coverage, an adverse verified reserve mark or failed exit would warrant review.
 
 ## 3 · Liquidity & Exit — 3.5
+
+The **October 26** review recorded **1.448195 apxUSD per share**, CoinGecko discount **−2.6630%** against its timed NAV, and **$49,759.98** returned by the **$50K market-notional** routed quote. The standing NAV discount and execution cost are distinct. The observed **20-day unlock cooldown** does not measure queue depth or underlying issuer settlement. No dollar redemption at NAV is promised. The shared backing feed supplies the ladder; the separate venue-inventory feed does not supply depth.
 **Two exit paths, and which binds depends on size. The axis takes the worse one — here they land together at 3.5, and the binding constraint is that both terminate in an asset that trades below $1**, which is a market fact and no longer a backing one.
 
-**Retail-scale, sub-$1M — DEX two-hop, minutes to cash.** Sell apyUSD → apxUSD on Curve, then apxUSD → USDC. ⚠️ **Both legs price the apxUSD discount in**, so the cash received reflects the below-par value, not NAV. Trading on the apyUSD/apxUSD pool is sporadic and market-maker driven, and **Apyx pulls its own depth off-hours by design.** Backup venues exist on PancakeSwap V3 and smaller Uniswap V4 pools. **Depth on the Jupiter-routed STRCx venue is thin at roughly $180K**, which bears directly on the arithmetic one layer down.
+**Retail-scale, sub-$1M — DEX two-hop, minutes to cash.** Sell apyUSD → apxUSD on Curve, then apxUSD → USDC. ⚠️ **Both legs price the apxUSD discount in**, so the cash received reflects the below-par value, not NAV. Trading on the apyUSD/apxUSD pool is sporadic and market-maker driven, and **Apyx pulls its own depth off-hours by design.** Backup venues exist on PancakeSwap V3 and smaller Uniswap V4 pools. **The October 26 STRCx routed-liquidity snapshot was $260,864.37**, which bears directly on the arithmetic one layer down.
 
 **Canonical — a 3-to-20-day window with a declining fee.** Burn apyUSD, enter the UnlockToken window, and **exit faster by paying more: the fee declines linearly from ≈3.5% at about 3 days to ≈0.1% at the full ≈20 days.** It is **not** a flat 20-day cooldown. The max window was shortened from 30 to 20 days by the Apyx admin on 2026-04-15, verified on-chain, and remains admin-mutable subject to a 72-hour visibility window.
 
@@ -121,23 +124,16 @@ apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposi
 Because the canonical path terminates in apxUSD, this asset inherits the underlying's redemption model. Apyx's "Apyx 2.0" plan to move apxUSD mint/redeem to a single Redemption Value floor would improve the terminal asset — **but it is blog-only, not in docs or on-chain, and it changes nothing about this vault's own window.**
 
 ## 4 · Dependencies — 3.0
-⚠️ **This is a chain, not a diversified book, and every link is the same story.**
 
-```
-apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
- vault      the unit    ~74% of    the      the
- share      it is       reserve    issuer   collateral
-            denominated
-            in
-```
+The dominant path is **apyUSD → apxUSD → STRC/STRCx → Strategy**. Apyx’s STRC bucket is **44.04% gross / 58.11% excluding inventory / approximately 83.91% of netted assets** in the October 26 snapshot. These bases answer different questions; protocol inventory and POL do not diversify the terminal issuer. Holding apxUSD and apyUSD together does not diversify this exposure.
 
-- **apxUSD** — 100% of what this share is worth. Its overall score is what this axis tracks.
-- **STRC family** — roughly **74% of the reserve** net of inventory, and about **60% on the issuer's own live figure**, above the 55% single-issuer threshold flagged elsewhere in this coverage.
-- **MSTR, then BTC** — STRC is a preferred instrument junior to MSTR's convertible debt. **A severe BTC drawdown compresses MSTR equity, which compresses the dividend stream this vault exists to pass through.**
+Strategy's [October 26 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm), accession **0001193125-26-431146**, covers October 19–25. General USD Cash fell **$447.3M → $242.4M (−45.8%)**, funding **$204.9M / 2,068,459 STRC shares** of repurchases. The separate USD Reserve held **$4.83B** at disclosed precision. Preferred repurchase authorization remaining was **$956.8M** under the existing $3B program. There were **no ATM share sales and no BTC purchases or sales**; holdings remained **848,517 BTC**. Authorization is permission to spend, rather than funded liquidity or a contractual price floor.
 
-**Strategy's discretionary soft floor remains active, but finite.** The October 12 disclosure records **$192.4M for 1,932,145 STRC shares at about $99.58**, leaving **$354.8M** authorized; STRC closed at **$99.88**. ⚠️ **That is a bid under STRC, not a peg, redemption right, or contractual floor.** It reinforces the near-par mark without restocking Apyx's reserve; meanwhile USD Cash fell **$833.4M → $640.5M**, only $140.5M above the nearest trigger, and the restricted USD Reserve held at $4.88B. apyUSD inherits that two-sided update only through apxUSD; none of its wrapper mechanics changed. The issuer release is live, but EDGAR still ends at the October 5 8-K; no October 12 accession is cited.
+The repeated depletion without refill underlies [MSTR](/reports/mstr/) Funding **3.0**, Overall **3.5**, and [raw STRC](/reports/strc/) Counterparty and Overall **3.0**. The unchanged service reserve, effective 12% rate, lower future coupon burden and functioning near-par bid provide counterevidence. Depletion of the buyback cash pocket is distinct from exhaustion of dividend-service funds. The aged STRC outstanding-count base makes derived share counts, absolute service totals and runway **provisional**; no precise modeled service life or dividend-default date is established.
 
-⚠️ **Holding apxUSD and apyUSD together does not diversify.** They are two claims against the same Apyx and STRC backing.
+November daily STRC dividends at 12% remained **conditional in this pre-vote review**: the October 28 vote, approval by October 31 at 17:00 New York time, and designation effectiveness by November 1 at 00:01 Eastern were still required. The October 26 filing does not establish approval or effectiveness. Replacement daily dividends and the November 15 dividend must not be added together. Neither declaration nor a cadence change automatically establishes wrapper receipt, accrual or pass-through.
+
+**Dependencies 3.0** reflects the existing concentrated exposure and verification limits. The lower raw-STRC credit assessment now equals that dependency anchor; no additional score change or new custody assurance is implied.
 
 ## 5 · Contract & Admin — 4.5
 ⚠️ **This axis is set equal to [apxUSD](/reports/apxusd/), and the reason is that it is literally the same admin surface.** The three Safes described below are Apyx's, not the vault's — **the wrapper adds a vault, and the vault adds no admin exposure of its own.** ✅ **A wrapper cannot be safer on admin than the thing it wraps when both answer to one set of keys**, so this sits at apxUSD's number rather than above it. **The vault's own cleanliness is real and is described below; it earns no uplift here because there is nothing to uplift past.**
@@ -192,7 +188,13 @@ apyUSD  ->  apxUSD  ->  STRC  ->  MSTR  ->  BTC
 
 The [apxUSD report](/reports/apxusd/) covers the non-yield-bearing sibling — the asset this vault wraps. apxUSD exits faster at any size, via Curve or USDC settlement, but earns no yield; apyUSD adds the dividend pass-through and the unlock window. ⚠️ **The two are claims against the same Apyx and STRC backing. Holding both does not diversify.**
 
+
+
+**October 26 targeted scope:** inherited filing, dated reserve/quote facts and active dependency rationale only. Full verification dates, scores and publication status are unchanged. Governance, custody and primary redemption were not re-audited. [Reviewed source snapshots](/data/strategy/2026-10-26/sources.json).
+
 ## Revision history
+
+- **2026-10-26 — factual dependency propagation.** Incorporated accession 0001193125-26-431146, dated reserve and exit observations, provisional outstanding-count/runway limits and conditional November dividends. Scores and full verification dates unchanged. Broader shared-source/history-format migration remains deferred.
 
 - **2026-10-04 — the underlying's backing recovered and Stability was cut anyway; Stability 6.5 → 5.5, Backing 2.0 → 3.0, Overall 3.0 → 4.0 (Liquidity & Exit 3.5, Dependencies 3.0, Contract & Admin 4.5, Issuer 5.0 held).** apxUSD's attested collateral ratio holds **101.5602%** continuously since 2026-09-17, which carries Backing. ⚠️ **Stability moves the other way, and not for deterioration:** the discount narrowed to −1.34%, NAV rose to 1.436830 strictly monotonically, and the underlying ratio reached 101.56% — **every figure behind the previous number improved.** The cut is because NAV smoothness on a `total_assets / shares` definition is **substantially definitional**, the mark under it is 52.18% issuer-priced with the verifiable remainder struck against about $371K of venue liquidity, and **no independent price measure has ever printed at or above NAV** — 0 of 722 on the DEX, 0 of 702 on CoinGecko. **Redemption folds into axis 3; no number moved, redemption 3.5 against liquidity 3.5.**
 - **2026-08-30 — correction carried forward from the body; no score change.** An earlier pass on 2026-08-23 stated that our independent bound read **higher** than the issuer's attested ratio, and concluded the portion we can check marks better than the attestation. ⚠️ **That was an artifact of comparing our gross bound against the issuer's netted ratio** — a +0.51pp illusion, not a finding. Like for like, our bound is **0.06pp stricter**, as designed. The same pass published a second, larger shortfall of about **$6.2M**, derived by multiplying the netted ratio by gross supply; **that figure does not exist on any basis and is withdrawn.** The single correct figure is **$4,399,857.64**. ⚠️ **The terminal asset's concentration is unchanged either way, so nothing re-rates on this** — and the collateral ratio, which was below par when this was written, has since crossed back above it without the concentration moving.
