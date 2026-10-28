@@ -2,7 +2,7 @@
 asset: "syrupUSDT"
 slug: "syrupusdt"
 aliases: ["syrupUSDT", "SYRUPUSDT", "Syrup USDT", "Maple Syrup USDT"]
-chains: ["eth", "plasma"]
+chains: ["eth", "plasma", "mantle", "bsc", "ink"]
 category: "vault-share"
 underlying_assets: ["USDT"]
 yield_bearing: true
@@ -10,11 +10,11 @@ assessment_type: "light"
 audience: "retail"
 date: "2026-05-03"
 last_verified: "2026-09-06"
-last_revised: "2026-10-13"
+last_revised: "2026-10-28"
 featured: false
 production: true
 issuer: "Maple International Operations SPC"
-market_cap_approx: 304360000
+market_cap_approx: 318672000
 axis_frame: six
 volatility_score: 8.5
 backing_score: 6.0
@@ -24,7 +24,7 @@ underlying_score: 4.0
 liquidity_score: 6.0
 issuer_score: 5.5
 overall_score: 6.0
-# Financial review: 2026-10-13; authority walk: 2026-09-06; assurance: 2026-10-03.
+# Financial review: 2026-10-28; authority walk: 2026-09-06; assurance: 2026-10-03.
 # Legacy redemption_score remains evidence for Liquidity & Exit, not a seventh displayed axis.
 # PARKED: issuer recourse/principals/entity-financial-audit inputs need review; 5.5 carried from riskAnalyst [owner: riskAnalyst] [since: 2026-10-13]
 ---
@@ -33,128 +33,138 @@ overall_score: 6.0
 
 **Moderate risk · 6.0/10**
 
-syrupUSDT is a USDT-denominated vault share in Maple’s institutional lending and supporting-strategy portfolio.
+Financial review: October 28, 2026. syrupUSDT is a USDT-denominated share in Maple’s lending and supporting-strategy portfolio. It accrues yield into NAV and is not a dollar-pegged stablecoin. Borrower default, strategy losses, collateral/custody failure and underlying-token disruption can reduce value. [syrupUSDC](/reports/syrupusdc/) shares governance and overlapping borrower addresses; it is not an independent diversification leg.
 
-[Live backing and exit dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt)
+The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt) shows current conditions. This report assesses persistence and structure from the **same selected files, price references and liquidity conventions**, from the public [base feed](https://todayindefi.github.io/backing-monitor/data/syrupusdt_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdt_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json). Source times differ; these are dated review inputs.
 
-## Summary
+The October 28 corrected shared inputs use address-specific issuer/metadata classifications and keep canonical supply separate from remote representations. Credit collateral coverage and bridge reconciliation remain incomplete. The classification change is a definition break, not a historical improvement or deterioration in the same population.
 
-Depositing USDT buys a share whose net asset value (NAV) accrues yield. syrupUSDT is not a dollar-pegged stablecoin: credit losses, supporting-strategy losses or an underlying-token depeg can reduce its value. It shares governance, custody dependencies and some borrowers with [its sibling](/reports/syrupusdc/), while the pools have different delegate addresses.
-
-Financial data and retained quote history were reviewed on **October 13, 2026**. Authority measurements remain **September 6** and contract assurance **October 3**; no new live role enumeration or timed redemption supports this review. The verified-through date reflects the oldest retained authority evidence.
-
-Producer snapshot **2026-10-13T09:44:22Z**; collateral records dated **2026-10-13T09:44:20Z**. Financial figures are from the dated producer snapshot; live magnitudes can differ.
-
-| Metric | October 13 snapshot | Basis |
-|---|---:|---|
-| Pool assets | $304.36M | Canonical totalAssets; not the sum of chain supplies |
-| NAV | 1.147779 | Underlying token per share |
-| Enumerated principal | $285.26M | All active positions, including pool-owned liquidity |
-| Loan / liquidity records | 8 / 10 | Loan / pool-owned strategy classification |
-| Loan-classified principal | $226.11M | Includes at-par loans; category is not collateral quality |
-| Numeric collateral coverage | 62.07% / 78.30% | All-principal / loan-classified-principal denominators |
-| Free liquidity | 6.27% | Cash plus accrued strategy interest; not all instantly spendable cash |
-| Pool cash | $18,863,161.66 | Underlying held in canonical pool |
-| Current discount to NAV | -9.18 bps | Market price vs contemporaneous NAV |
-| Core APY | 5.27% | Maple GraphQL; separate 7-day NAV estimate 5.33% |
-| Impaired / called / defaulted | 0 / 0 / 0 | Current producer flags; recognized losses $0 |
+The published verification date remains **September 6**, with this financial revision dated **October 28**. Authority observations remain September 6 and component assurance October 3. No timed redemption, fresh role walk or v4-hook inspection was performed.
 
 ## 1 · Stability — 8.5
 
-Yield accrues into the share price rather than being distributed through a rebase. Core APY was **5.27%** at the October 13 snapshot, principally from lending and supporting strategies; rates vary with the portfolio. Market discounts to NAV are distinct from a stablecoin depeg.
+The dashboard selects the public backing history’s **peg_market_price / peg_theoretical_price**, with no accounting-NAV substitution. The corrected snapshot has market price **1.145003**, reference NAV **1.150159** and a **−44.83bps discount**; accounting NAV is separately **1.150163**. These price and accounting clocks need not coincide. The source APY is an observation, not a guaranteed rate.
 
-**Risks and limitations.** The snapshot reports zero impaired, called or defaulted positions and no recognized losses. These are current accounting observations, not independent proof of lifetime loss-free performance or adequate collateral on every loan. A default can write down NAV, and yield can fall or turn negative.
+The retained month has **701 valid paired observations**, mean discount **−12.62bps**, range **−65.64 to −1.07bps**. The latest week has 169 valid hourly pairs, mean **−17.33bps**. The largest observed discount exceeds 50bps, so the report does not describe every observed price as inside that level. These indicative samples do not establish sustained duration at the worst price, executable fills or behavior between reads. All retained accounting observations show zero recognized unrealized losses; that does not independently verify collateral or lifetime loss performance.
+
+**Stability stays 8.5.** The share accrues yield and the observed deviations are relatively small discounts to a moving NAV, not loss of a $1 peg. A sustained material discount, impairment or new loss channel can require immediate review; unavailable 90-day history is not inferred from the month retained here.
 
 ## 2 · Backing — 6.0
 
-The deployed principal is fully enumerated, with listed rows reconciling to principalOut and **$0 residual**. Collateral valuation coverage is **62.07% / 78.30%**, measured as principal on rows with a finite numeric collateral USD value divided by all enumerated principal / loan-classified principal respectively. Only **7 of 18 records** have numeric valuations. A collateral record object alone does not establish valuation or independent custody assurance.
+Canonical pool assets are **$318.67M** at **2026-10-28T15:03:04Z**. Enumerated principal is **$312.76M**, reconciling to principalOut with **$0 residual**. Complete principal accounting does not verify custody or recovery value.
 
-The $49.06M USDtb loan has no valuation; the seven priced crypto loans have no below-120% flag. Off-chain evidence and $0 delegate cover remain. Numeric presence is weaker than independently verified custody and recoverability. Closing principal enumeration or adding collateral record objects does not justify a higher score while valuation gaps and discretionary enforcement survive. Conversely, nulls and uncorroborated readings alone do not establish a loss or force an automatic cut. Persistent material evidence deterioration can still justify a lower score before loss recognition.
+**Seven of 18 records have numeric collateral USD values**, covering **59.17% of all enumerated principal** and **76.75% of classified credit principal**. Unpriced principal is **$127.71M**, including the $50M USDC credit position and non-credit wrappers. The credit coverage field is explicitly incomplete: **$165.05M of $215.05M** credit principal has valuations; the full-credit collateral ratio stays unavailable. Numeric presence does not verify custodian balances, enforceability or realizable collateral.
 
-The $108.21M of unpriced principal consists of **$59.15M pool-owned liquidity plus a $49.06M USDtb loan**. USDtb is classified as a loan at 100% initial collateralization, not pool-owned liquidity. At-par exposure is therefore **37.93% of all principal**, while liquidity is only **20.74%**. At-par exposure includes this loan as well as the liquidity layer.
+Available row valuations sum to **$290.91M**, versus the source’s **$418.54M aggregate / 133.82% reported collateral ratio**. Scope, missing values and conventions remain unreconciled. The aggregate is not an independently proved credit recovery buffer. Zero recognized losses and zero current impairment/call/default flags do not settle that discrepancy. The accounting PCR of 100% checks vault components against totalAssets, not off-chain collateral.
 
-On loan-classified principal, BTC is **53.90%**, XRP **24.41%**, and USDtb **21.70%**. USDtb adds an issuer/reserve dependency; its name is not USDT. [Ethena's description](https://docs.ethena.fi/usdtb) identifies Treasury products and stablecoin reserves. The snapshot has no USD valuation for this position; no independent collateral or custody assurance is inferred from the label.
+**The corrected classification is address-specific but is not independent economic verification.** Version **issuer_economic_v2_2026-10-28** assigns **$215.05M / seven records to credit** and **$97.71M / eleven records to non-credit strategies**, with no unknown principal in this snapshot. The compatibility label liquidity includes Treasuries, trading, DeFi, LP and intercompany positions; it does not mean immediately withdrawable cash. [Maple’s transparency](https://maple.finance/transparency/products/syrupusdt) and exact position metadata support the $50M USDC credit classification, USDtb Treasury classification and BTC basis-strategy classification. The latter is now $4.2M of principal. Issuer assertions and metadata are not independently verified custody evidence. The old heuristic history is not relabelled using today’s membership.
 
-The pool-owned layer is **$50M USDC, $9.15M USDT and $15 of residual issuer positions**. USDC is **84.53% of the layer**. Address-level custody balances for these rows are not available in the snapshot. This is an evidence gap, not a zero-balance finding.
+The at-par Set B is **47.23% of all enumerated principal**. This initial-collateral-level grouping is separate from economic categories and the non-credit-strategy share. Collateral posted at 100% provides no initial overcollateralization cushion; a stablecoin label does not make the claim pool cash.
 
-Loans are delegated underwriting with custodied collateral; OpenTermLoan principal is on-chain, but collateral valuation comes from Maple GraphQL. Margin calls and realization depend on operator action. Notice periods vary by loan: **1–60 days**, followed by the recorded 48-hour grace.
+A [Network Firm summary](https://dashboard.ledgerlens.io/c/maple) is now readable, dated **October 27, 01:00 UTC**, and describes **$2.11B combined collateral for both pools**. This retires the blanket claim that a current summary cannot be retrieved. It is not a retrieved per-loan attestation, matched per-pool allocation or proof that all unvalued positions are covered. No additional per-pool coverage credit is awarded from its headline alone.
 
-[Maple's September 2 mandate expansion](https://maple.finance/insights/allocation-strategies) includes securities-backed credit, securitization and basis trading, initially staged through syrupUSDT. A collateral token or loan wrapper does not identify strategy: the $49.06M USDtb position neither proves nor excludes basis-trade exposure. No strategy allocation is inferred from unknown loan metadata.
-
-**Risks and limitations.** Collateral is held off-chain under delegate policy. The reported aggregate collateral ratio is 142.13%, but available row valuations and the reported aggregate ($297.78M / $405.44M) do not reconcile in scope or valuation convention. Neither is an independently verified solvency buffer. The 100% pool accounting-reconciliation ratio checks vault components against totalAssets; it does not verify off-chain collateral. Zero recognized losses does not resolve anomalous collateral readings. Both pools have **zero funded delegate cover**, so depositors bear losses without a funded delegate first-loss buffer.
+**Backing stays 6.0.** Complete principal accounting and limited positive collateral evidence remain, while substantial unpriced principal, incomplete credit coverage, operator-controlled realization and **$0 funded delegate cover** constrain confidence. The classification correction does not establish a new loss or justify an upgrade. Corroborated shortfalls or persistent loss of usable evidence can justify a cut before formal default; differently defined snapshots do not independently measure custody deterioration.
 
 ## 3 · Liquidity & Exit — 6.0
 
-Holders can sell through a DEX route or request primary redemption through an operator-processed queue. Secondary exits incur market execution costs; primary settlement depends on available liquidity and queue processing. This axis covers both legs and is constrained by the weaker one.
+The shared source is the backing feed’s **KyberSwap Ethereum exit_mark, selling into USDT at a market anchor**. The separate venue overlay supplies inventory and disclaims replacement depth, primary exit and rating. The dashboard retains the backing feed’s exact ladder. Venue TVL is not executable depth.
 
-The latest Ethereum ladder is **2026-10-13T07:31:15Z**, selling into USDT. Cost uses **(fill_ratio − 1) × 10,000**. The rung notional is market-priced, so these figures are all-in **against market notional, not NAV**. A NAV discount is a separate cost; slippage_bps removes the smallest rung's spread and must not be substituted for holder cost.
+At the corrected snapshot’s **$250K** rung, the **13:32:15 UTC** quote has baseline-relative impact **−1.0bps**, while all-in signed return versus market-sized notional is **+5.57bps**. The venue baseline/fair-value spread explains the difference. Neither is full cost versus NAV. The **50bps depth is a floor ≥$1M**, with ladder_exhausted status; no exact crossing was located. The separate 200bps threshold is not substituted for the primary one.
 
-| Notional | Latest all-in bps | History median bps | History IQR bps |
-|---|---:|---:|---:|
-| $150,000 | -11.42 | -11.64 | 17.78 |
-| $250,000 | -11.82 | -12.04 | 17.78 |
-| $500,000 | -12.82 | -13.04 | 17.77 |
-| $1,000,000 | -14.81 | -15.03 | 17.77 |
+The pre-correction archive ending October 28 at 08:45 UTC retains **214 distinct successful quotes per institutional rung over 26.77 days**, maximum retained quote gap six hours. The **$250K all-in median is −10.81bps, IQR 9.57bps**; the **$1M median is −13.80bps, IQR 9.56bps**. Relative to the October 13 distribution, typical market-relative costs and spread are better, but market-anchor gaps also affect all-in returns: this is not proof that the pool curve itself deepened. The successful-quote store lacks a failure denominator; quotes are not trades or a fill-success distribution.
 
-Retained history: **95 distinct timestamps per rung**, 2026-10-01T13:09:32Z to 2026-10-13T07:31:15Z (**11.77 elapsed days**), deduplicated on measured_at, not tracker runs. These are successful quotes only: a quote is not a trade, and the missing failure denominator prevents an execution success-rate estimate. Execution variability and an unmeasured primary route limit the rating.
+The producer’s route description is still explicitly **verified October 1**, identifying a single Uniswap v4 syrupUSDT/USDT pool; it is not fresh route-level verification for every later quote. The archived venue inventory reports about **$5.07M** for that Ethereum pool and about **$3.17M** for the Plasma Oku pair, but liveness/custody fields remain unknown and indexer TVL has explicit caveats. The v4 hook remains uninspected. Neither the destination-chain supply reads nor a reported Plasma venue establish equivalent executable exits for an Ethereum position. For a holder on Plasma, the current Ethereum ladder does not measure the local exit.
 
-The queue is empty at the financial snapshot. That establishes current queue state, not request-to-fill latency. The withdrawal watch contains an old single watched wallet, not a current latency distribution. [Maple's current disclosure](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks) describes FIFO processing, liquidity-dependent delays and no guaranteed maximum period. The historical “under five minutes” claim is not independently verified; the integration guide's 30-day wording is not treated as an enforceable maximum.
+The primary route remains a liquidity-dependent withdrawal queue. Empty pointers do not measure request-to-fill speed. At the corrected observation, broader free liquidity is **1.85% / $5.91M**, including accrued interest; pool USDT cash is **$5.33M**. The source field free_usdc is legacy naming; its unit follows the vault’s USDT asset token.
 
-The 721 hourly buckets over September 13–October 13 have median free liquidity **2.54%**, with a trailing seven-day median **4.30%**. This is an observation over the available window, not a permanent buffer. Accrued interest is included; spendable cash is narrower.
+In the pre-correction archive ending 08:45 UTC, the month’s median cushion is **3.05%**; the latest week’s is **2.63%**, with **42/169 samples below 2%** and a **0.19% minimum**. That is a variable buffer rather than a reliably immediate primary exit. [Issuer disclosure](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks) describes FIFO processing and a claimed sub-24h average with no guaranteed maximum; the historical five-minute claim has not been independently timed.
 
-The $250K median exit cost is higher than syrupUSDC’s, with materially larger variability. Reconsider an upgrade after sustained improvement in that market-relative distribution and measured primary latency; reconsider a cut on persistent quote deterioration, widening NAV discount, unavailable routes or prolonged actual redemption.
+**Liquidity stays 6.0.** Current and retained quotes support reasonably efficient Ethereum secondary exits, so “no institutional measurement” is not a valid cap. The remaining limits are primary-latency evidence, routing/venue concentration and uninspected hook/liveness, alongside observed buffer variability. The improved distribution alone does not remove those constraints or justify copying syrupUSDC’s 7.0. Reassess after live route/hook verification, measured primary settlement and continued comparable quote quality; cut on persistent deterioration, unavailable routes or prolonged measured redemptions.
 
 ## 4 · Dependencies — 4.0
 
-The pool depends on its underlying stablecoin issuer, Maple’s underwriting and reporting, collateral custodians, supporting-strategy issuers and the venues used to exit. Borrower addresses identify on-chain exposure, without independently identifying firms or proving that firms are unrelated.
+The dashboard now selects the published **classified-credit concentration**: **top-1 42.89%, top-3 91.80%, top-5 100%, HHI 3089**, denominator **$215.05M**, five borrower addresses across seven credit records. Membership follows the corrected address-specific source definition; addresses are not independently identified firms. All-enumerated concentration remains separately available: **top-1 29.49%, top-3 74.81%, top-5 95.59%, HHI 2233**, denominator **$312.76M**, eight addresses including non-credit strategies.
 
-| Concentration | All enumerated principal | Loan-classified principal |
-|---|---:|---:|
-| Denominator | $285.26M | $226.11M |
-| Borrower addresses | 9 | 6 |
-| Top-1 | 32.33% | 40.79% |
-| Top-3 | 69.21% | 86.89% |
-| Top-5 | 91.66% | 98.83% |
-| HHI | 2075 | 2804 |
+The former loan-filtered diagnostic is superseded by the published companion table. The dashboard uses that table’s five borrowers and leaves the incomplete credit collateral ratio unavailable. Older heuristic concentration figures are historical diagnostics, not a continuous issuer-economic credit series. The October 13 all-enumerated top-3 of 69.21% remains comparable in scope to the all-position table, rather than to the new credit subset.
 
-Addresses are not independently identified firms; operator/accounting addresses are included where positions use them. The [USDT dependency](/reports/usdt/) carries a 4.0 Dependencies score, setting a ceiling for a pool that adds counterparties to that underlying exposure. Loan-classified top-1/top-3 are 40.79%/86.89%; the at-par USDtb loan adds a distinct issuer/reserve dependency. The enumerated Circle position and measurable pool legs support the ceiling, not an upgrade above it. Borrower concentration contributes to Dependencies; collateral evidence quality contributes to Backing.
+On the corrected credit denominator, collateral labels are **BTC 51.09%, XRP 25.66%, USDC 23.25%**. These are labels, not independently verified custody allocations. USDT, USDC, USDtb, PYUSD and aUSDT introduce distinct issuer/reserve/contract exposures. Family all-position top-1/top-3 are **15.76% / 42.31%** on **$1,268.83M**; classified-credit top-1/top-3 are **17.56% / 47.14%** on **$1,138.77M**. The family combines reviewed USDT membership with legacy unreviewed USDC heuristics and is explicitly a mixed definition. Family credit collateral coverage stays unavailable; strategy principal is not subtracted from aggregate collateral to manufacture a credit ratio.
 
-Family concentration is independently recomputed from both complete loan exports: **top-1 15.16%, top-3 40.70%, top-5 55.86%, HHI 871 on $1,318.97M all-enumerated principal**; **16.99%, 45.61%, 62.61%, HHI 1,044 on $1,176.82M loan-classified principal**.
-
-The shared XRP borrower **0x8669f3189ea2318d28c7183a971d65e0c352f1e9** has $151.80M across both pools: **11.51% of all-enumerated family principal / 12.90% of loan-classified family principal**. It accounts for the entire XRP bucket, and is the **third-largest family borrower**. A combined allocation retains this correlated counterparty/collateral exposure and shared governance/custody risk.
+**Dependencies stays 4.0.** The USDT dependency bound and concentrated operator/credit/issuer exposures remain load-bearing. This review explicitly declines an extra half-point cut for the top-3 move: the existing low rating already recognizes concentrated, correlated exposure, and the current evidence mixes economic categories without an independently established new loss path. It also declines a diversification upgrade based on the lower all-enumerated top-1. Revisit after membership reconciliation or independently identified new counterparty/custody concentration. This closes the old “concentration never reviewed” backlog premise without claiming the concentration reverted or charging it to Backing a second time.
 
 ## 5 · Contract & Admin — 4.5
 
-The canonical pools share MapleGlobals, the governor, securityAdmin and the permission Safe. Their Pool Delegate EOAs differ. Holding both pools therefore separates delegate keys but retains common governance and securityAdmin exposure. The snapshot reports both pools active and unpaused, with **zero delegate cover and minCoverAmount = 0**. Depositors have no funded delegate first-loss buffer.
+The pools share MapleGlobals, governor, securityAdmin and permission infrastructure; their delegate EOAs differ. Current named governor/securityAdmin/delegate addresses match the earlier financial record, but this is not a new membership or role enumeration. The **September 6 walk** remains the authority evidence: two governor-role EOAs can reach role changes after the recorded delay; securityAdmin has an undelayed manager-upgrade route to governor-registered implementations; the delegate’s manager path does not impose the same wait on withdrawal-manager control. The recorded floor and shared authority do not diversify by buying both pools.
 
-The **September 6 authority walk** remains the source for role reach, thresholds and delays: two governor-role EOAs can schedule/execute role changes after three days; securityAdmin has a three-signature undelayed manager-upgrade route, bounded to governor-registered implementations; the delegate's manager-upgrade path waits seven days, while its withdrawal-manager route can bypass that wait. The October 13 review compares the named governor/securityAdmin/delegate addresses with the current producer snapshot; it does not re-enumerate Safe membership or re-walk bridge authorities. The authority evidence covers canonical Ethereum pools; destination-chain authorities were not re-walked.
+**Contract & Admin stays 4.5.** The **October 3** component/source-assurance work is not a full audited-build-to-live-bytecode proof, and syrupUSDT-specific instance coverage remains unestablished. Historically recorded bounty and audits are not re-verified today and cannot offset privileged routes. The venue’s v4 hook remains a separate uninspected exit dependency.
 
-Reusable V2 code reviews, withdrawal/timelock reviews and Syrup entry-path reviews have distinct scopes. The October 3 security brief establishes strong source-file matches to the December 2024 review, not a complete audited-build-to-live-bytecode proof. The recorded Maple bounty maximum is $500,000, with privileged-key/centralization exclusions; it is not a dedicated full-pool coverage guarantee. Code assurance does not offset the authority path. syrupUSDT-specific instance coverage remains unestablished.
-
-**Documentation and coverage.** Maple’s [risk disclosures](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks) agree that upgrades require authorized actors and approved versions. They do not specify the complete live holder set, thresholds or each bypass delay; those particulars rely on the dated authority walk. An EOA proves the absence of an on-chain quorum, while private key custody arrangements remain unverified. Code assurance does not establish that the live privileged-role topology was audited.
+Supply observations now cover **Ethereum, Plasma, Mantle, BNB and Ink**. Canonical totalAssets is **$318.67M**; Ethereum totalSupply includes bridge locks, while remote supplies are representations. The additive chain total, percentages and resident decomposition are unavailable, and reconciliation remains **incomplete**. Current documented pool identities and an Ethereum lock balance were probed separately; those asynchronous reads do not prove active router/admin registration, migration completeness, matched-block liabilities or in-flight-message reconciliation. Supply enumeration does not establish exit depth or replacement-pool authority coverage. Older authority observations cannot verify the replacement pools.
 
 ## 6 · Issuer — 5.5
 
-The named issuer is **Maple International Operations SPC**, acting for **Maple USDT Segregated Portfolio 1**; Syrup Ltd operates the interface. The issuer vehicle is a segregated portfolio company. Entity identification and portfolio structure are established in Maple’s [issuer disclosure](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks). Lender recourse is limited to the relevant portfolio’s assets. Cross-portfolio ring-fencing does not diversify shared operational exposure.
+The legal issuer is **Maple International Operations SPC** acting for the **Maple USDT Segregated Portfolio 1**; **Syrup Ltd** operates the interface. Issuer **5.5** remains based on operator underwriting, custody/strategy discretion, enforcement dependence, operating record and Maple’s v1 loss history. Portfolio legal separation does not segregate shared operational keys. The newly readable combined collateral summary is limited evidence, not a full entity financial audit or enforceable recovery guarantee. Contract audits and bounty are not issuer credit. Current zero recognized losses is not independent proof of loss-free history.
 
-The entity assessment considers underwriting and custody discretion and Maple’s v1 credit-loss history. The current snapshot establishes no recognized loss now; independent lifetime Syrup loss history is not verified. The **5.5** issuer score is carried from the October 13 research assessment, rather than independently re-derived here.
 
-**Risks and limitations.** Governing law and the dispute mechanism were not verified in this review. Current accountable principals and entity financial-audit coverage were not independently checked. Naming the issuer does not establish those inputs or guarantee recovery.
+## Shared dashboard evidence — October 28, 2026
 
-## Cross-chain exposure
+Corrected financial snapshot **2026-10-28T15:03:04Z**; family **2026-10-28T15:03:39Z**; Ethereum quote **2026-10-28T13:32:15Z**. The separately retained historical statistics below end at **08:45:18Z**. The classification definition changed; no classified history was spliced or backfilled.
 
-[Maple's September 28 announcement](https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0) starts a staged CCIP 2.0 rollout on September 29. Token addresses stay fixed while bridge pools change. The article describes native non-Ethereum mint/redeem as future functionality. The receiver integration guide also documents cross-chain messages settled on Ethereum; that is not proof of locally settled redemption on every chain. No score credit is added for an announced future exit route.
+| Supporting snapshot | Value | Definition |
+|---|---:|---|
+| Pool assets / NAV | $318.67M / 1.150163 | Canonical vault accounting; USDT per share |
+| Enumerated principal | $312.76M | All active positions; $0 principal residual |
+| Credit / non-credit strategy records | 7 / 11 | Address-specific classification version issuer_economic_v2_2026-10-28 |
+| Credit / non-credit strategy principal | $215.05M / $97.71M | Non-credit does not mean immediately available cash |
+| Numeric valuation coverage | 59.17% / 76.75% | Numeric collateral USD / all principal and classified credit principal |
+| Numeric valuation records | 7 / 18 | Numeric presence does not verify custody |
+| Unpriced principal | $127.71M | Null valuation is unknown, not zero |
+| Free-liquidity measure / cash | $5.91M (1.85%) / $5.33M | Cash plus accrued interest / pool USDT cash |
+| Credit collateral ratio | Unavailable | Incomplete: $165.05M of $215.05M credit principal priced |
+| Global chain sum / resident shares | Unavailable | Canonical includes locked shares; remote representations are non-additive |
 
-Use the [current per-asset registry](https://docs.maple.finance/integrate/crosschain/syrupusd-crosschain.md) to locate deployments. Its wider network menu is not evidence of material supply on every network, and a family announcement alone does not establish a per-asset deployment. Old pool addresses and authority walks need reconciliation as migration reaches each chain. The measured exit ladder is **Ethereum-only**: it establishes no executable exit on Monad, Plasma or Solana.
+The following history window and statistics retain the original pre-correction archive:
 
-The supply panel sums Ethereum $304.36M and Plasma $57.92M to $362.28M (119.03% of canonical assets). Ethereum canonical supply already includes locked bridged shares, so this is double-counting, not excess issuance evidence. Use $304.36M canonical totalAssets. Plasma token-pool versions and addresses require reconciliation during CCIP migration; no new lock-balance proof was taken in this refresh.
+| Window | Hourly samples / covered days | Discount to NAV, mean / min / max (bps) | Free liquidity, median / min (%) | Samples below 2% | Largest gap (hours) |
+|---|---:|---:|---:|---:|---:|
+| 7d | 169 (169 peg) / 7.00 | -17.33 / -65.64 / -6.36 | 2.63 / 0.19 | 42 / 169 | 1.10 |
+| 30d | 719 (701 peg) / 30.00 | -12.62 / -65.64 / -1.07 | 3.05 / 0.06 | 137 / 719 | 2.00 |
 
-## Score interpretation and monitoring
+Backing history spans **2026-09-28T08:47:09Z–2026-10-28T08:45:18Z**. Keep the newest observation per UTC hour, then use unweighted sample statistics. Peg uses **peg_market_price / peg_theoretical_price − 1**, never accounting NAV as a substitute reference. All 719 retained hourly samples show zero recognized unrealized losses; this does not verify collateral or intrahour conditions. The 90-day request has only the same 30.00 days of retained backing history; no 90-day conclusion is made.
 
-The overall score is **6.0**. The six displayed axes average **5.75**, so overall sits **+0.25 above its own axis mean**. The source assessment retains its legacy seven-field convention, including Redemption (6.5), whose mean is **5.8571**; rounding that mean to the nearest half-point gives the overall score. Redemption is evidence for Liquidity & Exit rather than a seventh displayed axis. The aggregation convention is due for review by November 1 or when an axis changes.
+| Ethereum sell size | Latest impact (bps) | Latest all-in return (bps) | Historical all-in median / IQR (bps; archive ending 08:45 UTC) | Distinct successful quotes / days |
+|---|---:|---:|---:|---:|
+| $150,000 | -0.60 | 5.97 | -10.41 / 9.57 | 214 / 26.77 |
+| $250,000 | -1.00 | 5.57 | -10.81 / 9.57 | 214 / 26.77 |
+| $500,000 | -2.00 | 4.57 | -11.80 / 9.57 | 214 / 26.77 |
+| $1,000,000 | -4.00 | 2.57 | -13.80 / 9.56 | 214 / 26.77 |
 
-Watch for recognized impairment or default, corroborated collateral shortfalls, unresolved valuation gaps, strategy or authority changes, widening NAV discounts and sustained exit deterioration. Match pool-owned strategy positions to custody balances at one block before treating an unmatched balance as a loss. An empty queue does not establish redemption latency.
+Impact is the dashboard’s **slippage_bps**, relative to the venue’s smallest $1,000 rung. All-in signed return is **(fill_ratio − 1) × 10,000**, versus market-sized notional; negative means cost. Neither is a NAV-based exit loss. Historical all-in and impact are kept separate. Deduplicate by quote measured_at, with source/chain/pair/market-anchor identity fixed. Successful quotes do not measure execution success or fill latency.
+
+The producer’s **50bps depth is a floor of at least $1M**, with ladder_exhausted status; it is not an exact crossing. The separate 200bps field is not the stable-valued primary threshold. The venue inventory’s venue-only overlay deliberately publishes no depth, primary exit or rating; BM retains the backing feed’s ladder.
+
+| Borrower address concentration | All enumerated principal | Published classified credit |
+|---|---:|---:|
+| Denominator | $312.76M | $215.05M |
+| Addresses | 8 | 5 |
+| Top-1 | 29.49% | 42.89% |
+| Top-3 | 74.81% | 91.80% |
+| Top-5 | 95.59% | 100.00% |
+| HHI | 2233 | 3089 |
+
+The corrected companion declares exact included and excluded position addresses. Concentration is recomputed against those members and checked against the served source. This is a definition break from the earlier heuristic diagnostic; no retrospective economic reclassification or per-position trend is implied. Addresses are not independently identified legal counterparties.
+
+## Score interpretation
+
+Overall **6.0** is held. The six displayed axes average **5.75**; the retained legacy Redemption component (6.5) gives a seven-field mean of **5.8571**. The existing exception is due for review November 1 or when its axis premises change. Legacy Redemption is folded into Liquidity & Exit, not a seventh displayed axis.
+
+## Open evidence and review triggers
+
+- Extend address-specific economic review to the sibling pool; independently corroborate custody and issuer metadata. Keep the classification definition break explicit.
+- Reconcile current locks, remote liabilities and in-flight transfers at aligned blocks; verify active replacement-pool registration.
+- Verify current quoted route, pool key, v4 hook/callback permissions, liveness and destination-chain executable exits. Indexed TVL is not a fill measurement.
+- Measure primary request-to-fill latency at size; obtain scoped collateral attestation/custody records rather than using a combined headline to fill nulls.
+- Reassess on recognized impairment/default, corroborated shortfall, changed mandate/authority, unusable common evidence or persistent exit deterioration.
 
 ## Revision history
 
-- **2026-10-13:** Refreshed financial snapshots, collateral valuation coverage, allocations, concentration and retained exit history from the October 13 research review. Removed the 100%-priced claim, unsupported universal default lag and stale six-times exit comparison. Updated issuer identity and scoped evidence dates. Overall and all axis scores unchanged; syrupUSDC’s liquidity upgrade remains conditional on duration and measured primary redemption latency.
+- **2026-10-28 — Financial revision.** Scores unchanged. Corrected common classifications, loan-only concentration and non-additive five-chain supply fields incorporated. Earlier history retains its own observation window and classification definition. Principal accounting reconciles; credit coverage and bridge reconciliation remain incomplete. No fresh authority/hook walk or timed redemption is claimed.
+- **2026-10-13 — Prior financial review.** Its magnitudes and categorical claims are historical where superseded above.
