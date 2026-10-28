@@ -1,0 +1,15 @@
+{
+  "status": "authored correction; propagation to live dashboard not verified",
+  "decided_on": "2026-10-28",
+  "asset": "usg",
+  "changes": [
+    {
+      "file": "usg_axis_basis.json",
+      "source_sha256": "25af0687cbe7531d514c09c046e25c9bb0e81b4baa8c891fa6916b2a9a248ca5",
+      "field": "liquidity_score",
+      "archived_value": 3.0,
+      "authored_value": 3.5,
+      "reason": "User-approved correction: use the dashboard market-priced ladder; remove standing par-discount penalty from liquidity. This changes the assessment, not the underlying quote data."
+    }
+  ]
+}

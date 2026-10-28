@@ -11,7 +11,7 @@ last_verified: "2026-10-28"
 last_revised: "2026-10-28"
 peg_mechanism_score: 5.0
 backing_score: 5.0
-liquidity_score: 3.0
+liquidity_score: 3.5
 underlying_score: 4.0
 structural_score: 3.5
 issuer_score: 4.0
@@ -36,7 +36,7 @@ production: true
 
 USG is Tangent Finance’s Ethereum stablecoin, borrowed against productive collateral in isolated markets. Its collateral is largely Curve LP exposure, often held through external wrappers. PegKeepers and borrower incentives support its dollar peg; holders have no direct redemption into borrower collateral.
 
-Overcollateralization and no reported bad debt in the retained history support the assessment. Persistent discounts, correlated collateral, concentrated exits and undelayed administration constrain resilience. Overall **4.0** sits **0.08 below the six-axis mean of 4.08**; higher scores indicate lower risk.
+Overcollateralization and no reported bad debt in the retained history support the assessment. Persistent discounts, correlated collateral, concentrated exits and undelayed administration constrain resilience. Overall **4.0** sits **0.17 below the six-axis mean of 4.17**; higher scores indicate lower risk.
 
 The report uses the same peg, backing, liquidity, dependency and authority records as the dashboard. The dashboard shows current conditions; this assessment considers their persistence and structural risks. The retained history covers approximately one month, with only one comparable liquidity ladder snapshot. [Archived source manifest](/data/usg/2026-10-28/sources.json).
 
@@ -56,13 +56,13 @@ Borrower collateral is largely productive Curve LP exposure, held through StakeD
 
 Stable-LP borrowing parameters leave narrow gaps to liquidation thresholds, so an aggregate ratio near 130% does not describe the first borrower's liquidation distance. Repeated dated market checks have found substantial debt in markets with thin aggregate headroom. The latest <5% bucket increased largely because the largest market crossed that bucket boundary, rather than every borrower becoming proportionally riskier. The shared retained history does **not** contain per-market headroom series, so no monthly average or trend in those buckets is asserted. **Backing scores 5.0**: measured collateral and a clean monitored record are offset by correlated collateral and thin liquidation margins.
 
-## 3 · Liquidity & Exit — 3.0
+## 3 · Liquidity & Exit — 3.5
 
 **USG's long-term exit constraint is reliance on two keeper pools with limited counter-side inventory.** Their stables are LP-owned exit liquidity, not deployable protocol defense. The shared history shows inventory varies materially: the recent weekly average is somewhat above the retained-month average, while the October 3 episode demonstrates that this inventory can contract abruptly. This does not support describing every recent inventory move as deterioration or treating the current balance as permanent capacity.
 
 The report uses **the exact shared liquidity feed ladder consumed by the dashboard**, including market-price input sizing, inventory-proportional allocation and its displayed added-impact field. Small-trade execution is efficient in the archived ladder, while impact increases sharply at larger sizes. The current ladder documents that shape at its observation time. Only one snapshot of this version of the shared ladder is archived here, so a sustained improvement or deterioration in executable depth is **not established**. Older independently measured ladders have different conventions and are not spliced into a trend.
 
-The standing discount belongs in the Peg axis. Added price impact measures execution-rate deterioration relative to the producer's small-trade baseline; total cost versus market value includes that baseline spread. Neither is measured against a hypothetical $1 USG entry price. **Liquidity scores 3.0** because the limited venue structure and large-size curve constrain exit resilience despite low small-trade impact. A sustained score improvement needs repeated comparable ladder observations, rather than one favorable quote or a larger pool balance.
+The standing discount belongs in the Peg axis. Added price impact measures execution-rate deterioration relative to the producer's small-trade baseline; total cost versus market value includes that baseline spread. Neither is measured against a hypothetical $1 USG entry price. **Liquidity scores 3.5.** The shared market-priced ladder shows low small-trade impact and roughly $445K clearing within 50 bps of added impact. Two concentrated exit pools, sharply increasing large-size impact and uncertain stressed depth still limit the score. More comparable history is needed to establish how depth behaves over time and under stress.
 
 sUSG is a holder of circulating USG, not a separate backing source. Wrapper withdrawals can feed demand into the same exit venues. The dedicated [sUSG report](/reports/susg/) covers wrapper mechanics; this refresh does not re-audit its strategies or redemption behavior.
 
@@ -131,11 +131,11 @@ Scores express the longer-term assessment above. The same authored scores feed t
 |---|---|---|
 | Peg Mechanism | 5.0 | Persistent sub-par pricing across the shared history, including a reported October stress episode; no collateral redemption and limited downside keeper action at zero outstanding debt. Operating record remains short. |
 | Backing | 5.0 | Real overcollateralization and no bad debt in retained observations; recursive collateral and narrow market liquidation margins limit resilience. Recent average CR is softer than the retained-month average. |
-| Liquidity | 3.0 | Concentrated exit venues and a steep large-size impact curve. Small-trade impact is low. Current depth is taken directly from shared liquidity feed; insufficient comparable ladder history to claim a depth trend. |
+| Liquidity | 3.5 | Efficient small trades and roughly $445K within 50 bps added impact on the shared market-priced ladder. Two concentrated exit pools, a steep large-size curve and uncertain stressed depth limit resilience. |
 | Dependencies | 4.0 | Shared wrappers, pools and constituent issuers; recursive reUSD exposure and minimum-price collateral marking limit diversification. Composition history is incomplete. |
 | Contract & Admin | 3.5 | Shared authority record identifies undelayed load-bearing parameters under a 3-of-5 Safe. No verified improvement in holder reaction time; delegate and custody questions remain open. |
 | Issuer | 4.0 | Small scale, beta product and limited operating history; unverified current token-governance status and limited legal-accountability evidence. |
-| **Overall** | **4.0** | Peg 5.0 · Backing 5.0 · Liquidity 3.0 · Dependencies 4.0 · Contract & Admin 3.5 · Issuer 4.0: **mean 4.08, min 3.0**. Overall is **0.08 below the mean** and **1.0 above the weakest axis**. Clean sampled backing performance is balanced against persistent discount, layered collateral, concentrated exits and undelayed administration. |
+| **Overall** | **4.0** | Peg 5.0 · Backing 5.0 · Liquidity 3.5 · Dependencies 4.0 · Contract & Admin 3.5 · Issuer 4.0: **mean 4.17, min 3.5**. Overall is **0.17 below the mean** and **0.5 above the joint weakest axes (Liquidity and Contract & Admin)**. Clean sampled backing performance is balanced against persistent discount, layered collateral, concentrated exits and undelayed administration. |
 
 ## What would change the assessment
 
@@ -154,6 +154,8 @@ Scores express the longer-term assessment above. The same authored scores feed t
 - [USG design and current risk disclosure](https://docs.tangent.finance/docs/usg/overview_usg), [peg-stability design](https://docs.tangent.finance/docs/usg/peg-stability), and [official site](https://www.tangent.finance/) checked October 28.
 
 ## Revision history
+
+- **2026-10-28 — Liquidity basis correction:** Liquidity corrected from 3.0 to 3.5; overall remains 4.0, with a six-axis mean of 4.17. The previous par-based assessment counted the standing peg discount as execution cost. The shared market-priced ladder supports the correction; it does not establish a recent improvement in market conditions.
 
 - **2026-10-28:** Aligned all six axes with the shared dashboard evidence and internal assessment. Added seven-day and retained-month history, the canonical shared liquidity feed ladder and dated authority verification. Liquidity changed from 3.5 to the shared 3.0 assessment; overall remains 4.0. September setter simulations retain their original date.
 - **2026-09-06:** Added the Contract & Admin axis and separated authority risk from issuer assessment.

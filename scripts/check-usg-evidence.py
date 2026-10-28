@@ -52,9 +52,21 @@ def render(evidence=EVIDENCE):
         (contract['contract'], 'structural_score'),
         (basis['issuer'], 'issuer_score'),
     ]
+    revisions_path = evidence / 'score-revisions.json'
+    revisions = json.loads(revisions_path.read_text())['changes'] if revisions_path.exists() else []
+    used_revisions = []
     for source, key in score_sources:
         authored = float(re.search(r'^' + key + r':\s*([0-9.]+)', frontmatter, re.M)[1])
-        assert source[key] == authored, f'dashboard/report score mismatch: {key}'
+        if source[key] != authored:
+            filename = 'usg_contract_overlay.json' if key == 'structural_score' else 'usg_axis_basis.json'
+            matches = [r for r in revisions if r['file'] == filename and r['field'] == key
+                       and r['source_sha256'] == manifest[filename]['sha256']
+                       and r['archived_value'] == source[key] and r['authored_value'] == authored
+                       and r.get('reason')]
+            assert len(matches) == 1, f'unexplained dashboard/report score mismatch: {key}'
+            used_revisions.append(matches[0])
+            print(f"Recorded correction: {key} archived {source[key]} -> authored {authored}; live propagation not verified")
+    assert len(used_revisions) == len(revisions), 'Stale or unmatched score revision; review the source snapshot and decision'
     rows = sorted(history["entries"], key=lambda r: timestamp(r["timestamp"]))
     assert len({r["timestamp"] for r in rows}) == len(rows)
     end = timestamp(rows[-1]["timestamp"])
@@ -127,7 +139,7 @@ def main():
         print('Updated USG shared-history and dashboard-ladder evidence')
     else:
         assert START + current + END == expected, 'USG evidence differs from shared dashboard inputs; run --write'
-        print('USG shared-source hashes, peg/history semantics and report evidence agree')
+        print('USG source hashes, metric semantics and report evidence pass; score differences checked against explicit revisions')
 
 
 if __name__ == '__main__':

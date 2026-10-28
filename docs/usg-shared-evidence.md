@@ -78,7 +78,11 @@ averaging window.
 
 The evidence checker verifies archived-source hashes/URLs, peg history selection,
 market-based liquidity sizing, baseline convention, six authored score values
-against archived dashboard overlays, and the generated report block. It does not
+against archived dashboard overlays, and the generated report block. A deliberate
+score correction may differ from an older archived overlay only with an explicit
+`score-revisions.json` record pinning the source hash, field, old/new values and
+rationale. The check reports that divergence and does not call it verified live
+propagation; stale or unmatched revision records fail. It does not
 prove all free prose correct, verify the live deployment, or automatically
 refresh sources. Source refresh/publication and review scheduling are not added
 by this pilot. The snapshot directory is an explicit dated review input, not a
