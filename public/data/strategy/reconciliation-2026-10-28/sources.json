@@ -1,0 +1,28 @@
+{
+  "review_commit": "b3e713d437e0f61f6990a1ecdb457a29b5263c73",
+  "status": "Shared dashboard correction confirmed; base/count and both October 5 periods independently verified",
+  "files": {
+    "reconciled-count.json": "a0f92be214b6c2eb7bbab000292bb505853a7d0d766051c41ac15d34fd278c55",
+    "corrected-oct5-event.json": "14bb9ef84d9441e92612f582df168ea131bfa5b39e7e6b1cbcb47776cd8d8b8d",
+    "strc_backing-reconciled.json": "1aab2280e4c27e9f4fa4a7c4f176ca58dd9d851d81ca8b04b78fa87e2c1c95df",
+    "served-strc_backing.json": "1aab2280e4c27e9f4fa4a7c4f176ca58dd9d851d81ca8b04b78fa87e2c1c95df",
+    "served-strategy_events.json": "c935681399a45c64c64108ee54b2924ba16cffbde361ccaf445cc033920b5591"
+  },
+  "primary_sources": {
+    "october_5_8k": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm",
+    "june_30_10q": "https://www.sec.gov/Archives/edgar/data/1050446/000105044626000044/mstr-20260630.htm"
+  },
+  "backing_monitor_commit": "c113313157",
+  "shared_outputs": {
+    "served-strc_backing.json": {
+      "url": "https://todayindefi.github.io/backing-monitor/data/strc_backing.json",
+      "as_of": "2026-10-28T08:49:34Z",
+      "sha256": "1aab2280e4c27e9f4fa4a7c4f176ca58dd9d851d81ca8b04b78fa87e2c1c95df"
+    },
+    "served-strategy_events.json": {
+      "url": "https://todayindefi.github.io/backing-monitor/data/strategy_events.json",
+      "as_of": "2026-10-28T04:49:31Z",
+      "sha256": "c935681399a45c64c64108ee54b2924ba16cffbde361ccaf445cc033920b5591"
+    }
+  }
+}

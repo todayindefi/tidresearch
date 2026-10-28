@@ -85,15 +85,17 @@ def render(directory=DATA):
     repurchase = {e['filing_date']:e for e in events['events'] if e['type']=='SECURITY_REPURCHASE'}
     for date, event in sorted(reserve.items()):
         x=event['extracted'];r=repurchase[date]['extracted']
-        lines.append(f"| {date} | ${x['usd_cash_usd']/1e6:,.1f}M | ${x['reserve_usd']/1e9:.2f}B | "
-                     f"${r['per_security_aggregate_price_usd']['STRC']/1e6:,.1f}M |")
+        amount = f"${r['per_security_aggregate_price_usd']['STRC']/1e6:,.1f}M"
+        if date == '2026-10-05' and not r.get('periods'):
+            amount = 'Withheld: mixed-period extraction corrected after this snapshot'
+        lines.append(f"| {date} | ${x['usd_cash_usd']/1e6:,.1f}M | ${x['reserve_usd']/1e9:.2f}B | {amount} |")
     latest=reserve[max(reserve)]
     assert latest['accession'] == feed['mstr_view']['balance_sheet']['usd_reserve_source_accession']
     policy=feed['digital_credit_framework']['usd_reserve_policy']
     assert policy['usd_cash_usd'] == latest['extracted']['usd_cash_usd']
     assert policy['balance_usd'] == latest['extracted']['reserve_usd']
     lines += ["", "Amounts are discrete filing observations, not a daily cash series. "
-              "Disclosed periods differ in length; the October 5 repurchase observation covers September 28–30. "
+              "Disclosed periods differ in length. The archived October 5 repurchase event mixed two tables and is withheld here; see the subsequent reconciliation note. "
               "No interpolation or annualized weekly buyback burn is used.", "",
               f"Latest filing: **{latest['accession']}**, filed **{latest['filing_date']}**. "
               f"Unspent preferred repurchase authorization: **${feed['digital_credit_framework']['dcs_repurchase_program']['remaining_usd']/1e6:,.1f}M**; "

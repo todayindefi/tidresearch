@@ -1,0 +1,13 @@
+{
+  "base_shares": 104894705,
+  "base_as_of": "2026-06-30",
+  "shares_retired": 20980508,
+  "shares_retired_as_of": "2026-10-26",
+  "shares": 83914197,
+  "status": "derived",
+  "basis": "Q2 2026 10-Q 0001050446-26-000044 Note 10 exact share base at base_as_of, less cumulative STRC shares retired under the DCS repurchase program (strategy_events.json SECURITY_REPURCHASE sum). Valid only while the preferred ATM stays shut \u2014 checked below.",
+  "strc_issuance_after_base": [],
+  "base_age_days": 120,
+  "par_usd": 8391419700.0,
+  "as_of": "2026-10-26"
+}

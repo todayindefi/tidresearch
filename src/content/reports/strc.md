@@ -60,7 +60,7 @@ Repurchases reduce outstanding shares and future dividends, which is constructiv
 
 The issuer has substantial BTC assets and additional funding choices. STRC nevertheless carries a preferred claim on residual corporate assets, not a security interest in a ring-fenced BTC reserve. Debt and senior preferred claims compete ahead of it, and the ability or willingness to pay depends on decisions and market conditions. The prior ranking assessment places STRC behind debt and STRF; precise legal rights retain their original verification scope.
 
-**Counterparty scores 3.0.** The October 26 cut reflects persistent cash depletion and the severity of the latest contraction, balanced against the intact service reserve, a stable rate, lower future coupon burden and multiple funding options. The same source's aged outstanding-count warning means modeled multi-decade runway is not proof of safety. Restoration needs actual cash rebuilding and sustained pricing with less issuer support, not a temporary stock-price improvement alone. The [MSTR issuer report](/reports/mstr/) supplies the underlying funding analysis.
+**Counterparty scores 3.0.** The October 26 cut reflects persistent cash depletion and the severity of the latest contraction, balanced against the intact service reserve, a stable rate, lower future coupon burden and multiple funding options. The original snapshot’s aged-count warning prompted the reconciliation below; a corrected count still does not make modeled multi-decade runway proof of safety. Restoration needs actual cash rebuilding and sustained pricing with less issuer support, not a temporary stock-price improvement alone. The [MSTR issuer report](/reports/mstr/) supplies the underlying funding analysis.
 
 ## 4 · Redemption and holder rights — 5.0
 
@@ -87,12 +87,12 @@ Window end: **2026-10-28T06:50:13Z**. The 90-day sample starts **2026-07-30T07:4
 
 | Filing date | General USD Cash | USD Reserve | STRC repurchased in disclosed period |
 |---|---:|---:|---:|
-| 2026-10-05 | $833.4M | $4.88B | $73.7M |
+| 2026-10-05 | $833.4M | $4.88B | Withheld: mixed-period extraction corrected after this snapshot |
 | 2026-10-13 | $640.5M | $4.88B | $192.4M |
 | 2026-10-19 | $447.3M | $4.83B | $193.1M |
 | 2026-10-26 | $242.4M | $4.83B | $204.9M |
 
-Amounts are discrete filing observations, not a daily cash series. Disclosed periods differ in length; the October 5 repurchase observation covers September 28–30. No interpolation or annualized weekly buyback burn is used.
+Amounts are discrete filing observations, not a daily cash series. Disclosed periods differ in length. The archived October 5 repurchase event mixed two tables and is withheld here; see the subsequent reconciliation note. No interpolation or annualized weekly buyback burn is used.
 
 Latest filing: **0001193125-26-431146**, filed **2026-10-26**. Unspent preferred repurchase authorization: **$956.8M**; BTC held: **848,517**. Authorization is not cash.
 
@@ -121,16 +121,27 @@ Observed STRC rate: **12.00%**, current recorded payment cadence **semi-monthly*
 
 STRCx adds wrapper/custody and token-market constraints. Apyx and Saturn add their own reserve composition and redemption rules; senior tranches add a loss waterfall, and PTs add maturity and first-leg execution mechanics. None inherits raw STRC's Liquidity 7.0 automatically. USDat itself is M0-backed, so STRC exposure must not be assigned to it merely because sUSDat sits in the family. Their distinct custody, collateral and exit risks require separate assessment.
 
+## Subsequent share-count reconciliation — October 28
+
+A primary-filing review identified a producer extraction error, rather than only an old share base. The [October 5 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm) reports **1,033,168 STRC shares / $102.6M** repurchased September 28–30 and **740,634 / $73.7M** October 1–4. The old parser overwrote the first table, understating cumulative retirements. The combined filing total is **1,773,802 shares / $176.3M**. This is a data correction, not additional repurchases discovered after the period.
+
+The [June 30 10-Q, Note 10](https://www.sec.gov/Archives/edgar/data/1050446/000105044626000044/mstr-20260630.htm) supplies the exact base **104,894,705 shares**, replacing the rounded 104,895,000 dashboard anchor and its incorrect June 14 date. Subtracting corrected cumulative retirements **20,980,508** gives **83,914,197 derived shares** through the October 26 filing. The refreshed local producer at **08:49:11 UTC** reports $8,391,419,700 stated amount and $1,006,970,364 annual STRC dividends at 12%, consistent with the issuer's rounded $8,391.4M notional. The producer still checks for subsequent issuance and incomplete retirement history.
+
+The earlier shared snapshot above remains dated historical evidence; its October 5 repurchase amount is withheld. The corrected base, cumulative retirements and derived count were verified against the shared dashboard feed, and both October 5 periods against its filing-event stream. This does not turn the June 30 base into an October share-count filing: its actual age remains 120 days, the calendar guard is unchanged and may warn again as it ages. Nor does it certify other preferred/debt inputs or a precise service-life forecast. **Scores are unchanged.** [Reconciliation evidence](/data/strategy/reconciliation-2026-10-28/sources.json).
+
+
 ## Source agreement and review scope
 
 The [source definitions](/data/strategy/2026-10-28/source-contract.txt) identifies the exact fields and definitions. [Saved sources and hashes](/data/strategy/2026-10-28/sources.json) preserve the dashboard inputs used in this refresh. Contractual and governance facts retain their prior verification scope; `last_revised` records this refresh and the older `last_verified` is intentionally preserved.
 
 Current filing and market data were re-read from the shared source on October 28. The latest event stream still anchors the weekly financial facts to the [October 26 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm). The [official STRC description](https://www.strategy.com/strc/learn) continues to show a 12% variable annual rate and semi-monthly payments. The [daily-dividend proposal](https://www.strategy.com/mstr/vote) remains conditional in the reviewed evidence. The October 28 10:00 a.m. Eastern meeting is **14:00 UTC / 22:00 Taipei**, later than this review's source check. No vote result or effective amendment is assumed.
 
-The issuer webpage exposes a different STRC notional from the producer model, without a usable observation timestamp for reconciliation. It is recorded as a cross-check, not substituted into the shared dataset. A new authoritative count and a reconciled producer update are needed before absolute service/runway figures can be certified. Similarly, the dashboard's coarse stated-maturity ladder is not a fresh legal review of investor put dates; refinancing analysis must not assume all cash demands wait until stated maturity.
+The original snapshot showed a mismatch between issuer notional and the producer model. The subsequent reconciliation above identifies the missing repurchase table and exact filed base, and the reviewed corrected producer now agrees with the issuer’s rounded notional. This is a carried-forward June 30 base, not a fresh October outstanding-share filing; age checks, other liability inputs and model assumptions still limit precise service/runway certification. Similarly, the dashboard's coarse stated-maturity ladder is not a fresh legal review of investor put dates; refinancing analysis must not assume all cash demands wait until stated maturity.
 
 This pass covers MSTR and raw STRC only.
 
 ## Revision history
+
+- **2026-10-28 — share-count data reconciliation:** Withheld the mixed-period October 5 historical repurchase cell and documented both filing tables, the exact June 30 base and corrected derived outstanding count. No new repurchase, score change, vote result or legal effectiveness is established.
 
 - **2026-10-28:** Refreshed the longer-term assessment using shared dashboard sources and 7/30/90-day context. Preserved the four instrument-specific axes, provisional outstanding-count and runway limits, and conditional dividend terms. The review preceded the scheduled October 28 vote; no approval or effectiveness is assumed.

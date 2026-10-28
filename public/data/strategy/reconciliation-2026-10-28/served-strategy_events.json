@@ -1,0 +1,2371 @@
+{
+  "asset": "strc",
+  "timestamp_utc": "2026-10-28T04:49:31Z",
+  "freshness_seconds": 0,
+  "last_edgar_poll_utc": "2026-10-28T04:49:31Z",
+  "edgar_health": {
+    "last_successful_fetch_utc": "2026-10-28T04:49:31Z",
+    "consecutive_failures": 0
+  },
+  "events": [
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-10-26T00:00:00Z",
+      "filing_date": "2026-10-26",
+      "accession": "0001193125-26-431146",
+      "title": "8-K filed 2026-10-26 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 848517,
+        "aggregate_purchase_price_usd": 64019999999.99999,
+        "aggregate_avg_cost": 75446,
+        "table_direction": "none",
+        "table_direction_source": "narrative_no_activity_statement",
+        "as_of": "October 25, 2026",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "26, Strategy did not sell any shares under its at-the-market offering program and did not purchase or sell any bitcoin. As of October 25, 2026, Strategy holds approximately 848,517 bitcoin that were acquired at an aggregate purchase price of $64.02 billion and an average purchase price of approximately $75,446 per bitcoin, inclusive of fees and expenses.",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-10-26T00:00:00Z",
+      "filing_date": "2026-10-26",
+      "accession": "0001193125-26-431146",
+      "title": "8-K filed 2026-10-26 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 2068459,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 204900000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 2068459,
+        "total_aggregate_price_usd": 204900000.0,
+        "preferred_program_remaining_usd": 956800000.0,
+        "period_start": "October 19, 2026",
+        "period_end": "October 25, 2026"
+      },
+      "context": "Repurchase Program Updates On October 26, 2026, Strategy announced the following update with respect to its share repurch",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-10-26T00:00:00Z",
+      "filing_date": "2026-10-26",
+      "accession": "0001193125-26-431146",
+      "title": "8-K filed 2026-10-26 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4830000000.0,
+        "reserve_text": "$4.83 billion",
+        "usd_cash_usd": 242400000.0,
+        "usd_cash_text": "$242.4 million",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "tober 25, 2026, Strategy used $204.9 million of USD Cash to fund repurchases of STRC Stock. As of October 25, 2026, the balances of the USD Reserve and USD Cash were $4.83 billion and $242.4 million, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-10-19T00:00:00Z",
+      "filing_date": "2026-10-19",
+      "accession": "0001193125-26-424688",
+      "title": "8-K filed 2026-10-19 \u2014 8-K",
+      "extracted": {
+        "btc_count": 267,
+        "btc_holdings": 848517,
+        "aggregate_avg_cost": 75446,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "purchased",
+            "price_kind": "purchase",
+            "btc_count": 267,
+            "aggregate_price_usd": 22100000.0,
+            "avg_price_usd": 82900,
+            "btc_holdings": 848517,
+            "aggregate_purchase_price_usd": 64019999999.99999,
+            "aggregate_avg_cost_usd": 75446,
+            "period_start": "October 12, 2026",
+            "period_end": "October 18, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 22100000.0,
+        "avg_purchase_price": 82900,
+        "btc_holdings_delta": 267,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On October 19, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period October 12, 2026 to October 18, 2026 As of October 18, 2026 BTC Purchased (1) Aggregate Purchase Price (in millions) (2)",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-10-19T00:00:00Z",
+      "filing_date": "2026-10-19",
+      "accession": "0001193125-26-424688",
+      "title": "8-K filed 2026-10-19 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1938780,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 193100000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1938780,
+        "total_aggregate_price_usd": 193100000.0,
+        "preferred_program_remaining_usd": 1160000000.0,
+        "preferred_program_authorized_usd": 3000000000.0,
+        "preferred_program_previous_authorized_usd": 2000000000.0,
+        "preferred_program_authorization_increase_usd": 1000000000.0,
+        "period_start": "October 12, 2026",
+        "period_end": "October 18, 2026"
+      },
+      "context": "Repurchase Program Updates On October 19, 2026, Strategy announced that its board of directors approved an increase in th",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-10-19T00:00:00Z",
+      "filing_date": "2026-10-19",
+      "accession": "0001193125-26-424688",
+      "title": "8-K filed 2026-10-19 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 22000000.0,
+        "amount_usd": 22000000.0,
+        "amount_text": "$22.0M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 22000000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 140872
+        },
+        "period_start": "October 12, 2026",
+        "period_end": "October 18, 2026"
+      },
+      "context": "ATM Update On October 19, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-10-19T00:00:00Z",
+      "filing_date": "2026-10-19",
+      "accession": "0001193125-26-424688",
+      "title": "8-K filed 2026-10-19 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4830000000.0,
+        "reserve_text": "$4.83 billion",
+        "usd_cash_usd": 447300000.0,
+        "usd_cash_text": "$447.3 million",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "d $45.5 million of the USD Reserve to fund the payment of dividends on its preferred stock. As of October 18, 2026, the balances of the USD Reserve and USD Cash were $4.83 billion and $447.3 million, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526424688/mstr-20261019.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "STRC_RATE_ANNOUNCEMENT",
+      "ts_utc": "2026-10-16T00:00:00Z",
+      "filing_date": "2026-10-16",
+      "accession": "0001193125-26-423400",
+      "title": "8-K filed 2026-10-16 \u2014 8-K",
+      "extracted": {
+        "rate_pct": 12.0,
+        "effective_from": "2026-11-01",
+        "effective_through": "2026-11-30",
+        "conditional": true,
+        "condition_context": "ly Dividend Amendments pass and the Second A&R STRC CoD is timely filed and effective, as described further below. See \u201cConditional Dividends\u201d. Conditional Dividends As previously announced, the Company has scheduled a special meeting of stockholders to be held on October 28, 2026 at 10:00 a.m. Eastern time (including any adjournment or postponement thereof, the \u201cSpecial Meeting\u201d), to consider a proposal to amend and restate the certificates of designations governing STRC (the \u201cSecond A&R STRC CoD\u201d) and certain of the Company\u2019s other series of preferred stock to provide for a regular dividend record date on each calendar day, with the related dividend, if declared, payable on the next following business day (the \u201cDaily Dividend Amendments\u201d). The daily dividends on STRC described above (the \u201cNovember Daily Dividends\u201d) will be payable only if both of the following events occur (the \u201cContingent Dividend Condition\u201d): (a) the Daily Dividend Amendments have been approved by the Company\u2019s stockholders at the Special Meeting at or prior to 5:00 p.m., New York City time, on October 31, 2026; and (b) the Second A&R STRC CoD has been filed and become effective at or prior to 12:01 a.m., Eastern time, on November 1, 2026. If the Contingent Dividend Condition is satisfied, i.e., both the Daily Dividend Amendments pass and the Second A&R STRC CoD is timely filed and effective, then the November Daily Dividends will be payable, and the dividend on STRC which the Company declared on September 30, 2026 (payable on November 15, 2026 to stockholders of record as of 5:00 p.m., New York City time on October 31, 2026) (the \u201cNovember 15 Dividend\u201d), will not be payable. If the Contingent Dividend Condition is not satisfied, the November Daily Dividends will not be payable, the November 15 Dividend will be payable, and the Company expects, subject to approval by its board of directors, to declare dividends on STRC with record dates in the month of November following the current semi-monthly cadence under the existing STRC certificate of designations. In no event will both the November Daily Dividends and the November 15 Dividend become unconditionally payable. Expected Tax Treatment As of October 16, 2026, the Company expects",
+        "proposed_dividend_frequency": "daily",
+        "requires_effectiveness_confirmation": true
+      },
+      "context": "change Commission on October 5, 2026. Such rate shall have no effect on any previously declared but unpaid dividends on STRC. As previously announced, management will recommend to the board of directors that the Company maintain STRC\u2019s regular dividend rate per annum at 12.00% until STRC has demonstrated sustained, healthy trading near $100 per share. Cash Dividend Declaration On October 15, 20",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526423400/mstr-20261015.htm",
+      "severity_hint": "info",
+      "reparsed_at_utc": "2026-10-19T16:32:15.832990+00:00"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-10-13T00:00:00Z",
+      "filing_date": "2026-10-13",
+      "accession": "0001193125-26-419726",
+      "title": "Strategy Acquires 250 BTC and Repurchases $192 Million of STRC",
+      "extracted": {
+        "btc_count": 250,
+        "btc_holdings": 848250,
+        "aggregate_avg_cost": 75444,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "purchased",
+            "price_kind": "purchase",
+            "btc_count": 250,
+            "aggregate_price_usd": 21500000.0,
+            "avg_price_usd": 86194,
+            "btc_holdings": 848250,
+            "aggregate_purchase_price_usd": 64000000000.0,
+            "aggregate_avg_cost_usd": 75444,
+            "period_start": "October 5, 2026",
+            "period_end": "October 11, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 21500000.0,
+        "avg_purchase_price": 86194,
+        "btc_holdings_delta": 250,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On October 12, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period October 5, 2026 to October 11, 2026 As of October 11, 2026 BTC Purchased (1) Aggregate Purchase Price (in millions) (2) A",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526419726/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-10-13T00:00:00Z",
+      "filing_date": "2026-10-13",
+      "accession": "0001193125-26-419726",
+      "title": "Strategy Acquires 250 BTC and Repurchases $192 Million of STRC",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1932145,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 192400000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1932145,
+        "total_aggregate_price_usd": 192400000.0,
+        "preferred_program_remaining_usd": 354800000.0,
+        "period_start": "October 5, 2026",
+        "period_end": "October 11, 2026"
+      },
+      "context": "Repurchase Program Updates On October 12, 2026, Strategy announced the following update with respect to its share repurch",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526419726/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-10-13T00:00:00Z",
+      "filing_date": "2026-10-13",
+      "accession": "0001193125-26-419726",
+      "title": "Strategy Acquires 250 BTC and Repurchases $192 Million of STRC",
+      "extracted": {
+        "total_net_proceeds_usd": 21000000.0,
+        "amount_usd": 21000000.0,
+        "amount_text": "$21.0M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 21000000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 125183
+        },
+        "period_start": "October 5, 2026",
+        "period_end": "October 11, 2026"
+      },
+      "context": "ATM Update On October 12, 2026, Strategy announced an update with respect to sales made under its at-the-market offering",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526419726/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-10-13T00:00:00Z",
+      "filing_date": "2026-10-13",
+      "accession": "0001193125-26-419726",
+      "title": "Strategy Acquires 250 BTC and Repurchases $192 Million of STRC",
+      "extracted": {
+        "reserve_usd": 4880000000.0,
+        "reserve_text": "$4.88 billion",
+        "usd_cash_usd": 640500000.0,
+        "usd_cash_text": "$640.5 million",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "2026 to October 11, 2026, Strategy used $0.5 million of USD Cash to fund bitcoin purchases. As of October 11, 2026, the balances of the USD Reserve and USD Cash were $4.88 billion and $640.5 million, respectively. About Strategy Strategy Inc (Nasdaq: STRF/STRC/STRK/STRD/MSTR; LuxSE: STRE) is the world\u2019s first and largest Bitcoin T",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526419726/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-10-05T00:00:00Z",
+      "filing_date": "2026-10-05",
+      "accession": "0001193125-26-413164",
+      "title": "8-K filed 2026-10-05 \u2014 8-K",
+      "extracted": {
+        "btc_count": 334,
+        "btc_holdings": 848000,
+        "aggregate_avg_cost": 75440,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "acquired",
+            "price_kind": "purchase",
+            "btc_count": 0,
+            "aggregate_price_usd": 0.0,
+            "avg_price_usd": null,
+            "btc_holdings": 847666,
+            "aggregate_purchase_price_usd": 63950000000.0,
+            "aggregate_avg_cost_usd": 75436,
+            "period_start": "September 28, 2026",
+            "period_end": "September 30, 2026",
+            "as_of": "September 30, 2026"
+          },
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "acquired",
+            "price_kind": "purchase",
+            "btc_count": 334,
+            "aggregate_price_usd": 28700000.0,
+            "avg_price_usd": 85838,
+            "btc_holdings": 848000,
+            "aggregate_purchase_price_usd": 63970000000.0,
+            "aggregate_avg_cost_usd": 75440,
+            "period_start": "October 1, 2026",
+            "period_end": "October 4, 2026",
+            "as_of": "October 4, 2026"
+          }
+        ],
+        "aggregate_purchase_price_usd": 28700000.0,
+        "avg_purchase_price": 85838,
+        "btc_holdings_delta": 334,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On October 5, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period September 28, 2026 to September 30, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Purchase Pri",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-10-05T00:00:00Z",
+      "filing_date": "2026-10-05",
+      "accession": "0001193125-26-413164",
+      "title": "8-K filed 2026-10-05 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1773802,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 176300000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1773802,
+        "total_aggregate_price_usd": 176300000.0,
+        "preferred_program_remaining_usd": 547200000.0,
+        "period_start": "September 28, 2026",
+        "period_end": "October 4, 2026",
+        "periods": [
+          {
+            "period_start": "September 28, 2026",
+            "period_end": "September 30, 2026"
+          },
+          {
+            "period_start": "October 1, 2026",
+            "period_end": "October 4, 2026"
+          }
+        ]
+      },
+      "context": "Repurchase Program Updates On October 5, 2026, Strategy announced the following update with respect to its share repurcha",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm",
+      "severity_hint": "info",
+      "repair_note": "2026-10-28: both disjoint repurchase tables in October 5 primary filing aggregated; prior parser overwrote the first table."
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-10-05T00:00:00Z",
+      "filing_date": "2026-10-05",
+      "accession": "0001193125-26-413164",
+      "title": "8-K filed 2026-10-05 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 0.0,
+        "amount_usd": 0.0,
+        "amount_text": "$0.0M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 15700000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 92894
+        },
+        "period_start": "September 28, 2026",
+        "period_end": "September 30, 2026"
+      },
+      "context": "ATM Update On October 5, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-10-05T00:00:00Z",
+      "filing_date": "2026-10-05",
+      "accession": "0001193125-26-413164",
+      "title": "8-K filed 2026-10-05 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4880000000.0,
+        "reserve_text": "$4.88 billion",
+        "usd_cash_usd": 833400000.0,
+        "usd_cash_text": "$833.4 million",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "serve to fund dividends on its preferred stock and interest on its outstanding indebtedness. As of October 4, 2026, the balances of the USD Reserve and USD Cash were $4.88 billion and $833.4 million, respectively. Q3 2026 Financial Update Strategy estimates that, for the three months ended September 30, 2026, it had: \u2022 $20.91 bill",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526413164/mstr-20261005.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "STRC_RATE_ANNOUNCEMENT",
+      "ts_utc": "2026-10-01T00:00:00Z",
+      "filing_date": "2026-10-01",
+      "accession": "0001193125-26-409863",
+      "title": "8-K filed 2026-10-01 \u2014 8-K",
+      "extracted": {
+        "rate_pct": 12.0
+      },
+      "context": "its website, www.strategy.com/strc . Such rate shall have no effect on any previously declared but unpaid dividends on STRC. As previously announced, management will recommend to the board of directors that the Company maintain STRC\u2019s regular dividend rate per annum at 12.00% until STRC has demonstrated sustained, healthy trading near $100 per share. Cash Dividend Declaration On September 30,",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526409863/mstr-20260930.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-09-28T00:00:00Z",
+      "filing_date": "2026-09-28",
+      "accession": "0001193125-26-403417",
+      "title": "8-K filed 2026-09-28 \u2014 8-K",
+      "extracted": {
+        "btc_count": 1665,
+        "btc_holdings": 847666,
+        "aggregate_avg_cost": 75437,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "purchased",
+            "price_kind": "purchase",
+            "btc_count": 1665,
+            "aggregate_price_usd": 142700000.0,
+            "avg_price_usd": 85681,
+            "btc_holdings": 847666,
+            "aggregate_purchase_price_usd": 63950000000.0,
+            "aggregate_avg_cost_usd": 75437,
+            "period_start": "September 21, 2026",
+            "period_end": "September 27, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 142700000.0,
+        "avg_purchase_price": 85681,
+        "btc_holdings_delta": 1666,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On September 28, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period September 21, 2026 to September 27, 2026 As of September 27, 2026 BTC Purchased (1) Aggregate Purchase Price (in millions",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526403417/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-09-28T00:00:00Z",
+      "filing_date": "2026-09-28",
+      "accession": "0001193125-26-403417",
+      "title": "8-K filed 2026-09-28 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1534530,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 151700000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1534530,
+        "total_aggregate_price_usd": 151700000.0,
+        "preferred_program_remaining_usd": 723500000.0,
+        "period_start": "September 21, 2026",
+        "period_end": "September 27, 2026"
+      },
+      "context": "Repurchase Program Updates On September 28, 2026, Strategy announced the following update with respect to its share repur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526403417/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-09-28T00:00:00Z",
+      "filing_date": "2026-09-28",
+      "accession": "0001193125-26-403417",
+      "title": "8-K filed 2026-09-28 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 246200000.0,
+        "amount_usd": 246200000.0,
+        "amount_text": "$246.2M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 246200000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 1469165
+        },
+        "period_start": "September 21, 2026",
+        "period_end": "September 27, 2026"
+      },
+      "context": "ATM Update On September 28, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-t",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526403417/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-09-28T00:00:00Z",
+      "filing_date": "2026-09-28",
+      "accession": "0001193125-26-403417",
+      "title": "8-K filed 2026-09-28 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5020000000.0,
+        "reserve_text": "$5.02 billion",
+        "usd_cash_usd": 1000000000.0,
+        "usd_cash_text": "$1.00 billion",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "$22.1 million of the USD Reserve to fund the payment of dividends on its preferred stock. As of September 27, 2026, the balances of the USD Reserve and USD Cash were $5.02 billion and $1.00 billion, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526403417/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "OTHER",
+      "ts_utc": "2026-09-25T00:00:00Z",
+      "filing_date": "2026-09-25",
+      "accession": "0001193125-26-401636",
+      "title": "8-K filed 2026-09-25 \u2014 8-K",
+      "extracted": {},
+      "context": "8-K false 0001050446 0001050446 2026-09-24 2026-09-24 0001050446 mstr:M800SeriesAPerpetualStrikePreferredStock0001ParValuePerShareMember 2026-09-24 2026-09-24 0001050446 us-gaap:CommonStockMember 2026-09-24 2026-09-24 0001050446 mstr:M1000S",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526401636/mstr-20260924.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-09-21T00:00:00Z",
+      "filing_date": "2026-09-21",
+      "accession": "0001193125-26-396093",
+      "title": "8-K filed 2026-09-21 \u2014 8-K",
+      "extracted": {
+        "btc_count": 950,
+        "btc_holdings": 846000,
+        "aggregate_avg_cost": 75416,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "purchased",
+            "price_kind": "purchase",
+            "btc_count": 950,
+            "aggregate_price_usd": 75700000.0,
+            "avg_price_usd": 79670,
+            "btc_holdings": 846000,
+            "aggregate_purchase_price_usd": 63800000000.0,
+            "aggregate_avg_cost_usd": 75416,
+            "period_start": "September 14, 2026",
+            "period_end": "September 20, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 75700000.0,
+        "avg_purchase_price": 79670,
+        "btc_holdings_delta": 950,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On September 21, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period September 14, 2026 to September 20, 2026 As of September 20, 2026 BTC Purchased (1) Aggregate Purchase Price (in millions",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-09-21T00:00:00Z",
+      "filing_date": "2026-09-21",
+      "accession": "0001193125-26-396093",
+      "title": "8-K filed 2026-09-21 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1771238,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 174000000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1771238,
+        "total_aggregate_price_usd": 174000000.0,
+        "preferred_program_remaining_usd": 875100000.0,
+        "period_start": "September 14, 2026",
+        "period_end": "September 20, 2026"
+      },
+      "context": "Repurchase Program Updates On September 21, 2026, Strategy announced the following update with respect to its share repur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-09-21T00:00:00Z",
+      "filing_date": "2026-09-21",
+      "accession": "0001193125-26-396093",
+      "title": "8-K filed 2026-09-21 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 0.0,
+        "amount_usd": 0.0,
+        "amount_text": "$0.0M net proceeds",
+        "per_security_net_proceeds_usd": {},
+        "per_security_shares_sold": {},
+        "zero_activity": true
+      },
+      "context": "ATM Update On September 21, 2026, Strategy Inc (\"Strategy\") announced that, during the period between September 14, 2026",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-09-21T00:00:00Z",
+      "filing_date": "2026-09-21",
+      "accession": "0001193125-26-396093",
+      "title": "8-K filed 2026-09-21 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5040000000.0,
+        "reserve_text": "$5.04 billion",
+        "usd_cash_usd": 1050000000.0,
+        "usd_cash_text": "$1.05 billion",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "payment of dividends on its preferred stock and interest on its outstanding indebtedness. As of September 20, 2026, the balances of the USD Reserve and USD Cash were $5.04 billion and $1.05 billion, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526396093/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-09-14T00:00:00Z",
+      "filing_date": "2026-09-14",
+      "accession": "0001193125-26-389858",
+      "title": "8-K filed 2026-09-14 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1420467,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 139300000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1420467,
+        "total_aggregate_price_usd": 139300000.0,
+        "preferred_program_remaining_usd": 1050000000.0,
+        "period_start": "September 8, 2026",
+        "period_end": "September 13, 2026"
+      },
+      "context": "Repurchase Program Updates On September 14, 2026, Strategy announced the following update with respect to its share repur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526389858/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-09-14T00:00:00Z",
+      "filing_date": "2026-09-14",
+      "accession": "0001193125-26-389858",
+      "title": "8-K filed 2026-09-14 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 845050,
+        "aggregate_purchase_price_usd": 63730000000.0,
+        "aggregate_avg_cost": 75412,
+        "table_direction": "none",
+        "table_direction_source": "narrative_no_activity_statement",
+        "as_of": "September 13, 2026",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "26, Strategy did not sell any shares under its at-the-market offering program and did not purchase or sell any bitcoin. As of September 13, 2026, Strategy holds approximately 845,050 bitcoin that were acquired at an aggregate purchase price of $63.73 billion and an average purchase price of approximately $75,412 per bitcoin, inclusive of fees and expenses.",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526389858/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-09-14T00:00:00Z",
+      "filing_date": "2026-09-14",
+      "accession": "0001193125-26-389858",
+      "title": "8-K filed 2026-09-14 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5100000000.0,
+        "reserve_text": "$5.10 billion",
+        "usd_cash_usd": 1300000000.0,
+        "usd_cash_text": "$1.30 billion",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "ber 13, 2026, Strategy used $139.3 million of USD Cash to fund repurchases of STRC Stock. As of September 13, 2026, the balances of the USD Reserve and USD Cash were $5.10 billion and $1.30 billion, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526389858/mstr-20260914.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-09-08T00:00:00Z",
+      "filing_date": "2026-09-08",
+      "accession": "0001193125-26-384402",
+      "title": "8-K filed 2026-09-08 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1810885,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 176300000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1810885,
+        "total_aggregate_price_usd": 176300000.0,
+        "preferred_program_remaining_usd": 1190000000.0,
+        "preferred_program_authorized_usd": 2000000000.0,
+        "preferred_program_previous_authorized_usd": 1000000000.0,
+        "preferred_program_authorization_increase_usd": 1000000000.0,
+        "period_start": "August 31, 2026",
+        "period_end": "September 7, 2026"
+      },
+      "context": "Repurchase Program Updates On September 8, 2026, Strategy announced that its board of directors approved an increase in t",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526384402/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-09-08T00:00:00Z",
+      "filing_date": "2026-09-08",
+      "accession": "0001193125-26-384402",
+      "title": "8-K filed 2026-09-08 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 845050,
+        "aggregate_purchase_price_usd": 63730000000.0,
+        "aggregate_avg_cost": 75412,
+        "table_direction": "none",
+        "table_direction_source": "narrative_no_activity_statement",
+        "as_of": "September 7, 2026",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "26, Strategy did not sell any shares under its at-the-market offering program and did not purchase or sell any bitcoin. As of September 7, 2026, Strategy holds approximately 845,050 bitcoin that were acquired at an aggregate purchase price of $63.73 billion and an average purchase price of approximately $75,412 per bitcoin, inclusive of fees and expenses.",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526384402/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-09-08T00:00:00Z",
+      "filing_date": "2026-09-08",
+      "accession": "0001193125-26-384402",
+      "title": "8-K filed 2026-09-08 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5100000000.0,
+        "reserve_text": "$5.10 billion",
+        "usd_cash_usd": 1440000000.0,
+        "usd_cash_text": "$1.44 billion",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "ember 7, 2026, Strategy used $176.3 million of USD Cash to fund repurchases of STRC Stock. As of September 7, 2026, the balances of the USD Reserve and USD Cash were $5.10 billion and $1.44 billion, respectively. Item 7.01 Regulation FD Disclosure. Strategy Dashboard Strategy also maintains a dashboard on its website (www.strateg",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526384402/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "STRC_RATE_ANNOUNCEMENT",
+      "ts_utc": "2026-09-01T00:00:00Z",
+      "filing_date": "2026-09-01",
+      "accession": "0001193125-26-377583",
+      "title": "8-K filed 2026-09-01 \u2014 8-K",
+      "extracted": {
+        "rate_pct": 12.0
+      },
+      "context": "its website, www.strategy.com/strc . Such rate shall have no effect on any previously declared but unpaid dividends on STRC. As previously announced, management will recommend to the board of directors that the Company maintain STRC\u2019s regular dividend rate per annum at 12.00% until STRC has demonstrated sustained, healthy trading near $100 per share. Cash Dividend Declaration On August 31, 202",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526377583/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-08-31T00:00:00Z",
+      "filing_date": "2026-08-31",
+      "accession": "0001193125-26-375463",
+      "title": "8-K filed 2026-08-31 \u2014 8-K",
+      "extracted": {
+        "btc_count": 4603,
+        "btc_holdings": 845050,
+        "aggregate_avg_cost": 75412,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "direction_source": "column_header",
+            "header_verb": "purchased",
+            "price_kind": "purchase",
+            "btc_count": 4603,
+            "aggregate_price_usd": 369700000.0,
+            "avg_price_usd": 80318,
+            "btc_holdings": 845050,
+            "aggregate_purchase_price_usd": 63730000000.0,
+            "aggregate_avg_cost_usd": 75412,
+            "period_start": "August 24, 2026",
+            "period_end": "August 30, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 369700000.0,
+        "avg_purchase_price": 80318,
+        "btc_holdings_delta": 4603,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On August 31, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period August 24, 2026 to August 30, 2026 As of August 30, 2026 BTC Purchased (1) Aggregate Purchase Price (in millions) (2) Ave",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526375463/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-08-31T00:00:00Z",
+      "filing_date": "2026-08-31",
+      "accession": "0001193125-26-375463",
+      "title": "8-K filed 2026-08-31 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1557177,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 151800000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1557177,
+        "total_aggregate_price_usd": 151800000.0,
+        "preferred_program_remaining_usd": 364800000.0,
+        "period_start": "August 24, 2026",
+        "period_end": "August 30, 2026"
+      },
+      "context": "Repurchase Program Updates On August 31, 2026, Strategy announced an update with respect to its share repurchase program",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526375463/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-08-31T00:00:00Z",
+      "filing_date": "2026-08-31",
+      "accession": "0001193125-26-375463",
+      "title": "8-K filed 2026-08-31 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 602800000.0,
+        "amount_usd": 602800000.0,
+        "amount_text": "$602.8M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 602800000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 4531421
+        },
+        "period_start": "August 24, 2026",
+        "period_end": "August 30, 2026"
+      },
+      "context": "ATM Update On August 31, 2026, Strategy announced an update with respect to sales made under its at-the-market offering p",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526375463/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-08-31T00:00:00Z",
+      "filing_date": "2026-08-31",
+      "accession": "0001193125-26-375463",
+      "title": "8-K filed 2026-08-31 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5100000000.0,
+        "reserve_text": "$5.10 billion",
+        "usd_cash_usd": 1610000000.0,
+        "usd_cash_text": "$1.61 billion",
+        "wording": "plural_reserve_and_cash"
+      },
+      "context": "oin, expanding the USD Reserve, broader capital management uses, and other similar purposes. As of August 30, 2026, the balances of the USD Reserve and USD Cash were $5.10 billion and $1.61 billion, respectively. These amounts include expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526375463/mstr-20260831.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-08-24T00:00:00Z",
+      "filing_date": "2026-08-24",
+      "accession": "0001193125-26-361845",
+      "title": "8-K filed 2026-08-24 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 840447,
+        "aggregate_avg_cost": 75385,
+        "table_direction": "none",
+        "table_direction_source": "cell_sign",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On August 24, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period August 17, 2026 to August 23, 2026 As of August 23, 2026 BTC Purchased / (Sold) (1) Aggregate Purchase / (Sale) Price (in",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-08-24T00:00:00Z",
+      "filing_date": "2026-08-24",
+      "accession": "0001193125-26-361845",
+      "title": "8-K filed 2026-08-24 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1431212,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 136400000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1431212,
+        "total_aggregate_price_usd": 136400000.0,
+        "preferred_program_remaining_usd": 516600000.0,
+        "period_start": "August 17, 2026",
+        "period_end": "August 23, 2026"
+      },
+      "context": "Repurchase Program Updates On August 24, 2026, Strategy announced an update with respect to its share repurchase program",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-08-24T00:00:00Z",
+      "filing_date": "2026-08-24",
+      "accession": "0001193125-26-361845",
+      "title": "8-K filed 2026-08-24 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 2006500000.0,
+        "amount_usd": 2006500000.0,
+        "amount_text": "$2,006.5M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 2006500000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 18261118
+        },
+        "period_start": "August 17, 2026",
+        "period_end": "August 23, 2026"
+      },
+      "context": "ATM Update On August 24, 2026, Strategy announced an update with respect to sales made under its at-the-market offering p",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-08-24T00:00:00Z",
+      "filing_date": "2026-08-24",
+      "accession": "0001193125-26-361845",
+      "title": "8-K filed 2026-08-24 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 5100000000.0,
+        "reserve_text": "$5.10 billion",
+        "usd_cash_usd": 1590000000.0,
+        "usd_cash_text": "$1.59 billion",
+        "wording": "plural_reserve_and_cash_bullets"
+      },
+      "context": "ent Report on Form 8-K filed with the SEC on June 29, 2026. USD Reserve and USD Cash Updates As of August 23, 2026, the balances of the USD Reserve and USD Cash were as follows: \u2022 USD Reserve: $5.10 billion \u2022 USD Cash: $1.59 billion These amounts include expected cash proceeds from shares sold under Strategy's ATM (defined below) that had not yet set",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526361845/mstr-20260824.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-08-17T00:00:00Z",
+      "filing_date": "2026-08-17",
+      "accession": "0001193125-26-353240",
+      "title": "8-K filed 2026-08-17 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 840447,
+        "aggregate_avg_cost": 75385,
+        "table_direction": "none",
+        "table_direction_source": "cell_sign",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On August 17, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period August 10, 2026 to August 16, 2026 As of August 16, 2026 BTC Purchased / (Sold) (1) Aggregate Purchase / (Sale) Price (in",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526353240/mstr-20260817.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-08-17T00:00:00Z",
+      "filing_date": "2026-08-17",
+      "accession": "0001193125-26-353240",
+      "title": "8-K filed 2026-08-17 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1388720,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 132199999.99999999,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1388720,
+        "total_aggregate_price_usd": 132199999.99999999,
+        "preferred_program_remaining_usd": 653000000.0,
+        "period_start": "August 10, 2026",
+        "period_end": "August 16, 2026"
+      },
+      "context": "Repurchase Program Updates On August 17, 2026, Strategy announced an update with respect to its share repurchase program",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526353240/mstr-20260817.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-08-17T00:00:00Z",
+      "filing_date": "2026-08-17",
+      "accession": "0001193125-26-353240",
+      "title": "8-K filed 2026-08-17 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 333700000.0,
+        "amount_usd": 333700000.0,
+        "amount_text": "$333.7M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 333700000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 3458866
+        },
+        "period_start": "August 10, 2026",
+        "period_end": "August 16, 2026"
+      },
+      "context": "ATM Update On August 17, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526353240/mstr-20260817.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-08-17T00:00:00Z",
+      "filing_date": "2026-08-17",
+      "accession": "0001193125-26-353240",
+      "title": "8-K filed 2026-08-17 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4800000000.0,
+        "reserve_text": "$4.80 billion"
+      },
+      "context": "ent of dividends on Strategy's preferred stock and interest on its outstanding indebtedness. As of August 16, 2026, the balance of the USD Reserve is $4.80 billion. This amount includes expected cash proceeds from shares sold under Strategy's ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526353240/mstr-20260817.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_SALE",
+      "ts_utc": "2026-08-10T00:00:00Z",
+      "filing_date": "2026-08-10",
+      "accession": "0001193125-26-341297",
+      "title": "8-K filed 2026-08-10 \u2014 8-K",
+      "extracted": {
+        "btc_count": 1690,
+        "btc_holdings": 840447,
+        "aggregate_avg_cost": 75385,
+        "table_direction": "sale",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "sale",
+            "header_verb": "sold",
+            "price_kind": "sale",
+            "btc_count": 1690,
+            "aggregate_price_usd": 108600000.0,
+            "avg_price_usd": 64262,
+            "btc_holdings": 840447,
+            "aggregate_purchase_price_usd": 63360000000.0,
+            "aggregate_avg_cost_usd": 75385,
+            "period_start": "August 3, 2026",
+            "period_end": "August 9, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_sale_price_usd": 108600000.0,
+        "avg_sale_price": 64262,
+        "proceeds_use_text": "The net proceeds from the bitcoin sales were used to fund repurchases of STRC Stock under the Digital Credit Securities Repurchase Program (defined below).",
+        "proceeds_use_categories": [
+          "buybacks"
+        ],
+        "proceeds_use_all_declared": true,
+        "btc_holdings_delta": -1691,
+        "delta_implied_direction": "sale"
+      },
+      "context": "BTC Update On August 10, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period August 3, 2026 to August 9, 2026 As of August 9, 2026 BTC Sold (1) Aggregate Sale Price (in millions) (2) Average Sale Pr",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526341297/mstr-20260810.htm",
+      "severity_hint": "critical"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-08-10T00:00:00Z",
+      "filing_date": "2026-08-10",
+      "accession": "0001193125-26-341297",
+      "title": "8-K filed 2026-08-10 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 1152020,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 108600000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 1152020,
+        "total_aggregate_price_usd": 108600000.0,
+        "preferred_program_remaining_usd": 785200000.0,
+        "common_program_remaining_usd": 1000000000.0,
+        "period_start": "August 3, 2026",
+        "period_end": "August 9, 2026"
+      },
+      "context": "Repurchase Program Updates On August 10, 2026, Strategy announced an update with respect to its share repurchase program",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526341297/mstr-20260810.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-08-10T00:00:00Z",
+      "filing_date": "2026-08-10",
+      "accession": "0001193125-26-341297",
+      "title": "8-K filed 2026-08-10 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 653100000.0,
+        "amount_usd": 653100000.0,
+        "amount_text": "$653.1M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 653100000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 6585682
+        },
+        "period_start": "August 3, 2026",
+        "period_end": "August 9, 2026"
+      },
+      "context": "ATM Update On August 10, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526341297/mstr-20260810.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-08-10T00:00:00Z",
+      "filing_date": "2026-08-10",
+      "accession": "0001193125-26-341297",
+      "title": "8-K filed 2026-08-10 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4650000000.0,
+        "reserve_text": "$4.65 billion"
+      },
+      "context": "ment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of August 9, 2026, the balance of the USD Reserve is $4.65 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526341297/mstr-20260810.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_SALE",
+      "ts_utc": "2026-08-03T00:00:00Z",
+      "filing_date": "2026-08-03",
+      "accession": "0001193125-26-329565",
+      "title": "8-K filed 2026-08-03 \u2014 8-K",
+      "extracted": {
+        "btc_count": 1638,
+        "btc_holdings": 842138,
+        "aggregate_avg_cost": 75419,
+        "table_direction": "sale",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "sale",
+            "header_verb": "sold",
+            "price_kind": "sale",
+            "btc_count": 1638,
+            "aggregate_price_usd": 104730000.0,
+            "avg_price_usd": 63957,
+            "btc_holdings": 842138,
+            "aggregate_purchase_price_usd": 63510000000.0,
+            "aggregate_avg_cost_usd": 75419,
+            "period_start": "July 27, 2026",
+            "period_end": "August 2, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_sale_price_usd": 104730000.0,
+        "avg_sale_price": 63957,
+        "proceeds_use_text": "$52.4 million in proceeds from the bitcoin sales were used to fund dividends on Strategy's preferred stock and $52.3 million in proceeds from the bitcoin sales were used to fund repurchases of STRC Stock under the Digital Credit Securities Repurchase Program.",
+        "proceeds_use_categories": [
+          "preferred_dividends",
+          "buybacks"
+        ],
+        "proceeds_use_all_declared": true,
+        "btc_holdings_delta": -1637,
+        "delta_implied_direction": "sale"
+      },
+      "context": "BTC Update On August 3, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period July 27, 2026 to August 2, 2026 As of August 2, 2026 BTC Sold (1) Aggregate Sale Price (in millions) (2) Average Sale Pri",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526329565/mstr-20260803.htm",
+      "severity_hint": "critical"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-08-03T00:00:00Z",
+      "filing_date": "2026-08-03",
+      "accession": "0001193125-26-329565",
+      "title": "8-K filed 2026-08-03 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 912143,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 81200000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 912143,
+        "total_aggregate_price_usd": 81200000.0,
+        "preferred_program_remaining_usd": 893800000.0,
+        "common_program_remaining_usd": 1000000000.0,
+        "period_start": "July 27, 2026",
+        "period_end": "August 2, 2026"
+      },
+      "context": "Repurchase Program Updates On August 3, 2026, Strategy announced an update with respect to its share repurchase program o",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526329565/mstr-20260803.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-08-03T00:00:00Z",
+      "filing_date": "2026-08-03",
+      "accession": "0001193125-26-329565",
+      "title": "8-K filed 2026-08-03 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 290600000.0,
+        "amount_usd": 290600000.0,
+        "amount_text": "$290.6M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 290600000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 3011361
+        },
+        "period_start": "July 27, 2026",
+        "period_end": "August 2, 2026"
+      },
+      "context": "ATM Update On August 3, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-m",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526329565/mstr-20260803.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-08-03T00:00:00Z",
+      "filing_date": "2026-08-03",
+      "accession": "0001193125-26-329565",
+      "title": "8-K filed 2026-08-03 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 4000000000.0,
+        "reserve_text": "$4.0 billion"
+      },
+      "context": "ment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of August 2, 2026, the balance of the USD Reserve is $4.0 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526329565/mstr-20260803.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "STRC_RATE_ANNOUNCEMENT",
+      "ts_utc": "2026-07-30T00:00:00Z",
+      "filing_date": "2026-07-30",
+      "accession": "0001628280-26-051027",
+      "title": "Strategy Announces Second Quarter Financial Results; Currently Holds 843,775 Bitcoin; Now the Largest Institutional Holder Globally Digital Capital Highlights (as of July 26, 2026) \u25aa 843,775 bitcoin h",
+      "extracted": {
+        "rate_pct": 12.0
+      },
+      "context": "mately 2.1 years of coverage reserved for preferred-stock dividend payments and interest on outstanding indebtedness. \u25aa STRC Dividend Policy: Increased the dividend rate to 12.00% to support STRC trading near its $100 per share stated amount, and will maintain the 12.00% rate until STRC demonstrate",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000162828026051027/mstr-20260730x8kxex991.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-07-27T00:00:00Z",
+      "filing_date": "2026-07-27",
+      "accession": "0001193125-26-316917",
+      "title": "8-K filed 2026-07-27 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 843775,
+        "aggregate_avg_cost": 75476,
+        "table_direction": "none",
+        "table_direction_source": "column_header",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On July 27, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period July 20, 2026 to July 26, 2026 As of July 26, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pu",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526316917/mstr-20260727.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-07-27T00:00:00Z",
+      "filing_date": "2026-07-27",
+      "accession": "0001193125-26-316917",
+      "title": "8-K filed 2026-07-27 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {
+          "STRF": 0,
+          "STRC": 288930,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 0
+        },
+        "per_security_aggregate_price_usd": {
+          "STRF": 0.0,
+          "STRC": 25000000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 0.0
+        },
+        "zero_activity": false,
+        "total_shares_repurchased": 288930,
+        "total_aggregate_price_usd": 25000000.0,
+        "preferred_program_remaining_usd": 975000000.0,
+        "common_program_remaining_usd": 1000000000.0,
+        "period_start": "July 20, 2026",
+        "period_end": "July 26, 2026"
+      },
+      "context": "Repurchase Program Updates On July 27, 2026, Strategy announced an update with respect to its share repurchase program of",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526316917/mstr-20260727.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-07-27T00:00:00Z",
+      "filing_date": "2026-07-27",
+      "accession": "0001193125-26-316917",
+      "title": "8-K filed 2026-07-27 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 544500000.0,
+        "amount_usd": 544500000.0,
+        "amount_text": "$544.5M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 544500000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 5429160
+        },
+        "period_start": "July 20, 2026",
+        "period_end": "July 26, 2026"
+      },
+      "context": "ATM Update On July 27, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-ma",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526316917/mstr-20260727.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-07-27T00:00:00Z",
+      "filing_date": "2026-07-27",
+      "accession": "0001193125-26-316917",
+      "title": "8-K filed 2026-07-27 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 3750000000.0,
+        "reserve_text": "$3.75 billion"
+      },
+      "context": "yment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of July 26, 2026, the balance of the USD Reserve is $3.75 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526316917/mstr-20260727.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-07-20T00:00:00Z",
+      "filing_date": "2026-07-20",
+      "accession": "0001193125-26-308369",
+      "title": "8-K filed 2026-07-20 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 843775,
+        "aggregate_avg_cost": 75476,
+        "table_direction": "none",
+        "table_direction_source": "column_header",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On July 20, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period July 13, 2026 to July 19, 2026 As of July 19, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pu",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526308369/mstr-20260720.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-07-20T00:00:00Z",
+      "filing_date": "2026-07-20",
+      "accession": "0001193125-26-308369",
+      "title": "8-K filed 2026-07-20 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {},
+        "per_security_aggregate_price_usd": {},
+        "zero_activity": true,
+        "total_shares_repurchased": 0,
+        "total_aggregate_price_usd": 0
+      },
+      "context": "Repurchase Program Updates On July 20, 2026, Strategy announced that, during the period between July 13, 2026 and July 19",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526308369/mstr-20260720.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-07-20T00:00:00Z",
+      "filing_date": "2026-07-20",
+      "accession": "0001193125-26-308369",
+      "title": "8-K filed 2026-07-20 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 263500000.0,
+        "amount_usd": 263500000.0,
+        "amount_text": "$263.5M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 263500000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 2732318
+        },
+        "period_start": "July 13, 2026",
+        "period_end": "July 19, 2026"
+      },
+      "context": "ATM Update On July 20, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-ma",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526308369/mstr-20260720.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-07-20T00:00:00Z",
+      "filing_date": "2026-07-20",
+      "accession": "0001193125-26-308369",
+      "title": "8-K filed 2026-07-20 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 3225000000.0,
+        "reserve_text": "$3.225 billion"
+      },
+      "context": "yment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of July 19, 2026, the balance of the USD Reserve is $3.225 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526308369/mstr-20260720.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-07-13T00:00:00Z",
+      "filing_date": "2026-07-13",
+      "accession": "0001193125-26-301483",
+      "title": "8-K filed 2026-07-13 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 843775,
+        "aggregate_avg_cost": 75476,
+        "table_direction": "none",
+        "table_direction_source": "column_header",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On July 13, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period July 6, 2026 to July 12, 2026 As of July 12, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526301483/mstr-20260713.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-07-13T00:00:00Z",
+      "filing_date": "2026-07-13",
+      "accession": "0001193125-26-301483",
+      "title": "8-K filed 2026-07-13 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {},
+        "per_security_aggregate_price_usd": {},
+        "zero_activity": true,
+        "total_shares_repurchased": 0,
+        "total_aggregate_price_usd": 0
+      },
+      "context": "Repurchase Program Updates On July 13, 2026, Strategy announced that, during the period between July 6, 2026 and July 12,",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526301483/mstr-20260713.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-07-13T00:00:00Z",
+      "filing_date": "2026-07-13",
+      "accession": "0001193125-26-301483",
+      "title": "8-K filed 2026-07-13 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 466700000.0,
+        "amount_usd": 466700000.0,
+        "amount_text": "$466.7M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 466700000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 4818781
+        },
+        "period_start": "July 6, 2026",
+        "period_end": "July 12, 2026"
+      },
+      "context": "ATM Update On July 13, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-ma",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526301483/mstr-20260713.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-07-13T00:00:00Z",
+      "filing_date": "2026-07-13",
+      "accession": "0001193125-26-301483",
+      "title": "8-K filed 2026-07-13 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 3000000000.0,
+        "reserve_text": "$3.0 billion"
+      },
+      "context": "yment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of July 12, 2026, the balance of the USD Reserve is $3.0 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526301483/mstr-20260713.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_SALE",
+      "ts_utc": "2026-07-06T00:00:00Z",
+      "filing_date": "2026-07-06",
+      "accession": "0001193125-26-295586",
+      "title": "8-K filed 2026-07-06 \u2014 8-K",
+      "extracted": {
+        "btc_count": 3588,
+        "btc_holdings": 843775,
+        "aggregate_avg_cost": 75476,
+        "table_direction": "sale",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "sale",
+            "header_verb": "sold",
+            "price_kind": "sale",
+            "btc_count": 1363,
+            "aggregate_price_usd": 80800000.0,
+            "avg_price_usd": 59256,
+            "btc_holdings": 846000,
+            "aggregate_purchase_price_usd": 63940000000.0,
+            "aggregate_avg_cost_usd": 75578,
+            "period_start": "June 29, 2026",
+            "period_end": "June 30, 2026",
+            "as_of": "June 30, 2026"
+          },
+          {
+            "direction": "sale",
+            "header_verb": "sold",
+            "price_kind": "sale",
+            "btc_count": 2225,
+            "aggregate_price_usd": 135200000.0,
+            "avg_price_usd": 60773,
+            "btc_holdings": 843775,
+            "aggregate_purchase_price_usd": 63690000000.0,
+            "aggregate_avg_cost_usd": 75476,
+            "period_start": "July 1, 2026",
+            "period_end": "July 5, 2026",
+            "as_of": "July 5, 2026"
+          }
+        ],
+        "aggregate_sale_price_usd": 216000000.0,
+        "avg_sale_price": 60197,
+        "proceeds_use_text": "Proceeds from the bitcoin sales were used to fund payment of distributions on preferred stock and to replenish the portion of the USD reserve used for this purpose.",
+        "proceeds_use_categories": [
+          "preferred_dividends",
+          "usd_reserve"
+        ],
+        "proceeds_use_all_declared": true,
+        "btc_holdings_delta": -3588,
+        "delta_implied_direction": "sale"
+      },
+      "context": "C Updates On July 6, 2026, Strategy announced the following updates with respect to its bitcoin holdings: During Period June 29, 2026 to June 30, 2026 BTC Sold Aggregate Sale Price (in millions) (2) Average Sale Price (2) 1,363 (1) $80.8 $59",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526295586/mstr-20260706.htm",
+      "severity_hint": "critical"
+    },
+    {
+      "type": "SECURITY_REPURCHASE",
+      "ts_utc": "2026-07-06T00:00:00Z",
+      "filing_date": "2026-07-06",
+      "accession": "0001193125-26-295586",
+      "title": "8-K filed 2026-07-06 \u2014 8-K",
+      "extracted": {
+        "per_security_shares_repurchased": {},
+        "per_security_aggregate_price_usd": {},
+        "zero_activity": true,
+        "total_shares_repurchased": 0,
+        "total_aggregate_price_usd": 0
+      },
+      "context": "Repurchase Program Updates On July 6, 2026, Strategy announced that, during the period between June 29, 2026 and July 5,",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526295586/mstr-20260706.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-07-06T00:00:00Z",
+      "filing_date": "2026-07-06",
+      "accession": "0001193125-26-295586",
+      "title": "8-K filed 2026-07-06 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 0.0,
+        "amount_usd": 0.0,
+        "amount_text": "$0.0M net proceeds",
+        "per_security_net_proceeds_usd": {},
+        "per_security_shares_sold": {},
+        "zero_activity": true
+      },
+      "context": "ATM Updates On July 6, 2026, Strategy Inc (\"Strategy\") announced that, during the period between June 29, 2026 and July 5",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526295586/mstr-20260706.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-07-06T00:00:00Z",
+      "filing_date": "2026-07-06",
+      "accession": "0001193125-26-295586",
+      "title": "8-K filed 2026-07-06 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 2550000000.0,
+        "reserve_text": "$2.55 billion"
+      },
+      "context": "ayment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of July 5, 2026, the balance of the USD Reserve was $2.55 billion. On June 29, 2026, Strategy announced a BTC Monetization Program pursuant to which Strategy may sell bitcoin from time",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526295586/mstr-20260706.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_HOLDINGS_UPDATE",
+      "ts_utc": "2026-06-29T00:00:00Z",
+      "filing_date": "2026-06-29",
+      "accession": "0001193125-26-286871",
+      "title": "8-K filed 2026-06-29 \u2014 8-K",
+      "extracted": {
+        "btc_count": 0,
+        "btc_holdings": 847363,
+        "aggregate_avg_cost": 75651,
+        "table_direction": "none",
+        "table_direction_source": "column_header",
+        "btc_holdings_delta": 0,
+        "delta_implied_direction": "none"
+      },
+      "context": "BTC Update On June 29, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period June 22, 2026 to June 28, 2026 As of June 28, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pu",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526286871/mstr-20260629.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-06-29T00:00:00Z",
+      "filing_date": "2026-06-29",
+      "accession": "0001193125-26-286871",
+      "title": "8-K filed 2026-06-29 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 1152400000.0,
+        "amount_usd": 1152400000.0,
+        "amount_text": "$1,152.4M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 1152400000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 12669017
+        },
+        "period_start": "June 22, 2026",
+        "period_end": "June 28, 2026"
+      },
+      "context": "ATM Update On June 29, 2026, Strategy announced an update with respect to sales made under its ATM of the following secur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526286871/mstr-20260629.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-06-29T00:00:00Z",
+      "filing_date": "2026-06-29",
+      "accession": "0001193125-26-286871",
+      "title": "8-K filed 2026-06-29 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 2550000000.0,
+        "reserve_text": "$2.55 billion"
+      },
+      "context": "ayments and interest obligations. Any reduction below that level requires Board authorization. As of June 28, 2026, the balance of the USD Reserve is $2.55 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s at-the-market offering program (\u201cATM\u201d) t",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526286871/mstr-20260629.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-06-22T00:00:00Z",
+      "filing_date": "2026-06-22",
+      "accession": "0001193125-26-276717",
+      "title": "8-K filed 2026-06-22 \u2014 8-K",
+      "extracted": {
+        "btc_count": 520,
+        "btc_holdings": 847363,
+        "aggregate_avg_cost": 75651,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "header_verb": "acquired",
+            "price_kind": "purchase",
+            "btc_count": 520,
+            "aggregate_price_usd": 34900000.0,
+            "avg_price_usd": 67068,
+            "btc_holdings": 847363,
+            "aggregate_purchase_price_usd": 64099999999.99999,
+            "aggregate_avg_cost_usd": 75651,
+            "period_start": "June 15, 2026",
+            "period_end": "June 21, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 34900000.0,
+        "avg_purchase_price": 67068,
+        "btc_holdings_delta": 521,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On June 22, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period June 15, 2026 to June 21, 2026 As of June 21, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pu",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526276717/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-06-22T00:00:00Z",
+      "filing_date": "2026-06-22",
+      "accession": "0001193125-26-276717",
+      "title": "8-K filed 2026-06-22 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 335500000.0,
+        "amount_usd": 335500000.0,
+        "amount_text": "$335.5M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 335500000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 2714839
+        },
+        "period_start": "June 15, 2026",
+        "period_end": "June 21, 2026"
+      },
+      "context": "ATM Update On June 22, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-ma",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526276717/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-06-22T00:00:00Z",
+      "filing_date": "2026-06-22",
+      "accession": "0001193125-26-276717",
+      "title": "8-K filed 2026-06-22 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 1400000000.0,
+        "reserve_text": "$1.4 billion"
+      },
+      "context": "yment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of June 21, 2026, the balance of the USD Reserve is $1.4 billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526276717/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "STRC_RATE_ANNOUNCEMENT",
+      "ts_utc": "2026-06-15T00:00:00Z",
+      "filing_date": "2026-06-15",
+      "accession": "0001193125-26-270366",
+      "title": "8-K filed 2026-06-15 \u2014 8-K",
+      "extracted": {
+        "rate_pct": 11.5
+      },
+      "context": "1 par value per share STRC Semi-monthly period ending July 15, 2026 $ 0.479166667 (1) (1) The cash dividend declared on STRC for the semi-monthly period ending July 15, 2026 represents a per annum dividend rate of 11.50% and reflects one-half of the regular monthly dividend amount. Expected Tax Treatment As of June 15, 2026, the Company e",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526270366/d144149d8k.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-06-15T00:00:00Z",
+      "filing_date": "2026-06-15",
+      "accession": "0001193125-26-270311",
+      "title": "8-K filed 2026-06-15 \u2014 8-K",
+      "extracted": {
+        "btc_count": 1587,
+        "btc_holdings": 846842,
+        "aggregate_avg_cost": 75656,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "header_verb": "acquired",
+            "price_kind": "purchase",
+            "btc_count": 1587,
+            "aggregate_price_usd": 100000000.0,
+            "avg_price_usd": 63024,
+            "btc_holdings": 846842,
+            "aggregate_purchase_price_usd": 64069999999.99999,
+            "aggregate_avg_cost_usd": 75656,
+            "period_start": "June 8, 2026",
+            "period_end": "June 14, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 100000000.0,
+        "avg_purchase_price": 63024,
+        "btc_holdings_delta": 1586,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On June 15, 2026 , Strategy announced updates with respect to its bitcoin holdings: During Period June 8, 2026 to June 14, 2026 As of June 14, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Pur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526270311/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-06-15T00:00:00Z",
+      "filing_date": "2026-06-15",
+      "accession": "0001193125-26-270311",
+      "title": "8-K filed 2026-06-15 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 209000000.0,
+        "amount_usd": 209000000.0,
+        "amount_text": "$209.0M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 209000000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 1732553
+        },
+        "period_start": "June 8, 2026",
+        "period_end": "June 14, 2026"
+      },
+      "context": "ATM Update On June 15, 2026 , Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-m",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526270311/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-06-15T00:00:00Z",
+      "filing_date": "2026-06-15",
+      "accession": "0001193125-26-270311",
+      "title": "8-K filed 2026-06-15 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 1100000000.0,
+        "reserve_text": "$1.1 Billion"
+      },
+      "context": "yment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of June 14, 2026, the balance of the USD Reserve is $1.1 Billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526270311/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "OTHER",
+      "ts_utc": "2026-06-10T00:00:00Z",
+      "filing_date": "2026-06-10",
+      "accession": "0001193125-26-265108",
+      "title": "8-K filed 2026-06-10 \u2014 8-K",
+      "extracted": {},
+      "context": "8-K false 0001050446 0001050446 2026-06-08 2026-06-08 0001050446 mstr:M10.00SeriesAPerpetualStrifePreferredStock0.001ParValuePerShareMember 2026-06-08 2026-06-08 0001050446 mstr:VariableRateSeriesAPerpetualStretchPreferredStock0.001ParValue",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526265108/d152189d8k.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "OTHER",
+      "ts_utc": "2026-06-08T00:00:00Z",
+      "filing_date": "2026-06-08",
+      "accession": "0001193125-26-261038",
+      "title": "8-K filed 2026-06-08 \u2014 8-K",
+      "extracted": {},
+      "context": "8-K false 0001050446 0001050446 2026-06-08 2026-06-08 0001050446 mstr:M10.00SeriesAPerpetualStrifePreferredStock0.001ParValuePerShareMember 2026-06-08 2026-06-08 0001050446 mstr:VariableRateSeriesAPerpetualStretchPreferredStock0.001ParValue",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526261038/d130937d8k.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-06-08T00:00:00Z",
+      "filing_date": "2026-06-08",
+      "accession": "0001193125-26-260709",
+      "title": "8-K filed 2026-06-08 \u2014 8-K",
+      "extracted": {
+        "btc_count": 1550,
+        "btc_holdings": 845256,
+        "aggregate_avg_cost": 75680,
+        "table_direction": "purchase",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "purchase",
+            "header_verb": "acquired",
+            "price_kind": "purchase",
+            "btc_count": 1550,
+            "aggregate_price_usd": 101300000.0,
+            "avg_price_usd": 65332,
+            "btc_holdings": 845256,
+            "aggregate_purchase_price_usd": 63970000000.0,
+            "aggregate_avg_cost_usd": 75680,
+            "period_start": "June 1, 2026",
+            "period_end": "June 7, 2026",
+            "as_of": null
+          }
+        ],
+        "aggregate_purchase_price_usd": 101300000.0,
+        "avg_purchase_price": 65332,
+        "btc_holdings_delta": 1550,
+        "delta_implied_direction": "purchase"
+      },
+      "context": "BTC Update On June 8, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period June 1, 2026 to June 7, 2026 As of June 7, 2026 BTC Acquired (1) Aggregate Purchase Price (in millions) (2) Average Purch",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526260709/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-06-08T00:00:00Z",
+      "filing_date": "2026-06-08",
+      "accession": "0001193125-26-260709",
+      "title": "8-K filed 2026-06-08 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 181000000.0,
+        "amount_usd": 181000000.0,
+        "amount_text": "$181.0M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 181000000.0
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 1409600
+        },
+        "period_start": "June 1, 2026",
+        "period_end": "June 7, 2026"
+      },
+      "context": "ATM Update On June 8, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-mar",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526260709/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-06-08T00:00:00Z",
+      "filing_date": "2026-06-08",
+      "accession": "0001193125-26-260709",
+      "title": "8-K filed 2026-06-08 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 1000000000.0,
+        "reserve_text": "$1.0 Billion"
+      },
+      "context": "ayment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of June 7, 2026, the balance of the USD Reserve is $1.0 Billion. This amount includes expected cash proceeds from shares sold under Strategy\u2019s ATM that had not yet settled as of such",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526260709/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_SALE",
+      "ts_utc": "2026-06-01T00:00:00Z",
+      "filing_date": "2026-06-01",
+      "accession": "0001193125-26-249768",
+      "title": "8-K filed 2026-06-01 \u2014 8-K",
+      "extracted": {
+        "btc_count": 32,
+        "btc_holdings": 843706,
+        "aggregate_avg_cost": 75699,
+        "table_direction": "sale",
+        "table_direction_source": "column_header",
+        "blocks": [
+          {
+            "direction": "sale",
+            "header_verb": "sold",
+            "price_kind": "sale",
+            "btc_count": 32,
+            "aggregate_price_usd": 2500000.0,
+            "avg_price_usd": 77135,
+            "btc_holdings": 843706,
+            "aggregate_purchase_price_usd": 63870000000.0,
+            "aggregate_avg_cost_usd": 75699,
+            "period_start": "May 26, 2026",
+            "period_end": "May 31, 2026",
+            "as_of": "May 31, 2026"
+          }
+        ],
+        "aggregate_sale_price_usd": 2500000.0,
+        "avg_sale_price": 77135,
+        "proceeds_use_text": "Proceeds from the bitcoin sales are expected to be used to fund distributions on preferred stock.",
+        "proceeds_use_categories": [
+          "preferred_dividends"
+        ],
+        "proceeds_use_all_declared": true,
+        "btc_holdings_delta": -32,
+        "delta_implied_direction": "sale"
+      },
+      "context": "BTC Update On June 1, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period May 26, 2026 to May 31, 2026* BTC Sold Aggregate Sale Price (in millions) (2) Average Sale Price (2) 32 (1) $2.5 $77,135",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526249768/mstr-20260530.htm",
+      "severity_hint": "critical"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-06-01T00:00:00Z",
+      "filing_date": "2026-06-01",
+      "accession": "0001193125-26-249768",
+      "title": "8-K filed 2026-06-01 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 128300000.00000001,
+        "amount_usd": 128300000.00000001,
+        "amount_text": "$128.3M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 0.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 128300000.00000001
+        },
+        "per_security_shares_sold": {
+          "STRF": 0,
+          "STRC": 0,
+          "STRK": 0,
+          "STRD": 0,
+          "MSTR": 801994
+        },
+        "period_start": "May 26, 2026",
+        "period_end": "May 31, 2026"
+      },
+      "context": "ATM Update On June 1, 2026, Strategy Inc (\"Strategy\") announced an update with respect to sales made under its at-the-mar",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526249768/mstr-20260530.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "USD_RESERVE_UPDATE",
+      "ts_utc": "2026-06-01T00:00:00Z",
+      "filing_date": "2026-06-01",
+      "accession": "0001193125-26-249768",
+      "title": "8-K filed 2026-06-01 \u2014 8-K",
+      "extracted": {
+        "reserve_usd": 900000000.0,
+        "reserve_text": "$900 million"
+      },
+      "context": "ayment of dividends on Strategy\u2019s preferred stock and interest on its outstanding indebtedness. As of May 31, 2026, the balance of the USD Reserve is $900 million. Dividend Rate on Variable Rate Series A Perpetual Stretch Preferred Stock On May 31, 2026, Strategy announced that it",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526249768/mstr-20260530.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-05-26T00:00:00Z",
+      "filing_date": "2026-05-26",
+      "accession": "0001193125-26-237907",
+      "title": "Strategy Provides Capital Structure Update after Completing $1.5 Billion Debt Repurchase",
+      "extracted": {
+        "btc_count": 24869
+      },
+      "context": "of Variable Rate Series A Perpetual Stretch Preferred Stock (STRC) and $84 million of Class A common stock (MSTR), and used these proceeds to purchase 24,869 bitcoin \u2022 Achieved year-to-date BTC Yield of 13.3%, BTC Gain of 89,378 bitcoin, and BTC $ Gain of $6.8 billion \"These transacti",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526237907/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "PREFERRED_ISSUANCE",
+      "ts_utc": "2026-05-26T00:00:00Z",
+      "filing_date": "2026-05-26",
+      "accession": "0001193125-26-237907",
+      "title": "Strategy Provides Capital Structure Update after Completing $1.5 Billion Debt Repurchase",
+      "extracted": {
+        "amount_text": "$2.0 billion notional",
+        "series": "STRC"
+      },
+      "context": "$333 million \u2022 Lowered aggregate principal amount of convertible notes outstanding from $8.2 billion to $6.7 billion \u2022 Issued an additional $2.0 billion notional of Variable Rate Series A Perpetual Stretch Preferred Stock (STRC) and $84 million of Class A common stock (MSTR), and used these proceeds to purchase 24,869 bitcoin \u2022 Achieved year-to-",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526237907/mstr-ex99_1.htm",
+      "severity_hint": "warning"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-05-26T00:00:00Z",
+      "filing_date": "2026-05-26",
+      "accession": "0001193125-26-237907",
+      "title": "Strategy Provides Capital Structure Update after Completing $1.5 Billion Debt Repurchase",
+      "extracted": {
+        "amount_usd": 6700000000.0,
+        "amount_text": "$6.7 billion"
+      },
+      "context": "he use of cash reserves for this purpose, and sales of Digital Equity (MSTR) and Digital Credit (STRC) under Strategy's at-the-market offering programs. At the conclusion of these transactions, as of May 25, 2026, Strategy holds 843,738 bitcoin, has 220,900 Bitcoin Per Share (in sats), has $6.7 billion aggregate principal amount of convertible notes and $15.5 billion aggregate notional amount of preferred stock outstand",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526237907/mstr-ex99_1.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "BTC_PURCHASE",
+      "ts_utc": "2026-05-18T00:00:00Z",
+      "filing_date": "2026-05-18",
+      "accession": "0001193125-26-227918",
+      "title": "8-K filed 2026-05-18 \u2014 8-K",
+      "extracted": {
+        "btc_count": 24869,
+        "btc_holdings": 843738,
+        "avg_purchase_price": 80985,
+        "aggregate_avg_cost": 75700,
+        "aggregate_purchase_price_usd": 2009999.9999999998
+      },
+      "context": "se Price (in billions) (2) Average Purchase Price (2) Aggregate BTC Holdings Aggregate Purchase Price (in billions) (2) Average Purchase Price (2) 24,869 $ 2.01 $ 80,985 843,738 $ 63.87 $ 75,700 (1) The bitcoin purchases were made using proceeds from the sale of shares under the ATM. (2) Aggregate and average pur",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526227918/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "ATM_PROGRAM_UPDATE",
+      "ts_utc": "2026-05-18T00:00:00Z",
+      "filing_date": "2026-05-18",
+      "accession": "0001193125-26-227918",
+      "title": "8-K filed 2026-05-18 \u2014 8-K",
+      "extracted": {
+        "total_net_proceeds_usd": 2032700000.0,
+        "amount_usd": 2032700000.0,
+        "amount_text": "$2,032.7M net proceeds",
+        "per_security_net_proceeds_usd": {
+          "STRF": 0.0,
+          "STRC": 1949000000.0,
+          "STRK": 0.0,
+          "STRD": 0.0,
+          "MSTR": 83700000.0
+        }
+      },
+      "context": "",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526227918/mstr-20260504.htm",
+      "severity_hint": "info"
+    },
+    {
+      "type": "PREFERRED_ISSUANCE",
+      "ts_utc": "2026-05-18T00:00:00Z",
+      "filing_date": "2026-05-18",
+      "accession": "0001193125-26-227918",
+      "title": "8-K filed 2026-05-18 \u2014 8-K",
+      "extracted": {
+        "series": "STRC",
+        "amount_usd": 1949000000.0,
+        "amount_text": "$1,949.0M net proceeds"
+      },
+      "context": "for Issuance and Sale (in millions) (3) STRF Stock - $ - $ - $ 1,619.3 10.00% Series A Perpetual Strife Preferred Stock STRC Stock 19,519,801 $ 1,952.0 $ 1,949.0 $ 17,510.8 Variable Rate Series A Perpetual Stretch Preferred Stock STRK Stock - $ - $ - $ 2,100.0 8.00% Series A Perpetual Strike",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526227918/mstr-20260504.htm",
+      "severity_hint": "warning"
+    }
+  ],
+  "events_by_type_count_last_90d": {
+    "BTC_SALE": 2,
+    "BTC_PURCHASE": 6,
+    "PREFERRED_ISSUANCE": 0,
+    "STRC_RATE_ANNOUNCEMENT": 3,
+    "ATM_PROGRAM_UPDATE": 10,
+    "BTC_HOLDINGS_UPDATE": 5,
+    "SECURITY_REPURCHASE": 13,
+    "USD_RESERVE_UPDATE": 13,
+    "PARSE_FAILURE": 0,
+    "OTHER": 1
+  },
+  "repurchase_program": {
+    "preferred_program_remaining_usd": 956800000.0,
+    "common_program_remaining_usd": null,
+    "preferred_program_authorized_usd": 3000000000.0,
+    "preferred_program_previous_authorized_usd": 2000000000.0,
+    "preferred_program_authorization_increase_usd": 1000000000.0,
+    "authorization_as_of_filing_date": "2026-10-19",
+    "as_of_filing_date": "2026-10-26",
+    "preferred_issuance_paused_weeks": 20
+  },
+  "usd_reserve_direction": "flat",
+  "risk_flags": []
+}
