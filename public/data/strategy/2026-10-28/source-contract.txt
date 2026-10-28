@@ -1,0 +1,23 @@
+# MSTR and raw STRC shared-source definitions
+
+## Field map
+
+| Evidence | Canonical source and fields | Report treatment |
+|---|---|---|
+| General cash and service reserve | `strategy_events.json`: USD_RESERVE_UPDATE.extracted.usd_cash_usd / reserve_usd; base `digital_credit_framework.usd_reserve_policy` | Discrete filing trend, preserving both meanings and filing dates; no daily interpolation or misleading average of repeated stale disclosures. |
+| Repurchases | Events SECURITY_REPURCHASE.extracted.per_security_aggregate_price_usd.STRC and period_start/end | Repeated-period support and cash use. Authorization is not cash; execution average is not a holder quote. Period lengths differ. |
+| BTC holdings | Base `tradfi.strategy_btc_holdings.count`, count_as_of/count_source | Use issuer-anchored count, retain scrape as a cross-check; market value changes are distinct from BTC transactions. |
+| mNAV | Base `tradfi.mnav`, version v2; history `series[].mnav`, explicit mnav_definition_version=v2 | Same EV/BTC convention. Do not substitute common-market-cap/BTC, gross BTC per share, or net equity per share. Historical means exclude unversioned rows. |
+| STRC market price and par | Base `tradfi.strc_secondary`; history `series[].strc_price` | Same Yahoo/yfinance source and $100 reference. Keep closed-market/stale-quote caveats. Describe observed price behavior, not a redemption guarantee. |
+| MSTR market price / BTC market price | Base `tradfi.mstr` / `tradfi.btc`; yfinance / CoinGecko | Preserve producer choices and timestamps. No independently acquired replacement quotes. |
+| Rate and cadence | Base `tradfi.strc_dividend.current_rate`, dividend_frequency, pending_terms, current_rate_source | Actual current terms separate from conditional proposals. Do not double-count daily and replaced semi-monthly dividends. |
+| Support policy | Base `digital_credit_framework.strc_dividend_policy` and dcs_repurchase_program | Discretionary policy, not an automatic ratchet, segregated collateral or contractual price floor. |
+| Service/runway | Base `cash_service_waterfall`, `tradfi.strc_dividend.outstanding_derivation`, risk_flags | Producer's model, with aged-base warning. No alternative forecast; do not endorse precise absolute runway while the base remains aged. |
+| Raw STRC exit | Nasdaq venue/access; no order-book depth ladder in the shared feed | Liquidity 7.0 is a venue/access judgement, not a measured dollar threshold. Never import the STRCx DEX ladder or measure execution shortfall from $100 par. |
+
+## Time horizon
+
+The reports use 7/30/90-day arithmetic means of retained source observations and their observed ranges. Repeated closed-market quotes remain in those samples: they are not independent trades, exchange closing series or time-weighted statistics. Observation counts and maximum gaps are disclosed. Compatible mNAV rows carry v2 explicitly. Source-period financial facts are reviewed as filings rather than repeated once per monitor poll.
+
+Strong recent prices and weak cash funding can coexist. Recovery toward par is credited on price behavior while issuer support is judged on repeat funding and depletion. Bad debt, a missed payment or a legal change can warrant immediate review without waiting for an averaging period. A favorable spot mark alone does not establish durable restoration.
+

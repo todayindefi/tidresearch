@@ -109,7 +109,7 @@ const common = {
   aliases: z.array(z.string()).default([]),
   chains: z.array(z.string()),
   // Editorial depth — independent of which score axes are used.
-  assessment_type: z.enum(["full", "light"]),
+  assessment_type: z.enum(["full", "light", "dependency"]),
   // Tiering for paired reports. "retail" is public; "institutional" is gated.
   // Two reports in a pair cross-link via companion_report (slug of the other).
   audience: z.enum(["retail", "institutional"]).optional(),
@@ -316,12 +316,20 @@ const lendingVault = z.object({
 });
 
 // Issuer-entity / treasury-company analyses (e.g. MSTR/Strategy Inc.). Body markdown
-// carries per-axis issuer scores (balance_sheet / funding_model / refinancing /
-// governance); frontmatter only carries overall_score. Used for dependency-analysis
+// carries issuer axes in frontmatter; preferred instruments carry their own
+// volatility / liquidity / counterparty / redemption axes. Used for dependency-analysis
 // reports — the upstream issuer behind a preferred or wrapper, not an equity buy-sell.
 const tradfiEquity = z.object({
   ...common,
   category: z.literal("tradfi-equity"),
+  balance_sheet_score: score.optional(),
+  funding_model_score: score.optional(),
+  refinancing_capacity_score: score.optional(),
+  governance_score: score.optional(),
+  volatility_score: score.optional(),
+  liquidity_score: score.optional(),
+  counterparty_score: score.optional(),
+  redemption_score: score.optional(),
   yield_bearing: z.boolean().optional(),
   underlying_assets: z.array(z.string()).default([]),
 });

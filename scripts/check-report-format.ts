@@ -115,11 +115,9 @@ const SELF_REF_BACKLOG: Record<string, number> = {
   "apyusd.md": 1,
   "ausd.md": 2,
   "crvusd.md": 1,
-  "mstr.md": 5,
   "onyc.md": 1,
   "pyusd.md": 2,
   "rlusd.md": 3,
-  "strc.md": 5,
   "strcx.md": 3,
   "susdai.md": 1,
 

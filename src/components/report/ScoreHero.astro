@@ -75,6 +75,20 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
 // key — yzUSD is the proof, since its timelocked token owner and its no-delay
 // bridge EOA belong to the same issuer. One score cannot span a checkable axis
 // and a subjective one.
+
+const instrumentAxes: Axis[] | null = data.category !== "tradfi-equity" ? null
+  : typeof data.balance_sheet_score === "number" ? [
+    { key: "balance_sheet_score", label: "Balance sheet quality" },
+    { key: "funding_model_score", label: "Funding model durability" },
+    { key: "refinancing_capacity_score", label: "Refinancing capacity" },
+    { key: "governance_score", label: "Governance" },
+  ] : typeof data.counterparty_score === "number" ? [
+    { key: "volatility_score", label: "Volatility and par behavior" },
+    { key: "liquidity_score", label: "Liquidity and exit" },
+    { key: "counterparty_score", label: "Counterparty and support durability" },
+    { key: "redemption_score", label: "Redemption and holder rights" },
+  ] : null;
+
 const SIX_AXES: Axis[] = [
   { key: "peg_mechanism_score", label: "Stability" },
   { key: "volatility_score", label: "Stability" },
@@ -97,7 +111,7 @@ const rwaRetailAxes = !isRwa
       : null;
 const axes = (data.axis_frame === "six"
   ? SIX_AXES
-  : rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []
+  : instrumentAxes ?? rwaRetailAxes ?? AXES_BY_CATEGORY[data.category as string] ?? []
 )
   .filter((a) => typeof data[a.key] === "number")
   // Two keys can carry the same five-axis label (peg_mechanism/volatility ->

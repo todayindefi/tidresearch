@@ -1,0 +1,27 @@
+{
+  "strc_backing.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strc_backing.json",
+    "sha256": "d8b564579d5d28a39e65f596458073e97c7af36ce367da7f225e6b3296175c5e",
+    "as_of": "2026-10-28T06:50:13Z"
+  },
+  "strc_backing_history.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strc_backing_history.json",
+    "sha256": "24ac5d1e0205f45431c57bb8b3efba803820c0c09a843a4d8920a0ed0b9bf53e",
+    "as_of": null
+  },
+  "strategy_events.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strategy_events.json",
+    "sha256": "57fb5792dc92383e7055ce84ef1b32f1f482c9645d74f4e85e1490b1da943235",
+    "as_of": "2026-10-28T04:49:31Z"
+  },
+  "strc_axis_basis.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strc_axis_basis.json",
+    "sha256": "3569ec877c19d20dc7d7785a0bcc763a8840bd96ab9a7c16cf229c27c81cf79e",
+    "as_of": "2026-10-26T15:37:10Z"
+  },
+  "strcx_axis_basis.json": {
+    "url": "https://todayindefi.github.io/backing-monitor/data/strcx_axis_basis.json",
+    "sha256": "b9f3c00c59734b089f8c7ba56c0e8fae6aec0c773c3955f7c1f7a6d9c5c73805",
+    "as_of": "2026-10-26T15:37:10Z"
+  }
+}

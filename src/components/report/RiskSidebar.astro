@@ -94,6 +94,20 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
 // key — yzUSD is the proof, since its timelocked token owner and its no-delay
 // bridge EOA belong to the same issuer. One score cannot span a checkable axis
 // and a subjective one.
+
+const instrumentAxes: Axis[] | null = data.category !== "tradfi-equity" ? null
+  : typeof data.balance_sheet_score === "number" ? [
+    { key: "balance_sheet_score", label: "Balance sheet quality" },
+    { key: "funding_model_score", label: "Funding model durability" },
+    { key: "refinancing_capacity_score", label: "Refinancing capacity" },
+    { key: "governance_score", label: "Governance" },
+  ] : typeof data.counterparty_score === "number" ? [
+    { key: "volatility_score", label: "Volatility and par behavior" },
+    { key: "liquidity_score", label: "Liquidity and exit" },
+    { key: "counterparty_score", label: "Counterparty and support durability" },
+    { key: "redemption_score", label: "Redemption and holder rights" },
+  ] : null;
+
 const SIX_AXES: Axis[] = [
   { key: "peg_mechanism_score", label: "Stability" },
   { key: "volatility_score", label: "Stability" },
@@ -125,7 +139,7 @@ const rwaRetailAxes = !isRwa
 const axes =
   data.axis_frame === "six"
     ? SIX_AXES
-    : rwaRetailAxes ?? (AXES_BY_CATEGORY[data.category as string] ?? []);
+    : instrumentAxes ?? rwaRetailAxes ?? (AXES_BY_CATEGORY[data.category as string] ?? []);
 const scoredAxes = axes
   .filter((a) => typeof data[a.key] === "number")
   // See ScoreHero: two keys can share a five-axis label; render it once.
@@ -171,7 +185,7 @@ const liveAxisPhrase =
 // DASHBOARD_SLUGS upstream, so slug-based assets (syrup) have a dashboard with
 // no live_dashboard_url of their own. Only 27 of 59 reports have one at all —
 // on the rest this line would point at a dashboard that does not exist.
-const showLiveCaveat = Boolean(liveDashboardUrl) && liveAxisLabels.length > 0;
+const showLiveCaveat = !instrumentAxes && Boolean(liveDashboardUrl) && liveAxisLabels.length > 0;
 const authoredAsOf = (data.last_verified as Date | undefined)
   ?.toISOString?.()
   .slice(0, 10);
@@ -240,7 +254,7 @@ const categoryLabel = (c: string) =>
         <ArrowRight className="h-3.5 w-3.5" />
       </a>
       <p class="text-xs text-muted-foreground mt-2">
-        Live reserves, collateralization, peg, and bridge state — updated hourly.
+        {instrumentAxes ? "Shared issuer, market and filing observations; source dates are shown on the dashboard." : "Live reserves, collateralization, peg, and bridge state — updated hourly."}
       </p>
     </div>
   )}

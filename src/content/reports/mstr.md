@@ -1,276 +1,134 @@
 ---
-asset: "MSTR"
-slug: "mstr"
-aliases: ["MSTR", "Strategy", "Strategy Inc", "MicroStrategy"]
+asset: MSTR
+slug: mstr
+aliases:
+- MSTR
+- Strategy
+- Strategy Inc
+- MicroStrategy
 chains: []
-category: "tradfi-equity"
-assessment_type: "light"
-date: "2026-06-02"
-last_verified: "2026-10-12"
-# 2026-10-12 issuer release (period 2026-10-05 -> 2026-10-11): 250 BTC bought,
-# 125,183 MSTR shares sold, STRC repurchase $192.4M / 1,932,145 shares, USD
-# Reserve held $4.88B and USD Cash fell to $640.5M. EDGAR CIK feed still ended
-# at the 2026-10-05 8-K when checked, so no 2026-10-12 accession is asserted.
-last_revised: "2026-10-13"
-live_dashboard_url: "https://tidresearch.com/dashboards/?asset=mstr"
-featured: false
-production: true
-issuer: "Strategy Inc."
+category: tradfi-equity
+assessment_type: dependency
+date: '2026-05-30'
+last_verified: '2026-08-26'
+last_revised: '2026-10-28'
+issuer: Strategy Inc. (formerly MicroStrategy Incorporated)
+balance_sheet_score: 5.0
+funding_model_score: 3.0
+refinancing_capacity_score: 4.5
+governance_score: 4.5
+overall_score: 3.5
 yield_bearing: false
-underlying_assets: ["btc"]
-overall_score: 4.5
+underlying_assets:
+- btc
+production: true
+featured: false
+live_dashboard_url: https://tidresearch.com/dashboards/?asset=mstr
 ---
 
-# MSTR (Strategy Inc.) — Risk Report
+# mstr — Risk Report
 
-> **Scope: dependency analysis.** This report analyzes Strategy as an upstream issuer for STRC, STRCx, and downstream-asset holders (apxUSD, apyUSD, sUSDat, etc.).
-> It is **NOT an equity investment analysis** of MSTR common stock. No buy or sell guidance on MSTR is intended or implied.
-> MSTR-vs-spot-ETF comparisons, convert-strike arithmetic, dividend-discount comparisons, and peer DAT analysis are out of scope.
-> The score axes describe Strategy's upstream solvency posture for downstream holders, not its attractiveness as an equity allocation.
+**Elevated risk · 3.5/10**
 
-**Moderate-high risk · 4.5/10** | Listed: NASDAQ: MSTR | Issuer-level dependency analysis
+**Scope:** issuer analysis for STRC and its downstream holders. This is not an investment assessment of MSTR common stock. The [MSTR dashboard](https://todayindefi.github.io/backing-monitor/?asset=mstr) and [STRC dashboard](https://todayindefi.github.io/backing-monitor/?asset=strc) use the same `strc_backing.json` dataset with different views. This report uses that dataset, its referenced market history and the same filing-event stream; it retains Strategy's four issuer-risk axes rather than forcing a six-axis DeFi schema.
 
-MSTR is the common stock of **Strategy Inc.** (formerly MicroStrategy), the publicly listed treasury company holding **848,250 Bitcoin** (10-11) on its balance sheet — a stack that *declined* for the first time in the record in the 06-29→07-05 week, when Strategy sold 3,588 BTC to fund preferred dividends, but has since resumed growing. Strategy's legacy enterprise-software business is operationally immaterial; the entire investment thesis and risk profile is the BTC stack + the capital-structure machinery that funds the dividends on a growing preferred-stock obligation.
+## Summary
 
-This report is the **issuer-level analysis** that Strategy's preferred-stock holders (STRC, STRF, STRD, STRK) and any DeFi assets dependent on those preferreds (STRCx wrapper, apxUSD / apyUSD reserves, sUSDat backing) need to understand. It is NOT an equity-investment recommendation on MSTR common — that would require a different analytical lens (peer comparison vs IBIT spot ETF, conversion math, dividend-discount-model alternatives). The scope here is dependency analysis: how solvent is Strategy as an issuer, what drives the funding model, what's the runway, what could break.
+Strategy is a Bitcoin treasury company financed through common equity, debt and preferred stock. This assessment covers its reliability as the issuer behind STRC and downstream claims, rather than the investment merits of common stock.
 
-| Holdings | Funding model | USD Reserve (restricted) | Preferred outstanding | Convert debt |
-|---|---|---|---|---|
-| **848,250 BTC (10-11; +250 in the latest disclosure)** | **125,183 MSTR shares sold for $21.0M; no preferred issuance** | **$4.88B (10-11, unchanged)** ⚠️ **not general cash, which fell to $640.5M** | $15.5B | $6.7B |
+## 1 · Balance sheet quality — 5.0
 
-⚠️ **Source caveat:** Strategy's issuer release dated **2026-10-12** covers the 10-05→10-11 week and is the source for this refresh. At the time checked, **EDGAR's CIK feed still ended at the October 5 8-K**. This report therefore cites **no October 12 EDGAR accession** and does not imply one has posted.
+**Asset scale provides capacity, but concentration determines resilience.** Strategy's economic asset base remains overwhelmingly BTC, while debt and preferred claims create dollar-denominated demands on that base. A rising BTC mark improves measured coverage without producing cash until assets are sold or financed. A falling BTC mark can weaken asset coverage and access to new funding together.
 
-**Bitcoin rose slightly while common dilution continued.** Strategy bought **250 BTC for $21.5M**, taking holdings **848,000 → 848,250 BTC**, and sold **125,183 MSTR shares for $21.0M**. No preferred stock was issued and no MSTR common was repurchased.
+The issuer's two cash categories answer different questions. The **USD Reserve** is designated for preferred dividends and interest, subject to the applicable board policy; **general USD Cash** is available for broader treasury uses, including repurchases. They must not be collapsed into a single buyback budget or mistaken for segregated collateral securing STRC. The latest filing records a large service reserve alongside a much thinner general-cash balance.
 
-**The STRC bid continued near par:** Strategy repurchased **1,932,145 STRC shares for $192.4M**, about **$99.58/share**. **$354.8M remains** under the digital-credit repurchase authorization. That is demonstrated support, but still a discretionary and finite bid rather than a floor, put, redemption right, or peg.
+Over the retained filings the reserve built substantially during the summer, then stopped growing and eased below its late-August peak. The latest two disclosures hold it flat, which is better than continuing service-reserve depletion but is not evidence that general liquidity is being replenished. **Balance Sheet scores 5.0** on meaningful assets and service capacity, offset by BTC concentration and senior claims. The share-count model's aged anchor limits precise liability and runway calculations.
 
-⚠️ **USD Reserve held at $4.88B, but unrestricted USD Cash fell $833.4M → $640.5M.** The nearest live trigger is USD Cash below **$500M**, now only **$140.5M away**. **Scores hold:** Balance 5.0 / Funding 4.0 / Refinancing 4.5 / Governance 4.5 / Overall 4.5.
+## 2 · Funding model durability — 3.0
 
-**Live monitoring** of mNAV regime, balance sheet, capital structure, per-share BTC NAV trajectory, and SEC 8-K event log is on the [live MSTR dashboard](https://tidresearch.com/dashboards/?asset=mstr) — values in this report are point-in-time anchors; the dashboard reflects current readings.
+**Repeated cash depletion, rather than a single threshold breach, is the binding adverse evidence.** The October disclosures show general cash declining through several observations while repurchases continue. Across the three most recent disclosed full periods, STRC repurchases remain near $200M per period. Common issuance was small in the earlier two periods and absent in the latest filing; that latest filing also reports no BTC buying or selling. Cash-funded price support has therefore continued without a matching refill of general liquidity.
 
-## What Strategy actually is
+Strategy can raise common equity, issue other securities, monetize BTC or reduce discretionary spending. These are available choices, not guaranteed demand or an obligation to continue buybacks. Funding dividends by selling BTC reduces the asset base, whereas issuing new preferreds creates future service obligations. Repurchases can reduce future dividends while consuming present cash. Both sides of that trade matter.
 
-**A levered Bitcoin bet wrapped in a public-company shell.** Strategy adopted Bitcoin as its primary treasury asset in August 2020 under the direction of Executive Chairman Michael Saylor. Since then it has accumulated BTC through three funding sources, in roughly this evolution:
+The shared producer's **mNAV is EV/BTC**, with its stated debt, preferred and cash assumptions. It is distinct from common market capitalization divided by gross BTC holdings and from net asset value per common share. The retained 7/30/90-day compatible history averages above 1, providing counterevidence to a claim that the modeled premium has simply disappeared. A premium may help financing flexibility, but it does not establish actual issuance proceeds or prove that general cash has rebuilt.
 
-1. **Common equity issuance** via at-the-market (ATM) programs — works when MSTR trades at a premium to its underlying BTC NAV (mNAV > 1), dilutes per-share BTC NAV when mNAV < 1
-2. **Senior convertible notes** — 0% to 2.25% coupon debt that converts to MSTR shares at strike prices well above current MSTR levels. Cheap leverage, but bullet maturities create refinancing walls.
-3. **Variable-rate perpetual preferred stock** (STRC since mid-2025) — 11.5% perpetual dividend, no maturity, the "all-weather" funding source because demand doesn't depend on MSTR-equity NAV multiples.
+**Funding scores 3.0.** The October 26 cut reflected the severity of repeated depletion without refill, not a second penalty merely for being below $500M. A static weeks-of-buybacks sensitivity is not a forecast or a dividend-default clock and is no longer the headline argument. Restoration requires actual rebuilding and a durable funding mix over subsequent disclosures.
 
-The legacy software business (BI tools, on-premise + cloud analytics) generates roughly break-even cash flow. **Treat software cash flow as zero** for risk-analysis purposes — the entire financial story is BTC + capital markets.
+## 3 · Refinancing capacity — 4.5
 
-**Governance is concentrated.** Saylor holds majority voting control via a dual-class share structure. There's effectively no risk of activist intervention, and no realistic risk of shareholder-vote-driven strategic shift. But there's also no external check on his decisions — the 2026-05-05 pivot to BTC sales for preferred dividend funding (see below) happened on a single executive call. Future strategic shifts can happen with similar speed and similar lack of external check.
+**Capital-market access is cyclical and can weaken with the asset base.** Conversions, common issuance, new preferred issuance, BTC sales and reductions in discretionary spending provide several ways to meet liabilities. Their availability and cost are correlated: weaker BTC and equity demand can reduce the attractiveness of more than one route at once.
 
-## The mNAV mechanism — the binding signal
+Do not assume a convertible removes a cash obligation simply because settlement in shares is possible under some conditions. Investor put rights can bring cash demands forward relative to stated maturities. A weekly cash filing does not re-certify precise tranche and strike tables; the aggregate maturity view does not replace the legal terms. **Refinancing scores 4.5** on multiple financing routes but uncertain future market access, timing and cost. No newly verified refinancing transaction in this refresh justifies a separate score change.
 
-> **How STRC now defends its value — a discretionary soft floor, not a rate-ratchet par defense.** The 06-29 framework explicitly states Strategy **"will not necessarily increase the STRC dividend rate solely because STRC trades below its stated amount."** STRC's old reflex — *if STRC drifts below ~$95 par, hike the dividend until buyers return at $100* — is gone. In its place Strategy may instead defend STRC by **buying it back** (the $1.0B program, STRC first priority, funded by selling bitcoin) or by drawing the **$2.55B reserve**. That is a **discretionary soft floor under the price, not a peg**: downside is genuinely cushioned, but there is no contractual floor, no put, and no commitment to return STRC to $100 — and the buyback bid appears precisely *because* STRC is cheap (accretive). **This report originally added "then fades as it nears par," and four weeks of filings say otherwise** — repurchases ran $25.0M → $81.2M → $108.6M → $132.2M while the implied price rose $86.53 → $95.20, so the bid accelerated into the recovery rather than fading. Whether the price rose *because* of the bid is not established, but a holder should not expect the support to withdraw itself as par approaches; on the evidence so far it has done the opposite. **Two things now make this mechanism heavier than when it was first described:** the buyback has been used at scale rather than merely authorised, and the rate ratchet has been forward-disclaimed until STRC trades sustainably near $100 — so the buyback and the reserve are carrying the defence alone. ⚠️ **But the funding source is no longer what the June framework described.** It read "the funding is observed to be Bitcoin sales, not merely permitted to be" — true of the 2026-08-10 filing and **false of the 2026-08-17 one**, in which no Bitcoin was sold and $132.2M of repurchases came from common-stock issuance. **That changes which constraint binds:** the gate is now the market's appetite for common issuance, watched through mNAV, rather than the depth of the Bitcoin stack. The flip is recorded at the top of this report, which is the body-rots-under-a-fresh-box failure this report flags elsewhere. For downstream holders, mark STRC to its market price *with that soft floor beneath it*, not to a par recovery. This reframes the STRC/STRCx/apxUSD/apyUSD reports consistently.
+## 4 · Governance — 4.5
 
-The single most important number for understanding Strategy is **mNAV** — Strategy's own published metric, visible on the strategy.com landing page:
+**Concentrated decision-making makes funding policy durable in one sense and changeable in another.** The prior governance assessment identifies controlling influence and a discretionary treasury policy. The same flexibility that permits cash rebuilding also permits continued repurchases, BTC sales, new obligations or a change in dividend-support strategy. Policy intentions are not creditor protections.
 
-```
-mNAV = Enterprise Value ÷ BTC Reserve
-EV   = MSTR market cap + senior convertible debt + perpetual preferred − cash
-```
+**Governance scores 4.5.** This refresh does not re-verify the voting register or infer a governance improvement from a scheduled shareholder vote. Moving dividend payments to a different cadence, if approved and made effective, would not by itself strengthen the balance sheet, increase the annual payout or independently validate wrapper pass-through.
 
-As of 2026-06-03 (strategy.com): EV ≈ $67.2B, BTC Reserve ≈ $55.3B, **mNAV ≈ 1.21 — premium**. **Update 2026-06-26:** the late-June selloff (MSTR to 52-week lows, BTC ~$61.3K, STRC to ~$76) has compressed mNAV from ~1.05 (pre-market) to **~1.02 — into PARITY**. At parity ATM equity issuance is no longer reliably accretive — the compounding engine is roughly neutral. This is the regime crossing the prior pass was watching for, and it drove this pass's Funding / Refinancing / Overall cuts. A durable bounce back above ~1.05 would revert them.
+## Shared quantitative evidence
 
-*A note on mNAV: MktCap / BTC ≈ 0.86 is a useful **leverage indicator** for the common claim, but it is not Strategy's published mNAV and it is not the ATM-accretion test. With $22B of senior claims (debt + preferred) sitting ahead of common, MktCap/BTC being mechanically less than 1 is normal capital-structure arithmetic — it would only equal mNAV in a debt-free pure-BTC structure (a spot ETF).*
+The figures below are generated from the same base feed, history and filing-event stream used by the dashboards. They are supporting evidence for the longer-term assessment, not a new score for each market tick.
 
-| mNAV range (EV/BTC) | Regime | What it means |
+<!-- strategy-shared-evidence:start -->
+Shared dashboard feed: **2026-10-28T06:50:13Z**. Financial observations retain their filing dates; a fresh feed does not make an older filing or market close new.
+
+| Shared-history measure | Last 7 days | Last 30 days | Last 90 days |
+|---|---:|---:|---:|
+| STRC observed marks | 211 | 903 | 2717 |
+| Mean STRC price | $99.21 | $99.23 | $97.25 |
+| Observed STRC price range | $98.65–$99.65 | $97.70–$99.92 | $87.51–$99.92 |
+| Compatible v2 mNAV observations | 211 | 903 | 2717 |
+| Mean producer mNAV (EV/BTC) | 1.118× | 1.128× | 1.094× |
+
+Window end: **2026-10-28T06:50:13Z**. The 90-day sample starts **2026-07-30T07:49:58Z**; largest gap between observations within it is **2.21 hours**. These are arithmetic means of retained observations, not time-weighted prices or trading-day closes. Repeated closed-market stock quotes are included, so counts are not independent trades. mNAV includes only rows explicitly labelled v2; older unversioned values are excluded. Historical mNAV inherits the producer's historical share-count and preferred-value assumptions.
+
+| Filing date | General USD Cash | USD Reserve | STRC repurchased in disclosed period |
+|---|---:|---:|---:|
+| 2026-10-05 | $833.4M | $4.88B | $73.7M |
+| 2026-10-13 | $640.5M | $4.88B | $192.4M |
+| 2026-10-19 | $447.3M | $4.83B | $193.1M |
+| 2026-10-26 | $242.4M | $4.83B | $204.9M |
+
+Amounts are discrete filing observations, not a daily cash series. Disclosed periods differ in length; the October 5 repurchase observation covers September 28–30. No interpolation or annualized weekly buyback burn is used.
+
+Latest filing: **0001193125-26-431146**, filed **2026-10-26**. Unspent preferred repurchase authorization: **$956.8M**; BTC held: **848,517**. Authorization is not cash.
+
+Observed STRC rate: **12.00%**, current recorded payment cadence **semi-monthly**. Proposed November daily terms are separately conditional; do not count both replacement schedules.
+
+**Model-quality limit:** the source flags `STRC_OUTSTANDING_BASE_AGED`. Its derived share count, absolute service obligations, preferred-value inputs and runway are provisional. No precise modeled service life is endorsed by this report.
+<!-- strategy-shared-evidence:end -->
+
+## Scoring Rationale
+
+| Category | Score | Notes |
 |---|---|---|
-| > 1.05 | **Premium (current)** | ATM equity issuance accretive — every $1 raised buys $1 of BTC that accrues to common above the senior wedge. Per-share BTC NAV grows on each issuance. BTC-bid flywheel intact. |
-| 0.95 - 1.05 | Parity | Marginal — ATM neither accretive nor dilutive in per-share BTC terms. |
-| 0.85 - 0.95 | Discount | ATM dilutive to per-share BTC. BTC-accumulation funding leg compressed. |
-| < 0.85 | Distress | Funding model under acute stress. |
+| Balance sheet quality | 5.0 | Substantial BTC assets and designated service liquidity, offset by concentration, senior claims and provisional liability-model precision. |
+| Funding model durability | 3.0 | Repeated general-cash depletion and ongoing discretionary support without a matching refill; modeled premium and other funding options remain counterevidence. |
+| Refinancing capacity | 4.5 | Several financing routes, but correlated market access and potentially earlier investor cash demands; no new legal maturity certification. |
+| Governance | 4.5 | Concentrated control and discretionary treasury choices; policy intentions do not create enforceable holder protections. |
+| Overall | 3.5 | The four-axis mean is 4.25; Overall is 0.75 below the mean and 0.5 above Funding. Funding durability is the binding dependency, rather than an arithmetic average of asset marks. |
 
-**Why mNAV would matter if it inverted:** the Strategy investment thesis is centrally a per-share BTC NAV compounding story. If mNAV ever sustains < 1, the compounding mechanism inverts — new equity issuance dilutes per-share BTC NAV rather than growing it. That self-reinforcing loop (weaker thesis → weaker equity → lower mNAV) is the **forward stress case** to monitor; it is not the operating regime as of 2026-06-03.
+## What would change the assessment
 
-## The 2026-05-05 disclosure — funding-mix optimization
+- **Up:** repeated disclosures of actual cash rebuilding, a sustainable funding mix and reduced dependence on issuer-funded price support. A stronger market mark alone is insufficient.
+- **Down:** further material depletion without refill, impaired access to funding, adverse liability substitution or verified acceleration of cash claims.
+- **Evidence review:** reconcile preferred outstanding counts, preserve the distinction between general cash and the service reserve, and check the daily-dividend vote and effective legal terms after the scheduled meeting.
 
-On Strategy's Q1 2026 earnings call (2026-05-05), Saylor publicly committed for the first time to using **BTC sales** as one funding leg for preferred-dividend obligations. He stated current annual preferred payments require selling ~18,500-19,000 BTC per year (~2.2% of the 843K BTC stack) if funded entirely from the stack.
+## Dependency boundary
 
-**The disclosure was a funding-mix decision, not a forced response to a broken ATM.** Annual preferred dividend obligation is ~$1.7B. Funding that via incremental ATM at MSTR ≈ $130 requires issuing ~13M new shares per year (~4% basic-float dilution annually); funding via BTC sales requires liquidating ~26K BTC/yr (~3% of stack annually). Both are economically feasible at mNAV ≈ 1.21. Saylor's preference is a **mix** — ATM for liability management plus opportunistic BTC sales for dividend service — rather than open-ended ATM dilution. The "pivot" is a portfolio choice between two viable funding legs, not an admission that the equity-issuance leg is closed.
+The economic path is **Strategy issuer → raw STRC → wrappers, reserve holders and tranches**. MSTR common equity is not a reserve token held by those downstream products. Their own collateral, subordination, custody and exits still need separate assessment. This focused refresh does not automatically change downstream scores. See [STRC](/reports/strc/) for the instrument-level assessment.
 
-**For preferred holders (STRC, STRF, etc.):** Strategy now operates a three-leg funding stack — ATM equity issuance, ongoing preferred issuance, and opportunistic BTC sales. Phase 1 is the **USD Reserve** — ⚠️ **the restricted balance the filings describe as "intended to support the payment of dividends on Strategy's preferred stock and interest on its outstanding indebtedness", and not the same thing as general cash** — which has *built* from $871M (5/25) → $1.0B → $1.1B → $1.4B (06-21) → about $2.55B (06-28) → $3.0B (07-12) → $3.225B (07-19) → $3.75B (07-26) → $4.0B (08-02) → $4.65B (08-09) → **a record $4.80B (08-16)**, under the 06-29 framework's **12-month-minimum reserve policy**. That eases Phase-1 coverage to about **37 months** at the current obligation, and about **54 months** on STRC alone, with zero issuance refill — on the $5.04B reserve at 09-20 against a derived ~$1.625B annual preferred obligation (the 10-Q's preferences with STRC par reduced for 11,732,792 shares repurchased; see What to watch), rather than the ~$1.728B pre-buyback figure, which overstated the burden. ⚠️ **But the funding mix changed:** the three flat-BTC weeks ended, and Strategy sold 3,328 BTC across 07-27→08-09, with August proceeds funding STRC buybacks rather than only dividends. The buffer is building even as STRC's price sits below par; that is the key offset to the late-June drawdown, and it is why this stays instrument-price stress rather than a regime change. The same framework's **$1.0B STRC-priority buyback** is now live and accelerating: cumulatively **3,741,813 STRC shares for $347.0M**, leaving **$653.0M** available. Phase 2 is the BTC stack itself — about 31 years of runway at flat BTC and flat preferred outstanding, now with BTC sales formally authorized to fund dividends/reserve/buybacks. The three-leg structure is more robust than a single-leg model would be; residual stress vectors are STRC issuance demand absorption, rate-ceiling headroom, and a future mNAV inversion under sustained BTC weakness.
+## Source agreement and review scope
 
-> **From 2026-06-30, STRC pays its dividend twice a month instead of once, and the July rate is confirmed at 12.00%** (+50bp, the locked hike). The payout is split into two semi-monthly payments (approved at the June 8 annual meeting; first semi-monthly payment July 15, 2026). Note the *rate-setting* logic itself changed on 06-29: under the revised dividend policy the rate is no longer a reflexive sub-par ratchet — Strategy evaluates it across a basket of factors and explicitly **"will not necessarily increase the STRC dividend rate solely because STRC trades below its stated amount."** The dividend is now one tool among several (alongside the reserve, the STRC buyback, and BTC monetization) — see the soft-floor reframe above.
+The [source definitions](/data/strategy/2026-10-28/source-contract.txt) identifies the exact fields and definitions. [Saved sources and hashes](/data/strategy/2026-10-28/sources.json) preserve the dashboard inputs used in this refresh. Contractual and governance facts retain their prior verification scope; `last_revised` records this refresh and the older `last_verified` is intentionally preserved.
 
-## The 2026-05-26 transaction — the new playbook in action
+Current filing and market data were re-read from the shared source on October 28. The latest event stream still anchors the weekly financial facts to the [October 26 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526431146/mstr-20261026.htm). The [official STRC description](https://www.strategy.com/strc/learn) continues to show a 12% variable annual rate and semi-monthly payments. The [daily-dividend proposal](https://www.strategy.com/mstr/vote) remains conditional in the reviewed evidence. The October 28 10:00 a.m. Eastern meeting is **14:00 UTC / 22:00 Taipei**, later than this review's source check. No vote result or effective amendment is assumed.
 
-Two weeks after the Saylor pivot, Strategy executed a paradigm transaction (2026-05-11 to 2026-05-25):
+The issuer webpage exposes a different STRC notional from the producer model, without a usable observation timestamp for reconciliation. It is recorded as a cross-check, not substituted into the shared dataset. A new authoritative count and a reconciled producer update are needed before absolute service/runway figures can be certified. Similarly, the dashboard's coarse stated-maturity ladder is not a fresh legal review of investor put dates; refinancing analysis must not assume all cash demands wait until stated maturity.
 
-- **Repurchased** $1.50B face of 0% 2029 convertible notes for ~$1.38B cash (8% discount to par)
-- **Funded by** cash reserves + MSTR ATM + STRC ATM
-- **Zero BTC sales** for this transaction
-- **Result:** convert debt $8.2B → $6.7B; total preferred notional grew by $5.7B (mostly new STRC); BTC holdings unchanged
-
-**Why Strategy did this:**
-1. Captured the 8% discount (~$120M of free economic value retiring face below par)
-2. Reduced conversion overhang on 2029 notes (eliminates future per-share BTC NAV dilution if MSTR ever rallies above the conversion strike)
-3. Maturity-wall management (defends the bigger 2030 maturity wall for later)
-
-**Why it's structurally negative for preferred holders:** Strategy traded $1.5B of near-term cash exposure for ~$345-575M/yr in perpetual cash obligation (the new STRC tranches at 11.5%). At any reasonable discount rate, that's ~$5-8B in present-value terms given up to gain ~$1.6B in present-value terms. The trade only makes sense if STRC issuance is treated as "free" — i.e., the dividend can be perpetually rolled by issuing more STRC. That's the Ponzi-structure risk explicit in the new regime.
-
-**Why MSTR equity reacted -7.9% on the news:** Markets read the transaction as net negative for common holders despite Strategy's positive framing ("BTC Gain of 4,391 BTC, $333M BTC $ Gain"). The convert buyback pressured liquidity, and the new STRC issuance added permanent obligation. Market vote on Saylor's framing: not buying it.
-
-## Capital structure and the 2028 put wall
-
-> ⚠️ **The convert wall is 2028, not 2030.** Both were wrong, and wrong in the *safe* direction on the axis this section scores. Figures below are read from Strategy's **Q2 2026 Form 10-Q** (filed 2026-08-03, accession `0001050446-26-000044`, Notes 6 and 10). **A 10-Q is unaudited** — reviewed, not audited — which matters on a report scoped entirely to issuer solvency.
-
-Preferred stack, at aggregate liquidation preference as of 2026-06-30:
-
-```
-$10.489B  STRC  (12.00% variable, semi-monthly)   <- dominant
- $1.402B  STRK  (8% convertible)
- $1.402B  STRD  (10% fixed)
- $1.284B  STRF  (10% fixed perpetual)
- $0.884B  STRE  (10%, EUR 100 stated amount, Luxembourg SE)
---------
-$15.462B  total preferred
- $6.714B  Senior Convertible Notes (six tranches, 2028-2032 maturities)
-```
-
-STRC has since been reduced by buybacks: roughly **$8.90B of par at 2026-10-11** on a derived 88,954,899 shares (the 06-08 dashboard count less 15,940,101 issuer-disclosed cumulative repurchases), against the $10.489B above.
-
-```
-```
-
-Common equity is roughly **$37B**, on **384,225,751 shares** (364,585,501 class A plus 19,640,250 class B, per the 10-Q cover at 2026-07-24, plus about 13.1M issued under the August ATMs) against a market price near **$119.25** (2026-08-23). That class-A-plus-class-B basis is the one used for mNAV throughout this report, not the 401.3M assumed-diluted count the 10-Q uses for its own per-share Bitcoin metrics.
-
-**STRE deserves a flag of its own.** It is euro-denominated with a EUR 100 stated amount, so part of Strategy's preferred obligation carries an **FX leg** that this report has never discussed and does not attempt to size here.
-
-### The wall is 2028, not 2030 — because every tranche carries a holder put
-
-**Each convertible tranche gives holders a noncontingent right to require Strategy to repurchase the notes for cash at 100% of principal**, on a date well before stated maturity — in the 10-Q's words, a *"noncontingent right to require the Company to repurchase for cash all or any portion of their respective notes at a repurchase price equal to 100% of the principal amount."* Noncontingent. Cash. Par. ⚠️ **The holder puts, not the maturities, are what set the binding schedule.**
-
-| tranche | maturity | principal | conversion price | **holder put date** |
-|---|---|---:|---:|---|
-| 2028 | 2028-09-15 | $1,010.0M | $183.19 | **2027-09-15** |
-| 2029 | 2029-12-01 | $1,500.0M | $672.40 | **2028-06-01** |
-| 2030A | 2030-03-15 | $800.0M | $149.77 | **2028-09-15** |
-| 2030B | 2030-03-01 | $2,000.0M | $433.43 | **2028-03-01** |
-| 2031 | 2031-03-15 | $603.75M | $232.72 | **2028-09-15** |
-| 2032 | 2032-06-15 | $800.0M | $204.33 | **2029-06-15** |
-| | | **$6,713.75M** | | |
-
-That places **$4.90B inside calendar 2028** and **$5.91B — 88% of the stack — puttable by 2028-09-15**, with the first $1.01B falling due about 13 months out, in September 2027.
-
-**And the put is the rational path, not a tail case.** The *lowest* conversion price in the stack is **$149.77**; MSTR was **$119.25** on 2026-08-23, so even the cheapest strike sits about **26% above spot**, and the rest range to more than 5x it. Every tranche is out of the money. Absent a rally of more than 26% sustained into 2028 — and far more for the other five — holders take par in cash and the notes never reach their stated maturities. **A 26% gap is thin enough to cut both ways: one strong quarter changes which schedule binds, so treat it as a figure to re-check rather than assume.**
-
-**So the March 2030 wall is not the dominant single-year exposure it looks like — it does not exist in the scenario assumed here.** Both 2030 tranches are puttable in 2028. If MSTR stays below $149.77 they are gone by then; if it clears $433.43 the 2030B converts to equity instead. The only world in which $2.8B cash-settles in March 2030 requires MSTR to sit between the strikes for two years *and* every holder to decline a free par put in 2028 — which no rational holder does when the conversion option is worthless.
-
-**Keep the size of this in proportion.** Capacity is not the constraint: roughly $21.7B of MSTR ATM capacity remains, $17.5B of STRC capacity, and the stack is **846,000 BTC** (09-20). Cost and timing are. The reserve is **$5.04B** (09-20) but policy-committed to a 12-month forward coverage minimum against a derived annual obligation of about $1.625B (see What to watch), leaving about **$3.4B genuinely free** — and drawing that to meet a convert put attacks the same coverage story holding the preferred axes up. Converts can also be rolled into new converts rather than repaid, which Strategy has done at scale before. **This is a worse position than the report described, not a distressed one.**
-
-The 5/26 transaction is the playbook for handling this: retire near-term maturities at discount using ATM + new preferred issuance. The 2030 wall will face the same playbook ~12-18 months ahead of March 2030. Whether the playbook still works at that point depends on (a) STRC issuance demand remaining absorptive, (b) the rate-ceiling headroom not being exhausted, and (c) MSTR ATM still being functional.
-
-## How Strategy reports its progress — the BTC metrics
-
-Strategy publishes three custom metrics:
-- **BTC Yield** = BTC count growth ÷ share count growth (per-share BTC NAV change %)
-- **BTC Gain** = BTC count equivalent of any accretive-to-per-share transaction
-- **BTC $ Gain** = USD value of BTC Gain
-
-For the 2026-05-26 transaction: BTC Yield 0.7%, BTC Gain 4,391 BTC, BTC $ Gain $333M. Strategy didn't actually gain 4,391 BTC — the count was unchanged. The framing communicates that the transaction was "equivalent to gaining 4,391 BTC per share" because of conversion-overhang elimination + discount capture.
-
-**Useful but somewhat self-serving framing.** It ignores the perpetual STRC obligation cost that funded the trade. Read with awareness of this bias.
-
-## Score breakdown — issuer-entity axes
-
-These are scores for Strategy as an **issuer entity** affecting downstream-asset (preferred, wrapper) analysis, NOT for MSTR as a potential equity investment.
-
-| Dimension | Score | Notes |
-|---|---|---|
-| Balance sheet quality | 5.0 | **Held (cut from 5.5 in the June 2026 drawdown).** BTC stack ~$51.9B at ~$61.3K spot; cost-basis ($75,651/BTC avg) deeper underwater at 52-week-low MSTR. But the cash buffer **built to ≈$1.4B (06-21)** — the largest weekly build in the series — lifting coverage to **≈9.8 months** against the ~$1.5B+/yr preferred dividend service. Buffer building into the stress is the offset; cash alone still covers under a year, and debt + preferred remain meaningful ($22B+ combined). Quality is BTC-correlated; this week the issuer's near-term position arguably improved, so the axis holds. |
-| Funding model durability | 4.0 | **The machine that pays the preferred dividends is no longer refilling itself.** This axis scores whether the funding loop closes. Through 09-13 the USD Reserve printed $5.10B flat for four weeks, and the 08-24 filing shows why: $300.0M of common-ATM proceeds were *"used to increase the USD Reserve"* — a closed loop, not stillness. With the common ATM idle for three filings, nothing refilled it, and the 09-21 filing prints both limbs of the re-arm condition set on 2026-09-08 — *the reserve falling while buybacks continue*: the reserve fell **$5.10B → $5.04B**, drawn $57.4M *"to fund the payment of dividends on its preferred stock and interest on its outstanding indebtedness"* (the first such sentence in any filing), while **$174.0M** of STRC was repurchased in the same week. **The cut is about the direction of the flow, not the size of the draw**: $57.4M is 1.1% of the reserve, one payment week is not a run rate, and $5.04B still covers roughly three years of the preferred obligation. Held to a single notch because the idle issuance legs are plausibly choice rather than inability — $17.5B of STRC capacity is untapped and the $1.0B MSTR buyback authorisation has never been drawn — and because the balance sheet did not weaken: the BTC stack grew this week and STRC recovered toward par. The *shape* of the funding weakened; the balance sheet did not. Earlier history on this axis: cut from 5.0 at the June 2026 mNAV parity crossing, when the equity-ATM leg stopped being reliably accretive; a durable mNAV bounce above ~1.05 was the stated reversion condition and it has not occurred. |
-| Refinancing capacity | 4.5 | **Both refi legs weaken at parity.** Demonstrated capacity to retire $1.5B converts at discount (5/26 transaction) shows the rolling-refinancing playbook works at scale, but at parity the two legs that fund it weaken together: the accretive-ATM leg is now neutral, and the fresh-STRC-near-par leg is impaired with STRC at an all-time low. The 2030-wall-via-STRC assumption is a notch less safe. The reserve build extending runway is the offset that caps this to one notch. **A durable bounce back above ~1.05 mNAV reverts this.** **Cut again to 4.5 on 2026-08-23 — a recalibration on a corrected fact, not a deterioration.** The wall this axis was scored against is wrong: holder puts make $5.91B puttable for cash at par by 2028-09-15, not $2.7B maturing in 2030, so the exposure is about 18 months nearer and roughly 1.75x larger than the rationale above assumed. Nothing about Strategy changed — the puts have been in every 10-Q since issuance and only our reading of them changed. One notch rather than more because the first put is still about 13 months out, ATM and STRC capacity are ample, the reserve is at a record and building, and converts can be refinanced rather than repaid. |
-| Governance | 4.5 | Saylor majority voting via dual-class. Strength (consistent BTC thesis) AND single-point-of-decision risk (the 5/05 pivot was a unilateral call reshaping the company's risk profile). Held — no new governance event. |
-| **Overall** | **4.5** | **Held through the 2026-10-12 issuer release.** BTC holdings rose to 848,250 and the restricted Reserve held at $4.88B, but USD Cash fell to $640.5M as the near-par STRC buyback continued. The nearest trigger—USD Cash below $500M—is now $140.5M away. Functional and levered, with a finite but demonstrated STRC bid; acceptable as an upstream dependency only when sized accordingly. |
-
-## How to use this analysis
-
-- **Preferred-stock holders** (STRC, STRCx, downstream) who want to understand the upstream issuer's solvency mechanics
-- **DeFi investors with STRC-dependent positions** (apxUSD, apyUSD, sUSDat, STRCx) who want the upstream view rather than only the wrapper-side analysis
-- **Researchers tracking the Digital Asset Treasury company category** — Strategy is the canonical example, and the framework here transfers to peer DAT issuers (MetaPlanet, etc.)
-
-## What this analysis does NOT cover
-
-- **Equity-investment analysis of MSTR common.** Peer comparison versus spot BTC ETFs (IBIT, FBTC), convert-strike arithmetic at maturity, and dividend-discount-model alternatives are out of scope; those require an equity-research framework.
-- **Personal-portfolio sizing for MSTR common.** This dependency analysis does not produce buy or sell signals.
-- **Bitcoin-exposure substitution analysis.** Spot ETFs are the relevant simple-BTC products, but comparing them with MSTR is not covered by this report.
-- **Saylor governance as a personal-risk gate.** His voting concentration is relevant here as a structural issuer fact, not as individualized investment guidance.
-
-## What to watch
-
-Each of these signals has a live panel on the [MSTR dashboard](https://tidresearch.com/dashboards/?asset=mstr) (and most also on the [STRC dashboard](https://tidresearch.com/dashboards/?asset=strc) for the preferred-side view):
-
-- **mNAV (EV/BTC, currently about 0.98 — just below parity).** This is the live signal. ⚠️ **Updated: mNAV read 1.0101 on 2026-08-23 — back above the 1.0 line**, after printing roughly 0.97 to 0.99 through July and early August. That is the line where ATM equity issuance stops being accretive, so crossing back above it restores the funding flywheel. The re-arm tracker shows zero of the three sub-1.0 weekly prints the downgrade trigger requires, with the reserve up for a sixth week. MSTR was **$119.25** at that read; the $96.5 figure quoted in the update box is the ATM-implied average for the 08-16 filing week, not a current price. Part of the latest compression reflects the cash reserve growing to a record $3.75B, because cash is deducted from enterprise value. This is a **watch, not a break**: the cut re-arms only on a **sustained sub-1.0 with the reserve drawing down**, and the reserve is instead building — so marks hold. A durable bounce back above about 1.05 reverts the 06-26 parity notch; a sustained sub-1.0 *with reserve drawdown* re-arms the cut; sustained below 0.85 = distress. Use strategy.com's landing-page mNAV as the authoritative reading.
-- **BTC price and Strategy's BTC count.** Weekly purchase/sale cadence; the first at-scale BTC *sale* (3,588 BTC in the 06-29→07-05 week) has now executed — regime confirmation is behind us, so the signal shifts to the *pace* of ongoing sales versus reserve refills.
-- **Per-share BTC NAV trajectory.** The headline equity metric. Compresses with dilution (ATM issuance) even when BTC count grows.
-- **STRC outstanding tranche cadence.** **$10.489B** at 2026-06-30 (Q2 10-Q, aggregate liquidation preference), and roughly **$8.90B at 10-11** after a derived 15,940,101 shares were retired by buybacks. Preferred issuance remains zero, so the live risk is currently the opposite: the buyback is shrinking STRC while consuming cash.
-- **Aggregate-preferred runway.** Currently ~31 years; meaningful compression below 30 years.
-- **BTC-sale window date.** About **37 months** of total-preferred coverage at zero issuance refill, and about **55 months** on STRC alone—the $4.88B reserve at 10-11 against a derived annual obligation of about **$1.574B** (STRC about $1.067B at 12.00% on 88,954,899 shares, plus STRF, STRE, STRK and STRD at the 10-Q's preferences). The STRC count is derived, not disclosed. Drift inward to within about 3 months = acute short-term stress.
-- ⚠️ **USD Reserve is not USD Cash.** Reserve held at **$4.88B**, while Cash fell **$833.4M → $640.5M**. The below-$500M trigger is now **$140.5M away**. Do not merge the pockets.
-- **BTC count (848,250 as of 10-11).** The latest 250 BTC cost $21.5M. Strategy sold 125,183 common shares for $21.0M; preferred issuance remained zero.
-- **STRC buyback execution.** The latest disclosure records **1,932,145 shares for $192.4M at about $99.58**, leaving **$354.8M** under the digital-credit authorization. The near-par execution demonstrates the bid remains active, but the authorization and USD Cash are finite; this is still not a contractual floor, put, redemption right, or peg.
-- **✅ RESOLVED — the August STRC rate was HELD at 12.00%** (announced 2026-07-31), as this report flagged was possible. Management will not recommend a change **until STRC trades sustainably at or near $100**, so the rate leg is forward-disclaimed and the defence now rests on the buyback and the reserve. The live question becomes whether that policy survives a renewed STRC slide. Formerly: the revised late-June policy lets Strategy hold at 12.00% instead and defend STRC via the now-live buyback and reserve. A hold remains a real possibility.
-- **⚠️ The 2028 put wall, not the 2030 maturity wall.** The first noncontingent holder put is **2027-09-15 ($1.01B)**, followed by $2.0B on 2028-03-01, $1.5B on 2028-06-01 and $1.4B on 2028-09-15. Markets will start pricing the cash-versus-conversion outcome roughly 12-18 months ahead of each — so from around **mid-2026 for the first tranche**, which is now. The single number that decides it is MSTR against **$149.77**, the lowest strike in the stack.
-- **Saylor governance events.** Voting structure changes, succession plans, health events — material risk vectors.
-
-## Related reports
-
-- [STRC + STRCx retail report](/reports/strcx/) — the variable-rate perpetual preferred that is Strategy's primary funding instrument, and Backed Finance's on-chain wrapper. **The most direct retail exposure to Strategy's preferred-dividend stream.**
-- [apxUSD report](/reports/apxusd/) — Apyx's $1 stablecoin backed partly by STRC family (~30-40% of reserves).
-- [apyUSD report](/reports/apyusd/) — Apyx's yield-bearing sibling, captures the STRC dividend stream as NAV growth.
-- [sUSDat retail report](/reports/susdat/) — Saturn's yield wrapper, ~81% backed by raw STRC at steady state.
-
----
-
-*Revision history: **2026-08-24 — funding source changed; no score change.** The 2026-08-17 filing shows **no Bitcoin sold** and **$132.2M of STRC repurchases funded from common-stock issuance**, against the 08-10 filing in which sales funded them. **The binding constraint moves from the depth of the Bitcoin stack to the market's appetite for common issuance**, watched through mNAV. **2026-08-23 — Refinancing capacity 5.0 → 4.5; Overall held at 4.5.** Every convertible tranche carries a **noncontingent holder put at 100% of principal in cash** well before stated maturity: **$4.90B is puttable inside calendar 2028 and $5.91B — 88% of the $6.71B stack — by 2028-09-15**, with the first $1.01B in September 2027. **The convert wall is 2028, not 2030.** Every tranche is out of the money — lowest conversion price $149.77 against MSTR at $119.25 — so the puts are the rational path rather than a tail case. Capital structure restated from the Q2 Form 10-Q (unaudited): **STRC $10.489B, semi-monthly at 12.00%; STRK plus STRD $2.804B; STRE $0.884B, euro-denominated and carrying an FX leg**; strikes $149.77–$672.40. Common equity about **$37B** on 384,225,751 shares. **2026-08-23 — Bitcoin sales became a pattern, not a one-off:** sales in two of three weeks (1,638 and 1,690 BTC, 843,775 → 840,447), and the **purpose changed** — July sales funded dividends, August sales funded discretionary STRC buybacks. Buybacks ran $25.0M → $81.2M → $108.6M → $132.2M as the implied price rose $86.53 → $95.20. **The August STRC rate held at 12.00%**, forward-disclaimed until STRC trades sustainably near $100. Reserve $3.75B → $4.80B across three record weeks; buyback remaining $653.0M; coverage about 33 months total and 38 on STRC alone. **mNAV 1.0101 at 2026-08-23**, back above break-even after a month below. **2026-07-27 — first STRC buyback of about $25M**, record $3.75B reserve, third flat-BTC week under a par-conditioned pause, STRC about $88.90; marks held.*
+This pass covers MSTR and raw STRC only.
 
 ## Revision history
 
-> **2026-10-13 (issuer release dated 2026-10-12, period 10-05→10-11) — scores held; USD Cash is $140.5M above the nearest trigger.** Strategy bought **250 BTC for $21.5M**, taking holdings to **848,250 BTC**; sold **125,183 MSTR shares for $21.0M**; and repurchased **1,932,145 STRC shares for $192.4M**. USD Reserve held at **$4.88B**, USD Cash fell **$833.4M → $640.5M**, and **$354.8M** remains under the DCS repurchase authorization. Balance 5.0 / Funding 4.0 / Refinancing 4.5 / Governance 4.5 / Overall 4.5 all held. ⚠️ **Source discipline:** the issuer release is live, but EDGAR's CIK feed still ended at the October 5 8-K when checked; no October 12 accession is cited.
-
-> **2026-09-22 (weekly 8-K, period 09-14→09-20, accession 0001193125-26-396093, read at source from EDGAR) — first USD Reserve decline; bitcoin buying resumed from cash; Funding model durability 4.5 → 4.0, Overall held at 4.5.**
-> - **USD Reserve $5.10B → $5.04B**, the first decline in the series, with the filing stating $57.4M of the reserve was used to pay preferred dividends and interest — the first reserve-draw sentence in any weekly filing. A first observed net draw, not a run rate.
-> - **950 BTC bought for $75.7M (~$79,670) from USD Cash**, ending a three-week halt; holdings **846,000**, aggregate cost $63.80B, average $75,416 (nudged up: the purchase was above cost basis).
-> - **STRC buyback: 1,771,238 shares for $174.0M at ~$98.24 (1.76% below par)**, sixth consecutive week and highest price yet; STRF/STRK/STRD/MSTR zero; **$875.1M remains** under the $2.0B digital-credit programme; $1.0B untouched under the MSTR programme.
-> - **USD Cash $1.30B → $1.05B** ($249.7M out, nothing in); combined Reserve + Cash **$6.40B → $6.09B**, the largest weekly decline of the series. Common ATM zero for a third filing; preferred issuance zero in all 17 weekly filings since 2026-05-26, against ~$17.5B of STRC capacity that has never moved.
-> - **Preferred obligation restated downward, and the prior figure overstated the burden.** STRC par is about **$9.32B at 09-20** (derived: 104,895,000 shares less 11,732,792 repurchased), so the annual preferred obligation is about **$1.625B**, not the $1.728B computed on the 10-Q's pre-buyback $10.489B — about 6.5% lower. Coverage on the $5.04B reserve is about **37 months total and 54 on STRC alone**, against the 33 and 38 previously shown. Free reserve above the 12-month policy floor is about $3.4B.
-> - **Funding 4.5 → 4.0.** The re-arm condition set on 09-08 — the reserve falling while buybacks continue — printed on this filing: $57.4M drawn from the reserve for dividends and interest in the same week as $174.0M of STRC repurchases, with nothing refilling the reserve since the common ATM went idle. One notch, not more: the draw is 1.1% of the reserve, one week is not a run rate, the idle legs may be choice, and the balance sheet did not weaken. Balance 5.0 / Refinancing 4.5 / Governance 4.5 unchanged; **Overall held at 4.5**, and moves to 4.0 on USD Cash below $500M, a second consecutive reserve decline, or a zero-buyback week.
-
-> **2026-08-17 (weekly 8-Ks, periods 07-27→08-16) — Bitcoin selling resumed and is now funding STRC buybacks; marks HELD (Overall 4.5).** Read at source from EDGAR (CIK 1050446), accessions 0001193125-26-329565, -341297 and -353240.
->
-> - **Sales in two of the next three weeks.** **1,638 BTC** (07-27→08-02, avg $63,957) and **1,690 BTC** (08-03→08-09, avg $64,262), none in the week to 08-16. The stack went **843,775 → 840,447**, a net **3,328 BTC** across the gap. The sales are small — about **0.4% of the stack** — price-opportunistic, and inside the Board-authorized monetization program. **Selling is a run-rate hypothesis rather than a one-off**, on three weeks of evidence.
-> - **⚠️ The sharper change is what the sales are FOR.** In July, Bitcoin was sold to fund **dividends** — an obligation. In August it funded **buybacks of Strategy's own preferred**. Of $104.73M in sale proceeds in the 07-27→08-02 week, **$52.4M went to dividends and $52.3M to STRC repurchases**; the following week the 8-K states flatly that the net proceeds of a **$108.6M** sale went entirely to **repurchases of STRC Stock**. Strategy is liquidating Bitcoin to support the market price of its own preferred — observed behaviour at scale, two weeks running.
-> - **⚠️ The buyback accelerated as STRC approached par rather than fading.** Across four weeks: **$25.0M → $81.2M → $108.6M → $132.2M** of repurchases, at implied average prices of **$86.53 → $89.03 → $94.27 → $95.20**. The bid grew more than **5×** while the price rose about 10% toward par. Causality is not established — the buyback may be *why* the price rose. Cumulative: **3,741,813 STRC shares for $347.0M**; **$653.0M remains** of the $1.0B program.
-> - **The STRC rate was held at 12.00%.** Announced 2026-07-31, with management stating it **"does not intend to recommend to our board of directors a change from the current 12.00% per annum dividend rate for STRC Stock until STRC Stock demonstrates sustained trading at or near its $100 stated amount."** The rate ratchet is now forward-disclaimed by stated policy, leaving the buyback and the reserve as STRC's defence.
-> - **Figures refreshed.** USD reserve **$3.75B → $4.0B → $4.65B → $4.80B** across the three weeks, three further records, up $1.05B. STRC recovered to about **$95.20**, roughly **5% below par** rather than 11% — anything marking STRC downstream should be re-checked. MSTR is about **$96.5**, **derived from the weekly ATM tables rather than quoted** ($333.7M net on 3,458,866 shares), so treat it as ATM-implied and slightly understated by commission.
-> - **Coverage, recomputed rather than scaled.** Against the 10-Q's liquidation preferences at current rates, the annual preferred obligation is about **$1.728B** — STRF $1.284B at 10.00%, STRC $10.489B at 12.00%, STRE $0.884B at 10.00%, STRK $1.402B at 8.00%, STRD $1.402B at 10.00%. So the $4.80B reserve at 08-16 was about **33 months** of total-preferred coverage, and about **38 months** on STRC alone. **The 10-Q those preferences come from is unaudited**, as quarterly filings are; on an assessment scoped entirely to issuer solvency that qualification matters.
-> - **⚠️ And the live state is better than the filings alone imply — mNAV has crossed back above break-even.** The three 8-Ks above run only to 08-16. The live dashboard, timestamped **2026-08-23**, has **MSTR at $119.25** and **BTC at $76,156** — roughly 24% and 18% above where the last filing week left them, and well above the **$64,262** average price at which Strategy sold in the 08-03→08-09 week. **mNAV reads 1.0101 — back *above* the 1.0 line**, after printing about 0.97 to 0.99 since early July. The re-arm tracker shows **zero of the three required sub-1.0 weekly prints**, with reserve direction up for a sixth week. **This belongs beside the BTC-selling finding because the two point in opposite directions:** the sales resumed, while the condition that would trigger a downgrade — sustained sub-1.0 *with the reserve drawing down* — is further from being met than at any point in this series. The $96.5 MSTR figure above is the ATM-implied average for the 08-16 week and is **not** the current price.
-> - **No score change.** Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5 all hold. The sales are small and opportunistic, the reserve set three more records, the rate held, and the mNAV trigger — sustained sub-1.0 *with the reserve drawing down* — is not met, because the reserve did the opposite again.
->
-> **2026-07-27 (weekly 8-K, period 07-20→07-26) — first STRC buyback, record $3.75B cash reserve, a third straight week with no Bitcoin sold; marks HELD (Overall 4.5).** Strategy used its June $1.0B program for the first time, repurchasing **288,930 STRC shares for about $25.0M at roughly $86.50 each**, below the $100 face value; about **$975M remains**. The soft floor moved from promised to actually used, though it remains a discretionary issuer bid rather than a contractual floor or put. The preferred-dividend cash cushion reached another record, **$3.75B** (up $525M), or roughly **25 to 26 months** of total-preferred coverage and **34 months** on STRC alone.
-> - **Dividend funding stayed clean.** Preferred dividends were paid without selling Bitcoin for a **third consecutive week**, leaving the stack flat at **843,775 BTC**. Common-stock issuance roughly doubled to about **$544M**, while preferred issuance stayed at zero for a ninth week. Management said it will not buy more Bitcoin until STRC returns to $100, making the pause a deliberate STRC-support choice rather than a sign of funding trouble.
-> - **mNAV remained just below break-even at about 0.98**, partly because the larger cash reserve reduces enterprise value; this was not stock weakness, as **MSTR rose to about $97.58**. STRC recovered to about **$88.90**, roughly 11% below par. Marks hold (Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5).
-
-> **2026-07-20 (weekly 8-K, period 07-13→07-19) — record $3.225B cash reserve, a second straight week with no Bitcoin sold, mNAV just below break-even; marks HELD (Overall 4.5).** The cash cushion that pays Strategy's preferred dividends hit **another record at $3.225B** (from $3.0B, up $225M) — a third consecutive weekly build, roughly **22 months** of total-preferred coverage (roughly **30 months** on STRC alone), about 10 months of slack above the Board's 12-month-minimum floor. Preferred dividends were paid **without selling any Bitcoin for the second week running**, with the stack **flat at 843,775 BTC**. Funding came from common stock issuance at about half the prior week's pace (**$263.5M** vs $466.7M) at an essentially flat share price near $96 — an eighth consecutive week of zero preferred issuance, and no buybacks.
-> - **mNAV sat just below the break-even line, at roughly 0.99** (07-17 close), with **MSTR about flat week-over-week at $94.85** after the prior week's 8% drop failed to continue. The trigger logic: a sub-1.0 mNAV only re-arms a cut if it is *sustained with the reserve drawing down*, and the reserve is doing the opposite. Marks hold (Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5).
-> - **STRC softened to $85.29**, about 14.7% below par, still well above its late-June low near $76 — see the [STRC/STRCx report](/reports/strcx/). The soft floor under STRC continues to be reinforced and cash-funded (a discretionary issuer bid plus a record reserve, still not a contractual par guarantee).
-
-> **2026-07-13 (weekly 8-K, period 07-06→07-12) — record $3.0B cash reserve, common ATM resumed, no Bitcoin sold; mNAV slipped back below 1.0; marks HELD (Overall 4.5).** **(1) The cash cushion for preferred dividends hit a record $3.0B** (from $2.55B, +$450M) — roughly **~20 months** of total-preferred coverage (~28 months on STRC alone), the clearest ability-to-pay reading in the series to that point. **(2) Dividends were funded without selling any Bitcoin, and stock issuance restarted** — common ATM resumed at **$466.7M** and the BTC stack held **flat at 843,775** (7th straight week of zero preferred issuance, no buybacks).
-> - MSTR fell ~8% w/w (to **~$93–95**), pushing **mNAV back just below the break-even line (~0.97–0.98)**. Under the trigger logic a sub-1.0 mNAV only re-arms a cut if it is *sustained with the reserve drawing down* — and the reserve was building to a record. Marks hold (Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5).
-> - **STRC held ~$87.48** (07-12, about −12.5% to par), still well off its $76 all-time low — see the [STRC/STRCx report](/reports/strcx/). The soft floor under STRC is **reinforced and cash-funded**: a record reserve plus the STRC-priority buyback authorization sit beneath the price (still a discretionary bid, not a contractual par guarantee).
-
-> **2026-07-06 (weekly 8-K, period 06-29→07-05) — Strategy sold Bitcoin at scale for the first time to fund its preferred dividends; marks HELD (Overall 4.5), prices recovered off the late-June lows.** **The Bitcoin treasury company that markets itself as never selling Bitcoin started selling it — to pay its dividends.** In the week of 06-29→07-05 Strategy **sold 3,588 BTC (~$216M)** to cover its preferred-stock dividends and top its cash reserve back up, and for the first time in the record its Bitcoin stack *fell* — from **847,363 → 843,775 BTC**. For the five weeks before, it had been *buying* Bitcoin, funded by issuing common stock.
-> - **Why it matters:** the never-sell posture is formally over. The selling is modest and by Strategy's own Board-authorized "monetization" plan — the BTC Monetization Program armed on 06-29 is live, not a fire sale — but it is a real behavioral shift.
-> - **The other side:** the stock recovered. MSTR reclaimed **$100 ($101.96)**, STRC bounced off an all-time low (to ~$87.87, see the [STRC/STRCx report](/reports/strcx/)), and the cash reserve held at **≈$2.55B** (~a year of dividend coverage). This is *"starting to use the backstop,"* not *"running out of options."*
-> - **Marks held.** The event was already priced by the late-June cuts and prices recovered off the 06-26 nadir (Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5). *(Also this quarter: a Q2 2026 digital-asset loss of $8.32B — unrealized, non-cash; and CFO Andrew Kang added the principal-accounting-officer role after the prior CAO retired.)*
-
-> **2026-06-29 (8-K — "Digital Credit Capital Framework") — scores HELD (Balance 5.0 / Funding 4.5 / Refinancing 5.0 / Governance 4.5 / Overall 4.5).** Over the weekend of 06-28 Strategy's mNAV (EV/BTC) briefly printed below 1.0 — the point where new common-stock issuance stops adding BTC-per-share. Monday's 06-29 8-K reversed that: mNAV recovered to **~1.01 (low-parity, back above the 1.0 line)** and Strategy disclosed a coordinated funding-resilience package supplying dividend coverage. Five parts, all strengthening preferred-dividend coverage:
-> - **USD cash reserve nearly doubled to ≈$2.55B (06-28)** from ≈$1.4B (06-21), under a Board policy to keep a **minimum 12 months** of forward preferred-dividend + interest coverage on hand. Near-term cash coverage **~17.3 months**; the zero-issuance BTC-sale window moves out to **≈2027-12** from ≈2027-04.
-> - **A BTC Monetization Program** — Board-authorized BTC sales (up to ~$1.25B into the reserve, plus funding dividends/buybacks). A **shift from the never-sell posture**: BTC sales for dividend service become a standing authorization. *Armed, not yet used* — BTC holdings flat at **847,363** and the reserve build funded by **common-stock issuance (~$1.15B), not BTC sales**.
-> - **Two $1.0B buyback programs** — one for the digital-credit preferreds (**STRC the explicit first priority**, "if accretive") and one for common stock, both BTC-funded.
-> - **July STRC dividend rate confirmed at 12.00%** (+50bp), now paid semi-monthly.
-> - **A revised STRC dividend policy** converting STRC's old par mechanism into a **discretionary soft floor**. Net read: Strategy funded a near-doubled reserve by **diluting common at low-parity mNAV** (worse for equity accretion — already reflected in the 06-26 cut) while **materially strengthening preferred-dividend coverage** (the axis that matters for downstream STRC/apxUSD holders). The held score reflects the second. Low-parity mNAV (~1.01) stays a **live watch** — a sustained re-break below 1.0 with the reserve drawing down would re-arm the cut.
-
-> **2026-06-26 — mNAV crossed premium → PARITY; Funding 5.0 → 4.5, Refinancing 5.5 → 5.0, Overall 5.0 → 4.5.** STRC fell further to a regular-session **~$76 (a fresh all-time low, about −24% to par)** and Strategy's **mNAV (EV/BTC) crossed from premium (~1.05) into PARITY (~1.02)**. At parity the accretive common-ATM-to-BTC flywheel is roughly **neutral**, so both the funding engine and the refinancing legs weaken: the ATM-equity leg no longer reliably compounds per-share BTC NAV, and the fresh-STRC-near-par and accretive-ATM refi legs degrade together. **Why the cut is capped at one notch:** mNAV is at **low-parity, not discount/distress** (just below the 1.05 boundary), the **$1.4B reserve** extends runway to **~9.8 months**, **issuance is paused by choice, not forced** (4th consecutive week), and **net BTC accumulation continues** (+520 BTC → ~847,362 BTC, common ATM only). This is the funding model at its inflection, not broken. Balance sheet 5.0 and Governance 4.5 **held**. The underlying STRC instrument was cut a further notch in parallel (see [STRCx report](/reports/strcx/)). **Reversion note:** a durable mNAV bounce back above ~1.05 reverts these notches. *(Prior same-day pass — pre-market: a constructive 8-K (reserve $1.1B → $1.4B, coverage to ~9.8mo) against MSTR at 52-week lows ~$94 and STRC at an all-time low ~$80; mNAV sat right on the ~1.05 floor and scores HELD pending the crossing — which then occurred intraday. Earlier — 2026-06-07: a ~16% BTC drawdown took MSTR about −21% and STRC sub-par to ~$93.40; overall moved 5.5 → 5.0 then, capped at one notch because mNAV stayed premium.)*
+- **2026-10-28:** Refreshed the longer-term assessment using shared dashboard sources and 7/30/90-day context. Preserved the four instrument-specific axes, provisional outstanding-count and runway limits, and conditional dividend terms. The review preceded the scheduled October 28 vote; no approval or effectiveness is assumed.
