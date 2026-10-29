@@ -55,7 +55,7 @@ survived the October 2025 stress event. The constraints are a permissioned prima
 look-through into the managed portfolio, concentrated operational roles, and governance that can
 redirect revenue without USDe-holder consent.
 
-This is a targeted October 29 evidence and rationale revision. The last full six-axis verification remains **October 11**. Authority observations retain their October 11 scope; no new role audit, execution test or settlement-latency measurement is claimed. The [dashboard](https://tidresearch.com/dashboards/?asset=usde) and this assessment share the archived source observations and route definitions described below; verification against repaired live inputs is pending. Verification of the repaired source and actual served dashboard inputs remains pending; local agreement alone does not establish synchronization.
+This is a targeted October 29 evidence and rationale revision. The last full six-axis verification remains **October 11**. Authority observations retain their October 11 scope; no new role audit, execution test or settlement-latency measurement is claimed. The [dashboard](https://tidresearch.com/dashboards/?asset=usde) and this assessment use the repaired source generation and selected route definitions described below. The source repair and dashboard publication were verified on **October 29 at 08:00:03.667 UTC** by executing the actual public renderer against freshly fetched public inputs. This verifies source ingestion, consumer selection and generated display labels; it is not independent custody verification or a visual browser review.
 
 The October 29 archived backing files have unavailable headline coverage, and their histories end **October 14**: USDe at **14:49:58 UTC** and sUSDe at **14:50:00 UTC**, with **2,180 rows each**. This gap cannot support current backing trends. The separate peg exports extend through **October 29 05:18:41 UTC**; the daily oracle statistics end **October 28 18:18:20 UTC**. Price observations do not verify backing or execution. The issuer snapshot is separately attributed evidence. The later served generation below restores issuer observations without filling the missing interval or independently verifying custody.
 
@@ -106,12 +106,10 @@ and derivatives notional remain unresolved.
 The October 12 Risk Committee update puts the Reserve Fund at $62.57m, or 1.314% of supply, against
 a $45.7m recommended size (1.4 times). The recommendation rose from $2.84m in May as the framework
 added an RWA buffer and a $20m PSM buffer and reflected a larger perp book. The Risk Committee's 101.43% backing
-ratio has a different source and timestamp from the hourly feed; it does not repair that feed's outage.
+ratio has a different source and timestamp from the hourly feed. Restored hourly coverage uses the separately labelled October 29 issuer source, not that committee snapshot.
 The October 29 issuer snapshot has about 2.62% less supply and 0.3177 percentage points higher
 including-fund coverage than the October 21 issuer snapshot. This does not establish improved
-portfolio safety, a loss, fund-flow attribution or a new Reserve Fund adequacy assessment. Producer
-onchain supply agrees with issuer supply to rounding; the dashboard's separate supply RPC call returned 403,
-so this review does not claim a successful new independent dashboard supply read.
+portfolio safety, a loss, fund-flow attribution or a new Reserve Fund adequacy assessment. In the initial archived generation, producer onchain supply agreed with issuer supply to rounding; the dashboard’s separate supply RPC call returned 403. That failed probe is not the later successful canonical supply measurement documented below, whose time and denominator differ from the issuer snapshot.
 
 The published fee-switch average reproduces exactly from 340 observations between September 30
 15:50:05 and October 14 14:49:58 UTC. Its October 28 19:13:40 UTC runtime is not the window end.
@@ -135,8 +133,7 @@ The venue-only USDe liquidity overlay does not replace the base ladder in the sa
 The base quote provider is KyberSwap. Legacy impact is total fill impact against the venue’s smallest quoted rung, excluding that rung’s own spread; all-in signed return uses output USD divided by notional. Both the legacy 200-bps and nested 50-bps results use total fill impact; neither is a marginal-impact crossing. Their threshold labels must remain separate. The saved overlay inventory is dated October 29 00:10:21 UTC and does not replace the base quote clock.
 
 The older inventory enumerated 55 dollar-exit pools across ten chains. Venue TVL is not executable
-depth or chain-local capacity. Liquidity 7.0 is carried unchanged pending common-input reconciliation and
-review; the evidence does not establish a fresh capacity limit or execution assurance. Quotes are
+depth or chain-local capacity. Liquidity 7.0 is carried unchanged while source-level threshold definitions remain under review; the evidence does not establish a fresh capacity limit or execution assurance. Quotes are
 not simulations, fills or settlement proof.
 
 ## 4 · Dependencies — 6.0
@@ -195,7 +192,7 @@ At that block, sUSDe has **951,705,614.5658604 shares**, **1,194,804,931.2529356
 
 Both served backing histories retain their **2,180 original rows** and append **two acquired rows**, at **07:00:29 and 07:02:10 UTC**. The source transition is explicit; the interval from the October 14 endpoint remains missing. No history was interpolated or backfilled. The served fee-switch result is **insufficient_history**, with mean and milestone verdict unavailable. Two new samples cannot establish a trailing 14-day average, and governance activation remains independently unverified.
 
-These served payloads match the reviewed producer package. **End-to-end dashboard selection and display verification remains pending the dashboard verification**; file delivery does not close route, precision, execution or settlement limitations.
+The repaired public payloads match the reviewed producer package. The dashboard verification records the selected **USDe→USDC** quote clock as **October 29 00:10:21 UTC**, with the **200-bps headline ≥$5m floor** and separate **50-bps ≥$5m floor**. The selected **sUSDe→USDe** quote clock is **October 28 23:49:20 UTC**, with its **50-bps $1m–$10m unresolved bracket**; the legacy approximately $3.32m result remains **200 bps**. These quote clocks are separate from producer generation and issuer observation times. The published dashboard’s selected inputs and generated display were verified against the public code on **October 29 at 08:00:03.667 UTC**: issuer attribution, separate observation clocks and units, unknown allocation, explicit history breaks, unavailable fee-switch verdict and selected liquidity definitions are visible. This closes the source-repair and dashboard-publication checks, while route-definition, precision, execution and settlement limitations remain unresolved.
 
 ## Scoring Rationale
 
@@ -204,7 +201,7 @@ The six displayed axes average **6.4167**. Overall remains **6.5** under the exi
 | Axis | Score | Basis |
 |---|---:|---|
 | Stability / Peg | 6.5 | Stable 30-day oracle history and proven stress performance; primary arb remains permissioned and RFQ-based. |
-| Backing | 6.5 | September attestation remains historical; October 29 issuer API reports 100.3806% excluding / 101.7467% including the fund. Archived producer headline fields are null and histories end October 14. Offchain backing and current exposures remain independently unverified; score carried unchanged. |
+| Backing | 6.5 | September attestation remains historical; October 29 issuer API reports 100.3806% excluding / 101.7467% including the fund. Repaired issuer-backed headlines and their dashboard display are verified; the October 14–29 acquisition gap remains. Offchain backing and current exposures remain independently unverified; score carried unchanged. |
 | Liquidity & Exit | 7.0 | Nonzero primary caps and a sampled $5m Ethereum floor; legacy 200-bps metadata needs reconciliation with nested 50-bps results. No new execution or chain-local assurance; score carried unchanged. |
 | Dependencies | 6.0 | Named institutional set with meaningful role overlap and incomplete exposure weights. |
 | Contract & Admin | 5.5 | Immutable Ethereum token and 24-hour full-reach path, offset by no independent veto and bounded immediate roles. |
@@ -213,15 +210,13 @@ The six displayed axes average **6.4167**. Overall remains **6.5** under the exi
 
 ## Open measurements
 
-- Verify restored issuer ingestion against actual served observations, with issuer-reported labels, source clocks, onchain supply checks and coverage arithmetic. The archived feed has null backing and Reserve Fund headlines.
+- Independently corroborate offchain custody and allocation. Verified issuer ingestion, coverage arithmetic and onchain supply observations do not establish independently verified backing.
 - Reconstruct September 27 balances for six added EVM accounts and the second Solana wallet. Current coverage of 13 disclosed accounts does not complete this historical comparison.
 - Obtain an asset-level current split for loans, RWAs and derivatives notional if
   Ethena publishes one.
 - Reconcile top-level 200-bps and nested 50-bps fields, preserve route and
   cost conventions, and locate a crossing only where valid. Add material chain-local ladders.
-- Verify prospective resumption of backing history prospectively with an explicit source break; reject stale
-  fee-switch windows using wall-clock freshness, window endpoints and missing-data guards. Verify
-  actual served fields and consumer selection before calling reports/dashboard synchronized.
+- Retain the explicit source transition and October 14–29 acquisition gap as history resumes prospectively. A complete current 14-day fee-switch window is still required; fresh computation time does not validate missing observations or establish governance activation.
 - Walk newly enumerated deployments when target addresses are registered.
 
 The October 14–29 gap prevents a continuous current coverage trend. Restored issuer observations do not independently verify offchain coverage. The dated
@@ -232,6 +227,7 @@ and timestamps.
 
 | Date | Change |
 |---|---|
+| 2026-10-29 | Source-repair and dashboard-publication reconciliation: replaced pending-repair language with verified repaired ingestion, consumer selection and generated display; retained acquisition gap, issuer provenance, insufficient fee history and liquidity/execution limits. Scores, chain overrides and October 11 full-verification scope unchanged. |
 | 2026-10-29 | Targeted shared-evidence update: dated issuer coverage, stale history and fee-window correction, current oracle statistics, route/threshold limitations. All scores held; no new full verification. |
 | 2026-10-21 | Added the timestamped Ethena issuer API backing snapshot and separated it from independent producer verification. Scores held; full six-axis verification remains October 11. |
 | 2026-10-20 | Partial evidence update: recorded the LlamaRisk hourly overview HTTP 404 and null live coverage, October 19 peg and fee-switch checks, and the October 13 Risk Committee publication's September 30 composition and October 12 Reserve Fund sizing. Scores held pending restored live coverage; full six-axis verification remains October 11. |

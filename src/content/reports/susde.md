@@ -55,8 +55,8 @@ sUSDe is a yield-bearing claim on USDe. It has no independent reserve portfolio:
 Dependencies and Issuer inherit from the USDe assessment. Wrapper risk comes from its
 exchange rate, cooldown, secondary liquidity, administrative roles and use as leveraged collateral.
 
-At Ethereum block 26,296,428 (October 29 05:53:11 UTC), the vault held 1.194843340bn USDe against
-951.742305m shares, for 1.255427372 USDe per share. `totalAssets / totalSupply` matched
+At Ethereum block 26,296,767 (October 29 07:01:23 UTC), the vault held 1.194804931bn USDe against
+951.705615m shares, for 1.255435413 USDe per share. `totalAssets / totalSupply` matched
 `convertToAssets(1e18)` at the same block. The latest daily oracle sample, October 28 18:18:20 UTC,
 was 5.43bps below NAV; no sampled 30-day breach below -50bps was recorded. These are not executable prices.
 
@@ -69,7 +69,7 @@ an unresolved broad bracket; this does not support a trend claim against older r
 scores remain venue-inventory judgments. The historical 52.1% Aave/Morpho/Pendle concentration is
 not a current census against the newly measured share supply.
 
-This is a targeted October 29 evidence and rationale revision. The last full six-axis verification remains **October 11**. Authority observations retain their October 11 scope; no new role audit, execution test or settlement-latency measurement is claimed. The [dashboard](https://tidresearch.com/dashboards/?asset=susde) and this assessment share the archived source observations and route definitions described below; verification against repaired live inputs is pending. Verification of the repaired source and actual served dashboard inputs remains pending; local agreement alone does not establish synchronization.
+This is a targeted October 29 evidence and rationale revision. The last full six-axis verification remains **October 11**. Authority observations retain their October 11 scope; no new role audit, execution test or settlement-latency measurement is claimed. The [dashboard](https://tidresearch.com/dashboards/?asset=susde) and this assessment use the repaired source generation and selected route definitions described below. The source repair and dashboard publication were verified on **October 29 at 08:00:03.667 UTC** by executing the actual public renderer against freshly fetched public inputs. This verifies source ingestion, consumer selection and generated display labels; it is not independent custody verification or a visual browser review.
 
 The October 29 archived backing files have unavailable headline coverage, and their histories end **October 14**: USDe at **14:49:58 UTC** and sUSDe at **14:50:00 UTC**, with **2,180 rows each**. This gap cannot support current backing trends. The separate peg exports extend through **October 29 05:18:41 UTC**; the daily oracle statistics end **October 28 18:18:20 UTC**. Price observations do not verify backing or execution. The issuer snapshot is separately attributed evidence. The later served generation below restores issuer observations without filling the missing interval or independently verifying custody.
 
@@ -83,18 +83,18 @@ NAV, mean -5.21bps, latest -5.43bps and no sampled breach below -50bps. Its 715 
 contain only 31 distinct values and five two-to-three-hour gaps; this is not continuous market
 coverage or an executable-price distribution.
 
-| Measure at block 26,296,428 | Value |
+| Measure at block 26,296,767 | Value |
 |---|---:|
-| Shares outstanding | 951,742,304.5658604 |
-| `totalAssets()` | 1,194,843,340.0313458 USDe |
-| NAV | 1.2554273717783055 USDe/share |
-| USDe in cooldown silo | 9,293,742.649529113 |
+| Shares outstanding | 951,705,614.5658604 |
+| `totalAssets()` | 1,194,804,931.2529356 USDe |
+| NAV | 1.255435412974809 USDe/share |
+| USDe in cooldown silo (earlier block 26,296,428) | 9,293,742.649529113 |
 | Live cooldown | 1 day |
 | Contract maximum | 90 days |
 
-The vault observation was acquired October 29 05:53:28 UTC, block time 05:53:11 UTC. The same-block
+The vault observation was acquired October 29 07:01:37 UTC, block time 07:01:23 UTC. The silo balance is retained from the earlier block and is not a same-block balance. The same-block
 ratio check supports share accounting, not dollar backing. Valid nested share measurements exist
-despite null legacy share-supply fields in the archived feed; repaired summary wiring requires served verification.
+despite null legacy share-supply fields in the archived feed. The repaired share summary and its separate USDe-asset and NAV units have now been verified in the public dashboard.
 
 ## 2 · Backing — 6.5
 
@@ -217,7 +217,7 @@ At that block, sUSDe has **951,705,614.5658604 shares**, **1,194,804,931.2529356
 
 Both served backing histories retain their **2,180 original rows** and append **two acquired rows**, at **07:00:29 and 07:02:10 UTC**. The source transition is explicit; the interval from the October 14 endpoint remains missing. No history was interpolated or backfilled. The served fee-switch result is **insufficient_history**, with mean and milestone verdict unavailable. Two new samples cannot establish a trailing 14-day average, and governance activation remains independently unverified.
 
-These served payloads match the reviewed producer package. **End-to-end dashboard selection and display verification remains pending the dashboard verification**; file delivery does not close route, precision, execution or settlement limitations.
+The repaired public payloads match the reviewed producer package. The dashboard verification records the selected **USDe→USDC** quote clock as **October 29 00:10:21 UTC**, with the **200-bps headline ≥$5m floor** and separate **50-bps ≥$5m floor**. The selected **sUSDe→USDe** quote clock is **October 28 23:49:20 UTC**, with its **50-bps $1m–$10m unresolved bracket**; the legacy approximately $3.32m result remains **200 bps**. These quote clocks are separate from producer generation and issuer observation times. The published dashboard’s selected inputs and generated display were verified against the public code on **October 29 at 08:00:03.667 UTC**: issuer attribution, separate observation clocks and units, unknown allocation, explicit history breaks, unavailable fee-switch verdict and selected liquidity definitions are visible. This closes the source-repair and dashboard-publication checks, while route-definition, precision, execution and settlement limitations remain unresolved.
 
 ## Scoring Rationale
 
@@ -226,7 +226,7 @@ The six displayed axes average **6.4167**; the retained seven-component conventi
 | Axis | Score | Basis |
 |---|---:|---|
 | Stability / Peg | 6.5 | Tight NAV tracking and consistent accrual; ultimately exposed to USDe's changing portfolio. |
-| Backing | 6.5 | Equal to USDe; no independent reserve or cushion. October 29 issuer coverage is separately labelled; the archived feed has null headlines and backing history ending October 14. Score carried unchanged. |
+| Backing | 6.5 | Equal to USDe; no independent reserve or cushion. October 29 issuer coverage is separately labelled; repaired issuer-backed headlines and dashboard display are verified, with the October 14–29 acquisition gap retained. Score carried unchanged. |
 | Liquidity & Exit | 7.0 | Score carried unchanged pending reconciliation: selected 50-bps route has a broad $1m–$10m bracket, not a located crossing. One-day primary cooldown can rise to 90 days; complete stablecoin execution and L2 ladders remain unproven. |
 | Dependencies | 6.0 | Pure-wrapper equality with USDe. |
 | Contract & Admin | 5.5 | 24-hour full-reach path but no independent veto, bounded immediate restrictions, and weaker OFT legs. |
@@ -239,15 +239,14 @@ The six displayed axes average **6.4167**; the retained seven-component conventi
 - USDe live reserve-wallet coverage is complete at 13 of 13 disclosed accounts. Seven accounts
   still lack reconstructed September 27 balances, which limits the inherited historical comparison
   but not current monitoring.
-- Verify restored upstream issuer ingestion with explicit source labels and onchain supply checks. The archived LlamaRisk-backed hourly feed has null backing and Reserve Fund headlines.
+- Independently corroborate inherited offchain custody and allocation. Repaired issuer ingestion and verified dashboard display do not provide independent backing assurance.
 - Non-Ethereum executable ladders remain unmeasured.
 - Monad proposer remains unresolved.
 - Re-read Pendle balances and venues after the elapsed October 22 maturities; refresh concentration
   on a common denominator.
 - Reconcile selected sUSDe→USDe overlay versus base direct-USDC
   ladder, primary 50-bps versus legacy 200-bps outputs, and unresolved bracket precision.
-- Preserve the backing-history gap, expose stale fee-window endpoints and guards,
-  and verify actual served common inputs before claiming report/dashboard synchronization.
+- Preserve the October 14–29 backing-history gap and source transition. Obtain a complete current 14-day fee-switch window and authoritative activation evidence; the verified dashboard correctly withholds the current average and milestone verdict.
 
 Restored issuer observations do not independently verify inherited offchain coverage. Current fee-switch activation and complete-exit execution remain unverified.
 Issuer-reported and other dated measurements remain reportable with their scope and timestamps.
@@ -256,6 +255,7 @@ Issuer-reported and other dated measurements remain reportable with their scope 
 
 | Date | Change |
 |---|---|
+| 2026-10-29 | Source-repair and dashboard-publication reconciliation: replaced pending-repair language with verified repaired ingestion, consumer selection and generated display; retained acquisition gap, issuer provenance, insufficient fee history and liquidity/execution limits. Scores, chain overrides and October 11 full-verification scope unchanged. |
 | 2026-10-29 | Targeted shared-evidence update: same-block vault/NAV, realized growth and oracle marks; inherited issuer/source gap; stale fee-switch and elapsed maturity corrections; selected liquidity bracket and execution limits. All scores and chain overrides held. |
 | 2026-10-21 | Added inherited, timestamped Ethena issuer API coverage while retaining the independent producer gap. Scores held; full six-axis verification remains October 11. |
 | 2026-10-20 | Partial evidence update: refreshed vault state, NAV growth and oracle discount; recorded inherited USDe live backing outage and the October 12 Risk Committee coverage reading. Scores held; full six-axis verification remains October 11. |
