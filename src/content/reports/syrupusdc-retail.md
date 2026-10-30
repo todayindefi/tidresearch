@@ -24,7 +24,7 @@ underlying_score: 5.5
 liquidity_score: 7.0
 issuer_score: 5.5
 overall_score: 6.5
-# Financial review: 2026-10-29; authority walk: 2026-09-06; assurance: 2026-10-03.
+# Financial update: 2026-10-30; assessment basis: 2026-10-29; authority walk: 2026-09-06; assurance: 2026-10-03.
 # Legacy redemption_score remains evidence for Liquidity & Exit, not a seventh displayed axis.
 # PARKED: issuer recourse/principals/entity-financial-audit inputs need review; 5.5 carried from riskAnalyst [owner: riskAnalyst] [since: 2026-10-13]
 ---
@@ -33,11 +33,11 @@ overall_score: 6.5
 
 **Moderate-to-low risk · 6.5/10**
 
-Assessed October 29, 2026. syrupUSDC is a USDC-denominated share in Maple’s institutional credit and non-credit strategies. Yield accrues into NAV; credit losses, collateral/custody failure, strategy losses or underlying-token disruption can reduce value. It is not a $1 stablecoin. [syrupUSDT](/reports/syrupusdt/) shares governance and overlapping borrowers, not independent diversification.
+Assessment basis: October 29, 2026; financial update: October 30. syrupUSDC is a USDC-denominated share in Maple’s institutional credit and non-credit strategies. Yield accrues into NAV; credit losses, collateral/custody failure, strategy losses or underlying-token disruption can reduce value. It is not a $1 stablecoin. [syrupUSDT](/reports/syrupusdt/) shares governance and overlapping borrowers, not independent diversification.
 
-The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) shows current conditions; this report interprets the **same selected sources and definitions** over time. The public [backing feed](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json) provide the shared financial inputs. Source clocks differ; the assessment uses an archived selected generation. This assessment uses the selected **01:49:29 UTC** source, not an independently substituted newer financial series.
+The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) shows current conditions; this report interprets the **same selected sources and definitions** over time. The public [backing feed](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json) provide the shared financial inputs. Source clocks differ. The historical October 29 assessment uses the selected **01:49:29 UTC** generation; the separate October 30 financial update below retains its own source clocks. The historical series has not been rebased to the newer spot observations.
 
-This is a **targeted financial and dependency revision**, not a fresh authority or contract audit. Published last_verified remains September 6; last_revised is October 29. The source internal assessment retains its separate October 13 verification date. Authority observations remain September 6 and component assurance October 3. No USDC-specific new route/hook verification, executed exit or primary-latency measurement is claimed.
+This is a **targeted financial and dependency revision**, not a fresh authority or contract audit. Published last_verified remains September 6; last_revised is October 30. The source internal assessment retains its separate October 13 verification date. Authority observations remain September 6 and component assurance October 3. No USDC-specific new route/hook verification, executed exit or primary-latency measurement is claimed.
 
 ## Financial update — October 30, 2026
 
@@ -51,21 +51,23 @@ Maple's [CCIP 2.0 rollout](https://maple.finance/insights/syrupusd-assets-are-up
 
 **Scores remain unchanged.** Thin cash and unresolved custody/collateral, bridge and execution assurance remain material. The dated sections below retain their original financial snapshots and historical statistics; the October 30 observations above supersede their spot balances, cash and queue descriptions. Authority and assurance dates are unchanged.
 
+**Historical assessment basis — October 29, 2026.** The six axis sections below retain that assessment’s dated snapshot and history windows. October 30 spot assets, cash, queue and quotes are shown in the financial update above; the older figures below are not current balances.
+
 ## 1 · Stability — 8.5
 
-The selected price series remains CoinGecko market against **peg_theoretical_price** from the backing history. Accounting NAV and the separate peg-history export do not replace that reference. At the selected snapshot the indicative discount is **−11.52bps**. The month has **701 valid paired observations** from **719 hourly samples**, mean **−8.72bps**, range **−48.35 to +15.55bps**. Latest-week paired mean is **−12.31bps**. All retained accounting observations report zero recognized unrealized losses; that does not independently validate custody or lifetime loss performance.
+The selected price series remains CoinGecko market against **peg_theoretical_price** from the backing history. Accounting NAV and the separate peg-history export do not replace that reference. At the October 29 snapshot the indicative discount was **−11.52bps**. The month has **701 valid paired observations** from **719 hourly samples**, mean **−8.72bps**, range **−48.35 to +15.55bps**. Latest-week paired mean is **−12.31bps**. All retained accounting observations report zero recognized unrealized losses; that does not independently validate custody or lifetime loss performance.
 
 **Stability stays 8.5.** Observed secondary deviations remain small relative to the accruing NAV; the classification change does not alter price behavior or create a new stablecoin peg. These samples do not prove executable prices, exact time at an extreme or behavior between observations. No 90-day conclusion is drawn from ~30 days of retained data. Sustained material discounts, impairment or a new loss channel can warrant immediate review without waiting for an average to deteriorate.
 
 ## 2 · Backing — 6.5
 
-Canonical pool assets are **$949.13M**. All **33** manager positions sum to **$934.87M principal**, matching principalOut with **zero residual**. This verifies enumeration, not off-chain collateral or recovery value.
+At the October 29 **01:49:29 UTC** snapshot, canonical pool assets were **$949.13M**. All **33** manager positions sum to **$934.87M principal**, matching principalOut with **zero residual**. This verifies enumeration, not off-chain collateral or recovery value.
 
 Version **issuer_economic_usdc_v1_2026-10-29** now identifies **24 credit records / $898.72M**, **nine non-credit strategy records / $36.15M** and no unknown principal in this snapshot. Credit requires the exact reviewed issuer loan address and matching borrower; strategies require exact address/borrower and matched metadata. Unknown/new/mismatched rows remain unknown. The sole changed membership is **$5 USDtb**, moved from the legacy heuristic loan bucket to Treasury strategy. That is a definition improvement, not economically meaningful diversification or a reason to change a score. Prior rows were not relabelled into a continuous new economic series.
 
 **25/33 rows have numeric collateral valuations**, covering **94.28% of all principal and 96.27% of classified credit principal**. Credit priced principal is **$865.22M / $898.72M**; a **$33.5M WBTC valuation remains missing**, so full-credit collateral ratio is explicitly unavailable. Object presence or numeric availability is not independent custody, loan allocation, liquidation value or enforcement assurance.
 
-Available row collateral sums to **$1,103.83M**, versus a **reported $1,612.24M aggregate / 172.46% ratio**. The dashboard uses the reported aggregate as its current measure; this report does not silently substitute a row-sum ratio as a new solvency metric. Scope, allocation and observation clocks remain unreconciled. Accounting PCR 100% checks agreement of vault components against totalAssets, not the amount held by each off-chain custodian.
+Available row collateral sums to **$1,103.83M**, versus a **reported $1,612.24M aggregate / 172.46% ratio**. The October 29 dashboard input used the reported aggregate; this report does not silently substitute a row-sum ratio as a new solvency metric. Scope, allocation and observation clocks remain unreconciled. Accounting PCR 100% checks agreement of vault components against totalAssets, not the amount held by each off-chain custodian.
 
 **Seven material low collateral readings cover $355M of credit principal**. A direct below-par diagnostic also catches a separate **$5 USTB dust position**; it is not an eighth material credit-health incident. The field investigation materially narrows the ambiguity: issuer figures appear consistent with GraphQL **assetAmount**, while the producer values **currentAssetAmount** at its retained prices and scales. The report does not choose either field as recovery truth. Matched loan/custodian allocation and the meaning of the quantities remain unresolved. Zero recognized losses and zero impairment/call/default flags do not prove that low readings are artifacts; the low readings alone do not establish a proved shortfall or a loss amount.
 
@@ -79,11 +81,11 @@ The accessible [Network Firm summary](https://dashboard.ledgerlens.io/c/maple) i
 
 The canonical source remains **KyberSwap / Ethereum / sell to USDC / market-sized notional**. The actual served merge preserves that exact exit_mark beside the venue-only inventory. The supplemental source investigation does not replace the ladder with a new quote provider, NAV anchor, par-cost series or venue TVL.
 
-At **$250K**, selected quote **01:33:04 UTC** has **−7.60bps baseline-relative impact** and **−5.95bps all-in signed return versus market notional**. These answer different questions; neither is full cost versus NAV. The stable-valued **50bps depth is a ≥$1M floor**, ladder_exhausted, not an exact crossing. The separate 200bps field is not the primary threshold.
+At **$250K**, the October 29 quote at **01:33:04 UTC** had **−7.60bps baseline-relative impact** and **−5.95bps all-in signed return versus market notional**. These answer different questions; neither is full cost versus NAV. The stable-valued **50bps depth is a ≥$1M floor**, ladder_exhausted, not an exact crossing. The separate 200bps field is not the primary threshold.
 
-Retained history now has **220 distinct successful quotes per institutional rung over 27.52 days**. The $250K all-in median is **−7.83bps**, IQR **3.18bps**; the $1M median is **−12.65bps**, IQR **3.16bps**. Maximum retained quote gap is six hours. Count, duration and quoted-cost quality requirements for considering 7.5 are met, but a successful quote is not a trade, a failure-rate denominator or a primary fill-latency distribution.
+The archive ending October 29 has **220 distinct successful quotes per institutional rung over 27.52 days**. The $250K all-in median is **−7.83bps**, IQR **3.18bps**; the $1M median is **−12.65bps**, IQR **3.16bps**. Maximum retained quote gap is six hours. Count, duration and quoted-cost quality requirements for considering 7.5 are met, but a successful quote is not a trade, a failure-rate denominator or a primary fill-latency distribution.
 
-Current cash-plus-interest free liquidity is **$14.26M / 1.50%**, with **$11.57M immediately held pool USDC**. The latest week has **168 hourly samples**, cushion median **1.34%**, **164/168 below 2%**. Month median is **1.69%**. A larger cash observation than yesterday does not establish a durable buffer improvement; it does not measure DEX capacity or guarantee primary processing speed. The current queue is empty with a recent fill, but neither queue pointers nor last-fill age measure a request-to-fill distribution.
+At the October 29 **01:49:29 UTC** snapshot, cash-plus-interest free liquidity was **$14.26M / 1.50%**, with **$11.57M immediately held pool USDC**. The week ending at that snapshot has **168 hourly samples**, cushion median **1.34%**, **164/168 below 2%**. Month median is **1.69%**. That dated cash observation did not establish a durable buffer improvement; it does not measure DEX capacity or guarantee primary processing speed. The queue was empty with a recent fill at the October 29 snapshot. That observation is superseded by the October 30 queue reading above; neither queue pointers nor last-fill age measure a request-to-fill distribution.
 
 [Maple’s legal disclosure](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks) describes liquidity-dependent FIFO withdrawals, a claimed sub-24h average and no guaranteed maximum. The earlier five-minute claim has not been independently timed at size. Cross-chain token enumeration and syrupUSDT’s exact zero-hook pool finding do not establish USDC’s route controls, local executable exits, fills or settlement.
 
@@ -91,11 +93,11 @@ Current cash-plus-interest free liquidity is **$14.26M / 1.50%**, with **$11.57M
 
 ## 4 · Dependencies — 5.5
 
-Current producer concentration declares explicit exact membership. All-position **$934.87M** has **top-1 21.39%, top-3 51.88%, top-5 72.91%, HHI 1290**, across **17 addresses**. Classified credit **$898.72M** has **top-1 22.25%, top-3 53.97%, HHI 1388**, across **15 addresses**. Addresses are not independently identified firms. The source’s reviewed economic labels do not establish independent counterparties, custodians or security control.
+The October 29 producer snapshot declared explicit exact membership. All-position **$934.87M** has **top-1 21.39%, top-3 51.88%, top-5 72.91%, HHI 1290**, across **17 addresses**. Classified credit **$898.72M** has **top-1 22.25%, top-3 53.97%, HHI 1388**, across **15 addresses**. Addresses are not independently identified firms. The source’s reviewed economic labels do not establish independent counterparties, custodians or security control.
 
 Credit collateral labels are **BTC 79.87%, WBTC 3.73%, XRP 10.75%, ETH 5.65%**. BTC-linked principal remains **83.60%**. The $5 membership correction cannot explain meaningful risk improvement; contraction/composition and the definition break must be separated before trend claims. There is no continuous comparable borrower/custody/valuation history in the export.
 
-Both family books now have declared per-pool economic versions. On **$1,247.63M all-position principal**, family top-1/top-3/top-5 are **16.03% / 43.03% / 59.06%**, HHI **938**. On **$1,113.77M classified-credit principal**, they are **17.96% / 48.20% / 66.15%**, HHI **1111**. The earlier mixed legacy-USDC/versioned-USDT label is superseded for this current snapshot; it remains true of the old archive, not a reason to relabel history. Issuer/metadata membership is still not independently verified economic/custody allocation, and incomplete family credit collateral ratios remain unavailable.
+At the October 29 family snapshot, both books had declared per-pool economic versions. On **$1,247.63M all-position principal**, family top-1/top-3/top-5 are **16.03% / 43.03% / 59.06%**, HHI **938**. On **$1,113.77M classified-credit principal**, they are **17.96% / 48.20% / 66.15%**, HHI **1111**. The earlier mixed legacy-USDC/versioned-USDT label is superseded for this current snapshot; it remains true of the old archive, not a reason to relabel history. Issuer/metadata membership is still not independently verified economic/custody allocation, and incomplete family credit collateral ratios remain unavailable.
 
 **Dependencies stays 5.5.** Concentrated BTC-linked collateral, common keys/custody channels and overlapping borrowers remain load-bearing. Exact address labels remove a definition gap without establishing diversification or a new independent risk layer; the updated concentration level does not warrant an additional half-point move. Collateral-field uncertainty is assessed on Backing rather than charged a second time here. Reopen for verified new counterparty/custody linkage, materially changed exposure or a resolved economic classification that changes the actual population rather than metadata alone.
 
@@ -105,7 +107,7 @@ The pools share MapleGlobals, governor, securityAdmin and permission infrastruct
 
 **Contract & Admin stays 4.5.** The **October 3 component-assurance work** does not prove full audited-build-to-live-bytecode assurance. Historical bounty and audit scope are not re-dated by this financial review and cannot offset surviving privileged paths. The USDT exit-pool zero-hook result is not a USDC pool finding. No new USDC route/hook audit, executable swap or Maple role walk was performed.
 
-All **nine declared USDC networks** now return supply observations: Ethereum, Solana, Arbitrum, Base, Monad, Ink, Tempo, Robinhood and Arc. Canonical Ethereum shares include bridge locks; remote tokens are representations. Additive totals, chain-resident percentages and reconciliation ratios stay unavailable/incomplete. Successful asynchronous token reads do not prove current bridge locks/liabilities, replacement-pool authority, migration completeness or in-flight settlement. Supply enumeration adds coverage information, not executable exits or control assurance.
+The October 29 supply observations covered all **nine declared USDC networks**: Ethereum, Solana, Arbitrum, Base, Monad, Ink, Tempo, Robinhood and Arc. Canonical Ethereum shares include bridge locks; remote tokens are representations. Additive totals, chain-resident percentages and reconciliation ratios stay unavailable/incomplete. Successful asynchronous token reads do not prove current bridge locks/liabilities, replacement-pool authority, migration completeness or in-flight settlement. Supply enumeration adds coverage information, not executable exits or control assurance.
 
 ## 6 · Issuer — 5.5
 
@@ -136,7 +138,7 @@ Backing **2026-10-29T01:49:29Z**; collateral **2026-10-29T01:48:45Z**; quote **2
 
 Month window **2026-09-29T02:45:03Z–2026-10-29T01:49:29Z**. Newest row per UTC hour; unweighted sample means/empirical quantiles. Market/reference NAV uses peg_market_price / peg_theoretical_price, not accounting nav. The 90-day request has only this retained 29.96-day window. Samples do not establish exact stress duration or intrahour behavior.
 
-| Ethereum market-sized sell | Latest impact (bps) | Latest all-in signed return (bps) | Retained all-in median / IQR (bps) | Successful distinct quotes / elapsed days |
+| Ethereum market-sized sell | October 29 impact (bps) | October 29 all-in signed return (bps) | Retained all-in median / IQR (bps) | Successful distinct quotes / elapsed days |
 |---|---:|---:|---:|---:|
 | $150,000 | -5.90 | -4.26 | -5.90 / 3.48 | 220 / 27.52 |
 | $250,000 | -7.60 | -5.95 | -7.83 / 3.18 | 220 / 27.52 |
@@ -145,7 +147,7 @@ Month window **2026-09-29T02:45:03Z–2026-10-29T01:49:29Z**. Newest row per UTC
 
 Impact is slippage_bps versus the smallest $1K venue rung; all-in return is (fill_ratio−1)×10,000 versus market-sized notional. Negative means cost. Neither is full loss versus NAV. Source identity stays KyberSwap / Ethereum / USDC / market anchor; quotes are deduplicated by measured_at, not producer runs. Success-only history has no failure denominator and proves neither fills nor primary latency. Primary 50bps depth is a ≥$1M floor, ladder_exhausted, not an exact crossing.
 
-| Current address concentration | All positions | Classified credit |
+| October 29 address concentration | All positions | Classified credit |
 |---|---:|---:|
 | Principal denominator | $934.87M | $898.72M |
 | Addresses | 17 | 15 |
@@ -169,6 +171,8 @@ Overall **6.5** is held. The six displayed axes average **6.25**; the retained l
 - Preserve the economic-definition boundary and source clocks. Do not manufacture per-loan valuation/custody/borrower histories or replace canonical financial sources to fill a gap.
 
 ## Revision history
+
+- **2026-10-30 — Financial update and snapshot chronology.** Refreshed spot assets, direct cash versus accrued interest, queue observations, quotes and dependency notes. Historical axis figures and quote/history windows retain their October 29 basis and are explicitly distinguished from the October 30 update. Numeric scores, production status and verification/authority/assurance dates unchanged.
 
 - **2026-10-29 — BM-led common-source assessment.** Exact versioned address membership, nine-chain observation scope and retained source/history package accepted after replay. All scores held after explicit axis review. Retired stale unreviewed-classification and mixed-current-family claims; amount-field/custody, bridge, executable exits and primary latency remain unresolved. No fresh Maple role/code or USDC hook audit performed.
 - **2026-10-28 — Prior common-source review.** Its financial magnitudes are historical; the earlier immutable evidence archive remains retained.
