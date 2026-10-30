@@ -8,35 +8,12 @@ peg_mechanism: "crypto-overcollateralized"
 assessment_type: "full"
 date: "2026-06-07"
 last_verified: "2026-08-29"
-# ⚠️ 2026-09-08 re-measured supply and all eight facilitator levels (identical
-# to the wei) and added which direction the mint caps bind. `last_verified`
-# HOLDS — the GSM, audit and issuer material was not re-read.
-last_revised: "2026-09-08"
+last_revised: "2026-10-30"
 featured: false
 production: true
 issuer: "Aave DAO"
 audited_reserves: false
 market_cap_approx: 699000000
-# SIX-AXIS CORE — Stability · Backing · Liquidity & Exit · Dependencies ·
-# Contract & Admin · Issuer. Order matches the dashboards exactly.
-# ⚠️ Two axes ADDED by riskAnalyst's internal pass (83d64e7); NO existing score
-# moved, and this page reflects their analysis rather than re-deriving it:
-#   underlying_score 6.0 renders as DEPENDENCIES. GHO's dependencies concentrate
-#     in Aave itself — pool, collateral basket and all eight facilitators are
-#     Aave-governed. ⚠️ That is not diversification; it is ONE mature
-#     counterparty. Docked for 44.3% of supply in a single facilitator, above
-#     the 25% single-name line. ⚠️ The seized GSMs and zeroed PegKeeper are
-#     scored in Stability and DELIBERATELY NOT re-punished here — same failure,
-#     counted once.
-#   structural_score 6.0 renders as CONTRACT & ADMIN. Targeted `hasRole` checks
-#     settled what enumeration could not: the deployer EOA holds DEFAULT_ADMIN
-#     on NEITHER the 310M facilitator nor the token; the Aave Governance v3
-#     Executor holds it on BOTH. ⚠️ A NARROWING, NOT A CLEARANCE — three bounds
-#     are on the page and must not be dropped: "the executor holds it" is not
-#     "only the executor holds it" (getRoleMemberCount reverts); DEFAULT_ADMIN
-#     GRANTS the mint role rather than being it; and impl/admin reading 0x0 on
-#     8,046 bytes is NOT immutability — the upgrade path is simply not where it
-#     is normally found and has not been located.
 axis_frame: six
 peg_mechanism_score: 5.5
 backing_score: 6.0
@@ -51,135 +28,111 @@ overall_score: 5.5
 
 **Moderate risk · 5.5/10**
 
-## What this actually is
+[Live dashboard](https://tidresearch.com/dashboards/?asset=gho)
 
-GHO is Aave DAO's overcollateralized stablecoin. It is minted by a set of authorised **facilitators**, each with a governance-set cap — a "bucket" — that bounds how much GHO it may issue. Supply is **699,000,000.00** across eight facilitator levels.
+## Summary
 
-⚠️ **Two things dominate this report and neither is about collateral quality.** The peg's defence mechanism is wound down (axis 1), and **44.3% of supply is minted by a contract whose authorised callers cannot be listed from chain state** (axis 5).
+GHO is Aave DAO’s dollar-targeting stablecoin, issued through authorized facilitators with capacity buckets. Issuance routes, collateral claims, wrapper inventory and holder exits have different economic scopes.
+
+At the October 30 authority pin, the **2-of-3 Risk Council can increase the mainnet direct facilitator’s bucket and then mint without a DAO payload or execution timelock**. The DAO’s separate one-day delay and guardian cancellation do not gate that Council route. Current registry-discovered RemoteGSMs differ from the legacy seized modules; their presence does not itself establish an executable par exit or independently realizable backing.
+
+This is a targeted October 30 authority and architecture revision, not a new full verification. **Last verified remains August 29. Contract & Admin 6.0 is a historical rating, pending current reassessment; it is not newly endorsed.** The current authority findings are accepted with gaps; deployed-component code-risk review, full financial assessment and live execution remain incomplete.
 
 ## 1 · Stability — 5.5
-**Reference: a $1 par target.** ⚠️ **The mechanism that would defend it is wound down.**
 
-**Both of Aave's mainnet GHO Stability Modules are seized** — first verified on-chain **2026-08-13**, re-verified unchanged **2026-08-30**:
+GHO targets one dollar through lending repayment, facilitator issuance and stability-module mechanisms. Their effectiveness depends on current module configuration, available inventory and holder-specific execution.
 
-```
-0x0d8eFfC11dF3F229AA1EA0509BC9DFa632A13578   getIsSeized() TRUE   getIsFrozen() FALSE
-   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 = USDC
-0x686F8D21520f4ecEc7ba577be08354F4d1EB8262   getIsSeized() TRUE   getIsFrozen() FALSE
-   GHO 0.0 · exposureCap 0 · UNDERLYING_ASSET() 0xdAC17F958D2ee523a2206206994597C13D831ec7 = USDT
-GHO PegKeeper 0x53876B157DeCf04389eEd66c7C29d73863f8C50b   debt() 0.00
-```
+GHO’s current registry-discovered RemoteGSMs are distinct from the previously seized legacy GSMs. Current Ethereum modules are:
 
-⚠️ **Note how each module's identity is established: by reading `UNDERLYING_ASSET()`, not by trusting its name.** Same discipline as axis 5 below, and for the same reason — **on this asset, labels have already proven the least reliable thing on the contract.**
+| Underlying wrapper | Current module | Frozen / seized at authority pin |
+|---|---|---|
+| waEthUSDC | `0x3A3868898305f04beC7FEa77BecFf04C13444112` | false / false |
+| waEthUSDT | `0x882285E62656b9623AF136Ce3078c6BdCc33F5E3` | false / false |
 
-⚠️ **`seized = true` alongside `frozen = false` is the signature of a wind-down, not a pause pending restart.** Freezing halts a module you intend to restart; **seizure is the GSM's terminal emergency action.** Neither module can swap GHO against USDC or USDT, **so the mechanism that would arbitrage a sub-$1 GHO back toward par is not available.**
+The authority review reported approximately **0.029227 USDC-wrapper units** and **24,396,388.692988 USDT-wrapper units** available in these modules. Wrapper units are not verified dollar exit capacity. Live module identity and unfrozen getters do not prove an executable holder swap, sufficient inventory at size or complete peg defence. Older legacy seizure and PegKeeper observations remain dated history, not current fleet-wide absence claims.
 
-**Unchanged since 2026-08-13 is the more useful fact than either reading alone.** A module seized today could be mid-incident; **one that has held seized, unfrozen, empty and capped at zero for weeks is behaving like a decommissioned component** — which makes this an observation rather than an inference.
-
-**And Curve's Emergency DAO set the GHO PegKeeper debt ceiling to 0**, so that keeper can neither mint nor burn and contributes nothing in either direction. ⚠️ **What has not stopped: the GHO/crvUSD pool still exists and still provides DEX depth.** **What ended is its role as a defence mechanism, not its role as liquidity** — see axis 3.
-
-**The two facts connect legibly:** with no functioning GSM there is no reliable route from sub-par GHO back to $1, **so a PegKeeper accumulating GHO would have been holding something it could not exit.** The reported trigger for the GSM impairment is the April 2026 rsETH bridge exploit.
-
-⚠️ **Sourcing, because these have different standing.** The seizure states and the zero ceiling are **direct on-chain reads.** **The Curve governance action itself is reported rather than read** — the Emergency DAO decision, its date and ID remain unverified, since `gov.curve.finance` returns HTTP 403 from two separate environments. See the [crvUSD report](/reports/crvusd/).
+The selected common backing source records a $0.99850861 mark, but its upstream price timestamp is unavailable; the source write time does not establish mark freshness. No current peg-performance upgrade or downgrade is inferred. The historical mechanism rating remains 5.5 pending the complete financial review. Current module identities do not support a blanket claim that mainnet peg defence is absent.
 
 ## 2 · Backing — 6.0
-**GHO is overcollateralized and minted against Aave's collateral basket**, with each facilitator bounded by a governance-set bucket. **The reconciliation works:** eight facilitator levels sum to **699,000,000.00** against a `totalSupply` of **699,000,000.00** — **zero delta.**
 
-⚠️ **Supply is frozen, not merely slow, and every level is identical to the 2026-08-13 read. Not approximately — exactly.**
+The selected common backing source at Ethereum block **26,303,132**, October 30 04:18:59 UTC, reconciles **699m origin GHO supply** to facilitator levels. It records **239m** in lending routes, **310m** mainnet direct-facilitator allocation and **150m** origin allocations associated with three remote reserves. These describe issuance routes, not independently realizable collateral. Remote representations are not added to origin supply.
 
-```
-2026-08-13   699,000,000.00   (the preceding week had run +7.7%)
-2026-08-30   699,000,000.00   +0.0%
-2026-09-08   699,000,000.00   +0.0% — every facilitator level identical to the wei
-```
+TokenLogic’s dated pro-rata collateral model and remote reserve accounting reconciliation do not establish a complete, same-time, realizable-dollar backing ratio. The selected independent coverage fields remain null. Module-held wrapper inventory, outstanding loans, idle GHO and remote allocations cannot be added as independent backing without eliminating internal claims. A GSM-labelled allocation is not proof of fiat-stablecoin backing swapped at par.
 
-**A growth rate that went from +7.7% in a week to exactly zero, and has held there since 2026-08-13, is a state change rather than a slowdown.** **65.8% of supply sits at hard caps**, so a substantial part of the float is structurally unable to expand without governance raising ceilings.
-
-⚠️ **Which direction the cap binds decides how to read that 65.8%.** A facilitator at capacity cannot **mint**. So the leg the caps constrain is the defence against GHO trading **above** par — the arbitrage that mints fresh GHO into a premium and sells it back toward $1. **GHO trades at $0.998702, which is 0.13% *below* par**, so that is not the leg under load today.
-
-**Below par the correcting trade is a different one: buy GHO under $1 and repay debt at face value.** It does not touch a facilitator bucket and works whatever the ceilings say. ⚠️ **So "65.8% at hard caps" is not an active peg failure** — and a reader meeting that figure next to "no functioning GSM" will reasonably conclude that it is. **It is a latent, one-sided constraint, and clearing it needs a governance vote: the vote is the exposure, not the cap.**
-
-⚠️ **That is not a reassurance, because both legs are impaired and only one of them is being tested.** Upward correction is throttled by the caps. Downward correction lost its reliable route when both Stability Modules were seized, leaving borrower repayment — which depends on there being borrowers who want to repay. **The leg currently under load is the impaired one without a mechanism behind it.**
-
-⚠️ **And the caps cut both ways for a holder, which is why they do not move this axis alone.** Caps that bind are a constraint on uncontrolled issuance, and equally a constraint on the asset's ability to meet demand.
+No verified backing shortfall or new loss is established by this authority package. Equally, source reconciliation is not proof of solvency. Backing 6.0 is historical, pending financial assessment. Current GSM identities are established; economic coverage and execution gaps remain.
 
 ## 3 · Liquidity & Exit — 6.0
-**Both exit paths, and the axis takes the worse one.** ⚠️ **The binding leg here is the PRIMARY route, and it closed** — stated explicitly so the axis does not read as a comment on depth.
 
-**Primary — the fixed-price swap is gone.** A GSM let a holder swap GHO against USDC or USDT at a fixed price. **Both modules are seized with `exposureCap` at zero** (axis 1), so **that route is not available at any size.** What remains on the primary side is repaying an Aave borrow position, which is only an exit for someone who minted.
+Current module discovery corrects the earlier architecture description; it is not a new executed exit measurement. Primary eligibility, wrapper redemption, module direction/capacity/fees and secondary trade execution remain separate checks. Market-notional quote proceeds are not par-redemption proceeds, and venue TVL is not executable depth. No universal legal holder right to redeem GHO for one dollar is established here.
 
-**Secondary — intact.** The GHO/crvUSD pool still exists and still provides DEX depth. ⚠️ **The PegKeeper's zeroed ceiling ended its role as a defence mechanism, not the pool's role as liquidity**, and conflating the two would understate the exit.
+Monad and Plasma have material reserve/module usage at distinct October 30 chain pins: Monad used **47.20m of a 50m GHO entity limit**, Plasma **43.02m of 50m**. Those limits differ from **49m wrapper-unit exposure caps**. Idle reserve GHO supports a different swap direction and is not automatically dollar liquidity for GHO sellers. September’s near-unused Monad observation is superseded. Local holder execution and settlement remain unverified.
 
-⚠️ **So the shape is: a working secondary market and a closed primary one.** For a holder who did not mint, **a DEX is now the exit**, and the fixed-price backstop that would have bounded its worst case is not there.
+For GHO borrowers, market availability, repayment-token acquisition, interest, collateral oracle values and liquidation permissions determine practical exit risk. A GHO discount does not by itself establish a safe or executable repayment route.
 
 ## 4 · Dependencies — 6.0
-⚠️ **GHO's dependencies concentrate in Aave itself, and that is not diversification — it is one mature counterparty.** The lending pool, the collateral basket and **all eight facilitators are Aave-governed.** A governance failure or a protocol-level incident reaches every leg at once.
 
-⚠️ **Docked specifically for concentration inside that: 44.3% of supply sits in a single facilitator**, above the 25% single-name line this coverage applies elsewhere.
+Dependencies include the Aave lending/oracle/liquidation stack, stablecoin issuers and their wrappers, and CCIP/remote-chain infrastructure. The largest facilitator’s **310m / 699m = 44.35%** is issuance concentration, not a collateral allocation. Different facilitators under shared ecosystem controls do not establish independent counterparty diversification.
 
-⚠️ **The seized GSMs and the zeroed PegKeeper are scored under axis 1 and are deliberately NOT re-punished here.** Same failure, counted once. **A reader comparing this axis against the peg axis should not read the 6.0 as disagreement — it is the absence of a double-count.**
-
-**What the concentration is not:** the counterparty is a long-lived, heavily audited protocol with public governance, which is why this axis sits at 6.0 rather than lower. **The finding is that there is one of it.**
+The current dependency review retains 6.0 with incomplete per-reserve oracle and downstream mapping disclosed. The Council minting authority belongs under Contract & Admin; it does not create an additional independent dependency. The six measured/identified paths are not an exhaustive inventory or an additive portfolio.
 
 ## 5 · Contract & Admin — 6.0
-⚠️ **The largest facilitator is not what its label says.**
 
-It holds **310,000,000 GHO — 44.3% of all supply** — and is labelled **"GhoDirectFacilitator GSMs Mainnet"**. That name implies a GHO Stability Module: fiat-stable collateral swapped at a fixed price, the arrangement that makes a large minting bucket comfortable to reason about. **Its bytecode implements no such thing.** Selectors enumerated from the deployed contract at `0xE9ac5231…27d2`:
+At Ethereum block **26,304,162**, October 30 **07:45:11 UTC**, the **2-of-3 Risk Council** is a MINTER_ROLE holder on mainnet direct facilitator `0xE9ac5231fAecb633dA0Fe85Fcb2785b8363427d2`. Its bucket was full at **310m GHO level / 310m capacity**. The same Council can use the bucket steward to raise capacity and then mint to an arbitrary recipient without a DAO payload or execution timelock.
 
-```
-PRESENT   GHO_TOKEN() · mint(address,uint256) · burn(uint256) · AccessControl roles
-ABSENT    GSM() · gsm() · getGsmList() · UNDERLYING_ASSET() · POOL() · VAULT()
-ABSENT    getRoleMember() · getRoleMemberCount()
-```
+The authority producer’s stateful local fork increased capacity from **310m to 620m**, then minted **one wei to the existing reserve**. Supply and reserve balance each rose by one wei. Increasing beyond twice current capacity, decreasing capacity and repeating an update inside the cooldown reverted. No forward time jump was used. The arbitrary-recipient conclusion comes from matched source permissions; the demonstrated recipient was the reserve. The accepted evidence consists of archived proofs and hashes; the fork was not independently repeated for this report. The actor was impersonated on the local fork, not signed on the public network.
 
-**Every GSM accessor is missing**, and ⚠️ **the last line matters most: without `getRoleMember()` or `getRoleMemberCount()`, the addresses holding the mint role cannot be listed from chain state at all.** **So: 44.3% of GHO is minted by a role-gated contract whose authorised callers cannot be enumerated on-chain.**
+**310m additional headroom is the next eligible increase, not a lifetime ceiling.** Subsequent increases require more than 86,400 seconds between updates and can expand capacity again. A full bucket therefore does not provide a durable barrier against this Council path. This is a permission consequence, not evidence of key compromise, unauthorized issuance or realized loss.
 
-### What targeted checks did settle
+The Council also has guardian paths on three lending direct minters. Those mint into configured pools rather than an arbitrary Council-selected recipient. Their reach is different from the mainnet direct facilitator and must remain separate.
 
-⚠️ **Enumeration reverts, but `hasRole` answers. Measured 2026-08-30:**
+**Admin and access control.** The authority producer reconstructed Ethereum role histories for eight contracts, checked 37 historical-holder memberships and 14 transaction receipts, and validated the staged topology. The reconstruction still relies on indexer completeness; receipt checks validate returned events, not absence of omitted events.
 
-```
-hasRole(DEFAULT_ADMIN_ROLE, X)      310M facilitator     GHO token
-  Aave Governance v3 Executor L1          TRUE               TRUE
-  0x3765a685… (the deployer EOA)          false              false
-  GHO token (negative control)            false                —
-```
+The material constraint is the verified **undelayed 2-of-3 Council core mint route**, not merely a bounded reserve parameter path. Ordinary DAO paths have a currently enforced **one-day execution floor** under the matched controllers; the seven-day level-2 configuration is not the governing delay for these GHO paths. Controllers are upgradeable and roles can be regranted, so that floor is mutable.
 
-✅ **The deployer EOA holds `DEFAULT_ADMIN` on neither.** ✅ **The Aave DAO executor holds it on both**, so authority over the token and over the 44.3% facilitator sits with governance rather than a bare key.
+Distinct **5-of-9 guardians** can cancel unexecuted DAO payloads. They cannot pre-cancel an immediate Council transaction. Different signer addresses do not prove independent human operators or key custody.
 
-⚠️ **Three bounds, and this is a narrowing rather than a clearance:**
+The **Ethereum GHO token has fixed implementation code**: the complete source/runtime binding found no delegatecall, UUPS, beacon or implementation setter. Token roles remain administrable, and surrounding facilitators, reserves, GSMs and controllers include upgradeable components. Fixed token code does not make GHO’s economic authority immutable.
 
-1. ⚠️ **"The executor holds it" is not "only the executor holds it."** `getRoleMemberCount` reverts on both contracts, so the holder set is **confirmed non-empty and cannot be closed.**
-2. ⚠️ **`DEFAULT_ADMIN` grants the mint role — it is not the mint role.** Who currently holds mint was not tested.
-3. ⚠️ **The token is not at the standard EIP-1967 slots** — impl and admin both read `0x0` on 8,046 bytes of code. **That is not immutability. The upgrade path is simply not where it is normally found, and has not been located.**
+On the named remote reserve paths the Council can immediately change existing registered-entity limits, subject to inventory and module mechanics. LIMIT_MANAGER alone does not grant arbitrary reserve transfers or origin minting. GSM steward update cooldowns are not queued notice or timelocks. Remaining remote holder history, CCIP/emergency delivery, some remote token implementation and token ProxyAdmin source/permission paths stay explicitly unresolved.
 
-### The cap is the mitigation, and omitting it would overstate the finding
+**Smart-contract security.** The official security catalogue contains GHO audit/review links. Catalogue presence and source/runtime matches do not establish audit coverage of all current deployed components, closure of findings, incident completeness, effective bounty scope or integration invariants. The deployed-code/audit/bounty/remediation assessment remains outstanding. Audit volume cannot offset the Council’s immediate minting authority.
 
-⚠️ **The bucket is at its ceiling: 310,000,000 minted against a 310,000,000 cap. Zero headroom.** It cannot mint one more GHO without a governance action raising capacity. **That is a real constraint, publicly visible, and it bounds the exposure the authority gap creates.** A page stating the enumeration problem without stating the cap would describe a larger risk than exists.
+**Score disposition:** the stored 6.0 is historical, pending current reassessment. The staged current structural assessment is withheld until code-risk review and the combined judgment are complete. An unrated current review is not a finding that all code is unsafe. The stored historical number does not endorse the superseded rationale.
 
-**Still unestablished, and that is different from unknowable:** where the 310M was minted to, not traced; and who holds the mint role, not enumerable through the standard accessors. **Both have resolution paths** — role-grant events and mint destinations are traceable with the right log queries.
-
-**Re-score trigger, written to be checkable by anyone rather than a matter of judgement: any governance action raising the `0xE9ac5231…27d2` bucket above 310M.** That would remove the constraint currently bounding the authority gap.
+**Score status: historical 6.0, pending current reassessment.** The source correction does not apply a new structural rating.
 
 ## 6 · Issuer — 6.5
-**Aave DAO** — one of the longest-running and most heavily audited protocols in the category, with public governance, on-chain voting and a mature executor structure. **Authority over both the token and the largest facilitator sits with the governance executor**, verified above rather than assumed.
 
-⚠️ **What holds this axis at 6.5 rather than higher is disclosure rather than conduct.** The mint-role holders are not published anywhere and are not readable from chain; a facilitator carries a name that does not describe what it implements; and the upgrade path on the token is not at the standard slots and has not been located. **None of that is misconduct. All of it means a holder must take on trust things that could be made checkable.**
+GHO is governed by Aave DAO, with public proposals/voting and delegated operational stewards. The current staged issuer review retains 6.5 on the established governance organization, public decision record and disclosed operating framework. It does not establish a legal guarantor, independently audited issuer finances or universal holder par-redemption rights. Audits, bounty size, signer thresholds and technical timelocks receive no separate issuer credit. Handling legacy seized modules is not a current standalone issuer rationale.
 
-## Who should avoid this
+## Source dates and scope
 
-- **Anyone who needs to know who can mint.** For 44.3% of supply, that list is not readable from chain — narrowed by the `hasRole` checks above, but not closed (axis 5).
-- **Anyone treating the "GSM" label as a description of backing.** It is a name, not an implementation (axis 5).
-- **Anyone relying on a fixed-price exit.** Both stability modules are seized; a DEX is the exit (axes 1 and 3).
-- **Anyone sizing on growth.** Supply has not moved since 2026-08-13 and most of it is at ceilings (axis 2).
+| Evidence | Observation |
+|---|---|
+| Selected common backing / issuance reconciliation | Ethereum block 26,303,132; October 30 04:18:59 UTC |
+| Ethereum authority and current module identities | Block 26,304,162; October 30 07:45:11 UTC |
+| Monad authority/module observation | Block 117,842,055; October 30 07:45:18 UTC |
+| Plasma authority/module observation | Block 36,404,497; October 30 07:45:19 UTC |
+| Arbitrum authority/module observation | Block 519,615,002; October 30 07:45:18 UTC |
+| Selected price mark | $0.99850861; upstream price timestamp unavailable |
 
-## What to watch
+These are distinct chain and source clocks, not a single atomic global balance sheet. Source write/review time does not refresh a missing market observation. Local fork behavior establishes the tested permission consequence at the pinned state, not possession of Council keys, a public-network transaction or a realized loss.
 
-- ⚠️ **Any capacity raise on the 310M bucket.** This is the re-score trigger and the single most consequential thing that could change here (axis 5).
-- **Whether either GSM is unseized**, which would restore the par-defence route and the fixed-price exit together (axes 1 and 3).
-- **Whether the mint role is ever made enumerable**, by a facilitator upgrade or by governance publishing the holders (axis 5).
-- **Whether supply moves at all.** Exactly zero since 2026-08-13 is unusual enough that a resumption is itself information (axis 2).
-- **Mint destinations for the 310M**, if traced — the open question with the clearest resolution path (axis 5).
----
+Official context: [GHO](https://aave.com/docs/ecosystem/gho), [governance](https://www.aave.com/docs/ecosystem/governance), and the [security catalogue](https://aave.com/security). Current authority conclusions rely on pinned source/runtime and role-history evidence, not general documentation alone. Governance documentation and current deployment permissions must be distinguished: the documented DAO process does not gate the separately established immediate Council path. Human operator independence and key custody are unverified.
 
-*Revision history: 2026-08-29 (third) — **GSM findings re-verified and the sourcing sharpened; no score change.** Both Stability Modules re-read on 2026-08-29 and **unchanged across sixteen days** — `getIsSeized()` true, `getIsFrozen()` false, zero GHO, exposure caps 0 — with the GHO PegKeeper at `0x53876B15…C50b` confirming `debt()` of 0.00. ⚠️ **Stated as "verified 2026-08-13, unchanged 2026-08-29" rather than simply re-dated to today, because persistence is the more informative claim here.** A module seized today might be mid-incident; **one that has held seized, unfrozen, empty and capped across sixteen days is behaving like a decommissioned component**, which turns the wind-down reading from an inference into an observation. ⚠️ **Each module's identity is now established by reading `UNDERLYING_ASSET()` rather than by trusting its name** — the same discipline this report applies to the facilitator, and for the same reason: **on this asset the labels have already proven the least reliable thing on the contract.** The Curve governance action remains **reported rather than read**. 2026-08-29 (second) — ⚠️ **A driver of these scores was missing from the page: both mainnet GHO Stability Modules are seized, and Curve's GHO PegKeeper debt ceiling is 0.** No score change — the marks already reflected this; **the page simply did not say so, which is worse than it sounds, because nothing about it looked incomplete.** **The facilitator finding above concerns issuance authority; this one concerns whether the peg has a working defence**, and that is the more retail-relevant half. `seized = true` with `frozen = false` is a **wind-down rather than a pause** — freezing is what you do to a module you intend to restart. **Both hold zero GHO and zero underlying with exposure caps of 0**, so no route exists to arbitrage sub-par GHO back toward $1, which is what makes Curve's decision legible rather than assumed. ⚠️ **Dated, not current: the seizure states and the zero ceiling are on-chain reads taken 2026-08-13 and not re-read since.** The Curve governance action connecting them is **reported rather than read** — `gov.curve.finance` returns 403 from two environments. **Sourced from this site's own [crvUSD report](/reports/crvusd/), which already carried the finding with full contract addresses.** ⚠️ **The internal source could not re-verify it because its own record stored those addresses truncated, and a reconstructed address that answers is not evidence about the contract you meant** — so the addresses were recovered from the published page rather than guessed. 2026-08-29 — **first publication of GHO on this site, staged pending a publication decision.** ⚠️ **The central finding corrects this coverage's own prior framing:** the largest facilitator, holding **310,000,000 GHO or 44.3% of supply**, is labelled *"GhoDirectFacilitator GSMs Mainnet"* and **implements no GSM machinery at all** — every GSM accessor is absent from its bytecode, enumerated rather than inferred. **Previous descriptions of GSM-minted GHO as fiat-stable-backed at a fixed price describe an architecture this contract does not have.** ⚠️ **`getRoleMember()` and `getRoleMemberCount()` are also absent, so the addresses authorised to mint cannot be listed from chain state** — the accurate statement is that 44.3% of GHO is minted by a role-gated contract whose callers are not enumerable. **The cap is carried with equal weight because omitting it would overstate the finding: the bucket is at 310M of 310M with zero headroom and cannot mint further without a governance capacity raise.** **Two items are recorded as not established rather than unknowable** — where the 310M was minted to, and who holds the role — and both have resolution paths; **the deploying address is a zero-byte EOA, but deployment does not establish role-holding and no such claim is made.** **Supply is frozen: eight facilitator levels sum to exactly 699,000,000.00 against the same `totalSupply`, every level identical to the 2026-08-13 read, against +7.7% growth in the preceding week — 0.0% over 16 days with 65.8% of supply at hard caps.** **Scores held at 5.5** because the new facts point both ways and neither is measured well enough to move a number; **re-score trigger is any governance action raising that bucket above 310M.***
+## Open evidence and review triggers
+
+- Complete deployed-component code/audit/bounty/remediation review and the combined Contract & Admin reassessment. Historical 6.0 is not a current endorsement.
+- Bound remote role-history completeness, CCIP/emergency delivery, remaining remote token implementation and token ProxyAdmin source/permission paths.
+- Reconcile complete realizable backing and current collateral/liability scope, eliminating internal and wrapper claims. Issuance reconciliation alone does not establish solvency.
+- Measure holder-specific primary eligibility, module direction, wrapper conversion, fees, trade execution, settlement and latency at size.
+- Reassess on changed Council permissions, repeated eligible capacity increases, altered DAO controllers/guardian powers, corroborated collateral shortfalls or materially impaired executable exits. No exploit or realized loss is inferred from a permission path alone.
+
+## Score interpretation
+
+Overall **5.5** and all stored axis values are unchanged. Contract & Admin **6.0 is historical, pending current reassessment**. This targeted revision does not calculate a new overall or re-endorse the earlier authority rationale. Dependencies 6.0 and Issuer 6.5 retain their staged editorial judgments with the disclosed evidence gaps.
+
+## Revision history
+
+- **2026-10-30 — Targeted authority and architecture correction.** Incorporated the accepted authority evidence and selected common financial source from the source assessment at commit `7c76bf6`. Distinguished the immediate 2-of-3 Council mint path from delayed DAO execution and guardian cancellation; fixed Ethereum token implementation from administrable/upgradeable surrounding components; and current RemoteGSMs from legacy seized modules. Issuance reconciliation and wrapper inventory are not independently realizable backing. All numeric scores and the August 29 full-verification date remain unchanged; Contract & Admin 6.0 is historical and pending reassessment.
+- **2026-09-08 — Historical supply/facilitator observation.** Archived with the earlier report; its module/authority rationale is superseded by the dated evidence above.

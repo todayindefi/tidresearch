@@ -1,0 +1,50 @@
+{
+  "status": "review_only_no_deployment",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4899,
+      "sha256": "adabf002cead3e066dbfb2592e9b24b7b2a7abaec4b1d23cbc0f33901ed0a215"
+    },
+    {
+      "path": "build-validation.json",
+      "bytes": 534,
+      "sha256": "92f01f62a6baab4aa5de4c833c3a0035f4e5d10e046935cf6a8ecf113d35778f"
+    },
+    {
+      "path": "gho.candidate.md",
+      "bytes": 14856,
+      "sha256": "bf7134a4bb88d6cfda90e5bc3723f3afd6e399a77bfea70e01cb9bba6162321c"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 1661,
+      "sha256": "d5ab8aa9e4064699e54958c05ff3c80016a21adccb6f7b8e7636bafd85f8cd12"
+    },
+    {
+      "path": "review.html",
+      "bytes": 17003,
+      "sha256": "9e1f0c8001766df80e734ff90692ba93c6de0a2c62881b4334d0c0c6d27b9b00"
+    },
+    {
+      "path": "riskanalyst-gho-7c76bf6.md",
+      "bytes": 13433,
+      "sha256": "b2f5759423cbaba346217276bd62f4c13af9497345fe2b3054dfd41ac0b8c7de"
+    },
+    {
+      "path": "tidr-gho-before.md",
+      "bytes": 19585,
+      "sha256": "dd127b49f9512553eb416be8dd21002c9644e5dcae717e149de694b3a05049c5"
+    },
+    {
+      "path": "validate.py",
+      "bytes": 4539,
+      "sha256": "10b088098882268e32754e6c3975853ccc5d432c9365a6159f135033ac3adfcf"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 682,
+      "sha256": "d7b2ee40ab519dc8b4538cd9cea73ad794d713f31077a9c53ee048dad2789256"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "status": "review_only_no_deployment",
+  "riskanalyst_commit": "7c76bf6bb4891fe81540fe215aa1f723b8753447",
+  "source_path": "/home/danger/riskAnalyst/assets/gho.md",
+  "source_sha256": "b2f5759423cbaba346217276bd62f4c13af9497345fe2b3054dfd41ac0b8c7de",
+  "source_matches_commit": true,
+  "source_manifest_path": "/home/danger/riskAnalyst/data/reviews/gho-score-review-2026-10-30/sa-authority-receipt/manifest.json",
+  "source_manifest_sha256": "67649e5f12049d60cfaad6d8e1b405b415d1041a94bdd941cdf84e4ac67a5451",
+  "authority_files_verified": 326,
+  "authority_manifest_file_root": "/home/danger/security_analyst/audits/gho-authority-2026-10-30",
+  "authority_acceptance": "producer-approved measured observations and explicit gaps; no independent fork replay",
+  "fork_proof_sha256": "6a26e7dfc5861626c140ea494bed679b6b6d9d364639e4ce7344b14b94f387b9",
+  "baseline_sha256": "dd127b49f9512553eb416be8dd21002c9644e5dcae717e149de694b3a05049c5",
+  "candidate_sha256": "bf7134a4bb88d6cfda90e5bc3723f3afd6e399a77bfea70e01cb9bba6162321c",
+  "scores_before": {
+    "peg_mechanism_score": 5.5,
+    "backing_score": 6.0,
+    "liquidity_score": 6.0,
+    "underlying_score": 6.0,
+    "structural_score": 6.0,
+    "issuer_score": 6.5,
+    "overall_score": 5.5
+  },
+  "production_before": true,
+  "last_verified_before": "2026-08-29",
+  "assessment_type_before": "full",
+  "last_revised": "2026-10-30",
+  "current_structural_assessment": "withheld_pending_reassessment",
+  "displayed_structural_score": {
+    "value": 6.0,
+    "status": "historical_not_newly_endorsed"
+  },
+  "deployment": false,
+  "dashboard_score_changes": false,
+  "production_status_changed": false
+}

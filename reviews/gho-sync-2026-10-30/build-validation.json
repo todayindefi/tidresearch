@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "command": "PUBLIC_STAGE=production npm run build",
+  "isolated_tree": "/tmp/tidresearch-gho-staged-build",
+  "only_report_edit_added_to_head_snapshot": true,
+  "prebuild_and_astro_build_passed": true,
+  "generated_pages": 56,
+  "six_axis_headings_verified": true,
+  "sidebar_numeric_scores_preserved": true,
+  "historical_structural_status_in_body": true,
+  "built_report_sha256": "b1b226522e876f183626f5572bf55417badcee3c2ce7e0853c301be3a016292a",
+  "deployment": false,
+  "visual_browser_review": false
+}

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "riskanalyst_commit": "7c76bf6bb4891fe81540fe215aa1f723b8753447",
+  "source_commit_bytes_match": true,
+  "authority_manifest_files_verified": 326,
+  "six_body_axes_match_unchanged_scores": true,
+  "all_metadata_except_revision_date_preserved": true,
+  "production_status_preserved": true,
+  "last_verified": "2026-08-29",
+  "contract_admin_score": {
+    "displayed": 6.0,
+    "basis": "historical_pending_current_reassessment"
+  },
+  "current_authority_and_module_corrections_present": true,
+  "source_dates_execution_limits_and_remote_gaps_retained": true,
+  "fork_independently_replayed": false,
+  "deployed": false,
+  "dashboard_score_changes": false
+}
