@@ -10,11 +10,11 @@ assessment_type: "light"
 audience: "retail"
 date: "2026-04-25"
 last_verified: "2026-09-06"
-last_revised: "2026-10-29"
+last_revised: "2026-10-30"
 featured: false
 production: true
 issuer: "Maple International Operations SPC"
-market_cap_approx: 949133273
+market_cap_approx: 937168430
 axis_frame: six
 volatility_score: 8.5
 backing_score: 6.5
@@ -38,6 +38,18 @@ Assessed October 29, 2026. syrupUSDC is a USDC-denominated share in Maple’s in
 The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) shows current conditions; this report interprets the **same selected sources and definitions** over time. The public [backing feed](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json) provide the shared financial inputs. Source clocks differ; the assessment uses an archived selected generation. This assessment uses the selected **01:49:29 UTC** source, not an independently substituted newer financial series.
 
 This is a **targeted financial and dependency revision**, not a fresh authority or contract audit. Published last_verified remains September 6; last_revised is October 29. The source internal assessment retains its separate October 13 verification date. Authority observations remain September 6 and component assurance October 3. No USDC-specific new route/hook verification, executed exit or primary-latency measurement is claimed.
+
+## Financial update — October 30, 2026
+
+At **13:45:31 UTC**, canonical pool assets are **$937.17M**, 1.26% below the prior assessed snapshot. Credit principal remains **$898.72M**, with largest-borrower/top-three shares **22.25% / 53.97%**. Principal enumeration reconciles with zero residual. No impairment, call or default is reported; these flags do not independently verify borrower solvency or collateral custody.
+
+The broader cash-plus-accrued-interest measure is **$2.30M / 0.245%** of assets. Direct pool USDC is only **$9,186.70**. Accrued strategy interest is not immediately available cash. The queue has **26 request-ID slots**; its dollar amount and request-to-fill timing are unavailable. Slot counts are not unique waiting holders or measured delays.
+
+The indicative CoinGecko market/NAV discount is **-17.01bps**. The Ethereum $250K KyberSwap quote has **-8.20bps baseline-relative impact**, versus **-1.23bps signed all-in return against market-sized notional**. These are separate measures; neither is an executed fill or total cost against NAV. Source headline APY is **4.99%**, observed October 29 at 00:00 UTC; the October 30 backing clock does not make it a new yield observation.
+
+Maple's [CCIP 2.0 rollout](https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0) replaces token pools through Q4. Replacement-pool authority, lock/liability reconciliation and migration status require verification; the announcement does not establish native mint/redeem availability outside Ethereum. The [IRACE banking relationship](https://maple.finance/insights/maple-finance-selects-irace-digital-bank-for-institutional-banking-and-fiat-settlement) adds an institutional settlement dependency, but per-pool bank balances/exposure are unestablished. The reviewed [governance forum](https://community.maple.finance/latest) concerns SYRUP buybacks and migration rather than a newly established change to these pool controls.
+
+**Scores remain unchanged.** Thin cash and unresolved custody/collateral, bridge and execution assurance remain material. The dated sections below retain their original financial snapshots and historical statistics; the October 30 observations above supersede their spot balances, cash and queue descriptions. Authority and assurance dates are unchanged.
 
 ## 1 · Stability — 8.5
 

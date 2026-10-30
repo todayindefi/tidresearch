@@ -10,11 +10,11 @@ assessment_type: "light"
 audience: "retail"
 date: "2026-05-03"
 last_verified: "2026-09-06"
-last_revised: "2026-10-28"
+last_revised: "2026-10-30"
 featured: false
 production: true
 issuer: "Maple International Operations SPC"
-market_cap_approx: 318672000
+market_cap_approx: 298172891
 axis_frame: six
 volatility_score: 8.5
 backing_score: 6.0
@@ -40,6 +40,18 @@ The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdt) shows curre
 The October 28 corrected shared inputs use address-specific issuer/metadata classifications and keep canonical supply separate from remote representations. Credit collateral coverage and bridge reconciliation remain incomplete. The classification change is a definition break, not a historical improvement or deterioration in the same population.
 
 The published verification date remains **September 6**, with this financial revision dated **October 28**. Authority observations remain September 6 and component assurance October 3. No timed redemption or fresh Maple role walk was performed. A subsequent dated exit-pool check establishes zero hook for the exact sampled Ethereum pool.
+
+## Financial update — October 30, 2026
+
+At **13:46:15 UTC**, canonical pool assets are **$298.17M**, 6.43% below the prior assessed snapshot. Credit principal remains **$215.05M**, with largest-borrower/top-three shares **42.89% / 91.80%**. Principal enumeration reconciles with zero residual. No impairment, call or default is reported; these flags do not independently verify borrower solvency or collateral custody.
+
+The broader cash-plus-accrued-interest measure is **$0.51M / 0.172%** of assets. Direct pool USDT is only **$163,086.33**. Accrued strategy interest is not immediately available cash. The queue has **25 request-ID slots**; its dollar amount and request-to-fill timing are unavailable. Slot counts are not unique waiting holders or measured delays.
+
+The indicative CoinGecko market/NAV discount is **-21.43bps**. The Ethereum $250K KyberSwap quote has **-1.00bps baseline-relative impact**, versus **-10.22bps signed all-in return against market-sized notional**. These are separate measures; neither is an executed fill or total cost against NAV. Source headline APY is **4.99%**, observed October 29 at 00:00 UTC; the October 30 backing clock does not make it a new yield observation.
+
+Maple's [CCIP 2.0 rollout](https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0) replaces token pools through Q4. Replacement-pool authority, lock/liability reconciliation and migration status require verification; the announcement does not establish native mint/redeem availability outside Ethereum. The [IRACE banking relationship](https://maple.finance/insights/maple-finance-selects-irace-digital-bank-for-institutional-banking-and-fiat-settlement) adds an institutional settlement dependency, but per-pool bank balances/exposure are unestablished. The reviewed [governance forum](https://community.maple.finance/latest) concerns SYRUP buybacks and migration rather than a newly established change to these pool controls.
+
+**Scores remain unchanged.** Thin cash and unresolved custody/collateral, bridge and execution assurance remain material. The dated sections below retain their original financial snapshots and historical statistics; the October 30 observations above supersede their spot balances, cash and queue descriptions. Authority and assurance dates are unchanged.
 
 ## 1 · Stability — 8.5
 
