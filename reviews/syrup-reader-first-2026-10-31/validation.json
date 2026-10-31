@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "reports": {
+    "syrupusdc": {
+      "entire_frontmatter_unchanged": true,
+      "six_axis_scores_unchanged": true,
+      "historical_tables_unchanged": true,
+      "no_frontloaded_review_metadata": true,
+      "no_main_section_self_reference_or_warning_icons": true,
+      "durable_risks_and_qualification_preserved": true,
+      "main_words": 925
+    },
+    "syrupusdt": {
+      "entire_frontmatter_unchanged": true,
+      "six_axis_scores_unchanged": true,
+      "historical_tables_unchanged": true,
+      "no_frontloaded_review_metadata": true,
+      "no_main_section_self_reference_or_warning_icons": true,
+      "durable_risks_and_qualification_preserved": true,
+      "main_words": 984
+    }
+  }
+}

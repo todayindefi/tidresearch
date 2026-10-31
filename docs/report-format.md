@@ -39,8 +39,15 @@ assessment, and the retail/institutional split was retired on 2026-09-10.
 ## 5 · Contract & Admin — N
 ## 6 · Issuer — N
 <supporting sections: who it's for, comparisons, what to watch>
+<sources, methodology, review dates and verification scope>
 ## Revision history   ← last
 ```
+
+Start the visible report with the asset summary and main analysis. Put structural-review dates,
+historical assessment-basis notes, source-selection details, methodology and revision scope at the
+end, before Revision history. Keep a short dashboard link near the top when useful. Keep a
+measurement date beside a figure when it is needed to interpret that evidence; this is different
+from opening with a review-status bulletin.
 
 The axis score in the heading must equal its frontmatter field. Which field feeds
 which axis is in `src/lib/…` and enforced by `check-axis-headings.ts`.
@@ -74,6 +81,12 @@ Every scored axis uses this reading order:
 The final part may be a paragraph beginning **“Risks and limitations.”** or a
 short list when several independent items need separation. It is not required
 when the axis genuinely has no material qualification.
+
+The main axis sections should summarize how the asset works and explain the drivers of risk.
+Use direct factual prose rather than report-writing commentary, repeated score-retention verdicts,
+warning labels or references to earlier wording. Keep detailed measurement ledgers, classification
+versions and review bookkeeping in supporting evidence at the end. Preserve substantive limits in
+the explanation; moving metadata is not a reason to hide control, backing or execution risk.
 
 Do not open an axis with a warning, verdict, score defence or rhetorical line
 such as “this is the binding constraint.” Describe the exit paths first; then
