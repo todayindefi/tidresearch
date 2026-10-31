@@ -1,7 +1,8 @@
 # Report format
 
 The house shape for every asset report on tidresearch. Owner-set, 2026-09-10;
-descriptive-first axis style added 2026-09-15.
+descriptive-first axis style added 2026-09-15; reader-first presentation confirmed
+by the owner on 2026-10-31.
 
 Applies to **new reports, refreshes, reviews and revisions**. Any substantive edit
 brings the report onto this shape; it does not preserve an older structure or voice
@@ -58,10 +59,10 @@ preamble short — a label, a headline, a sentence of orientation. If it runs pa
 
 ## 3. Flags live in the axis they belong to
 
-⚠️ and ✅ callouts go **inside the axis section that argues them**, apart from the
-critical-warning exception below, and are never stacked in the lede. A finding
-about custody belongs under Contract & Admin; a concentration figure belongs
-under whichever axis prices it.
+Ordinary risks belong in the explanation of their axis, without warning or
+reassurance icons. A finding about control belongs under Contract & Admin;
+a concentration figure belongs under whichever axis prices it. Reserve callouts
+for the immediate, severe conditions described below; never stack them in the lede.
 
 **A wall of warnings above the summary tells a reader the report is alarmed
 without telling them what about.**
@@ -78,9 +79,9 @@ Every scored axis uses this reading order:
 3. **Risks and limitations.** Put ordinary caveats, adverse trends, missing
    measurements and monitoring qualifications at the end of the axis.
 
-The final part may be a paragraph beginning **“Risks and limitations.”** or a
-short list when several independent items need separation. It is not required
-when the axis genuinely has no material qualification.
+Explain material limitations as part of the prose. Do not make ordinary sections
+read as warning checklists or repeat a ‘Risks and limitations’ label by default.
+Use a short list only when genuinely separate items are easier to compare.
 
 The main axis sections should summarize how the asset works and explain the drivers of risk.
 Use direct factual prose rather than report-writing commentary, repeated score-retention verdicts,
@@ -152,6 +153,15 @@ A sidebar link and an in-body link are both fine. **No iframe.** A report is an
 authored judgement at a stated date; an embedded live surface silently changes
 what the page says and can contradict the prose beside it.
 
+### Reports versus daily monitoring
+
+Use the dashboard for changing cash balances, queue amounts, APY, allocations and
+live quote ladders. Do not accumulate daily bulletins in the main report. Bring
+new readings into the report when they establish persistent deterioration, a
+verified material incident or a changed risk assessment. A clearly dated baseline
+or historical distribution can support the explanation; do not silently turn it
+into a current reading or infer persistence from one snapshot.
+
 ## 6. Figures
 
 - **State the basis** where a figure is a product or a ratio — which denominator,
@@ -180,3 +190,34 @@ which inputs are established and which are not, individually rather than as a he
 **nothing from axis 5 may appear here**, including relabelled as entity conduct; and say
 whether the number was **derived from the current inputs or carried across a change**.
 ⚠️ **A named entity is not accountability, and an unexamined absence is not a measured one.**
+
+## 9 · Presentation reference and editorial acceptance
+
+The owner identified [GHO](../src/content/reports/gho.md) as the presentation
+reference. The rewritten [syrupUSDC](../src/content/reports/syrupusdc-retail.md)
+and [syrupUSDT](../src/content/reports/syrupusdt-retail.md) reports show the same
+approach: a short asset summary, then explanatory six-axis analysis, with detailed
+evidence and review bookkeeping at the end. These are style references, not
+sources from which to inherit another asset’s facts, scores or verification dates.
+
+Before accepting a new report or update, confirm:
+
+- The opening explains the asset and its main risk profile without structural-review
+  dates, assessment-basis boilerplate or a change log.
+- Each axis explains how that part works, what drives risk and what evidence limits
+  the conclusion. The main text is not a measurement ledger, score defence,
+  collection log or narration of how the report was revised.
+- Review dates, source selection, methodology, verification scope, score conventions
+  and revision history are at the end. Measurement dates stay beside facts where
+  needed to prevent stale observations from appearing current.
+- There are no routine warning icons, repeated score-retention statements or
+  references to earlier report wording in the main analysis.
+- Durable risks and material qualifications remain visible. Historical or pending
+  score status is explained plainly where necessary to interpret a displayed rating;
+  moving metadata must not imply a current endorsement or new verification.
+- Editing structure or prose does not silently change facts, scores, units,
+  production status or verification dates. Numerical or substantive changes require
+  their own evidence and authorization.
+
+This applies to all future report creation and updates, including revisions of
+older reports. Mechanical checks supplement editorial review; they do not replace it.
