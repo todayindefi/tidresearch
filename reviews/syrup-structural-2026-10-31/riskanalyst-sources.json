@@ -1,0 +1,105 @@
+[
+  {
+    "file": "syrupusdc_backing.json",
+    "url": "https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json",
+    "retrieved_at": "2026-10-31T08:05:08.164011+00:00",
+    "sha256": "e4a327d32117da5b8cc8a6a88267c6714599b151aa9772fd7fa5114da69d3b5e"
+  },
+  {
+    "file": "syrupusdt_backing.json",
+    "url": "https://todayindefi.github.io/backing-monitor/data/syrupusdt_backing.json",
+    "retrieved_at": "2026-10-31T08:05:08.091708+00:00",
+    "sha256": "7c27cb874a9f44eda94fe0e6e7dc26065607bc032db09d250e8f8fc65e10863f"
+  },
+  {
+    "file": "allocation-strategies.html",
+    "url": "https://maple.finance/insights/allocation-strategies",
+    "retrieved_at": "2026-10-31T08:05:08.071577+00:00",
+    "sha256": "f2aae4f97fad9784bb48ef0c31bcc09566b2b87f9397e7b04a2319a57888081c"
+  },
+  {
+    "file": "ccip-announcement.html",
+    "url": "https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0",
+    "retrieved_at": "2026-10-31T08:05:08.032092+00:00",
+    "sha256": "c13b0d08a5c55b37893402e2a2633cb501662bdac6a1b08a07bd983588a626ab"
+  },
+  {
+    "file": "crosschain.md",
+    "url": "https://docs.maple.finance/integrate/crosschain/syrupusd-crosschain.md",
+    "retrieved_at": "2026-10-31T08:05:08.043514+00:00",
+    "sha256": "627dbb01dbebbd9d55d257438ab8c2d17b0645eac4b1a3cbee02323e4d3829db"
+  },
+  {
+    "file": "zodia.html",
+    "url": "https://maple.finance/insights/zodia-custody-opens-interchange-to-maple",
+    "retrieved_at": "2026-10-31T08:05:08.282646+00:00",
+    "sha256": "f0812a909261cca698a6330ab71a1fb7e27a3fb4e60fdec2cda183c3cd05bec6"
+  },
+  {
+    "file": "irace.html",
+    "url": "https://maple.finance/insights/maple-finance-selects-irace-digital-bank-for-institutional-banking-and-fiat-settlement",
+    "retrieved_at": "2026-10-31T08:05:08.260478+00:00",
+    "sha256": "064066e51253bcd5720987d671001e32639675edd8d0459d4dae8b48e739466d"
+  },
+  {
+    "file": "risk-disclosures.md",
+    "url": "https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks.md",
+    "retrieved_at": "2026-10-31T08:05:08.324036+00:00",
+    "sha256": "a3f3f1602fd2b7aaf9d865fb8bc153c9d4a65c207275cc3838d94e0e20447fe5"
+  },
+  {
+    "file": "forum-latest.json",
+    "url": "https://community.maple.finance/latest.json",
+    "status": 403,
+    "retrieved_at": "2026-10-31T08:05:08.213898+00:00",
+    "limitation": "Direct fetch unavailable; forum content separately reviewed via web browser tool"
+  },
+  {
+    "file": "mip021.json",
+    "url": "https://community.maple.finance/t/1153.json",
+    "status": 403,
+    "retrieved_at": "2026-10-31T08:05:08.296903+00:00",
+    "limitation": "Direct fetch unavailable; forum content separately reviewed via web browser tool"
+  },
+  {
+    "file": "redemption-topic.json",
+    "url": "https://community.maple.finance/t/1086.json",
+    "status": 403,
+    "retrieved_at": "2026-10-31T08:05:08.320049+00:00",
+    "limitation": "Direct fetch unavailable; forum content separately reviewed via web browser tool"
+  },
+  {
+    "file": "october-memo.html",
+    "url": "https://maple.finance/insights/maple-memo-october-2026",
+    "retrieved_at": "2026-10-31T08:05:08.511643+00:00",
+    "sha256": "f7a6e61ef857fe92722fdaa5c1b378507304e8a5326d128ca0438581effa0527"
+  },
+  {
+    "file": "insights.html",
+    "url": "https://maple.finance/insights",
+    "retrieved_at": "2026-10-31T08:05:08.510807+00:00",
+    "sha256": "a94db2cbaab799821aabca1e04ec3f454bd416de972708bef4dae7c8abf79477"
+  },
+  {
+    "file": "prior-impact-review.json",
+    "local_source": "/home/danger/backing-monitor/specs/reviews/syrup-major-changes-2026-10-31/impact-review.json",
+    "sha256": "8c4e00a662c286e2e8fbee6d9be3a856f42d00a89f24d28edd8ad9ed98ef1f9f"
+  },
+  {
+    "file": "producer-redemptions.py",
+    "local_source": "/home/danger/backing-monitor/tools/refresh_syrup_redemptions.py",
+    "sha256": "970e4ba1297d1abe0de3abb2856873aaffcaa29040af65a493ac1828a1e21723"
+  },
+  {
+    "file": "syrupusdc-served-report.html",
+    "url": "https://tidresearch.com/reports/syrupusdc/",
+    "retrieved_at": "2026-10-31T08:09:06.533361+00:00",
+    "sha256": "a322265033e3946dcdf0bfbbc8b107d81cc54411a50e8d767d7e5d72711727a4"
+  },
+  {
+    "file": "syrupusdt-served-report.html",
+    "url": "https://tidresearch.com/reports/syrupusdt/",
+    "retrieved_at": "2026-10-31T08:09:06.533361+00:00",
+    "sha256": "7cd9d9ce1607fbf02b3e9d7b4af70039aad297f04d9e00bfb00b2d064bee0ea4"
+  }
+]

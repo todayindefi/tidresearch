@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "assets": {
+    "syrupusdc": {
+      "scores_and_all_nonrevision_metadata_unchanged": true,
+      "last_revised": "2026-10-31",
+      "last_verified": "2026-09-06",
+      "durable_structural_scope_present": true,
+      "daily_bulletin_and_standalone_cash_queue_figures_removed": true,
+      "dated_historical_assessment_evidence_retained": true
+    },
+    "syrupusdt": {
+      "scores_and_all_nonrevision_metadata_unchanged": true,
+      "last_revised": "2026-10-31",
+      "last_verified": "2026-09-06",
+      "durable_structural_scope_present": true,
+      "daily_bulletin_and_standalone_cash_queue_figures_removed": true,
+      "dated_historical_assessment_evidence_retained": true
+    }
+  },
+  "no_new_authority_custody_or_execution_verification": true
+}

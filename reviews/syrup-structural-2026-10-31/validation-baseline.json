@@ -1,0 +1,93 @@
+{
+  "syrupusdc": {
+    "sha256": "9afd3a45b00b8897abc2cec2ebd5584af0a134f238416566340b14a7b0f025ee",
+    "metadata": {
+      "asset": "syrupUSDC",
+      "slug": "syrupusdc",
+      "aliases": [
+        "syrupUSDC",
+        "SYRUPUSDC",
+        "syrupUSD",
+        "Syrup USDC",
+        "Maple Syrup"
+      ],
+      "chains": [
+        "eth",
+        "sol",
+        "arb",
+        "base",
+        "monad",
+        "ink",
+        "tempo",
+        "robinhood",
+        "arc"
+      ],
+      "category": "vault-share",
+      "underlying_assets": [
+        "USDC"
+      ],
+      "yield_bearing": true,
+      "assessment_type": "light",
+      "audience": "retail",
+      "date": "2026-04-25",
+      "last_verified": "2026-09-06",
+      "last_revised": "2026-10-30",
+      "featured": false,
+      "production": true,
+      "issuer": "Maple International Operations SPC",
+      "market_cap_approx": 937168430,
+      "axis_frame": "six",
+      "volatility_score": 8.5,
+      "backing_score": 6.5,
+      "structural_score": 4.5,
+      "redemption_score": 7.5,
+      "underlying_score": 5.5,
+      "liquidity_score": 7.0,
+      "issuer_score": 5.5,
+      "overall_score": 6.5
+    }
+  },
+  "syrupusdt": {
+    "sha256": "2a3b12dccd01537e7b8d6a89031759cf4e8ad126280641ccdbd3818d259dc3aa",
+    "metadata": {
+      "asset": "syrupUSDT",
+      "slug": "syrupusdt",
+      "aliases": [
+        "syrupUSDT",
+        "SYRUPUSDT",
+        "Syrup USDT",
+        "Maple Syrup USDT"
+      ],
+      "chains": [
+        "eth",
+        "plasma",
+        "mantle",
+        "bsc",
+        "ink"
+      ],
+      "category": "vault-share",
+      "underlying_assets": [
+        "USDT"
+      ],
+      "yield_bearing": true,
+      "assessment_type": "light",
+      "audience": "retail",
+      "date": "2026-05-03",
+      "last_verified": "2026-09-06",
+      "last_revised": "2026-10-30",
+      "featured": false,
+      "production": true,
+      "issuer": "Maple International Operations SPC",
+      "market_cap_approx": 298172891,
+      "axis_frame": "six",
+      "volatility_score": 8.5,
+      "backing_score": 6.0,
+      "structural_score": 4.5,
+      "redemption_score": 6.5,
+      "underlying_score": 4.0,
+      "liquidity_score": 6.0,
+      "issuer_score": 5.5,
+      "overall_score": 6.0
+    }
+  }
+}

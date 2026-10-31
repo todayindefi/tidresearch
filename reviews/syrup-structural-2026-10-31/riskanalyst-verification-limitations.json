@@ -1,0 +1,45 @@
+{
+  "rpc_replay": {
+    "status": "unavailable",
+    "attempts": [
+      {
+        "endpoint": "https://ethereum.publicnode.com",
+        "http_status": 403
+      },
+      {
+        "endpoint": "https://eth.llamarpc.com",
+        "http_status": 525
+      },
+      {
+        "endpoint": "https://ethereum-rpc.publicnode.com",
+        "http_status": 403
+      }
+    ],
+    "meaning": "Endpoint HTTP failures, not contract reverts or evidence of a protocol failure. No successful independent RPC confirmation is claimed.",
+    "source_used": "Archived public BM backing files: supplemental asset_specific.redemptions, Ethereum block 26311168.",
+    "checks_completed": [
+      "Producer code inspected: totalShares, convertToAssets and pool underlying balanceOf at one block",
+      "Queue funding arithmetic recomputed",
+      "Principal totals, economic subtype totals and historical position deltas recomputed"
+    ],
+    "checks_not_completed": [
+      "Independent pinned RPC replay",
+      "Request-level wait times",
+      "Executed redemption or swap",
+      "Replacement CCIP authority verification"
+    ]
+  },
+  "forum_review": {
+    "method": "web browser search/open; direct JSON endpoints HTTP 403",
+    "sources": [
+      "https://community.maple.finance/latest",
+      "https://community.maple.finance/t/mip-021-a-rules-based-buyback-that-scales-with-revenue/1153",
+      "https://community.maple.finance/t/any-hope-for-redemption/1086"
+    ],
+    "findings": [
+      "Recent reviewed topics concern MPL/SYRUP conversion and token buybacks",
+      "Redemption-titled topic concerns missed MPL migration, not pool withdrawal failure",
+      "No new pool administration change identified in reviewed items; no on-chain governance audit claimed"
+    ]
+  }
+}

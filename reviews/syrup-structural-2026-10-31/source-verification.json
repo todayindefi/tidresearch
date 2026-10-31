@@ -1,0 +1,36 @@
+{
+  "hash_verified_sources": [
+    "syrupusdc_backing.json",
+    "syrupusdt_backing.json",
+    "allocation-strategies.html",
+    "ccip-announcement.html",
+    "crosschain.md",
+    "zodia.html",
+    "irace.html",
+    "risk-disclosures.md",
+    "october-memo.html",
+    "insights.html",
+    "prior-impact-review.json",
+    "producer-redemptions.py",
+    "syrupusdc-served-report.html",
+    "syrupusdt-served-report.html"
+  ],
+  "source_entries_without_retained_hash_check": [
+    {
+      "file": "forum-latest.json",
+      "scope": "no hash-verified local source in this entry",
+      "reported_status": 403
+    },
+    {
+      "file": "mip021.json",
+      "scope": "no hash-verified local source in this entry",
+      "reported_status": 403
+    },
+    {
+      "file": "redemption-topic.json",
+      "scope": "no hash-verified local source in this entry",
+      "reported_status": 403
+    }
+  ],
+  "no_independent_rpc_or_custody_or_execution_verification": true
+}

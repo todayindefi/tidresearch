@@ -10,7 +10,7 @@ assessment_type: "light"
 audience: "retail"
 date: "2026-04-25"
 last_verified: "2026-09-06"
-last_revised: "2026-10-30"
+last_revised: "2026-10-31"
 featured: false
 production: true
 issuer: "Maple International Operations SPC"
@@ -24,7 +24,7 @@ underlying_score: 5.5
 liquidity_score: 7.0
 issuer_score: 5.5
 overall_score: 6.5
-# Financial update: 2026-10-30; assessment basis: 2026-10-29; authority walk: 2026-09-06; assurance: 2026-10-03.
+# Structural review: 2026-10-31; historical financial update: 2026-10-30; assessment basis: 2026-10-29; authority walk: 2026-09-06; assurance: 2026-10-03.
 # Legacy redemption_score remains evidence for Liquidity & Exit, not a seventh displayed axis.
 # PARKED: issuer recourse/principals/entity-financial-audit inputs need review; 5.5 carried from riskAnalyst [owner: riskAnalyst] [since: 2026-10-13]
 ---
@@ -33,25 +33,15 @@ overall_score: 6.5
 
 **Moderate-to-low risk · 6.5/10**
 
-Assessment basis: October 29, 2026; financial update: October 30. syrupUSDC is a USDC-denominated share in Maple’s institutional credit and non-credit strategies. Yield accrues into NAV; credit losses, collateral/custody failure, strategy losses or underlying-token disruption can reduce value. It is not a $1 stablecoin. [syrupUSDT](/reports/syrupusdt/) shares governance and overlapping borrowers, not independent diversification.
+Structural review: October 31, 2026; historical assessment basis: October 29. syrupUSDC is a USDC-denominated share in Maple’s institutional credit and non-credit strategies. Yield accrues into NAV; credit losses, collateral/custody failure, strategy losses or underlying-token disruption can reduce value. It is not a $1 stablecoin. [syrupUSDT](/reports/syrupusdt/) shares governance and overlapping borrowers, not independent diversification.
 
-The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) shows current conditions; this report interprets the **same selected sources and definitions** over time. The public [backing feed](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json) provide the shared financial inputs. Source clocks differ. The historical October 29 assessment uses the selected **01:49:29 UTC** generation; the separate October 30 financial update below retains its own source clocks. The historical series has not been rebased to the newer spot observations.
+The [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc) shows current conditions; this report interprets the **same selected sources and definitions** over time. The public [backing feed](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing.json), [retained history](https://todayindefi.github.io/backing-monitor/data/syrupusdc_backing_history.json) and [family feed](https://todayindefi.github.io/backing-monitor/data/syrup_family.json) provide the shared financial inputs. Source clocks differ. The dated October 29 assessment uses the selected **01:49:29 UTC** generation. Current cash, queues, APY, allocations and quote ladders are on the dashboard; historical assessment statistics retain their original windows.
 
-This is a **targeted financial and dependency revision**, not a fresh authority or contract audit. Published last_verified remains September 6; last_revised is October 30. The source internal assessment retains its separate October 13 verification date. Authority observations remain September 6 and component assurance October 3. No USDC-specific new route/hook verification, executed exit or primary-latency measurement is claimed.
+This is a **targeted structural and dependency revision**, not a fresh authority or contract audit. Published last_verified remains September 6; last_revised is October 31. The source internal assessment retains its separate October 13 verification date. Authority observations remain September 6 and component assurance October 3. No USDC-specific new route/hook verification, executed exit or primary-latency measurement is claimed.
 
-## Financial update — October 30, 2026
+**Report scope.** The October 31 structural review covers mandate, funded strategy types, custody/settlement dependencies and migration risk. Routine cash, queue, APY and allocation readings belong on the [dashboard](https://tidresearch.com/dashboards/?asset=syrupusdc). Verified incidents, persistent deterioration or changed risk judgments warrant report updates; a single daily observation does not establish them.
 
-At **13:45:31 UTC**, canonical pool assets are **$937.17M**, 1.26% below the prior assessed snapshot. Credit principal remains **$898.72M**, with largest-borrower/top-three shares **22.25% / 53.97%**. Principal enumeration reconciles with zero residual. No impairment, call or default is reported; these flags do not independently verify borrower solvency or collateral custody.
-
-The broader cash-plus-accrued-interest measure is **$2.30M / 0.245%** of assets. Direct pool USDC is only **$9,186.70**. Accrued strategy interest is not immediately available cash. The queue has **26 request-ID slots**; its dollar amount and request-to-fill timing are unavailable. Slot counts are not unique waiting holders or measured delays.
-
-The indicative CoinGecko market/NAV discount is **-17.01bps**. The Ethereum $250K KyberSwap quote has **-8.20bps baseline-relative impact**, versus **-1.23bps signed all-in return against market-sized notional**. These are separate measures; neither is an executed fill or total cost against NAV. Source headline APY is **4.99%**, observed October 29 at 00:00 UTC; the October 30 backing clock does not make it a new yield observation.
-
-Maple's [CCIP 2.0 rollout](https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0) replaces token pools through Q4. Replacement-pool authority, lock/liability reconciliation and migration status require verification; the announcement does not establish native mint/redeem availability outside Ethereum. The [IRACE banking relationship](https://maple.finance/insights/maple-finance-selects-irace-digital-bank-for-institutional-banking-and-fiat-settlement) adds an institutional settlement dependency, but per-pool bank balances/exposure are unestablished. The reviewed [governance forum](https://community.maple.finance/latest) concerns SYRUP buybacks and migration rather than a newly established change to these pool controls.
-
-**Scores remain unchanged.** Thin cash and unresolved custody/collateral, bridge and execution assurance remain material. The dated sections below retain their original financial snapshots and historical statistics; the October 30 observations above supersede their spot balances, cash and queue descriptions. Authority and assurance dates are unchanged.
-
-**Historical assessment basis — October 29, 2026.** The six axis sections below retain that assessment’s dated snapshot and history windows. October 30 spot assets, cash, queue and quotes are shown in the financial update above; the older figures below are not current balances.
+**Historical assessment basis — October 29, 2026.** The six axes below retain clearly dated baseline evidence and history windows where they support the assessment; those figures are not current dashboard readings. Authority observations remain September 6 and component assurance October 3.
 
 ## 1 · Stability — 8.5
 
@@ -60,6 +50,10 @@ The selected price series remains CoinGecko market against **peg_theoretical_pri
 **Stability stays 8.5.** Observed secondary deviations remain small relative to the accruing NAV; the classification change does not alter price behavior or create a new stablecoin peg. These samples do not prove executable prices, exact time at an extreme or behavior between observations. No 90-day conclusion is drawn from ~30 days of retained data. Sustained material discounts, impairment or a new loss channel can warrant immediate review without waiting for an average to deteriorate.
 
 ## 2 · Backing — 6.5
+
+Maple's [expanded allocation mandate](https://maple.finance/insights/allocation-strategies), announced September 2, 2026, adds securities-backed institutional lending, receivables securitizations and spot/futures basis trading, starting with syrupUSDT. The initial limit is **5% per new strategy of overall Maple deposits**, not 5% of each pool or all non-credit assets combined. This is announced policy, not independently verified immutable enforcement. Announcement alone does not prove a strategy is funded.
+
+Securities and receivables introduce obligor/originator, valuation, servicing, SPV priority and legal-recovery risks. Basis trading introduces broker/venue custody, margin funding, basis compression and forced-unwind risk. A directionally hedged position can still lose money or delay realization. LP and Treasury strategy balances are invested assets whose exit terms matter; the dashboard's historical “liquidity” classification must not be read as immediately available pool cash.
 
 At the October 29 **01:49:29 UTC** snapshot, canonical pool assets were **$949.13M**. All **33** manager positions sum to **$934.87M principal**, matching principalOut with **zero residual**. This verifies enumeration, not off-chain collateral or recovery value.
 
@@ -85,13 +79,17 @@ At **$250K**, the October 29 quote at **01:33:04 UTC** had **−7.60bps baseline
 
 The archive ending October 29 has **220 distinct successful quotes per institutional rung over 27.52 days**. The $250K all-in median is **−7.83bps**, IQR **3.18bps**; the $1M median is **−12.65bps**, IQR **3.16bps**. Maximum retained quote gap is six hours. Count, duration and quoted-cost quality requirements for considering 7.5 are met, but a successful quote is not a trade, a failure-rate denominator or a primary fill-latency distribution.
 
-At the October 29 **01:49:29 UTC** snapshot, cash-plus-interest free liquidity was **$14.26M / 1.50%**, with **$11.57M immediately held pool USDC**. The week ending at that snapshot has **168 hourly samples**, cushion median **1.34%**, **164/168 below 2%**. Month median is **1.69%**. That dated cash observation did not establish a durable buffer improvement; it does not measure DEX capacity or guarantee primary processing speed. The queue was empty with a recent fill at the October 29 snapshot. That observation is superseded by the October 30 queue reading above; neither queue pointers nor last-fill age measure a request-to-fill distribution.
+Primary withdrawals depend on portfolio liquidity, operator processing and asset realization. The dashboard distinguishes direct pool cash from accrued strategy interest and reports current queue measurements; those measures are not a request-to-fill distribution.
+
+The historical week ending October 29 has **168 hourly samples**, cushion median **1.34%**, **164/168 below 2%**; the month median is **1.69%**. This dated distribution supports the assessment’s persistent thin-buffer limitation, not a claim about today’s cash, queue age or an established withdrawal freeze.
 
 [Maple’s legal disclosure](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks) describes liquidity-dependent FIFO withdrawals, a claimed sub-24h average and no guaranteed maximum. The earlier five-minute claim has not been independently timed at size. Cross-chain token enumeration and syrupUSDT’s exact zero-hook pool finding do not establish USDC’s route controls, local executable exits, fills or settlement.
 
 **Liquidity stays 7.0.** The retained low-cost Ethereum quote distribution supports this rating, while primary latency, persistent thin observed buffer and unproved executable/local-chain settlement prevent 7.5. The refreshed source package closes neither leg by inference. Reconsider on measured primary settlement at size and comparable executable-route evidence. Cut-review triggers remain $250K all-in median worse than −25bps, dispersion above 50bps, observed primary delay beyond 24h or loss of usable canonical evidence. The $250K median here is a signed market-notional quote measure, not the impact column.
 
 ## 4 · Dependencies — 5.5
+
+[Zodia Interchange](https://maple.finance/insights/zodia-custody-opens-interchange-to-maple) separates custody from credit and relies on enforcement against pledged collateral. The [IRACE banking relationship](https://maple.finance/insights/maple-finance-selects-irace-digital-bank-for-institutional-banking-and-fiat-settlement) adds banking/settlement dependencies without deposit-insurance protection for Maple's accounts. Actual per-loan custody and per-pool bank exposures remain unestablished, so partnership announcements receive no automatic score credit.
 
 The October 29 producer snapshot declared explicit exact membership. All-position **$934.87M** has **top-1 21.39%, top-3 51.88%, top-5 72.91%, HHI 1290**, across **17 addresses**. Classified credit **$898.72M** has **top-1 22.25%, top-3 53.97%, HHI 1388**, across **15 addresses**. Addresses are not independently identified firms. The source’s reviewed economic labels do not establish independent counterparties, custodians or security control.
 
@@ -102,6 +100,8 @@ At the October 29 family snapshot, both books had declared per-pool economic ver
 **Dependencies stays 5.5.** Concentrated BTC-linked collateral, common keys/custody channels and overlapping borrowers remain load-bearing. Exact address labels remove a definition gap without establishing diversification or a new independent risk layer; the updated concentration level does not warrant an additional half-point move. Collateral-field uncertainty is assessed on Backing rather than charged a second time here. Reopen for verified new counterparty/custody linkage, materially changed exposure or a resolved economic classification that changes the actual population rather than metadata alone.
 
 ## 5 · Contract & Admin — 4.5
+
+The [CCIP 2.0 migration](https://maple.finance/insights/syrupusd-assets-are-upgrading-to-chainlink-ccip-2-0) replaces bridge token pools while retaining token addresses. Older authority observations do not verify replacement-pool permissions, delays, verification settings or matched locks and remote liabilities. Native mint/redeem outside Ethereum remains unverified; neither the announcement nor a listed receiver address proves an operational primary exit.
 
 The pools share MapleGlobals, governor, securityAdmin and permission infrastructure; delegate EOAs differ. Current named governor/securityAdmin/delegate addresses match the earlier record. That is not a fresh membership, module, role or bypass-path audit. The **September 6 authority walk** remains the basis for the two-governor-role-EOA path, recorded three-day delay, undelayed securityAdmin manager route to registered implementations, and differing delegate manager/withdrawal powers. A shared control path is not diversified by holding both pools.
 
@@ -129,7 +129,6 @@ Backing **2026-10-29T01:49:29Z**; collateral **2026-10-29T01:48:45Z**; quote **2
 | Numeric row coverage | 25/33; 94.28% / 96.27% | Principal-weighted all / classified-credit availability |
 | Credit priced / full ratio | $865.22M / unavailable | $33.5M WBTC valuation missing; incomplete scope |
 | Row collateral / reported aggregate | $1,103.83M / $1,612.24M | Unreconciled allocation/time/value conventions |
-| Free-liquidity measure / pool cash | $14.26M / $11.57M | Cash plus interest / held USDC; not DEX capacity |
 
 | Window | Raw / hourly / valid peg samples | Covered days | Peg mean / min / max (bps) | Cushion median / minimum (%) | Below 2% samples | Largest gap (hours) |
 |---|---:|---:|---:|---:|---:|---:|
@@ -165,12 +164,16 @@ Overall **6.5** is held. The six displayed axes average **6.25**; the retained l
 
 ## Open evidence and review triggers
 
+- Verify enforcement and subsequent changes to the per-new-strategy, overall-deposit launch-cap policy; distinguish new announcements from funded positions.
+- Confirm loan-level custody allocation, pledged-collateral enforcement and per-pool IRACE account exposure; partnership names do not establish protection.
 - Resolve currentAssetAmount versus assetAmount semantics and matched loan/custodian allocation, missing WBTC valuation and aggregate scope before claiming proved recovery coverage. Do not infer artifact or safety from PCR/zero recognized losses.
 - Measure primary request-to-fill latency and USDC-specific route execution/fills/settlement/local-chain coverage. USDT evidence does not close USDC route risk.
 - Reconcile bridge locks/liabilities, active registration, migration and in-flight balances across separately timed chains; totalSupply enumeration is not completeness.
 - Preserve the economic-definition boundary and source clocks. Do not manufacture per-loan valuation/custody/borrower histories or replace canonical financial sources to fill a gap.
 
 ## Revision history
+
+- **2026-10-31 — Structural review.** Added the expanded mandate and correct overall-deposit, per-new-strategy launch-cap basis; strategy-specific risks; CCIP replacement-pool verification gaps; and Zodia/IRACE dependencies. Routine daily cash, queue, APY and allocation observations remain dashboard/evidence material. Historical assessment windows, scores and verification/authority/assurance dates are unchanged.
 
 - **2026-10-30 — Financial update and snapshot chronology.** Refreshed spot assets, direct cash versus accrued interest, queue observations, quotes and dependency notes. Historical axis figures and quote/history windows retain their October 29 basis and are explicitly distinguished from the October 30 update. Numeric scores, production status and verification/authority/assurance dates unchanged.
 
