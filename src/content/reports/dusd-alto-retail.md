@@ -10,7 +10,7 @@ assessment_type: "full"
 audience: "retail"
 date: "2026-09-21"
 last_verified: "2026-09-20"
-last_revised: "2026-10-03"
+last_revised: "2026-11-02"
 issuer: "Alto Foundation"
 audited_reserves: false
 market_cap_approx: 822000
@@ -25,6 +25,8 @@ overall_score: 5.0
 featured: false
 production: false
 ---
+
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-scoped-report-layout>
 
 # DUSD (Alto) — Risk Report
 
@@ -94,6 +96,9 @@ The curve's 2% crossing is located at **$3,373,047** (bracket width $17,578) —
 
 The stress case was measured too. On-chain, the treasury holds 61.91% of the pool's LP (2,042,222 of 3,298,835 LP tokens, staked through Convex, StakeDAO and Yearn rather than held directly), with no lockup. If it withdraws, both sides of the pool shrink by that share, the treasury's 493,971 DUSD joins the float to make 517,907, and the 2% crossing falls to about 961,000 DUSD. Even then, selling that entire enlarged float returned 517,949 USDC, a premium of +0.82 bps.
 
+**Stake DAO retirement scope — November 2, 2026, 09:38 UTC.** The reviewed Curve V2 DUSD/frxUSD wrapper is a **qualified non-match**, not confirmed unaffected by SDGP-81 retirement. Its wrapper/LP/gauge and shared control addresses were absent from the checked withdraw-site sources; the measured Curve controller was unpaused and the gauge not shut down. However, the referenced 126-vault V1 inventory returned 404, and neither a V2 label nor current API membership proves exclusion. The same qualified finding applies to the reviewed USD3/scrvUSD wrapper. The vote was active at the source check; no final outcome or execution is established by that observation. No immediate principal-withdrawal deadline or forced exit was found. The legacy Pendle merkle reward deadline does not apply to deposited principal. Track execution and the promised complete contract/roles inventory separately; scores are unchanged. [SDGP-81](https://snapshot.org/#/stakedao.eth/proposal/0x8f4f3223518f62e320942d65cdbf0ad83ad195e9545da82d72aa4fdda977003c), [withdraw-site configuration](https://withdraw.stakedao.org/config.js), [Curve strategy API](https://api.stakedao.org/api/strategies/v2/curve/1.json).
+
+
 **What binds this axis is therefore not exit cost, which is excellent in both regimes, but the exit market itself.** There is no redemption right; one live venue and three dead ones; no exchange listing; daily volume in the hundreds or low thousands of dollars; and 62% of the depth is the issuer's own capital, withdrawable without notice. The asset is cheap to leave partly because there is almost nothing to leave — the 2% crossing sits far above supply, and what is actually held outside the quoting pool is **26,495 DUSD** — of which **19,714 sits in Alto's two borrow markets** (18,807 and 907) and **4,434 in fee timelocks**, leaving **at most 2,347 DUSD in third-party hands.** ⚠️ **That last figure is an upper bound, not a count.** Roughly 1,400 of it appeared after the 2026-09-20 holder classification and has never been attributed, so some or all of it may also be protocol-owned.
 
 **Risks and limitations.** The frxUSD-quoted venue is a recent condition, not the original design. A direct UniV3 DUSD/USDC pool was created on 2025-12-11, the day after the token, and carried real liquidity for six months; its liquidity reached zero at block 25,329,865 (2026-06-16 11:44 UTC), after which the Curve pool became the only venue. The pool's current premium to par is a property of its frxUSD-heavy balance and inverts into a discount as soon as the pool turns DUSD-heavy. The free dollar leg is Frax's inventory, not a property of DUSD: the redemption contract's USDC pocket moved from 59,196 to 72,836 USDC within ten minutes on 2026-09-21 and read 32,920 later that day — of the same order as the entire holding outside the pool — and once it is exhausted the 1:1 call simply fails and the dollar exit costs 0.86–2.4 bps more than the frxUSD exit through Curve. Immaterial to the verdict, but not Alto's to guarantee. Uniswap V4 has no factory to enumerate and was covered only through an index and route discovery; CoW Protocol and limit-order books were not enumerated; the redemption pocket and the crvUSD pools were read at a single block with no history.
@@ -150,3 +155,5 @@ Alto Foundation operates the protocol, publishing at altofoundation.org and docs
 *2026-09-21 — dollar exit measured end to end at block 26,022,595; Liquidity & Exit 4.5 → 5.5, overall 4.75 → 5.0. Frax's ERC-4626 redemption contract converts frxUSD to USDC one-for-one at zero fee, so the dollar exit costs nothing over the frxUSD exit at any size the float can produce; 2% crossing bisected at 2,515,625–2,531,250 DUSD, 3.06 times supply, so depth is reported as the 23,935 DUSD float; treasury LP share verified on-chain at 61.91% and the withdrawal case measured at +0.82 bps for the enlarged float. Venue sweep by contract address found one live pool and three dead ones. A ticker-only aggregator lookup returned 38 other assets among 42 rows.*
 
 *2026-09-21 — first staged publication. Supply, stability-module reserve, holder set, Curve pool balances and quotes, Safe owners and thresholds, timelock delay and the full minter and role histories read on-chain at block 26,017,854 (2026-09-20) and re-confirmed on 2026-09-21. Peg history reconstructed from archive state across 283 daily samples over both venues the token has ever had.*
+
+</div>

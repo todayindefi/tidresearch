@@ -16,7 +16,7 @@ last_verified: "2026-08-25"
 # ⚠️ 2026-09-09: bridge Safe re-read on-chain — 3-of-6 -> 4-of-7 at block
 # 25,877,589 (2026-08-31). The 08-25 owner-set-identity finding was CORRECT WHEN
 # WRITTEN; the asset moved under it. `last_verified` HOLDS.
-last_revised: "2026-10-26"
+last_revised: "2026-11-02"
 featured: false
 production: true
 # issuer: withheld pending review — this report states the issuing entity is
@@ -50,6 +50,8 @@ overall_score: 3.5
 # so the largest reserve component has had no CPA coverage for months; the body also
 # states this is "not a full financial-statement audit". `true` asserts the opposite.
 ---
+
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-scoped-report-layout>
 
 # apxUSD — Risk Report
 
@@ -102,7 +104,7 @@ Treat the specific discount and collateral ratio as a **moving event, not a fixe
 
 **What broke the peg, and what restores it:** STRC de-anchoring on a concentrated reserve plus a redemption wave pushed collateralization below par, and with no atomic redemption there was no automatic arbitrage to close the gap. ⚠️ **The collateral gap closed through the reserve recovering rather than through any redemption mechanism, and it closed for good on 2026-09-17** — which is the point: the same absence of arbitrage that let it open means nothing holds it shut. The path back to $1 depends on reserve value and functioning exit arbitrage. Strategy’s discretionary repurchases can support STRC’s mark but do not refill Apyx reserves or guarantee redemption. October 26 coverage is above 100% with a thin surplus, as detailed in Backing.
 
-**"Apyx 2.0" — an announced redemption redesign (June 15, 2026).** In a follow-up to the post-mortem, Apyx outlined a reworked mint/redeem model intended to fix a flaw the June event exposed. Everyone — in calm and in stress — would mint and redeem at a single **Redemption Value**, a floor price carrying a small spread, with the dashboard's headline NAV relabeled **Total Collateral Value** so the gap between the two reads directly as the overcollateralization buffer (their worked example: $1.02 of collateral behind a $1.00 redemption floor). Approved counterparties would quote against the reserve through a structured **RFQ**. Apyx frames the redesign as closing the prior "free put option" — under the old NAV-redemption logic, the first redeemers in a drawdown could arbitrage the buffer at the expense of everyone who stayed, exactly the dynamic that played out in June; under Redemption Value the buffer instead accrues to long-term holders. The intent is a genuine improvement in the redemption logic. **The important caveat: this is blog-only as of this revision.** Apyx's own docs at [`docs.apyx.fi`](https://docs.apyx.fi) still describe the old mechanism (apxUSD "settled in USDC / not directly redeemable"), no contract, PSM, or cooldown change has been disclosed, and redemption stays off-chain and is now explicitly gated to "approved counterparties." Redemption Value is an announced pricing *policy*, not an enforceable on-chain mechanism — so it doesn't change the no-atomic-redemption reality behind the Peg and Backing scores, and the scores are unchanged. Read it as a credible fix that is **pending adoption into the docs and on-chain confirmation**, not as a live guarantee that Apyx now redeems at a floor.
+**Redemption Value — documented, with execution and access limits (November 2, 2026).** The [official token overview](https://docs.apyx.fi/product-overview/apxusd-overview) and [peg model](https://docs.apyx.fi/solution-overview/peg-stability-model) now distinguish Redemption Value from Total Collateral Value and describe an approved-counterparty RFQ process. This supersedes the earlier conclusion that the model was blog-only. Documentation adoption does not establish a deployed, executable permissionless apxUSD→USDC primary redemption endpoint, an enforceable floor, or a settlement deadline. The scoped November 2 endpoint review found no supported direct on-chain cash endpoint in its declared scope; unlisted or off-chain facilities were not excluded. Eligible whitelisted participants in permitted jurisdictions remain distinct from ordinary token holders. Receipt claims into apxUSD do not confer primary cash entitlement. Scores and the full verification date are unchanged.
 
 ## 2 · Backing — 3.0
 
@@ -212,7 +214,7 @@ November daily STRC dividends at 12% remained **conditional in this pre-vote rev
 
 ## A note on the apyUSD sibling
 
-If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD report](/reports/apyusd/). apyUSD captures the dividend stream (≈13% APY ongoing) but exits through a **3-to-20-day unlock window with a declining fee** (and now sits on top of the same below-par collateral). The two products are claims against the same Apyx + STRC backing — holding both doesn't diversify.
+If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD report](/reports/apyusd/). apyUSD captures the dividend stream (≈13% APY ongoing) but exits through an **Unlock Receipt NFT path**: the November 2 Ethereum configuration charges 0.1% upfront plus a separate receipt fee of 2.5% through day 3, declining nonlinearly to zero at day 20. Claims pay apxUSD; these mutable terms do not establish a USDC exit. The two products are claims against the same Apyx + STRC backing — holding both doesn't diversify.
 
 
 
@@ -234,3 +236,5 @@ If you're considering the yield-bearing apyUSD wrapper, see the [apyUSD report](
 - **2026-07-13 — STRC weekly 8-K anchor refresh; scores held.**
 - **2026-06-29 — STRC soft-floor reframe** following Strategy's 8-K.
 - **2026-06-25 — depeg deepened.**
+
+</div>

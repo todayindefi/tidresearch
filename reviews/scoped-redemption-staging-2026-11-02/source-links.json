@@ -1,0 +1,52 @@
+[
+  {
+    "url": "https://docs.apyx.fi/technical-overview/unlocking",
+    "status": 200,
+    "final": "https://docs.apyx.fi/technical-overview/unlocking"
+  },
+  {
+    "url": "https://docs.apyx.fi/product-overview/apxusd-overview",
+    "status": 200,
+    "final": "https://docs.apyx.fi/product-overview/apxusd-overview"
+  },
+  {
+    "url": "https://docs.apyx.fi/solution-overview/peg-stability-model",
+    "status": 200,
+    "final": "https://docs.apyx.fi/solution-overview/peg-stability-model"
+  },
+  {
+    "url": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/YieldTokenization/PT",
+    "status": 200,
+    "final": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/YieldTokenization/PT"
+  },
+  {
+    "url": "https://etherscan.io/address/0x9bf51f33955ec70f87c4b5c49441815589043237",
+    "status": 403,
+    "final": "https://etherscan.io/address/0x9bf51f33955ec70f87c4b5c49441815589043237"
+  },
+  {
+    "url": "https://snapshot.org/#/stakedao.eth/proposal/0x8f4f3223518f62e320942d65cdbf0ad83ad195e9545da82d72aa4fdda977003c",
+    "status": 200,
+    "final": "https://snapshot.org/#/stakedao.eth/proposal/0x8f4f3223518f62e320942d65cdbf0ad83ad195e9545da82d72aa4fdda977003c"
+  },
+  {
+    "url": "https://withdraw.stakedao.org/config.js",
+    "status": 200,
+    "final": "https://withdraw.stakedao.org/config.js"
+  },
+  {
+    "url": "https://api.stakedao.org/api/strategies/v2/curve/1.json",
+    "status": 200,
+    "final": "https://api.stakedao.org/api/strategies/v2/curve/1.json"
+  },
+  {
+    "url": "https://todayindefi.github.io/backing-monitor/?asset=apyusd",
+    "status": 200,
+    "final": "https://todayindefi.github.io/backing-monitor/?asset=apyusd"
+  },
+  {
+    "url": "https://todayindefi.github.io/backing-monitor/?asset=usdat",
+    "status": 200,
+    "final": "https://todayindefi.github.io/backing-monitor/?asset=usdat"
+  }
+]

@@ -14,7 +14,7 @@ date: "2026-05-07"
 # 25,877,589 (2026-08-31). The 08-25 measurement was CORRECT WHEN WRITTEN; the
 # asset moved under it. ⚠️ The custody Safe is STILL 3-of-6 on the same six as
 # token governance, so the quorum gap survives there. `last_verified` HOLDS.
-last_revised: "2026-10-26"
+last_revised: "2026-11-02"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -64,19 +64,21 @@ redemption_score: 3.5
 overall_score: 4.0
 ---
 
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-scoped-report-layout>
+
 # apyUSD — Risk Report
 
 **Significant risk · 4.0/10**
 
 ## What this actually is
 
-apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **≈13% APY**, within STRC's 11-15% indicated-rate range. Where apxUSD holders forgo yield for stablecoin functionality, apyUSD holders accept an exit window — a **3-to-20-day unlock with a declining fee** — in exchange for the dividend pass-through, or take a DEX two-hop for retail-scale exits in minutes.
+apyUSD is the yield-bearing wrapper around [apxUSD](/reports/apxusd/) — deposit apxUSD, receive apyUSD shares, and the share value grows as Apyx's STRC-backed collateral pays dividends. Ongoing yield is **≈13% APY**, within STRC's 11-15% indicated-rate range. Where apxUSD holders forgo yield for stablecoin functionality, apyUSD holders accept an exit window — an **Unlock Receipt NFT claim path with a separate upfront fee and declining receipt fee** — in exchange for the dividend pass-through, or take a DEX two-hop for retail-scale exits in minutes.
 
 The October 26 parent reserve review reports **100.2146% netted / 100.1125% gross coverage**, with **$325,186.68 surplus**. Its **$127.437M STRC bucket** exposes the wrapper to a concentrated mark and funding risk. Overall remains **4.0**; the vault’s own coverage identity does not add a separate reserve cushion.
 
 | Yield | Exit methods | Effective time-to-cash | Age | Chains |
 |---|---|---|---|---|
-| ≈13% APY ongoing | DEX two-hop (retail) or 3-to-20-day unlock window (institutional) | Minutes (sub-$1M via DEX) or 3–20 days (canonical) | ≈3 months | Ethereum, Base |
+| ≈13% APY ongoing (dated) | DEX two-hop or Unlock Receipt NFT | DEX execution depends on quotes; receipt claims pay apxUSD after 3–20 days, then require a separate cash exit | Launched February 2026 | Ethereum, Base |
 
 ## 1 · Stability — 5.5
 
@@ -112,16 +114,20 @@ On fixed netted liabilities and other reserve marks, **1% / 5% losses on the STR
 
 ## 3 · Liquidity & Exit — 3.5
 
-The **October 26** review recorded **1.448195 apxUSD per share**, CoinGecko discount **−2.6630%** against its timed NAV, and **$49,759.98** returned by the **$50K market-notional** routed quote. The standing NAV discount and execution cost are distinct. The observed **20-day unlock cooldown** does not measure queue depth or underlying issuer settlement. No dollar redemption at NAV is promised. The shared backing feed supplies the ladder; the separate venue-inventory feed does not supply depth.
+The **October 26** review recorded **1.448195 apxUSD per share**, CoinGecko discount **−2.6630%** against its timed NAV, and **$49,759.98** returned by the **$50K market-notional** routed quote. The standing NAV discount and execution cost are distinct. The historical **20-day unlock observation** does not measure the active receipt queue or underlying issuer settlement; the November 2 path is described below. No dollar redemption at NAV is promised. The shared backing feed supplies the ladder; the separate venue-inventory feed does not supply depth.
 **Two exit paths, and which binds depends on size. The axis takes the worse one — here they land together at 3.5, and the binding constraint is that both terminate in an asset that trades below $1**, which is a market fact and no longer a backing one.
 
 **Retail-scale, sub-$1M — DEX two-hop, minutes to cash.** Sell apyUSD → apxUSD on Curve, then apxUSD → USDC. ⚠️ **Both legs price the apxUSD discount in**, so the cash received reflects the below-par value, not NAV. Trading on the apyUSD/apxUSD pool is sporadic and market-maker driven, and **Apyx pulls its own depth off-hours by design.** Backup venues exist on PancakeSwap V3 and smaller Uniswap V4 pools. **The October 26 STRCx routed-liquidity snapshot was $260,864.37**, which bears directly on the arithmetic one layer down.
 
-**Canonical — a 3-to-20-day window with a declining fee.** Burn apyUSD, enter the UnlockToken window, and **exit faster by paying more: the fee declines linearly from ≈3.5% at about 3 days to ≈0.1% at the full ≈20 days.** It is **not** a flat 20-day cooldown. The max window was shortened from 30 to 20 days by the Apyx admin on 2026-04-15, verified on-chain, and remains admin-mutable subject to a 72-hour visibility window.
+**Active new-redemption path — Unlock Receipt NFT.** At Ethereum block **26,324,501**, November 2, 2026 **03:47:59 UTC**, the measured implementation routes new withdraw/redeem requests into an Unlock Receipt NFT. It charges a **0.1% upfront, non-refundable vault fee**, separate from the receipt's fee. Claims start after **259,200 seconds (3 days)**; the additional receipt fee is **2.5% through day 3**, then declines **nonlinearly to zero at day 20**, with curvature **0.75** and fee amounts rounded up. Waiting until day 20 removes the receipt fee, not the upfront fee. This dated configuration is mutable and is not a guarantee of future terms or availability on every chain. Claims pay **apxUSD, not USDC**.
 
-⚠️ **The window is both an exit cost and the protocol's anti-bank-run feature** — Apyx's June post-mortem credits it with preventing a run by disincentivizing the simultaneous exits that would have forced more STRC selling. **For institutional sizing it binds, and it exposes the holder to several more days of collateral drift before the terminal apxUSD is even received.**
+The legacy UnlockToken queue and the documentary linear ≈3.5%→0.1% example do not describe the measured active new-redemption configuration. The [official unlocking guide](https://docs.apyx.fi/technical-overview/unlocking) mixes legacy and receipt descriptions; use the dated implementation/configuration evidence for this distinction. [Active receipt monitoring](https://todayindefi.github.io/backing-monitor/?asset=apyusd), [receipt contract](https://etherscan.io/address/0x9bf51f33955ec70f87c4b5c49441815589043237).
 
-Because the canonical path terminates in apxUSD, this asset inherits the underlying's redemption model. Apyx's "Apyx 2.0" plan to move apxUSD mint/redeem to a single Redemption Value floor would improve the terminal asset — **but it is blog-only, not in docs or on-chain, and it changes nothing about this vault's own window.**
+At block **26,326,100**, November 2 **09:08:35 UTC**, the accepted receipt-monitor release reconciled 1,304 issued IDs, 183 live receipts and 171 time-eligible receipts. Face liabilities equalled held apxUSD units at that block. Time eligibility and token coverage do not prove every claim will execute, independent issuer reserves, fiat solvency or final cash eligibility. These clocks are observations, not continuously fresh attestations.
+
+**Terminal apxUSD redemption remains a separate leg.** Current [token docs](https://docs.apyx.fi/product-overview/apxusd-overview) and [peg docs](https://docs.apyx.fi/solution-overview/peg-stability-model) now describe Redemption Value separately from Total Collateral Value, superseding the earlier blog-only conclusion. Docs adoption does not establish an executable permissionless primary apxUSD→USDC endpoint. Primary participation remains restricted to eligible whitelisted participants in permitted jurisdictions, with an approved-counterparty RFQ process. The scoped November 2 endpoint review found no supported direct on-chain cash endpoint in its declared scope; it does not exclude unlisted or off-chain facilities. Receipt claims and technical token permissions establish no primary settlement entitlement.
+
+**Pendle PT settlement.** Maturity is not automatic cash settlement. A PT's accounting unit and its SY conversion determine the amount of underlying delivered: **one PT is not necessarily one apyUSD vault share**. Redeeming to apyUSD, claiming a receipt into apxUSD and converting apxUSD into USDC are distinct steps, with separate fees, availability and eligibility. No mandatory pre-maturity roll or exit deadline was established for the reviewed Apyx PT. A dated pre-maturity sale quote or conditional simulation is not evidence of future maturity payout or a complete cash exit. [Pendle principal-token documentation](https://docs.pendle.finance/pendle-v2/ProtocolMechanics/YieldTokenization/PT).
 
 ## 4 · Dependencies — 3.0
 
@@ -186,13 +192,15 @@ November daily STRC dividends at 12% remained **conditional in this pre-vote rev
 
 ## A note on the apxUSD companion
 
-The [apxUSD report](/reports/apxusd/) covers the non-yield-bearing sibling — the asset this vault wraps. apxUSD exits faster at any size, via Curve or USDC settlement, but earns no yield; apyUSD adds the dividend pass-through and the unlock window. ⚠️ **The two are claims against the same Apyx and STRC backing. Holding both does not diversify.**
+The [apxUSD report](/reports/apxusd/) covers the non-yield-bearing sibling — the asset this vault wraps. apxUSD earns no yield and can be sold on secondary venues subject to depth; primary USDC settlement requires eligibility; apyUSD adds the dividend pass-through and the receipt claim path. ⚠️ **The two are claims against the same Apyx and STRC backing. Holding both does not diversify.**
 
 
 
 **October 26 targeted scope:** inherited filing, dated reserve/quote facts and active dependency rationale only. Full verification dates, scores and publication status are unchanged. Governance, custody and primary redemption were not re-audited. [Reviewed source snapshots](/data/strategy/2026-10-26/sources.json).
 
 ## Revision history
+
+- **2026-11-02 — scoped redemption and PT correction.** Active receipt configuration, documented Redemption Value and final-settlement limits updated. Scores and full verification date unchanged.
 
 - **2026-10-26 — factual dependency propagation.** Incorporated accession 0001193125-26-431146, dated reserve and exit observations, provisional outstanding-count/runway limits and conditional November dividends. Scores and full verification dates unchanged. Broader shared-source/history-format migration remains deferred.
 
@@ -201,3 +209,5 @@ The [apxUSD report](/reports/apxusd/) covers the non-yield-bearing sibling — t
 - **2026-08-25 — signer concentration measured; scores held at 3.0.** Three Safes govern the Apyx surface: token governance `0xABdd8c8e…65e96` (**4 of 6**, behind the 72h timelock), bridge governor `0xf9862EfC…3cE2` (**3 of 6**, no delay), and STRCx custody `0x37b0779a…a555` (**3 of 6**, no delay, about the STRCx custody Safe). ⚠️ **All three owner sets are identical — six shared, none exclusive to any of them.** Six people holding three hats, so **any three of the six move tokens cross-chain or move the collateral with no delay**, and the timelock governs one of the three paths rather than the people. Owner-set identity and thresholds are measured; the role attributions are read from records.
 - **2026-08-23 — apxUSD collateral basis clarified; scores held (Overall 3.0 / Underlying 3.0).** The attested collateral ratio of **98.017743%** is a **netted** figure, excluding **$50.20M of protocol-owned liquidity and $39.92M of minted-but-unsold inventory from both sides**, and is published alongside gross totals. The shortfall on gross supply is **$4,399,857.64**. An independent lower bound reads **98.5289%**, computed gross after stripping the STRCx premium over STRC NAV. **The terminal asset's recovery gate is par or better on the attested feed, sustained.** ⚠️ **That gate was not met at this date, and the early readings that looked like it were noise: the ratio crossed par 21 times between 09-04 and 09-17.** The clean break is 2026-09-17 — see the 2026-10-04 entry. **What can be said is that the condition has started being met rather than remaining unmet.**
 - **2026-06-29 — STRC soft-floor reframe.** See the [apxUSD report](/reports/apxusd/) for the reserve and team-trust write-up this inherits.
+
+</div>

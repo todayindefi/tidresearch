@@ -9,7 +9,7 @@ assessment_type: "light"
 companion_report: "susdat"
 date: "2026-05-20"
 last_verified: "2026-08-23"
-last_revised: "2026-10-14"
+last_revised: "2026-11-02"
 # Partial refresh: dated dashboard observations and current public documentation.
 # Source and main-file audit parity verified in the October 14 reassessment.
 # Full dependency parity, custody, bridge powers and eligible-holder exit remain outstanding.
@@ -30,6 +30,8 @@ overall_score: 4.5
 audited_reserves: false
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=usdat"
 ---
+
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-scoped-report-layout>
 
 # USDat — Risk Report
 
@@ -91,6 +93,11 @@ Historical router activity demonstrates that an eligible holder redeemed substan
 The reassessment's **2026-10-14 04:45:42 UTC** venue snapshot sets **Liquidity & Exit at 5.0**: its venue rubric combines a depth tier of 6.0, peg adjustment +0.5, single-venue adjustment −1.0, zero turnover adjustment and pool/supply adjustment −0.5. Its effective under-25-basis-point capacity input is **$333,505**; this rubric input is distinct from the broader router ladder above. These are Ethereum measurements, not measured Monad depth.
 
 **Risks and limitations.** For a holder without a proven primary route, secondary depth and single-venue concentration bind the exit. Primary settlement remains incompletely measured. MoonPay accepts direct PYUSDx minting and redemption only from eligible counterparties; indirect holders have no direct issuer-redemption right. A full USDat → PYUSDx → PYUSD/USDC exit still needs eligibility, fees, inventory and timing verification. Neither historical transactions nor indicative quotes guarantee a present fill. [MoonPay terms](https://www.moonpay.com/legal/pyusdx_terms)
+
+
+**November 2 scoped route finding.** Dated USDat→USDC secondary quotes on Ethereum and Monad support positive sale liquidity at the tested route sizes. This does not establish the upstream path from **srUSDat shares or PT-srUSDat** into spendable USDat. That senior-share product is distinct from sUSDat and from USDat itself. Local share conversion, share delivery across chains, any applicable queue, and the actual composed cash route remain conditional. The reviewed srUSDat bridge uses LayerZero; it must not be conflated with the Saturn token CCIP migration. A share preview is not completed redemption, and a quote is not an executed swap. [USDat market monitoring](https://todayindefi.github.io/backing-monitor/?asset=usdat).
+
+Maturity of a PT does not automatically deliver cash, and one PT need not equal one vault share: market accounting units and conversion determine the underlying amount. Upstream settlement and final USDat sale remain separate. The positive secondary evidence should not be described as an underlying USDat sale-depth blocker, nor as proof of a complete share-to-cash exit. Scores and full verification dates are unchanged.
 
 ## 4 · Dependencies — 5.0
 
@@ -165,3 +172,5 @@ Numerical observations are frozen at **2026-10-14 03:45:41 UTC**, with Ethereum 
 - **2026-09-09 — six-axis assessment adopted.** Dependencies 5.0 and Contract & Admin 4.0; Overall 4.5.
 - **2026-08-29 — reserve and redemption observations refreshed.** Recorded Ethereum reserve-token coverage and partial BNB scope.
 - **2026-08-23 — PYUSDx reserve migration assessed.** Backing 5.5, Issuer 5.0 and Overall 4.5.
+
+</div>

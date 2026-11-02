@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 export interface ReportRow {
   slug: string;
   asset: string;
+  aliases?: string[];
   category: string;
   assessment_type: "full" | "light";
   audience?: "retail" | "institutional";
@@ -77,7 +78,7 @@ export default function ReportsFilter({
       if (chain !== "all" && !r.chain_labels.includes(chain)) return false;
       if (!bandFn(r.overall_score)) return false;
       if (monitoredOnly && !r.has_dashboard) return false;
-      if (qq && !r.asset.toLowerCase().includes(qq)) return false;
+      if (qq && ![r.asset, ...(r.aliases ?? [])].some((name) => name.toLowerCase().includes(qq))) return false;
       return true;
     });
   }, [reports, category, chain, band, q, monitoredOnly]);

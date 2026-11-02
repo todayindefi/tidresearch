@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "apxusd",
+    "status": 200,
+    "main_matches_build": true,
+    "mobile_wrapper": true
+  },
+  {
+    "slug": "apyusd",
+    "status": 200,
+    "main_matches_build": true,
+    "mobile_wrapper": true
+  },
+  {
+    "slug": "usdat",
+    "status": 200,
+    "main_matches_build": true,
+    "mobile_wrapper": true
+  },
+  {
+    "slug": "susdat",
+    "status": 200,
+    "main_matches_build": true,
+    "mobile_wrapper": true
+  },
+  {
+    "slug": "dusd-alto",
+    "status": 200,
+    "main_matches_build": true,
+    "mobile_wrapper": true
+  }
+]
