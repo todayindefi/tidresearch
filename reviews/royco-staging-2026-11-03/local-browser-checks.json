@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "viewport": 1440,
+      "page": "report",
+      "status": 200,
+      "overflow": false,
+      "scores_and_dates_verified": true,
+      "matches_build": true,
+      "sidebar": "OVERALL SCORE\n4.0\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nSmart Contract\n5.0\nEconomic\n3.5\nProject\n3.5\nCATEGORY\nProtocol\nCHAINS\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\nLAST REVIEWED\n2026-11-03"
+    },
+    {
+      "viewport": 1440,
+      "page": "index",
+      "search": "Royco",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 1440,
+      "page": "index",
+      "search": "Royco Day",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 1440,
+      "page": "index",
+      "search": "srRoyUSDC",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 1440,
+      "page": "index",
+      "search": "Boyco",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 390,
+      "page": "report",
+      "status": 200,
+      "overflow": false,
+      "scores_and_dates_verified": true,
+      "matches_build": true,
+      "sidebar": "OVERALL SCORE\n4.0\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nSmart Contract\n5.0\nEconomic\n3.5\nProject\n3.5\nCATEGORY\nProtocol\nCHAINS\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\nLAST REVIEWED\n2026-11-03"
+    },
+    {
+      "viewport": 390,
+      "page": "index",
+      "search": "Royco",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 390,
+      "page": "index",
+      "search": "Royco Day",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 390,
+      "page": "index",
+      "search": "srRoyUSDC",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    },
+    {
+      "viewport": 390,
+      "page": "index",
+      "search": "Boyco",
+      "royco_visible": true,
+      "index_card": "PROTOCOL\n\u00b7 FULL\nRoyco\nScore\n4.0\nETHEREUM\nARBITRUM\nBASE\nAVALANCHE\n\nLast reviewed 2026-11-03"
+    }
+  ],
+  "pageerrors": []
+}

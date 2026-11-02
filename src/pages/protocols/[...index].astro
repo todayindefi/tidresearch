@@ -26,11 +26,18 @@ const rows = all
     chain_labels: Array.from(new Set(entry.data.chains.map(chainLabel))),
     overall_score: entry.data.overall_score,
     last_verified: new Date(entry.data.last_verified).toISOString().slice(0, 10),
+    last_revised: entry.data.last_revised
+      ? new Date(entry.data.last_revised).toISOString().slice(0, 10)
+      : undefined,
     featured: Boolean(entry.data.featured),
   }))
   .sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    return b.last_verified.localeCompare(a.last_verified);
+    const reviewed = (entry: { last_verified: string; last_revised?: string }) =>
+      entry.last_revised && entry.last_revised > entry.last_verified
+        ? entry.last_revised
+        : entry.last_verified;
+    return reviewed(b).localeCompare(reviewed(a));
   });
 ---
 

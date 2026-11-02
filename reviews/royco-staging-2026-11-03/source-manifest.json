@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/home/danger/riskAnalyst/reports/royco.md",
+    "sha256": "30d151536a537d4243f0bbe875845dacefeb24e24b7169b3d6270c3a96d4b8ac"
+  },
+  {
+    "path": "/home/danger/riskAnalyst/data/reviews/royco-2026-11-03/results.json",
+    "sha256": "c038ca511a77b89a8f9b834fe5a746ca082e8e3a584da0720450b99851a29531"
+  },
+  {
+    "path": "/home/danger/riskAnalyst/data/reviews/royco-2026-11-03/provenance.json",
+    "sha256": "7d353da9e684de0147294948045304c48b836c6180d5ef9241235784190dfdca"
+  },
+  {
+    "path": "/home/danger/DeFiAnalyst/data/projects/royco.yaml",
+    "sha256": "8ac3fcc81c5c3d768b72a442df88db2dcd9a7f00fe5ab787881f2b5f39e0790c"
+  },
+  {
+    "path": "/home/danger/DeFiAnalyst/data/reviews/royco-profile-2026-11-03/provenance.json",
+    "sha256": "49922c14ce2aa420e833d5555b5b8a3e4ccf2b44138088f89c7bbe8ec62bafb4"
+  }
+]
