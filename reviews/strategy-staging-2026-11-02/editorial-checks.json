@@ -1,0 +1,56 @@
+[
+  {
+    "report": "mstr",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "67786943c2872be4435b6bc42575b6b9dfd85624e175e86dd95c474a44468a77"
+  },
+  {
+    "report": "strc",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "ecd5a70c4fa9006c5cb819487b309b98bceab6b74fac59aa55add5cf852bbb1b"
+  },
+  {
+    "report": "strcx",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "ca203d5cf66e129e368fb6144737477d9c551e37893b8485ffb4bdc21c6dc240"
+  },
+  {
+    "report": "apxusd",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "7d33fb25ca1b4edaf3918c751af7385c619cf84ddaa3b18cc6362436464c7a8a"
+  },
+  {
+    "report": "apyusd",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "4f4aa8f5fe3e7e557bb3512b170d13de1fd167ef5b216b491272e5aa385dfb09"
+  },
+  {
+    "report": "susdat",
+    "all_scores_unchanged": true,
+    "full_verification_unchanged": true,
+    "publication_flag_unchanged": true,
+    "reader_first_structure": true,
+    "no_routine_icons_in_main": true,
+    "sha256": "35998e8f0673c0366b50afb494cf5d7c2e6b756909be99ea198d1d63bc788d73"
+  }
+]

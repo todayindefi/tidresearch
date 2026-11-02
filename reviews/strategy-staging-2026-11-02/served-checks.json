@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "mstr",
+    "status": 200,
+    "main_matches_build": true
+  },
+  {
+    "slug": "strc",
+    "status": 200,
+    "main_matches_build": true
+  },
+  {
+    "slug": "strcx",
+    "status": 200,
+    "main_matches_build": true
+  },
+  {
+    "slug": "apxusd",
+    "status": 200,
+    "main_matches_build": true
+  },
+  {
+    "slug": "apyusd",
+    "status": 200,
+    "main_matches_build": true
+  },
+  {
+    "slug": "susdat",
+    "status": 200,
+    "main_matches_build": true
+  }
+]

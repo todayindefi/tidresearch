@@ -1,0 +1,65 @@
+{
+  "accession": "0001193125-26-442707",
+  "filing_date": "2026-11-02",
+  "activity_start": "2026-10-26",
+  "activity_end": "2026-11-01",
+  "balances_as_of": "2026-11-01",
+  "primary_url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm",
+  "issuer_pdf_url": "https://assets.contentstack.io/v3/assets/bltf8d808d9b8cebd37/blte93fe0f1dbd00c0c/6ae80aa9f59c3f3fd5ce7aac/form-8-k_11-02-2026.pdf",
+  "source_hashes": [
+    {
+      "sha256": "24c7a6f66c32e6f6f234e7501b7c2a4398a7bc7fab7348aad139e9b088c85168",
+      "bytes": 9161,
+      "file": "0001193125-26-442707-index.html"
+    },
+    {
+      "sha256": "e42e1329d069d02ef3eb2b5a52c1a4278c93b46806a118f4d70f56e6772fe855",
+      "bytes": 1392,
+      "file": "0001193125-26-442707-index.html.txt"
+    },
+    {
+      "sha256": "6a9b435f57bbddc4bb983fd34b28ec26e5f7d93245d6bd41d935c00490b8e2cd",
+      "bytes": 909198,
+      "file": "8-k.pdf"
+    },
+    {
+      "sha256": "6e733bfde6562ed7a1741aac650efd174837dbc59efc9e5973172ab0a3e4930a",
+      "bytes": 204220,
+      "file": "mstr-20261102.htm"
+    },
+    {
+      "sha256": "5587a3d85489eb5aed2612ca6f1fe0ece07c30360c70a653ac5f0f4cb3da3925",
+      "bytes": 8152,
+      "file": "mstr-20261102.htm.txt"
+    }
+  ],
+  "facts": {
+    "common_shares_sold": 1178552,
+    "common_net_proceeds_usd": 164000000,
+    "proceeds_to_btc_usd": 65500000,
+    "proceeds_to_general_cash_usd": 98500000,
+    "strc_shares_repurchased": 2092035,
+    "strc_repurchase_cost_usd": 208200000,
+    "general_cash_usd": 132700000,
+    "prior_general_cash_usd": 242400000,
+    "cash_change_usd": -109700000,
+    "cash_change_pct": -45.25577557755776,
+    "usd_reserve_usd": 4790000000,
+    "preferred_dividend_cash_use_usd": 43400000,
+    "preferred_buyback_authorization_remaining_usd": 748600000,
+    "btc_purchased": 811,
+    "btc_ending": 849327,
+    "btc_previous": 848517,
+    "btc_delta": 810,
+    "preferred_atm_sales_reported": false
+  },
+  "limitations": [
+    "811 BTC purchased versus 810 BTC holdings delta remains unreconciled.",
+    "Dividend cash use is for preferreds, not identified as STRC-only.",
+    "Repurchases do not independently establish retirement, current outstanding shares or service burden.",
+    "No new dividend rate/daily-dividend effectiveness/wrapper pass-through established.",
+    "Live SEC retrieval failed; retained primary source hashes matched.",
+    "Public dashboard financial anchors and market clocks may differ from filing date.",
+    "Shares sold include trades not yet settled as of October 30; allocation figures are as disclosed."
+  ]
+}

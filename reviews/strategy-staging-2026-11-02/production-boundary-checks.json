@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "mstr",
+    "status": 200,
+    "staging_marker_present": false
+  },
+  {
+    "slug": "strc",
+    "status": 200,
+    "staging_marker_present": false
+  },
+  {
+    "slug": "strcx",
+    "status": 200,
+    "staging_marker_present": false
+  },
+  {
+    "slug": "apxusd",
+    "status": 200,
+    "staging_marker_present": false
+  },
+  {
+    "slug": "apyusd",
+    "status": 200,
+    "staging_marker_present": false
+  },
+  {
+    "slug": "susdat",
+    "status": 200,
+    "staging_marker_present": false
+  }
+]

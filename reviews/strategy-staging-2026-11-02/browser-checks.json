@@ -1,0 +1,125 @@
+{
+  "results": [
+    {
+      "slug": "mstr",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nShared issuer, market and filing observations; source dates are shown on the dashboard.\n\nSCORE BREAKDOWN\nBalance sheet quality\n5.0\nFunding model durability\n3.0\nRefinancing capacity\n4.5\nGovernance\n4.5\nCATEGORY\nTradFi Equity\nISSUER\nStrategy Inc. (formerly MicroStrategy Incorporated)\nUNDERLYING\nBTC\nCHAINS\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "mstr",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nShared issuer, market and filing observations; source dates are shown on the dashboard.\n\nSCORE BREAKDOWN\nBalance sheet quality\n5.0\nFunding model durability\n3.0\nRefinancing capacity\n4.5\nGovernance\n4.5\nCATEGORY\nTradFi Equity\nISSUER\nStrategy Inc. (formerly MicroStrategy Incorporated)\nUNDERLYING\nBTC\nCHAINS\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "strc",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nShared issuer, market and filing observations; source dates are shown on the dashboard.\n\nSCORE BREAKDOWN\nVolatility and par behavior\n5.0\nLiquidity and exit\n7.0\nCounterparty and support durability\n3.0\nRedemption and holder rights\n5.0\nCATEGORY\nTradFi Equity\nISSUER\nStrategy Inc.\nUNDERLYING\nMSTR\nCHAINS\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "strc",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nShared issuer, market and filing observations; source dates are shown on the dashboard.\n\nSCORE BREAKDOWN\nVolatility and par behavior\n5.0\nLiquidity and exit\n7.0\nCounterparty and support durability\n3.0\nRedemption and holder rights\n5.0\nCATEGORY\nTradFi Equity\nISSUER\nStrategy Inc.\nUNDERLYING\nMSTR\nCHAINS\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "strcx",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n4.5\nBacking\n4.0\nLiquidity & Exit\n2.5\nDependencies\n3.0\nContract & Admin\n6.0\nIssuer\n6.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-13. For live readings, see the dashboard \u2192\n\nCATEGORY\nWrapped Token\nISSUER\nBacked Assets (JE) Limited (Jersey)\nUNDERLYING\nSTRC\nCHAINS\nETHEREUM\nSOLANA\nARBITRUM\nBNB CHAIN\nMANTLE\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "strcx",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n4.5\nBacking\n4.0\nLiquidity & Exit\n2.5\nDependencies\n3.0\nContract & Admin\n6.0\nIssuer\n6.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-13. For live readings, see the dashboard \u2192\n\nCATEGORY\nWrapped Token\nISSUER\nBacked Assets (JE) Limited (Jersey)\nUNDERLYING\nSTRC\nCHAINS\nETHEREUM\nSOLANA\nARBITRUM\nBNB CHAIN\nMANTLE\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "apxusd",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n3.5\nBacking\n3.0\nLiquidity & Exit\n3.5\nDependencies\n3.0\nContract & Admin\n4.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-08-25. For live readings, see the dashboard \u2192\n\nCATEGORY\nStablecoin\nPEG MECHANISM\nRwa-Synthetic\nCHAINS\nETHEREUM\nBASE\nBNB CHAIN\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "apxusd",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n3.5\nBacking\n3.0\nLiquidity & Exit\n3.5\nDependencies\n3.0\nContract & Admin\n4.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-08-25. For live readings, see the dashboard \u2192\n\nCATEGORY\nStablecoin\nPEG MECHANISM\nRwa-Synthetic\nCHAINS\nETHEREUM\nBASE\nBNB CHAIN\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "apyusd",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n4.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n5.5\nBacking\n3.0\nLiquidity & Exit\n3.5\nDependencies\n3.0\nContract & Admin\n4.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-08-25. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nUNDERLYING\nAPXUSD\nCHAINS\nETHEREUM\nBASE\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "apyusd",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n4.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n5.5\nBacking\n3.0\nLiquidity & Exit\n3.5\nDependencies\n3.0\nContract & Admin\n4.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-08-25. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nUNDERLYING\nAPXUSD\nCHAINS\nETHEREUM\nBASE\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "susdat",
+      "width": 1440,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n3.5\nBacking\n2.5\nLiquidity & Exit\n2.0\nDependencies\n2.5\nContract & Admin\n3.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-10-13. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nSaturn Labs\nUNDERLYING\nSTRC (OFF-CHAIN CLAIM)\nUSDAT (ON-CHAIN BUFFER)\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-02"
+    },
+    {
+      "slug": "susdat",
+      "width": 390,
+      "status": 200,
+      "matches_build": true,
+      "mobile_overflow": false,
+      "routine_icons": false,
+      "iframes": 0,
+      "sidebar": "OVERALL SCORE\n3.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n3.5\nBacking\n2.5\nLiquidity & Exit\n2.0\nDependencies\n2.5\nContract & Admin\n3.5\nIssuer\n5.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-10-13. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nSaturn Labs\nUNDERLYING\nSTRC (OFF-CHAIN CLAIM)\nUSDAT (ON-CHAIN BUFFER)\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-02"
+    }
+  ],
+  "pageerrors": []
+}

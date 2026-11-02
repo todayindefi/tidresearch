@@ -1,0 +1,117 @@
+[
+  {
+    "url": "https://accountable.apyx.fi",
+    "status": 403,
+    "final": "https://accountable.apyx.fi/"
+  },
+  {
+    "url": "https://assets.contentstack.io/v3/assets/bltf8d808d9b8cebd37/blte93fe0f1dbd00c0c/6ae80aa9f59c3f3fd5ce7aac/form-8-k_11-02-2026.pdf",
+    "status": 200,
+    "final": "https://assets.contentstack.io/v3/assets/bltf8d808d9b8cebd37/blte93fe0f1dbd00c0c/6ae80aa9f59c3f3fd5ce7aac/form-8-k_11-02-2026.pdf"
+  },
+  {
+    "url": "https://docs.apyx.fi/collateral-and-custody/third-party-attestation",
+    "status": 200,
+    "final": "https://docs.apyx.fi/collateral-and-custody/third-party-attestation"
+  },
+  {
+    "url": "https://docs.apyx.fi/product-overview/apxusd-overview",
+    "status": 200,
+    "final": "https://docs.apyx.fi/product-overview/apxusd-overview"
+  },
+  {
+    "url": "https://docs.apyx.fi/solution-overview/peg-stability-model",
+    "status": 200,
+    "final": "https://docs.apyx.fi/solution-overview/peg-stability-model"
+  },
+  {
+    "url": "https://docs.apyx.fi/technical-overview/unlocking",
+    "status": 200,
+    "final": "https://docs.apyx.fi/technical-overview/unlocking"
+  },
+  {
+    "url": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/YieldTokenization/PT",
+    "status": 200,
+    "final": "https://docs.pendle.finance/pendle-v2/ProtocolMechanics/YieldTokenization/PT"
+  },
+  {
+    "url": "https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555",
+    "status": 403,
+    "final": "https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555"
+  },
+  {
+    "url": "https://etherscan.io/address/0x9bf51f33955ec70f87c4b5c49441815589043237",
+    "status": 403,
+    "final": "https://etherscan.io/address/0x9bf51f33955ec70f87c4b5c49441815589043237"
+  },
+  {
+    "url": "https://etherscan.io/address/0xABdd8c8eE69e5F5180eb9352AEFFC5CeeAD65e96",
+    "status": 403,
+    "final": "https://etherscan.io/address/0xABdd8c8eE69e5F5180eb9352AEFFC5CeeAD65e96"
+  },
+  {
+    "url": "https://etherscan.io/address/0xf9862EfC1704aC05e687f66E5cD8c130E5663cE2",
+    "status": 403,
+    "final": "https://etherscan.io/address/0xf9862EfC1704aC05e687f66E5cD8c130E5663cE2"
+  },
+  {
+    "url": "https://github.com/saturn-organization/saturn-yield-dollar",
+    "status": 200,
+    "final": "https://github.com/saturn-organization/saturn-yield-dollar"
+  },
+  {
+    "url": "https://saturn.credit/legal/terms-conditions",
+    "status": 200,
+    "final": "https://saturn.credit/legal/terms-conditions"
+  },
+  {
+    "url": "https://saturncredit.gitbook.io/saturn-docs/operations-and-governance/transparency-and-audits",
+    "status": 200,
+    "final": "https://saturncredit.gitbook.io/saturn-docs/operations-and-governance/transparency-and-audits"
+  },
+  {
+    "url": "https://saturncredit.gitbook.io/saturn-docs/solution/susdat-overview",
+    "status": 200,
+    "final": "https://saturncredit.gitbook.io/saturn-docs/solution/susdat-overview"
+  },
+  {
+    "url": "https://saturncredit.gitbook.io/saturn-docs/solution/susdat-overview/digital-credit-strategy",
+    "status": 200,
+    "final": "https://saturncredit.gitbook.io/saturn-docs/solution/susdat-overview/digital-credit-strategy"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=apxusd",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=apxusd"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=apyusd",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=apyusd"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=mstr",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=mstr"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=strc",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=strc"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=strcx",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=strcx"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=susdat",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=susdat"
+  },
+  {
+    "url": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm",
+    "status": 403,
+    "final": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm"
+  }
+]
