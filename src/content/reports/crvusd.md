@@ -19,7 +19,7 @@ date: "2026-03-28"
 #   rebuilt. The ten-plus audit-firm count is carried from Curve's own
 #   disclosures and was not independently re-counted.
 last_verified: "2026-09-10"
-last_revised: "2026-09-10"
+last_revised: "2026-11-02"
 peg_mechanism_score: 6.0
 backing_score: 5.0
 liquidity_score: 8.0
@@ -33,547 +33,120 @@ market_cap_approx: 225000000
 production: true
 ---
 
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-crvusd-report-layout>
+
 # crvUSD — Risk Report
 
-**Category:** Stablecoin | **Peg Mechanism:** Algorithmic (LLAMMA + PegKeepers) | **Issuer:** Curve Finance
+**Moderate risk · 5.0/10**
 
-**Live data:** [crvUSD Backing Dashboard](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, collateral, PegKeeper debt, and YieldBasis utilization.
+Dollar-targeting stablecoin · LLAMMA lending and authorized issuance · Curve DAO
+
+[Live dashboard](https://tidresearch.com/dashboards/?asset=crvusd)
 
 ## Summary
 
-crvUSD is Curve Finance's native stablecoin, launched May 14, 2023. Users mint crvUSD by depositing crypto collateral into specialized lending markets. The core innovation is LLAMMA (Lending-Liquidating AMM Algorithm), which replaces traditional discrete liquidations with continuous, gradual soft-liquidation via a band-based AMM. Peg stability is maintained by PegKeepers (automated minting/burning into stablecoin pools) and a variable-rate monetary policy.
+crvUSD is Curve's dollar-targeting stablecoin. Borrowers mint it against crypto collateral through LLAMMA, an automated market maker that gradually converts collateral into crvUSD as prices fall. YieldBasis credit facilities, PegKeepers and a DAO-authorized lending operator provide additional issuance routes. These routes have different collateral, accounting and control risks.
 
-crvUSD's supply architecture is complex and often misunderstood. There is no single authoritative "circulating supply" number:
-
-- **`totalSupply()`** returns ~$2B+ but includes pre-minted ceiling buffers — **not a meaningful metric**.
-- **StablecoinLens** only tracks original minting market (CDP) debt + PegKeeper debt. It does **not** include YieldBasis. It predates YB and was never updated.
-- **CoinGecko** reports a "circulating" figure (low $200Ms range) via an unknown methodology (not StablecoinLens).
-- **YieldBasis factory** holds hundreds of millions in pre-minted crvUSD, but this includes idle buffer alongside actually-deployed pool liquidity. The split is opaque.
-
-All crvUSD is minted through a single contract: the ControllerFactory (`0xC9332fdCB1C491Dcc683bAe86Fe3cb70360738BC`).
-
----
-
-## Score breakdown
-
-| Category | Score | Notes |
-|----------|-------|-------|
-| Peg Mechanism | 6.0 | LLAMMA + PegKeepers + monetary policy is a sophisticated system with a $0.9997 average peg, and 2,985 hourly multi-DEX samples show a median −9 bps deviation from $1.00 — at the top end of decentralized stables, tighter than thBILL by ~3× and only marginally looser than OUSD. YieldBasis flows did increase peg volatility 66% in mean absolute deviation post-Sep-2025 launch, and rate swings between 0% and 12%+ remain a structural feature, but elevated volatility hasn't broken the peg through Q2 2026. PK downside defense capacity fluctuates with deployment — depleted PK debt means no active burn buffer, while concentrated deployment (as currently sits in the USDT keeper) exposes the protocol to that pool's liquidity if a depeg arrives — but the realized tightness through the YB era carries the score. |
-| Backing | **5.0** | **Three legs, backed differently.** CDP markets are overcollateralized (small, **197% weighted CR**); YieldBasis pools are BTC-backed near 100% CR; and the **PegKeeper leg is uncollateralized by construction** — protocol-minted crvUSD whose only backing is the stablecoins sitting opposite it in the pools. ⚠️ **That third leg is the one to watch, and its size swings:** it ran **14.07% → 34.56% → 6.81%** of supply between 2026-08-19 and 2026-09-10. **The peg held throughout, never more than 0.049% from par**, so the swings are keepers absorbing pool imbalance rather than a solvency event. **A sustained rise is what would cut this — above 25% of supply for more than five consecutive daily readings, not a single high print.** Argued in full under [2 · Backing](#2--backing--50) |
-| Liquidity | **8.0** | ✅ **The best measured exit in this coverage.** All-in cost to sell into USDC is **about 3 basis points at every size up to $1,000,000** and **about 16bps at $10,000,000**, tested to $50M (quoted 2026-09-12). ⚠️ **The cliff is real and sits above every size this axis scores for — $25,000,000 costs 1,078bps.** **All eight YieldBasis pools pair crvUSD with BTC or ETH**, so the $144.79M resident there is routed through rather than exited into; the quotes above are one-hop into dollars and already carry any routing spread. Argued in full under [3 · Liquidity & Exit](#3--liquidity--exit--80) |
-| Issuer | 6.0 | Curve is one of DeFi's most established protocols (10+ audit firms, $2B+ TVL history). CRV tokenomics add governance complexity. Egorov's dual Curve/YB role creates concentrated influence over crvUSD's supply architecture. |
-| Dependencies | **4.5** | **YieldBasis holds a $1B line that is fully drawn — `debt_ceiling` and `debt_ceiling_residual` both read $1,000,000,000.00 on 2026-09-10, so headroom is zero.** **Its pools carry 51.2% of issuance-side supply.** ⚠️ **Two different shares exist depending on the denominator: the $1B line over raw `totalSupply()` gives 47.5%; measured pool debt over issuance-side supply gives 51.2%. The issuance-side basis is the one used here — see the axis.** ⚠️ **The idle $669.3M is allocated by YieldBasis's own DAO, which Curve cannot direct**, and that DAO's seven-day duration is **early execution** rather than a delay. ✅ **But Curve's 5-of-9 emergency Safe is also the YieldBasis factory's `emergency_admin`, so it can kill the market immediately.** Expansion is slow and public; contraction is fast. Argued under [4 · Dependencies](#4--dependencies--45) |
-| Contract & Admin | **5.5** | ✅ **The token cannot be replaced** — 3,572 bytes of Vyper with all three EIP-1967 slots reading zero, re-verified 2026-09-09. **Mint capacity moves through a Curve DAO vote, not a key.** ⚠️ **Docked for the 5-of-9 emergency Safe, which carries no execution delay, and for the bridged legs, which answer to each chain's own operators rather than to Curve.** Argued in full under [5 · Contract & Admin](#5--contract--admin--55) |
-| **Overall** | **5.0** | **This composite tracks its weakest axis rather than averaging them.** ⚠️ **The structural constraint is the PegKeeper leg: uncollateralized by construction, so a sustained rise in its share of supply is what would move this** — judged on a level held over several days, not on one high reading. **The concentration in YieldBasis is the other standing exposure**, and it is argued on Dependencies rather than here |
+The main exposures are concentration in YieldBasis, collateral prices and liquidation performance, and the authorities that can change lending and pricing behavior. Curve's Ethereum emergency wallet requires five of nine signatures. Its permissions include restricted lending-policy and callback replacement and conditional oracle repair without a proxy-level delay. An immutable token does not remove these controls over the surrounding system.
 
 ## 1 · Stability — 6.0
 
+crvUSD targets one dollar through borrowing incentives, debt repayment and PegKeeper activity in stablecoin pools. LLAMMA gradually trades a borrower's collateral into crvUSD across price bands during a decline. A recovery can reverse those trades; sufficiently impaired positions can still require hard liquidation. This reduces reliance on a single liquidation threshold but exposes borrowers to trading losses, fees and market conditions while their positions are in the liquidation range.
 
-**crvUSD's peg has held through the largest stress its own defence mechanism has produced.** In late August 2026 PegKeeper debt tripled inside ten days — the keepers minting crvUSD into pools to hold the price down, which is the mechanism operating as designed rather than a fault. ✅ **The peg did not move while that happened, and that is what distinguishes the two.** Across the whole episode crvUSD never deviated more than **0.049%** from par — 0.99999, 0.99993 and 0.99991 on 08-21, 08-22 and 08-23, at the very moment PegKeeper debt tripled. **Keepers absorbing pool imbalance is what this looks like from the outside; a solvency event looks nothing like it.** The implicit backing tracks the same way: `PegKeeper debt − pool stables` was **+$32.80M** at the peak and **−$2.58M** on 2026-09-07, and it read **−$6.65M** on 08-19 — it oscillates around zero as a matter of course rather than widening.
+PegKeepers mint crvUSD into pools when it trades above target and withdraw and burn their existing positions when it trades below target. Their ability to reduce supply therefore depends on outstanding PegKeeper debt. **Zero debt means no existing PegKeeper-issued position to withdraw and burn**, rather than the failure of every peg-support mechanism. The November 2 10:36 UTC source snapshot measured zero aggregate PegKeeper debt. Pool trading, debt repayment and other arbitrage routes remain separate mechanisms.
 
-**How the peg is defended, and how well it has held.**
+Historical market observations show a comparatively tight peg: thirty daily last-observation marks from September 16 to October 16 ranged from **$0.998543 to $1.000412**, averaging **$0.999495**. Daily samples do not establish intraday extremes. YieldBasis rebalancing can create correlated demand for, or selling of, crvUSD as BTC and ETH prices move. Earlier near-zero-to-12% rate swings are historical stress evidence, not a measured current rate regime.
 
-### LLAMMA Mechanism
-
-#### How Bands Work
-
-When opening a crvUSD loan, the borrower selects between **4 and 50 bands** — narrow price intervals across which their collateral is distributed equally. Together, all bands define the borrower's liquidation range.
-
-- More bands = wider liquidation range = smoother, more gradual liquidation with lower losses
-- Positions with 50 bands have remained in soft liquidation for months while losing only a small percentage of health
-- Fewer bands = tighter range = more aggressive conversion but concentrated loss
-
-#### Soft Liquidation vs Hard Liquidation
-
-**Soft liquidation:** When the collateral price enters a band, the LLAMMA AMM progressively converts collateral → crvUSD. If the price recovers, the reverse happens — crvUSD repurchases collateral. This is continuous and automatic, not a discrete event. Losses accumulate in both directions while inside the range due to rebalancing fees, slippage, and price movement.
-
-**Hard liquidation:** Only triggered when health reaches **0%** (not simply when price hits the bottom of the range). Any external user can repay the debt and claim remaining collateral at a discount. The borrower loses collateral but keeps their borrowed crvUSD.
-
-Key loss factors during soft liquidation: band count (more = less loss), market volatility (sudden moves are worse), and liquidity depth within the AMM.
-
-#### Architecture Components
-
-| Contract | Function |
-|----------|----------|
-| Controller (V1-V3) | User-facing — loan creation, management, repayment |
-| LLAMMA (AMM) | Per-market liquidation engine with band-based soft-liquidation |
-| ControllerFactory | Market creation, debt ceilings, single minter for all crvUSD |
-| Monetary Policy | Interest rate calculation and adjustment |
-| PegKeepers | Automated peg stability via mint/burn into stablecoin pools |
-| Price Aggregator | Aggregates crvUSD price across Curve pools using EMAs |
-| FlashLender | Flash loans denominated in crvUSD |
-| StablecoinLens | Circulating supply calculator — **outdated, does not include YieldBasis** |
-
----
-
-### Peg Maintenance
-
-#### PegKeeper System
-
-PegKeepers are Curve's AMO (Algorithmic Market Operations) — automated contracts that stabilize crvUSD's peg through Curve stablecoin pools. Read on-chain 2026-08-13 from the PegKeeperRegulator (`0x36a04CAffc681fa179558B2Aaba30395CDdd855f`) plus `ControllerFactory.debt_ceiling()`:
-
-| Keeper | Pool | PK debt | Debt ceiling | Status |
-|---|---|---:|---:|---|
-| `0x9201da0D97CaAAff53f01B2fB56767C7072dE340` | USDC/crvUSD | 0 | 135M | Active, idle |
-| `0xFb726F57d251aB5C731E5C64eD4F5F94351eF9F3` | USDT/crvUSD | **15.80M** (2026-09-10; 36.98M on 09-07, peaked 98.60M on 08-24) | 135M | **Active — holds all current PK debt** |
-| `0x3fA20eAa107DE08B38a8734063D605d5842fe09C` | PYUSD/crvUSD | 0 | 45M | Active, idle |
-| `0x338Cb2D827112d989A861cDe87CD9FfD913A1f9D` | frxUSD/crvUSD | 0 | 9M | Active, idle |
-| `0x53876B157DeCf04389eEd66c7C29d73863f8C50b` | GHO/crvUSD | 0 | **0** | **Decommissioned — cannot mint** |
-
-**The GHO keeper is decommissioned** — a 0 debt ceiling, so it can neither mint nor burn and contributes nothing to peg defence in either direction. ✅ **The GHO/crvUSD Curve pool still exists and still adds DEX depth**: a decommissioned keeper is not a drained pool.
-
-**Why it was zeroed is legible on-chain.** Both of Aave's mainnet GHO Stability Modules — `0x0d8eFfC11dF3F229AA1EA0509BC9DFa632A13578` (USDC) and `0x686F8D21520f4ecEc7ba577be08354F4d1EB8262` (USDT) — read **seized**, holding zero GHO and zero underlying with exposure caps of 0. With no functioning GSM there is no reliable arbitrage of sub-$1 GHO back toward par, so a keeper accumulating GHO would be holding something it could not exit. ⚠️ **The Curve vote itself is reported rather than read** — `gov.curve.finance` returns HTTP 403 from two separate environments, so the decision's date and ID remain unverified even though the state at both ends of it does not.
-
-How the active keepers work:
-
-- **Price > $1:** PegKeepers **mint crvUSD** and deposit into pools, adding supply to push price down
-- **Price < $1:** PegKeepers **withdraw and burn** previously deposited crvUSD, removing supply to push price up
-- **Asymmetric capacity:** Upside defense (minting) is unlimited up to the ceiling. Downside defense (burning) is capped by current PK debt — they can only burn what they previously minted.
-- PK debt fluctuates constantly with market conditions. **The dashboard carries the current PegKeeper total** (the "Total PK Debt" card).
-
-PegKeeper crvUSD is protocol-minted and protocol-owned. It is not backed by collateral — it is implicitly backed by the counterpart stablecoins (USDC/USDT/frxUSD/PYUSD) in the pool. Over time, PK minting and burning should net to zero.
-
-**⚠️ Monitoring note:** High PK debt = healthy downside buffer (more burn capacity). Zero PK debt = no downside defense available. PK debt relative to circulating supply indicates how actively the peg mechanism is working.
-
-**⚠️ The entire burn buffer sits in one keeper (re-measured 2026-09-10 by calling `debt()` on all fifteen registered keepers, with the pool identified by `coins()` rather than by its ticker).** PK activity was already concentrated in the **USDT keeper** through Q2 2026; it is not merely dominant but exclusive — the USDT keeper holds **$15,804,635.52, 100% of all PegKeeper debt**, with the other fourteen reading **exactly zero**. ⚠️ **The level swings hard while the concentration does not:** 33.75M on 08-13, 98.60M on 08-24, 36.98M on 09-07, 15.80M on 09-10 — **a 100% share throughout.** The concentration is the durable finding; the level is not. ⚠️ **Note the ceiling:** at 98.60M against a 135M cap, the single active keeper is now roughly 73% drawn, where it was about a quarter drawn ten days earlier. The USDC, PYUSD and frxUSD keepers are all at zero, and the GHO keeper is decommissioned.
-
-Why that matters more than "concentration" usually does: downside defense is the asymmetric side of this mechanism. The other keepers can still *mint* against their ceilings, but a keeper with no debt has nothing to *burn*. So a USDT-specific disruption — a depeg, a freeze, a pool drain — would remove crvUSD's only active downside defense at exactly the moment it stressed the pool. The remaining keepers would be able to push the price down and not up.
-
-Downside defense is still two-layered: (a) the USDT keeper's burn buffer, **$15.80M** at 2026-09-10, down from 36.98M on 09-07 and a peak near 98.60M during the August excursion — real deployable capacity, though it is uncollateralized supply rather than reserves — and (b) the reserve-pool stables (USDC, USDT, frxUSD, PYUSD sitting opposite crvUSD across the active keeper pools) accessible via arbitrage. The reserve stables in aggregate still exceed the typical depeg event size for a token of this market cap — but the burn buffer, the faster and more reliable of the two, now has a single point of failure. ⚠️ **Per-keeper debt is not on the dashboard** — it publishes the PegKeeper total only, so the concentration below cannot be read off it. **Measured directly on 2026-09-10** by calling `debt()` on all fifteen registered PegKeepers: **the USDT keeper `0xFb726F57d251aB5C731E5C64eD4F5F94351eF9F3` holds $15,804,635.52 and every other keeper reads exactly zero**, so the single-point-of-failure reading still holds. ⚠️ **The level moves fast and this figure will be stale before the concentration is** — it was $36.98M on 09-07 and peaked at $98.60M on 08-24. **Re-read `debt()` per keeper rather than inferring a split from the total.**
-
-#### Monetary Policy
-
-The monetary policy contract (AggMonetaryPolicy) functions as a system-wide algorithmic rate controller with three inputs:
-
-1. **Target rate (rate0):** Baseline rate when crvUSD = $1 and no PK debt exists
-2. **Price oracle:** Measures deviation from $1 peg
-3. **PegKeeper debt share:** Proportion of PK debt vs total crvUSD debt
-
-The rate is uniform across all minting markets (not per-market). Higher rates encourage borrowers to repay (bullish for peg); lower rates incentivize new borrowing.
-
-**Structural issue:** YieldBasis's large credit line has caused rate volatility — rates spike above 12% and drop near 0% driven by YB's BTC rebalancing flows rather than organic lending market dynamics. Two monetary policy reform proposals (LlamaRisk Target Fraction adjustment, Egorov 3-week EMA smoothing) aim to address this.
-
-#### Peg Performance
-
-Average peg of **$0.9997** — one of the tightest for a decentralized stablecoin. Peg volatility increased **66% in mean absolute deviation** after YieldBasis launched (Sep 2025), though the average peg stayed above $0.9997.
-
-**Measured across 2,985 hourly multi-DEX samples:** avg **−13 bps**, median **−9 bps** from $1.00. Tighter than thBILL (median −32 bps) by ~3×, slightly looser than OUSD (median −6 bps) — reflecting the trade-off between algorithmic complexity (LLAMMA + PegKeepers + YB-induced rate volatility) and OUSD's simpler USDC-redemption model.
-
----
+The peg is an economic target, not a contractual right for every holder to exchange crvUSD for one dollar. PegKeeper capacity, oracle behavior, borrower repayment and secondary liquidity all matter during stress.
 
 ## 2 · Backing — 5.0
 
+Backing depends on the issuance route. LLAMMA loans hold crypto collateral; YieldBasis borrowing is supported by its leveraged pool positions; the Resupply sreUSD lending operator supplies freshly minted crvUSD to a lending vault. PegKeeper issuance has no borrower collateral: the other stablecoins in its trading pools are paired market liquidity, not segregated reserves owed to holders.
 
-**Current operating regime, measured 2026-09-10. Both columns are issuance-side and therefore comparable.**
+Ordinary LlamaLend deposits and scrvUSD savings generally recirculate existing crvUSD. Adding their balances or all downstream borrowing to origin issuance would count the same tokens more than once. ERC-20 supply also includes pre-minted idle allocations. A useful exposure measure must identify deployed debt, minted-but-idle tokens and re-lending separately; neither a token balance nor an authorized ceiling alone measures borrowing.
 
-| | 2026-08-23 | **2026-09-10** |
-|---|---|---|
-| Total supply (issuance-side) | $300.5M | **$232.3M** |
-| Conservative CR (symmetric) | 101.96% | **115.12%** |
-| Inclusive CR | 92.21% — below par | **119.21%** |
-| PegKeeper debt | $36.98M (09-07) | **$15.80M — 6.80% of supply** |
-| YieldBasis pool debt | *not measured on this basis* | **$118.9M — 51.2% of supply** |
+**Resupply's allocation is executed issuance.** On October 29, vote 1509 minted and deposited an additional **30 million crvUSD**, taking the operator's mint limit and minted amount to **60 million**. At the November 2 10:36 UTC accounting snapshot, the producer attributed approximately **$25.351 million** to deployed borrowing and **$34.649 million** to excluded idle operator supply. The 60 million allocation is not 60 million of borrower debt. This is Resupply's **sreUSD**, distinct from Re Protocol reUSD. [Execution receipt](https://etherscan.io/tx/0x567e9b7264c0a6f8397648482778dd7dce742aecd96745da576f799871abca53), [allocation specification](https://gov.curve.finance/t/raise-lending-limit-of-crvusd-to-the-sreusd-lending-market-to-60m/11187).
 
-✅ **Both collateral ratios moved materially in Curve's favour over eighteen days, and the inclusive ratio is the one that changed character.** It read **below par** on 2026-08-23 and reads **119.21%** now. ⚠️ **A separate 47.1% YieldBasis figure is not in the table because it is not on this basis** — it divides the $1B line by raw `totalSupply()`. **Comparing it against the 51.2% would be comparing a line to a drawing across two denominators.**
+The denominator changes the apparent collateral coverage. At that same source snapshot, the deployed-basis collateral ratio was **114.78%**, while the sensitivity counting all operator minting was **96.36%**. The latter adds idle issued tokens as liabilities without equivalent deployed collateral. It identifies an accounting exposure; it is not by itself evidence of realized bad debt or holder insolvency. Neither ratio establishes executable liquidation proceeds or independent realizability of every asset.
 
-⚠️ **These are point measurements on a system that moves daily**, and the [dashboard](https://tidresearch.com/dashboards/?asset=crvusd) is the source of truth between passes.
-
-**PegKeeper debt is the number to watch here, and it should be judged on a level held over several days rather than on any one reading.** PegKeeper crvUSD is protocol-minted and protocol-owned, and **it is not backed by collateral** — so the share of supply it represents is the share that is uncollateralized. **Measured 2026-09-07 it is $36.98M against $263.29M of supply — 14.0%**, and it has held between 13.9% and 16.7% for the ten days to that date.
-
-⚠️ **It does not sit still, and a single reading of it is not a state.** Between 2026-08-19 and 2026-08-24 the ratio ran **14.07% → 20.35% → 32.72% → 34.56%**, then decayed back through 23.68% and 15.68% to the level above. **A reading taken on 08-24 would have described a third of supply as uncollateralized; three days before the spike it was 14.07%, and three days after the peak it was on its way back there.**
-
-⚠️ **This is not a depeg and should not be read as one.** PegKeeper minting *is* the peg mechanism functioning as designed — keepers mint into pools above a dollar and burn below. crvUSD trades at **$1.0009**, the minting market's collateral ratio is **230.7%**, and the $98.6M of burn capacity is real, deployable defence. **What changed is composition, not solvency:** the peg is being defended by expanding uncollateralized supply, at three times the scale this report described.
-
-**A definitional note, because it would silently corrupt every figure above.** The supply figure used here is **`total_supply` at $300.5M, not `totalSupply()` at $2,104.8M** — the latter includes pre-minted ceiling buffer that was never issued. Every ratio on this page uses the former.
-
-⚠️ **The headline collateral ratio depends on which basis is used, and the two do not agree.** The collateral-ratio basis changed on **2026-08-18**, without announcement. **Measured 2026-09-10 the deployed basis reads 115.12% and the minted basis 111.82%** — about three points apart on the same book. **A figure quoted on one basis is not comparable with a live dashboard reading the other.** ⚠️ **The gap has been wide enough to change the sign:** on 2026-08-23 the same two bases read **101.96%** and **99.17%** — one above par and one below, on identical collateral. **Which basis is the correct one is not settled here** — but the two should not be meetable without knowing they are not measured the same way.
-
-PegKeeper debt remains entirely in the USDT keeper; the GHO keeper is decommissioned at a 0 ceiling. **Numbers move daily — the dashboard is the source of truth**, and the ranges above are re-checked as of 2026-08-23 rather than assumed to outlive the interval between passes.
-
-**What creates crvUSD, and what stands behind each source.**
-
-### Supply Architecture
-
-#### Sources of crvUSD (what creates new supply)
-
-Four mechanisms create new crvUSD. DefiLlama also counts LlamaLend debt as supply (explained below).
-
-| Source | Structural Role | How It Works |
-|--------|----------------|-------------|
-| **Minting markets (CDP)** | Original mechanism | Users deposit collateral (WBTC, WETH, wstETH, etc.), mint crvUSD as debt. Over-collateralized. 8 markets deployed, of which **6 are active and 2 are winding down** (sfrxETH, LBTC — both at $0 debt ceiling, residual debt only). |
-| **YieldBasis credit line** | Dominant source since Sep 2025 | $1B ceiling from ControllerFactory. YB factory (`0x370a449FeBb9411c95bf897021377fe0B7D100c0`) receives pre-minted crvUSD, deploys it into BTC/crvUSD Curve pools as users deposit BTC. Pre-minted balance includes idle buffer — actual deployment depends on BTC deposits. |
-| **PegKeepers** | Peg defense | Four active keepers (crvUSD/USDC, crvUSD/USDT, crvUSD/frxUSD, pyUSD/crvUSD) mint crvUSD into stable pools when price > $1 and burn when price < $1; the GHO/crvUSD keeper is decommissioned at a 0 debt ceiling. **All current PK debt sits in the USDT keeper.** Protocol-owned, not collateral-backed. |
-| **CurveLendOperator** | DAO-minted lending liquidity (Oct 2025) | Governance-approved operator (`0x21862...eCD`) receives debt ceiling from ControllerFactory and mints fresh crvUSD into specific LlamaLend vaults as protocol-owned liquidity. Tracks `mintedAmount` — **$15M minted as of 2026-07-28**, up from the original 5M sreUSD-market ceiling. This line has grown 3x and is no longer a rounding error. **Precedent-setting** — the DAO can create new operators to mint into any LlamaLend market. |
-
-**LlamaLend and supply accounting:**
-
-Standard LlamaLend markets (OneWayLendingFactory) accept user-deposited crvUSD — the factory itself has no minting authority. Only the CurveLendOperator (**$15M** as of 2026-07-28) mints fresh crvUSD into LlamaLend. The remaining ~$26M of LlamaLend debt is crvUSD that was originally minted elsewhere (CDP, YB, or PK), bought by users on DEXes, and then deposited into LlamaLend vaults as lending liquidity.
-
-**Two supply definitions — do not mix them.** The distinction matters because one of them is the denominator of every collateral ratio we publish.
-
-- **Issuance-side (authoritative here, and what the dashboard reports):**
-  **`mint market debt + PK debt + YB AMM crvUSD + CurveLendOperator minted`**
-  This counts each crvUSD token exactly once, at the point it was created. It is the only
-  definition that can legitimately sit under a collateral ratio: CR compares collateral
-  against the crvUSD that *exists*, not against how many times it was re-lent.
-- **Deployment-based (DefiLlama):** substitutes *all* LlamaLend debt for the operator
-  line, tracking where crvUSD is actively in use. This is a valid but **different and
-  larger** number — the ~$26M of non-operator LlamaLend debt is crvUSD already counted
-  once at its CDP/YB/PK origin and then counted again when a second borrower draws it
-  from a lending vault. Useful as a utilization measure; **not comparable to backing**,
-  and never to be used as a CR denominator.
-
-Everything outside the operator line is therefore **recirculation**, not supply — the
-dashboard breaks it out under that heading (LlamaLend borrowed, scrvUSD savings) precisely
-so it can be seen without being added in.
-
-Q2–Q3 2026: the issuance-side number ran in the mid $200Ms including PK debt, read **$300.5M at 2026-08-23** and **$232.3M at 2026-09-10**.
-
-**The universal minting gate:** `set_debt_ceiling` on ControllerFactory is the only way to authorize new crvUSD creation. Any address that receives a ceiling can mint. The DAO controls who gets ceilings via governance votes. To monitor for new supply sources, enumerate all `set_debt_ceiling` events on ControllerFactory — this is the complete list of entities that can create crvUSD.
-
-**What does NOT count as supply:**
-- **scrvUSD vault:** Users deposit existing crvUSD to earn yield. Holds crvUSD, doesn't create it. **However** (V3, see §IV), YieldBasis HybridVaults route **45%** of their TVL *into* scrvUSD as a stablecoin sleeve (`stablecoin_fraction()` on HybridVaultFactory `0xBdC32268…dC5b`, read 2026-09-09) — this still doesn't create new crvUSD, but it makes scrvUSD a structural *destination* of crvUSD supply: a peg-defense buffer when calm, a crvUSD-outflow lever on mass V3 redemption. Tracked as a first-class line item on the dashboard.
-- **DEX trading / wallet transfers:** Moves crvUSD, doesn't create it.
-- **YB factory idle buffer:** Pre-minted but not deployed — excluded from supply (only YB AMM pool balances count).
-
-#### Supported Collateral Types (Minting Markets)
-
-| Collateral | Category | Added | Notes |
-|-----------|----------|-------|-------|
-| sfrxETH | ETH LST | May 2023 | Launch collateral (v1 → v2). **Wind-down** ($0 ceiling). |
-| wstETH | ETH LST | Mid-2023 | Lido — historically largest market |
-| WBTC | BTC | Mid-2023 | Currently dominant by debt |
-| WETH | ETH | Mid-2023 | Native Ethereum — most loans by count |
-| tBTC | BTC | Mid-2023 | Threshold Network |
-| cbBTC | BTC | 2025 | Coinbase wrapped BTC |
-| weETH | ETH LST | 2025 | ether.fi wrapped eETH — see the [weETH report](/reports/weeth/). Was an LRT when added; ether.fi removed restaking on 2026-08-06, moving it to the separate opt-in weETHs token. |
-| LBTC | BTC | 2025 | Lombard BTC. **Wind-down** ($0 ceiling). |
-
-**Structural trend:** CDP minting has declined from hundreds of millions to tens of millions in active debt, while YieldBasis has become the dominant supply source. BTC-denominated collateral (WBTC, tBTC, cbBTC) now dominates CDP markets by debt value. The dashboard carries current per-market **debt, ceiling and collateral ratio**; utilization is not shown as such but is debt over ceiling.
-
-#### Collateral Ratio
-
-**Total crvUSD supply (issuance-side, the CR denominator)** = mint market debt + PK debt + YB AMM crvUSD + CurveLendOperator minted. This counts each token once at creation and matches the dashboard's methodology. Do not use `totalSupply()` (includes ceiling buffers) or StablecoinLens (misses YB and operators); CoinGecko's undocumented figure is a cross-check only, never a source.
-
-Two coherent CR readings, both symmetric:
-
-**Conservative CR (primary metric; 105–115% through Q2 2026, **101.96% at 2026-08-23** — below that band — and **115.12% at 2026-09-10**, back inside it):**
-```
-CR = (mint market collateral + YB pool BTC) / (mint debt + YB AMM crvUSD + operator-minted)
-```
-This drops PegKeeper-minted crvUSD from supply AND PegKeeper pool stables from collateral. The rationale: PK supply and the stables sitting opposite it in the pools are a paired position — in any depeg the PK withdraws crvUSD and consumes the paired stables together, so the conservative reading removes the pair from both sides rather than asymmetrically penalizing one. Treating PK supply as real debt while ignoring its paired stables (or vice versa) produces a metric that doesn't correspond to any realistic state.
-
-**Inclusive CR (reference metric; 110–120% through Q2 2026, **92.21% at 2026-08-23** — below par — and **119.21% at 2026-09-10**, back inside the band):**
-```
-CR = (mint market collateral + YB pool BTC + PK reserve pool stables) / (mint debt + PK debt + YB AMM crvUSD + operator-minted)
-```
-This is also symmetric, but in the opposite direction: PK debt enters supply and PK reserve pool stables (USDC/USDT/frxUSD/PYUSD sitting opposite PK crvUSD across the active keeper pools — the decommissioned GHO keeper holds no PK position on either side) enter collateral. Because PK debt and PK stables are similar in magnitude in steady state, conservative and inclusive CR sit within a few percentage points of each other — that proximity is the correctness signal that the two framings agree.
-
-**What backs each supply source:**
-
-| Supply Source | Collateral | CR Character |
-|--------------|-----------|-------------|
-| Mint markets (CDP) | BTC, ETH, LSTs at ~190% CR | Traditional overcollateralized CDP |
-| YieldBasis | BTC side of 50/50 BTC/crvUSD pools (~100% CR) | Credit-line-backed, BTC-denominated |
-| LlamaLend | Borrower collateral in lending vaults | Mix of user-deposited crvUSD (recirculated) and operator-minted (fresh). Collateral varies by market. |
-| PegKeepers | None directly; USDC/USDT/frxUSD/PYUSD sit opposite in pools as paired counterparts (GHO no longer — that keeper is decommissioned) | Protocol-minted, reserve-pool-backed. Conservative CR drops both PK debt and PK stables; inclusive CR counts both. |
-
-**Key monitoring metrics (check dashboard for live values):**
-1. **Conservative CR** — the primary health indicator
-2. **% of supply from YieldBasis** — concentration risk
-3. **PK reserve pool sizes** — downside defense capacity (stables available to buy crvUSD dips)
-4. **PK debt** — current burn capacity for downside peg defense
-
-#### Supply Measurement Problem
-
-No single contract or API gives an accurate crvUSD supply:
-
-| Metric | What It Shows | What It Misses |
-|--------|--------------|----------------|
-| `totalSupply()` | Mint *authorization* capacity (~$2.09B, 2026-07-28) | Meaningless as supply — includes all undeployed ceiling buffers |
-| StablecoinLens `circulating_supply` | CDP debt + PK debt only ($69.95M, 2026-07-28) | YieldBasis and operator mints entirely. Predates YB, never updated. |
-| CoinGecko | "circulating" ($212.5M, 2026-07-28) | Methodology undocumented. Cross-check only — never a source. Currently reads ~6.5% below our issuance-side figure; the gap is tracked in the dashboard's reconciliation block. |
-| YB factory `balanceOf` | Pre-minted allocation | Doesn't distinguish deployed vs idle buffer |
-| **Mint + PK + YB AMMs + operator minted** | **Authoritative issuance-side supply — the CR denominator** ($226.2M, 2026-07-28) | Requires querying multiple contracts — see dashboard |
-| Mint + PK + YB AMMs + *all* LlamaLend debt | DefiLlama's deployment-based figure | Double-counts re-lent crvUSD. Utilization measure, not a backing denominator. |
-
-All figures above are **Ethereum-scoped, and that is complete**: Ethereum is crvUSD's canonical chain, and every other deployment is lock-and-mint through the native L2 bridges or the LayerZero FastBridge. Cross-chain crvUSD was minted on Ethereum first and is already inside the issuance-side number — adding chain balances on top would double-count.
-
-**⚠️ This opacity is itself a risk factor.** Unlike USDC (clear attestations) or DAI (Dai Stats dashboard), there is no authoritative crvUSD supply dashboard from Curve itself. Our [backing dashboard](https://tidresearch.com/dashboards/?asset=crvusd) attempts to fill this gap by querying on-chain primitives directly.
-
-#### Historical Evolution
-
-1. **May 2023:** Launched with sfrxETH as sole collateral
-2. **Mid-2023:** Added wstETH, WBTC, WETH, tBTC
-3. **2024:** Matured with 150M debt ceiling for wstETH; sfrxETH v1 phased out for v2
-4. **2025:** Added cbBTC, weETH, LBTC; supply grew 3x from <$100M to >$361M (ATH)
-5. **Sep 2025:** YieldBasis launched — 60M → 300M → $1B credit line, fundamentally changing supply dynamics
-6. **2025–2026:** CDP minting declined to tens of millions while YB became dominant supply source
-
----
+The standing assessment also monitors PegKeeper debt as a share of consistently defined supply. Its historical reassessment trigger is a share above 25% for more than five consecutive daily readings. That trigger addresses one component of backing risk; it does not certify the safety of YieldBasis, lending collateral or oracle valuations.
 
 ## 3 · Liquidity & Exit — 8.0
 
-**crvUSD's exit is native rather than borrowed — Curve's own pools give it real on-chain depth.** ⚠️ **But the aggregate depth figure answers a different question from the one a seller is asking, and the two differ by more than five times.** Measured on-chain 2026-09-10 by calling `coins()` and `balanceOf()` on each pool directly — **crvUSD actually resident in the pool, not a notional**:
+Holders normally exit by selling crvUSD on secondary markets. Curve stablecoin pools provide direct routes into dollar stablecoins; YieldBasis cryptopools provide routes through BTC or ETH that require another trade to reach dollars. Repaying a crvUSD debt is a separate use of the token and does not give an ordinary holder a reserve-redemption right.
 
-| exit route | what you receive | measured |
-|---|---|---:|
-| PegKeeper pools — stable side | **dollars** | **$27,157,970** |
-| YieldBasis cryptopools — crvUSD side | **BTC or ETH** | $144,794,876 |
+A September 10 pool-balance review found approximately **$27.16 million** on the stablecoin side of the measured PegKeeper pools and **$144.79 million crvUSD** resident in the measured YieldBasis cryptopools. Those quantities describe different assets and routes, not interchangeable cash depth. YieldBasis debt, resident token balances and pool notionals must not be substituted for each other.
 
-⚠️ **All eight YieldBasis pools pair crvUSD with WBTC, cbBTC, tBTC or WETH — not one pairs it with a dollar stablecoin**, verified by `coins()` on each. **So selling crvUSD into them leaves a holder in BTC or ETH, not in dollars.** ✅ **That is still an exit, and BTC and ETH are far deeper markets than any stablecoin pool** — but it is a **two-hop** exit that takes on price risk between the hops, and its depth **thins in exactly the BTC volatility that would provoke it.**
+The historical USDC exit ladder supporting the rating was quoted September 12:
 
-✅ **The one-hop dollar exit is the $27.16M of stablecoins sitting opposite crvUSD in the Curve pools** — **11.69% of the $232.3M issuance-side supply**. The **USDT PegKeeper pool is the largest single venue** at $13.16M of USDT against $14.90M of crvUSD, followed by frxUSD ($7.39M) and USDC ($5.18M). ⚠️ **The GHO pool ($1.01M of GHO) is larger than the PYUSD pool ($0.41M)**, which is worth noting because the GHO keeper is decommissioned — **a decommissioned keeper is not a drained pool**, and its depth still counts on this axis even though it no longer backstops the peg.
-
-⚠️ **Three different YieldBasis figures are in circulation and they differ by up to three times, so the basis has to be stated.** The **$144.79M** above is crvUSD **resident in the eight cryptopools**, read by `balanceOf()` on each. A **debt** basis — what YieldBasis owes across its pools — gives **$118.91M**. A **notional** basis gives a figure near **$356M**. ✅ **The finding does not rest on choosing one:** the two-hop route exceeds the one-hop dollar exit on every basis.
-
-**The ladder now runs past where it used to stop, and it is quoted all-in into USDC** — the cost a seller actually bears, not price impact alone:
-
-*Quoted 2026-09-12. These are live measurements and the exact figures move daily; the shape is what is durable.*
-
-| size | all-in cost |
+| Trade size | Quoted total cost before gas |
 |---:|---:|
-| $1,000 | 2.6bps |
-| $100,000 | 2.7bps |
-| $1,000,000 | 3.3bps |
-| $10,000,000 | 16.0bps |
-| $25,000,000 | **1,078bps** |
-| $50,000,000 | **4,345bps** |
+| $100,000 | 2.7 basis points |
+| $1 million | 3.3 basis points |
+| $10 million | 16.0 basis points |
+| $25 million | approximately 1,078 basis points |
 
-✅ **A holder at any retail or professional size exits crvUSD for single-digit basis points, and at seven figures for 3.3.** ⚠️ **The 2% crossing is bracketed between $10M and $25M, and the cliff at $25M is steep rather than gradual** — there is no soft warning as you approach it. **Every size this axis is scored for sits below it.**
+These are dated routed quotes, not current offers or executed fills. Proceeds include routing spread and fees; the router's price-impact field alone is a different measure. A November 2 review still placed its routed 2% total-impact crossing in a coarse **$10 million–$25 million** bracket. The last passing rung does not locate an exact maximum exit size.
 
-**8.0 because the cost of leaving is the question, and crvUSD answers it better than anything else here.** ⚠️ **Not higher, because the exit IS the market** — there is no redeem-at-NAV channel standing behind these quotes, so a holder depends on the pools continuing to be there. ⚠️ **And the composition above still matters at size**: the dollar side is what the quotes consume, and a seller large enough to exhaust it is in a different position from the ladder's readings.
-
-⚠️ **This axis is priced on depth, not on the peg holding** — the peg record is argued under Stability above.
+Depth can change quickly, especially when BTC/ETH volatility affects YieldBasis and borrowers at the same time. Gas, route availability, stablecoin counterparty risk and fresh minimum-output protection remain relevant. The dashboard supplies changing quote ladders; the historical rating does not guarantee their continued availability.
 
 ## 4 · Dependencies — 4.5
 
-**crvUSD's largest dependency is a single counterparty, and the size of it is the finding.** YieldBasis holds a **$1,000,000,000 credit line that is 100% drawn** — **$669.3M idle and $330.8M deployed** — against a **$2.105B** total supply and a **$76.8M** CDP book. ⚠️ **One counterparty has been minted roughly 47.5% of all crvUSD in existence.**
+crvUSD depends on the collateral assets, their oracles and LLAMMA's trading and liquidation behavior. YieldBasis adds a large shared exposure to BTC/ETH market conditions and leveraged rebalancing. Its recorded debt was approximately **$98.833 million**, or **54.54% of the $181.224 million deployed-basis measure**, at the November 2 10:36 UTC snapshot. This concentration uses deployed debt over deployed supply, not a facility ceiling over raw ERC-20 supply.
 
-⚠️ **The idle $669.3M is allocated by YieldBasis's own governance, and Curve cannot direct it.** The allocation authority sits with YieldBasis's Aragon OSx DAO rather than the Curve DAO, and the Curve Ownership Agent's permission over that DAO is **measured as absent rather than assumed**.
+The YieldBasis **WETH/crvUSD pool has an attached external pricing policy**. Its deployed reserved-profit fraction is **43%**. The official forum specification says 42.2%; the executed payload and pinned getters support 43%. The policy governs swap pricing, fees and leveraged-token deposit checks. It does not grant direct crvUSD minting authority or establish rollout to every YieldBasis market. [Policy execution](https://etherscan.io/tx/0x81f0fd5865f685a277de75b05f097538a49ab9b695c882b9425983f221a64fc3), [forum specification](https://gov.curve.finance/t/curve-part-of-turning-weth-crvusd-yieldbasis-pool-into-a-permissionless-propamm/11194).
 
-✅ **But Curve can stop the market, and that is a different power from directing it.** **The YieldBasis factory's `emergency_admin()` is `0x467947EE34aF926cF1DCac093870f613C96B1E0c` — the very same 5-of-9 Safe that is crvUSD's own emergency admin**, verified on-chain with the factory's `admin()` answering in the same pass. **Curve's emergency Safe can kill a YieldBasis market and force emergency withdrawal**, through the leveraged-token and gauge logic that gates on that address. ⚠️ **The factory itself only stores and sets the address; the enforcement sits one layer down in the market contracts**, so the reach is specific rather than general — it is a stop, not a steering wheel.
+YieldBasis DAO configures this policy and its verifier settings. Its voting mode permits early execution, so a seven-day voting duration is not a guaranteed seven-day update delay. Curve's emergency authority can **kill and revive the policy**. Killing it returns behavior to the pool's native fee/target logic and refuses reports; it is not a frozen-price guarantee. Policy replacement or removal through Curve's AMM owner proxy requires the ordinary DAO route.
 
-**So the asymmetry runs in both directions.** ⚠️ **Curve cannot say where the money goes**, and ✅ **it can shut the position down immediately, with no delay, by two independent levers** — `reduce_debt_ceiling`, which is one-way, and the kill path above. **The exposure is 47.5% of supply either way; the containment is better than the allocation picture alone suggests.**
+Signed Pyth reports add verifier, signer and delivery dependencies. The verifier is upgradeable and its owner can change trusted signers. The ultimate governance threshold and delay behind that owner's contract remain unresolved. The policy treats crvUSD as one dollar rather than independently converting crvUSD/USD, so an authenticated ETH price does not eliminate crvUSD peg risk.
 
-✅ **The ceiling is fully drawn, and that is itself a bound on the fast path — measured, with the address, on 2026-09-10.** The YieldBasis factory is **`0x370a449FeBb9411c95bf897021377fe0B7D100c0`**, identified by what it answers rather than by a name: `market_count()` returns **11**, and its `emergency_admin()` is **`0x467947EE34aF926cF1DCac093870f613C96B1E0c`** — the same 5-of-9 Safe named elsewhere on this page. On the ControllerFactory (`0xC9332fdC…738BC`, resolved as `crvUSD.minter()`), that address reads **`debt_ceiling` $1,000,000,000.00 and `debt_ceiling_residual` $1,000,000,000.00**, and holds **$669,276,044.02** of crvUSD. **Residual equal to ceiling means the whole line has been minted and headroom is zero.** Two fabricated control addresses return `0` for both fields and revert on `market_count()`, so the reads discriminate.
-
-**So the undelayed YieldBasis route can only *reallocate* the idle $669.3M — it cannot create supply.** Minting beyond the line requires `set_debt_ceiling`, which is the slow, public **7-day Curve DAO vote with a genuine participation floor**. ⚠️ **This bounds the speed, not the size.** The exposure is already outstanding, and nothing here reduces what a reallocation of the idle balance could do to the markets it lands in — it establishes only that the fast lever cannot make the position *larger*.
-
-⚠️ **One figure in this section is derived rather than measured, and it should not be read as an observation.** The **$330.8M "deployed"** is `ceiling − idle balance` — $1,000,000,000.00 less $669,276,044.02 is $330,723,955.98 — so it and the $1B ceiling are **one input stated twice**, not two independent facts. **The only measured deployment figure is $118,913,460.54**, the crvUSD debt across the four YieldBasis pools, which is **51.2% of the $232,348,386.49 issuance-side supply** measured the same day.
-
-⚠️ **That DAO's seven-day voting duration is not a delay, and the distinction matters more than the number.** Its voting mode is **early execution**: a proposal clearing **55% support at 30% participation executes immediately**, before the seven days elapse. ✅ **"Seven-day governance" would be a true sentence and a misleading one** — the duration is a ceiling on how long a vote may take, not a floor on how fast it can act. **The minimum proposing power is one token.**
-
-✅ **What holds this at 4.5 rather than lower is that every contraction lever is fast while every expansion lever is slow.** Expanding the line requires a **7-day Curve DAO vote with a genuine floor**; `reduce_debt_ceiling` is **one-way and immediate** for the 5-of-9 emergency Safe. **Expansion is slow and public; contraction is fast.** ⚠️ **Two items remain unscored — the stablecoin fraction and the unwind path — and both can only move this axis down.**
-
-**The two dependencies this axis is scored on are set out below.**
-
-### YieldBasis Dependency (KEY RISK)
-
-#### What is YieldBasis?
-
-YieldBasis (YB) is a protocol by Michael Egorov designed to eliminate impermanent loss for AMM liquidity providers. Launched September 2025 on Curve infrastructure. Originally BTC-only; ETH/WETH markets have since been added.
-
-#### Mechanism (V1/V2)
-
-1. User deposits collateral (WBTC, cbBTC, tBTC, or WETH)
-2. YB draws from its pre-minted crvUSD allocation (matching the collateral value)
-3. Both collateral + crvUSD enter a Curve pool as a 50/50 position
-4. Continuous rebalancing maintains 2x leverage — user's share tracks the asset price 1:1 while earning trading fees
-5. When users withdraw, the paired crvUSD returns to the YB factory as idle buffer
-
-#### V3 restructuring (live May 21, 2026)
-
-YB V3 restructured the user product into per-user **HybridVaults**. Instead of a bare leveraged-LP position, each hybrid vault holds two sleeves: the **leveraged BTC/ETH LP sleeve** (the V1/V2 market above) *plus* a **crvUSD-vault sleeve — currently 45%** of vault value — deployed into **scrvUSD** so the stable half of the position earns the crvUSD savings rate rather than sitting idle. The YB UI lists each asset twice (a standard market and a "Hybrid" variant over the *same* underlying market); the Hybrid row is that same collateral pool wrapped with the added stable sleeve, not a separate pool.
-
-Why this matters for crvUSD: every dollar of net-new V3 TVL routes **≈$0.45** into scrvUSD — i.e. into crvUSD held in the savings vault. This is a new, growing structural source of crvUSD demand living *inside* V3 — a peg-defense buffer when calm, but a crvUSD-outflow lever if V3 unwinds fast (mass redemption → scrvUSD redemption → crvUSD leaves the savings vault). ⚠️ **`stablecoin_fraction()` reads 45% today and is an ADMIN-settable lever with no reaction window** — `set_stablecoin_fraction` is gated on an ADMIN that resolves to YieldBasis's own DAO, the one with early execution and a minimum proposing power of one token. **A third party can change how much crvUSD demand exists, immediately.** ⚠️ **It is a parameter, not a constant, and a figure quoted as a default does not announce when it stops being one.**
-
-⚠️ **But size the lever before pricing it.** The savings vault holds **15,992,069.55 crvUSD** — verified two ways on 2026-09-09, since `scrvUSD.totalAssets()` and `crvUSD.balanceOf(scrvUSD)` return the same figure to the wei — which is **0.76% of supply**. **A vault can only release what it holds**, so that is the ceiling on this path whoever owns the shares. ✅ **Redemption is instant — `cooldownDuration()` and `withdrawalQueue()` both revert, so there is no queue** — which makes this **a shock rather than a drain, and a small one.** **Both halves belong in the sentence: immediate, and bounded at well under one percent of supply.** Aggregate scrvUSD parked through HybridVaults is tracked on the dashboard via the HybridVaultFactory's `crvusd_vault_total_required` reading.
-
-#### Credit Line (Structural — governance decisions)
-
-| Date | Ceiling | Notes |
-|------|---------|-------|
-| Sep 24, 2025 | 60M crvUSD | Initial approval — pools filled within minutes |
-| Oct 7–14, 2025 | 300M crvUSD | Expanded after rapid fill |
-| Late 2025 | $1B | Current ceiling |
-
-The ControllerFactory pre-mints crvUSD into the YB factory up to the ceiling. The factory then deploys into pools on demand as users deposit BTC. **The factory balance includes both deployed and idle crvUSD — check the dashboard for current figures.**
-
-#### Structural Risk Factors
-
-1. **Volume dominance:** YB accounts for >36% of all crvUSD volume (>60% during high BTC volatility). This is structural — YB's rebalancing mechanism generates crvUSD trades with every BTC price movement.
-2. **Bidirectional BTC correlation:** YB's rebalancing flows are proportional to BTC price moves in both directions. A +1% BTC move causes ~$3.5M in crvUSD flow. This creates BTC correlation in what is supposed to be a USD stablecoin.
-3. **Rate instability:** YB-induced flows cause borrow rates to swing between near-0% and 12%+, driven by PegKeeper debt ratio changes rather than organic lending demand. This cascades to scrvUSD yield volatility.
-4. **Single protocol concentration:** One protocol controls the largest crvUSD allocation and the majority of volume. A YB exploit or failure would cascade directly to crvUSD.
-5. **Dual-role governance:** Michael Egorov is both Curve founder and YB creator. This creates alignment but concentrates influence over crvUSD's dominant supply source.
-6. **Correlation amplifier in drawdowns:** A sharp BTC decline simultaneously: (a) triggers YB rebalancing flows that pressure crvUSD, (b) drops collateral value in CDP minting markets, (c) spikes borrow rates. These are correlated, not independent risks.
-
-#### Mitigants
-
-- Credit line is factory-bound with irrevocable minter controls
-- Emergency DAO multisig can intervene
-- crvUSD within YB pools is paired with BTC — not free-floating
-- Monetary policy smoothing (3-week EMA) proposal addresses rate volatility
-- YB rebalancing is bidirectional — BTC up = buy crvUSD, BTC down = sell crvUSD
-
----
-
-### Cross-Chain Architecture
-
-The crvUSD FastBridge consists of **six LayerZero OApps** — three `VaultMessengerLZ` contracts on Ethereum (one per supported L2) and three `L2MessengerLZ` contracts on Arbitrum, Optimism, and Fraxtal. An on-chain DVN-config audit (2026-04-25) confirms all configured pathways require **2 DVNs (LayerZero Labs + Google Cloud)**, point-to-point peer config, and consistent ownership through Curve's `OWNERSHIP_DAO`. **The bridge is not rsETH-shaped: zero exposed-and-peered pathways across all six OApps.** The April 19, 2026 manual pause was precautionary, not a response to a discovered DVN hole.
-
-#### Bridge contract topology
-
-| Role | Chain | Address |
-|---|---|---|
-| `VaultMessengerLZ` (Arbitrum pathway) | Ethereum | `0x15945526b5C32D963391343e9Bc080838fe3e6d9` |
-| `VaultMessengerLZ` (Optimism pathway) | Ethereum | `0x4A10d0FF9e394f3A3dCdb297973Db40Ce304b44f` |
-| `VaultMessengerLZ` (Fraxtal pathway) | Ethereum | `0xEC0e1c5Cc900D87b1FA44584310C43f82F75870F` |
-| `L2MessengerLZ` | Arbitrum | `0x14e11C1B8F04A7dE306a7B5bf21bbca0D5cF79ff` |
-| `L2MessengerLZ` | Optimism | `0x7a1f2f99B65f6c3B2413648c86C0326CfF8D8837` |
-| `L2MessengerLZ` | Fraxtal | `0x672C38258729060bF443BA28FaEF4F2db154C6fC` |
-
-Sourced from the [`curvefi/fast-bridge`](https://github.com/curvefi/fast-bridge) deployment artifacts. Each verified as a proper LayerZero OApp (peers responding, delegate set to `OWNERSHIP_DAO`, ownership readable). Source-of-truth references: [Curve fast-bridge docs](https://docs.curve.finance/fast-bridge/overview/), [VaultMessengerLZ](https://docs.curve.finance/fast-bridge/VaultMessengerLZ/), [L2MessengerLZ](https://docs.curve.finance/fast-bridge/L2MessengerLZ/).
-
-#### Two bridges — slow vs fast
-
-**Slow bridge — native L2 messaging.** For L2 deployments (Arbitrum, Optimism, Fraxtal), Curve uses each chain's canonical native bridge:
-
-- L2 → Ethereum: standard L2 native withdrawal periods (~1 week for Arbitrum)
-- Ethereum → L2: fast deposit (minutes)
-- Trust assumption: Ethereum security + the L2's native bridge architecture
-- No third-party verifiers; same trust model as bridging USDC or any other ERC-20 via canonical L2 bridges
-
-**Fast bridge — LayerZero OApp.** Used for L2 fast paths and for the L1 deployments (BSC, Avalanche, Fantom, Etherlink) where native L2 messaging doesn't apply:
-
-- Trust assumption: LayerZero infrastructure (Endpoint, MessageLibrary), 2 DVNs per peered pathway (LayerZero Labs + Google Cloud), and Curve's messenger contracts
-- Audited 2026-04-25: DVN config clean, all peered pathways pass the rsETH-class check (see audit findings below)
-
-#### Bridge audit findings (2026-04-25)
-
-| Layer | Status |
-|---|---|
-| 1. DVN count per peered pathway | ✓ Checked — 2 DVNs minimum on all six OApps |
-| 2. DVN identity / collusion | ✓ Checked — no single-operator pathways; LayerZero Labs + Google Cloud (independent operators) |
-| 3. MessageLibrary version | ✓ Checked — all default UlnV302 |
-| 4. Peer configuration | ✓ Checked — point-to-point, exactly one peer per messenger contract |
-| 5. OApp pause / kill switch | ⚠ Gap — messenger contracts don't expose `paused()` directly; emergency pause routes through `FastBridgeVault` per `EMERGENCY_DAO`. Curve's April 19 manual pause is documented and the architecture supports it. |
-| 6. Endpoint trust | ✓ Checked — owner readable, delegate set to `OWNERSHIP_DAO` |
-| 7. OApp admin / governance | ⚠ Partial — owner resolved as Curve's `OWNERSHIP_DAO` (`0x40907540d8a6C65c637785e8f8B742ae6b0b9968`), a Vyper admin contract rather than a Gnosis Safe. Governance-path detail (signers, threshold, voting parameters) requires a Vyper-aware reader and is unaudited here. |
-
-**Out-of-scope gaps** consistent across any LayerZero OApp audit:
-
-- DVN RPC infrastructure (off-chain operator detail; vendor cooperation required)
-- Formal adapter contract audit coverage (per-protocol manual review)
-- Real-world signer identity at the governance layer (not on-chain)
-- Per-pathway rate limits (non-standardized; not exposed by the messenger contracts)
-
-A note on the "exposed pathways" picture: 8–11 EXPOSED rows show up per-OApp on the Blockaid-style read, but **all are LayerZero defaults for unpeered EIDs** (Sei, Shimmer, Bitlayer, Blast, Etherlink, Katana, Monad, etc.). Forged messages from those chains hit a zero-peer check at the OApp layer and are rejected before DVN config matters. Layer-4 peer-config readability is what lets us draw this distinction — the original rsETH-style DVN-only audit could not.
-
-#### One configuration footnote — Fraxtal burn-address DVN
-
-Fraxtal's `L2MessengerLZ` has its inbound-from-Ethereum DVN configured as a single DVN at `0x000000000000000000000000000000000000dEaD` — the burn address. Effect: Ethereum → Fraxtal control messages cannot verify and cannot deliver. **Not exploitable today** — nothing passes the verification, including attackers. **Becomes a 1-DVN hole** if LayerZero ever updates the Fraxtal default to a real single DVN. Independent of the April 19 LayerZero pause; worth flagging to Curve as a defense-in-depth cleanup item.
-
-#### Curve's response to rsETH (April 19, 2026)
-
-Curve paused the LayerZero fast bridge — affecting CRV transfers from BSC, Sonic, and Avalanche, and crvUSD fast bridging across all LayerZero-supported chains. **The L2 slow bridge remained operational throughout.** This was a precautionary measure during root-cause investigation, not a confirmed exploit of Curve's bridge — and the on-chain audit (above) confirms there was no exploitable DVN-config hole to find.
-
-**Operational signal:** Curve's response demonstrated active monitoring and a credible pause mechanism. Holders relying on the slow bridge were unaffected. This is a positive operational observation: an LP-led precautionary pause in the same architectural class within 24 hours of the rsETH disclosure.
-
-**Verify current pause status before initiating any LayerZero-routed bridge transaction.** Pause/unpause status varies as Curve completes its investigation.
-
-#### Practical guidance for cross-chain crvUSD users
-
-- **Both bridges are audited as clean.** Slow bridge inherits Ethereum's native security; fast bridge is multi-DVN via LayerZero Labs + Google Cloud, audit-verified 2026-04-25.
-- **For larger sizes, the slow bridge is architecturally simpler** — fewer trust assumptions to evaluate per cycle. **The fast bridge is not unaudited surface**: its DVN configuration was verified on-chain 2026-04-25.
-- **L1 deployments (BSC, Avalanche, Fantom, Etherlink) only have the LayerZero fast bridge available** — slow-bridge fallback doesn't exist for non-EVM-rollup L1s. These chains carry unavoidable LayerZero dependency.
-- **Verify the fast bridge is currently active** before transacting (post-rsETH pause status varies).
-
-#### Cross-chain dependency summary for portfolio construction
-
-| Chain | crvUSD bridge model | Bridge-class trust assumption |
-|---|---|---|
-| Ethereum | Canonical (no bridge) | Curve smart contracts |
-| Arbitrum, Optimism, Fraxtal | Slow (native L2) + Fast (LayerZero, audited 2026-04-25) | L2 native bridge OR LayerZero (user choice) |
-| BSC, Avalanche, Fantom, Etherlink | Fast only (LayerZero, audited 2026-04-25) | LayerZero (no fallback) |
-
-Note that crvUSD on a non-canonical chain inherits its bridge's security model on top of crvUSD's own protocol risks. For users sizing on Ethereum, none of this section applies; for users sizing elsewhere, the bridge-layer exposure is real but verified clean (with the Fraxtal footnote above) as of 2026-04-25.
-
----
+Cross-chain holdings add the relevant native-bridge or LayerZero transport and chain-governance exposure. Earlier bridge reviews retain their original dates. The November child-gauge migration establishes gauge administration, not a refreshed token-bridge audit or complete cross-chain delivery history. Holding crvUSD alongside scrvUSD or leveraged claims backed by it preserves substantial common exposure.
 
 ## 5 · Contract & Admin — 5.5
 
-**crvUSD's contract risk and its authority risk point in opposite directions, and the score is the average of a strong half and a weaker one.**
+Ethereum crvUSD has no measured token-upgrade surface. Its surrounding factories, policies, oracles and lending operators remain governed contracts. At Ethereum block **26,327,058**, November 2 **12:20:23 UTC**, the ControllerFactory and lending factories used LendingOwnerProxy **`0xeda020b067872717901916a3b8c724c21f6080d1`**; the checked AMM factories used AmmOwnerProxy **`0xeda0108d5bb8cde2ba4a59e22f3ed5d211c77187`**. Their DAO is Curve's Ownership Agent **`0x40907540d8a6c65c637785e8f8b742ae6b0b9968`**. These are immutable forwarding/access-control programs, not token implementation-upgrade proxies.
 
-✅ **The token itself cannot be replaced.** Mainnet crvUSD is **3,572 bytes of Vyper with all three EIP-1967 slots — implementation, admin and beacon — reading zero**, re-verified on-chain 2026-09-09. That is positive evidence rather than a missing accessor: the code is present and the proxy slots are empty. **There is no upgrade path over the token**, which removes the single largest contract risk most stablecoins carry.
+The Ethereum emergency Safe **`0x467947ee34af926cf1dcac093870f613c96b1e0c`** remains **5-of-9**. Its restricted lending functions have no proxy-level execution delay. They include LLv2 monetary-policy and callback replacement, reducing debt ceilings, zeroing specified exposure limits, pausing deployment and conditional oracle repair. Oracle repair requires the existing oracle to fail bounded probes or return zero and the replacement to return nonzero values. Those checks test availability, not economic correctness. The permitted Chainlink-path toggle can operate in both directions.
 
-**Issuance authority is a chain of contracts, and it is not key-shaped at the top.** `minter()` is the ControllerFactory `0xc9332fdc…738bc`; the factory's `admin()` is `0xb7400D2EA0f6DC1d7b153aA430B9E572F28afB79`, which exposes a **`dao()`** — the Curve Ownership Agent `0x40907540…9968` — alongside an **`emergency()`** Safe `0x467947EE34aF926cF1DCac093870f613C96B1E0c` measured at **5-of-9**. ⚠️ **Raising mint capacity runs through a DAO vote rather than a key**, so the attack on that path is economic (veCRV) rather than key material.
+Arbitrary `execute` and debt-ceiling increases remain DAO-only. Curve Ownership Voting retains its seven-day execution floor; this is separate from YieldBasis's early-execution voting mode. The DAO or current emergency Safe can revoke the proxy's emergency address. Revocation does not undo earlier calls or revoke the WETH policy's separate emergency authority. The additional permissions mean an unchanged signature threshold does not establish unchanged control risk. [Migration specification](https://gov.curve.finance/t/emergency-dao-proxy-upgrade/11193), [executed migration](https://etherscan.io/tx/0x52b52f633eaef7cb05bdd29b3386b69e3c5f3368be20f3d113e6c21f837ff163).
 
-⚠️ **What holds the score at 5.5 is the emergency Safe and the bridged legs.** The Safe carries **no execution delay**, and the non-Ethereum deployments do not answer to Curve at all — each inherits the authority of that chain's own bridge operators, a different counterparty per chain and weaker than the mainnet arrangement on at least one of them. **This axis is scored on the Ethereum leg, where the mechanism and the great majority of supply sit.**
+The separate Resupply mint factory remains owned by the Curve Ownership Agent. Moving the upstream crvUSD factory to a new lending proxy does not transfer that separate ownership. Emergency ceiling reduction alone does not withdraw the operator's deposited balance or change its mint limit.
 
-### Smart Contract Security
+Current child-gauge bindings were checked on Arbitrum, Optimism, Sonic and Taiko. Their emergency Safes read 5-of-9 with the same owners as Ethereum; common membership does not prove signer independence. Optimism's destination receipt is verified. Exact destination execution chronology for Arbitrum, Sonic and Taiko remains unresolved, and their child-gauge proxies do not inherit the union of Ethereum lending permissions.
 
-#### Audits
-
-crvUSD has been audited by **10+ firms** across multiple engagements as part of Curve's broader audit program. Key audits include reviews of LLAMMA, Controller, PegKeeper, and Factory contracts. Curve is one of the most audited DeFi protocols.
-
-#### Notable Incident
-
-**July 2023 Vyper re-entrancy exploit** (~$70M lost across Curve ecosystem). While this did not directly exploit crvUSD contracts, it demonstrated cascade risk within the Curve ecosystem and temporarily destabilized CRV markets, which indirectly affected crvUSD confidence.
-
----
+The source/runtime review supports the checked proxy restrictions and WETH policy attachment. The migration specification agrees with the restricted lending scope; the policy forum's reserved-profit value differs from deployed state as described above. No complete current audit-to-deployment or bounty-scope mapping for these new privileged surfaces was established. Curve's historical audit disclosures and the July 2023 ecosystem Vyper exploit do not substitute for that check. Safe guards/fallback routes, complete Kernel/Voting upgrade history, all LLv2 oracle economics, other bridge chains and scrvUSD's separate vault authority were not fully refreshed.
 
 ## 6 · Issuer — 6.0
 
-**Curve is one of DeFi's most established protocols** — deployed since **2020**, ten-plus audit firms across its contracts, and a track record through multiple market cycles. ⚠️ **The audit-firm count is carried from the protocol's own disclosures and was not independently re-counted in this pass.** ✅ **On longevity and transparency this is close to the top of what a decentralised issuer can offer.**
+Curve is a long-running DeFi protocol governed through veCRV voting. Michael Egorov is a publicly identified founder and also a central figure in YieldBasis. This shared involvement concentrates influence over the protocol and its largest supply dependency; it does not establish wrongdoing or independent decision-making between them.
 
-⚠️ **What holds it at 6.0 is concentration rather than competence.** CRV tokenomics add governance complexity, and **Michael Egorov's dual role across Curve and YieldBasis creates concentrated influence over crvUSD's supply architecture specifically** — the same person is central to the protocol that issues the asset and to the counterparty holding its largest credit line. **That is a governance fact, not an allegation**, and it is priced here rather than on Dependencies because it is about who decides, not about what the asset passes through.
+A public governance grant identifies **Swiss Stake AG**, Switzerland, as a developer and grant recipient. That role does not establish a corporate obligation to repay crvUSD holders. Its registry details, directors and a token-specific repayment obligor were not independently verified in this refresh. The grant's Swiss-law/Zug provisions apply to the grant, not automatically to token-holder claims. [Developer grant](https://gov.curve.finance/t/funding-proposal-for-swiss-stake-ag-grant-proposal-2026/10953).
 
-## Comparison vs Other Stablecoins in Portfolio
+Token-specific governing law, dispute mechanism, enforceable holder recourse and a current consolidated financial audit remain unestablished here. Public governance records support visibility into decisions, while practical accountability and voter concentration require separate assessment. The issuer rating is carried from the historical assessment, rather than re-derived from a complete current legal and financial review.
 
-| Factor | crvUSD | USDC | eUSD | USD3 | msUSD |
-|--------|--------|------|------|------|-------|
-| Type | Algo (LLAMMA) + YB credit line | Fiat-backed | RToken basket | RToken basket | Main Street Finance |
-| Circulating | low $200Ms (Q2 2026 range) | $40B+ | $22M | $7–50M | $15–29M |
-| Liquidity | Deep (Curve native + YB pools) | Deep | Thin pool, ok aggregated | Moderate | Thin |
-| Backing | CDP + YB credit line + PK (opaque mix) | USD reserves (attested) | Yield-bearing stables → RLUSD | 4-asset DeFi basket | Options arbitrage |
-| Supply transparency | Poor (no authoritative metric) | Strong (attestations) | Moderate (on-chain basket) | Moderate | Poor |
-| Key risk | YB dominance + BTC correlation | Centralized | RLUSD concentration | Basket complexity | Opacity |
-| Audits | 10+ firms (Curve) | Regulated, attested | 7 firms (Reserve) | Reserve Protocol | Unknown |
-| Score | **5.0** | **9.0** | **6.0** | **7.0** | **5.0** |
+## What to watch
 
-## Recommendations
+- PegKeeper debt and paired stablecoin liquidity, using consistent supply definitions and multi-day observations.
+- YieldBasis deployed debt, collateral values, policy/verifier changes and performance during correlated BTC/ETH stress.
+- Resupply operator minting, actual borrower debt, idle balances and the liquidity required to unwind them.
+- Lending-policy, callback and oracle changes, emergency revocation, and evidence completing cross-chain destination execution.
+- Fresh USDC exit quotes at the intended size, including fees, gas and executable route conditions.
 
-### Supply & Collateral Monitoring
-1. **Track conservative CR** — symmetric: (mint markets + YB pool BTC) / (mint debt + YB + operator), dropping PK debt and PK stables from both sides. Primary health indicator. Cross-check against inclusive CR (PK in both); the two should sit within a few points of each other.
-2. **Track PK debt over time** — PK debt is the peg defense indicator. Store historical readings. Zero debt = zero downside burn capacity. High debt = healthy buffer.
-3. **Enumerate all `set_debt_ceiling` recipients** — pull all events from ControllerFactory to discover any new supply sources added by governance.
+## Sources, methodology and review scope
 
-### YieldBasis-Specific Monitoring
-4. **YB pool balance ratios** — each YB pool should be ~50/50 BTC/crvUSD. If a pool skews heavily toward crvUSD (BTC withdrawn), YB is selling crvUSD during a BTC decline. A sustained skew away from 50/50 means rebalancing is failing — this is the leading indicator for the Oct 2025 flash crash scenario repeating.
-5. **YB credit line utilization** — deployed crvUSD (sum of `crvUSD.balanceOf(pool)` across YB pools) vs $1B ceiling. Higher utilization = more crvUSD tied to BTC correlation. Watch for governance proposals to raise ceiling.
-6. **Net crvUSD flow direction** — is YB net buying or selling crvUSD? BTC up = buy (peg support), BTC down = sell (peg pressure). Magnitude scales with BTC volatility × pool size. Correlate with PK activity and peg deviations.
-7. **YB supply concentration** — YB deployed as % of total crvUSD supply. If YB represents 80%+, a single bad BTC day could overwhelm PegKeeper capacity.
+The report combines a historical six-axis assessment with a bounded November 2 authority and issuance review. The source block for current Ethereum controls is **26,327,058 at 12:20:23 UTC**. The accepted source review checked receipts, target events, getter bindings and verified-source runtime correspondence; those RPC investigations were not repeated during website publication. The November 2 financial observations above come from the **10:36 UTC** dashboard snapshot, not the later authority block.
 
-### System-Wide
-8. **Monitor rate volatility** — the AggMonetaryPolicy rate is the system-wide signal. Sustained high rates (>10%) indicate PK/YB stress; near-zero rates indicate excess crvUSD supply. Cascades to scrvUSD yield.
-9. **Model BTC drawdown scenarios** — quantify the correlated impact of a 20%+ BTC decline on YB pool ratios, rebalancing health, CDP collateral values, PK deployment, and borrow rates simultaneously.
+The [dashboard](https://tidresearch.com/dashboards/?asset=crvusd) provides changing balances, rates, allocations and exit quotes. Its generated timestamp is not a substitute for a source observation clock. Historical measurements in this report retain their dates. Deployed and minted accounting bases are presented separately; downstream recirculation and bridge representations are not added as independent origin issuance. Paired PegKeeper debt and stablecoin assets must be included or excluded symmetrically in collateral ratios.
 
-## Data Sources
+Primary execution evidence is linked in the relevant sections. The accepted October 29 Ethereum executions are vote 1508 at block **26,298,152**, vote 1509 at **26,299,424**, and vote 1510 at **26,300,155**. Vote 1507 was closed and unexecuted. Ethereum message dispatch alone is not proof of destination execution. The current verifier-owner governance and parts of the cross-chain execution history remain open.
 
-- **Live dashboard:** [tidresearch.com/dashboards/?asset=crvusd](https://tidresearch.com/dashboards/?asset=crvusd) — hourly on-chain supply, per-market CR, PK debt, YB utilization
-- **On-chain contracts:** ControllerFactory, Controllers, LLAMMA AMMs, PegKeepers, AggMonetaryPolicy, OneWayLendingFactory, YB Factory (`0x370a449FeBb9411c95bf897021377fe0B7D100c0`)
-- **LlamaRisk API:** `https://api.llamarisk.com/protocols/curve/graphql/` — market health scores, unhealthy user positions, soft-liquidation data
-- **LlamaRisk Portal:** [portal.llamarisk.com/curve/markets](https://portal.llamarisk.com/curve/markets) — 7-factor market health scores
-- **Cross-checks:** CoinGecko (circulating), DefiLlama (TVL), Curve Monitor (curvemonitor.com)
+**Scores are unchanged**, on a 1–10 scale where higher is safer. Contract & Admin **5.5** is a retained historical rating pending explicit reassessment of the expanded permissions, not a new endorsement. Overall remains **5.0**; it is an authored assessment rather than an arithmetic mean. Full verification remains **September 10, 2026**; the scoped revision date is **November 2, 2026**. The historical audit-firm count was inherited from Curve disclosures and was not independently recounted or bound to every current implementation.
 
-## Bottom Line
+## Revision history
 
-crvUSD is a well-engineered stablecoin with one of the tightest pegs among decentralized alternatives ($0.9997 average) and deep native Curve liquidity. The LLAMMA soft-liquidation mechanism and PegKeeper system are genuinely innovative. However, the September 2025 launch of YieldBasis fundamentally changed crvUSD's character. YB now dominates crvUSD's supply infrastructure (largest pre-minted allocation from a $1B ceiling) and volume dynamics (>36% of all crvUSD volume). Traditional CDP minting has declined to tens of millions while YB's allocation is hundreds of millions. The exact composition of circulating supply is opaque — StablecoinLens is outdated, CoinGecko's methodology is unknown, and the split between YB pool-deployed and idle crvUSD is not tracked. The 5.0/10 score reflects strong engineering weighed against structural YB dependency, BTC correlation exposure, rate instability, and supply opacity.
+- **2026-11-02:** Incorporated the restricted eDAO migration, attached WETH policy and deployed 43% fraction, executed Resupply mint/deposit and outstanding governance/execution limits. Reorganized the report into the current reader-first format. Scores and full-verification date unchanged.
+- **2026-09-12:** Liquidity assessment adopted the dated routed USDC exit ladder; Liquidity 8.0 is retained.
+- **2026-09-08–10:** Backing and Overall returned to 5.0 following the multi-day PegKeeper-share review; authority and supply observations were reviewed with the recorded coverage limits.
+- **2026-08-23:** Backing and Overall temporarily reduced to 4.5 during the PegKeeper issuance excursion. The historical sequence remains part of the assessment record.
 
----
-
-*Revision history: 2026-09-08 — **Backing 4.5 → 5.0, Overall 4.5 → 5.0.** The PegKeeper ratio moves as a swing rather than a level, and the 08-23 figure sat at the peak of a four-day excursion. Daily series: **14.07% (08-18) → 32.72% (08-21) → 34.56% (08-24) → 23.68% (08-25) → 15.68% (08-28) → 14.0% (09-07)**, ten days stable. ⚠️ **The peg was at par throughout** — never beyond **0.049%** deviation, with 0.99999 / 0.99993 / 0.99991 on 08-21/22/23 at the moment the debt tripled. `PegKeeper debt − pool stables` was **+$32.80M** at the peak, **−$6.65M** on 08-19 and **−$2.58M** on 09-07: it oscillates around zero rather than widening. A level-based trigger now replaces the snapshot: cut below 5.0 only if the ratio holds above 25% for more than five consecutive daily readings.*
-
-*Revision history: 2026-08-23 — **Backing 5.0 → 4.5, Overall 5.0 → 4.5. A finding, not a recalibration:** every figure here is a dated move since 2026-08-13. **PegKeeper debt tripled, $33.75M → $98.60M in ten days, and stood at 32.8% of supply** against about a tenth previously. PegKeeper crvUSD is protocol-minted, protocol-owned and **not backed by collateral**, so **roughly a third of crvUSD was uncollateralized supply** — and the implicit backing did not keep pace: PK pool stables **$71.24M against $98.60M of debt, a $27.35M gap**. ⚠️ **Explicitly not a depeg.** PegKeeper minting *is* the peg mechanism operating as designed; crvUSD traded at **$1.0009**, the minting market's CR was 230.7%, and the $98.6M of burn capacity was real. **The change was compositional — the peg being defended by expanding uncollateralized supply, at three times the earlier scale.** Peg, liquidity and issuer axes untouched; Overall follows Backing because this composite tracks its weakest axis. Supply moved to **$300.5M**; conservative CR to **101.96%**; inclusive CR to **92.21%, below par**; YieldBasis share to **47.1%**, moving opposite to its earlier direction. **A definitional control, stated rather than assumed:** supply is `total_supply` at $300.5M, **not** `totalSupply()` at $2,104.8M, which carries pre-minted ceiling buffer; every ratio uses the former. The **collateral-ratio basis changed on 2026-08-18** without announcement — the headline 101.96% is the **deployed** basis, while the same book on the **minted** basis reads **99.17%, below par**. `last_verified` is bumped: supply, collateral ratios, PegKeeper debt and pool stables were all re-read. 2026-08-13 (later same day) — verified on-chain that both mainnet Aave GHO Stability Modules are seized (zero GHO, zero underlying, exposure cap 0, `frozen = false`), promoting the GSM impairment behind the GHO keeper's retirement from reported to verified. The Curve Emergency DAO vote, its date and ID, and the LlamaRisk monetary-policy proposal remain unread — the Curve forum returns HTTP 403 from two separate environments. No conclusions or scores changed. 2026-08-13 — PegKeeper set re-read on-chain from the PegKeeperRegulator and `ControllerFactory.debt_ceiling()`. The GHO/crvUSD keeper is corrected from active to **decommissioned** (debt ceiling 0, no debt); its Curve pool still provides DEX depth but no peg defense. Added the verified finding that the USDT keeper then held **100% of PegKeeper debt** (33.75M), making it a single point of failure for downside defense. weETH reclassified from ETH LRT to ETH LST in the collateral table following ether.fi's 2026-08-06 restaking removal. Scores unchanged at 5.0. 2026-07-28 — supply reconciliation and YieldBasis dependency refresh.*
+</div>

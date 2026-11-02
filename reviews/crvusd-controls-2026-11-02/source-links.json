@@ -1,0 +1,42 @@
+[
+  {
+    "url": "https://etherscan.io/tx/0x52b52f633eaef7cb05bdd29b3386b69e3c5f3368be20f3d113e6c21f837ff163",
+    "status": 403,
+    "final": "https://etherscan.io/tx/0x52b52f633eaef7cb05bdd29b3386b69e3c5f3368be20f3d113e6c21f837ff163"
+  },
+  {
+    "url": "https://etherscan.io/tx/0x567e9b7264c0a6f8397648482778dd7dce742aecd96745da576f799871abca53",
+    "status": 403,
+    "final": "https://etherscan.io/tx/0x567e9b7264c0a6f8397648482778dd7dce742aecd96745da576f799871abca53"
+  },
+  {
+    "url": "https://etherscan.io/tx/0x81f0fd5865f685a277de75b05f097538a49ab9b695c882b9425983f221a64fc3",
+    "status": 403,
+    "final": "https://etherscan.io/tx/0x81f0fd5865f685a277de75b05f097538a49ab9b695c882b9425983f221a64fc3"
+  },
+  {
+    "url": "https://gov.curve.finance/t/curve-part-of-turning-weth-crvusd-yieldbasis-pool-into-a-permissionless-propamm/11194",
+    "status": 403,
+    "final": "https://gov.curve.finance/t/curve-part-of-turning-weth-crvusd-yieldbasis-pool-into-a-permissionless-propamm/11194"
+  },
+  {
+    "url": "https://gov.curve.finance/t/emergency-dao-proxy-upgrade/11193",
+    "status": 403,
+    "final": "https://gov.curve.finance/t/emergency-dao-proxy-upgrade/11193"
+  },
+  {
+    "url": "https://gov.curve.finance/t/funding-proposal-for-swiss-stake-ag-grant-proposal-2026/10953",
+    "status": 403,
+    "final": "https://gov.curve.finance/t/funding-proposal-for-swiss-stake-ag-grant-proposal-2026/10953"
+  },
+  {
+    "url": "https://gov.curve.finance/t/raise-lending-limit-of-crvusd-to-the-sreusd-lending-market-to-60m/11187",
+    "status": 403,
+    "final": "https://gov.curve.finance/t/raise-lending-limit-of-crvusd-to-the-sreusd-lending-market-to-60m/11187"
+  },
+  {
+    "url": "https://tidresearch.com/dashboards/?asset=crvusd",
+    "status": 200,
+    "final": "https://tidresearch.com/dashboards/?asset=crvusd"
+  }
+]

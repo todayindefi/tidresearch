@@ -1,0 +1,18 @@
+# crvUSD control findings and content-style publication — November 2, 2026
+
+Report: https://tidresearch.com/reports/crvusd/
+Dashboard: https://tidresearch.com/dashboards/?asset=crvusd
+
+The report has been rewritten to follow specs/report-style.md and docs/report-format.md: reader-first summary; six descriptive axes; no routine warning/reassurance icons, score defence, internal workflow narration or comparative scoring claims; source dates and methodology at the end; Revision history last. The issuer section separates the developer/grantee from a repayment obligor and marks recourse inputs unresolved. Daily monitoring stays on the dashboard. Dated material issuance/control findings remain in the analysis.
+
+Accepted findings: eDAO remains 5-of-9 with restricted LLv2 policy/callback replacement and conditional oracle repair. Arbitrary execution and ceiling increases stay DAO-only. WETH policy attachment is established; deployed reserved-profit fraction is 43%, not forum 42.2%. Curve emergency can kill and revive the policy, distinct from gauge kill-only functions. Verifier-owner governance remains unresolved. Resupply vote 1509 minted/deposited a further 30M; total minted allocation is 60M, separate from actual borrowing and idle issuance. Optimism destination execution is established; Arbitrum/Sonic/Taiko exact chronology remains unresolved.
+
+Source pins: security Ethereum block 26,327,058, November 2 12:20:23 UTC; historical financial comparison November 2 10:36 UTC. No fresh chain investigation during publication. Scores, full-verification date, chains and production status remain unchanged; last_revised advances only. Structural 5.5 remains historical pending explicit reassessment; Overall 5.0.
+
+Canonical source commits are in source-commits.json. The security generator reads only committed topology, so the accepted crvUSD YAML/audit and evidence hash/verification records were committed selectively before generation. The full security provenance gate flagged existing unrelated untracked files; each adopted crvUSD source was checked against the accepted manifest. Reader-prose, authority vocabulary and preventive-control gates passed. Existing topology coverage gaps remain. No other security work was committed. RiskAnalyst's crvUSD overlay score/date check found zero divergences; its fleet pre-commit warning named two unrelated USDat divergences, which were left unchanged.
+
+Dashboard publication changes only crvusd_contract.json (generated from committed topology), crvusd_contract_overlay.json, crvusd_axis_basis.json, the crvUSD renderer's deployed/minted accounting and PK wording, and a crvUSD-scoped mobile CSS rule. The normal producer/source roots remain authoritative; no cron or broad sync script was run for publication. Other local dashboard work was excluded. Generated feed time does not restamp historical layers or score clocks.
+
+Validation: production prebuild and Astro build pass (56 pages). Score/date/chain/production invariants pass. Local Chromium report and dashboard pass at 1440px and 390px with all details expanded, no horizontal page overflow and no page JavaScript errors. Screenshots and browser result files are retained locally. The report's full-address strings and tables wrap/scroll within the content. The dashboard's existing mobile table overflow is contained only for crvUSD.
+
+Source links: dashboard HTTP 200. Etherscan and Curve forum returned 403 to the direct automated HTTP client. All four linked Curve forum pages were successfully read through web browsing; proposals remain distinguished from receipts/current state. No broken-link conclusion is inferred from 403.
