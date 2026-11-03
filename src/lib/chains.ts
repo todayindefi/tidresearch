@@ -4,6 +4,8 @@
 const ALIASES: Record<string, string> = {
   eth: "ethereum",
   ethereum: "ethereum",
+  lighter: "lighter",
+  metis: "metis",
   arb: "arbitrum",
   arbitrum: "arbitrum",
   op: "optimism",
@@ -79,6 +81,8 @@ const LABELS: Record<string, string> = {
   pharos: "Pharos",
   berachain: "Berachain",
   ethereum: "Ethereum",
+  lighter: "Lighter",
+  metis: "Metis",
   arbitrum: "Arbitrum",
   optimism: "Optimism",
   base: "Base",

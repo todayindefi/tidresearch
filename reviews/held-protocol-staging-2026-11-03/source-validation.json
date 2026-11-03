@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "lighter",
+    "source_sha256": "04be6ab7e2be505bcd15664cb42403dd9a50224d15269ca8fb90654df52fc70f",
+    "profile": "lighter",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "zama",
+    "source_sha256": "ec64304e1577a70c3bbe3cff496e501ead9a42e2af8dc991280f5957e95d9111",
+    "profile": "zama",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "boros",
+    "source_sha256": "e3401a2c1a4d034aab900d38f44bd5b0c5a6301b9c0595bc4bda355bf7d47958",
+    "profile": "pendle",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "beefy",
+    "source_sha256": "b01bb50232fd72750d865e20f01ca896341ee1975f93a27e045b7704333a3685",
+    "profile": "beefy",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "convex",
+    "source_sha256": "b488a177d988cd7a1de98cd09db025d2472bd805f8452010ea3913ea698c2f44",
+    "profile": "convex",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "ipor",
+    "source_sha256": "b25a6637cc42fa2aca8ec62fc1021e826e8fa62f4e7d1e2ed26e410c6317dd43",
+    "profile": "ipor",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "superform",
+    "source_sha256": "fb25bba3d34cf1f0891c2bdf5aa48d308667a45c2a0baf01b0977e3096c0a9f4",
+    "profile": "superform",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "neverland-money",
+    "source_sha256": "2e098e626f566de26baa5bff4cecd26be52a9e56a826313ab7e2d14102bad8be",
+    "profile": "neverland-money",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "pendle-v2",
+    "source_sha256": "143f5a6b7f2c211885400e3ff8757a60a100576c080edfb16fbd54c76dab00b1",
+    "profile": "pendle",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "aave-v3",
+    "source_sha256": "0502f1bd134216e33f2c9063424147d7b1b2b6aedd2593eb800daa51fd053bb5",
+    "profile": "aave",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "morpho",
+    "source_sha256": "365e76266ece23363def238e67d77c02559402f30a124acc41cecfbeac8a906e",
+    "profile": "morpho",
+    "profile_gate": "passed"
+  },
+  {
+    "slug": "euler",
+    "source_sha256": "8416b542a9a20f2174ee6f428b693c92d828b445d86ead09553a5c206ddb02e9",
+    "profile": "euler",
+    "profile_gate": "passed"
+  }
+]

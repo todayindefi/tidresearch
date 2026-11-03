@@ -1,0 +1,68 @@
+{
+  "staging_pages": 108,
+  "production_pages": 56,
+  "production_protocol_index_absent": true,
+  "production_protocol_sitemap_absent": true,
+  "reports": [
+    {
+      "slug": "lighter",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "zama",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "boros",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "beefy",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "convex",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "ipor",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "superform",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "neverland-money",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "pendle-v2",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "aave-v3",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "morpho",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    },
+    {
+      "slug": "euler",
+      "score_date_schema_parity": true,
+      "production_route_absent": true
+    }
+  ]
+}

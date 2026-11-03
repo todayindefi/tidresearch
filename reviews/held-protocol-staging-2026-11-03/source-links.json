@@ -1,0 +1,352 @@
+[
+  {
+    "url": "https://api.llama.fi/protocol/beefy",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/beefy"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/boros",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/boros"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/convex-finance",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/convex-finance"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/ipor-fusion",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/ipor-fusion"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/lighter",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/lighter"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/neverland",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/neverland"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/pendle",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/pendle"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/superform",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/superform"
+  },
+  {
+    "url": "https://api.llama.fi/protocol/zama",
+    "status": 200,
+    "final_url": "https://api.llama.fi/protocol/zama"
+  },
+  {
+    "url": "https://docs.beefy.finance/beefy-products/strategies",
+    "status": 200,
+    "final_url": "https://docs.beefy.finance/beefy-products/strategies"
+  },
+  {
+    "url": "https://docs.beefy.finance/beefy-products/vaults",
+    "status": 200,
+    "final_url": "https://docs.beefy.finance/beefy-products/vaults"
+  },
+  {
+    "url": "https://docs.beefy.finance/safety/contracts-and-timelocks",
+    "status": 200,
+    "final_url": "https://docs.beefy.finance/safety/contracts-and-timelocks"
+  },
+  {
+    "url": "https://docs.convexfinance.com/convexfinance/faq/audits",
+    "status": 200,
+    "final_url": "https://docs.convexfinance.com/convexfinance/faq/audits"
+  },
+  {
+    "url": "https://docs.convexfinance.com/convexfinance/faq/fees",
+    "status": 200,
+    "final_url": "https://docs.convexfinance.com/convexfinance/faq/fees"
+  },
+  {
+    "url": "https://docs.convexfinance.com/convexfinance/faq/multisig-admin-rights",
+    "status": 200,
+    "final_url": "https://docs.convexfinance.com/convexfinance/faq/multisig-admin-rights"
+  },
+  {
+    "url": "https://docs.convexfinance.com/convexfinance/faq/risks",
+    "status": 200,
+    "final_url": "https://docs.convexfinance.com/convexfinance/faq/risks"
+  },
+  {
+    "url": "https://docs.euler.finance/EUL/overview/",
+    "status": 200,
+    "final_url": "https://docs.euler.finance/EUL/overview/"
+  },
+  {
+    "url": "https://docs.euler.finance/developers/contract-addresses/",
+    "status": 200,
+    "final_url": "https://docs.euler.finance/developers/contract-addresses/"
+  },
+  {
+    "url": "https://docs.lighter.xyz/about-lighter/lit-utility",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/about-lighter/lit-utility"
+  },
+  {
+    "url": "https://docs.lighter.xyz/developers/integration-guides/deposits-transfers-and-withdrawals",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/developers/integration-guides/deposits-transfers-and-withdrawals"
+  },
+  {
+    "url": "https://docs.lighter.xyz/security/security-audits",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/security/security-audits"
+  },
+  {
+    "url": "https://docs.lighter.xyz/security/security-vulnerability-disclosure-policy",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/security/security-vulnerability-disclosure-policy"
+  },
+  {
+    "url": "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund"
+  },
+  {
+    "url": "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund/llp-strategies",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund/llp-strategies"
+  },
+  {
+    "url": "https://docs.lighter.xyz/trading/public-pools",
+    "status": 200,
+    "final_url": "https://docs.lighter.xyz/trading/public-pools"
+  },
+  {
+    "url": "https://docs.morpho.org/developers/contracts/addresses/",
+    "status": 200,
+    "final_url": "https://docs.morpho.org/developers/contracts/addresses/"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-dev/Contracts/Router",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-dev/Contracts/Router"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-docs/Introduction",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-docs/Introduction"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-docs/about-boros/rate-settlement",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-docs/about-boros/rate-settlement"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-docs/arbitrage-with-crossex/risks-and-security",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-docs/arbitrage-with-crossex/risks-and-security"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-docs/boros-systems/margin-and-liquidations",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-docs/boros-systems/margin-and-liquidations"
+  },
+  {
+    "url": "https://docs.pendle.finance/boros-docs/boros-systems/protective-mechanism",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/boros-docs/boros-systems/protective-mechanism"
+  },
+  {
+    "url": "https://docs.pendle.finance/pendle-v2/Introduction",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/pendle-v2/Introduction"
+  },
+  {
+    "url": "https://docs.pendle.finance/pendle-v2/TermsOfUse",
+    "status": 200,
+    "final_url": "https://docs.pendle.finance/pendle-v2/TermsOfUse"
+  },
+  {
+    "url": "https://docs.superform.xyz/learn/supervaults",
+    "status": 200,
+    "final_url": "https://docs.superform.xyz/learn/supervaults"
+  },
+  {
+    "url": "https://docs.superform.xyz/learn/supervaults/transaction-lifecycle",
+    "status": 200,
+    "final_url": "https://docs.superform.xyz/learn/supervaults/transaction-lifecycle"
+  },
+  {
+    "url": "https://docs.superform.xyz/security",
+    "status": 200,
+    "final_url": "https://docs.superform.xyz/security"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/confidential-vault",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/confidential-vault"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/confidential-vault/concepts/trust-model",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/confidential-vault/concepts/trust-model"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/confidential-vault/guides/withdraw",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/confidential-vault/guides/withdraw"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/confidential-vault/reference/addresses",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/confidential-vault/reference/addresses"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/protocol-apps/governance/governance",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/protocol-apps/governance/governance"
+  },
+  {
+    "url": "https://docs.zama.org/protocol/protocol-apps/governance/pausing",
+    "status": 200,
+    "final_url": "https://docs.zama.org/protocol/protocol-apps/governance/pausing"
+  },
+  {
+    "url": "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Monad.sol",
+    "status": 200,
+    "final_url": "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Monad.sol"
+  },
+  {
+    "url": "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Plasma.sol",
+    "status": 200,
+    "final_url": "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Plasma.sol"
+  },
+  {
+    "url": "https://github.com/aave/aave-v3-core/blob/master/techpaper/Aave_V3_Technical_Paper.pdf",
+    "status": 200,
+    "final_url": "https://github.com/aave/aave-v3-core/blob/master/techpaper/Aave_V3_Technical_Paper.pdf"
+  },
+  {
+    "url": "https://github.com/aave/aave-v3-core/tree/master/audits",
+    "status": 200,
+    "final_url": "https://github.com/aave/aave-v3-core/tree/master/audits"
+  },
+  {
+    "url": "https://github.com/euler-xyz/ethereum-vault-connector",
+    "status": 200,
+    "final_url": "https://github.com/euler-xyz/ethereum-vault-connector"
+  },
+  {
+    "url": "https://github.com/euler-xyz/euler-interfaces/tree/master/addresses/143",
+    "status": 200,
+    "final_url": "https://github.com/euler-xyz/euler-interfaces/tree/master/addresses/143"
+  },
+  {
+    "url": "https://github.com/euler-xyz/euler-vault-kit",
+    "status": 200,
+    "final_url": "https://github.com/euler-xyz/euler-vault-kit"
+  },
+  {
+    "url": "https://github.com/morpho-org/morpho-blue",
+    "status": 200,
+    "final_url": "https://github.com/morpho-org/morpho-blue"
+  },
+  {
+    "url": "https://github.com/morpho-org/vault-v2",
+    "status": 200,
+    "final_url": "https://github.com/morpho-org/vault-v2"
+  },
+  {
+    "url": "https://github.com/pendle-finance/boros-core-public/blob/main/deployments/core.json",
+    "status": 200,
+    "final_url": "https://github.com/pendle-finance/boros-core-public/blob/main/deployments/core.json"
+  },
+  {
+    "url": "https://github.com/pendle-finance/boros-core-public/tree/main/audits",
+    "status": 200,
+    "final_url": "https://github.com/pendle-finance/boros-core-public/tree/main/audits"
+  },
+  {
+    "url": "https://governance.aave.com/",
+    "status": 200,
+    "final_url": "https://governance.aave.com/"
+  },
+  {
+    "url": "https://ipor.io/docs/build-on-fusion/developer-guide/security-and-audits",
+    "status": 200,
+    "final_url": "https://ipor.io/docs/build-on-fusion/developer-guide/security-and-audits"
+  },
+  {
+    "url": "https://ipor.io/docs/fusion-for-institutions/governance-and-operational-control",
+    "status": 200,
+    "final_url": "https://ipor.io/docs/fusion-for-institutions/governance-and-operational-control"
+  },
+  {
+    "url": "https://ipor.io/docs/fusion-for-institutions/institutional-grade-infrastructure",
+    "status": 200,
+    "final_url": "https://ipor.io/docs/fusion-for-institutions/institutional-grade-infrastructure"
+  },
+  {
+    "url": "https://lighter.xyz/terms",
+    "status": 200,
+    "final_url": "https://lighter.xyz/terms"
+  },
+  {
+    "url": "https://neverland.money/terms-of-service",
+    "status": 200,
+    "final_url": "https://neverland.money/terms-of-service"
+  },
+  {
+    "url": "https://snapshot.box/#/s:morpho.eth/proposal/0xa9fcf1d33d68f3b978e8e572e98825842bf9acebf055f680fa38507bcfb8ddfc",
+    "status": 200,
+    "final_url": "https://snapshot.box/#/s:morpho.eth/proposal/0xa9fcf1d33d68f3b978e8e572e98825842bf9acebf055f680fa38507bcfb8ddfc"
+  },
+  {
+    "url": "https://www.euler.finance/blog/euler-q1-2026",
+    "status": 200,
+    "final_url": "https://www.euler.finance/blog/euler-q1-2026"
+  },
+  {
+    "url": "https://www.superform.xyz/terms-of-service",
+    "status": 200,
+    "final_url": "https://www.superform.xyz/terms-of-service"
+  },
+  {
+    "url": "https://www.zama.org/legal/legal-notice",
+    "status": 200,
+    "final_url": "https://www.zama.org/legal/legal-notice"
+  },
+  {
+    "url": "https://www.zama.org/legal/zama-app-terms",
+    "status": 200,
+    "final_url": "https://www.zama.org/legal/zama-app-terms"
+  },
+  {
+    "url": "https://www.zama.org/post/zama-protocol-testnet-update-mpc-partners-better-performance-audits-and-new-features",
+    "status": 200,
+    "final_url": "https://www.zama.org/post/zama-protocol-testnet-update-mpc-partners-better-performance-audits-and-new-features"
+  },
+  {
+    "url": "https://x.com/aave/status/2115937863162339637",
+    "status": 200,
+    "final_url": "https://x.com/aave/status/2115937863162339637"
+  },
+  {
+    "url": "https://x.com/aave/status/2116167595237720167",
+    "status": 200,
+    "final_url": "https://x.com/aave/status/2116167595237720167"
+  },
+  {
+    "url": "https://x.com/aave/status/2116479695424192605",
+    "status": 200,
+    "final_url": "https://x.com/aave/status/2116479695424192605"
+  }
+]

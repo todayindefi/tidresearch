@@ -1,74 +1,104 @@
 ---
-protocol: "Aave V3"
-slug: "aave-v3"
-aliases: ["Aave", "aave", "Aave v3", "AaveV3", "Aave Protocol"]
-chains: ["ethereum", "arbitrum", "optimism", "polygon", "avalanche", "base", "gnosis", "scroll", "bnb", "zksync"]
-category: "protocol"
-protocol_category: "lending"
-assessment_type: "full"
-audience: "retail"
-date: "2026-07-28"
-last_verified: "2026-07-28"
-featured: true
+protocol: Aave V3
+slug: aave-v3
+aliases:
+- Aave
+- aave
+- Aave v3
+- AaveV3
+- Aave Protocol
+- Aave Lending
+chains:
+- eth
+- arbitrum
+- optimism
+- polygon
+- avalanche
+- base
+- gnosis
+- metis
+- scroll
+- bnb
+- zksync
+assessment_type: full
+date: '2026-04-12'
+last_verified: '2026-11-02'
+last_revised: '2026-11-03'
+category: protocol
+protocol_category: lending
+audience: retail
 production: false
+published: true
+featured: true
 contract_score: 9.0
 economic_score: 8.0
 project_score: 8.0
 overall_score: 8.0
-tvl_gross: 24590000000
-tvl_borrowed: 10840000000
 ---
 
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-protocol-report="aave-v3">
+
 # Aave V3 — Risk Report
-**Low risk · 8.0 / 10**
-*Lending protocol · 10+ chains · ~$24.6B supplied / ~$10.8B borrowed · live since Mar 2022 · verified 2026-07-28*
+
+**Low risk · 8.0/10 · provisional**
+
+Pooled overcollateralized lending
 
 ## Summary
 
-Aave V3 is the largest lending protocol in DeFi and the benchmark others are measured against. Suppliers deposit assets to earn yield; borrowers take overcollateralised loans against them. V3 added efficiency mode for correlated pairs, isolation mode with debt ceilings for newer assets, per-asset supply and borrow caps, and the Capo oracle system that caps how fast a derivative's exchange rate may grow.
+Aave V3 pools supplied assets for overcollateralized lending. Borrowers pay interest and can be liquidated when collateral falls below configured thresholds. Efficiency mode, isolation mode and asset-level caps constrain risk but cannot ensure the backing or market liquidity of accepted collateral.
 
-Its defining strength is process rather than any single feature. Continuous formal verification runs against every code change, risk parameters are set by a dedicated firm publishing its methodology in public, upgrades require a governance vote plus a multi-day timelock, and there is no admin function that can withdraw user funds. Across four years and peak TVL above $20B, no Aave V3 contract has been exploited.
+The assessed family scope includes multiple established deployments. **Monad and Plasma are officially documented but remain unassessed here**. Their address-book entries do not confer a live authority or credit grade, and neither is added to scored chains.
 
-Its defining weakness is what it accepts as collateral. In April 2026 an attacker exploited a bridge belonging to KelpDAO — not Aave — to mint unbacked rsETH, deposited it on Aave, and borrowed roughly $200M against it. Aave's code worked exactly as designed; the collateral simply stopped being real. Depositors were made whole, but the resolution depended on a discretionary rescue rather than the protocol's own backstop, and that distinction is the honest reason this scores 8.0 rather than higher.
+## 1 · Smart Contract — 9.0
 
-## At a glance
+Aave uses upgradeable pools, governance execution and separate emergency and delegated risk roles. Published technical reviews and formal-verification work provide substantial assurance. The historical review described roughly one-day routine and seven-day structural execution paths, emergency pause powers and bounded risk-steward adjustments. Those descriptions are dated scope, not newly measured controls for every current market.
 
-| | |
-|---|---|
-| **What it does** | Pooled overcollateralised lending. Supply assets to earn interest, borrow against collateral, with per-asset caps and correlated-pair efficiency mode. |
-| **Size** | ~$24.6B supplied, ~$10.8B borrowed, ~44% utilisation. Ethereum is ~83% of it; the rest is spread across ten-plus chains. |
-| **Who controls it** | AAVE holders via on-chain votes. ~1-day timelock for routine parameters, ~7-day for upgrades and listings. A guardian multisig can pause but cannot upgrade or change parameters. |
-| **Audits** | 25+ engagements including Certora, Trail of Bits, SigmaPrime and OpenZeppelin, plus continuous formal verification. $10M+ Immunefi bounty, among the largest in DeFi. |
-| **Track record** | Zero V3 contract exploits in four years. One ~$200M bad-debt event in April 2026, caused by an external asset, fully resolved with no depositor loss. |
-| **Oracles** | Chainlink with staleness checks, Capo rate-growth caps on derivatives, and sequencer uptime feeds on L2s. |
-| **Biggest risk** | Collateral it doesn't control — liquid staking and restaking tokens whose backing can fail upstream. |
+The November 3 address-book review identifies Monad and Plasma pool, configurator, ACL and oracle pointers. Current implementations, guardian/steward reach, cross-chain execution, effective delays and pending actions still require deployment-specific verification. Published pointers and family audit coverage do not prove those permissions or every deployed-code binding.
 
-## Risk by axis
+## 2 · Economic — 8.0
 
-**Smart Contract — 9.0.** This is as strong as DeFi gets. Over 25 audit engagements across V1, V2 and V3, with reports published openly in the Aave repo. The differentiator is Certora's continuous formal verification: core invariants such as solvency and interest accrual are mathematically proven against every change, not merely tested. The Immunefi bounty exceeds $10M, which is a genuine deterrent rather than a gesture.
+Collateral limits, oracles, liquidators and available pool cash determine supplier and borrower outcomes. Correlated-asset efficiency mode can improve capital efficiency while exposing loops to small price or rate discrepancies. High aggregate scale does not guarantee a specific reserve can repay withdrawals during stress.
 
-The admin model is equally disciplined. Upgrades need a passed vote plus a roughly seven-day timelock. The emergency guardian can freeze or pause but cannot upgrade contracts or move parameters. Chaos Labs holds a delegated Risk Steward role for routine adjustments, but it is bounded on-chain — it cannot set an LTV to 100% or remove caps. There is no admin withdrawal function anywhere.
+The **April 2026 KelpDAO rsETH bridge incident** created unbacked collateral and approximately **$200 million Aave bad debt**. The historical review records resolution by June without supplier haircuts. The approximately **$50 million Umbrella buffer** did not cover the entire loss; recovery and discretionary coalition support mattered. This was external collateral failure rather than an established Aave contract exploit, and that resolution is not guaranteed insurance against another event.
 
-Four years with zero V3 exploits at this size is the strongest empirical safety signal available in this sector. It is not 10.0 only because the proxy pattern remains upgradeable, so a governance capture or a flaw in the governance contracts is a non-zero, if remote, path.
+The **July 28 provider snapshot** reported approximately **$24.6 billion gross supplied**, **$10.84 billion borrowed** and **$13.75 billion net TVL**. These are historical figures with different denominators, not current market cash.
 
-**Economic — 8.0.** The risk architecture is the most mature in lending: efficiency mode captures capital efficiency without blending correlated and uncorrelated exposure, isolation mode bounds the damage a bad listing can do, and per-asset caps are actively managed against real on-chain liquidity. Liquidation is permissionless with the deepest bot ecosystem in DeFi, and it has cleared multiple violent market-wide drawdowns without systemic failure.
+Aave's October 29 announcement described a precautionary freeze after the Binance incident. Its October 30 update reported unfreezing with withdrawals/repayments continuing, while some collateral remained at zero LTV for new borrowing. October 31 brought tBTC deposit/borrow restrictions following Threshold maintenance. These are attributed operational statements, not a new per-market state sweep or proof every restriction ended.
 
-The deduction is the April 2026 KelpDAO event, and it is worth understanding precisely because it is the failure mode most likely to recur. An attacker minted about 116,500 unbacked rsETH through a bridge exploit, supplied it to Aave, and borrowed roughly $190–236M of WETH against collateral that no longer existed. Realised bad debt reached roughly $200M — around 170 times the previous worst incident. Markets were frozen within hours and by June 2026 rsETH backing was fully restored with no supplier taking a haircut.
+Monad and Plasma require current oracle/staleness checks, eMode and reserve thresholds, caps, pause/freeze state, collateral quality and liquidation/withdrawal capacity. Family scores do not establish safe buffers for individual leveraged strategies.
 
-But read how it was closed. The Umbrella backstop was slashed first and covered only about $50M of a ~$200M hole. The remainder came from Kelp recovering over 95% of the unbacked tokens and a coalition of other DAOs contributing roughly $314M in loans and donations. That is a good outcome achieved through goodwill and coordination, not through the protocol's own capital. The lesson is not that Aave is fragile — it absorbed a nine-figure hit and paid everyone — but that its formal backstop is smaller than its tail risk, and that every liquid staking or restaking token it lists is a dependency on somebody else's security.
+## 3 · Project — 8.0
 
-**Project — 8.0.** Aave is run by a doxxed founder with a nine-year track record, a substantial engineering organisation, and one of the largest treasuries in DeFi. Governance is fully on-chain with hundreds of executed proposals — no Snapshot-plus-trusted-executor arrangement. Responsibilities are split across independent service providers for risk, development, security and treasury, which avoids single-entity dependency.
+AAVE governance, public proposals and specialized development, security, risk and treasury providers distribute operating responsibilities. Cross-chain governance introduces messaging and execution dependencies. Public governance and an established organization do not create an unconditional depositor repayment promise.
 
-AAVE's tokenomics are mature: fixed 16M supply, no inflation, distribution settled since 2020, no pending unlock cliffs. Deductions are modest and structural — UK entity exposure, governance that is deliberately slow enough that a guardian can pause but cannot proactively steer during a black swan, cross-chain governance bridges adding trust assumptions on non-Ethereum deployments, and residual key-person association with the founder.
+The retained rating reflects the earlier assessment. Current legal recovery rights, financial assurance, provider dependence and deployment-specific execution still require evidence; historical treasury scale is not a measured current rescue commitment.
 
-## Bottom line
+## What to watch
 
-Aave V3 is the reference point for lending risk. If you are comfortable with any DeFi lending protocol, it should be this one first — the audit depth, formal verification, timelocked governance, bounded admin powers and four-year clean contract record are unmatched, and it is the benchmark the rest of this section is scored against.
+Reserve-level restrictions, collateral quality and liquidation depth, Umbrella coverage relative to tail exposure, and verified Monad/Plasma authority and market parameters.
 
-The realistic risk is not that Aave's code breaks. It is that something Aave accepts as collateral turns out not to be backed, which happened at scale in April 2026 and was resolved by a rescue rather than by design. Depositors in blue-chip markets — ETH, WBTC, and major stablecoins — carry very little of this. Depositors in markets exposed to liquid restaking tokens carry more, and should size accordingly.
+## Sources, scores and review scope
 
-**Watch items:** the post-rsETH collateral framework for restaking tokens, which was still being finalised; whether the Umbrella backstop is resized toward the scale of a realistic tail event; per-chain concentration on thinner L2 deployments, where the same shortfall bites far harder than on Ethereum; and supply-cap changes on any newly listed LST or LRT.
+- [Monad address book](https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Monad.sol)
+- [Plasma address book](https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Plasma.sol)
+- [Core technical paper](https://github.com/aave/aave-v3-core/blob/master/techpaper/Aave_V3_Technical_Paper.pdf)
+- [Published core audits](https://github.com/aave/aave-v3-core/tree/master/audits)
+- [Governance forum](https://governance.aave.com/)
+- [October 29 statement](https://x.com/aave/status/2115937863162339637)
+- [October 30 statement](https://x.com/aave/status/2116167595237720167)
+- [October 31 statement](https://x.com/aave/status/2116479695424192605)
 
-*Assessment based on public documentation, published audits, on-chain governance records and market data. Corrections welcome to info@tidresearch.com.*
+Original assessment: **2026-04-12**. The source last-verification field is **November 2, 2026**, limited to a targeted documentary/news review; it is not a renewed whole-report security, financial or market audit. **November 3** adds deployment-scope context without new chain grades. Historical control, balance and incident evidence retains its own dates. Scores remain provisional for the retained scope. Provider TVL figures, where cited, are dated observations rather than live balances, net flows or proof of exit capacity. No new live dashboard or account measurement is implied.
 
-*Revision history: 2026-07-28 — first publication at 8.0 (contract 9.0, economic 8.0, project 8.0), reflecting the April 2026 rsETH bad-debt event and its June 2026 resolution.*
+Higher scores mean safer on a 1–10 scale. Overall is an authored protocol judgment rather than a separate asset, parent-protocol or underlying-vault rating. It may differ from the arithmetic mean of the three axes.
+
+| Smart Contract | Economic | Project | Overall |
+|---:|---:|---:|---:|
+| 9.0 | 8.0 | 8.0 | 8.0 |
+
+## Revision history
+
+- **2026-11-03:** Scoped product/deployment and documentary revision; scores and earlier verification scope preserved.
+
+</div>

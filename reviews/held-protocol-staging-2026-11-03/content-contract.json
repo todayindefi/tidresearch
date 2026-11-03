@@ -1,0 +1,521 @@
+[
+  {
+    "slug": "lighter",
+    "source_sha256": "04be6ab7e2be505bcd15664cb42403dd9a50224d15269ca8fb90654df52fc70f",
+    "scores": {
+      "contract_score": 5.0,
+      "economic_score": 4.0,
+      "project_score": 5.0,
+      "overall_score": 4.5
+    },
+    "last_verified": "2026-11-03",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "public-pool documentation",
+        "https://docs.lighter.xyz/trading/public-pools"
+      ],
+      [
+        "liquidation waterfall",
+        "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund"
+      ],
+      [
+        "Strategy buckets",
+        "https://docs.lighter.xyz/trading/liquidations-and-llp-insurance-fund/llp-strategies"
+      ],
+      [
+        "LIT utility",
+        "https://docs.lighter.xyz/about-lighter/lit-utility"
+      ],
+      [
+        "deposit/withdrawal integration guide",
+        "https://docs.lighter.xyz/developers/integration-guides/deposits-transfers-and-withdrawals"
+      ],
+      [
+        "security-audit index",
+        "https://docs.lighter.xyz/security/security-audits"
+      ],
+      [
+        "disclosure policy",
+        "https://docs.lighter.xyz/security/security-vulnerability-disclosure-policy"
+      ],
+      [
+        "Service terms",
+        "https://lighter.xyz/terms"
+      ],
+      [
+        "DefiLlama provider snapshot",
+        "https://api.llama.fi/protocol/lighter"
+      ]
+    ],
+    "historical_chains": [
+      "ethereum",
+      "lighter"
+    ]
+  },
+  {
+    "slug": "zama",
+    "source_sha256": "ec64304e1577a70c3bbe3cff496e501ead9a42e2af8dc991280f5957e95d9111",
+    "scores": {
+      "contract_score": 5.0,
+      "economic_score": 4.5,
+      "project_score": 5.5,
+      "overall_score": 5.0
+    },
+    "last_verified": "2026-11-03",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "vault architecture",
+        "https://docs.zama.org/protocol/confidential-vault"
+      ],
+      [
+        "deployment register",
+        "https://docs.zama.org/protocol/confidential-vault/reference/addresses"
+      ],
+      [
+        "documented trust model",
+        "https://docs.zama.org/protocol/confidential-vault/concepts/trust-model"
+      ],
+      [
+        "withdrawal guide",
+        "https://docs.zama.org/protocol/confidential-vault/guides/withdraw"
+      ],
+      [
+        "Ethereum register",
+        "https://docs.zama.org/protocol/protocol-apps/addresses/mainnet/ethereum"
+      ],
+      [
+        "current governance description",
+        "https://docs.zama.org/protocol/protocol-apps/governance/governance"
+      ],
+      [
+        "Emergency pausing",
+        "https://docs.zama.org/protocol/protocol-apps/governance/pausing"
+      ],
+      [
+        "audit disclosure",
+        "https://www.zama.org/post/zama-protocol-testnet-update-mpc-partners-better-performance-audits-and-new-features"
+      ],
+      [
+        "Legal notice",
+        "https://www.zama.org/legal/legal-notice"
+      ],
+      [
+        "App terms",
+        "https://www.zama.org/legal/zama-app-terms"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/zama"
+      ]
+    ],
+    "historical_chains": [
+      "ethereum"
+    ]
+  },
+  {
+    "slug": "boros",
+    "source_sha256": "e3401a2c1a4d034aab900d38f44bd5b0c5a6301b9c0595bc4bda355bf7d47958",
+    "scores": {
+      "contract_score": 5.0,
+      "economic_score": 4.0,
+      "project_score": 6.0,
+      "overall_score": 5.0
+    },
+    "last_verified": "2026-11-03",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "overview",
+        "https://docs.pendle.finance/boros-docs/Introduction"
+      ],
+      [
+        "Margin mechanics",
+        "https://docs.pendle.finance/boros-docs/boros-systems/margin-and-liquidations"
+      ],
+      [
+        "rate-settlement design",
+        "https://docs.pendle.finance/boros-docs/about-boros/rate-settlement"
+      ],
+      [
+        "Protective mechanisms",
+        "https://docs.pendle.finance/boros-docs/boros-systems/protective-mechanism"
+      ],
+      [
+        "Router documentation",
+        "https://docs.pendle.finance/boros-dev/Contracts/Router"
+      ],
+      [
+        "CrossEx risk disclosures",
+        "https://docs.pendle.finance/boros-docs/arbitrage-with-crossex/risks-and-security"
+      ],
+      [
+        "documented Router, MarketHub, MarketFactory and AccessController",
+        "https://github.com/pendle-finance/boros-core-public/blob/main/deployments/core.json"
+      ],
+      [
+        "audit repository",
+        "https://github.com/pendle-finance/boros-core-public/tree/main/audits"
+      ],
+      [
+        "Pendle's terms",
+        "https://docs.pendle.finance/pendle-v2/TermsOfUse"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/boros"
+      ]
+    ],
+    "historical_chains": [
+      "arbitrum"
+    ]
+  },
+  {
+    "slug": "beefy",
+    "source_sha256": "b01bb50232fd72750d865e20f01ca896341ee1975f93a27e045b7704333a3685",
+    "scores": {
+      "contract_score": 6.5,
+      "economic_score": 6.0,
+      "project_score": 6.0,
+      "overall_score": 6.0
+    },
+    "last_verified": "2026-03-15",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "Vault documentation",
+        "https://docs.beefy.finance/beefy-products/vaults"
+      ],
+      [
+        "strategy documentation",
+        "https://docs.beefy.finance/beefy-products/strategies"
+      ],
+      [
+        "controls page",
+        "https://docs.beefy.finance/safety/contracts-and-timelocks"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/beefy"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "arb",
+      "avax",
+      "bsc",
+      "monad"
+    ]
+  },
+  {
+    "slug": "convex",
+    "source_sha256": "b488a177d988cd7a1de98cd09db025d2472bd805f8452010ea3913ea698c2f44",
+    "scores": {
+      "contract_score": 7.0,
+      "economic_score": 7.0,
+      "project_score": 6.5,
+      "overall_score": 7.0
+    },
+    "last_verified": "2026-03-18",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "audit index",
+        "https://docs.convexfinance.com/convexfinance/faq/audits"
+      ],
+      [
+        "multisig rights disclosure",
+        "https://docs.convexfinance.com/convexfinance/faq/multisig-admin-rights"
+      ],
+      [
+        "risk disclosure",
+        "https://docs.convexfinance.com/convexfinance/faq/risks"
+      ],
+      [
+        "published Curve fee schedule",
+        "https://docs.convexfinance.com/convexfinance/faq/fees"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/convex-finance"
+      ]
+    ],
+    "historical_chains": [
+      "eth"
+    ]
+  },
+  {
+    "slug": "ipor",
+    "source_sha256": "b25a6637cc42fa2aca8ec62fc1021e826e8fa62f4e7d1e2ed26e410c6317dd43",
+    "scores": {
+      "contract_score": 4.0,
+      "economic_score": 5.0,
+      "project_score": 5.0,
+      "overall_score": 4.5
+    },
+    "last_verified": "2026-07-04",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "Governance/control documentation",
+        "https://ipor.io/docs/fusion-for-institutions/governance-and-operational-control"
+      ],
+      [
+        "security index",
+        "https://ipor.io/docs/build-on-fusion/developer-guide/security-and-audits"
+      ],
+      [
+        "institutional architecture",
+        "https://ipor.io/docs/fusion-for-institutions/institutional-grade-infrastructure"
+      ],
+      [
+        "IPOR Fusion provider snapshot",
+        "https://api.llama.fi/protocol/ipor-fusion"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "arbitrum",
+      "base"
+    ]
+  },
+  {
+    "slug": "superform",
+    "source_sha256": "fb25bba3d34cf1f0891c2bdf5aa48d308667a45c2a0baf01b0977e3096c0a9f4",
+    "scores": {
+      "contract_score": 7.0,
+      "economic_score": 6.5,
+      "project_score": 7.0,
+      "overall_score": 7.0
+    },
+    "last_verified": "2026-05-13",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "security documentation",
+        "https://docs.superform.xyz/security"
+      ],
+      [
+        "SuperVault design",
+        "https://docs.superform.xyz/learn/supervaults"
+      ],
+      [
+        "transaction lifecycle",
+        "https://docs.superform.xyz/learn/supervaults/transaction-lifecycle"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/superform"
+      ],
+      [
+        "Interface terms",
+        "https://www.superform.xyz/terms-of-service"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "base",
+      "arbitrum",
+      "polygon",
+      "optimism",
+      "bsc",
+      "avalanche",
+      "fantom",
+      "blast",
+      "linea"
+    ]
+  },
+  {
+    "slug": "neverland-money",
+    "source_sha256": "2e098e626f566de26baa5bff4cecd26be52a9e56a826313ab7e2d14102bad8be",
+    "scores": {
+      "contract_score": 4.5,
+      "economic_score": 6.5,
+      "project_score": 4.0,
+      "overall_score": 5.0
+    },
+    "last_verified": "2026-07-05",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/neverland"
+      ],
+      [
+        "terms",
+        "https://neverland.money/terms-of-service"
+      ]
+    ],
+    "historical_chains": [
+      "monad"
+    ]
+  },
+  {
+    "slug": "pendle-v2",
+    "source_sha256": "143f5a6b7f2c211885400e3ff8757a60a100576c080edfb16fbd54c76dab00b1",
+    "scores": {
+      "contract_score": 7.0,
+      "economic_score": 7.0,
+      "project_score": 7.5,
+      "overall_score": 7.0
+    },
+    "last_verified": "2026-05-14",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "V2 introduction",
+        "https://docs.pendle.finance/pendle-v2/Introduction"
+      ],
+      [
+        "DefiLlama snapshot",
+        "https://api.llama.fi/protocol/pendle"
+      ],
+      [
+        "October 1 interface terms",
+        "https://docs.pendle.finance/pendle-v2/TermsOfUse"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "arbitrum",
+      "bsc",
+      "optimism",
+      "mantle"
+    ]
+  },
+  {
+    "slug": "aave-v3",
+    "source_sha256": "0502f1bd134216e33f2c9063424147d7b1b2b6aedd2593eb800daa51fd053bb5",
+    "scores": {
+      "contract_score": 9.0,
+      "economic_score": 8.0,
+      "project_score": 8.0,
+      "overall_score": 8.0
+    },
+    "last_verified": "2026-11-02",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "Monad address book",
+        "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Monad.sol"
+      ],
+      [
+        "Plasma address book",
+        "https://github.com/aave-dao/aave-address-book/blob/main/src/AaveV3Plasma.sol"
+      ],
+      [
+        "Core technical paper",
+        "https://github.com/aave/aave-v3-core/blob/master/techpaper/Aave_V3_Technical_Paper.pdf"
+      ],
+      [
+        "Published core audits",
+        "https://github.com/aave/aave-v3-core/tree/master/audits"
+      ],
+      [
+        "Governance forum",
+        "https://governance.aave.com/"
+      ],
+      [
+        "October 29 statement",
+        "https://x.com/aave/status/2115937863162339637"
+      ],
+      [
+        "October 30 statement",
+        "https://x.com/aave/status/2116167595237720167"
+      ],
+      [
+        "October 31 statement",
+        "https://x.com/aave/status/2116479695424192605"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "arbitrum",
+      "optimism",
+      "polygon",
+      "avalanche",
+      "base",
+      "gnosis",
+      "metis",
+      "scroll",
+      "bnb",
+      "zksync"
+    ]
+  },
+  {
+    "slug": "morpho",
+    "source_sha256": "365e76266ece23363def238e67d77c02559402f30a124acc41cecfbeac8a906e",
+    "scores": {
+      "contract_score": 8.5,
+      "economic_score": 7.0,
+      "project_score": 8.0,
+      "overall_score": 7.5
+    },
+    "last_verified": "2026-11-02",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "Contract and deployment register",
+        "https://docs.morpho.org/developers/contracts/addresses/"
+      ],
+      [
+        "MIP 133 vote",
+        "https://snapshot.box/#/s:morpho.eth/proposal/0xa9fcf1d33d68f3b978e8e572e98825842bf9acebf055f680fa38507bcfb8ddfc"
+      ],
+      [
+        "Blue source code",
+        "https://github.com/morpho-org/morpho-blue"
+      ],
+      [
+        "Vaults V2 source code",
+        "https://github.com/morpho-org/vault-v2"
+      ]
+    ],
+    "historical_chains": [
+      "eth",
+      "base"
+    ]
+  },
+  {
+    "slug": "euler",
+    "source_sha256": "8416b542a9a20f2174ee6f428b693c92d828b445d86ead09553a5c206ddb02e9",
+    "scores": {
+      "contract_score": 8.0,
+      "economic_score": 7.0,
+      "project_score": 7.0,
+      "overall_score": 7.5
+    },
+    "last_verified": "2026-11-02",
+    "last_revised": "2026-11-03",
+    "sources": [
+      [
+        "Deployment documentation",
+        "https://docs.euler.finance/developers/contract-addresses/"
+      ],
+      [
+        "Monad registry",
+        "https://github.com/euler-xyz/euler-interfaces/tree/master/addresses/143"
+      ],
+      [
+        "EUL utility",
+        "https://docs.euler.finance/EUL/overview/"
+      ],
+      [
+        "Q1 retrospective",
+        "https://www.euler.finance/blog/euler-q1-2026"
+      ],
+      [
+        "Euler Vault Kit",
+        "https://github.com/euler-xyz/euler-vault-kit"
+      ],
+      [
+        "Ethereum Vault Connector",
+        "https://github.com/euler-xyz/ethereum-vault-connector"
+      ]
+    ],
+    "historical_chains": [
+      "eth"
+    ]
+  }
+]

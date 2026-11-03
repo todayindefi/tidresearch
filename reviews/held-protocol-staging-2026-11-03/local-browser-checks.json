@@ -1,0 +1,292 @@
+{
+  "results": [
+    {
+      "slug": "lighter",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "zama",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/morpho/"
+      ]
+    },
+    {
+      "slug": "boros",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/pendle-v2/"
+      ]
+    },
+    {
+      "slug": "beefy",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/convex/"
+      ]
+    },
+    {
+      "slug": "convex",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "ipor",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "superform",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "neverland-money",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/aave-v3/"
+      ]
+    },
+    {
+      "slug": "pendle-v2",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/boros/",
+        "/protocols/superform/"
+      ]
+    },
+    {
+      "slug": "aave-v3",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "morpho",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "euler",
+      "width": 1440,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "lighter",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "zama",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/morpho/"
+      ]
+    },
+    {
+      "slug": "boros",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/pendle-v2/"
+      ]
+    },
+    {
+      "slug": "beefy",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/convex/"
+      ]
+    },
+    {
+      "slug": "convex",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "ipor",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "superform",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "neverland-money",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/aave-v3/"
+      ]
+    },
+    {
+      "slug": "pendle-v2",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": [
+        "/protocols/boros/",
+        "/protocols/superform/"
+      ]
+    },
+    {
+      "slug": "aave-v3",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "morpho",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    },
+    {
+      "slug": "euler",
+      "width": 390,
+      "status": 200,
+      "all_scores_match": true,
+      "last_reviewed": "2026-11-03",
+      "provisional_visible": true,
+      "no_overflow": true,
+      "matches_build": true,
+      "crosslinks": []
+    }
+  ],
+  "pageerrors": [],
+  "index_entries_checked": 24
+}
