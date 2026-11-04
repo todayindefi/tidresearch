@@ -1,0 +1,39 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "body_scores_and_sidebar_match_packet": true,
+      "all_distinct_clocks": true,
+      "identity": "0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+      "index": true,
+      "usg_paused_market_distinction": true,
+      "privacy": true,
+      "overflow": false,
+      "hero": "Not rendered by standard asset layout; sidebar carries four legacy axes."
+    },
+    {
+      "width": 390,
+      "body_scores_and_sidebar_match_packet": true,
+      "all_distinct_clocks": true,
+      "identity": "0x64351fC9810aDAd17A690E4e1717Df5e7e085160",
+      "index": true,
+      "usg_paused_market_distinction": true,
+      "privacy": true,
+      "overflow": false,
+      "hero": "Not rendered by standard asset layout; sidebar carries four legacy axes."
+    }
+  ],
+  "pageerrors": [],
+  "schema_category": "wrapped-token is the existing renderer adapter; prose identifies synthetic liability, without asserting backing or ownership",
+  "scores": {
+    "volatility": 2.5,
+    "liquidity": 3.5,
+    "structural": 4.0,
+    "redemption": 2.0,
+    "overall": 2.5
+  },
+  "last_whole_verified": "2026-04-09",
+  "assessment_date": "2026-11-04",
+  "missing_axes_not_invented": true,
+  "usg_numeric_scores_unchanged": true
+}

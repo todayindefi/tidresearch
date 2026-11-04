@@ -1,0 +1,54 @@
+{
+  "publication": "staging only",
+  "staging_urls": [
+    "https://staging.tidresearch.com/reports/mseth/",
+    "https://staging.tidresearch.com/reports/usg/"
+  ],
+  "deploy_id": "6aeab300f419f624490ab219",
+  "deploy_url": "https://6aeab300f419f624490ab219--tidresearch-staging.netlify.app",
+  "site_id": "2da6f038-beda-46a5-bcbb-497156b816e4",
+  "scores": {
+    "volatility": 2.5,
+    "liquidity": 3.5,
+    "structural": 4.0,
+    "redemption": 2.0,
+    "overall": 2.5
+  },
+  "score_status": "provisional Ethereum-only bounded November 4 assessment",
+  "last_whole_verified": "2026-04-09",
+  "assessment_date": "2026-11-04",
+  "checks": {
+    "required_build_gates": "pass, 109 staging pages",
+    "desktop_mobile": [
+      1440,
+      390
+    ],
+    "index_msETH": "pass",
+    "body_sidebar_scores": "match four authored axes and overall",
+    "hero": "not rendered by standard asset layout",
+    "usg_link_and_pause_vs_swap_distinction": "pass",
+    "served_main_build_parity": true,
+    "privacy_and_overflow": "pass",
+    "source_clocks": "separate supply/debt, DEX and security clocks preserved",
+    "public_primary_links": "3 HTTP 200",
+    "prior_staging_reports_preserved": 71,
+    "usg_scores_unchanged": true,
+    "production_url_fingerprints_unchanged": 2,
+    "production_build_excludes_msETH": true
+  },
+  "schema_adapter": "wrapped-token is technical; prose describes synthetic liability",
+  "residual_gaps": [
+    "net external backing/circulation; treasury financing/encumbrance/AMO exclusions",
+    "executed recovery burns",
+    "inner oracle and bridge receive-library assurance",
+    "complete Plasma perimeter and Swell",
+    "broader fresh execution/settlement evidence"
+  ],
+  "production_deployment": false,
+  "repository_adoption": {
+    "mseth": "src/content/reports/mseth.md; production:false",
+    "usg": "review staging candidate only; canonical production source unchanged",
+    "local_commit_authorized": true,
+    "push": false
+  }
+}
