@@ -1,0 +1,30 @@
+{
+  "staging_existing_asset_reports_match": 74,
+  "production": {
+    "": {
+      "status": 200,
+      "main_sha256": "29f602e783f88c1d0a6c44c40ceee2ae90fdd62f58bb01a7d100b23eac5feb84"
+    },
+    "reports/": {
+      "status": 200,
+      "main_sha256": "7634cc1b0b62a35a8445ffa6c76437f012fd592fc735691161541fa1c78cf9db"
+    },
+    "reports/wsteth/": {
+      "status": 200,
+      "main_sha256": "35d4dfcfd797425b49c2cd66b806726f1f14f561283c57e833b4a2df8b10ac64"
+    },
+    "reports/steth/": {
+      "status": 200,
+      "main_sha256": "b7a1e71a099844c7f9549b860952bdd4d7dd66c74c9d3cff4625b5d7729d0ebf"
+    },
+    "wbtc": {
+      "status": 404
+    },
+    "tbtc": {
+      "status": 404
+    },
+    "lbtc": {
+      "status": 404
+    }
+  }
+}

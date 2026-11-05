@@ -10,7 +10,7 @@ export interface ReportRow {
   chains: string[];
   chain_labels: string[];
   overall_score: number;
-  last_verified: string;
+  last_verified?: string;
   last_revised?: string;
   featured?: boolean;
   /** a live backing dashboard exists for this ASSET (see src/lib/dashboards.ts) */
@@ -233,7 +233,7 @@ export default function ReportsFilter({
                   unambiguous label. */}
               <p className="text-xs text-muted-foreground font-mono">
                 Last reviewed{" "}
-                {r.last_revised && r.last_revised > r.last_verified
+                {r.last_revised && (!r.last_verified || r.last_revised > r.last_verified)
                   ? r.last_revised
                   : r.last_verified}
               </p>

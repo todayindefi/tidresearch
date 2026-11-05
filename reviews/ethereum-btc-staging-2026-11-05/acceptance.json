@@ -1,0 +1,103 @@
+{
+  "status": "deployed_staging_consumer_parity_verified",
+  "production_published": false,
+  "deploy_id": "6aebd5c8d0974f72c0f8ee26",
+  "reports": {
+    "wbtc": {
+      "url": "https://staging.tidresearch.com/reports/wbtc/",
+      "evidence": "sha256:8cddb8ad40138d1e95c76ed192bb7e5d2b11eaa17f39a3f16d93cede7cad59c2",
+      "assessment": "sha256:c03da1cb0c0519a2e39988cb41c6ceff64958311226a24d7e673691648f38ce9",
+      "identity": {
+        "chain": "ethereum",
+        "chain_id": 1,
+        "component": "wbtc",
+        "decimals": 8,
+        "project": "bit-global",
+        "riskanalyst_slug": "wbtc",
+        "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      },
+      "scores": {
+        "backing_score": 6,
+        "issuer_score": 4.5,
+        "liquidity_score": 6.5,
+        "structural_score": 5.5,
+        "underlying_score": 5,
+        "volatility_score": 6.5
+      },
+      "overall": 5.5,
+      "hashes_verified": true
+    },
+    "tbtc": {
+      "url": "https://staging.tidresearch.com/reports/tbtc/",
+      "evidence": "sha256:33dc96b76d5e86a163bba4cbaf0e661a1dc4406344fee1f3411dc3628e937858",
+      "assessment": "sha256:616ea56860364d204e39d4fd42ae525dc8b2fd6a359570ca483a9c9631ac174d",
+      "identity": {
+        "chain": "ethereum",
+        "chain_id": 1,
+        "component": "tbtc",
+        "decimals": 18,
+        "project": "threshold-network",
+        "riskanalyst_slug": "tbtc",
+        "token": "0x18084fbA666a33d37592fA2633fD49a74DD93a88"
+      },
+      "scores": {
+        "backing_score": 5,
+        "issuer_score": 4,
+        "liquidity_score": 4,
+        "structural_score": 4,
+        "underlying_score": 4,
+        "volatility_score": 5.5
+      },
+      "overall": 4.5,
+      "hashes_verified": true
+    },
+    "lbtc": {
+      "url": "https://staging.tidresearch.com/reports/lbtc/",
+      "evidence": "sha256:1af01e1381cd22b8eb781f5b973e0f5728a3560eb0ccf6f55f907c0b0d403d5d",
+      "assessment": "sha256:48e04e19d417bec5b229a58d4ad92404d9183b437b135b62add52ebaa5ba474d",
+      "identity": {
+        "chain": "ethereum",
+        "chain_id": 1,
+        "component": "lombard-lbtc",
+        "decimals": 8,
+        "project": "lombard-finance",
+        "riskanalyst_slug": "lbtc",
+        "token": "0x8236a87084f8B84306f72007F36F2618A5634494"
+      },
+      "scores": {
+        "backing_score": 3.5,
+        "issuer_score": 3,
+        "liquidity_score": 4,
+        "structural_score": 4,
+        "underlying_score": 3.5,
+        "volatility_score": 5
+      },
+      "overall": 3.5,
+      "hashes_verified": true
+    }
+  },
+  "validation": {
+    "build_pages": 113,
+    "live_browser_checks": 6,
+    "viewports": [
+      1440,
+      390
+    ],
+    "prior_staged_asset_reports_preserved": 74,
+    "production_proof_pages_unchanged": 58,
+    "production_btc_routes": 404,
+    "source_documentary_api_links": {
+      "http_200": 9
+    },
+    "etherscan_links": {
+      "automated_http_403": 3
+    },
+    "authored_assessment_date": "2026-11-05",
+    "original_evidence_dates": "2026-11-03\u201304",
+    "whole_report_verification_date": null,
+    "scores_provisional": true,
+    "private_data_exported": false,
+    "dashboard_created": false
+  },
+  "deployment_note": "First two Netlify attempts returned server errors without publishing; final retry ready and served parity verified."
+}

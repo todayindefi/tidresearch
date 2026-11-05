@@ -115,7 +115,9 @@ const common = {
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
   date: z.coerce.date(),
-  last_verified: z.coerce.date(),
+  last_verified: z.coerce.date().optional(),
+  // A bounded assessment may deliberately make no whole-report verification claim.
+  verification_scope: z.literal("bounded").optional(),
   // Date of the most recent substantive pass, when only PART of the body was
   // re-read. last_verified stays the date the WHOLE body was verified through,
   // so a scope-limited refresh no longer has to choose between a false-fresh
@@ -339,6 +341,7 @@ const tradfiEquity = z.object({
 // replace the asset field with protocol so future reports do not blur the two collections.
 const protocolReport = z.object({
   ...common,
+  last_verified: z.coerce.date(),
   asset: z.never().optional(),
   protocol: z.string(),
   category: z.literal("protocol"),
@@ -398,6 +401,9 @@ export const collections = {
       lendingVault,
       tradfiEquity,
     ]).superRefine((data, ctx) => {
+      if (!data.last_verified && (data.verification_scope !== "bounded" || !data.last_revised)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["last_verified"], message: "Missing whole-report verification requires bounded scope and an explicit review date" });
+      }
       if (data.category !== "wrapped-token" && data.category !== "vault-share") return;
       const exemptions = new Set(
         (data.axis_exemptions ?? []).filter((e) => e.reason.trim()).map((e) => e.axis),

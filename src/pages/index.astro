@@ -13,7 +13,7 @@ import { services } from "@/lib/services";
 const reports = (await getCollection("reports"))
   .filter((r) => visibleAtCurrentStage(r.data) && r.data.audience !== "institutional")
   .sort(
-    (a, b) => +new Date(b.data.last_verified) - +new Date(a.data.last_verified),
+    (a, b) => +new Date(b.data.last_verified ?? b.data.last_revised ?? b.data.date) - +new Date(a.data.last_verified ?? a.data.last_revised ?? a.data.date),
   );
 
 // Lead = explicitly featured, else newest. Remaining reports fill the strip.
@@ -108,7 +108,7 @@ const dashboards = isProductionStage
                   </p>
                 )}
                 <p class="text-xs text-muted-foreground font-mono">
-                  Last verified {new Date(lead.data.last_verified).toISOString().slice(0, 10)}
+                  {lead.data.last_verified ? "Last verified" : "Last reviewed"} {new Date(lead.data.last_verified ?? lead.data.last_revised ?? lead.data.date).toISOString().slice(0, 10)}
                 </p>
               </div>
               <div class="shrink-0 flex flex-col items-start md:items-end gap-2">
@@ -137,7 +137,7 @@ const dashboards = isProductionStage
                     <RiskBadge score={r.data.overall_score} label="Score" />
                   </div>
                   <p class="text-sm text-muted-foreground font-mono">
-                    Last verified {new Date(r.data.last_verified).toISOString().slice(0, 10)}
+                    {r.data.last_verified ? "Last verified" : "Last reviewed"} {new Date(r.data.last_verified ?? r.data.last_revised ?? r.data.date).toISOString().slice(0, 10)}
                   </p>
                 </Card>
               ))}

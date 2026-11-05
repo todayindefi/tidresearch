@@ -1,0 +1,38 @@
+{
+  "reports": [
+    {
+      "asset": "wbtc",
+      "authored_source_sha256": "bc99f9cf2deae483daa12a4e408268c12aced9d728219e3671d4afcfcb532add",
+      "six_scores_and_overall_match": true,
+      "ethereum_identity_match": true,
+      "hashes_match": true,
+      "assessment_date": "2026-11-05",
+      "evidence_dates": "2026-11-03\u201304",
+      "whole_report_verified": null,
+      "production": false
+    },
+    {
+      "asset": "tbtc",
+      "authored_source_sha256": "0fcaca0f1bf2d16c1703e938c4a4f3b84de444af7d21b123c9cf221fe0dfb65e",
+      "six_scores_and_overall_match": true,
+      "ethereum_identity_match": true,
+      "hashes_match": true,
+      "assessment_date": "2026-11-05",
+      "evidence_dates": "2026-11-03\u201304",
+      "whole_report_verified": null,
+      "production": false
+    },
+    {
+      "asset": "lbtc",
+      "authored_source_sha256": "c827ec64d6adfc594506374afcabc23cf86247d13eb55625602548416a19e287",
+      "six_scores_and_overall_match": true,
+      "ethereum_identity_match": true,
+      "hashes_match": true,
+      "assessment_date": "2026-11-05",
+      "evidence_dates": "2026-11-03\u201304",
+      "whole_report_verified": null,
+      "production": false
+    }
+  ],
+  "schema_negative_checks": "bounded marker and last_revised individually required when last_verified absent; legacy verified report still accepted"
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://api.lombard.finance/v2/transparency/reports/latest",
+    "status": 200,
+    "final_url": "https://api.lombard.finance/v2/transparency/reports/latest"
+  },
+  {
+    "url": "https://docs.lombard.finance/resources/lbtc-product-terms",
+    "status": 200,
+    "final_url": "https://docs.lombard.finance/resources/lbtc-product-terms"
+  },
+  {
+    "url": "https://docs.lombard.finance/use/lbtc/yield-strategy",
+    "status": 200,
+    "final_url": "https://docs.lombard.finance/use/lbtc/yield-strategy"
+  },
+  {
+    "url": "https://docs.threshold.network/app-development/tbtc-sdk/guides/unmint-and-redeem.md",
+    "status": 200,
+    "final_url": "https://docs.threshold.network/app-development/tbtc-sdk/guides/unmint-and-redeem.md"
+  },
+  {
+    "url": "https://docs.threshold.network/contract-addresses/tbtc.md",
+    "status": 200,
+    "final_url": "https://docs.threshold.network/contract-addresses/tbtc.md"
+  },
+  {
+    "url": "https://etherscan.io/token/0x18084fba666a33d37592fa2633fd49a74dd93a88",
+    "status": 403,
+    "final_url": "https://etherscan.io/token/0x18084fba666a33d37592fa2633fd49a74dd93a88"
+  },
+  {
+    "url": "https://etherscan.io/token/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "status": 403,
+    "final_url": "https://etherscan.io/token/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+  },
+  {
+    "url": "https://etherscan.io/token/0x8236a87084f8b84306f72007f36f2618a5634494",
+    "status": 403,
+    "final_url": "https://etherscan.io/token/0x8236a87084f8b84306f72007f36f2618a5634494"
+  },
+  {
+    "url": "https://www.threshold.network/terms-of-use",
+    "status": 200,
+    "final_url": "https://www.threshold.network/terms-of-use"
+  },
+  {
+    "url": "https://www.wbtc.network/api/v2/assets",
+    "status": 200,
+    "final_url": "https://www.wbtc.network/api/v2/assets"
+  },
+  {
+    "url": "https://www.wbtc.network/faq",
+    "status": 200,
+    "final_url": "https://www.wbtc.network/faq"
+  },
+  {
+    "url": "https://www.wbtc.network/terms-of-service",
+    "status": 200,
+    "final_url": "https://www.wbtc.network/terms-of-service"
+  }
+]

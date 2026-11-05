@@ -1,0 +1,10 @@
+{
+  "production_unchanged_pages": 58,
+  "comparison": "visible main text, links and IDs; build-generated island hashes excluded",
+  "new_btc_excluded_from_production": true,
+  "staging_existing_changed_pages": [
+    "index.html",
+    "reports/index.html"
+  ],
+  "staging_pages": 113
+}
