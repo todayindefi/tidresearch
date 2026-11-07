@@ -1,159 +1,147 @@
 ---
-axis_frame: six
-asset: "DUSD (Alto)"
-slug: "dusd-alto"
-aliases: ["Alto DUSD", "Alto Money DUSD", "Alto Protocol DUSD"]
-chains: ["eth"]
-category: "stablecoin"
-peg_mechanism: "Hybrid: treasury-operated 1:1 frxUSD stability module plus over-collateralized CDP mint markets"
-assessment_type: "full"
-audience: "retail"
-date: "2026-09-21"
-last_verified: "2026-09-20"
-last_revised: "2026-11-02"
-issuer: "Alto Foundation"
-audited_reserves: false
-market_cap_approx: 822000
+asset: DUSD (Alto)
+slug: dusd-alto
+aliases:
+- Alto DUSD
+- Alto Money DUSD
+- Alto Protocol DUSD
+chains:
+- eth
+category: stablecoin
+peg_mechanism: Treasury credit-line issuance against Convex-staked DUSD/frxUSD LP,
+  permissioned frxUSD stability module and smaller isolated mint markets
+assessment_type: full
+last_verified: '2026-11-07'
+last_revised: '2026-11-07'
 peg_mechanism_score: 5.5
-backing_score: 5.5
+backing_score: 5.0
 underlying_score: 4.5
-# PARKED: no current collateralization ratio or frxUSD concentration is established — the collateral side has not been re-read since 2026-09-21 while supply rose 61%. ⚠️ Also unattributed: ~1,400 DUSD of third-party holdings that appeared after the 2026-09-20 classification, which is why 2,347 is published as an upper bound [owner: riskAnalyst] [since: 2026-10-03]
 liquidity_score: 5.5
 structural_score: 5.0
 issuer_score: 4.5
-overall_score: 5.0
-featured: false
+overall_score: 4.5
+issuer: DUSD corporate issuer/repayment obligor unestablished; Alto Foundation is
+  disclosed software provider
+audited_reserves: false
+axis_frame: six
+audience: retail
+date: '2026-09-21'
 production: false
+featured: false
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-scoped-report-layout>
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-source-report="3f0294f5968e30a9122f0a7eef73bd8b887235a6594fea0e6086dc9248f113af" data-assessment-version="dusd-alto-2026-11-07-v2" data-evidence-snapshot="sha256:7032ea7b8faccd3f34a8a367cc9c662ab8c4d252ffbd868cd2ff32a943c214b1" data-assessment-date="2026-11-07" data-canonical-project="alto" data-canonical-component="dusd-alto">
 
 # DUSD (Alto) — Risk Report
 
-**Moderate risk · 5.0/10**
+**High risk · 4.5/10 · Bounded Ethereum assessment**
 
-**Category:** Stablecoin | **Peg Mechanism:** Treasury-operated 1:1 frxUSD stability module (88% of supply) plus over-collateralized CDP mint markets (12%) | **Issuer:** Alto Foundation
-
-> ⚠️ **What is current and what is not.** Supply, pool and distribution figures are current to **2026-10-03**. ⚠️ **The collateral side has not been re-read since 2026-09-21**, so the backing table below is a 2026-09-21 reading and **no current collateralization ratio is established.** Do not divide a 2026-10-03 supply figure into a 2026-09-21 collateral figure — both operands belong to different dates and the quotient would be an artifact rather than a measurement. **The frxUSD share of backing is likewise not established at this date.**
+Dollar-denominated Alto token · Treasury credit line, permissioned stability module and smaller mint markets
 
 ## Summary
 
-DUSD is the dollar-denominated unit of Alto, a Frax-aligned lending protocol that launched on Ethereum mainnet on 2025-12-10. It is issued in two ways. About 12% of supply is borrower debt from isolated "mint markets", where a user posts WETH, wstETH, rETH, frxUSD or another approved collateral and mints DUSD against it, over-collateralized and liquidatable. The other 88% is protocol issuance from a Universal Stability Module — an adapted fork of Aave's GHO stability module — that holds frxUSD one-for-one against the DUSD it has minted.
+Alto DUSD targets one dollar through treasury support, secondary liquidity and several issuance modules. The selected November 7 backing observation shows issuance dominated by one treasury credit line against Convex-staked Curve DUSD/frxUSD LP, with a smaller permissioned frxUSD stability module and other mint markets.
 
-That stability module is permissioned. Its swap functions are open only to the Alto treasury Safe, which has been the sole counterparty since the module was initialised, so no DUSD holder has a redemption right against the reserve. A holder's only exit is the secondary market, and the secondary market is one Curve pool quoted in frxUSD; the onward step to dollars is cheap, but it runs through Frax's redemption inventory rather than anything Alto controls. Of 821,855 DUSD outstanding on 2026-09-20, 797,920 (97.09%) sat in that pool; genuine third-party holdings totalled roughly 1,000 DUSD across about 110 addresses.
+The staked LP position reconciles, but part of its underlying is DUSD itself. A fixed nominal LP oracle is not independent USD net asset value, and recovery depends on governance rather than ordinary public liquidation. Concentrated credit, circular collateral, discretionary recovery and conditional cash access are the central risks; a repaired custody reader does not establish a realized loss or reserve deficit.
 
-The protocol is better built than most of its size: the token contract is not upgradeable, ten external audit engagements are published, a bug bounty is live, and reserves can be verified by anyone with a single balance query. The **5.0/10** overall score reflects a well-constructed system wrapped around a stablecoin that no holder can redeem, whose reserve and exit venue are the same asset, and whose governance, treasury and emergency powers resolve to one set of seven keys at a 4-of-7 threshold behind a one-hour timelock.
-
-> **Critical token-identification warning:** this report covers Alto Protocol's DUSD at Ethereum address `0x63d74d22E689C715a04F2C13962b1f77F443d35b`, whose on-chain `name()` is the bare string `DUSD`. Three other live Ethereum tokens answer to the same ticker: Dialectic USD (`0x1e33E98aF620F1D563fcD3cfd3C75acE841204ef`, symbol `DUSD`), dTRINITY USD (`0x07fFf99e1664d9B116fbC158c0E99785F81cA236`, symbol `dUSD`) and the dormant 2020 DeFi Dollar (`0x8DC3c42fA99E36636b33E40d7949ba434c946511`). Neither supply nor venue shape separates them: dTRINITY's supply was 848,325 on 2026-09-20 against Alto's 821,855, and both hold Curve pools against a Frax asset. Curve's `DUSDUSDC` pool at `0x32E616F4f17d43f9A5cd9Be0e294727187064cb3` is Dialectic's, not Alto's — Alto DUSD has no live USDC venue. A DefiLlama query by the ticker alone returned 42 pools on 2026-09-21, 38 of them belonging to other assets. Resolve every price, pool and balance by contract address, never by ticker.
+The assessed token is Ethereum [Alto DUSD](https://etherscan.io/token/0x63d74d22e689c715a04f2c13962b1f77f443d35b), `0x63d74d22e689c715a04f2c13962b1f77f443d35b`, canonical **alto/dusd-alto**. Dialectic DUSD, dTRINITY dUSD and legacy DeFi Dollar are different assets. sDUSD is a separate share product, and ALTO is not assessed here. Resolve venues and balances by exact address rather than ticker.
 
 ## 1 · Stability — 5.5
 
-DUSD targets one dollar through two arrangements that work differently. The 12% CDP tranche behaves like a conventional over-collateralized stablecoin: borrowers who see DUSD trade below par can buy it cheaply and repay debt, a real but small arbitrage channel bounded by outstanding CDP debt. The 88% stability-module tranche is anchored at exactly one frxUSD per DUSD by a fixed-price strategy with zero fee in either direction — but only the treasury can use it. Peg support on the dominant tranche is therefore discretionary: it happens when, and at the size, the treasury chooses, not when an arbitrageur finds it profitable.
+DUSD is denominated against $1, but the observed operational anchor remains treasury action and secondary-market liquidity rather than a verified public par-redemption promise. The frxUSD stability module is permissioned. Security verified enabled/unfrozen/unseized state and the treasury candidate's access at its pin; that does not give ordinary holders access or prove exhaustive current swapper membership.
 
-The realised record is strong. Reconstructed daily prices across the token's entire life to 2026-09-20 — 283 samples with no gaps — cover both venues DUSD has ever had. The UniV3 DUSD/USDC 0.01% pool (`0x206239406abccF730493e4b133b30DF546f9ff43`), live from 2025-12-11 to 2026-06-16, never read below **0.9998 USDC**. The Curve DUSD/frxUSD pool (`0x104d6a1b97A6CEf88D905d7b865A378d90be932A`), live from 2026-05-14, has a lowest reading of **0.999673 frxUSD**, on 2026-06-30. Across the 23 sampled days when both venues were live they agreed within about 2 bps. The worst reading in DUSD's history is about 3 bps below par; on 2026-09-21 the Curve pool quoted 1,000 DUSD at a premium of about 18 bps, because the pool is frxUSD-heavy.
+The active USM price ratio was 1:1 against frxUSD, with zero fee strategy at the selected observation. The current strategy has configuration roles: the ratio is a measured setting, not an immutable guarantee. Historical evidence that the treasury was the only swapper must retain its original date; it is not a fresh universal holder census.
 
-CoinGecko lists an all-time low of **$0.9717 on 2026-03-12**. That figure is not reproducible on-chain: at block 24,637,909 on that date the UniV3 pool quoted 0.999998 with unchanged liquidity, and neighbouring days read the same. The listed low is a bad tick, not a depeg.
+Issued DUSD also comes from the designated treasury LP credit line and smaller mint markets. Alto's internal nominal DUSD valuation is not an independent market-price check. Historical narrow peg deviations support the observed record but cannot prove stress redemption or loss protection. A retained historical reconstruction is not a current forward price series.
 
-**Risks and limitations.** The record is bounded in three ways: sampling is daily, so an intraday excursion would not appear; a UniV3 spot price is a marginal quote rather than executable depth; and the Curve leg is quoted in frxUSD, whose own small deviations from the dollar are not corrected out. More fundamentally, a clean record on a discretionary mechanism is evidence about the operator's conduct to date, not about what the mechanism would do under stress — and no part of the period since 2025-12-10 has been stressed. Alto's own lending prices DUSD at a hardcoded $1, which insulates the protocol from a depeg but also means it never reacts to one.
+## 2 · Backing — 5.0
 
-## 2 · Backing — 5.5
+### Dated issuance mix
 
-Every DUSD in existence is attributable to a named minter with an on-chain ceiling; the sum of each minter's recorded issuance equals total supply to the wei (821,855.160989103709962351 on 2026-09-20). Backing splits into two tranches that should be read separately:
+Backing output timestamp November 7 **03:54:25 UTC**, reported Ethereum block **26,360,414**, is distinct from Security's block **26,360,048 /02:39:35 UTC** and retained quote clocks. At the backing anchor:
 
-| Tranche | DUSD | Collateral | Ratio |
-|---|---:|---|---:|
-| Stability module (frxUSD) | 722,605 | 722,604.611770924639631386 frxUSD | **100.00%** |
-| CDP mint markets | 99,251 | about $186,806 in wstETH, WETH, frxUSD, rETH, sUSDe and syrupUSDC | **188%** |
-| **Total** | **821,855** | **about $909,388** | **110.7%** |
+| DUSD issuance source | Rounded amount | Share of measured supply |
+|---|---:|---:|
+| Permissioned frxUSD USM | 223,113 | 12.4% |
+| Treasury Convex LP credit line | 1,497,105 | 83.0% |
+| Other non-USM modules, including unreadable collateral | 82,764 | 4.6% |
+| **Supply** | **1,802,983** | **100%** |
 
-⚠️ **This table is a 2026-09-21 reading.** Supply has since risen to 1,323,765 and the collateral column has **not** been re-read, so **the ratio cannot be carried forward and no current one has been established.**
+The discovered minter minted amounts and the USM/non-USM liability partition reconcile to supply to the wei. A previously omitted approximately 1,941 DUSD liability is retained even though its collateral is unknown. Zero liability residual verifies that specific accounting identity; it does not establish exhaustive issuance-path security, collectible collateral or a global reserve ratio.
 
-Collateral is valued with the markets' own oracles at block 26,017,854. The CDP book is mostly wstETH ($101,114 against 45,434 DUSD), WETH ($40,541 against 21,227 DUSD) and frxUSD ($37,270 against 29,199 DUSD); the other markets held dust.
+### The credit line is not a generic overcollateralized CDP
 
-Transparency here is a genuine strength. The stability module's reserve matches its issuance exactly, to the wei — re-verified unchanged on 2026-09-21 — and confirming it needs no attestation, auditor or issuer statement, just a `balanceOf` call. Few stablecoins of any size offer that.
+Market `0x6b3458c87cd38aefa6a5d059eb19f609420dd852` is a single-account **AltoConvexCreditLineMarket**. Its credit account, fee recipient and reward recipient are the treasury Safe. The position's roughly 2.385M LP shares reconcile to the market's Convex reward-pool balance. A zero direct LP balance reflects staking, not missing collateral. Credit-limit accounting does not represent deposits supplied by third-party lenders.
 
-**Risks and limitations.** The 110.7% aggregate is a blend of two unlike things and is not a system-wide margin. The 88% tranche is backed at exactly 100% by construction, with zero cushion: every cent of frxUSD impairment is a cent of DUSD impairment, and there is no insurance fund, surplus buffer or backstop anywhere in the system. The 188% on the CDP tranche is claimable by those markets' own borrowers and liquidators, not by DUSD holders generally, so it cannot cover a shortfall in the stability module. The frxUSD mint market is levered frxUSD rather than diversification. Across both tranches, **92.5% of collateral value is frxUSD**.
+The oracle fixes **one LP unit at one nominal DUSD**. It does not read the Curve pool's independently realizable NAV, frxUSD/USD price or an executable cash recovery. The configured 80% maximum LTV and 90% foreclosure threshold use that nominal mark. Comfortable marked headroom is therefore not equivalent to independently valued external coverage.
+
+Look-through at the backing anchor allocates approximately **1.549M frxUSD and 0.836M own DUSD** to the pledged LP. These are pro-rata stored pool balances, not executed withdrawals. Own DUSD is circular and excluded from external backing. Adding underlying balances to the LP mark would double-count collateral, and treasury LP is not automatically unencumbered cash. No reliable current aggregate external collateral ratio is established. The earlier zero-LP read used an invalid direct-balance custody reader; it is not evidence of collateral loss.
+
+### Recovery, encumbrance and conditional repayment
+
+Ordinary collateral removal must preserve solvency at the configured mark. The matched credit-line implementation does not provide ordinary public liquidation; its liquidation-engine address is zero. Governance can foreclose above the nominal threshold, transfer collateral into its recovery process and record bad debt; later settlement burns recovered DUSD. Administrative power is not proof of realized collateral recovery, holder legal priority or a guaranteed bailout.
+
+Security's current matched source supports a narrower repayment risk than a generic liquidation-warning headline: repayment accrues fees and can mint claimable fees **before burning repaid DUSD**. If those fees exceed available minter-ceiling headroom, the repayment can revert before its burn frees headroom. September audits acknowledge headroom-related conditions, but audit-commit-to-live-build equivalence and current financial blockage/headroom are not established. Current repayment headroom and blockage remain unverified. Public-liquidation failure conditions do not transfer automatically to this credit line; governance foreclosure follows a different path.
+
+The USM itself still holds frxUSD corresponding to its issued DUSD at the selected observation, but that is only one tranche. CDP collateral, staked treasury LP and issuer-reported treasury assets are not a common freely claimable reserve. Seizure rights and separate burning remain material controls.
+
+Public source references: [credit-line contract](https://etherscan.io/address/0x6b3458c87cd38aefa6a5d059eb19f609420dd852#code), [fixed LP oracle](https://etherscan.io/address/0x6ed6f809abede70a2f13a828ec59effe2d197bb7#code), [frxUSD USM](https://etherscan.io/address/0x1bd08b43d1579881cfad0a35aeea5b547dbe4c91#code). The selected producer/Security observations bind the reported current state; a source listing by itself does not certify financial recovery or audit correspondence.
 
 ## 3 · Liquidity & Exit — 5.5
 
-A DUSD holder has two conceivable exits: primary redemption against the stability module, and sale on a secondary venue. The first does not exist for holders. The module's `buyAsset` and `sellAsset` functions require a swapper role, the only address that has ever held that role is the Alto treasury Safe (`0xA1148A1b94262540994Cf9Aa431A13ad39764228`), and every one of the 16 swaps ever executed across Alto's three stability modules — eight buys and eight sells — originated from that Safe. The frxUSD module has been permissioned since its initialisation at block 25,030,679; the earlier USDC module was permissioned from launch. Zero third-party swaps have ever occurred.
+The meaningful observed venue remains Curve DUSD/frxUSD `0x104d6a1b97a6cef88d905d7b865a378d90be932a`. A current exact-token venue census does not establish a complete economic-holder or wrapper-ownership census. Pool TVL is not sellable public float, available cash or independent backing. Historical treasury LP percentages are not current measurements; credit-line encumbrance also affects LP withdrawal and recovery.
 
-The second exit is one Curve StableSwap-NG pool, DUSD/frxUSD (A = 1000, 0.01% fee). ⚠️ **Its DUSD side has grown sharply — 797,920 DUSD on 2026-09-21, 1,297,270 on 2026-10-03.** The frxUSD side read 2,502,131 on 2026-09-21 and **has not been re-read since**, so the pool's current balance is not established, and neither is the direction of the premium discussed below — that premium is a property of a frxUSD-heavy pool and inverts when the pool turns DUSD-heavy. A sweep by contract address across every Curve registry, the Uniswap V2/V3 and SushiSwap factories, Balancer, GeckoTerminal's indexes and aggregator route discovery found three other pools, all dead: the original UniV3 DUSD/USDC pool at zero liquidity, a UniV3 DUSD/frxUSD pool holding 2.55 DUSD, and a Curve twin holding 44 DUSD. There is no centralised-exchange listing, and 24-hour volume was $2,116 on 2026-09-20 and $201 on 2026-09-21, against a market cap of about $823,000 at that date.
+Retained quote output is dated **November 6 23:47:05 UTC**, with per-rung/provider and mixed pool clocks. The separate venue census is **November 7 02:40:31 UTC**. The existing indicative DUSD-to-USDC ladder includes an observed 1M-DUSD request yielding about 998,996 USDC before gas, assuming nominal DUSD and USDC reference values. This is a modeled route quote, not a funded settlement or a promise that 1M is freely circulating. Nominal-reference all-in cost, added rate impact versus the route's own small-size baseline, and gas are different measures; the before-gas output does not combine them into an executed all-in fee.
 
-From frxUSD the path to dollars is short and, at present, free. Frax operates an ERC-4626 redemption contract at `0x4f95c5ba0c7c69fb2f9340e190ccee890b3bd87c` whose `asset()` is USDC and which redeems frxUSD one-for-one at zero fee: `previewRedeem` of 1,000 frxUSD returned exactly 1,000.000000 USDC on 2026-09-21, and a simulated `redeem()` from a real holder failed only on the ordinary token allowance, so the call is permissionless. The cap is the USDC the contract holds, and it is enforced by a revert rather than a worse price — a simulated 100,000-share redemption failed with `ERC4626ExceededMaxRedeem` against a maximum of 32,919.58, the contract's entire USDC balance at that moment. Beyond that pocket the Curve frxUSD/crvUSD and crvUSD/USDC pools cost about 1 bp per hop. Measured end to end at block 26,022,595 and reproduced by a live aggregator to 0.00 bps at every size up to $1 million:
+The retained depth observation is an **observed quote-size floor bounded below recorded supply**. Mathematical crossings above total minted supply remain separate curve context. The residual of supply outside one pool is not current economic public float: protocol balances, lending claims, treasury ownership and pledged/staked LP require look-through. Exact public float remains unavailable.
 
-| DUSD sold | USDC received | vs par | Cost of the dollar leg vs stopping at frxUSD |
-|---:|---:|---:|---:|
-| 1,000 | 1,001.79 | +17.88 bps | 0.00 bps |
-| 25,000 | 25,043.11 | +17.25 bps | 0.00 bps |
-| 100,000 | 100,152.29 | +15.23 bps | −0.25 bps |
-| 500,000 | 500,400.57 | +8.01 bps | −1.28 bps |
-| 1,000,000 | 1,000,274.28 | +2.74 bps | −2.08 bps |
-
-The curve's 2% crossing is located at **$3,373,047** (bracket width $17,578) — about **2.55 times the entire supply of the asset**. ⚠️ **That number describes the pool, not what can be sold.** Measured depth clears the whole supply, so the depth figure is **clamped to supply at 1,323,765** rather than located at a crossing, and **where the supply actually sits is reported separately as distribution.** On 2026-10-03, **1,297,270 of the 1,323,765 DUSD in existence are inside the pool being quoted**, leaving **26,495 outside it.**
-
-⚠️ **Almost all of the supply growth went into the pool, not into the market.** Supply rose 821,855 → 1,323,765 between 2026-09-20 and 2026-10-03, and **99.5% of that increase — 499,350 of 501,910 — landed inside the Curve pool itself.** Holdings outside the pool moved only 23,935 → 26,495. ✅ **So the growth is pool liquidity on the venue Alto quotes, not demand arriving from holders.** ⚠️ **What produced it is not established:** the mint transaction and the LP events are unread, so the likeliest explanation — a stability-module mint added as protocol-owned liquidity — is an inference and not a measurement.
-
-The stress case was measured too. On-chain, the treasury holds 61.91% of the pool's LP (2,042,222 of 3,298,835 LP tokens, staked through Convex, StakeDAO and Yearn rather than held directly), with no lockup. If it withdraws, both sides of the pool shrink by that share, the treasury's 493,971 DUSD joins the float to make 517,907, and the 2% crossing falls to about 961,000 DUSD. Even then, selling that entire enlarged float returned 517,949 USDC, a premium of +0.82 bps.
-
-**Stake DAO retirement scope — November 2, 2026, 09:38 UTC.** The reviewed Curve V2 DUSD/frxUSD wrapper is a **qualified non-match**, not confirmed unaffected by SDGP-81 retirement. Its wrapper/LP/gauge and shared control addresses were absent from the checked withdraw-site sources; the measured Curve controller was unpaused and the gauge not shut down. However, the referenced 126-vault V1 inventory returned 404, and neither a V2 label nor current API membership proves exclusion. The same qualified finding applies to the reviewed USD3/scrvUSD wrapper. The vote was active at the source check; no final outcome or execution is established by that observation. No immediate principal-withdrawal deadline or forced exit was found. The legacy Pendle merkle reward deadline does not apply to deposited principal. Track execution and the promised complete contract/roles inventory separately; scores are unchanged. [SDGP-81](https://snapshot.org/#/stakedao.eth/proposal/0x8f4f3223518f62e320942d65cdbf0ad83ad195e9545da82d72aa4fdda977003c), [withdraw-site configuration](https://withdraw.stakedao.org/config.js), [Curve strategy API](https://api.stakedao.org/api/strategies/v2/curve/1.json).
-
-
-**What binds this axis is therefore not exit cost, which is excellent in both regimes, but the exit market itself.** There is no redemption right; one live venue and three dead ones; no exchange listing; daily volume in the hundreds or low thousands of dollars; and 62% of the depth is the issuer's own capital, withdrawable without notice. The asset is cheap to leave partly because there is almost nothing to leave — the 2% crossing sits far above supply, and what is actually held outside the quoting pool is **26,495 DUSD** — of which **19,714 sits in Alto's two borrow markets** (18,807 and 907) and **4,434 in fee timelocks**, leaving **at most 2,347 DUSD in third-party hands.** ⚠️ **That last figure is an upper bound, not a count.** Roughly 1,400 of it appeared after the 2026-09-20 holder classification and has never been attributed, so some or all of it may also be protocol-owned.
-
-**Risks and limitations.** The frxUSD-quoted venue is a recent condition, not the original design. A direct UniV3 DUSD/USDC pool was created on 2025-12-11, the day after the token, and carried real liquidity for six months; its liquidity reached zero at block 25,329,865 (2026-06-16 11:44 UTC), after which the Curve pool became the only venue. The pool's current premium to par is a property of its frxUSD-heavy balance and inverts into a discount as soon as the pool turns DUSD-heavy. The free dollar leg is Frax's inventory, not a property of DUSD: the redemption contract's USDC pocket moved from 59,196 to 72,836 USDC within ten minutes on 2026-09-21 and read 32,920 later that day — of the same order as the entire holding outside the pool — and once it is exhausted the 1:1 call simply fails and the dollar exit costs 0.86–2.4 bps more than the frxUSD exit through Curve. Immaterial to the verdict, but not Alto's to guarantee. Uniswap V4 has no factory to enumerate and was covered only through an index and route discovery; CoW Protocol and limit-order books were not enumerated; the redemption pocket and the crvUSD pools were read at a single block with no history.
+The onward cash route must follow current quoted hops, which can vary by size. The saved example uses frxUSD→USDS→USDC after the first Curve hop. A historical direct-Frax conversion route does not establish current eligibility, free conversion or available cash. Current custodian eligibility, cash, fee/minimum and redemption limits are unestablished; some route models have mixed underlying pool clocks. A quote does not close converter permissions, minimum-out, funding or settlement.
 
 ## 4 · Dependencies — 4.5
 
-DUSD's value passes almost entirely through frxUSD. The stability module holds 722,605 frxUSD, the frxUSD mint market holds a further 37,270, and together they are 92.5% of all collateral value. frxUSD is also the quote asset of the only venue on which DUSD trades. A frxUSD stress event would therefore impair the backing and the exit simultaneously and with perfect correlation; there is no leg of the system that survives it independently. DUSD cannot be worth more than frxUSD, and its price on the only venue is denominated in frxUSD.
+frxUSD remains both an important external asset and the observed exit venue's other leg. The LP credit line adds a material custody and recovery dependence on Curve and Convex, with Alto treasury/governance as designated credit-account and recovery actors. Smaller mint markets have their own collateral/oracle dependencies. Isolated assets cannot automatically absorb another module's shortfall.
 
-Beyond frxUSD the dependency set is ordinary: about $149,000 of wstETH, WETH and rETH in isolated, over-collateralized CDP markets priced by Chainlink-based and ERC-4626 ratio oracles; one Curve StableSwap-NG pool carrying 100% of holder exit, whose non-treasury LP persists only while Convex and Yearn emissions do; and demand driven by Alto Reward Options paid to borrowers, suppliers and minters rather than by transactional use.
-
-**Risks and limitations.** frxUSD carries its own administrative exposure: its Ethereum token owner is a 4-of-7 Safe whose mint, freeze and pause powers execute without delay, with only upgrades behind a timelock — see the [frxUSD report](/reports/frxusd/). DUSD's one-hour delay sits on top of a reserve asset whose most consequential powers have none. The dollar exit adds a second Frax dependency, and it resolves to the same keys. Frax's frxUSD-to-USDC redemption contract (`0x4f95c5ba0c7c69fb2f9340e190ccee890b3bd87c`) is an upgradeable proxy: its ProxyAdmin (`0x1a4563f238fa693ba9771cdba5ee8280a114ed7e`) is owned by the same 24-hour Timelock (`0xb898Ad2976b4d8f2E21521C9db16b7497825E503`) that governs frxUSD's own upgrades, and its `owner()` is the same 4-of-7 Safe (`0xfFFffF4F3baC444b2C0ecf2A1840d018bE783937`) that holds frxUSD's mint, freeze and pause powers. The zero-fee 1:1 rate is therefore an upgradeable parameter, and DUSD's reserve, its exit venue's quote asset and its free dollar leg are correlated not only through frxUSD's price but through one set of four keys. The leg is also free only while that contract holds USDC — the pocket swung 23% within ten minutes on 2026-09-21 and later read 32,920 — and when it is empty the leg costs 0.86–2.4 bps through Curve instead. Losing the custodian costs basis points, not the exit; but neither the pocket, the rate nor the crvUSD pools are Alto's to maintain. The CDP oracles were not reviewed.
+The main correlated stress path is clear: frxUSD or pool stress can weaken both collateral recovery and the secondary exit while own-DUSD marks remain nominal. Pool look-through describes exposure; it does not establish an additional independent reserve. Existing frxUSD asset research retains its own source clocks and is not refreshed merely by this report. No independent diversification protection is established by overlapping representations.
 
 ## 5 · Contract & Admin — 5.0
 
-The DUSD token contract is immutable: it is not a proxy, all three EIP-1967 slots read zero, and there is no upgrade path for the token itself. It inherits LayerZero's OFT standard through endpoint `0x1a44076050125825900e736c501f859c50fe728c`, but no peer has ever been set, so DUSD is Ethereum-only and the cross-chain mint surface is inert. Minting is restricted to allowlisted addresses, each with a ceiling; 19 minters have been authorised since launch and 17 are live. Pausing affects `mint()` and `burn()` only — transfers continue while paused, but primary issuance, stability-module swaps and CDP repayment all stop.
+The base DUSD token is non-proxy at the checked pin, but this does not make the whole system immutable. The credit-line and USM implementations are upgradeable and controlled by the timelock. Security matched selected explorer-verified source/runtime and the linked custody library; this is narrower than independently reproducing audited builds or closing every implementation/control path.
 
-Ten external audit engagements are published in Alto's security-review repository — four by Cantina (2025-11 through 2026-06), two by Bailsec (2025-11) and three by Enigma Dark (2025-07 through 2025-11) — with both the DUSD token and the stability module in scope. A bug bounty has been live since 2025-12-11 paying up to $100,000 for critical findings. The stability module is an acknowledged adaptation of Aave's GHO GSM, a codebase with far more adversarial exposure than Alto's own. The audit reports themselves were not read, so whether every finding was resolved is not established.
+At the November 7 Security pin, the minimum timelock delay is **86,400 seconds (24 hours)**, superseding the historical one-hour setting. The matched delay-update logic has no enforced positive floor; it must not be called a permanent minimum. Governance and treasury are 4-of-7 Safes; the pauser Safe has the same owner set. Shared owners do not provide independent governance layers.
 
-Ownership of the token and of every stability-module role runs through an `AltoTimelockController` at `0xfAe841679dc1A93D225ECc827E4BbF3e8d703F86`, which hardens the stock OpenZeppelin design by forcing role changes through its own queue and blocking renunciation of the admin role. Its proposer, executor, canceller and admin roles are held by the governance Safe `0xc49bf619cc9A68F84A6c9Ab88506f2627565a4D0`. The deployer EOAs handed the roles to that Safe and revoked their own at block 23,989,753; no EOA holds any timelock role today. The treasury Safe `0xA1148A1b94262540994Cf9Aa431A13ad39764228` holds the stability module's swapper role, and the emergency Safe `0x1c11d2d42929bd17Ab7212b79c91862ADFa8bBE4` holds pause rights alongside an EmergencyController contract.
+The effective emergency gate remains one current pauser-Safe owner for permitted controller actions, subject to registry/target gates. It is a halt/freeze surface, not arbitrary token movement; the controller has no unpause or seizure entry point. Separate direct Safe roles can have quorum-based actions. An enabled emergency mechanism does not guarantee recovery or a usable holder exit.
 
-**Risks and limitations.** Two facts undercut that structure. First, the timelock's `minDelay` is **3,600 seconds**. One hour is not a window in which a holder can observe a queued action and react. Second, the governance, treasury and emergency Safes have the **identical seven owner addresses at the identical 4-of-7 threshold** — read from `getOwners()` and `getThreshold()` on each, all seven owners being externally-owned accounts. There is no separation of duties: governance, the sole stability-module counterparty that also owns 62% of the exit pool, and the emergency pause all resolve to one quorum of four signatures. Four signatures plus one hour can authorise a new minter at an arbitrary ceiling, upgrade the stability modules (which are UUPS-upgradeable even though the token is not), repoint the module's price, fee or access mode, enable cross-chain minting via `setPeer`, or call `seize()`, which transfers the module's entire underlying balance — 722,605 frxUSD, 88% of all backing — to the treasury Safe while leaving the DUSD outstanding. That is a description of the authority as deployed; there is no evidence it has been misused, and the role history is orderly. A flash minter also offers up to 500,000 DUSD at zero fee; Alto's own markets are insulated because they price DUSD at $1, and the Curve pool absorbs a sale of that size with the executed price moving only from 1.0018 to 1.0009, but an external integrator pricing DUSD from a thinner source would not be.
+The USM is permissioned and was not seized/frozen at the Security pin. Matched `seize` can move underlying to the treasury while issued DUSD remains until a separate burn. Configuration and role candidates were checked, with index throttling and incomplete enumeration explicit. The full OFT peer/global issuance graph, credit delegates and upstream Curve/Convex control graphs were not closed.
+
+The longer current delay improves notice, but upgradeable credit/custody surfaces, correlated operators, emergency gates, mutable configuration and unresolved alternate paths prevent a broad safety upgrade. It is not a claim that any one key can seize funds.
+
+The [audit repository](https://github.com/altomoney/security-review-engagements) lists twelve engagements. Its broad statement that all findings are addressed must be read alongside the reports' acknowledged conditions. Audit count is not a clean-finding attestation, a financial audit or proof that every current runtime matches the reviewed version.
 
 ## 6 · Issuer — 4.5
 
-Alto Foundation operates the protocol, publishing at altofoundation.org and docs.alto.money and reachable at security@altofoundation.org. Its public conduct matches its contracts: the Frax partnership under which frxUSD was whitelisted into the permissioned stability module and the DUSD/frxUSD Curve pool was launched jointly is described accurately in Alto's later material, and the on-chain state agrees with it. Growth since launch has been orderly — the market set expanded from 8 minters to 17, a second-generation mint-market implementation replaced the first, and ceilings are actively managed. No pause has ever fired on the token, and no incident was found in the period from 2025-12-10 to 2026-09-20. The audit and bounty programme is a real credit: three independent firms, the token and the stability module both in scope, and reports published rather than merely claimed.
+[Foundation terms](https://www.altofoundation.org/legal/terms), revised October 22, identify Alto Foundation as a Cayman software provider and Mesh Interface Corp. as the separately operated Panamanian interface. These are disclosed roles, not independently verified registrations, identified directors/signers or a product-specific corporate repayment undertaking. Current Foundation and interface terms have different legal/access scopes; neither should be replaced by underlying frxUSD holder rights.
 
-**Risks and limitations.** No team members, legal entity or jurisdiction are disclosed on the website, documentation or launch post, and the seven Safe signers are unidentified. The 2025-12-10 launch post still describes a Peg Stability Module "allowing 1:1 swaps with USDC (minus a 0.20% fee)"; on-chain, that USDC module holds $0.01 with zero available liquidity, and the live module is frxUSD, zero-fee and treasury-only. Alto's Frax-partnership material does describe the module as permissioned, so this is a stale public surface rather than a misrepresentation — but the launch post is the page a new holder is most likely to find, and it implies an exit that has never existed for third parties. The source of the treasury's frxUSD — whether Frax-supplied, purchased or raised — is not established.
+The [risk disclosure](https://www.altofoundation.org/legal/risk-disclosure), revised October 19, expressly declines a required refund, repurchase or redemption undertaking. That declined undertaking does not establish that no legal remedies exist elsewhere; the unresolved gap is an established unconditional DUSD cash obligor and enforceable holder priority. sDUSD's technical redemption into DUSD does not close it.
 
-## Who this is for
-
-- Frax-ecosystem participants who understand DUSD as a frxUSD-denominated instrument, expect to exit through the Curve pool and Frax's own redemption inventory, and check the treasury's LP position and the pool balance before sizing.
-- Liquidity providers and borrowers in Alto's markets, for whom DUSD is a protocol unit rather than a savings asset.
-
-## Who should avoid it
-
-- Anyone who needs a redemption right against the reserve. None exists for holders; the exit is a market, and a very thin one.
-- Anyone unwilling to take frxUSD risk on both the reserve and the exit at once.
-- Anyone who reads a market cap as evidence of an organic holder base. Third-party holdings were roughly 1,000 DUSD on 2026-09-20.
+Corrected party/jurisdiction disclosure improves transparency, but principals, registration, contractual repayment and financial assurance remain unresolved. Audits, peg stability and access exclusions do not determine issuer credit quality. No current comprehensive incident-free record is asserted. The transparency report is historical issuer reporting, not an independent current reserve/solvency opinion.
 
 ## What to watch
 
-- Any `Seized` event on a stability module: a single call that separates the reserve from the token.
-- New `SetMinterStatus` or `SetMinterCeiling` events, and `PeerSet` on the DUSD token — new issuance authority on one hour's notice.
-- The Curve pool's DUSD share (24.3% on 2026-09-20). A move toward DUSD-heavy turns the premium into a discount and is the earliest peg signal available.
-- The treasury Safe's LP balance (2,036,225 LP, never reduced). Any burn is the issuer withdrawing the depth the exit depends on.
-- `MinDelayChange` on the timelock, and any change to the three Safes' owner sets or thresholds.
-- Every trigger in the [frxUSD report](/reports/frxusd/), at 92.5% pass-through.
-- The USDC balance of Frax's frxUSD redemption contract, which is what makes the dollar leg free, and the appearance of any DUSD/USDC venue with real liquidity.
+Reassess on material issuance/collateral shifts, independent external LP valuation and recoverability, a verified repayment-headroom failure, changed foreclosure or USM access, seized/frozen state, changed timelock/authority, actual stressed cash exits or new enforceable issuer obligations. Routine supply, pool and quote changes do not automatically change the grade.
+
+## Sources, scores and review scope
+
+The report was created **September 21, 2026** and received a **bounded November 7 assessment**. Selected backing output is **November 7 03:54:25 UTC**, Ethereum block **26,360,414**. Security uses **November 7 02:39:35 UTC**, block **26,360,048**. Retained quote output is **November 6 23:47:05 UTC**; provider and mixed pool clocks remain separate. Venue census is **November 7 02:40:31 UTC**. Earlier 01:52/02:53 LP readings are not mixed into the selected backing anchor. Publication and assessment dates do not refresh those observations.
+
+Scores are higher-is-safer: **Stability 5.5, Backing 5.0, Liquidity & Exit 5.5, Dependencies 4.5, Contract & Admin 5.0, Issuer 4.5, Overall 4.5**. Overall is a holistic assessment below the **5.0** axis mean. The earlier Backing/Overall judgments were **5.5/5.0**; their November 7 values reflect the changed concentrated credit/recovery structure, without assuming a measured loss. Other grades are retained. Issuer 4.5 retains the September 21 judgment provisionally after the November 7 factual/interpretive review, without an audit or peg-stability credit uplift. Redemption is included in Liquidity & Exit, not an extra scored axis.
+
+No independent aggregate external backing ratio, current economic public float, current minter-headroom blockage, complete OFT/global-control graph, all-market audit-build equivalence or actual repayment/cash-exit execution is established. Unknown current headroom and blockage remain unavailable rather than zero or a claimed active incident. Audit acknowledgments do not establish that all findings are fixed in the deployed build. The underlying token's non-proxy form does not make the credit line or USM immutable.
+
+BM dashboard delivery is a separate state: its local fixes were not deployed or visually accepted at selected package assembly. This authored report does not certify the served dashboard, change its grade or demonstrate holder execution. Raw packages, canonical profiles, owner messages and holdings are not exported into this report.
 
 ## Revision history
 
-*2026-10-03 — supply grew 61% and almost all of it went into the quoting pool; no score change. Total supply rose **821,855 → 1,323,765** between 2026-09-20 and 2026-10-03, and **99.5% of the increase — 499,350 of 501,910 — landed inside the DUSD/frxUSD Curve pool itself**, whose DUSD side moved 797,920 → 1,297,270. Holdings outside the pool moved only **23,935 → 26,495**, of which 19,714 sits in Alto's two borrow markets and 4,434 in fee timelocks, leaving **at most 2,347 in third-party hands** — an upper bound, because roughly 1,400 of it appeared after the 2026-09-20 holder classification and has never been attributed. ⚠️ **The cause is not established:** the mint transaction and the LP events are unread, so a stability-module mint added as protocol-owned liquidity is the likeliest explanation and remains an inference. Depth is now measured as clearing the entire supply, so the figure is **clamped to supply** with distribution reported separately, and the 2% crossing is located at **$3,373,047** — about 2.55 times supply. ⚠️ **The frxUSD side of the pool and the collateral behind the supply have not been re-read since 2026-09-21**, so neither a current pool balance, nor a current collateralization ratio, nor a current frxUSD concentration is established. Liquidity & Exit holds at 5.5 and Overall at 5.0: the axis was already set by the exit market rather than by exit cost, and growth landing inside the issuer's own pool does not change that.*
-
-*2026-09-21 — dollar exit measured end to end at block 26,022,595; Liquidity & Exit 4.5 → 5.5, overall 4.75 → 5.0. Frax's ERC-4626 redemption contract converts frxUSD to USDC one-for-one at zero fee, so the dollar exit costs nothing over the frxUSD exit at any size the float can produce; 2% crossing bisected at 2,515,625–2,531,250 DUSD, 3.06 times supply, so depth is reported as the 23,935 DUSD float; treasury LP share verified on-chain at 61.91% and the withdrawal case measured at +0.82 bps for the enlarged float. Venue sweep by contract address found one live pool and three dead ones. A ticker-only aggregator lookup returned 38 other assets among 42 rows.*
-
-*2026-09-21 — first staged publication. Supply, stability-module reserve, holder set, Curve pool balances and quotes, Safe owners and thresholds, timelock delay and the full minter and role histories read on-chain at block 26,017,854 (2026-09-20) and re-confirmed on 2026-09-21. Peg history reconstructed from archive state across 283 daily samples over both venues the token has ever had.*
+- **November 7, 2026:** Bounded material backing, recovery, authority, legal and exit-route refresh; Backing 5.0 and Overall 4.5.
+- **September 21, 2026:** Report creation and original issuer-score judgment.
 
 </div>

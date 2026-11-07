@@ -1,0 +1,52 @@
+[
+  {
+    "url": "https://docs.fluid.instadapp.io/audits-and-security.html",
+    "status": 200,
+    "final_url": "https://docs.fluid.instadapp.io/audits-and-security.html"
+  },
+  {
+    "url": "https://docs.fluid.instadapp.io/integrate/lend-borrow-yield-rates.html",
+    "status": 200,
+    "final_url": "https://docs.fluid.instadapp.io/integrate/lend-borrow-yield-rates.html"
+  },
+  {
+    "url": "https://fluid.io/blog/general-fluid-h1-2026-recap",
+    "status": 200,
+    "final_url": "https://fluid.io/blog/general-fluid-h1-2026-recap"
+  },
+  {
+    "url": "https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/contracts/protocols/vault/vaultTypesCommon/coreModule/main2.sol",
+    "status": 200,
+    "final_url": "https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/contracts/protocols/vault/vaultTypesCommon/coreModule/main2.sol"
+  },
+  {
+    "url": "https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/docs/docs.md",
+    "status": 200,
+    "final_url": "https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/docs/docs.md"
+  },
+  {
+    "url": "https://immunefi.com/bug-bounty/instadapp/information/",
+    "status": 200,
+    "final_url": "https://immunefi.com/bug-bounty/instadapp/information/"
+  },
+  {
+    "url": "https://instadapp.io/mica-whitepaper",
+    "status": 200,
+    "final_url": "https://instadapp.io/mica-whitepaper.pdf"
+  },
+  {
+    "url": "https://plasmascan.to/tx/0x81aa34ae36bf2e73c5dbccf2b53a49d79095d35368b016ce54f888bf0ceea7ad",
+    "status": 403,
+    "final_url": "https://plasmascan.to/tx/0x81aa34ae36bf2e73c5dbccf2b53a49d79095d35368b016ce54f888bf0ceea7ad"
+  },
+  {
+    "url": "https://www.tally.xyz/gov/instadapp/proposal/142",
+    "status": 200,
+    "final_url": "https://www.tally.xyz/gov/instadapp/proposal/142"
+  },
+  {
+    "url": "https://x.com/0xfluid/status/2061124908277538827",
+    "status": 200,
+    "final_url": "https://x.com/0xfluid/status/2061124908277538827"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "cases": [
+    {
+      "width": 1440,
+      "http": 200,
+      "seven_grades_body_sidebar_index": true,
+      "source_and_assessment_evidence_versions": true,
+      "exact_ethereum_identity": true,
+      "dated_credit_backing_oracle_repayment_authority_quote_legal_limits": true,
+      "old_thesis_removed": true,
+      "no_dashboard_conformance_claim": true,
+      "privacy": true,
+      "overflow": false,
+      "served_build_parity": true
+    },
+    {
+      "width": 390,
+      "http": 200,
+      "seven_grades_body_sidebar_index": true,
+      "source_and_assessment_evidence_versions": true,
+      "exact_ethereum_identity": true,
+      "dated_credit_backing_oracle_repayment_authority_quote_legal_limits": true,
+      "old_thesis_removed": true,
+      "no_dashboard_conformance_claim": true,
+      "privacy": true,
+      "overflow": false,
+      "served_build_parity": true
+    }
+  ],
+  "pageerrors": []
+}
