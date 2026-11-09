@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://docs.monolith.market/protocol/immutability-deadline",
+    "status": 200,
+    "final_url": "https://docs.monolith.market/protocol/immutability-deadline"
+  },
+  {
+    "url": "https://docs.monolith.market/protocol/peg-stability-module",
+    "status": 200,
+    "final_url": "https://docs.monolith.market/protocol/peg-stability-module"
+  },
+  {
+    "url": "https://docs.monolith.market/protocol/redemptions",
+    "status": 200,
+    "final_url": "https://docs.monolith.market/protocol/redemptions"
+  },
+  {
+    "url": "https://docs.monolith.market/security/audits",
+    "status": 200,
+    "final_url": "https://docs.monolith.market/security/audits"
+  },
+  {
+    "url": "https://docs.monolith.market/security/risks",
+    "status": 200,
+    "final_url": "https://docs.monolith.market/security/risks"
+  },
+  {
+    "url": "https://etherscan.io/address/0x4ed5c72816abc1b67ac31ddabe31cff4a8c56a15#code",
+    "status": 403,
+    "final_url": "https://etherscan.io/address/0x4ed5c72816abc1b67ac31ddabe31cff4a8c56a15#code"
+  },
+  {
+    "url": "https://etherscan.io/token/0x9bf2b2f57a2968a0e81546ed50cbbbb7c9d6e05e",
+    "status": 403,
+    "final_url": "https://etherscan.io/token/0x9bf2b2f57a2968a0e81546ed50cbbbb7c9d6e05e"
+  },
+  {
+    "url": "https://etherscan.io/token/0xfa80c7349cc2357c42a64c2954b24b1a61c29435",
+    "status": 403,
+    "final_url": "https://etherscan.io/token/0xfa80c7349cc2357c42a64c2954b24b1a61c29435"
+  },
+  {
+    "url": "https://github.com/MonolithMarket/GovernanceFactory/tree/36cb2803234bd9ae2ee201ede0ea7aaa739214c2",
+    "status": 200,
+    "final_url": "https://github.com/MonolithMarket/GovernanceFactory/tree/36cb2803234bd9ae2ee201ede0ea7aaa739214c2"
+  },
+  {
+    "url": "https://github.com/MonolithMarket/Monolith/tree/3511ab54c7532efde0fe19423cb3753ea469a805",
+    "status": 200,
+    "final_url": "https://github.com/MonolithMarket/Monolith/tree/3511ab54c7532efde0fe19423cb3753ea469a805"
+  },
+  {
+    "url": "https://monolith-public-files.vercel.app/audits/ChainSecurity-Monolith-Re-Audit-Report-March-2026.pdf",
+    "status": 200,
+    "final_url": "https://monolith-public-files.vercel.app/audits/ChainSecurity-Monolith-Re-Audit-Report-March-2026.pdf"
+  },
+  {
+    "url": "https://www.swanusd.com/",
+    "status": 200,
+    "final_url": "https://www.swanusd.com/"
+  }
+]

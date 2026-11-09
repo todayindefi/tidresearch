@@ -1,0 +1,8 @@
+{
+  "served_asset_protocol_reports_match_build": 99,
+  "unchanged_existing_reports": 99,
+  "only_new_swan_and_protocol_index_changed": true,
+  "production_published_deploy_unchanged": "6aebfcb1b82c9019e9196ff9",
+  "production_swan_http": 404,
+  "source_sha_still_matches": true
+}

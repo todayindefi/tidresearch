@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "width": 1440,
+      "http": 200,
+      "four_grades_body_hero_sidebar_index": true,
+      "four_alias_searches_one_entry": true,
+      "exact_ethereum_contracts": true,
+      "original_clocks": true,
+      "manager_timelock_audit_accounting_exit_legal_limits": true,
+      "privacy_and_internal_hashes_absent": true,
+      "overflow": false,
+      "served_build_parity": true
+    },
+    {
+      "width": 390,
+      "http": 200,
+      "four_grades_body_hero_sidebar_index": true,
+      "four_alias_searches_one_entry": true,
+      "exact_ethereum_contracts": true,
+      "original_clocks": true,
+      "manager_timelock_audit_accounting_exit_legal_limits": true,
+      "privacy_and_internal_hashes_absent": true,
+      "overflow": false,
+      "served_build_parity": true
+    }
+  ],
+  "pageerrors": []
+}

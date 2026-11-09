@@ -1,0 +1,25 @@
+{
+  "source_report_sha256": "c73fb99fc4f9e8c5e498241876f6b3e855a6fd0e295dc494c7d0c758ef2688db",
+  "assessment_version": "swan-dao-protocol-2026-11-07-v1",
+  "evidence_version": "sha256:db6ee4538d1bef26161ace3e6cf049e81e854f7d03449c4b883459d3cf0b38b8",
+  "security_manifest": "sha256:5a0dafed5109a232df48757f5460c1b773fda343b0c0b408f4706b18037d9c39",
+  "scores": {
+    "contract_score": 5.5,
+    "economic_score": 5.0,
+    "project_score": 4.5,
+    "overall_score": 5.0
+  },
+  "date": "2026-11-07",
+  "scope": "exact Ethereum SwanDAO instance; no asset, FiRM or other Monolith grade",
+  "production": false,
+  "public_version_hashes": false,
+  "financial_pin": 26360833,
+  "financial_clock": "2026-11-07T05:17:11Z",
+  "financial_retrieval": "2026-11-07T05:52:49Z",
+  "security_pin": 26361087,
+  "security_clock": "2026-11-07T06:08:23Z",
+  "security_pin_fetched": "2026-11-07T06:25:37Z",
+  "dex_collection": "2026-11-07T06:06:43Z\u201306:07:01Z",
+  "public_markdown_sha256": "c354c1d91e79a04a876ec9a1bd836e54280fd8c9e0634db778bd3c9efd8449b5",
+  "immutable_bm_snapshot_hash_verified": true
+}
