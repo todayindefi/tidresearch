@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "production_branch": "production/syrup-pair-release-2026-11-11",
+  "baseline_source_commit": "40917d2",
+  "baseline_previous_deploy": "6af270dc67e4db619d4a971c",
+  "accepted_report_deploy": "6af46a339e04713bdfb30f04",
+  "assessment_version": "syrup-pair-six-axis-2026-11-11-v1",
+  "reports": {
+    "syrupusdc-retail.md": {
+      "sha256": "af3020a6c31f46270f9ee89713363bd973d1c04d85dbbd8be1a2b254bcd6190c"
+    },
+    "syrupusdt-retail.md": {
+      "sha256": "616ba84ecf67552d7e8626424469bbdbe06b689439d73014a92e359a085b64be"
+    }
+  },
+  "dashboard_source": "Existing /dashboards proxy to BM normal published producer/renderer/RA canonical exports",
+  "frozen_dashboard_overrides_in_production": false,
+  "preservation": "Previously live baseline only; no unpublished source drafts imported",
+  "build": "PUBLIC_STAGE=production npm run build",
+  "ci_skip": "Current source-capture commits skip automatic Netlify deploys because the matching immutable report release is already published."
+}
