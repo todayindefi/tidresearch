@@ -16,7 +16,7 @@ last_verified: "2026-08-25"
 # ⚠️ 2026-09-09: bridge Safe re-read on-chain — 3-of-6 -> 4-of-7 at block
 # 25,877,589 (2026-08-31). The 08-25 owner-set-identity finding was CORRECT WHEN
 # WRITTEN; the asset moved under it. `last_verified` HOLDS.
-last_revised: "2026-11-02"
+last_revised: "2026-11-10"
 featured: false
 production: true
 # issuer: withheld pending review — this report states the issuing entity is
@@ -51,7 +51,7 @@ overall_score: 3.5
 # states this is "not a full financial-statement audit". `true` asserts the opposite.
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report>
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
 
 # apxUSD — Risk Report
 
@@ -85,7 +85,7 @@ The October 26 **14:47:09 UTC** reserve snapshot reported **$289,398,701.50** ag
 
 The **$127,437,270.44 STRC bucket** was **44.04% gross**, **58.11% excluding inventory** and approximately **83.91% of netted assets**. The tokenized slice is part of that bucket, not another reserve. The implied raw-share balance and mark were not independently verified brokerage positions. At fixed netted liabilities and other marks, a 1% loss on the bucket gives approximately **99.37%** coverage; a 5% loss gives **96.01%**. These are dated static sensitivities, not observed losses or forecasts. [Historical reserve evidence](/data/strategy/2026-10-26/apxusd_backing.json).
 
-A thin surplus can be consumed by small mark changes. The November 2 Strategy filing does not measure today's Apyx weights, revalue custody positions or establish a new backing deficit.
+A thin surplus can be consumed by small mark changes. The November 9 Strategy filing does not measure current Apyx weights, revalue custody positions or establish a new backing deficit.
 
 ## 3 · Liquidity & Exit — 3.5
 
@@ -99,9 +99,9 @@ Depth depends on venue liquidity, market-maker participation, time of day and st
 
 The identified path is **apxUSD reserve → raw STRC or Backed STRCx → Strategy**. Backed custody and accrual add another layer where STRCx is used; protocol inventory and POL do not diversify the terminal issuer.
 
-Strategy's [November 2 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm) reports **1,178,552 common shares sold for $164.0M net**, with **$65.5M used for BTC purchases** and **$98.5M allocated to general USD Cash**. STRC buybacks cost **$208.2M**, so general cash still fell from **$242.4M to $132.7M**, a **45.3% decline**. Common-equity access resumed, but the disclosed cash allocation did not cover buyback spending. This is financing access, not sustained cash rebuilding.
+Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), covering November 2–8 with balances as of November 8, reports **$283.8M common proceeds** funding **$188.3M STRC buybacks**, $81.9M BTC purchases and $13.6M general-cash allocation. General cash rose **$132.7M → $146.2M**, or **10.17%**. The common-funded buybacks are not a second deduction from cash. A **$0.1M rounded allocation/balance residual** remains unresolved. One positive week does not establish sustained cash rebuilding.
 
-The separate USD Reserve ended at **$4.79B**, down from the prior rounded $4.83B, after **$43.4M of preferred dividend payments**. Those payments are not identified as STRC-only. Remaining preferred repurchase authorization is **$748.6M**: permission to spend, not available cash or a guaranteed par exit. No preferred ATM sales were reported.
+The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
 
 The [MSTR issuer assessment](/reports/mstr/) and [raw STRC assessment](/reports/strc/) describe the funding and instrument risks. Wrapper rights, holdings, accrual and exits require separate evidence. The weekly filing does not supply a current reserve allocation, custody attestation or executable redemption path.
 
@@ -141,13 +141,15 @@ Entity jurisdiction, enforceable holder recourse, governing law/disputes and a c
 
 ## Sources and review scope
 
-The [November 2 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm) covers October 26–November 1, with balances as of November 1. It reports 811 BTC purchased and ending holdings of 849,327, a 810 BTC increase over the prior balance. Both figures remain unreconciled. This filing establishes no new token holdings, reserve weights, custody assurance, redemption eligibility, dividend rate, daily-dividend effectiveness or wrapper pass-through. Its $748.6M preferred buyback authorization is permission, not cash. No new outstanding-share, service-burden or runway estimate is inferred from repurchases alone.
+The [November 9 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers November 2–8, balances November 8. This is a targeted issuer-dependency review on **November 10**. It does not refresh token holdings, reserve weights, custody, multipliers, waterfall protection, redemption eligibility or executable cash routes. Repurchases do not establish current outstanding shares, dividend-service burden or runway. The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
-[Retained filing observations and provenance](/data/strategy/2026-11-02/filing-observations.json) distinguish the primary filing from older dashboard snapshots. Retained source HTML/PDF hashes were checked; live SEC retrieval was unsuccessful. The filing facts do not depend on the monitoring producer adopting a new financial anchor. Changing rates, marks, queues and quotes belong on the dashboard; dated observations below are not current executable offers.
+[Retained November 9 filing observations](/data/strategy/2026-11-09/filing-observations.json) distinguish the primary filing from older dashboard snapshots. Retained source HTML/PDF hashes were checked; live SEC retrieval was unsuccessful. The filing facts do not depend on the monitoring producer adopting a new financial anchor. Changing rates, marks, queues and quotes belong on the dashboard; dated observations below are not current executable offers.
 
-The October reserve and exit figures and September authority observations retain their source dates. The full-verification date remains **August 25, 2026**. All six scores and Overall **3.5** are unchanged. November 2 records the scoped filing and presentation revision, not a whole-asset audit.
+The October reserve and exit figures and September authority observations retain their source dates. The full-verification date remains **August 25, 2026**. All six scores and Overall **3.5** are unchanged. November 10 records the targeted filing review, not a whole-asset audit.
 
 ## Revision history
+
+- **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
 
 - **2026-11-02:** Incorporated the Strategy funding update and clarified product boundaries. Consolidated redemption documentation and historical evidence into descriptive axes; scores and full-verification date unchanged.
 - **2026-10-26:** Retained dated reserve, concentration and secondary-quote observations.

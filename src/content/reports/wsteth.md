@@ -8,9 +8,9 @@ underlying_assets: ["ETH"]
 assessment_type: "full"
 date: "2026-10-03"
 last_verified: "2026-10-10"
-last_revised: "2026-10-11"
+last_revised: "2026-11-04"
 featured: false
-production: false
+production: true
 issuer: "Lido DAO"
 yield_bearing: true
 axis_frame: six
@@ -36,9 +36,13 @@ chain_overrides:
 
 **Low risk · 8.0/10 on Ethereum · 7.0/10 on Monad**
 
+<div role="region" aria-label="Wrapper reference table" tabindex="0" style="max-width:100%;overflow-x:auto;">
+
 | Backing | What it earns | Exit methods | Age | Chains |
 |---|---|---|---|---|
 | stETH, representing ETH staked through Lido | Ethereum staking rewards through a rising exchange rate | Unwrap to stETH, withdraw through Lido, sell, or bridge back from supported chains | Live since 2021 | Ethereum, Base and Monad |
+
+</div>
 
 ## Summary
 
@@ -54,7 +58,7 @@ Ethereum and bridged wstETH inherit the same underlying value mechanism. The 9.0
 
 ## 2 · Backing — 9.0
 
-**Ethereum: 9.0.** At block **26,155,944**, the wrapper held **4,579,032.9408 stETH** against a represented claim of **4,579,032.9397 stETH**, equal to **100.0000000245% wrapper coverage**. This confirms that issued wstETH reconciles to the wrapper's credited stETH shares. The [stETH report](/reports/steth/) separately assesses the pooled ETH beneath those shares.
+**Ethereum: 9.0.** In the October 10 assessment, at block **26,155,944**, the wrapper held **4,579,032.9408 stETH** against a represented claim of **4,579,032.9397 stETH**, equal to **100.0000000245% wrapper coverage**. This confirms that issued wstETH reconciles to the wrapper's credited stETH shares. The [stETH report](/reports/steth/) separately assesses the pooled ETH beneath those shares.
 
 **Monad: 6.5.** Monad wstETH is backed through an Ethereum CCIP lock pool shared with other chains rather than a reserve ring-fenced for Monad. On 2026-10-03, the unsiloed pool held **21,305.268 wstETH** against **21,305.145 wstETH** of shared minted claims, leaving **0.1227 wstETH** of excess collateral. Monad represented **99.45%** of those claims. Coverage was complete at the measurement point, but holders depend on a shared pool whose collateral can serve multiple connected chains.
 
@@ -62,7 +66,7 @@ Ethereum and bridged wstETH inherit the same underlying value mechanism. The 9.0
 
 **Ethereum: 9.0.** Holders can unwrap wstETH to stETH without issuer approval, then use Lido's withdrawal queue, or sell directly into secondary markets. A simulated unwrap call reached the balance check rather than an access-control check, supporting the absence of a holder whitelist or investor-status gate.
 
-The measured Ethereum WETH-exit venue set held at least **$116.8M**, and every tested trade from $1,000 through $1,000,000 returned more than **99.95% fill**. The primary withdrawal route has typically taken 1–5 days, depending on available ETH and Ethereum's validator-exit queue. A **3-of-6 CircuitBreaker Committee** can pause new requests and finalization for up to **21 days**; it cannot seize balances or alter code, and finalized claims remain claimable.
+The October assessment’s measured Ethereum WETH-exit venue set held at least **$116.8M**, and every tested trade from $1,000 through $1,000,000 returned more than **99.95% fill**. The primary withdrawal route has typically taken 1–5 days, depending on available ETH and Ethereum's validator-exit queue. A **3-of-6 CircuitBreaker Committee** can pause new requests and finalization for up to **21 days**; it cannot seize balances or alter code, and finalized claims remain claimable.
 
 **Monad.** The local DEX book reached its 2% crossing at roughly **$1,000** and is not suitable for material exits. The practical route is CCIP back to Ethereum. Its outbound bucket holds **2,000 wstETH** and refills at **0.023148 wstETH per second**, reaching full capacity in 24 hours. Liquidity and Redemption do not yet carry separate Monad scores, but both exit paths are measured.
 
@@ -119,9 +123,15 @@ Full-reach Lido changes follow a measured ordinary route of at least eight days:
 
 ---
 
-*Based on direct Ethereum wrapper and Lido reads through 2026-10-10, the Base authority walk, and Monad authority, backing, liquidity and CCIP measurements from 2026-10-03. Corrections or additional primary evidence are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).*
+## Evidence dates and scope
+
+Ethereum wrapper and Lido observations retain their **October 10, 2026** assessment scope; the Base authority walk is a distinct control review. Monad backing, liquidity, authority and CCIP observations retain **October 3, 2026**. Base has no complete separate six-axis score, and the Monad exit qualifications remain in the relevant axes. November 4 publication and formatting do not renew measurements or scores.
+
+Corrections or additional primary evidence are welcome at [info@tidresearch.com](mailto:info@tidresearch.com).
 
 ## Revision history
+
+- **2026-11-04 — production publication.** Published with the companion Lido report; contained tables on mobile and clarified historical observation dates. Scores and full-verification dates unchanged.
 
 - **2026-10-11 — canonical and multichain update.** Added wrapper reconciliation, Ethereum depth, permissionless unwrap evidence, current Lido authority paths, Base administration and measured Monad exits.
 - **2026-10-10 — underlying reconciliation.** Linked the stETH assessment and removed an unverified claim that 6,750 stETH was a designated disruption reserve.

@@ -52,7 +52,7 @@ def render(directory=DATA):
     feed, history, events = load(directory)
     end = time(history[-1]['ts'])
     lines = [START,
-             f"Shared dashboard feed: **{feed['timestamp_utc']}**. Financial observations retain their filing dates; "
+             f"Historical shared dashboard snapshot: **{feed['timestamp_utc']}**. Financial observations retain their filing dates; "
              "a fresh feed does not make an older filing or market close new.", "",
              "| Shared-history measure | Last 7 days | Last 30 days | Last 90 days |",
              "|---|---:|---:|---:|"]
@@ -97,12 +97,12 @@ def render(directory=DATA):
     lines += ["", "Amounts are discrete filing observations, not a daily cash series. "
               "Disclosed periods differ in length. The archived October 5 repurchase event mixed two tables and is withheld here; see the subsequent reconciliation note. "
               "No interpolation or annualized weekly buyback burn is used.", "",
-              f"Latest filing: **{latest['accession']}**, filed **{latest['filing_date']}**. "
-              f"Unspent preferred repurchase authorization: **${feed['digital_credit_framework']['dcs_repurchase_program']['remaining_usd']/1e6:,.1f}M**; "
-              f"BTC held: **{feed['tradfi']['strategy_btc_holdings']['count']:,}**. Authorization is not cash.", "",
-              f"Observed STRC rate: **{feed['tradfi']['strc_dividend']['current_rate']*100:.2f}%**, "
-              f"current recorded payment cadence **{feed['tradfi']['strc_dividend']['dividend_frequency']}**. "
-              "Proposed November daily terms are separately conditional; do not count both replacement schedules.", "",
+              f"Last filing represented in this October 28 snapshot: **{latest['accession']}**, filed **{latest['filing_date']}**. "
+              f"Archived unspent preferred repurchase authorization: **${feed['digital_credit_framework']['dcs_repurchase_program']['remaining_usd']/1e6:,.1f}M**; "
+              f"Archived BTC held: **{feed['tradfi']['strategy_btc_holdings']['count']:,}**. Authorization is not cash.", "",
+              f"Archived STRC rate: **{feed['tradfi']['strc_dividend']['current_rate']*100:.2f}%**, "
+              f"archived cadence field **{feed['tradfi']['strc_dividend']['dividend_frequency']}**. "
+              "That field records the old snapshot, not current terms. The separately dated October 29 certificate context appears above; daily and replaced semi-monthly distributions must not be added together.", "",
               "**Model-quality limit:** the source flags `STRC_OUTSTANDING_BASE_AGED`. "
               "Its derived share count, absolute service obligations, preferred-value inputs and runway are provisional. "
               "No precise modeled service life is endorsed by this report.", END]

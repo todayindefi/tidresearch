@@ -167,7 +167,7 @@ const allDashboards: Dashboard[] = [
     name: "apyUSD",
     chain: "Ethereum + Base (CCIP bridge)",
     description:
-      "Yield-bearing ERC-4626 wrapper over apxUSD. Captures the STRC dividend stream as NAV growth; 30-day UnlockToken cooldown on canonical exits.",
+      "Yield-bearing apxUSD share. The November 2 reviewed new-redemption path uses an Unlock Receipt NFT paying apxUSD; fees, eligibility and final cash settlement remain separate.",
     category: "Yield",
     production: true,
   },
@@ -177,7 +177,7 @@ const allDashboards: Dashboard[] = [
     name: "USDat",
     chain: "Ethereum",
     description:
-      "Saturn Labs' permissioned, non-yield stablecoin. Reserve rotated out of $M into PYUSDx on 2026-08-19; coverage held at 1:1 through the move.",
+      "Saturn’s non-yield stablecoin has a separate Ethereum PYUSDx reserve route. Holding and transfers differ from eligible primary settlement; this is not direct STRC backing.",
     category: "RWA",
     production: true,
   },
@@ -187,7 +187,7 @@ const allDashboards: Dashboard[] = [
     name: "sUSDat",
     chain: "Ethereum",
     description:
-      "Saturn's yield-bearing ERC-4626 wrapper for USDat. STRC-dividend pass-through into NAV; dynamic LTV-rotation between on-chain buffer and off-chain STRC.",
+      "Saturn’s Ethereum yield share has an identified STRCon/STRC route and USDat buffer. Reserve marks and conditional withdrawals do not guarantee cash or automatic rotation.",
     category: "Yield",
     production: true,
   },
@@ -277,6 +277,7 @@ const allDashboards: Dashboard[] = [
     description:
       "Canonical wrapper coverage, exchange rate, peg history, exit depth, Lido dependencies, and governance controls.",
     category: "Yield",
+    production: true,
   },
   {
     slug: "ousd",

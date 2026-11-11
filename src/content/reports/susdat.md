@@ -10,7 +10,7 @@ assessment_type: "light"
 companion_report: "usdat"
 date: "2026-05-20"
 last_verified: "2026-10-13"
-last_revised: "2026-11-02"
+last_revised: "2026-11-10"
 # Partial refresh: October 14 measurements and public-document reconciliation.
 # The live implementation has not been independently source-matched or diffed.
 # PARKED: deployed implementation source match, audit coverage and privileged-role walk [owner: securityAnalyst] [since: 2026-10-04]
@@ -32,7 +32,7 @@ overall_score: 3.0
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=susdat"
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report>
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
 
 # sUSDat — Risk Report
 
@@ -44,7 +44,7 @@ Yield-bearing vault share · Predominantly off-chain STRC exposure · Saturn Lab
 
 ## Summary
 
-sUSDat is Saturn's ERC-4626 share token. Users deposit [USDat](/reports/usdat/), and The identified Ethereum preferred-share route is through Ondo STRCon to STRC, Strategy's variable-rate perpetual preferred stock. A smaller on-chain USDat balance provides liquidity. The share's value reflects the reserve's reported value and vested income, so STRC losses can reduce principal as well as yield.
+sUSDat is Saturn's ERC-4626 share token. Users deposit [USDat](/reports/usdat/). The identified Ethereum preferred-share route is through Ondo STRCon to STRC, Strategy's variable-rate perpetual preferred stock. A smaller on-chain USDat balance provides liquidity. The share's value reflects the reserve's reported value and vested income, so STRC losses can reduce principal as well as yield.
 
 
 ## 1 · Stability — 3.5
@@ -103,9 +103,9 @@ PT maturity does not automatically deliver cash, and one PT need not equal one v
 
 The identified Ethereum preferred-share path is **sUSDat → Ondo STRCon → STRC → Strategy**. STRC is a corporate preferred claim rather than a direct BTC redemption instrument. Ondo's wrapper, Saturn reserve reporting and withdrawal processing add separate dependencies. The **USDat → PYUSDx → PYUSD** buffer path is a different reserve exposure; it does not pass through STRC.
 
-Strategy's [November 2 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm) reports **1,178,552 common shares sold for $164.0M net**, with **$65.5M used for BTC purchases** and **$98.5M allocated to general USD Cash**. STRC buybacks cost **$208.2M**, so general cash still fell from **$242.4M to $132.7M**, a **45.3% decline**. Common-equity access resumed, but the disclosed cash allocation did not cover buyback spending. This is financing access, not sustained cash rebuilding.
+Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), covering November 2–8 with balances as of November 8, reports **$283.8M common proceeds** funding **$188.3M STRC buybacks**, $81.9M BTC purchases and $13.6M general-cash allocation. General cash rose **$132.7M → $146.2M**, or **10.17%**. The common-funded buybacks are not a second deduction from cash. A **$0.1M rounded allocation/balance residual** remains unresolved. One positive week does not establish sustained cash rebuilding.
 
-The separate USD Reserve ended at **$4.79B**, down from the prior rounded $4.83B, after **$43.4M of preferred dividend payments**. Those payments are not identified as STRC-only. Remaining preferred repurchase authorization is **$748.6M**: permission to spend, not available cash or a guaranteed par exit. No preferred ATM sales were reported.
+The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
 
 The [MSTR issuer assessment](/reports/mstr/) and [raw STRC assessment](/reports/strc/) describe the funding and instrument risks. Wrapper rights, holdings, accrual and exits require separate evidence. The weekly filing does not supply a current reserve allocation, custody attestation or executable redemption path.
 
@@ -157,13 +157,15 @@ October 14 numerical observations are retained at **03:45:41 UTC** in the [snaps
 
 
 
-The filing covers activity **October 26–November 1**, with ending balances **November 1**. It reports **811 BTC purchased** and **849,327 BTC held**, while the increase over the prior 848,517 is **810 BTC**. The difference remains unreconciled; no sale, loss or rounding explanation is assumed. The weekly 8-K establishes no new dividend rate, daily-dividend effectiveness or wrapper pass-through. Repurchases alone do not establish cancellation, current outstanding shares or a revised dividend-service burden.
+The [November 9 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers November 2–8, balances November 8. This is a targeted issuer-dependency review on **November 10**. It does not refresh token holdings, reserve weights, custody, multipliers, waterfall protection, redemption eligibility or executable cash routes. Repurchases do not establish current outstanding shares, dividend-service burden or runway. The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
-The November 2 funding facts come from retained primary filing evidence with checked source hashes; live SEC retrieval was unsuccessful. [Filing observations and provenance](/data/strategy/2026-11-02/filing-observations.json). October 26 financial and quote observations remain historical, not remeasured allocations or offers. Daily balances and quotes belong on the dashboard.
+The November 9 funding facts use retained primary filing evidence checked against documentary source hashes. [Selected public filing observations](/data/strategy/2026-11-09/filing-observations.json) distinguish that anchor from historical October reserve/quote readings. The filing does not remeasure current reserves or executable exits.
 
-The Overall **3.0** remains below the six-axis mean of **3.17**. All scores and the full-verification date, **October 13, 2026**, are unchanged. Issuer **5.0** is carried rather than re-derived against current legal/financial inputs. November 2 records the scoped funding and presentation revision.
+The Overall **3.0** remains below the six-axis mean of **3.17**. All scores and the full-verification date, **October 13, 2026**, are unchanged. Issuer **5.0** is carried rather than re-derived against current legal/financial inputs. November 10 records the targeted funding review.
 
 ## Revision history
+
+- **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
 
 - **2026-11-02:** Updated the Ethereum STRCon/STRC dependency and Strategy funding narrative, keeping USDat and other deployment routes separate. Consolidated review notes at the end; scores and full-verification date unchanged.
 

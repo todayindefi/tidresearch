@@ -18,7 +18,7 @@ last_verified: "2026-09-13"
 # ⚠️ 2026-09-09: backing_score 4.0 authored — absent on BOTH surfaces, so an
 # added axis rather than a re-scope. Migrated to the frame because the
 # wrapped-token rubric has no Backing row. `last_verified` HOLDS.
-last_revised: "2026-11-02"
+last_revised: "2026-11-10"
 live_dashboard_url: "https://tidresearch.com/dashboards/?asset=strcx"
 featured: false
 production: true
@@ -60,7 +60,7 @@ issuer_score: 6.0
 overall_score: 3.0
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report>
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
 
 # STRCx — Risk Report
 
@@ -74,7 +74,7 @@ Tokenized Strategy preferred stock · Backed xStock wrapper
 
 STRCx represents exposure to Strategy's raw STRC preferred shares through Backed's custody and token structure. The underlying security is perpetual preferred equity, rather than a stablecoin or a claim on segregated BTC. The token adds issuer-controlled accrual, custody and restricted primary access to the underlying issuer risk.
 
-Strategy's renewed common issuance shows access to funding, but general cash still fell after STRC buybacks. A better funding route does not independently verify STRCx reserves, dividend receipt or holder exits.
+Strategy’s common-funded STRC buybacks and modest November 8 cash rebuild improve the latest reported week. They do not establish durable financing or independently verify STRCx reserves, dividend receipt or holder exits.
 
 ## 1 · Stability — 4.5
 
@@ -90,7 +90,7 @@ The wrapper represents STRC held through Backed's custody structure. Backing qua
 
 The reviewed product terms identify **Backed Assets (JE) Limited**, a Jersey private limited company, as issuer. They name Swiss custodians **Maerki Baumann & Co. AG** and **InCore Bank AG**. Family-level proof-of-reserve/NAV reporting is not a continuous independent verification of this token's position. The multiplier is issuer-controlled, so observed accrual does not alone prove receipt of the underlying dividends.
 
-The November 2 filing remeasures neither custody nor token reserves. A new Strategy cash balance cannot be used as collateral held for STRCx.
+The November 9 filing remeasures neither custody nor token reserves. A new Strategy cash balance cannot be used as collateral held for STRCx.
 
 ## 3 · Liquidity & Exit — 2.5
 
@@ -106,9 +106,9 @@ Thin token-market liquidity, primary eligibility, fees, custody settlement and c
 
 The path is **STRCx → Backed custody/accrual → raw STRC → Strategy**. There is no direct contractual redemption into BTC. Holding related reserve tokens alongside STRCx may preserve the same terminal issuer exposure.
 
-Strategy's [November 2 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm) reports **1,178,552 common shares sold for $164.0M net**, with **$65.5M used for BTC purchases** and **$98.5M allocated to general USD Cash**. STRC buybacks cost **$208.2M**, so general cash still fell from **$242.4M to $132.7M**, a **45.3% decline**. Common-equity access resumed, but the disclosed cash allocation did not cover buyback spending. This is financing access, not sustained cash rebuilding.
+Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), covering November 2–8 with balances as of November 8, reports **$283.8M common proceeds** funding **$188.3M STRC buybacks**, $81.9M BTC purchases and $13.6M general-cash allocation. General cash rose **$132.7M → $146.2M**, or **10.17%**. The common-funded buybacks are not a second deduction from cash. A **$0.1M rounded allocation/balance residual** remains unresolved. One positive week does not establish sustained cash rebuilding.
 
-The separate USD Reserve ended at **$4.79B**, down from the prior rounded $4.83B, after **$43.4M of preferred dividend payments**. Those payments are not identified as STRC-only. Remaining preferred repurchase authorization is **$748.6M**: permission to spend, not available cash or a guaranteed par exit. No preferred ATM sales were reported.
+The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
 
 The [MSTR issuer assessment](/reports/mstr/) and [raw STRC assessment](/reports/strc/) describe the funding and instrument risks. Wrapper rights, holdings, accrual and exits require separate evidence. The weekly filing does not supply a current reserve allocation, custody attestation or executable redemption path.
 
@@ -134,13 +134,15 @@ The legal-entity and product-term observations are inherited from the September 
 
 ## Sources and review scope
 
-The [November 2 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526442707/mstr-20261102.htm) covers October 26–November 1, with balances as of November 1. It reports 811 BTC purchased and ending holdings of 849,327, a 810 BTC increase over the prior balance. Both figures remain unreconciled. This filing establishes no new token holdings, reserve weights, custody assurance, redemption eligibility, dividend rate, daily-dividend effectiveness or wrapper pass-through. Its $748.6M preferred buyback authorization is permission, not cash. No new outstanding-share, service-burden or runway estimate is inferred from repurchases alone.
+The [November 9 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers November 2–8, balances November 8. This is a targeted issuer-dependency review on **November 10**. It does not refresh token holdings, reserve weights, custody, multipliers, waterfall protection, redemption eligibility or executable cash routes. Repurchases do not establish current outstanding shares, dividend-service burden or runway. The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
-[Retained filing observations and provenance](/data/strategy/2026-11-02/filing-observations.json) distinguish the primary filing from older dashboard snapshots. Retained source HTML/PDF hashes were checked; live SEC retrieval was unsuccessful. The filing facts do not depend on the monitoring producer adopting a new financial anchor. Changing rates, marks, queues and quotes belong on the dashboard; dated observations below are not current executable offers.
+[Retained November 9 filing observations](/data/strategy/2026-11-09/filing-observations.json) distinguish the primary filing from older dashboard snapshots. Retained source HTML/PDF hashes were checked; live SEC retrieval was unsuccessful. The filing facts do not depend on the monitoring producer adopting a new financial anchor. Changing rates, marks, queues and quotes belong on the dashboard; dated observations below are not current executable offers.
 
-The historical wrapper and Final Terms observations retain their September/October dates; they were not reverified by the filing. [MSTR](/reports/mstr/) covers issuer funding and [raw STRC](/reports/strc/) covers the listed instrument. Scores, including Dependencies **3.0** and Overall **3.0**, are unchanged. Full verification remains **September 13, 2026**; November 2 records this scoped revision.
+The historical wrapper and Final Terms observations retain their September/October dates; they were not reverified by the filing. [MSTR](/reports/mstr/) covers issuer funding and [raw STRC](/reports/strc/) covers the listed instrument. Scores, including Dependencies **3.0** and Overall **3.0**, are unchanged. Full verification remains **September 13, 2026**; November 10 records this targeted filing review.
 
 ## Revision history
+
+- **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
 
 - **2026-11-02:** Updated the Strategy funding dependency and product boundaries. Reorganized the report into the reader-first format; scores and full-verification date unchanged.
 - **2026-10-26:** Retained dated multiplier, mark and venue-liquidity observations.
