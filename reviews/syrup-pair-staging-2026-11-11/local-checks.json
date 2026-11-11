@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "slug": "syrupusdc",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n6.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n8.5\nBacking\n5.5\nLiquidity & Exit\n6.0\nDependencies\n5.5\nContract & Admin\n4.5\nIssuer\n5.5\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-06. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nMaple International Operations SPC\nUNDERLYING\nUSDC\nCHAINS\nETHEREUM\nSOLANA\nARBITRUM\nBASE\nMONAD\nINK\nTEMPO\nROBINHOOD CHAIN\nARC\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "slug": "syrupusdt",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n5.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n8.5\nBacking\n6.0\nLiquidity & Exit\n5.5\nDependencies\n4.0\nContract & Admin\n4.5\nIssuer\n5.5\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-06. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nMaple International Operations SPC\nUNDERLYING\nUSDT\nCHAINS\nETHEREUM\nPLASMA\nMANTLE\nBNB CHAIN\nINK\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "slug": "syrupusdc",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n6.0\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n8.5\nBacking\n5.5\nLiquidity & Exit\n6.0\nDependencies\n5.5\nContract & Admin\n4.5\nIssuer\n5.5\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-06. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nMaple International Operations SPC\nUNDERLYING\nUSDC\nCHAINS\nETHEREUM\nSOLANA\nARBITRUM\nBASE\nMONAD\nINK\nTEMPO\nROBINHOOD CHAIN\nARC\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "slug": "syrupusdt",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n5.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n8.5\nBacking\n6.0\nLiquidity & Exit\n5.5\nDependencies\n4.0\nContract & Admin\n4.5\nIssuer\n5.5\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-06. For live readings, see the dashboard \u2192\n\nCATEGORY\nVault Share\nISSUER\nMaple International Operations SPC\nUNDERLYING\nUSDT\nCHAINS\nETHEREUM\nPLASMA\nMANTLE\nBNB CHAIN\nINK\nLAST REVIEWED\n2026-11-11"
+    }
+  ],
+  "page_errors": [],
+  "temporary_server_closed": true
+}

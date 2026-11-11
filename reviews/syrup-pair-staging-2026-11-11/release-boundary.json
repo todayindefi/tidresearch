@@ -1,0 +1,9 @@
+{
+  "changed_html": [
+    "reports/index.html",
+    "reports/syrupusdt/index.html",
+    "reports/syrupusdc/index.html"
+  ],
+  "other_report_html_preserved": true,
+  "build_pages": 117
+}

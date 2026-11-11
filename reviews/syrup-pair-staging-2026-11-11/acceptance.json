@@ -1,0 +1,216 @@
+{
+  "status": "staging_served_checks_passed",
+  "created_at": "2026-11-11T07:32:38.473064+00:00",
+  "assessment_version": "syrup-pair-six-axis-2026-11-11-v1",
+  "evidence_version": "sha256:54e6abc3d98e5a0db31757660213ad9bc2f1821a1b156955575ee5fd443b2d5b",
+  "source_commit": "8ef23dc",
+  "source_commit_matches_reports": true,
+  "incoming_request_sha256": "c16a25d10d7e44b2f0531facd20b4354039bc2ddbd973271d03e92a8047c6329",
+  "assessed_manifest_sha256": "9fbc3820c0cfd0d200ab8a4a341f9d3ea0d600bd2c2c199545d4ad2318f585a3",
+  "deploy": {
+    "site_id": "2da6f038-beda-46a5-bcbb-497156b816e4",
+    "site_name": "tidresearch-staging",
+    "deploy_id": "6af419ebeef404ea5d8e6163",
+    "deploy_url": "https://6af419ebeef404ea5d8e6163--tidresearch-staging.netlify.app",
+    "logs": "https://app.netlify.com/projects/tidresearch-staging/deploys/6af419ebeef404ea5d8e6163",
+    "function_logs": "https://app.netlify.com/projects/tidresearch-staging/logs/functions",
+    "edge_function_logs": "https://app.netlify.com/projects/tidresearch-staging/logs/edge-functions",
+    "url": "https://staging.tidresearch.com"
+  },
+  "reports": {
+    "syrupusdc": {
+      "url": "https://staging.tidresearch.com/reports/syrupusdc/",
+      "candidate_sha256": "af3020a6c31f46270f9ee89713363bd973d1c04d85dbbd8be1a2b254bcd6190c",
+      "source_sha256": "f460156e57ae43183be60c62427b4f9971f728b8fde29da9207d3176f2556f32",
+      "scores": {
+        "volatility_score": 8.5,
+        "backing_score": 5.5,
+        "liquidity_score": 6.0,
+        "underlying_score": 5.5,
+        "structural_score": 4.5,
+        "issuer_score": 5.5,
+        "overall_score": 6.0
+      },
+      "redemption_score": 6.0,
+      "last_verified": "2026-09-06",
+      "last_revised": "2026-11-11",
+      "production_metadata": true,
+      "historical_remote_overrides": {
+        "sol": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "arb": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "base": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "monad": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "ink": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "tempo": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "robinhood": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        },
+        "arc": {
+          "volatility_score": 8.5,
+          "backing_score": 6.5,
+          "liquidity_score": 7.0,
+          "underlying_score": 5.5,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 7.5,
+          "overall_score": 6.5
+        }
+      }
+    },
+    "syrupusdt": {
+      "url": "https://staging.tidresearch.com/reports/syrupusdt/",
+      "candidate_sha256": "616ba84ecf67552d7e8626424469bbdbe06b689439d73014a92e359a085b64be",
+      "source_sha256": "f777329ef624d92612113eb6c227626c5203e945ce2eb003eb213dd751474427",
+      "scores": {
+        "volatility_score": 8.5,
+        "backing_score": 6.0,
+        "liquidity_score": 5.5,
+        "underlying_score": 4.0,
+        "structural_score": 4.5,
+        "issuer_score": 5.5,
+        "overall_score": 5.5
+      },
+      "redemption_score": 5.5,
+      "last_verified": "2026-09-06",
+      "last_revised": "2026-11-11",
+      "production_metadata": true,
+      "historical_remote_overrides": {
+        "plasma": {
+          "volatility_score": 8.5,
+          "backing_score": 6.0,
+          "liquidity_score": 6.0,
+          "underlying_score": 4.0,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 6.5,
+          "overall_score": 6.0
+        },
+        "mantle": {
+          "volatility_score": 8.5,
+          "backing_score": 6.0,
+          "liquidity_score": 6.0,
+          "underlying_score": 4.0,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 6.5,
+          "overall_score": 6.0
+        },
+        "bsc": {
+          "volatility_score": 8.5,
+          "backing_score": 6.0,
+          "liquidity_score": 6.0,
+          "underlying_score": 4.0,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 6.5,
+          "overall_score": 6.0
+        },
+        "ink": {
+          "volatility_score": 8.5,
+          "backing_score": 6.0,
+          "liquidity_score": 6.0,
+          "underlying_score": 4.0,
+          "structural_score": 4.5,
+          "issuer_score": 5.5,
+          "redemption_score": 6.5,
+          "overall_score": 6.0
+        }
+      }
+    }
+  },
+  "date_reconciliation": {
+    "tidr_last_verified": "2026-09-06",
+    "upstream_last_verified": "2026-10-13",
+    "confirmed_by": "RiskAnalyst owner reply in dispatch thread",
+    "clarification": "Preserve separate original scopes; November11 is targeted assessment/revision."
+  },
+  "scope": "eip155:1 exact syrupUSDC and syrupUSDT pools; remote historical values explicitly unassessed",
+  "checks": {
+    "incoming_request_exit": 2,
+    "assessed_handoff_exit": 0,
+    "build_exit": 0,
+    "local_browser_cases": 4,
+    "score_parity": true,
+    "dates_preserved": true,
+    "remote_overrides_match_previous_tidr_defaults": true,
+    "privacy": true,
+    "source_links_200": 3,
+    "only_tracked_changes": [
+      "src/content/reports/syrupusdc-retail.md",
+      "src/content/reports/syrupusdt-retail.md"
+    ],
+    "served_browser_cases": 4,
+    "served_build_parity": true,
+    "page_errors": [],
+    "temporary_server_closed": true
+  },
+  "gaps": [
+    "No dedicated syrupUSDG TIDR report exists; comparison qualification adopted in both pair pages.",
+    "Independent borrower servicing/delinquency, custody/title/recovery, complete authority/build equivalence and remote coverage remain unverified.",
+    "BM authored association/dashboard parity belongs to BM and is not certified by these report checks."
+  ],
+  "production_deployment_performed": false,
+  "commit": false,
+  "push": false
+}

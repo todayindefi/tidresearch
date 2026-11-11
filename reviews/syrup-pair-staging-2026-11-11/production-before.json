@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "syrupusdc",
+    "status": 200,
+    "main_sha256": "53383d08ecabd2eeab2ea8b564ec01f421febc3ba96b402caeabb5998f93fe46"
+  },
+  {
+    "slug": "syrupusdt",
+    "status": 200,
+    "main_sha256": "4fe225351cd266fec09b7ca457d7ecff0515f29a24f7b0bb615c292922926f2d"
+  }
+]

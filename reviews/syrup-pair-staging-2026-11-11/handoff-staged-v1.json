@@ -1,0 +1,417 @@
+{
+  "contract_version": 1,
+  "task_id": "syrup-pair-staging-adoption-2026-11-11-tidresearch",
+  "summary": "Completed finite TIDR staging adoption of the accepted exact Ethereum Syrup pair assessment",
+  "owner": "tidresearch",
+  "recipient": "riskAnalyst",
+  "state": "staged",
+  "authority": {
+    "max_stage": "staging",
+    "reference": "User 2026-11-11 explicitly: commission consumer updates. Prepared consumer handoff limits TIDR to staging; no production."
+  },
+  "scope": [
+    {
+      "project": "maple",
+      "component": "syrupusdc",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+      ]
+    },
+    {
+      "project": "maple",
+      "component": "syrupusdt",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+      ]
+    }
+  ],
+  "evidence_version": "sha256:54e6abc3d98e5a0db31757660213ad9bc2f1821a1b156955575ee5fd443b2d5b",
+  "assessment_version": "syrup-pair-six-axis-2026-11-11-v1",
+  "artifacts": [
+    {
+      "id": "assessment",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/assessment.json",
+      "sha256": "529c0e4e1b1a9ed8a9ab42bd1c82827306137034626f0128f990c942d910c7b2",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "index",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/index-entries.json",
+      "sha256": "6a468becd4be62939c2c19e263d2e6caa7bfbae0639ff1eef8dde5ae5bf0973e",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "receipt",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/assessment-acceptance.json",
+      "sha256": "2d50589aa146e9d243951307db509e4f9f7c93cb7e5d6d14d4aab0a3df78a955",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "validation",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/validation.json",
+      "sha256": "423fba6a58834504e7bc1459678f86308007971f01719fc50eadfee6c8696f4b",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "bm",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/package.json",
+      "sha256": "54e6abc3d98e5a0db31757660213ad9bc2f1821a1b156955575ee5fd443b2d5b",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "bmindex",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json",
+      "sha256": "b56aab6af125c9a46aeaa27ad132fa8e1686740b317c5f6b469f88c33d853c08",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "bm_validation",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm-validation.json",
+      "sha256": "379cc794e92a326856bd2c4bc046702852fb564594ff597c4b1f1ca6a1ba740a",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "financial_dex_validation",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/financial-dex-validation.json",
+      "sha256": "f8961abf9a836c641d9a439616824cfd1ae7852bc2ec1f94a47861f2db3a156b",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "syrupusdc_report",
+      "path": "/home/danger/riskAnalyst/assets/syrupusdc.md",
+      "sha256": "f460156e57ae43183be60c62427b4f9971f728b8fde29da9207d3176f2556f32",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "syrupusdc_baseline",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/baselines/syrupusdc.md",
+      "sha256": "96209087155f0db79fd0c589e0e6e8c568482ea68b7e36cac246e89093ecd757",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "syrupusdt_report",
+      "path": "/home/danger/riskAnalyst/assets/syrupusdt.md",
+      "sha256": "f777329ef624d92612113eb6c227626c5203e945ce2eb003eb213dd751474427",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdt",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "syrupusdt_baseline",
+      "path": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/baselines/syrupusdt.md",
+      "sha256": "ca05f8ea9e9528ff97bf141f6d17d6b8eccdf4a76d9806f42881d77e0db7992e",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdt",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM shared immutable selected source package",
+        "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/bm/source-index.json"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:02:04.282153+00:00",
+      "clock_note": "Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "id": "consumer_syrupusdc",
+      "path": "/home/danger/tidresearch/reviews/syrup-pair-staging-2026-11-11/acceptance.json",
+      "sha256": "d077460341fbd164f060f758994b8c333cec17d7e3c9bc6a4af2339c2bc1a495",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdc",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "TIDR accepted report/build/score-date/privacy/served browser receipts; exact scopes and original clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:32:38.473064+00:00",
+      "clock_note": "Consumer acceptance time is separate from source financial, quote, loan metadata and documentary observations retained in the reports."
+    },
+    {
+      "id": "consumer_syrupusdt",
+      "path": "/home/danger/tidresearch/reviews/syrup-pair-staging-2026-11-11/acceptance.json",
+      "sha256": "d077460341fbd164f060f758994b8c333cec17d7e3c9bc6a4af2339c2bc1a495",
+      "scope": {
+        "project": "maple",
+        "component": "syrupusdt",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+        ]
+      },
+      "version": "syrup-pair-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "TIDR accepted report/build/score-date/privacy/served browser receipts; exact scopes and original clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-11T07:32:38.473064+00:00",
+      "clock_note": "Consumer acceptance time is separate from source financial, quote, loan metadata and documentary observations retained in the reports."
+    }
+  ],
+  "checks": [
+    {
+      "id": "assessment_version",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "assessment",
+      "pointer": "/assessment_version",
+      "expected": "syrup-pair-six-axis-2026-11-11-v1"
+    },
+    {
+      "id": "evidence_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "TIDR adoption of RiskAnalyst completed evidence acceptance",
+      "note": "Upstream assessed handoff checker exit0 and pinned critical-source acceptance retained. No independent custody/servicing assurance is inferred.",
+      "artifact": "receipt"
+    },
+    {
+      "id": "assessment_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "TIDR adoption of RiskAnalyst authored assessment",
+      "note": "Exact seven Ethereum score fields agree with the accepted assessment, version and source commit; remote historical fields are separately preserved.",
+      "artifact": "receipt"
+    },
+    {
+      "id": "staging_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "Codex / TIDR",
+      "note": "Bounded source/style/score/date/privacy, local and served desktop/mobile checks accepted; staging site only.",
+      "artifact": "consumer_syrupusdc"
+    },
+    {
+      "id": "syrupusdc_score_parity",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "consumer_syrupusdc",
+      "pointer": "/reports/syrupusdc/scores",
+      "other_artifact": "assessment",
+      "other_pointer": "/assets/syrupusdc/scores"
+    },
+    {
+      "id": "syrupusdc_original_tidr_date",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer_syrupusdc",
+      "pointer": "/reports/syrupusdc/last_verified",
+      "expected": "2026-09-06"
+    },
+    {
+      "id": "syrupusdt_score_parity",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "consumer_syrupusdt",
+      "pointer": "/reports/syrupusdt/scores",
+      "other_artifact": "assessment",
+      "other_pointer": "/assets/syrupusdt/scores"
+    },
+    {
+      "id": "syrupusdt_original_tidr_date",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer_syrupusdt",
+      "pointer": "/reports/syrupusdt/last_verified",
+      "expected": "2026-09-06"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "absent_usdg_consumer",
+      "description": "No dedicated syrupUSDG TIDR report exists; qualified comparison text is adopted in both pair reports.",
+      "blocking": false,
+      "reopen_when": "A dedicated USDG report is commissioned with accepted evidence and matching measurements."
+    },
+    {
+      "id": "assurance_limits",
+      "description": "Independent custody/title/recovery, servicing, complete authority/build equivalence and remote coverage remain unresolved as disclosed.",
+      "blocking": false,
+      "reopen_when": "Responsible producers provide accepted targeted evidence."
+    },
+    {
+      "id": "bm_association",
+      "description": "BM authored association/display acceptance is outside TIDR report receipts.",
+      "blocking": false,
+      "reopen_when": "BM returns its separate consumer receipt."
+    }
+  ]
+}

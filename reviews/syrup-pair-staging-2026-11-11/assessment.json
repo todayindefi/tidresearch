@@ -1,0 +1,49 @@
+{
+  "assessment_version": "syrup-pair-six-axis-2026-11-11-v1",
+  "selected_evidence_version": "sha256:54e6abc3d98e5a0db31757660213ad9bc2f1821a1b156955575ee5fd443b2d5b",
+  "status": "assessed_provisional",
+  "assets": {
+    "syrupusdc": {
+      "scores": {
+        "volatility_score": 8.5,
+        "backing_score": 5.5,
+        "liquidity_score": 6.0,
+        "underlying_score": 5.5,
+        "structural_score": 4.5,
+        "issuer_score": 5.5,
+        "overall_score": 6.0
+      },
+      "previous_overall": 6.5,
+      "six_axis_mean": 5.916666666666667,
+      "scope": "eip155:1 exact pool",
+      "report": "assets/syrupusdc.md"
+    },
+    "syrupusdt": {
+      "scores": {
+        "volatility_score": 8.5,
+        "backing_score": 6.0,
+        "liquidity_score": 5.5,
+        "underlying_score": 4.0,
+        "structural_score": 4.5,
+        "issuer_score": 5.5,
+        "overall_score": 5.5
+      },
+      "previous_overall": 6.0,
+      "six_axis_mean": 5.666666666666667,
+      "scope": "eip155:1 exact pool",
+      "report": "assets/syrupusdt.md"
+    }
+  },
+  "usdg_comparison": "Common-axis comparison completed with measured-history missingness explicit; previousUSDGstability5.5 not a calibrated relative disadvantage",
+  "no_publication": true,
+  "scope_limits": [
+    "Exact Ethereum pair review; remote representations not freshly verified",
+    "USDG measured stability comparison unavailable; prior numeric difference uncalibrated, scores retained as provisional",
+    "No independently verified borrower servicing, custody/title or full role/build assurance"
+  ],
+  "report_updates": [
+    "assets/syrupusdc.md",
+    "assets/syrupusdt.md",
+    "assets/syrupusdg.md"
+  ]
+}

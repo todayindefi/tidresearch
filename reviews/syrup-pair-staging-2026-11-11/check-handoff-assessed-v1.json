@@ -1,0 +1,231 @@
+{
+  "manifest": "/home/danger/riskAnalyst/data/reviews/syrup-pair-refresh-2026-11-11/handoff-assessed-v1.json",
+  "exit_code": 0,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "contract",
+      "detail": "Shared handoff v1 structure"
+    },
+    {
+      "status": "PASS",
+      "check": "authority",
+      "detail": "Scope consistent; authorization reference is not independently verified"
+    },
+    {
+      "status": "GAP",
+      "check": "assessment",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "assessment",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "index",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "index",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "receipt",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "receipt",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "validation",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "validation",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bm",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "bm",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bmindex",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "bmindex",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bm_validation",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "bm_validation",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "financial_dex_validation",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "financial_dex_validation",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "syrupusdc_report",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_report",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "syrupusdc_baseline",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_baseline",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "syrupusdt_report",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_report",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "syrupusdt_baseline",
+      "detail": "Observation time unknown: Mixed source clocks: common ETH26389831 Nov11 06:16:59UTC; loan metadata05:41/05:43,quotes06:16, LedgerLensNov10; original per-field clocks retained, not renewed by assessment"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_baseline",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_volatility_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_backing_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_liquidity_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_underlying_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_structural_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_issuer_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdc_overall_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_volatility_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_backing_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_liquidity_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_underlying_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_structural_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_issuer_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "syrupusdt_overall_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "evidence_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "assessment_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "GAP",
+      "check": "loan_condition",
+      "detail": "Independent delinquency/servicing, collateral custody/title and recoverableNAV unestablished; reopen: Material source-bound new evidence"
+    },
+    {
+      "status": "GAP",
+      "check": "usdg_comparison",
+      "detail": "USDG stability numeric comparison remains uncalibrated without same-basis measured history; reopen: Material source-bound new evidence"
+    },
+    {
+      "status": "GAP",
+      "check": "full_control_scope",
+      "detail": "Complete authority/build/managed-wallet/remote assurance outside finite scope; reopen: Material source-bound new evidence"
+    }
+  ]
+}
