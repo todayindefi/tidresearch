@@ -1,0 +1,21 @@
+{
+  "scope": "local candidate only",
+  "results": [
+    {
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "first_section": "Summary",
+      "sidebar": "OVERALL SCORE\n6.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n7.0\nBacking\n7.5\nLiquidity & Exit\n5.5\nDependencies\n7.0\nContract & Admin\n8.5\nIssuer\n8.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-15. For live readings, see the dashboard \u2192\n\nCATEGORY\nStablecoin\nPEG MECHANISM\nOvercollateralized CDP With Permissionless Redemption\nISSUER\nLiquity protocol; no corporate repayment guarantor established\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "first_section": "Summary",
+      "sidebar": "OVERALL SCORE\n6.5\n\nScale 1\u201310. Higher is safer.\n\nLIVE DATA\nOPEN DASHBOARD\n\nLive reserves, collateralization, peg, and bridge state \u2014 updated hourly.\n\nSCORE BREAKDOWN\nStability\n7.0\nBacking\n7.5\nLiquidity & Exit\n5.5\nDependencies\n7.0\nContract & Admin\n8.5\nIssuer\n8.0\n\nStability, Backing and Liquidity & Exit are authored as of 2026-09-15. For live readings, see the dashboard \u2192\n\nCATEGORY\nStablecoin\nPEG MECHANISM\nOvercollateralized CDP With Permissionless Redemption\nISSUER\nLiquity protocol; no corporate repayment guarantor established\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-11"
+    }
+  ],
+  "page_errors": [],
+  "temporary_server_closed": true
+}

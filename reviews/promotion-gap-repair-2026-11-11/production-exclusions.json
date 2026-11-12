@@ -1,0 +1,18 @@
+[
+  {
+    "path": "reports/dusd-alto/",
+    "status": 404
+  },
+  {
+    "path": "reports/fxsave/",
+    "status": 404
+  },
+  {
+    "path": "reports/tsm-adr/",
+    "status": 404
+  },
+  {
+    "path": "protocols/fluid/",
+    "status": 404
+  }
+]

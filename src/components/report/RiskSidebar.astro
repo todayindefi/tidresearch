@@ -96,7 +96,12 @@ const AXES_BY_CATEGORY: Record<string, Axis[]> = {
 // and a subjective one.
 
 const instrumentAxes: Axis[] | null = data.category !== "tradfi-equity" ? null
-  : typeof data.balance_sheet_score === "number" ? [
+  : data.instrument_type === "adr" ? [
+    { key: "volatility_score", label: "Volatility" },
+    { key: "liquidity_score", label: "Liquidity" },
+    { key: "counterparty_score", label: "Counterparty" },
+    { key: "redemption_score", label: "Redemption" },
+  ] : typeof data.balance_sheet_score === "number" ? [
     { key: "balance_sheet_score", label: "Balance sheet quality" },
     { key: "funding_model_score", label: "Funding model durability" },
     { key: "refinancing_capacity_score", label: "Refinancing capacity" },
@@ -434,7 +439,7 @@ const categoryLabel = (c: string) =>
     <div>
       <div class="eyebrow mb-1">Last Reviewed</div>
       <div class="font-mono">{fmtDate(
-        data.last_revised && +new Date(data.last_revised) > +new Date(data.last_verified)
+        data.last_revised && (!data.last_verified || +new Date(data.last_revised) > +new Date(data.last_verified))
           ? data.last_revised
           : data.last_verified
       )}</div>

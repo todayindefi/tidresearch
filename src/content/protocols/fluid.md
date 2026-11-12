@@ -1,137 +1,160 @@
 ---
-protocol: "Fluid"
-slug: "fluid"
-aliases: ["Instadapp", "Fluid", "Fluid Protocol", "Instadapp Fluid", "Fluid Vault", "Fluid Lending", "Fluid DEX"]
-chains: ["eth", "arbitrum", "base", "polygon", "bnb", "plasma"]
-category: "protocol"
-protocol_category: "lending"
-audience: "retail"
-production: false
-assessment_type: "full"
-date: "2026-11-02"
-last_verified: "2026-11-02"
+protocol: Fluid
+slug: fluid
+aliases:
+- Instadapp
+- Fluid
+- Fluid Protocol
+- Instadapp Fluid
+- Fluid Vault
+- Fluid Lending
+- Fluid DEX
+chains:
+- eth
+- arbitrum
+- base
+- polygon
+- bnb
+- plasma
+assessment_type: full
+date: '2026-11-02'
+last_verified: '2026-11-07'
+last_revised: '2026-11-07'
 contract_score: 7.5
-economic_score: 6.5
+economic_score: 6.0
 project_score: 6.5
-overall_score: 6.5
+overall_score: 6.0
 audited: true
 audit_count: 7
-audit_firms: ["MixBytes", "PeckShield", "StateMind", "Cantina"]
+audit_firms:
+- MixBytes
+- PeckShield
+- StateMind
+- Cantina
 bug_bounty: true
 team_doxxed: true
 incident_history: true
 is_fork: false
-live_since: "2024-02"
+live_since: 2024-02
+category: protocol
+protocol_category: lending
+audience: retail
+production: false
 ---
 
-# Fluid Risk Assessment Report
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-source-report="929be1bc40735a7a7bbf127b32bb252ee226ae4d519cbcfb881666b88c85c748" data-assessment-version="fluid-protocol-2026-11-07-v2" data-evidence-snapshot="sha256:732236904d9d874357cd4ff277fd392bd4af8d19db4b0460be159155e0b77fb5" data-assessment-date="2026-11-07" data-assessment-scope="bounded-ethereum-plasma">
 
-**Updated:** November 2, 2026. **Overall: 6.5/10** (10 = safest).
+# Fluid — Risk Report
 
-Fluid combines lending, collateralized borrowing and trading over a shared Liquidity Layer. Its capital efficiency comes with linked liquidity, liquidation and oracle risks: a collateral or pricing failure can affect lenders beyond the originating leveraged position. The Instadapp team's operating history and published audits support the assessment; aggressive leverage, complex accounting and operational-key incidents constrain it.
+**Moderate risk · 6.0/10 · Bounded assessment**
 
-| Dimension | Score | Principal drivers |
-|---|---:|---|
-| Smart contracts | 7.5 | Seven listed audit reports; complex shared architecture; direct team deployment permission persists alongside DAO controls; newer products require separate scope checks |
-| Economic / market | 6.5 | High permitted LTV, correlated collateral and shared liquidity; historical Resolv bad debt; oracle quality and realizable exit liquidity matter per market |
-| Project / operations | 6.5 | Identified founders and legal disclosures; positive historical loss handling offset by rewards-key compromise and disclosure concerns |
-| **Overall** | **6.5** | Retained assessment; no score uplift from additional legal identification or an extra audit listing |
+Shared-liquidity lending and trading · Instadapp
 
-**Verification scope:** current Ethereum control reads at block **26,321,165**, official audit index, FLUID white paper, legal-entity record, official DEX v2 architecture article and governance payload sources. Historical incident and market evidence remains dated below. This is not a fresh audit of every deployment, oracle or incident transaction. Historical incident evidence was not independently reverified in this refresh.
+## Summary
 
-## Protocol and product scope
+Fluid combines ERC4626 lending fTokens, collateralized borrowing and DEX liquidity over a shared Liquidity Layer. Vaults support normal or smart collateral/debt across T1–T4 designs. Capital efficiency links lender liquidity to borrower repayment, collateral marks and liquidation execution. [Architecture and limits](https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/docs/docs.md) · [Rate and product definitions](https://docs.fluid.instadapp.io/integrate/lend-borrow-yield-rates.html)
 
-Fluid was developed by the Instadapp team led by Sowmay Jain and Samyak Jain. The core products include ERC-4626 lending fTokens, borrowing vaults, DEX liquidity and Smart Collateral / Smart Debt: trading positions can also represent collateral or borrowing obligations. Tick-based liquidation aggregates positions into debt/collateral-ratio buckets.
+The November 6 Ethereum and Plasma GHO observations show concentrated credit-bearing collateral. Plasma also had severe funding pressure and a recorded absorption whose final recovery and loss allocation remain unresolved. Administrative and oracle paths differ by chain. Strong source/runtime correspondence and historical response support confidence, while those economic and execution uncertainties constrain the assessment.
 
-The report covers the Fluid protocol family, with current authority checks limited to Ethereum. Existing deployment coverage includes Ethereum, Arbitrum, Base, Polygon, BNB and Plasma; this does not assert equal current activity or verified controls on every chain. The February 2024 launch-era governance record is a better anchor than the previous unsupported January date.
+An unlevered fGHO lender has no personal collateral-liquidation threshold. Its risks include borrower repayment and collateral recovery, contracts, administrative powers, the token and withdrawal access. No individual deposit or product-wide cash guarantee follows from the protocol score.
 
-Separate product risks matter:
+## 1 · Smart Contract — 7.5
 
-- **DEX v2:** the official architecture describes a singleton, modular DEX types, range orders, hooks, dynamic fees and flash accounting. These add accounting, integration and permission risks. Legacy audit counts do not establish coverage of v2 deployed implementations. The November review treats DEX v2 as newer/beta scope. Proposal #141 was reported executed in a November 1 governance snapshot, but execution and resulting state were not independently verified here. The official #141 payload sets initial $50k base withdrawal limits and borrowing ceilings for specified DexV2/Money Market token configurations. These are configuration parameters, not a verified current aggregate TVL cap. Execution effects and current limits were not independently replayed here.
-- **Fluid Lite:** leveraged strategies using other lending venues introduce strategy and external-protocol dependencies. Historical Lite loss compensation is separate from core lending safety.
-- **Jupiter Lend:** a Fluid technology integration on Solana does not inherit this report's Ethereum authority verification or scores automatically.
+Fluid’s core factories, lending wrappers and administrative modules coordinate shared liquidity and privileged operations. The reviewed implementation paths and exact oracle leaves differ by chain.
 
-Sources: [DEX v2 architecture](https://fluid.io/blog/protocol-introducing-fluid-dex-v2), [proposal #141 payload](https://github.com/Instadapp/fluid-governance/blob/main/contracts/payloads/IGP141/PayloadIGP141.sol), [launch-era vote](https://snapshot.box/#/s:instadapp-gov.eth/proposal/0x804215890929a22190a53e97aacf41b326c9d85ef5b8021fc56b7e0848baa0e3) (not independently replayed in this refresh).
+Eighteen targeted builds were reproduced, binding only compiler-declared immutable fields to pinned values; selected live runtimes match. Coverage includes core factories/wrappers/admin modules and the relevant Plasma absorption secondary. It is **not deployed audit-commit/remediation equivalence**, nor a full new code audit. Full Plasma fGHO build equivalence and every relevant vault/DEX body remain incomplete.
 
-## I. Smart Contract Risk — 7.5/10
+At the November 6 security pins, the team wallet reports **6-of-12** on both chains, replacing the historical 5-of-10. These are custom-wallet getters; failed Safe getters do not prove absence of custom forwarders or other policy. Independent signer custody remains unknown.
 
-### Audit and bounty coverage
+Named Liquidity/LendingFactory administration is behind a current **24-hour delay** on both chains. Effective permissions differ: on Ethereum the checked team is VaultFactory deployer but not global-auth, while on Plasma it is **both deployer and global-auth**. A false vault-specific auth does not remove global authorization. Source-matched owner wrappers route specified factory control changes through governance, while allowing separate constrained distressed/dust operations. Not all operations are universally delayed.
 
-The official security index currently lists **seven reports**, correcting the earlier count of six: PeckShield pre-launch; StateMind; StateMind Liquidity Layer updates; MixBytes Vault, DEX and Liquidity Layer; and Cantina DEX. The extra StateMind listing is not evidence of a new engagement since the prior assessment. The index alone does not establish audited commit-to-live-bytecode equivalence, current implementation coverage or resolution of all findings. Audit-firm branding is not a substitute for those checks.
+Rates/limits/withdraw-limit auth contracts and guardian candidates have current privileges. Matched RatesAuth allows team changes within per-call bounds and a one-second cooldown; that is not a cumulative limit across many calls. Withdraw limits and pause powers can affect liquidity independently of an implementation upgrade. Holder enumeration remains incomplete.
 
-The current Immunefi program advertises a **$500,000 maximum smart-contract bounty**, subject to program rules and scope. Do not assume every new Fluid product or deployment is covered because the Instadapp program exists. This refresh did not establish formal-verification coverage.
+Ethereum has an installed rollback facility subject to prior governance registration and eligibility rules; queried entries do not establish a currently usable arbitrary-upgrade bypass. Plasma's checked rollback selectors are absent. Neither observation proves a universal delay floor or cross-chain policy parity.
 
-Sources: [official security index](https://docs.fluid.instadapp.io/audits-and-security.html), [Immunefi program](https://immunefi.com/bug-bounty/instadapp/information/).
+### Exact oracle coverage
 
-### Ethereum authority — current observations
+Ethereum162 reads a capped Re source connected to Re's SharePriceCalculator. Ethereum179 reads a capped SUSDAI/USDAI source. The checked generic paths each have one un-inverted hop and **no separate GHO/USD market-price leg**. Ethereum's verified source helper checks positivity without using source timestamps; a 25-hour minimum heartbeat is not a maximum age rejection. Re's source-data clock must remain distinct from a later delivery timestamp.
 
-<div class="overflow-x-auto" tabindex="0" role="region" aria-label="Ethereum authority observations">
+Plasma38 has its own generic oracle, cap and SUSDAI-USDAI feed; it is not Ethereum179's implementation by assumption. At the Security pin, its source timestamp is approximately **21 hours old**. Raw heartbeat/configuration getters are known, but exact deployed source/compiler correspondence, cap-setter permissions and source-age rejection semantics are unsupported after retained source-fetch failures. Ethereum's verified behavior must not be inherited to Plasma. A positive displayed rate is not evidence of freshness enforcement or a market-realizable liquidation price.
 
-| Read at block 26,321,165 | Result | Meaning and limit |
-|---|---|---|
-| LendingFactory `owner()` | `0x2386DC45AdDed673317eF068992F19421B481F4c` | Ownership remains with the historical lending timelock |
-| Timelock `delay()` | 86,400 seconds | 24-hour delay; governor parameters and all alternate paths were not re-audited |
-| VaultFactory `owner()` | `0xB031913cB7AD81b8A4Ba412B471c2dA69BEA410B` | Factory owner is a wrapper, not the team wallet itself |
-| VaultFactory `isDeployer(0x4F6F…D49e)` | `true` | Team wallet retains direct deployment authorization |
-| VaultFactory `isGlobalAuth(timelock)` | `true` | Timelock has global vault authorization; this coexists with team deployer permission |
-| Team wallet `requiredSigners()` / `signers()` | **5 / 10** | Supersedes historical **7 / 14**; signers' independence and custody remain unverified |
+The official index lists seven EVM audit reports; nine separate Sui reports do not clear EVM lending. Current DEX v2, Money Market and Lite scope must be checked separately. The historical advertised $500k Immunefi maximum remains program/scope dependent; it is not coverage of every product. [Audit index](https://docs.fluid.instadapp.io/audits-and-security.html), [bounty program](https://immunefi.com/bug-bounty/instadapp/information/).
+
+## 2 · Economic — 6.0
+
+Lenders supply tokens into a chain-local Liquidity Layer used by borrowing vaults and DEX users. Lender exits depend on physical cash, protocol-user limits and competing flows; available cash is not reserved separately for every depositor. Borrower repayment and collateral recovery transmit credit and liquidation risks into that shared funding.
+
+Financial observations below are **November 6**: Ethereum block **26,356,922, 16:11:35 UTC**, and Plasma **37,038,203, 16:11:43 UTC**. Security observations use the earlier Ethereum **26,356,906, 16:08:23 UTC**, and Plasma **37,038,008, 16:08:28 UTC**.
+
+### Dated GHO funding and concentration
+
+| Same-pin native observation | Ethereum | Plasma |
+|---|---:|---:|
+| Liquidity Layer supply, GHO | 28,902,745 | 7,492,211 |
+| Liquidity Layer borrowing, GHO | 25,566,762 | 7,417,816 |
+| Computed utilization | 88.46% | 99.01% |
+| Physical GHO / fGHO protocol-user withdrawable | 3,380,522 | 94,189 |
+| fGHO nominal totalAssets, GHO | 21,410,831 | 7,457,349 |
+| Stored supply APR, excluding external incentives | 6.20% | 31.43% |
+| Largest relevant GHO borrowing exposure | reUSD vault162: 89.37% | sUSDai vault38: 73.95% |
+
+High Plasma interest reflects scarcity of funding; it is not a risk-free premium or a forecast. Figures are historical pinned observations and variable rates, not a continuing monitoring guarantee. The sampled Ethereum GHO pool avoids the direct AI-loan collateral exposure identified on Plasma and had more cash at these pins, but is heavily dependent on Re Protocol reUSD. This is not a diversified low-risk collateral book merely because it runs on Ethereum.
+
+Deduplicated observed borrower users leave 442.720681 GHO unattributed on Ethereum and 0.013686 GHO on Plasma. Neither residual is assigned to loss or rounding without evidence. DEX v2/Money Market/Lite user enumeration is not proven exhaustive.
+
+Physical cash minus supply-plus-debt accounting differences equal the resolver's available-revenue figure, but that revenue is defined from the same balance surplus. The zero-wei identity is true by construction, not independent proof of earned fees, reserve segregation, insurance or funded first-loss capital.
+
+### Collateral marks, ticks and exits
+
+Ethereum vault162 is **Re Protocol reUSD**, not Resupply reUSD. Its marked aggregate LTV is about 83.40% against a 90% liquidation threshold. Plasma vault38 is sUSDai/GHO, with about 84.93% aggregate LTV against 90%. Aggregate mark declines to threshold are about 7.34% and 5.63%, respectively.
+
+Those averages conceal closer debt buckets. The bounded 20-tick view covers 67.63% of Ethereum162 debt and 89.32% of Plasma38 debt. The closest visible buckets reach threshold after approximately **3.41% and 2.13%** conditional oracle-mark declines. These are tick aggregates, not the full position distribution, executable liquidation results or guarantees that oracle marks track sale prices.
+
+Re's issuer-written NAV and legal/insurance waterfall remain distinct from independently recoverable cash. reUSDe is junior to reUSD, but its marked value is not automatically a verified contractual protection amount. Current tranche-attributed reserves and contractual first-loss thickness remain unknown. Re's accepted November 6 authority improvement does not certify insurance collectability. ReUSDe exits remain periodic and incomplete in dollar-route evidence.
+
+sUSDai adds GPU-credit and loan-collection uncertainty. Its partial public schedules do not reconcile the complete loan population or verify scheduled-versus-received payments. Liquidation-event counts do not establish zero arrears, and public always-true hardware flags do not verify operating health. Current GPU liquidation values, funded DSRA and enforceable recovery protection remain unestablished. A conditional warranty is not a guarantee against correlated market stress.
+
+### Plasma vault30: absorption established, final loss unresolved
+
+Vault30 uses GHO/syrupUSDT DEX shares as collateral against GHO debt; it is separate from sUSDai/GHO vault38. The current episode begins at **Plasma block 37,015,256, November 6 09:49:16 UTC**, with zero absorbed storage in the preceding block. [Creation transaction](https://plasmascan.to/tx/0x81aa34ae36bf2e73c5dbccf2b53a49d79095d35368b016ce54f888bf0ceea7ad).
+
+The event records 46,938.735939 collateral shares and 96,236.136269 debt-index units. Applying the current debt exchange price yields approximately **100,728.781930 GHO gross absorbed debt**. Debt-index units are not proven original cash principal. The raw bucket is unchanged through the financial pin, and a bounded event scan finds no subsequent liquidation/rebalance in that episode. This does not establish all-time first occurrence or exclude every possible external funding path.
+
+Indicative collateral valuations suggest a shortfall, but have different bases. The native oracle/share mark is about 6,615 GHO below gross debt; an allocation of pool claims valued with separately clocked component prices is about $97,542, approximately $3,044 below the debt's USD mark before execution costs. Neither is an executed recovery, an independently established net bad debt or a realized depositor haircut. Do not combine or average those marks. The gross absorbed view also exceeds the vault total-borrow view by about 59.346 GHO; do not add the bucket to recorded Liquidity Layer borrowing.
+
+Security's matched absorption code records the debt/collateral bucket; it does **not itself repay the debt or write a fGHO haircut**. Later rebalance operations require authorized execution and actual asset transfers. Reserve/rebalancer permissions do not establish funds or a mandatory bailout. Automatic pro-rata socialization, final deficit allocation, funded clearing and realized lender losses remain unsupported. Source: [frozen secondary implementation](https://github.com/Instadapp/fluid-contracts-public/blob/404d73f91e6806f881f8dabeb30494f93f9e99b7/contracts/protocols/vault/vaultTypesCommon/coreModule/main2.sol).
+
+## 3 · Project — 6.5
+
+Fluid is developed by the Instadapp team led by Sowmay and Samyak Jain. The FLUID MiCA document identifies Interop Labs Ltd., BVI company 2063557, for token admission; this is not a banking license, insurance for fGHO or a depositor repayment covenant. Current Foundation registry/director details, exact interface operator and substantive depositor legal terms remain incomplete. FLUID token-holder rights must not substitute for lender rights. [MiCA disclosure](https://instadapp.io/mica-whitepaper).
+
+**Rewards compromise:** Fluid's **May 31 statement expressly acknowledged an off-chain Merkle rewards compromise**. A later complete root-cause/remediation and recovery record was not established in the bounded current search; that is not proof none exists. The reward-distributor incident is not evidence of a core Liquidity Layer exploit. [Original acknowledgment](https://x.com/0xfluid/status/2061124908277538827).
+
+**Resolv:** the official August 5 recap says about $9.7M shortfall was treasury-covered and lenders made whole. An older imported investigation describes $19.3M and a multi-party split. The accounting scopes remain unreconciled; neither is a new independent transfer audit. Historical support is a positive conduct signal, not proof that Plasma30 is cleared or future compensation is guaranteed. [Official recap](https://fluid.io/blog/general-fluid-h1-2026-recap).
+
+Governance proposal #142 was queued in the owner's November 7 primary UI observation, with no executed entry observed. Its proposed oracle upgrades, market closures and cleanup are not asserted as current runtime changes. A frozen deployment registry is an inventory of publisher entries, including historical/deprecated products, not proof that every listed row is live. Current buyback execution, compensation reserve capacity and institutional partnership execution are not established by recap or proposal language. [Proposal #142](https://www.tally.xyz/gov/instadapp/proposal/142).
+
+## What to watch
+
+Reassess on a cleared or growing absorbed bucket; funded recovery/deficit allocation; persistent severe GHO utilization or a material cash change; a reUSD/sUSDai impairment, redemption interruption or loan-collection deterioration; oracle-age/cap behavior or a market-value mismatch; changed auth/upgrade paths; and a current audit/remediation/incident return. A lower gross bucket alone is not proof of repayment without reconciling units and transactions.
+
+Exact net loss, future compensation, independent issuer capital, complete all-chain controls and a guaranteed cash exit remain unknown. Those unknowns constrain the grade.
+
+## Scope, sources and assessment date
+
+This **November 7, 2026 bounded assessment** covers selected Ethereum/Plasma Liquidity Layer, factory/fGHO dependencies, delegated controls, exact reUSD/GHO and sUSDai/GHO oracle paths, and Plasma vault30 absorption. Arbitrum, Base, Polygon and BNB badges represent documentary deployment inventory; current controls, cash and markets there were not refreshed. Same-address deployments on different chains are distinct contracts, and Ethereum cash is not automatically available to Plasma withdrawals.
+
+DEX v2, Money Market, Lite/Lite USD and partner integrations have separate implementations and boundaries. Documentary addresses and audits do not automatically transfer this core-lending grade to those products. Sui and Solana work is outside this EVM assessment. Bounded tick views are not full or individual-position coverage. Underlying Re/USDai observations keep their own earlier dates.
+
+The report was created **November 2** and substantively reviewed **November 7** within that bounded scope. Financial pins are Ethereum **26,356,922 / November 6 16:11:35 UTC**, Plasma **37,038,203 / 16:11:43 UTC**. Security pins are Ethereum **26,356,906 / 16:08:23 UTC**, Plasma **37,038,008 / 16:08:28 UTC**. The Plasma38 addendum uses the same earlier security pin. The later assessment and publication dates do not refresh measurements or certify current issuer solvency or every deployment.
+
+Scores are higher-is-safer: **Smart Contract 7.5, Economic 6.0, Project 6.5, Overall 6.0**. Overall is a holistic assessment below the **6.67** three-axis mean. The Economic and Overall assessments were 6.5 on November 2; the November 7 grades reflect funding pressure, concentrated credit, marked-oracle versus cash-exit risk and unresolved absorption. No realized lender haircut is assumed. Stronger runtime correspondence and corrected incident acknowledgment do not turn those economic findings into an upgrade. This is a protocol assessment, not fGHO insurance, an asset-specific grade or an all-chain clearance.
+
+Examined source repository pin: `404d73f91e6806f881f8dabeb30494f93f9e99b7`. Selected evidence and assessment versions are retained as page provenance. Detailed source captures and canonical research are not exported.
+
+## Revision history
+
+- **November 7, 2026:** Bounded Ethereum/Plasma assessment; Economic and Overall 6.0, dated absorption and control/oracle evidence, corrected incident acknowledgment.
+- **November 2, 2026:** Initial protocol report.
 
 </div>
-
-Core addresses: LendingFactory `0x54B91A0D94cb471F37f949c60F7Fa7935b551D03`; VaultFactory `0x324c5Dc1fC42c7a4D43d92df1eBA58a54d13Bf2d`; team wallet `0x4F6F977aCDD1177DCD81aB83074855EcB9C2D49e`.
-
-**Both governance paths matter.** Proposal #128's published payload grants the timelock global authorization; the live read confirms that permission. It does not revoke the team's deployer permission. Conversely, being a deployer does not alone confer arbitrary owner-only authorization changes. The published factory source gates deployment by `isDeployer`, whereas `setVaultAuth` is owner-only. The currently published owner-wrapper source routes factory-auth changes through governance. Its relationship to deployed runtime must be established before treating all source-level restrictions as proven live protections.
-
-The earlier blanket statement that the team can directly modify every vault authorization without a timelock is therefore withdrawn. Direct vault deployment is verified; full current per-vault and Liquidity Layer upgrade/control reach remains an open diligence item. A 5-of-10 wallet is a changed control boundary, not proof of independent signers or an automatic score change.
-
-Sources: Ethereum reads pinned to [block 26,321,165](https://etherscan.io/block/26321165), [LendingFactory](https://etherscan.io/address/0x54B91A0D94cb471F37f949c60F7Fa7935b551D03), [VaultFactory](https://etherscan.io/address/0x324c5Dc1fC42c7a4D43d92df1eBA58a54d13Bf2d) and [team wallet](https://etherscan.io/address/0x4F6F977aCDD1177DCD81aB83074855EcB9C2D49e); [factory source](https://github.com/Instadapp/fluid-contracts-public/blob/main/contracts/protocols/vault/factory/main.sol); [owner wrapper](https://github.com/Instadapp/fluid-contracts-public/blob/main/contracts/protocols/vault/factory/ownerWrapper.sol); [#128 payload](https://github.com/Instadapp/fluid-governance/blob/main/contracts/payloads/IGP128/PayloadIGP128.sol). GitHub main is mutable. The wrapper runtime did not exactly match the published deployment artifact before normalization of build differences and immutables; source-to-runtime correspondence remains unresolved. This mismatch alone is not evidence of malicious code.
-
-### Historical incidents and operational boundaries
-
-**March 2026 Resolv collateral failure:** the prior investigation records **$19.3M settled bad debt**, allocated approximately $9.7M to Resolv, $8.2M to Fluid treasury and $1.5M to the core team. Those rounded components total $19.4M; do not present them as an exact reconciliation. The historical account says users were made whole and identifies wstUSR pricing that did not promptly reflect its compromised underlying. Compensation is evidence of past conduct, not a binding guarantee for future losses. Incident amounts and remediation were not transaction-reconciled again in this refresh.
-
-**May 27, 2026 rewards-distributor compromise:** the prior six-chain investigation found compromised proposer/approver keys used on Ethereum and Plasma, with **about $294K gross claimed value as a historical lower bound**. Root approvals permitted rapid claims; historical checks found the burned keys removed from checked distributors and outside the team-wallet signer set. That containment finding is dated June 1, not a November live-role attestation. It does not establish a Liquidity Layer or VaultFactory exploit. The historical record also identified a cross-chain response delay and public communication framed as a claims pause.
-
-The June review made a further project-score downgrade conditional on continued silence or omission after a six-week deadline. That deadline has passed, but this refresh did not establish a complete subsequent disclosure history. The trigger is **unresolved**, not silently cleared or automatically applied. Project score remains 6.5 pending a targeted disclosure review. These incident findings come from the dated May/June investigation; the November refresh does not independently reconcile the transactions or establish a later public post-mortem.
-
-## II. Economic / Market Risk — 6.5/10
-
-Fluid permits high capital efficiency, historically up to 95% LTV in some correlated markets and low liquidation penalties. These are product maxima, not current settings for every vault. Liquidator profitability depends on actual realizable collateral value, depth, gas and congestion; a small penalty does not itself ensure liquidation participation. Shared capital and Smart Collateral / Debt create correlated stress paths across trading and borrowing.
-
-**TVL and utilization:** the saved DefiLlama `/protocol/fluid` response identifies itself as `parent#fluid`. Its latest dated aggregate TVL point is **$808.0M at 2026-11-01 15:28:35 UTC**; its separately returned `currentChainTvls.borrowed` field is **$634.7M**. The fields do not provide a demonstrated common gross-supply denominator or common observation timestamp. Do not divide them into a protocol utilization figure. A separate November 1 component snapshot sums Lending/DEX/Lite to approximately $1.017B; that is a different aggregation and is not evidence of a one-day outflow. Old $984M TVL / $843M loans / 86% utilization headlines are retired from current metadata.
-
-**Oracle protections are market-specific.** A global statement that post-Resolv deviation controls close the pricing gap is not supported for every market. Inspect actual oracle implementations, sources, bounds, freshness, market references and pause behavior. Likewise, equal borrow and liquidation oracle outputs do not prove that no market cross-check exists: equality is an observation, not a full source trace.
-
-**Re Protocol reUSD exposure is historical, not a current position recommendation.** May evidence identifies vaults 160–164 with Re Protocol's token `0x5086bf358635b81d8c47c66d1c8b9e567db70c72`, distinct from Resupply reUSD. The prior report contradicted this by also listing Re reUSD as absent; that line is removed. The approximately $81M collateral, vault-162 balances, 87% LTV and 4.6% liquidation-buffer observations are May snapshots and are not carried as current. NAV pricing, off-chain reinsurance claims, issuer redemption eligibility and secondary liquidity remain necessary diligence topics. Re's historical US-person redemption restriction is an underlying-asset restriction, not an established Fluid-wide access rule.
-
-The old upstream-NAV oracle path was an inference, not a complete code/configuration proof. This refresh withdraws categorical claims that all five vaults have no market cross-check or cannot benefit from any deviation protection until the full current path is traced. Conservative treatment of unverified exotic-collateral exit paths remains warranted.
-
-Source: [DefiLlama response](https://api.llama.fi/protocol/fluid), saved with its embedded timestamp; historical market observations retain their May 2026 dates.
-
-## III. Project / Operational Risk — 6.5/10
-
-### Legal identity and holder rights
-
-The FLUID MiCA white paper identifies **Interop Labs Ltd.**, BVI company **2063557**, LEI **984500F1E4E11CA2A027**, as the person seeking admission to trading; the document indicates no different issuer. It names the Jain founders and other management. Match this entity by registration/LEI rather than name alone.
-
-This is a disclosure document for the **FLUID token**, not a banking license, regulatory approval of protocol safety or proof of the operator of every Fluid service. It states that no competent EU authority approved it. Token holders are not granted ownership, profit participation or creditor claims in the protocol or affiliates. Its FY2024 financial statements are company disclosures, not proof of consolidated Fluid reserves, present treasury liquidity or deposit insurance.
-
-The Foundation proposal describes the Cayman Fluid Foundation and a February 2026 governance proposal moving protocol IP to it, with team-held director seats. That proposal is an issuer/governance disclosure, not an independent registry verification. The Foundation's registration details, current directors and the interface operator remain unestablished here. User governing law, disputes and access restrictions were not established by this refresh; missing terms are an information gap, not proof of unrestricted service.
-
-Sources: [FLUID white paper](https://instadapp.io/mica-whitepaper), [GLEIF record API](https://api.gleif.org/api/v1/lei-records/984500F1E4E11CA2A027), [Foundation proposal](https://snapshot.box/#/s:instadapp-gov.eth/proposal/0xde0d55050ef945d3d756219a9ee2cf29ef97c3f5625b107a65e9fd39937d6c5e) (not independently replayed here).
-
-### Assessment
-
-Identified founders, an established development history and historical compensation support the score. Rewards-key custody, cross-chain response timing, incomplete current legal/operator mapping and unresolved disclosure follow-up limit it. The earlier categorical statements of healthy profitability, fully recovered TVL and no vesting concerns are withdrawn: current revenue, expenses, liquid treasury and vesting were not sufficiently established. Buybacks and discretionary compensation are not enforceable token-holder rights.
-
-## Monitoring and reassessment priorities
-
-1. Complete the current Ethereum authority walk, including Liquidity Layer upgrades, delegated auths, wrapper runtime correspondence and wallet signer independence; repeat per chain.
-2. Bind each new DEX v2 / Money Market implementation to audit scope and live limits; separate proposed governance changes from executed state. The November 1 governance snapshot reported #142 active, not executed; this is not a current-state attestation.
-3. Trace current reUSD and other off-chain/NAV collateral oracles end to end; fetch current caps, positions and executable exits before assessing a leveraged trade.
-4. Resolve the rewards-incident disclosure deadline with a bounded, documented search and any subsequent public post-mortem; revisit Project 6.5 if the historical trigger is substantiated.
-5. Monitor realizable withdrawal liquidity, collateral concentration, oracle divergence and actual bad debt, with consistent metric definitions and source timestamps.
-
-## Evidence limits
-
-Current Ethereum selector reads, official source code and governance payloads have different evidentiary reach: a permission read confirms that permission at the stated block; published source describes intended restrictions; neither alone maps every live authority path. Historical incident and market findings retain their original dates. Legal disclosures identify roles and token rights, without establishing a licensed lending operator or approved protocol.

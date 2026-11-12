@@ -1,0 +1,14 @@
+{
+  "url": "https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf",
+  "status": 200,
+  "sha256": "923117acae9536fa30629f87573e6f976fb6e678ad46070c1e68520eb375de29",
+  "source_date": "2026-04-16",
+  "checked": "2026-11-11",
+  "findings": {
+    "Citibank, N.A.": true,
+    "five common shares": true,
+    "Taipei Branch": true,
+    "Cancellation of ADS": true
+  },
+  "scope": "Depositary/ratio/custody/cancellation disclosures; broker-specific execution and subsequent amendment completeness unverified"
+}

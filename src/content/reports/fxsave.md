@@ -10,137 +10,130 @@ yield_bearing: true
 assessment_type: "light"
 date: "2026-09-22"
 last_verified: "2026-09-22"
-last_revised: "2026-10-21"
+last_revised: "2026-11-10"
 issuer: "f(x) Protocol (AladdinDAO)"
-market_cap_approx: 73330000
 volatility_score: 5.0
 backing_score: 4.5
 liquidity_score: 3.5
 underlying_score: 4.5
 structural_score: 4.0
 issuer_score: 5.5
-# Timelock role history (axis 5) — end state verified on-chain here; the event
-# history is riskAnalyst's Etherscan read, pinned to the hardening tx
-# 0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af (block
-# 24,920,489, 2026-04-20: EXECUTOR -> 0x0, TIMELOCK_ADMIN revoked from the Safe
-# and from 0xa1d0027ca4c0cb79f9403d06a29470abc7b0a468). Deployment grants:
-# 0x4be19268a0f6a7e08f10fdf0afcb665acc9135c5f28b7db0d1870d4d4499970f and
-# 0x1e535204641e8fb44a97b357490e9cc9caeae2d1752a309479ef24ecdee14a28 (2026-04-06).
-# Public RPCs refuse historical eth_getLogs, so grant histories cannot be
-# re-derived from this desk; they come from whoever holds an Etherscan key.
-# redemption_score is retained as the evidence for axis 3 and is not rendered on
-# the six-axis frame: Liquidity & Exit is scored on the WORSE leg, and the worse
-# leg includes the fxUSD -> USDC market exit; fxSP also returns USDC directly.
-# October 21 is a partial refresh; all scores await a full review.
 redemption_score: 7.0
 overall_score: 4.5
 featured: false
 production: false
 ---
 
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-assessment-version="fxsave-targeted-six-axis-2026-11-10-v1" data-evidence-snapshot="sha256:621d12c6c3543660d165613464149028a3dd031c08ec97c6a9ccf96788139689" data-canonical-project="fx-protocol" data-canonical-component="fxsave">
+
 # fxSAVE — Risk Report
 
-**Elevated risk · 4.5/10**
+**Elevated risk · 4.5/10 · Provisional**
 
-**Category:** Vault share | **Underlying:** fxSP (the f(x) Stability Pool), which redeems into fxUSD + USDC | **Issuer:** f(x) Protocol (AladdinDAO)
+Ethereum vault share · fxSP liquidation backstop · Mixed fxUSD and USDC redemption
 
 ## Summary
 
-fxSAVE is an ERC-4626 vault share issued by f(x) Protocol on Ethereum. It is widely described as "saved fxUSD", and that description is wrong in a way that matters: the vault's `asset()` is not fxUSD but **fxSP, the f(x) Stability Pool token**. The Stability Pool is the protocol's liquidation backstop — it absorbs collateral from liquidated positions in exchange for burning fxUSD, and pays depositors for taking that role. fxSAVE is therefore a yield-bearing claim on a loss-absorbing pool, and its worst day arrives on the same day as the worst day for the collateral behind fxUSD.
+fxSAVE is an ERC-4626 vault share over fxSP, the f(x) Stability Pool token. The pool earns income for absorbing liquidated collateral in exchange for burning fxUSD. Holders therefore own a claim on a loss-absorbing pool rather than an ordinary stablecoin savings reserve. Redemption passes through fxSP and pays **both fxUSD and USDC**.
 
-At Ethereum block 26,239,340 on October 21, 2026, one fxSAVE represented **1.113778 fxSP**. The vault held 72.622m fxSP against 65.203m shares; onchain NAV was **$1.124641**, implying about **$73.33m** of share value on that date. fxSP redemption returns **both fxUSD and USDC**. Per fxSAVE, the queued preview was **1.072408 fxUSD + 0.052772 USDC**; a simulated instant exit returned about **1.061684 fxUSD + 0.052245 USDC** after the 1% fee, before gas and market impact.
+At the November 10 financial observation, wrapper custody reconciled exactly and Morpho Blue held **45.132% of fxSAVE supply**, up from 37.38% on October 21. Concentrated exits, liquidation exposure, coarse cash-exit quotes and shared control dependencies constrain the assessment. The increased concentration has been reviewed; Overall remains provisionally 4.5.
 
-Morpho Blue held **24.370m fxSAVE, 37.38% of supply**, about $27.41m at NAV. That exceeds the 30% score-review trigger. The **4.5/10** overall and all axis scores remain unchanged pending a full concentration and direct exit-depth review. This is a partial refresh: last verification remains September 22. The current direct fxSAVE exit ladder is unmeasured.
+The exact assessed token is Ethereum [fxSAVE](https://etherscan.io/token/0x7743e50F534a7f9F1791DdE7dCD89F7783Eefc39), `0x7743e50F534a7f9F1791DdE7dCD89F7783Eefc39`. fxUSD, fxSP and deployments on other chains are distinct products.
 
 ## 1 · Stability — 5.0
 
-fxSAVE is a NAV token rather than a pegged one. Each share represents a growing claim on fxSP: `convertToAssets` of one share returned 1.113778 fxSP on 2026-10-21 (1.108142 in the September 22 read), and the rate rises as Stability Pool rewards accrue. Deviation from one dollar is the wrong lens for it; the relevant questions are whether the NAV moves monotonically and what the NAV is a claim on. On the first, the mechanism is functioning as designed and the rate has only risen.
+fxSAVE accrues value through its fxSP claim rather than targeting a fixed dollar price. At Ethereum block **26,383,107, November 10 07:46:59 UTC**, one share converted to **1.118125877 fxSP**, and contract NAV was **$1.129915688 per share**. Contract NAV describes the protocol's accounting value, not a firm market bid.
 
-On the second, fxSP is not a stablecoin. The Stability Pool exists to absorb collateral from liquidated f(x) positions, burning fxUSD to do so. In calm conditions that is a source of yield; in stress it is a conversion of the depositor's dollar-denominated claim into the volatile collateral that was just liquidated. The value a fxSAVE holder carries is a claim on a buffer that is drawn down precisely when the protocol's collateral is under pressure.
+The Stability Pool earns rewards while taking liquidation risk. In stress, its exposure can shift into the volatile collateral of liquidated borrowers. Share-price accrual does not protect against losses in that underlying pool or discounts during a rushed exit.
 
-**Risks and limitations.** The pool deliberately absorbs liquidation risk; stress performance remains untested. At September archive block 26,031,531, `previewRedeem(1 fxSP)` returned **0.976412 fxUSD + 0.033807 USDC**, about $1.0102 combined at par. Both return values must be decoded. This preview provides no evidence of a below-par loss or an unidentified fee.
+An independently synchronized market price and discount to NAV are unavailable: the retained market fields have mismatched clocks and remain **null**. The separate route quotes below do not renew those fields. No new long-window return or stress-loss series establishes improved stability.
 
 ## 2 · Backing — 4.5
 
-fxSAVE's assets were 72,621,668.88 fxSP against 65,202,993.12 shares at October 21 block 26,239,340. fxSP in turn is a claim on the Stability Pool's holdings, which convert into fxUSD and USDC on redemption, and fxUSD is over-collateralised by wstETH and WBTC held against leveraged positions in f(x)'s CDP markets. So the backing passes through two layers before it reaches any external asset, and the external asset is volatile crypto collateral rather than a reserve.
+The wrapper held approximately **61.094 million fxSP against 54.640 million fxSAVE shares** at the November 10 financial pin. Assets pass through a segregated custody contract and fxSP gauge. The custody gauge claim minus wrapper `totalAssets()` was **zero in raw units**; the gauge's fxSP balance also equaled its share supply. Those equalities support accounting consistency, not independent economic solvency.
 
-The bookkeeping between the layers is exact. fxSAVE holds no fxSP directly; its assets sit in a segregated custody contract whose balance of fxSP gauge tokens matched `totalAssets()` to the wei on 2026-09-22, and the gauge held 99.68% of all fxSP (78,721,590.46 of 78,971,349.16). Nothing is unaccounted for, and confirming it requires only balance reads.
+fxSP is the liquidation backstop. Its redemption basket contains fxUSD and USDC, while fxUSD depends on leveraged positions collateralized with WBTC and wstETH. This places volatile collateral and liquidation mechanics beneath the apparent dollar-denominated payout.
 
-**Risks and limitations.** The collateral behind fxUSD is pledged against leveraged positions rather than held idle, so the backing's worst day and fxSAVE's worst day are the same event. The Stability Pool converts into that collateral by design during imbalance — that is the risk a depositor is paid to carry, not a defect, but it means fxSAVE cannot be read as a claim on stablecoins. The fxUSD leg remains exposed to its collateral: the October 21 producer read gives a 136.743% aggregate collateral ratio, with 88.2% of debt in the WBTC pool at 132.19%. Backing remains 4.5 pending full review; the two-output preview does not establish a loss.
+Separately timed fxUSD context at block **26,383,142, November 10 07:53:59 UTC** reported **134.67% aggregate marked collateral/debt**, with **85.80% of pool debt on WBTC at 130.11%**. These are underlying fxUSD CDP measurements, **not fxSAVE's collateral ratio**. Original upstream collateral-oracle update times are unknown. Accounting reconciliation does not remove collateral-price, valuation or liquidation-loss risk.
 
 ## 3 · Liquidity & Exit — 3.5
 
-A holder can sell fxSAVE directly or redeem through fxSP. The historical September 22 direct venue snapshot showed $535,283 TVL in Curve fxSAVE/scrvUSD, 0.69% of the then market capitalisation; the other listed pairs held effectively nothing. TVL is not executable depth, and **the current direct fxSAVE exit ladder remains unmeasured**.
+Holders can sell fxSAVE directly for USDC or redeem through fxSP. The configured fxSP cooldown is **one hour**; its instant route charges **1%**, already reflected in both output legs below. The [integration documentation](https://fxprotocol.gitbook.io/fx-docs/developers/integrating-fxsave) describes these separate paths.
 
-September 22 holder simulations redeemed 1m fxSAVE into 1,108,141.67 fxSP and 10m into 11,081,416.68 fxSP. A burn-address control reverted with `ERC4626ExceededMaxRedeem`; `maxRedeem` returned Morpho Blue's full historical 18,751,881.70-share balance. These establish the wrapper path at that date, not current market proceeds.
+At the November 10 financial pin, the per-share payouts were:
 
-At October 21 block 26,239,340, `previewRedeem(1 fxSP)` returned **0.962856 fxUSD + 0.047381 USDC**. One fxSAVE represented 1.113778 fxSP, giving a queued preview of **1.072408 fxUSD + 0.052772 USDC**. The queue was one hour. A funded-gauge `eth_call` simulated **1.061684 fxUSD + 0.052245 USDC per fxSAVE** after the **1% fee on each leg**. Onchain fxSAVE NAV was $1.124641; the simulated instant basket was about $1.1135 at near-par marks, before gas and market impact. These are contract outputs, not settled proceeds. The September archive preview also returned two assets: **0.976412 fxUSD + 0.033807 USDC per fxSP**.
+| Path | fxUSD | USDC |
+|---|---:|---:|
+| Queued preview | 0.824018961 | 0.305644 |
+| Instant output after the 1% fee | 0.815778771 | 0.302588 |
 
-The fxUSD portion still needs a dollar market exit (see the [fxUSD report](/reports/fxusd/)). The **October 20 fxUSD→USDC routed quotes** crossed **−50 bps around $3.37m–$3.39m** and **−200 bps around $3.95m–$3.99m**, with observed USDC proceeds peaking near **$4.27m**. These are dated routed quotes for the fxUSD leg, not a ceiling on all fxSAVE redemption proceeds: fxSP pays USDC directly as a second leg.
+The USDC leg is paid directly. Converting the fxUSD leg into cash requires a separate market exit; see [fxUSD](/reports/fxusd/). The retained producer's funded public-contract calls succeeded and its burn-address negative control reverted at the financial pin. These are simulations of their specific calls and block, not settled transactions, universal holder access or completed queue settlement. Exact wrapper/fxSP pause mapping remains **unknown**: reverting candidate getters do not prove that either contract is unpaused.
 
-**Risks and limitations.** Morpho Blue held **24,370,111.29 fxSAVE, 37.38% of supply**, on October 21, above the 30% score-review trigger. A full queued redemption previews roughly **26.13m fxUSD + 1.29m USDC**, before market impact or the instant fee. That fxUSD flow far exceeds the dated route's quoted size. Direct USDC is additional; no full-position executable dollar exit is established. Refresh the direct fxSAVE ladder and review concentration before treating the unchanged liquidity score as a new full assessment.
+### Direct and composite cash routes
+
+The quote block is **26,383,221, November 10 08:09:47 UTC**, separate from the financial pin. Inputs are sized by fxSAVE NAV. All-in quoted costs and incremental deterioration from each route's small-size baseline are different measures.
+
+| Route | NAV-sized input | All-in quoted cost |
+|---|---:|---:|
+| Direct fxSAVE → USDC | $1,000 | 17.15 bps |
+| Direct | $10,000 | 27.77 bps |
+| Direct | $100,000 | 80.88 bps |
+| Direct | $1 million | 3,364.01 bps |
+| Instant basket plus fxUSD swap | $1,000 | 100.78 bps |
+| Composite | $100,000 | 100.94 bps |
+| Composite | $1 million | 102.13 bps |
+| Composite | $10 million | 652.14 bps |
+
+The direct route's **50-bps incremental** deterioration lies in the coarse **$10,000–$100,000** bracket; its **200-bps incremental** bracket is **$100,000–$1 million**. Both composite incremental brackets are **$1 million–$10 million**. These are decade-wide bounds, not located capacity thresholds: **`precision_obligation_met=false`**. In particular, the composite's roughly 1% standing cost does not imply a 50-bps all-in exit.
+
+Composite inputs use fxSAVE NAV and its actual fxUSD basket component, not a standalone fxUSD-notional grid. Direct USDC is added **once**, and the instant fee is included **once**. Gas and complete approval/redemption costs are excluded. No atomic funded end-to-end cash execution is demonstrated. The older standalone fxUSD ladder is not comparable enough to support a quantified October-to-November capacity trend.
+
+Morpho Blue's approximately **24.660 million shares, 45.132% of supply**, represent aggregate holdings at one venue, not necessarily one borrower. Concentration rose about **7.75 percentage points** as total supply fell. The 30% review trigger was explicitly assessed November 10. Potential simultaneous exits remain material; the holding does not itself establish withdrawal requests, bad debt or a full-position executable cash exit.
 
 ## 4 · Dependencies — 4.5
 
-Five contracts sit between a fxSAVE holder and a stablecoin, and the ERC-4626 interface shows only the first:
+The claim passes through fxSAVE, its custody contract, the fxSP gauge and Stability Pool, then the fxUSD and USDC payout legs. The custody contract is `0x4bFc5292DA18e32ED2354350e07e417cE4796f9C`; the gauge is `0xEd92dDe3214c24Ae04F5f96927E3bE8f8DbC3289`; fxSP is `0x65C9A641afCEB9C0E6034e558A319488FA0FA3be`.
 
-| Layer | Contract | What it holds (2026-09-22) |
-|---|---|---|
-| Share | fxSAVE `0x7743e50F534a7f9F1791DdE7dCD89F7783Eefc39` | no tokens directly |
-| Custody | vault `0x4bFc5292DA18e32ED2354350e07e417cE4796f9C` (EIP-1167 minimal proxy, 45 bytes) | 76,974,259.94 fxSP-gauge tokens |
-| Gauge | fxSP-Gauge `0xEd92dDe3214c24Ae04F5f96927E3bE8f8DbC3289` | 78,721,590.46 fxSP (99.68% of supply) |
-| Pool | fxSP `0x65C9A641afCEB9C0E6034e558A319488FA0FA3be` | the Stability Pool |
-| fxUSD leg | fxUSD `0x085780639CC2cACd35E474e71f4d000e2405d8f6` | reached via `previewRedeem` / `instantRedeem` |
-| USDC leg | USDC `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` | returned directly as the second output |
+fxUSD adds WBTC custody, Lido wstETH, borrower leverage, collateral pricing and its market-exit dependencies. USDC adds issuer, transfer-control and cash-conversion dependencies. A larger direct USDC payout reduces the amount requiring an fxUSD swap at this observation; it does not eliminate those risks.
 
-The Stability Pool pays a mixed fxUSD/USDC basket. fxUSD is the larger redemption leg and needs market liquidity for an independent dollar exit; the USDC leg is paid directly and adds USDC issuer and transfer-control dependencies. The wrapper, custody and gauge remain f(x)'s own plumbing.
-
-**Risks and limitations.** fxSAVE and fxUSD share one ProxyAdmin and one timelock (see Contract & Admin), so a holder who treats them as separate legs is counting diversification that does not exist — a single control failure reaches both. fxSP itself has no independent market: at the September snapshot, 99.68% of it sat in one gauge, and most of that gauge is fxSAVE's own custody contract, so its value is only ever realised through the redemption path described above.
+fxSAVE and fxUSD share protocol administration and pricing infrastructure. Their exposures are correlated rather than independent diversification. Other chains and distinct deployments are outside this assessment.
 
 ## 5 · Contract & Admin — 4.0
 
-The fxSAVE share is an upgradeable proxy. Its EIP-1967 implementation slot resolves to `0xe4031e271809d20074e4bef1caeefec5f710e8a6` and its admin slot to a ProxyAdmin at `0x9b54b7703551d9d0ced177a78367560a8b2edda4`, whose `owner()` is an OpenZeppelin TimelockController at `0x68863fb8855b04509a835082478D6E3D0bE4E61a` with a minimum delay of 259,200 seconds — 72 hours. Every address here was read from a call that returned it, and the timelock's role table was read off the contract: proposer and canceller authority is held solely by a Gnosis Safe v1.3.0 at `0x26b2ec4E02ebe2F54583af25b647b1D619e67BbF` requiring **6 of 9 signatures**, all nine owners externally-owned accounts; the timelock is its own only administrator — the Safe and one deployer address held that role from deployment on 2026-04-06 until both were revoked on 2026-04-20 (block 24,920,489, transaction `0x8449887472c310415b1b17f5daff8ab72511a76616cb257ccc02605f48e027af`), in the same action that granted the executor role to the zero address. That action tightened the timelock's own administration and nothing else. Shortening the delay is itself subject to it — `updateDelay` succeeds only when called by the timelock, so a reduction must be scheduled and wait the full 72 hours in public.
+fxSAVE is an upgradeable proxy with segregated custody and downstream gauge/pool contracts. The retained authority baseline uses the shared ProxyAdmin `0x9b54b7703551d9d0ced177a78367560a8b2edda4`, controlled by TimelockController `0x68863fb8855b04509a835082478D6E3D0bE4E61a`. September's role review identified a 72-hour delay and a 6-of-9 proposer/canceller Safe; a delay reduction was itself subject to the delay, without an immutable positive floor.
 
-The delay covers code upgrades, and that is the extent of it. The fxSAVE contract's own `DEFAULT_ADMIN` role has a second holder beside the timelock: Safe `0xa0fb1b11cca5871fb0225b64308e249b97804e99`, a 6-of-9 whose owners are the same nine accounts, granted on 2025-04-02 and untouched by the April 2026 change. Its reach is bounded — it can change the treasury and harvester addresses, the expense ratio and the claim-for role (a simulated `updateTreasury` to an arbitrary address succeeds from it) but not principal or the implementation. Below the wrapper, the contracts fxSAVE's value passes through carry undelayed emergency authority: the main Safe and a 3-of-4 Safe (`0x28c921adac4c1072658eb01a28da06b5f651ef62`, owners a subset of the nine) hold emergency roles on the PoolManager, both collateral pools and the Stability Pool, including `updatePriceOracle` with no validation; the deployer key `0xa1d0027ca4c0cb79f9403d06a29470abc7b0a468` alone still holds `EMERGENCY_ROLE` on the WBTC pool that carried 89.7% of fxUSD debt in September (88.2% in the October 21 producer read); and both collateral oracles are owned by the main Safe directly, with the transfer to the timelock scheduled on 2026-04-20 and never executed. The oracle decides what gets liquidated into the Stability Pool that fxSAVE holds. Changing what the code reads is instant; changing the code takes three days.
+The **October 24** shared-control assessment verified both collateral-oracle ownership transfers to that timelock and revocation of the old WBTC deployer emergency role. The main 6-of-9 and emergency 3-of-4 Safes nevertheless retained **undelayed oracle-pointer authority**. Ownership of an oracle and authority to change the pool's oracle pointer are separate controls. A delayed upgrade does not delay every consequential price-path change.
 
-Custody is segregated: assets sit in a bare 45-byte minimal proxy with no admin of its own, and its gauge balance reconciled to `totalAssets()` exactly. A bug bounty is published at docs.aladdin.club, paying up to $500,000 for critical findings. Two audits are published, and the one serious finding on record — a double-flash-loan access-control bypass in the router peripheral, found by ChainSecurity in April 2025 with over $2M at risk — was responsibly disclosed, fixed, and never exploited.
+The historical wrapper review also identified a separate 6-of-9 Safe, with the same owners, holding bounded fxSAVE administration over treasury, harvester, expense ratio and claim-for settings. Those dated findings do not establish newly enumerated owners, modules, guards or complete current authority.
 
-**Risks and limitations.** Three contracts sit between the share and the Stability Pool, none visible through the ERC-4626 interface, and the audited perimeter stops at the first of them. The fxSAVE implementation is byte-identical to the May 2025 OpenZeppelin audited commit, and the fxUSD implementation differs from it by three lines matching a later published patch; but the PoolManager, both collateral pools, the Stability Pool and the PoolConfiguration contract were deployed between October 2025 and April 2026 and differ from the audited commit by roughly 1,500 lines. SECBIT's March 2026 report names two of them but scopes itself to a deployment on a different chain, so no published audit covers this rework — and those four contracts custody the collateral, run the liquidation logic, hold the Stability Pool that is fxSAVE's entire asset, and determine whether fxUSD redemption is open. That is a statement about coverage, not about a defect: private review may exist, and nothing here says the code is wrong. The oracle path compounds with an audit finding — OpenZeppelin's H-02, price manipulation through a single low-TVL spot source, is acknowledged and unresolved, and both live oracles are non-upgradeable contracts from March 2025 carrying the pre-fix formula. The same ProxyAdmin, timelock and emergency keys govern fxUSD, so the share and the stablecoin beneath it are one administrative leg, and nine key-holders with no external governance check remain the ultimate authority. f(x)'s public v2 deployment manifest (AladdinDAO/fx-protocol-contracts) names the ProxyAdmin and the base pool at the addresses measured here, and is silent on the TimelockController, the proposer Safe and the fxSAVE token itself — the authority structure above the ProxyAdmin is verifiable on-chain but not documented by the issuer. Chains read: Ethereum. Re-check by 2026-12-22, or on a new deployment of any of the four contracts, a published audit naming the rework, or the combined fxUSD-plus-USDC redemption basket marking below par or either output leg failing. Arbitrum, Base, Optimism and BSC carry no code at the fxSAVE address; Polygon was not read; and a same-address check cannot rule out a different-address deployment elsewhere.
+Historical deployed-code comparison matched the fxSAVE implementation to the OpenZeppelin-reviewed code but did not establish a public audit matching the later Ethereum pool rework. Published work on a different chain and a router engagement do not close that specific build/scope gap. ChainSecurity's April 2025 router vulnerability was responsibly disclosed and fixed; it is not evidence of exploited collateral loss. The issuer's retained deployment manifest agreed on the ProxyAdmin and base pool but was silent on the timelock, proposer Safe and fxSAVE governance entries.
+
+The November 10 refresh does not renew comprehensive runtime/audit correspondence, current authority enumeration or exact pause-state assurance. The retained controls constrain the grade despite the historical hardening.
 
 ## 6 · Issuer — 5.5
 
-f(x) Protocol is built and operated by AladdinDAO and has run on Ethereum since 2023. Protocol TVL was $134.3M on 2026-09-22, Ethereum only; two audits are published and a self-hosted bug bounty pays up to $500,000. When ChainSecurity disclosed the router vulnerability in April 2025, the team fixed it under responsible disclosure and published the report on 2025-06-17; the distinction between a vulnerability that existed and funds that were lost is worth keeping, because the first is often quoted as the second. fxUSD marked $0.99966 on 2026-09-22 and no depeg event surfaced.
+f(x) Protocol's contributors and interface disclosures provide the operating context for fxSAVE, while this component has its own mixed redemption mechanics. [Interface terms effective March 5, 2026](https://fx.aladdin.club/terms-of-use), reviewed alongside the exact component's documentation on November 8, do not identify an incorporated token-repayment obligor. They disclaim fiduciary duties and insurance rather than providing an unconditional cash repayment undertaking.
 
-**Risks and limitations.** This is a small DAO with no external check on its governance, operating a complex multi-contract system with no regulated wrapper. The disclosure response is evidence of engagement, not of the absence of further issues.
+Public sources and the bounded historical disclosure response support some operational accountability. They do not establish current named corporate principals, comprehensive conduct assurance or enforceable token-specific recourse. No blanket conclusion about contributor liability follows from an unidentified corporate obligor.
 
-## Who this is for
-
-- Depositors who understand fxSAVE as a paid position in f(x)'s liquidation backstop and expect to redeem through fxSP into **fxUSD plus USDC**.
-- USDC lenders against fxSAVE or PT-fxSAVE on Morpho who assess both payout legs, the 1% instant fee, market impact on fxUSD and concentrated liquidation flow. Morpho Blue's October 21 position was 24.370m fxSAVE, 37.38% of supply; lender headroom needs a fresh exit-depth review.
-
-## Who should avoid it
-
-- Anyone who reads "saved fxUSD" as a stablecoin savings product. The underlying is a loss-absorbing pool, not a reserve.
-- Anyone who needs a dollar exit at size. Redemption pays fxUSD plus USDC, but the larger fxUSD leg faces limited routed liquidity and direct fxSAVE depth is unmeasured.
-- Anyone counting fxSAVE and fxUSD as two separate exposures. They share a ProxyAdmin, a timelock and the same undelayed emergency keys.
-- Anyone who reads the 72-hour timelock as covering the collateral. It covers the code; the price feed that decides what gets liquidated into the Stability Pool can be repointed without delay, and on the WBTC pool by one key.
+Issuer 5.5 is retained **provisionally on this accountability and recourse basis**. TVL, audit counts, peg performance and timelock thresholds are not issuer-credit evidence. No new full incident-history or legal-assurance investigation was completed.
 
 ## What to watch
 
-- Both fxSP output legs and their combined marked value; the September preview was 0.976412 fxUSD + 0.033807 USDC, not a one-asset shortfall.
-- The one-hour queue, 1% instant fee and any failure of either output leg. October 21 simulated instant output was 1.061684 fxUSD + 0.052245 USDC per fxSAVE.
-- A current direct fxSAVE ladder and the dated fxUSD route: October 20 −50 bps at $3.37m–$3.39m, −200 bps at $3.95m–$3.99m, observed proceeds peak near $4.27m for that leg only.
-- Morpho Blue concentration: 24.370m fxSAVE, 37.38% on October 21, already above the 30% score-review trigger. Complete the concentration and direct exit-depth review.
-- `MinDelayChange` on the timelock at `0x68863fb8855b04509a835082478D6E3D0bE4E61a`, any change to the proposer Safe's 6-of-9 owner set or threshold, and any implementation change on the fxSAVE or fxUSD proxies — one queue governs both.
-- Any `updatePriceOracle` call on either collateral pool; whether the deployer key is ever removed from `EMERGENCY_ROLE` on the WBTC pool; and whether the oracles' pending transfer to the timelock is ever accepted.
-- The vault's gauge balance against `totalAssets()`; they matched to the wei and should continue to.
+Reassess on impaired payout value, failure of either output leg, changed pause/access conditions, further concentration or materially changed comparable route quotes. Changed oracle pointers, emergency roles, implementations or a public audit matching the later Ethereum rework also warrant review. Contract NAV, custody accounting and a quoted route should remain separate from actual cash delivery.
+
+## Sources, scores and review scope
+
+The **September 22, 2026 full-verification date is unchanged**. November 10 is a targeted six-axis financial and documentary assessment, not a comprehensive renewal of all historical security or legal findings. Overall **4.5** and Issuer **5.5** remain provisional. All existing numerical fields are retained, including the displayed Dependencies **4.5**; the upstream assessment does not author a new dependency grade. Historical Redemption **7.0** remains folded into Liquidity & Exit rather than displayed as a seventh axis. Overall is holistic, not the arithmetic mean of displayed grades.
+
+Financial observations use **November 10 07:46:59 UTC / block 26,383,107**. Underlying fxUSD context uses **07:53:59 UTC / block 26,383,142**. Quote state uses **08:09:47 UTC / block 26,383,221**, with individual router requests around **08:09:48–08:10:21 UTC**. The USDC/USD reference is **0.99977704**, last updated **05:53:23 UTC**; that source clock is not the quote time. Collateral-oracle source update times remain unknown. Financial, quote, oracle, documentary and control clocks are not interchangeable.
+
+Exact pause state, synchronized market price/discount and located liquidity crossings remain unavailable. Coarse quotes, retained simulations and successful accounting checks do not establish future claimant access, full-size atomic cash settlement or a comprehensive solvency opinion. The official integration page and interface terms provide documentary context; visiting them does not refresh the dated observations.
 
 ## Revision history
 
-*2026-10-21 — Partial refresh from the October 21 producer draft. Corrected the two-output fxSP decoder: the September 2.4% shortfall and 4.3% instant redemption gap were false because USDC was omitted. Removed the loss-versus-fee question and lender-cushion calculation. Added block 26,239,340 share accounting, NAV, queued and simulated instant baskets, October 20 routed quotes and Morpho Blue's 37.38% concentration above the 30% review trigger. All scores and production: false remain unchanged pending full review; last_verified remains 2026-09-22.*
+- **November 10, 2026:** Targeted concentration, mixed-payout, direct/composite route and issuer-basis review; existing scores and September 22 full-verification date retained. October 24 shared-control findings incorporated with their original scope.
+- **October 21, 2026:** Partial financial refresh and two-output fxSP payout decoding; historical figures retain that date.
+- **September 22, 2026:** Initial assessment and subsequent exit-depth and control review.
 
-*2026-09-22 (latest) — Contract & Admin 5.0 → 4.0; overall held at 4.5. A second `DEFAULT_ADMIN` holder on the fxSAVE contract (a 6-of-9 Safe with the same owners, bounded to treasury, harvester, expense ratio and claim-for) read alongside the timelock; undelayed emergency authority on the contracts beneath the wrapper, including a single deployer key on the WBTC pool and unvalidated oracle repointing; both collateral oracles owned directly by the main Safe. Bytecode matched: the fxSAVE implementation is byte-identical to the audited commit; the collateral machinery is not covered by any published audit. Bounty confirmed at $500,000.*
-
-*2026-09-22 (later) — Liquidity & Exit 4.0 → 3.5, overall held at 4.5. The fxUSD → USDC leg measured: proceeds peak at $4,648,576 USDC, 2% crossing at $4.25M–$4.30M, 33 Curve pools enumerated and no Uniswap, SushiSwap or Balancer venue; fxUSD's own redemption confirmed refused, so the leg is DEX-only; 90.55% of fxUSD locked in the Stability Pool.*
-
-*2026-09-22 — first staged publication. Custody chain, share supply, `totalAssets`, `convertToAssets`, the Morpho Blue balance, the proxy implementation and admin slots, the ProxyAdmin owner, the timelock delay and its role holders, and the proposer Safe's owners and threshold read on-chain; redemption paths established by `eth_call` simulation with a burn-address control; venue TVL from Curve's stable-ng factory listing. Admin addresses reconciled against the issuer's v2 deployment manifest and the OpenZeppelin audit scope. Not done at first publication: a depth ladder on fxUSD/USDC, matching the deployed implementation to the audited commit, and a Polygon read.*
+</div>

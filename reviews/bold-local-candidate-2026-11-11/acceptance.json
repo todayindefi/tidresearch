@@ -1,0 +1,90 @@
+{
+  "decision": "update_required; local candidate updated",
+  "created_at": "2026-11-10T16:30:02.097093+00:00",
+  "assessment_version": "bold-targeted-six-axis-2026-11-11-v1",
+  "evidence_version": "sha256:fcd0016ee3ef904d103f0bbcea036b7d1e8ffb524f672d25de2904a60d5601d9",
+  "scope": {
+    "chain_id": "eip155:1",
+    "component": "bold",
+    "identifiers": [
+      "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+    ],
+    "project": "liquity"
+  },
+  "source_report_sha256": "ab5faad87cfd8a24273c603e650e862a505f384e5537da4acbfde95f9904915f",
+  "request_manifest_sha256": "dad3131d6080d6639fed62abc700d11ff7c6abc14e30f02886aa8bda114c789a",
+  "assessment_manifest_sha256": "39392f5523ef0dca4b05e2e92f32b10a50942749b170dd55d27b6d7abb90b865",
+  "assessment_json_sha256": "7545c4cb8785a40937bedbb7e146e48449699d26e41cfce4a7a679b673ff8847",
+  "exports_manifest_sha256": "91a22580d357bfc61a4c8b37e97d1da0dc7d7c4c76c36f9ce3a46a0df1cd550a",
+  "candidate_path": "src/content/reports/bold.md",
+  "candidate_sha256": "827531b55c3ae31a2d40413a1f5df3a9c38f9d29c633e5a2c9b38a1d27cf6f27",
+  "baseline_sha256": "09d111573131d09e1a1fe9168b527cdd8d6e1876d1e82c6ebd6b63dc39654fa7",
+  "published_baseline_sha256": "70acc44e504eb6f88ff7c96f67068b3d4d0f758a24397d5dddebcc10ce093428",
+  "scores_unchanged": {
+    "peg_mechanism_score": 7.0,
+    "backing_score": 7.5,
+    "liquidity_score": 5.5,
+    "underlying_score": 7.0,
+    "structural_score": 8.5,
+    "issuer_score": 8.0,
+    "overall_score": 6.5
+  },
+  "last_verified": "2026-09-15",
+  "upstream_last_verified": "2026-07-21",
+  "last_revised": "2026-11-11",
+  "production_metadata": true,
+  "source_clocks": {
+    "financial_clock_note": "Use the frozen producer timestamp; sequential latest model reads, not a coherent fixed-block pin; source update time unknown",
+    "financial_reported_timestamp": "2026-11-10T14:38:13Z",
+    "quote_summary": "2026-11-09T23:45:09Z",
+    "quoted_payload": "2026-11-09T23:45:46Z",
+    "security_observed_at": "2026-11-10T14:43:11Z",
+    "security_pin": 26385182,
+    "venue_inventory": "2026-09-14T10:32:23Z"
+  },
+  "unknowns": [
+    "No coherent same-block backing/liquidation valuation; Peg source age/round validity unknown",
+    "No borrower-level liquidation exposure or realized-loss stress evaluation",
+    "No complete current venue census or executed collateral-to-USD redemption",
+    "Stress200bps unresolved/nonmonotonic; no comparable September-to-November liquidity trend",
+    "Original September full authority scope retained; current check subset only, historical runtime hash delta unavailable403",
+    "Chainlink proxy governance, LQTY voter concentration/majority cost, full incident/bounty update and all-chain deployment coverage not refreshed",
+    "No sBOLD wrapper grade or authority transfer"
+  ],
+  "checks": {
+    "request_checker_exit": 2,
+    "assessment_checker_exit": 0,
+    "prebuild_and_build_exit": 0,
+    "pages_built": 117,
+    "score_date_preservation": true,
+    "privacy": true,
+    "summary_first": true,
+    "routine_icons": 0,
+    "iframes": 0,
+    "local_browser_cases": 2,
+    "page_errors": [],
+    "only_tracked_source_change": [
+      "src/content/reports/bold.md"
+    ],
+    "other_report_html_changes": [],
+    "candidate_and_listing_changes": [
+      "reports/index.html",
+      "reports/bold/index.html"
+    ]
+  },
+  "build_directory": "/tmp/bold-local-candidate-2026-11-11",
+  "deployment": {
+    "performed": false,
+    "staging": false,
+    "production": false,
+    "served_acceptance": "not performed; local candidate only"
+  },
+  "git": {
+    "commit": false,
+    "push": false
+  },
+  "limitations": [
+    "Production metadata retained as requested; this does not release the local candidate.",
+    "Finite version-bound local acceptance, not whole-report verification or current served-page acceptance."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "width": 1440,
+      "http": 200,
+      "four_grades_body_hero_sidebar_index": true,
+      "source_and_assessment_evidence_versions": true,
+      "original_native_financial_security_clocks": true,
+      "economic_absorption_oracle_authority_incident_limits": true,
+      "bounded_coverage": true,
+      "privacy": true,
+      "overflow": false,
+      "served_build_parity": true
+    },
+    {
+      "width": 390,
+      "http": 200,
+      "four_grades_body_hero_sidebar_index": true,
+      "source_and_assessment_evidence_versions": true,
+      "original_native_financial_security_clocks": true,
+      "economic_absorption_oracle_authority_incident_limits": true,
+      "bounded_coverage": true,
+      "privacy": true,
+      "overflow": false,
+      "served_build_parity": true
+    }
+  ],
+  "pageerrors": []
+}

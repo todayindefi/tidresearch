@@ -1,0 +1,186 @@
+{
+  "manifest": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/handoff-v1.json",
+  "exit_code": 0,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "contract",
+      "detail": "Shared handoff v1 structure"
+    },
+    {
+      "status": "PASS",
+      "check": "authority",
+      "detail": "Scope consistent; authorization reference is not independently verified"
+    },
+    {
+      "status": "GAP",
+      "check": "assessment",
+      "detail": "Observation time unknown: Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "status": "PASS",
+      "check": "assessment",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "validation",
+      "detail": "Observation time unknown: Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "status": "PASS",
+      "check": "validation",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "export",
+      "detail": "Observation time unknown: Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "status": "PASS",
+      "check": "export",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "report",
+      "detail": "Observation time unknown: Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "status": "PASS",
+      "check": "report",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bm_index",
+      "detail": "Observation time unknown: Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "status": "PASS",
+      "check": "bm_index",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_axis_basis",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_axis_basis",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_backing_overlay",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_backing_overlay",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_dependencies",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_dependencies",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_contract_overlay",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_contract_overlay",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_issuer",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_issuer",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_evidence_review",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_evidence_review",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "fxsave_assessment",
+      "detail": "Observation time unknown: Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_assessment",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "PASS",
+      "check": "score_parity",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "original_full_clock",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "evidence_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "assessment_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_axis_basis_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_backing_overlay_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_contract_overlay_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "fxsave_issuer_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "GAP",
+      "check": "pause",
+      "detail": "Exact pause mapping remains unknown; not unpaused clearance; reopen: Security owner provides exact mapped current control evidence"
+    },
+    {
+      "status": "GAP",
+      "check": "consumers",
+      "detail": "BM source/browser parity and TIDR candidate acceptance remain separate pending consumer gates; reopen: Owner returns exact evidence/assessment version and consumer validation receipt"
+    }
+  ]
+}

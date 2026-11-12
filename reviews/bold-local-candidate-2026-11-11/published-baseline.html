@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/png" href="/favicon.png"><link rel="canonical" href="https://tidresearch.com/reports/bold/"><title>BOLD — Risk Assessment | TID Research</title><meta name="description" content="BOLD risk assessment — stablecoin | TID Research"><meta property="og:title" content="BOLD — Risk Assessment | TID Research"><meta property="og:description" content="BOLD risk assessment — stablecoin | TID Research"><meta property="og:type" content="website"><meta property="og:url" content="https://tidresearch.com/reports/bold/"><meta property="og:image" content="https://tidresearch.com/opengraph.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="BOLD — Risk Assessment | TID Research"><meta name="twitter:description" content="BOLD risk assessment — stablecoin | TID Research"><meta name="twitter:image" content="https://tidresearch.com/opengraph.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_slug_.BDmXOn6V.css">
+<style>#tid-watermark[data-astro-cid-i4gp34ka]{background-repeat:repeat;background-position:0 0}@media print{#tid-watermark[data-astro-cid-i4gp34ka]{display:block!important;position:fixed!important;inset:0!important;z-index:9999!important}}
+</style></head> <body class="min-h-screen flex flex-col"> <nav class="border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50"> <div class="container-page h-20 flex items-center justify-between"> <a href="/" class="flex items-center gap-3" aria-label="TID Research home"> <img src="/wordmark.png" alt="TID Research" class="h-8 md:h-10 w-auto"> </a> <div class="hidden md:flex items-center gap-8"> <a href="/reports" class="text-sm uppercase tracking-wider font-semibold transition-colors text-primary"> Assets </a><a href="/dashboards" class="text-sm uppercase tracking-wider font-semibold transition-colors text-muted-foreground hover:text-foreground"> Dashboards </a><a href="/services" class="text-sm uppercase tracking-wider font-semibold transition-colors text-muted-foreground hover:text-foreground"> Services </a><a href="/about" class="text-sm uppercase tracking-wider font-semibold transition-colors text-muted-foreground hover:text-foreground"> About </a> </div> <a href="/contact" class="inline-flex items-center justify-center font-bold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 rounded-none border border-primary/30 text-foreground hover:border-primary/60 hover:bg-primary/10 px-4 py-2 text-xs">Contact</a> </div> </nav> <main class="flex-1">  <article class="container-page py-12 "> <div class="mb-8 print-hide flex items-center justify-between gap-4"> <a href="/reports" class="text-xs uppercase tracking-wider text-muted-foreground hover:text-primary font-mono">
+← All Reports </a> <div class="flex items-center gap-2">  </div> </div>  <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12"> <div class="min-w-0">    <div class="prose-report">  <h1 id="bold--risk-report">BOLD — Risk Report</h1>
+<p><strong>Moderate risk · 6.5/10</strong></p>
+<p><strong>Category:</strong> Stablecoin | <strong>Peg Mechanism:</strong> Overcollateralized CDP with permissionless redemption | <strong>Issuer:</strong> Liquity — an immutable protocol with no issuer counterparty</p>
+<p><a href="https://todayindefi.github.io/backing-monitor/?asset=bold">View the live BOLD six-axis risk dashboard</a> for peg history, collateral branches, secondary liquidity, size-dependent redemption, Stability Pool coverage, dependencies, contract authority and counterparty assessment.</p>
+<h2 id="summary">Summary</h2>
+<p>BOLD is the stablecoin of Liquity v2. It is created when borrowers deposit WETH, wstETH or rETH in collateralized debt positions called troves. Holders can redeem BOLD directly against that collateral without an allowlist, queue or issuer approval.</p>
+<p>The core protocol is immutable. The BOLD token has no owner or proxy administrator, and the collateral registry is permanently limited to its three existing assets. This removes the administrator and issuer risks common to many stablecoins, but it also means faulty code cannot be upgraded or paused.</p>
+<p>BOLD’s main constraint is exit capacity rather than ordinary retail execution. Small sales have low measured slippage, while larger sales encounter a sharply nonlinear liquidity curve and increasingly expensive redemptions. Its <strong>6.5/10</strong> overall score reflects strong contract and issuer characteristics alongside more limited liquidity and correlated ETH-based backing.</p>
+<blockquote>
+<p><strong>Critical token-identification warning:</strong> the current token uses the symbol <code>BOLD</code>, while the abandoned February 2025 deployment uses <code>Bold</code>. Some systems match symbols without respecting case. Identify the live token by its Ethereum address: <code>0x6440f144b7e50D6a8439336510312d2F54beB01D</code>.</p>
+</blockquote>
+<h2 id="1--stability--70">1 · Stability — 7.0</h2>
+<p>BOLD targets one dollar through permissionless redemption against Liquity’s collateral. When BOLD trades below one dollar, a buyer can purchase it in the market and redeem it for collateral of greater stated value. The mechanism operates through the contracts rather than an issuer treasury or discretionary market-making commitment.</p>
+<p>Redemption has no KYC requirement, allowlist or scheduled window. This gives every holder access to the primary peg mechanism and lets arbitrageurs act whenever the market price moves below the value available through redemption.</p>
+<p><strong>Risks and limitations.</strong> Redemption remains available at size, but its variable fee becomes expensive as the redeemed share of supply grows. Measurements on 2026-09-15 produced fees of <strong>0.94% at $100,000, 3.54% at $1,000,000 and 29.6% at $10,000,000</strong>. All three collateral assets are also exposed to ETH: WETH, wstETH and rETH are correlated in a market drawdown, so the branches do not provide independent sources of stability.</p>
+<h2 id="2--backing--75">2 · Backing — 7.5</h2>
+<p>BOLD is backed by collateral deposited in three separate Liquity branches. Each branch records its own debt, collateral and Stability Pool, while the same BOLD token represents debt across the system. On-chain readings on 2026-09-15 showed total BOLD supply of <strong>34,464,705.66</strong> against summed branch debt of <strong>34,465,713.32</strong>, a difference of <strong>1,007.66 BOLD, or 0.0029%</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>branch</th><th align="right">debt (BOLD)</th><th align="right">collateral (units)</th><th>shutdown</th></tr></thead><tbody><tr><td>WETH</td><td align="right">11,314,751.96</td><td align="right">10,493.68 WETH</td><td>none</td></tr><tr><td>wstETH</td><td align="right">18,972,630.47</td><td align="right">16,953.87 wstETH</td><td>none</td></tr><tr><td>rETH</td><td align="right">4,178,330.89</td><td align="right">5,769.65 rETH</td><td>none</td></tr><tr><td><strong>total</strong></td><td align="right"><strong>34,465,713.32</strong></td><td align="right"></td><td></td></tr></tbody></table>
+<p>Collateral is shown in native units because converting it to dollars would introduce an external market price into the protocol accounting. This distinction is particularly important for wstETH, whose exchange rate to ETH rises over time; a decline in wstETH units does not by itself describe the change in dollar value.</p>
+<p>Liquity reported system collateralization of approximately <strong>279.8%</strong> on about <strong>$96.8 million</strong> of collateral, using its own oracle inputs. Stability Pool deposits covered approximately <strong>53%</strong> of outstanding debt. Direct reads of <code>shutdownTime()</code> returned zero for all three branches, meaning none had entered shutdown.</p>
+<p><strong>Risks and limitations.</strong> Supply grew approximately <strong>14.9% over 55 days</strong>, with growth concentrated in the WETH branch, whose <strong>110% minimum collateral ratio</strong> is the lowest of the three. In the largest branch, wstETH debt rose about <strong>6.9%</strong> while collateral declined about <strong>19.1% in units</strong>. Although units and value are not interchangeable, the combination indicates higher leverage in the branch responsible for most BOLD debt.</p>
+<h2 id="3--liquidity--exit--55">3 · Liquidity &#x26; Exit — 5.5</h2>
+<p>BOLD can be exited through decentralized exchanges or redeemed through Liquity. Exchange liquidity is efficient for anything under seven figures: on the routed sell ladder measured 2026-09-22, <strong>$1,000</strong> moved the price 0.81 basis points, <strong>$10,000</strong> 0.86, <strong>$100,000</strong> 1.32 and <strong>$1,000,000</strong> 5.87. Permissionless redemption provides a second route when market liquidity is insufficient, although its fee rises with redemption size.</p>
+<p>The executable curve becomes materially weaker above that. The price falls <strong>0.5%</strong> at between <strong>$3,232,422 and $3,250,000</strong> of BOLD sold — the first point at which exiting costs real money — and <strong>2%</strong> at between <strong>$4.52 million and $4.66 million</strong>. Total USDC output peaks at about <strong>$5.06 million</strong> of input and then declines, meaning that beyond the peak a larger sale returns fewer dollars in total, not merely a worse rate per token. The 0.5% bracket is measured to within $17,578; the 2% bracket is about 3% wide because the router’s route split changes near it, so the two brackets’ precisions are independent.</p>
+<p>Published pool totals require deduplication. Convex, StakeDAO, Yearn and Beefy BOLD-USDC entries are wrappers around the same underlying Curve position, so adding them together counts the same liquidity more than once. Aggregator entries labelled <code>liquity-v2</code> BOLD represent Stability Pool deposits rather than tradable market depth.</p>
+<p><strong>Risks and limitations.</strong> The measured executable ceiling declined approximately <strong>34% over 55 days</strong>, while BOLD supply grew <strong>14.9%</strong> and aggregate reported DEX TVL increased. Pool TVL therefore did not reflect the exit a seller could actually execute. Router quotes change with pool balances on every refresh — these brackets carry their 2026-09-22 date and drift daily — so the important finding is the curve’s shape and turnover point rather than a permanently fixed dollar threshold. Redemption remained available but was more expensive than the AMM route at every measured size the AMM could serve.</p>
+<h2 id="4--dependencies--70">4 · Dependencies — 7.0</h2>
+<p>BOLD depends on the solvency and liquidation of troves backed by WETH, wstETH and rETH, together with Chainlink price feeds and the exchange-rate mechanisms used for the liquid-staking tokens. The core system has no off-chain reserve custodian, issuer treasury, attestation process or native bridge.</p>
+<p>Chainlink feeds determine collateral values and therefore influence borrowing, liquidation, redemption and branch shutdown. A stale or failed feed can cause its associated branch to shut down. Because the deployed core cannot be upgraded, shutdown retires the branch rather than pausing it for an administrator to repair.</p>
+<p>sBOLD (<code>0x50bd66d59911f5e086ec87ae43c811e0d059dd11</code>) is a separate ERC-4626 product that allocates BOLD among Liquity Stability Pools. Its <code>asset()</code> function points to the live BOLD token. On 2026-09-15 it held <strong>4,535,649.05 BOLD</strong>, equal to <strong>13.16% of supply</strong> and approximately one-quarter of all Stability Pool deposits.</p>
+<p><strong>Risks and limitations.</strong> The three collateral branches share ETH market exposure, and an oracle failure has an irreversible branch-level consequence. sBOLD also has a different control model from BOLD itself: its owner is a <strong>2-of-3 Gnosis Safe</strong> at <code>0x2dF68EA583B8394A8Cc71EeBcd4fA7c6746027D5</code>, and the wrapper can be paused. These controls belong to the optional third-party wrapper rather than the BOLD core, but holders using sBOLD are exposed to them.</p>
+<h2 id="5--contract--admin--85">5 · Contract &#x26; Admin — 8.5</h2>
+<p>BOLD combines an unusually strong core control surface with residual smart-contract risk that cannot be dismissed by its audit count. These are separate halves of the assessment: broad security review does not offset an exposed administrator, and immutability does not offset defective code. The <strong>8.5</strong> score reflects exceptional protection against administrative change, held below the top tier because a serious code failure has already occurred and another could not be patched in place.</p>
+<h3 id="intrinsic-smart-contract-risk">Intrinsic smart-contract risk</h3>
+<p>Liquity v2 received <strong>15 security engagements across six firms</strong>, Certora formal verification and a post-defect Cantina competition. No known incident affected the current deployment during the assessed post-relaunch window. This is unusually broad review, but it is not conclusive evidence that the code is defect-free.</p>
+<p>The first Liquity v2 deployment demonstrated the residual risk. A critical Stability Pool defect was found roughly three weeks after launch despite review by six audit firms and formal verification. Its technical root cause was not publicly disclosed in the assessed record. The immutable deployment could not be repaired in place, so Liquity abandoned it and required users to migrate; <strong>202,029.51 legacy BOLD</strong> remained outstanding on 2026-09-15.</p>
+<p>The <code>liquity/bold</code> repository also documents approximately <strong>26 accepted findings that remain unfixed</strong>. The assessed Cantina bounty schedule capped a critical award at <strong>125,000 BOLD</strong>, approximately <strong>0.16% of then-measured TVL</strong>. That provides relatively weak whitehat coverage against the value at risk. These facts do not establish that the current code is unsafe; they show that even extensive review leaves consequential residual risk when the deployed system has no pause or upgrade path.</p>
+<h3 id="admin-and-access-control-risk">Admin and access-control risk</h3>
+<p>The live BOLD core is ownerless, non-upgradeable and unpausable. Its authorized minting contracts and WETH, wstETH and rETH collateral set are permanently closed. The following Ethereum reads were reproduced on 2026-09-15:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BOLD.owner()              0x0000000000000000000000000000000000000000   renounced</span></span>
+<span class="line"><span>EIP-1967 impl slot        0x0           not a proxy</span></span>
+<span class="line"><span>EIP-1967 admin slot       0x0           no upgrade admin</span></span>
+<span class="line"><span>CollateralRegistry.getToken(3)  0x0000000000000000000000000000000000000000   collateral set closed</span></span></code></pre>
+<p>The authority walk covered five layers, thirty contracts and all three collateral branches. The registry’s <code>boldToken()</code> function returned <code>0x6440f144b7e50D6a8439336510312d2F54beB01D</code>, confirming that the registry examined governs the live BOLD token. No core EOA, Safe, timelock, proxy upgrade administrator, manual pause, mutable oracle controller or parameter setter was found.</p>
+<p><a href="https://docs.liquity.org/v2-documentation/risk-disclosure">Liquity’s own risk disclosure</a> agrees with these measurements: it describes the core as immutable, lists no upgradeable code or parameters, states that no manual pause or freeze exists, and limits BOLD’s native deployment to Ethereum mainnet. The same disclosure points to DeDaub and ChainSecurity audits for smart-contract risk. It does not establish on the page that those audits covered every authority path walked here or map each report to the exact deployed bytecode, so audit scope is not used as proof of the absence of control. This assessment covers the native Ethereum deployment; Liquity identifies no current native cross-chain deployment.</p>
+<p>Governance is bounded rather than absent. The LQTY-weighted allocator can direct weekly initiative payments from its own BOLD balance, register an initiative and unregister competing initiatives. It cannot reach collateral branches, oracle configuration, parameters, deployed code or the authorized-contract set. Vote increases close after day six of each seven-day epoch, and payment occurs no earlier than the following epoch. That creates a reaction window rather than a contract-level timelock; vote reductions and vetoes remain possible during the window.</p>
+<p><strong>Risks and limitations.</strong> Immutability prevents hostile administrative changes but also removes corrective upgrades. A defect in a live branch has no in-place patch path; permanent branch shutdown and urgent redemptions using <code>lastGoodPrice</code>, a 0% fee and a 2% collateral bonus provide a wind-down mechanism rather than a repair. The historical <code>OwnershipTransferred(previousOwner, address(0))</code> event was not read. Chainlink feed governance remains outside the core authority walk. LQTY voter concentration, the cost of acquiring a majority and continuous veto monitoring are also unmeasured, so the practical strength of the allocator’s reaction window is unknown.</p>
+<h2 id="6--issuer--80">6 · Issuer — 8.0</h2>
+<p>BOLD has no issuer counterparty holding reserves or promising redemption from a corporate balance sheet. No entity can freeze an address, stop token transfers or decide whether a holder may redeem. The peg and collateral claims are implemented by the Ethereum contracts rather than guaranteed by Liquity AG or another company.</p>
+<p>LQTY governance directs protocol incentives. It operates in seven-day epochs with a six-day voting cutoff, and approved payouts arrive no earlier than the following epoch. Its authority does not extend to upgrading the core contracts, changing the collateral registry or pausing BOLD.</p>
+<p><strong>Risks and limitations.</strong> LQTY voter concentration was not measured, so the cost of controlling incentive allocation is unknown. Governance of the Chainlink feeds was also outside the contract-authority walk, despite the importance of those feeds to irreversible branch shutdown. Cumulative redemption volume beyond approximately 82 days could not be measured without an archive node.</p>
+<h2 id="two-tokens-and-the-symbols-differ-only-by-case">Two tokens, and the symbols differ only by case</h2>
+<p>The live and abandoned deployments use symbols that differ only by capitalization:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>address</th><th><code>symbol()</code></th><th align="right">supply</th></tr></thead><tbody><tr><td><strong>live</strong></td><td><code>0x6440f144b7e50D6a8439336510312d2F54beB01D</code></td><td><code>BOLD</code></td><td align="right">34,464,705.66</td></tr><tr><td>legacy</td><td><code>0xb01dd87B29d187F3E3a4Bf6cdAebfb97F3D9aB98</code></td><td><code>Bold</code></td><td align="right">202,029.51</td></tr></tbody></table>
+<p>Case-insensitive ticker matching can resolve either token. The legacy token belongs to the abandoned February 2025 deployment, and its remaining supply did not migrate. Use the full contract address rather than the symbol when selecting BOLD. CoinGecko identifies the live asset as <code>liquity-bold-2</code>.</p>
+<h2 id="who-this-is-for">Who this is for</h2>
+<ul>
+<li><strong>Holders who want a dollar with no issuer</strong>, and who value that enough to accept a thinner exit than a centralised stablecoin offers.</li>
+<li><strong>Anyone who wants to verify rather than trust.</strong> The immutability, the collateral set, the branch debts and the reconciliation are all readable directly, without an attestation.</li>
+</ul>
+<h2 id="who-this-is-not-for">Who this is NOT for</h2>
+<ul>
+<li><strong>Anyone who may need to exit above seven figures quickly.</strong> The ladder turns over near $8M and redemption at $10M costs 29.6%.</li>
+<li><strong>Anyone who wants a recoverable failure mode.</strong> There is no patch path, by design.</li>
+<li><strong>Anyone relying on published TVL</strong> as a measure of how much can be sold.</li>
+</ul>
+<h2 id="what-to-watch">What to watch</h2>
+<ul>
+<li><strong>The wstETH branch’s leverage</strong> — debt rising against falling collateral units is the live adverse trend.</li>
+<li><strong>Where the liquidity ladder peaks</strong>, rather than the headline size of the pools. Reported TVL and executable capacity have moved in opposite directions.</li>
+<li><strong>Growth concentrating in the 110% MCR branch.</strong></li>
+<li><strong>sBOLD’s share of supply</strong>, and any change to what its 2-of-3 Safe can do.</li>
+<li><strong>Any branch <code>shutdownTime()</code> moving off zero</strong> — that is one-way.</li>
+</ul>
+<h2 id="revision-history">Revision history</h2>
+<p><em>2026-09-22 — exit ladder re-measured on the daily path; Liquidity &#x26; Exit held at 5.5. The 0.5% crossing ($3.23M–$3.25M) is now stated as the primary figure beside the 2% crossing ($4.52M–$4.66M) and the ~$5.06M output ceiling; the earlier 2%-only reading of about $4.3–4.4M sat on a different marginal baseline and is superseded. Promoted to production.</em></p>
+<p><em>2026-09-16 — Contract &#x26; Admin reframed into non-offsetting intrinsic-code-risk and admin/access-control halves using existing evidence. Audit breadth, the first deployment’s critical defect, accepted unfixed findings and bounty coverage now sit explicitly beside the immutable authority walk and bounded LQTY allocator. Scores and whole-report verification date unchanged.</em></p>
+<p><em>2026-09-15 — first publication. Immutability verified on-chain: <code>owner()</code> zero, both EIP-1967 slots zero, <code>getToken(3)</code> zero against a registry whose <code>boldToken()</code> returns the token itself. Branch debts read per-branch and reconciled against <code>totalSupply</code> at 0.0029%. sBOLD identified by <code>asset()</code> and its owner read as a 2-of-3 Safe. Both token addresses confirmed by <code>symbol()</code> and supply.</em></p>   </div> <section class="mt-12 border-t border-border pt-8 flex flex-wrap gap-3"> <a href="https://todayindefi.github.io/backing-monitor/?asset=bold" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-3 text-sm font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline">
+Open live dashboard
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> </a>  </section> </div> <div class="lg:sticky lg:top-28 lg:self-start"> <aside class="bg-card border border-border p-6 space-y-6 text-sm"> <div> <div class="eyebrow mb-2">Overall Score</div> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-amber-500/15 text-amber-400 border-amber-500/45 px-4 py-2 text-2xl">  6.5 </span> <p class="text-xs text-muted-foreground mt-2">
+Scale 1–10. Higher is safer.
+ </p> </div> <div> <div class="eyebrow mb-2">Live Data</div> <a href="https://todayindefi.github.io/backing-monitor/?asset=bold" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-mono uppercase tracking-wider hover:bg-primary/90 transition-colors no-underline w-full justify-center">
+Open dashboard
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-3.5 w-3.5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> </a> <p class="text-xs text-muted-foreground mt-2"> Live reserves, collateralization, peg, and bridge state — updated hourly. </p> </div> <div> <div class="eyebrow mb-3">Score Breakdown</div> <div class="space-y-2"> <div class="flex items-center justify-between"> <span class="text-muted-foreground"> Stability  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-lime-500/15 text-lime-400 border-lime-500/45 px-1.5 py-0.5 text-xs">  7.0 </span> </div><div class="flex items-center justify-between"> <span class="text-muted-foreground"> Backing  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-lime-500/15 text-lime-400 border-lime-500/45 px-1.5 py-0.5 text-xs">  7.5 </span> </div><div class="flex items-center justify-between"> <span class="text-muted-foreground"> Liquidity &amp; Exit  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-amber-500/15 text-amber-400 border-amber-500/45 px-1.5 py-0.5 text-xs">  5.5 </span> </div><div class="flex items-center justify-between"> <span class="text-muted-foreground"> Dependencies  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-lime-500/15 text-lime-400 border-lime-500/45 px-1.5 py-0.5 text-xs">  7.0 </span> </div><div class="flex items-center justify-between"> <span class="text-muted-foreground"> Contract &amp; Admin  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-lime-500/15 text-lime-400 border-lime-500/45 px-1.5 py-0.5 text-xs">  8.5 </span> </div><div class="flex items-center justify-between"> <span class="text-muted-foreground"> Issuer  </span> <span class="inline-flex items-center gap-1 font-mono font-bold border rounded-none bg-lime-500/15 text-lime-400 border-lime-500/45 px-1.5 py-0.5 text-xs">  8.0 </span> </div>  </div>  <p class="text-muted-foreground/70 text-xs mt-3 leading-relaxed"> Stability, Backing and Liquidity &amp; Exit are authored
+ as of 2026-09-15. For live readings,  <a href="https://todayindefi.github.io/backing-monitor/?asset=bold" class="underline hover:text-foreground">
+see the dashboard →
+</a> </p> </div> <div class="border-t border-border pt-4 space-y-3"> <div> <div class="eyebrow mb-1">Category</div> <div class="capitalize">stablecoin</div> </div> <div> <div class="eyebrow mb-1">Peg Mechanism</div> <div class="capitalize">overcollateralized CDP with permissionless redemption</div> </div>  <div> <div class="eyebrow mb-1">Issuer</div> <div>Liquity (immutable protocol, no issuer counterparty)</div> </div>     <div> <div class="eyebrow mb-1"> Market Cap </div> <div class="font-mono"> $34M </div> </div>   <div> <div class="eyebrow mb-1">Chains</div> <div class="flex flex-wrap gap-1"> <span class="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border rounded-none bg-transparent text-foreground border-border">Ethereum</span> </div> </div>  <div> <div class="eyebrow mb-1">Last Reviewed</div> <div class="font-mono">2026-09-22</div> </div> </div>   </aside> </div> </div> </article>  </main> <footer class="border-t border-border/40 bg-card/30 mt-24"> <div class="container-page py-12 grid grid-cols-1 md:grid-cols-4 gap-8"> <div class="md:col-span-2"> <img src="/wordmark.png" alt="TID Research" class="h-8 w-auto mb-4 opacity-80"> <p class="text-sm text-muted-foreground max-w-sm">
+Research for digital asset allocators — retail and institutional: risk
+        analysis, governance, investment, and portfolio support.
+</p> </div> <div> <div class="eyebrow mb-3">Research</div> <ul class="space-y-2 text-sm"> <li><a href="/reports" class="hover:text-primary">Assets</a></li>  <li><a href="/dashboards" class="hover:text-primary">Dashboards</a></li> </ul> </div> <div> <div class="eyebrow mb-3">Services</div> <ul class="space-y-2 text-sm"> <li> <a href="/services/risk" class="hover:text-primary"> Risk Analysis </a> </li><li> <a href="/services/monitoring" class="hover:text-primary"> Monitoring </a> </li><li> <a href="/services/governance" class="hover:text-primary"> Governance </a> </li><li> <a href="/services/investment" class="hover:text-primary"> Investment </a> </li><li> <a href="/services/portfolio" class="hover:text-primary"> Portfolio </a> </li> </ul> </div> </div> <div class="border-t border-border/40"> <div class="container-page py-6 flex flex-col md:flex-row items-center justify-between gap-2"> <p class="text-xs text-muted-foreground/60 font-mono">
+© 2026 TID Research. All rights reserved.
+</p> <a href="/cdn-cgi/l/email-protection#076e69616847736e63756274626675646f2964686a" class="text-xs text-muted-foreground hover:text-primary font-mono">
+<span class="__cf_email__" data-cfemail="7a13141c153a0e131e081f091f1b08191254191517">[email&#160;protected]</span>
+</a> </div> </div> </footer> <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body></html> <script type="module">document.querySelectorAll("[data-print-button]").forEach(e=>{e.addEventListener("click",()=>window.print())});window.addEventListener("beforeprint",()=>{document.querySelectorAll("details.report-section").forEach(e=>{e.dataset.prevOpen=e.open?"1":"0",e.open=!0})});window.addEventListener("afterprint",()=>{document.querySelectorAll("details.report-section").forEach(e=>{e.dataset.prevOpen==="0"&&(e.open=!1),delete e.dataset.prevOpen})});</script>

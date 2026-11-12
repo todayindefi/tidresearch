@@ -1,0 +1,87 @@
+{
+  "status": "staging_served_checks_passed",
+  "deploy_id": "6af3ee646eeb6a77fb98eadc",
+  "site_id": "2da6f038-beda-46a5-bcbb-497156b816e4",
+  "reports": {
+    "dusd-alto": {
+      "url": "https://staging.tidresearch.com/reports/dusd-alto/",
+      "sha256": "7d03776b713ffb5df9916153e80601195d78b5a53af5f2dafb02e8570f761bf5",
+      "scores": {
+        "peg_mechanism_score": 5.5,
+        "backing_score": 5.0,
+        "underlying_score": 4.5,
+        "liquidity_score": 5.5,
+        "structural_score": 5.0,
+        "issuer_score": 4.5,
+        "overall_score": 4.5
+      },
+      "last_verified": "2026-11-07",
+      "last_revised": "2026-11-11",
+      "production": false
+    },
+    "fxsave": {
+      "url": "https://staging.tidresearch.com/reports/fxsave/",
+      "sha256": "f7177ba950d57444f4854d7679eec94f73cb945e72e4a0a9b27ff81205fc13d5",
+      "scores": {
+        "volatility_score": 5.0,
+        "backing_score": 4.5,
+        "liquidity_score": 3.5,
+        "underlying_score": 4.5,
+        "structural_score": 4.0,
+        "issuer_score": 5.5,
+        "redemption_score": 7.0,
+        "overall_score": 4.5
+      },
+      "last_verified": "2026-09-22",
+      "last_revised": "2026-11-10",
+      "production": false
+    },
+    "tsm-adr": {
+      "url": "https://staging.tidresearch.com/reports/tsm-adr/",
+      "sha256": "a8e26680114bc82c84969c516fb029d1822a6db1744faf598b7bb61958270cde",
+      "scores": {
+        "liquidity_score": 9.0,
+        "overall_score": 5.5,
+        "volatility_score": 4.0,
+        "counterparty_score": 6.5,
+        "redemption_score": 6.5
+      },
+      "last_verified": "2026-09-06",
+      "last_revised": "2026-11-11",
+      "production": false
+    }
+  },
+  "fluid": {
+    "url": "https://staging.tidresearch.com/protocols/fluid/",
+    "change": "reviewed, source preserved",
+    "overall": 6.0,
+    "production_section_release": "pending explicit release decision"
+  },
+  "checks": {
+    "prebuild_and_build_exit": 0,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "local_browser_cases": 8,
+    "source_links_200": 15,
+    "source_links_access_blocked_403": 6,
+    "source_links_404": 0,
+    "only_tracked_changes": [
+      "src/components/report/RiskSidebar.astro",
+      "src/components/report/ScoreHero.astro",
+      "src/content.config.ts",
+      "src/content/reports/dusd-alto-retail.md",
+      "src/content/reports/tsm-adr.md",
+      "src/layouts/ReportLayout.astro"
+    ],
+    "unpublished_bold_excluded": true,
+    "served_browser_cases": 8,
+    "served_report_build_parity": true,
+    "page_errors": [],
+    "temporary_server_closed": true
+  },
+  "production_deployment": "6af270dc67e4db619d4a971c",
+  "production_deploy_performed": false,
+  "commit": false,
+  "push": false,
+  "remaining_evidence_limits": "README.md"
+}

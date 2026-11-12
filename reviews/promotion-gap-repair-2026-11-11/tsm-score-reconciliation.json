@@ -1,0 +1,21 @@
+{
+  "decision": "accepted existing authored ADR grades for display binding",
+  "source_baseline": "September 6 authored body, November 4 documentary adoption",
+  "scores": {
+    "Volatility": 4.0,
+    "Liquidity": 9.0,
+    "Counterparty": 6.5,
+    "Redemption": 6.5,
+    "Overall": 5.5
+  },
+  "finding": "The four headings in the accepted staging body agree with the upstream authored assessment. Three frontmatter fields were omitted. Schema already supports all three. This reviewed change transcribes the existing judgments without deriving a new grade.",
+  "display_change": "ADR-specific labels in both sidebar and score hero selected by instrument_type=adr",
+  "rubric": "Existing four-axis equity/depositary frame; no token issuer or contract score introduced",
+  "dates": {
+    "last_verified": "2026-09-06",
+    "documentary_review": "2026-11-04",
+    "binding_and_source_review": "2026-11-11"
+  },
+  "remaining_scope": "Current broker-specific execution, subsequent agreement-amendment completeness and legal recovery priority remain unverified. Historical rating is disclosed.",
+  "publication": "staging review only"
+}

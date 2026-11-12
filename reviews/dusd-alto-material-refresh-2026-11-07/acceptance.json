@@ -1,0 +1,51 @@
+{
+  "status": "staging_served_parity_verified",
+  "url": "https://staging.tidresearch.com/reports/dusd-alto/",
+  "deploy_id": "6aeeb5fb2c7362dd1a9a1edd",
+  "source_report_sha256": "3f0294f5968e30a9122f0a7eef73bd8b887235a6594fea0e6086dc9248f113af",
+  "assessment_version": "dusd-alto-2026-11-07-v2",
+  "evidence_version": "sha256:7032ea7b8faccd3f34a8a367cc9c662ab8c4d252ffbd868cd2ff32a943c214b1",
+  "public_markdown_sha256": "00037e3210d8191cdda0f343ad4cf5e015a0c34cf8b2b0f6fdcf933bc4580720",
+  "scores": {
+    "peg_mechanism_score": 5.5,
+    "backing_score": 5.0,
+    "underlying_score": 4.5,
+    "liquidity_score": 5.5,
+    "structural_score": 5.0,
+    "issuer_score": 4.5,
+    "overall_score": 4.5
+  },
+  "creation": "2026-09-21",
+  "assessment_date": "2026-11-07",
+  "issuer_score_retained_from": "2026-09-21",
+  "production": false,
+  "scope": "Ethereum Alto DUSD only",
+  "token": "0x63d74d22e689c715a04f2c13962b1f77f443d35b",
+  "aliases_preserved": true,
+  "bm_dashboard_conformance_claimed": false,
+  "private_data_exported": false,
+  "immutable_bm_snapshot_hash_verified": true,
+  "validation": {
+    "schema_prebuild_build": true,
+    "pages": 116,
+    "viewports": [
+      1440,
+      390
+    ],
+    "seven_grades_frontmatter_body_sidebar_index": true,
+    "primary_docs_http200": 3,
+    "etherscan_automated_http403": 4,
+    "all_99_report_bodies_match_build": true,
+    "98_other_reports_preserved": true,
+    "only_dusd_and_listing_cards_changed": true,
+    "production_deployment_unchanged": true,
+    "production_dusd": 404,
+    "no_lingering_local_preview": true
+  },
+  "changed_paths": [
+    "src/content/reports/dusd-alto-retail.md",
+    "reviews/dusd-alto-material-refresh-2026-11-07/"
+  ],
+  "commit": null,
+  "push": false
+}

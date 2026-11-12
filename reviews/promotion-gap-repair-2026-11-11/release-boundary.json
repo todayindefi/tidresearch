@@ -1,0 +1,12 @@
+{
+  "changed_html": [
+    "protocols/index.html",
+    "reports/index.html",
+    "reports/dusd-alto/index.html",
+    "reports/tsm-adr/index.html",
+    "reports/fxsave/index.html"
+  ],
+  "unrelated_report_html_preserved": true,
+  "unpublished_bold_candidate_excluded": true,
+  "pages": 117
+}

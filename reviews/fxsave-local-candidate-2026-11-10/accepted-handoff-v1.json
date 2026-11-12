@@ -1,0 +1,349 @@
+{
+  "contract_version": 1,
+  "task_id": "fxsave-assessment-return-2026-11-10",
+  "summary": "Completed bounded six-axis assessment; all scores held; consumer adoption remains separate",
+  "owner": "riskAnalyst",
+  "recipient": "backing-monitor",
+  "state": "assessed",
+  "authority": {
+    "max_stage": "assessment",
+    "reference": "User-authorized fxSAVE refresh and BM START handoff, November10; no production promotion"
+  },
+  "scope": [
+    {
+      "project": "fx-protocol",
+      "component": "fxsave",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+      ]
+    }
+  ],
+  "evidence_version": "sha256:621d12c6c3543660d165613464149028a3dd031c08ec97c6a9ccf96788139689",
+  "assessment_version": "fxsave-targeted-six-axis-2026-11-10-v1",
+  "artifacts": [
+    {
+      "id": "assessment",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/assessment.json",
+      "sha256": "e791f123cf3dbeb43ee469ac12800635900f59b332b89d306f72e2318471951f",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "BM selected producer exports and canonical fx-protocol/fxsave research; original per-field clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:21:43.864959+00:00",
+      "clock_note": "Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "id": "validation",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/validation.json",
+      "sha256": "50f11398c91730a0dbf195634b65378c08febf8d164610710b1b909ff7712d67",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "BM selected producer exports and canonical fx-protocol/fxsave research; original per-field clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:21:43.864988+00:00",
+      "clock_note": "Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "id": "export",
+      "path": "/home/danger/riskAnalyst/data/axes/fxsave_assessment.json",
+      "sha256": "8ec9bfc70f21bb0450517b9b5c4c26ea39573029b3a855523b4d30a74f86cf2c",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "BM selected producer exports and canonical fx-protocol/fxsave research; original per-field clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:21:43.865004+00:00",
+      "clock_note": "Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "id": "report",
+      "path": "/home/danger/riskAnalyst/assets/fxsave.md",
+      "sha256": "51a7abffe68b2d716b93af362940993de060e10850c71596798bd330b8fb636e",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "BM selected producer exports and canonical fx-protocol/fxsave research; original per-field clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:21:43.865036+00:00",
+      "clock_note": "Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "id": "bm_index",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/selected-bm-index.json",
+      "sha256": "621d12c6c3543660d165613464149028a3dd031c08ec97c6a9ccf96788139689",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "sha256:621d12c6c3543660d165613464149028a3dd031c08ec97c6a9ccf96788139689",
+      "source_refs": [
+        "BM selected producer exports and canonical fx-protocol/fxsave research; original per-field clocks retained"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:21:43.865050+00:00",
+      "clock_note": "Artifact review time is separate from original financial, quote, oracle and documentary dates; no common whole-report source clock."
+    },
+    {
+      "id": "fxsave_axis_basis",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_axis_basis.json",
+      "sha256": "fbc8210c629df62a4611781176690c76baf0ca5021eaff9b75a34cf59142b640",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419081+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_backing_overlay",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_backing_overlay.json",
+      "sha256": "a4a4a1fb481085e7eee9084651632c17ac2965bf46bab01bc4ec6f93877ea45f",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419101+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_dependencies",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_dependencies.json",
+      "sha256": "8723e4128b17abe29d558926daa849379f52f9242f8b49b010cd28f82a4ef9e0",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419107+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_contract_overlay",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_contract_overlay.json",
+      "sha256": "074d11934350d941c1d5a06d5b8f98bd262e61f731617c7fd0abd92b7a24bdf3",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419112+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_issuer",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_issuer.json",
+      "sha256": "08499e99f9638a96b7f14e3c73c25223f26ebe191d7010b28ed47abf04c7b902",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419117+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_evidence_review",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_evidence_review.json",
+      "sha256": "7cec7eb104fe11473668857e62515cb53fdab787c47eb4e373becf1999838364",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419122+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    },
+    {
+      "id": "fxsave_assessment",
+      "path": "/home/danger/riskAnalyst/data/reviews/fxsave-refresh-2026-11-10/exports/fxsave_assessment.json",
+      "sha256": "8ec9bfc70f21bb0450517b9b5c4c26ea39573029b3a855523b4d30a74f86cf2c",
+      "scope": {
+        "project": "fx-protocol",
+        "component": "fxsave",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39"
+        ]
+      },
+      "version": "fxsave-targeted-six-axis-2026-11-10-v1",
+      "source_refs": [
+        "Authored riskAnalyst consumer export; measured producer evidence remains separately attributed"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T10:24:28.419127+00:00",
+      "clock_note": "Export frozen at assessment; original per-field and grade/source clocks retained, not a new financial observation."
+    }
+  ],
+  "checks": [
+    {
+      "id": "score_parity",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "assessment",
+      "pointer": "/scores",
+      "other_artifact": "export",
+      "other_pointer": "/scores"
+    },
+    {
+      "id": "original_full_clock",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "export",
+      "pointer": "/last_verified",
+      "expected": "2026-09-22"
+    },
+    {
+      "id": "evidence_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "validation",
+      "note": "106 artifact hashes,24 Peg call records (23 successful result decodes plus one negative-control revert),custody/fee arithmetic and nine quote-cost rows checked; named limitations retained."
+    },
+    {
+      "id": "assessment_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "assessment",
+      "note": "Six-axis targeted judgments authored; scores/full verification date held; TIDR update required. No full authority or execution assurance."
+    },
+    {
+      "id": "fxsave_axis_basis_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "fxsave_axis_basis",
+      "pointer": "/liquidity/liquidity_score",
+      "expected": 3.5
+    },
+    {
+      "id": "fxsave_backing_overlay_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "fxsave_backing_overlay",
+      "pointer": "/backing/backing_score",
+      "expected": 4.5
+    },
+    {
+      "id": "fxsave_contract_overlay_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "fxsave_contract_overlay",
+      "pointer": "/contract/structural_score",
+      "expected": 4.0
+    },
+    {
+      "id": "fxsave_issuer_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "fxsave_issuer",
+      "pointer": "/issuer/issuer_score",
+      "expected": 5.5
+    }
+  ],
+  "gaps": [
+    {
+      "id": "pause",
+      "description": "Exact pause mapping remains unknown; not unpaused clearance",
+      "blocking": false,
+      "reopen_when": "Security owner provides exact mapped current control evidence"
+    },
+    {
+      "id": "consumers",
+      "description": "BM source/browser parity and TIDR candidate acceptance remain separate pending consumer gates",
+      "blocking": false,
+      "reopen_when": "Owner returns exact evidence/assessment version and consumer validation receipt"
+    }
+  ]
+}

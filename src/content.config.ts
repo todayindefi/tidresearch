@@ -115,7 +115,9 @@ const common = {
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
   date: z.coerce.date(),
-  last_verified: z.coerce.date(),
+  last_verified: z.coerce.date().optional(),
+  // A bounded assessment may deliberately make no whole-report verification claim.
+  verification_scope: z.literal("bounded").optional(),
   // Date of the most recent substantive pass, when only PART of the body was
   // re-read. last_verified stays the date the WHOLE body was verified through,
   // so a scope-limited refresh no longer has to choose between a false-fresh
@@ -322,6 +324,7 @@ const lendingVault = z.object({
 const tradfiEquity = z.object({
   ...common,
   category: z.literal("tradfi-equity"),
+  instrument_type: z.literal("adr").optional(),
   balance_sheet_score: score.optional(),
   funding_model_score: score.optional(),
   refinancing_capacity_score: score.optional(),
@@ -367,6 +370,10 @@ const protocolReport = z.object({
   incident_history: z.boolean().optional(),
   is_fork: z.boolean().optional(),
   fork_of: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (!data.last_verified && (data.verification_scope !== "bounded" || !data.last_revised)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["last_verified"], message: "Missing whole-report verification requires bounded scope and an explicit review date" });
+  }
 });
 
 const vaultReport = z.object({
@@ -398,6 +405,9 @@ export const collections = {
       lendingVault,
       tradfiEquity,
     ]).superRefine((data, ctx) => {
+      if (!data.last_verified && (data.verification_scope !== "bounded" || !data.last_revised)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["last_verified"], message: "Missing whole-report verification requires bounded scope and an explicit review date" });
+      }
       if (data.category !== "wrapped-token" && data.category !== "vault-share") return;
       const exemptions = new Set(
         (data.axis_exemptions ?? []).filter((e) => e.reason.trim()).map((e) => e.axis),

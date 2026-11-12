@@ -1,0 +1,329 @@
+{
+  "contract_version": 1,
+  "task_id": "bold-assessment-return-2026-11-11",
+  "summary": "Completed bounded BOLD six-axis review; local consumer adoption separate",
+  "owner": "riskAnalyst",
+  "recipient": "backing-monitor",
+  "state": "assessed",
+  "authority": {
+    "max_stage": "assessment",
+    "reference": "User authorized BOLD after fxSAVE and BM aggregate handoff; no publication/trades/jobs"
+  },
+  "scope": [
+    {
+      "project": "liquity",
+      "component": "bold",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+      ]
+    }
+  ],
+  "evidence_version": "sha256:fcd0016ee3ef904d103f0bbcea036b7d1e8ffb524f672d25de2904a60d5601d9",
+  "assessment_version": "bold-targeted-six-axis-2026-11-11-v1",
+  "artifacts": [
+    {
+      "id": "assessment",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/assessment.json",
+      "sha256": "7545c4cb8785a40937bedbb7e146e48449699d26e41cfce4a7a679b673ff8847",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166441+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "validation",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/validation.json",
+      "sha256": "e4afbe11ed8cccbbe4726609783a34e04bbdff2eeb9f83fc4e51343918747f07",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166492+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "report",
+      "path": "/home/danger/riskAnalyst/assets/bold.md",
+      "sha256": "ab5faad87cfd8a24273c603e650e862a505f384e5537da4acbfde95f9904915f",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166539+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "export",
+      "path": "/home/danger/riskAnalyst/data/axes/bold_assessment.json",
+      "sha256": "78dbb6f83131ec6097e6aae5df9267b426bc8e45164aa2d9644d68f0a02033bf",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166564+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "sources",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/bm-source-index.json",
+      "sha256": "fcd0016ee3ef904d103f0bbcea036b7d1e8ffb524f672d25de2904a60d5601d9",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166590+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_axis_basis",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_axis_basis.json",
+      "sha256": "75c9239c739457f1dd8bca5350ea19865f3d0c32d62a3438f4492f9b250f816f",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166633+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_contract_overlay",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_contract_overlay.json",
+      "sha256": "13b880da78c78ff0dfdf1c4b658069f955011a7291bf323b5e5f2354c5b43f46",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166665+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_dependencies",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_dependencies.json",
+      "sha256": "e891d8ca672cba3a40f5401c68fe6f518bb2e74be2a5c61c990e04d7c4b1ea01",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166697+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_issuer",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_issuer.json",
+      "sha256": "73b17de6a06a735a4e8d87f6cf0031b80ddcd5d611e137066394d3df99642990",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166730+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_assessment",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_assessment.json",
+      "sha256": "78dbb6f83131ec6097e6aae5df9267b426bc8e45164aa2d9644d68f0a02033bf",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166760+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "id": "bold_evidence_review",
+      "path": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/exports/bold_evidence_review.json",
+      "sha256": "4b6645bd0447c4d714be47a80aab00d49e48748e4a42d78f72093df5028ded2d",
+      "scope": {
+        "project": "liquity",
+        "component": "bold",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "0x6440f144b7e50d6a8439336510312d2f54beb01d"
+        ]
+      },
+      "version": "bold-targeted-six-axis-2026-11-11-v1",
+      "source_refs": [
+        "BM-selected owner evidence and canonical liquity/bold; source clocks remain explicit in assessment"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-10T16:25:40.166760+00:00",
+      "clock_note": "Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    }
+  ],
+  "checks": [
+    {
+      "id": "score_parity",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "assessment",
+      "pointer": "/scores",
+      "other_artifact": "export",
+      "other_pointer": "/scores"
+    },
+    {
+      "id": "full_clock",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "export",
+      "pointer": "/last_verified",
+      "expected": "2026-07-21"
+    },
+    {
+      "id": "evidence_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "validation",
+      "note": "111 source objects plus supplement hashes; branch/aggregate arithmetic, raw feed ages and quote/fee costs checked. Qualified model/nonpin/differing source clocks retained."
+    },
+    {
+      "id": "assessment_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "assessment",
+      "note": "Bounded six-axis interpretation complete; all scores explicitly held, unknowns and date reconciliation retained; no whole-report authority or execution assurance."
+    },
+    {
+      "id": "bold_axis_basis_backing_backing_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "bold_axis_basis",
+      "pointer": "/backing/backing_score",
+      "expected": 7.5
+    },
+    {
+      "id": "bold_axis_basis_liquidity_liquidity_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "bold_axis_basis",
+      "pointer": "/liquidity/liquidity_score",
+      "expected": 5.5
+    },
+    {
+      "id": "bold_contract_overlay_contract_structural_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "bold_contract_overlay",
+      "pointer": "/contract/structural_score",
+      "expected": 8.5
+    },
+    {
+      "id": "bold_issuer_issuer_issuer_score",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "bold_issuer",
+      "pointer": "/issuer/issuer_score",
+      "expected": 8.0
+    }
+  ],
+  "gaps": [
+    {
+      "id": "bounded_unknowns",
+      "description": "No same-pin liquidation CR, borrower distribution, complete current venue census, executed redemption or new full audit",
+      "blocking": false,
+      "reopen_when": "Owner returns decision-relevant qualified evidence or material risk trigger"
+    },
+    {
+      "id": "consumers",
+      "description": "BM/TIDR local consumer receipts pending; not an assessment blocker or publication acceptance",
+      "blocking": false,
+      "reopen_when": "Version-bound source/display/candidate receipts returned"
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "manifest": "/home/danger/riskAnalyst/data/reviews/bold-refresh-2026-11-10/assessment-2026-11-11/tidr-request-v1.json",
+  "exit_code": 2,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "contract",
+      "detail": "Shared handoff v1 structure"
+    },
+    {
+      "status": "PASS",
+      "check": "authority",
+      "detail": "Scope consistent; authorization reference is not independently verified"
+    },
+    {
+      "status": "GAP",
+      "check": "assessment",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "assessment",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "validation",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "validation",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "report",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "report",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "export",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "export",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "sources",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "sources",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_axis_basis",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_axis_basis",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_contract_overlay",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_contract_overlay",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_dependencies",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_dependencies",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_issuer",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_issuer",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_assessment",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_assessment",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "bold_evidence_review",
+      "detail": "Observation time unknown: Authored review/frozen artifact; original observation clocks are separate, no single fresh measurement claimed."
+    },
+    {
+      "status": "PASS",
+      "check": "bold_evidence_review",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "PASS",
+      "check": "score_parity",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "full_clock",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "bold_axis_basis_backing_backing_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "bold_axis_basis_liquidity_liquidity_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "bold_contract_overlay_contract_structural_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "bold_issuer_issuer_issuer_score",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "WAIT",
+      "check": "evidence_acceptance",
+      "detail": "Human review pending"
+    },
+    {
+      "status": "WAIT",
+      "check": "candidate",
+      "detail": "TIDR local report candidate/build/privacy/version and date-scope checks pending; reopen: TIDR finite local acceptance receipt"
+    },
+    {
+      "status": "WAIT",
+      "check": "workflow",
+      "detail": "Request is not a completed evidence handoff"
+    }
+  ]
+}

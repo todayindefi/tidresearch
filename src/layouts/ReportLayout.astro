@@ -27,7 +27,7 @@ const { data, hasDashboard = false, headings = [], dashboardUrl } = Astro.props;
 // Rendered in BOTH layout branches: retail reports do not render ScoreHero at
 // all (only institutional and protocol do), so putting it there would show the
 // badge on some reports and silently omit it on others.
-const dependency = isDependency(data);
+const dependency = data.category !== "protocol" && data.instrument_type !== "adr" && isDependency(data);
 const reportName = data.protocol ?? data.asset;
 const isProtocol = data.category === "protocol";
 const collectionPath = isProtocol ? "/protocols" : "/reports";

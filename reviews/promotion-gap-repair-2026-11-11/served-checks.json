@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "path": "reports/dusd-alto/",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n4.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nStability\n5.5\nBacking\n5.0\nLiquidity & Exit\n5.5\nDependencies\n4.5\nContract & Admin\n5.0\nIssuer\n4.5\nCATEGORY\nStablecoin\nPEG MECHANISM\nTreasury Credit-Line Issuance Against Convex-Staked DUSD/FrxUSD LP, Permissioned FrxUSD Stability Module And Smaller Isolated Mint Markets\nISSUER\nDUSD corporate issuer/repayment obligor unestablished; Alto Foundation is disclosed software provider\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "path": "reports/fxsave/",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n4.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nStability\n5.0\nBacking\n4.5\nLiquidity & Exit\n3.5\nDependencies\n4.5\nContract & Admin\n4.0\nIssuer\n5.5\nCATEGORY\nVault Share\nISSUER\nf(x) Protocol (AladdinDAO)\nUNDERLYING\nFXSP\nFXUSD\nUSDC\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-10"
+    },
+    {
+      "path": "reports/tsm-adr/",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n5.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nVolatility\n4.0\nLiquidity\n9.0\nCounterparty\n6.5\nRedemption\n6.5\nCATEGORY\nTradFi Equity\nISSUER\nTaiwan Semiconductor Manufacturing Company Limited\nUNDERLYING\n2330.TW ORDINARY SHARES (TWSE)\nCHAINS\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "path": "protocols/fluid/",
+      "width": 1440,
+      "status": 200,
+      "scroll_width": 1440,
+      "sidebar": "OVERALL SCORE\n6.0\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nSmart Contract\n7.5\nEconomic\n6.0\nProject\n6.5\nCATEGORY\nProtocol\nCHAINS\nETHEREUM\nARBITRUM\nBASE\nPOLYGON\nBNB CHAIN\nPLASMA\nLAST REVIEWED\n2026-11-07"
+    },
+    {
+      "path": "reports/dusd-alto/",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n4.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nStability\n5.5\nBacking\n5.0\nLiquidity & Exit\n5.5\nDependencies\n4.5\nContract & Admin\n5.0\nIssuer\n4.5\nCATEGORY\nStablecoin\nPEG MECHANISM\nTreasury Credit-Line Issuance Against Convex-Staked DUSD/FrxUSD LP, Permissioned FrxUSD Stability Module And Smaller Isolated Mint Markets\nISSUER\nDUSD corporate issuer/repayment obligor unestablished; Alto Foundation is disclosed software provider\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "path": "reports/fxsave/",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n4.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nStability\n5.0\nBacking\n4.5\nLiquidity & Exit\n3.5\nDependencies\n4.5\nContract & Admin\n4.0\nIssuer\n5.5\nCATEGORY\nVault Share\nISSUER\nf(x) Protocol (AladdinDAO)\nUNDERLYING\nFXSP\nFXUSD\nUSDC\nCHAINS\nETHEREUM\nLAST REVIEWED\n2026-11-10"
+    },
+    {
+      "path": "reports/tsm-adr/",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n5.5\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nVolatility\n4.0\nLiquidity\n9.0\nCounterparty\n6.5\nRedemption\n6.5\nCATEGORY\nTradFi Equity\nISSUER\nTaiwan Semiconductor Manufacturing Company Limited\nUNDERLYING\n2330.TW ORDINARY SHARES (TWSE)\nCHAINS\nLAST REVIEWED\n2026-11-11"
+    },
+    {
+      "path": "protocols/fluid/",
+      "width": 390,
+      "status": 200,
+      "scroll_width": 390,
+      "sidebar": "OVERALL SCORE\n6.0\n\nScale 1\u201310. Higher is safer.\n\nSCORE BREAKDOWN\nSmart Contract\n7.5\nEconomic\n6.0\nProject\n6.5\nCATEGORY\nProtocol\nCHAINS\nETHEREUM\nARBITRUM\nBASE\nPOLYGON\nBNB CHAIN\nPLASMA\nLAST REVIEWED\n2026-11-07"
+    }
+  ],
+  "page_errors": [],
+  "temporary_server_closed": true
+}

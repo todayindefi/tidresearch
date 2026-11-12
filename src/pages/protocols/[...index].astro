@@ -25,7 +25,7 @@ const rows = all
     chains: entry.data.chains,
     chain_labels: Array.from(new Set(entry.data.chains.map(chainLabel))),
     overall_score: entry.data.overall_score,
-    last_verified: new Date(entry.data.last_verified).toISOString().slice(0, 10),
+    last_verified: entry.data.last_verified ? new Date(entry.data.last_verified).toISOString().slice(0, 10) : undefined,
     last_revised: entry.data.last_revised
       ? new Date(entry.data.last_revised).toISOString().slice(0, 10)
       : undefined,
@@ -33,10 +33,10 @@ const rows = all
   }))
   .sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    const reviewed = (entry: { last_verified: string; last_revised?: string }) =>
-      entry.last_revised && entry.last_revised > entry.last_verified
+    const reviewed = (entry: { last_verified?: string; last_revised?: string }) =>
+      entry.last_revised && (!entry.last_verified || entry.last_revised > entry.last_verified)
         ? entry.last_revised
-        : entry.last_verified;
+        : (entry.last_verified ?? "");
     return reviewed(b).localeCompare(reviewed(a));
   });
 ---

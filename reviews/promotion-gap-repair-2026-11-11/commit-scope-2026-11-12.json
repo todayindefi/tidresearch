@@ -1,0 +1,21 @@
+{
+  "branch": "staging/promotion-gap-repair-2026-11-12",
+  "base": "1a7f98a087880231c8fe8e3227e7007c9894acf0",
+  "scope": [
+    "DUSD Alto",
+    "fxSAVE",
+    "TSM ADR",
+    "Fluid",
+    "BOLD local candidate",
+    "supporting presentation/schema and review records"
+  ],
+  "validation": {
+    "npm_run_build_exit": 0,
+    "git_diff_check_exit": 0,
+    "pages_built": 97
+  },
+  "deployment_performed": false,
+  "production_configuration_changed": false,
+  "bold": "local candidate only; not staged or promoted by this commit",
+  "note": "Existing served review receipts describe their original builds. This isolated source branch excludes unrelated uncommitted reports."
+}
