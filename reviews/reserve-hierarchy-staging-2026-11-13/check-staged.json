@@ -1,0 +1,176 @@
+{
+  "manifest": "/home/danger/tidresearch/reviews/reserve-hierarchy-staging-2026-11-13/handoff-staged-v1.json",
+  "exit_code": 0,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "contract",
+      "detail": "Shared handoff v1 structure"
+    },
+    {
+      "status": "PASS",
+      "check": "authority",
+      "detail": "Scope consistent; authorization reference is not independently verified"
+    },
+    {
+      "status": "GAP",
+      "check": "receipt",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "receipt",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "consumer",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "consumer",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "sources",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "sources",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "index",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "index",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "served",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "served",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "local",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "local",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "boundary",
+      "detail": "Observation time unknown: Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "status": "PASS",
+      "check": "boundary",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-protocol_version",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-protocol_unscored",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-protocol_chains",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-protocol_no_verification_date",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-yield-protocol_version",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-yield-protocol_unscored",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-yield-protocol_chains",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-yield-protocol_no_verification_date",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-index-protocol_version",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-index-protocol_unscored",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-index-protocol_chains",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "PASS",
+      "check": "reserve-index-protocol_no_verification_date",
+      "detail": "JSON values match"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "evidence_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "assessment_acceptance",
+      "detail": "Recorded review by riskAnalyst; judgment not machine-verified"
+    },
+    {
+      "status": "ATTESTED",
+      "check": "staging_acceptance",
+      "detail": "Recorded review by TIDR; judgment not machine-verified"
+    },
+    {
+      "status": "GAP",
+      "check": "missing_asset_pages",
+      "detail": "Reserve eUSD and ETH+ asset reports absent; no dead links/new assessments. USD3 crosslinked with unchanged scores/dates. Owner explicitly accepted coverage gap.; reopen: Separate approved asset report commission and completed assessment supplied"
+    },
+    {
+      "status": "GAP",
+      "check": "deployed_control_assurance",
+      "detail": "Complete current authority/audit/runtime binding unverified; all three reviews remain unscored, assessed_chains empty; reopen: Accepted exact deployment evidence and new scored assessment"
+    },
+    {
+      "status": "GAP",
+      "check": "owner_served_parity_review",
+      "detail": "TIDR staging accepted; RiskAnalyst may review served adaptation before marking its downstream publication task complete; reopen: Owner reviews returned staging receipt"
+    }
+  ]
+}

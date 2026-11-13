@@ -1,0 +1,10 @@
+{
+  "existing_reserve_protocol_routes": [],
+  "historical_reserve_eusd_route": null,
+  "asset_routes": {
+    "usd3": "/reports/usd3/",
+    "eusd": null,
+    "ethplus": null
+  },
+  "owner_resolution": "RiskAnalyst confirmed no invented eUSD/ETH+ pages; label unavailable/pending with no dead links. Asset refreshes separate."
+}

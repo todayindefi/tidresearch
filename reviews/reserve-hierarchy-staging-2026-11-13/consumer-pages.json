@@ -1,0 +1,60 @@
+{
+  "reserve-protocol": {
+    "assessment_version": "reserve-protocol-architecture-2026-11-13-v2",
+    "score_status": "unscored_shared_architecture_no_deployment_clearance",
+    "assessment_type": "architecture_review",
+    "report_role": "family",
+    "parent_protocol": null,
+    "child_protocols": [
+      "reserve-yield-protocol",
+      "reserve-index-protocol"
+    ],
+    "related_assets": null,
+    "date": "2026-11-13",
+    "last_revised": "2026-11-13",
+    "last_verified": null,
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "scores": {},
+    "assessed_chains": [],
+    "path": "/protocols/reserve-protocol/",
+    "sha256": "3a33101c2dddf2bd51ef1b79cfeb97ee833c7adcaba94aa28546fdb4f97b99f8"
+  },
+  "reserve-yield-protocol": {
+    "assessment_version": "reserve-yield-protocol-architecture-2026-11-13-v1",
+    "score_status": "unscored_shared_architecture_no_deployment_clearance",
+    "assessment_type": "architecture_review",
+    "report_role": "component",
+    "parent_protocol": "reserve-protocol",
+    "child_protocols": null,
+    "related_assets": [
+      "eusd",
+      "usd3",
+      "ethplus"
+    ],
+    "date": "2026-11-13",
+    "last_revised": "2026-11-13",
+    "last_verified": null,
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "scores": {},
+    "assessed_chains": [],
+    "path": "/protocols/reserve-yield-protocol/",
+    "sha256": "5858e9a6165ffdef9b419891cadaa7f3b541fe15f0a5812ffe7620c53f84f997"
+  },
+  "reserve-index-protocol": {
+    "assessment_version": "reserve-index-protocol-architecture-2026-11-13-v1",
+    "score_status": "unscored_shared_architecture_no_deployment_clearance",
+    "assessment_type": "architecture_review",
+    "report_role": "component",
+    "parent_protocol": "reserve-protocol",
+    "child_protocols": null,
+    "related_assets": [],
+    "date": "2026-11-13",
+    "last_revised": "2026-11-13",
+    "last_verified": null,
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "scores": {},
+    "assessed_chains": [],
+    "path": "/protocols/reserve-index-protocol/",
+    "sha256": "ae5289b2badb9c97e0c7b7f3e60e4cb1949287d19359b41aba3161d02c1aec26"
+  }
+}

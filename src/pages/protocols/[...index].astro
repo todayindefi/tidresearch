@@ -14,17 +14,20 @@ export function getStaticPaths() {
 const all = await getCollection("protocols");
 
 const rows = all
-  .filter((entry) => visibleAtCurrentStage(entry.data))
+  .filter((entry) => visibleAtCurrentStage(entry.data) && entry.data.report_role !== "component")
   .map((entry) => ({
     slug: entry.data.slug,
     asset: entry.data.protocol,
-    aliases: entry.data.aliases,
+    aliases: [...entry.data.aliases, ...(entry.data.child_protocols ?? []).map((slug) => all.find((child) => child.data.slug === slug)?.data.protocol ?? slug)],
+    child_protocols: entry.data.child_protocols?.map((slug) => ({ slug, asset: all.find((child) => child.data.slug === slug)?.data.protocol ?? slug })),
     category: entry.data.category,
     assessment_type: entry.data.assessment_type,
     audience: entry.data.audience,
     chains: entry.data.chains,
     chain_labels: Array.from(new Set(entry.data.chains.map(chainLabel))),
     overall_score: entry.data.overall_score,
+    assessed_chains: entry.data.assessed_chains,
+    assessment_version: entry.data.assessment_version,
     last_verified: entry.data.last_verified ? new Date(entry.data.last_verified).toISOString().slice(0, 10) : undefined,
     last_revised: entry.data.last_revised
       ? new Date(entry.data.last_revised).toISOString().slice(0, 10)

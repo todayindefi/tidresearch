@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://docs.reserve.org/core-components/index-dtfs/overview",
+    "status": 200
+  },
+  {
+    "url": "https://docs.reserve.org/core-components/yield-dtfs/overview",
+    "status": 200
+  },
+  {
+    "url": "https://docs.reserve.org/core-components/yield-dtfs/protocol-operations",
+    "status": 200
+  },
+  {
+    "url": "https://docs.reserve.org/core-components/yield-dtfs/security",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1656",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1661",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1726",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1766",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1767",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1768",
+    "status": 200
+  },
+  {
+    "url": "https://forum.reserve.org/t/1769",
+    "status": 200
+  },
+  {
+    "url": "https://github.com/reserve-protocol/reserve-governor/releases/tag/r1.1.0",
+    "status": 200
+  },
+  {
+    "url": "https://raw.githubusercontent.com/reserve-protocol/protocol/244a16ee130d11a18c19ff7471c750213a32d543/docs/pause-freeze-states.md",
+    "status": 200
+  },
+  {
+    "url": "https://raw.githubusercontent.com/reserve-protocol/protocol/244a16ee130d11a18c19ff7471c750213a32d543/docs/recollateralization.md",
+    "status": 200
+  },
+  {
+    "url": "https://reserve.org/terms-and-conditions/",
+    "status": 200
+  }
+]

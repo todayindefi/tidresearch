@@ -1,0 +1,10 @@
+{
+  "site_id": "2da6f038-beda-46a5-bcbb-497156b816e4",
+  "site_name": "tidresearch-staging",
+  "deploy_id": "6af6a936cde25c575437f232",
+  "deploy_url": "https://6af6a936cde25c575437f232--tidresearch-staging.netlify.app",
+  "logs": "https://app.netlify.com/projects/tidresearch-staging/deploys/6af6a936cde25c575437f232",
+  "function_logs": "https://app.netlify.com/projects/tidresearch-staging/logs/functions",
+  "edge_function_logs": "https://app.netlify.com/projects/tidresearch-staging/logs/edge-functions",
+  "url": "https://staging.tidresearch.com"
+}

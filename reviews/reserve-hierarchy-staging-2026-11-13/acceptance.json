@@ -1,0 +1,160 @@
+{
+  "receipt_version": 1,
+  "status": "staging_served_verified",
+  "checked_at": "2026-11-13T06:10:51.693381+00:00",
+  "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+  "site_id": "2da6f038-beda-46a5-bcbb-497156b816e4",
+  "deploy_id": "6af6a936cde25c575437f232",
+  "urls": {
+    "reserve-protocol": "https://staging.tidresearch.com/protocols/reserve-protocol/",
+    "reserve-yield-protocol": "https://staging.tidresearch.com/protocols/reserve-yield-protocol/",
+    "reserve-index-protocol": "https://staging.tidresearch.com/protocols/reserve-index-protocol/"
+  },
+  "directory_url": "https://staging.tidresearch.com/protocols/",
+  "pages": {
+    "reserve-protocol": {
+      "assessment_version": "reserve-protocol-architecture-2026-11-13-v2",
+      "score_status": "unscored_shared_architecture_no_deployment_clearance",
+      "assessment_type": "architecture_review",
+      "report_role": "family",
+      "parent_protocol": null,
+      "child_protocols": [
+        "reserve-yield-protocol",
+        "reserve-index-protocol"
+      ],
+      "related_assets": null,
+      "date": "2026-11-13",
+      "last_revised": "2026-11-13",
+      "last_verified": null,
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "scores": {},
+      "assessed_chains": [],
+      "path": "/protocols/reserve-protocol/",
+      "sha256": "3a33101c2dddf2bd51ef1b79cfeb97ee833c7adcaba94aa28546fdb4f97b99f8"
+    },
+    "reserve-yield-protocol": {
+      "assessment_version": "reserve-yield-protocol-architecture-2026-11-13-v1",
+      "score_status": "unscored_shared_architecture_no_deployment_clearance",
+      "assessment_type": "architecture_review",
+      "report_role": "component",
+      "parent_protocol": "reserve-protocol",
+      "child_protocols": null,
+      "related_assets": [
+        "eusd",
+        "usd3",
+        "ethplus"
+      ],
+      "date": "2026-11-13",
+      "last_revised": "2026-11-13",
+      "last_verified": null,
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "scores": {},
+      "assessed_chains": [],
+      "path": "/protocols/reserve-yield-protocol/",
+      "sha256": "5858e9a6165ffdef9b419891cadaa7f3b541fe15f0a5812ffe7620c53f84f997"
+    },
+    "reserve-index-protocol": {
+      "assessment_version": "reserve-index-protocol-architecture-2026-11-13-v1",
+      "score_status": "unscored_shared_architecture_no_deployment_clearance",
+      "assessment_type": "architecture_review",
+      "report_role": "component",
+      "parent_protocol": "reserve-protocol",
+      "child_protocols": null,
+      "related_assets": [],
+      "date": "2026-11-13",
+      "last_revised": "2026-11-13",
+      "last_verified": null,
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "scores": {},
+      "assessed_chains": [],
+      "path": "/protocols/reserve-index-protocol/",
+      "sha256": "ae5289b2badb9c97e0c7b7f3e60e4cb1949287d19359b41aba3161d02c1aec26"
+    }
+  },
+  "source_versions": {
+    "reserve-protocol": {
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "sha256": "3a67fc449265d894727cdc4ee3ae06df407541df7cc0ee2f78ddaee621d7420c",
+      "assessment_version": "reserve-protocol-architecture-2026-11-13-v2"
+    },
+    "reserve-yield-protocol": {
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "sha256": "0e42bb4c2b90532c483504ce310fbd2b1e414a1ba1bb76e901d61329cd56dbd2",
+      "assessment_version": "reserve-yield-protocol-architecture-2026-11-13-v1"
+    },
+    "reserve-index-protocol": {
+      "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "sha256": "884c1ce6d34b5d154744b33ad6ce71b9d27aea0ba711717e1fcb1315b564e513",
+      "assessment_version": "reserve-index-protocol-architecture-2026-11-13-v1"
+    }
+  },
+  "checks": {
+    "build_exit": 0,
+    "generated_routes": 120,
+    "local_browser_cases": 10,
+    "served_browser_cases": 10,
+    "widths": [
+      1440,
+      390
+    ],
+    "theme": "Existing TIDR dark theme; no site light toggle supported",
+    "minimum_sampled_text_contrast": 4.674285898380682,
+    "source_links_200": 15,
+    "source_links_total": 15,
+    "unscored_status_without_numeric_fallback": true,
+    "all_assessed_chains_empty": true,
+    "no_verified_chain_badges": true,
+    "family_child_navigation_and_usd3_return_link": true,
+    "usd3_scores_dates_and_existing_body_preserved_except_return_link": true,
+    "served_main_build_parity": [
+      {
+        "path": "protocols/reserve-protocol/",
+        "sha256": "775f89fb65f94b6e31f8e494bc6dff60b8996569f291c4a615fd532f0bbfc583",
+        "main_matches_build": true
+      },
+      {
+        "path": "protocols/reserve-yield-protocol/",
+        "sha256": "108e938b5badadf2e717d185e039b875d0a2ff3c49dd15ed9495f76be9223641",
+        "main_matches_build": true
+      },
+      {
+        "path": "protocols/reserve-index-protocol/",
+        "sha256": "8d2700cd55221077c467bb493097937dcb0990e6d763fa07bf73a5aafa001283",
+        "main_matches_build": true
+      },
+      {
+        "path": "protocols/",
+        "sha256": "f9f803c51a3d2d719c3c300ffa54beba18ed40476304f6f0473936d13e53c40c",
+        "main_matches_build": true
+      },
+      {
+        "path": "reports/usd3/",
+        "sha256": "cba5eca25afb241f7e7cf91451e4a7e2e267e3700edde59728c4589454a4dd4a",
+        "main_matches_build": true
+      }
+    ],
+    "unrelated_report_bodies_preserved": true,
+    "asset_directory_card_content_preserved": true,
+    "eusd_v3_all_static_file_hashes_preserved": true,
+    "eusd_forced_data_proxy_route_preserved": true,
+    "no_source_profile_or_private_owner_data_in_public_html": true,
+    "no_page_errors": true,
+    "no_document_overflow": true,
+    "temporary_local_servers_closed": true
+  },
+  "asset_coverage": {
+    "usd3": "Existing report crosslinked; all scores and dates unchanged",
+    "eusd": "No TIDR asset page exists; displayed unavailable/pending per RA clarification. Separate asset/dashboard refresh not completed by this hierarchy.",
+    "ethplus": "No TIDR asset page exists; displayed unavailable/pending. No new asset commission or grade."
+  },
+  "historical_reserve_eusd_route": "No existing source or deployed route; no fourth protocol page added/deleted",
+  "source_adaptation": "Reader-first public prose and primary links; local Markdown links rewritten or withheld for absent assets. Private profile/packet fields excluded.",
+  "configuration": "Existing staging input config bytes and maintained eUSD route unchanged. Netlify processed config metadata hash may vary with source artifact location; no site API/build-settings write.",
+  "netlify_processed_config_hash_before": "4614d95636dc1a7e94c0b42532dfc445439ec57a",
+  "netlify_processed_config_hash_after": "2eb7b3697a680f4c4afeafe627ac1de182fa6b81",
+  "production_before": "6af4712bb4a3f7dff8a2552d",
+  "production_after": "6af4712bb4a3f7dff8a2552d",
+  "production_deploy_or_configuration_change": false,
+  "separate_eusd_dashboard_or_asset_completion_claimed": false,
+  "commit_push_performed_for_hierarchy": false
+}

@@ -1,0 +1,27 @@
+{
+  "baseline_deploy": "6af6a7895907798a4f88c199",
+  "changed_existing_main_content": [
+    "protocols/index.html",
+    "reports/index.html",
+    "reports/usd3/index.html"
+  ],
+  "asset_index_card_content_preserved": true,
+  "usd3_only_return_link_and_relation_metadata": true,
+  "usd3_scores_and_dates_unchanged": true,
+  "usd3_baseline_metadata": {
+    "date": "2026-10-17",
+    "last_verified": "2026-10-17",
+    "peg_mechanism_score": 6.5,
+    "backing_score": 5.5,
+    "liquidity_score": 5.0,
+    "issuer_score": 6.5,
+    "overall_score": 5.5
+  },
+  "eusd_preview_all_static_bytes_and_proxy_configuration_preserved": true,
+  "new_protocol_pages": [
+    "reserve-protocol",
+    "reserve-yield-protocol",
+    "reserve-index-protocol"
+  ],
+  "new_asset_pages": []
+}

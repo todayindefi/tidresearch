@@ -1,0 +1,15 @@
+{
+  "branch": "staging/reserve-hierarchy-2026-11-13",
+  "base": "39bed3e",
+  "scope": "Three unscored Reserve protocol reports, USD3 return link, hierarchy/schema/directory support and bounded validation records",
+  "excluded": "Unrelated report edits, Aave economic report and score-component changes, financial-counterparty schema edits, production configuration and already-pushed eUSD preview source",
+  "validation_plan": "Run existing prebuild/build checks on isolated source; deployed acceptance records retain their original 120-route staging-build scope",
+  "deployment_performed": false,
+  "production_branch_or_config_changed": false,
+  "validation": {
+    "prebuild_and_build_exit": 0,
+    "scoped_source_routes_built": 100,
+    "git_diff_check_exit": 0,
+    "note": "Earlier served acceptance describes the full 120-route staging snapshot; this source branch intentionally excludes unrelated unpublished content."
+  }
+}

@@ -16,6 +16,7 @@ date: "2026-10-17"
 last_verified: "2026-10-17"
 production: false
 issuer: "Reserve Protocol"
+related_protocol: reserve-yield-protocol
 audited_reserves: false
 market_cap_approx: 1756000
 peg_mechanism_score: 6.5
@@ -30,6 +31,8 @@ overall_score: 5.5
 **Moderate risk · 5.5/10**
 
 An appreciating basket-backed RToken from Reserve Protocol on Ethereum.
+
+[Reserve Yield Protocol architecture](/protocols/reserve-yield-protocol/)
 
 ## Summary
 

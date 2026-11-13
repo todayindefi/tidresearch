@@ -1,0 +1,92 @@
+{
+  "all_passed": true,
+  "cases": [
+    {
+      "path": "protocols/reserve-protocol/",
+      "width": 1440,
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/reserve-yield-protocol/",
+      "width": 1440,
+      "version": "reserve-yield-protocol-architecture-2026-11-13-v1",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/reserve-index-protocol/",
+      "width": 1440,
+      "version": "reserve-index-protocol-architecture-2026-11-13-v1",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/",
+      "width": 1440,
+      "one_family_entry": true,
+      "two_child_links": true,
+      "unscored_filter_semantics": true
+    },
+    {
+      "path": "reports/usd3/",
+      "width": 1440,
+      "return_link": true
+    },
+    {
+      "path": "protocols/reserve-protocol/",
+      "width": 390,
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/reserve-yield-protocol/",
+      "width": 390,
+      "version": "reserve-yield-protocol-architecture-2026-11-13-v1",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/reserve-index-protocol/",
+      "width": 390,
+      "version": "reserve-index-protocol-architecture-2026-11-13-v1",
+      "unscored": true,
+      "assessed_chains": [],
+      "no_overflow": true,
+      "navigation": true,
+      "minimum_sampled_text_contrast": 4.674285898380682
+    },
+    {
+      "path": "protocols/",
+      "width": 390,
+      "one_family_entry": true,
+      "two_child_links": true,
+      "unscored_filter_semantics": true
+    },
+    {
+      "path": "reports/usd3/",
+      "width": 390,
+      "return_link": true
+    }
+  ],
+  "page_errors": [],
+  "temporary_server_closed": false,
+  "theme": "Existing TIDR dark theme; no light-theme toggle supported"
+}

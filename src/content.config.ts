@@ -114,6 +114,7 @@ const common = {
   // Two reports in a pair cross-link via companion_report (slug of the other).
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
+  related_protocol: z.string().optional(),
   date: z.coerce.date(),
   last_verified: z.coerce.date().optional(),
   // A bounded assessment may deliberately make no whole-report verification claim.
@@ -342,13 +343,24 @@ const tradfiEquity = z.object({
 // replace the asset field with protocol so future reports do not blur the two collections.
 const protocolReport = z.object({
   ...common,
+  assessment_type: z.enum(["full", "light", "dependency", "architecture_review"]),
+  overall_score: score.optional(),
+  score_status: z.literal("unscored_shared_architecture_no_deployment_clearance").optional(),
+  report_role: z.enum(["family", "component"]).optional(),
+  parent_protocol: z.string().optional(),
+  child_protocols: z.array(z.string()).optional(),
+  related_assets: z.array(z.string()).optional(),
+  selected_evidence_version: z.string().optional(),
+  source_commit: z.string().optional(),
+  assessed_chains: z.array(z.string()).optional(),
+  assessment_version: z.string().optional(),
   asset: z.never().optional(),
   protocol: z.string(),
   category: z.literal("protocol"),
   protocol_category: z.string().optional(),
-  contract_score: score,
-  economic_score: score,
-  project_score: score,
+  contract_score: score.optional(),
+  economic_score: score.optional(),
+  project_score: score.optional(),
   score_weights: z
     .object({
       contract: z.number(),
@@ -371,6 +383,14 @@ const protocolReport = z.object({
   is_fork: z.boolean().optional(),
   fork_of: z.string().optional(),
 }).superRefine((data, ctx) => {
+  const keys = ["contract_score", "economic_score", "project_score", "overall_score"] as const;
+  if (data.assessment_type === "architecture_review") {
+    if (keys.some((key) => data[key] !== undefined) || data.assessed_chains?.length !== 0 || !data.score_status) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Architecture reviews require explicit unscored status, empty assessed chains and no numeric scores" });
+    }
+  } else if (keys.some((key) => typeof data[key] !== "number")) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Scored protocol reports require all four numeric scores" });
+  }
   if (!data.last_verified && (data.verification_scope !== "bounded" || !data.last_revised)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["last_verified"], message: "Missing whole-report verification requires bounded scope and an explicit review date" });
   }

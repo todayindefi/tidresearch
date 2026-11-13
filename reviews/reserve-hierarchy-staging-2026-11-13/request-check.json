@@ -1,0 +1,91 @@
+{
+  "manifest": "/home/danger/riskAnalyst/data/reviews/reserve-protocol-2026-11-13/tidr-staging-request-v1.json",
+  "exit_code": 2,
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "contract",
+      "detail": "Shared handoff v1 structure"
+    },
+    {
+      "status": "PASS",
+      "check": "authority",
+      "detail": "Scope consistent; authorization reference is not independently verified"
+    },
+    {
+      "status": "GAP",
+      "check": "source_0",
+      "detail": "Observation time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "GAP",
+      "check": "source_0",
+      "detail": "Retrieval time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "PASS",
+      "check": "source_0",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "source_1",
+      "detail": "Observation time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "GAP",
+      "check": "source_1",
+      "detail": "Retrieval time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "PASS",
+      "check": "source_1",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "source_2",
+      "detail": "Observation time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "GAP",
+      "check": "source_2",
+      "detail": "Retrieval time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "PASS",
+      "check": "source_2",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "GAP",
+      "check": "source_3",
+      "detail": "Observation time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "GAP",
+      "check": "source_3",
+      "detail": "Retrieval time unknown: Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "status": "PASS",
+      "check": "source_3",
+      "detail": "Artifact hash and declared scope match (contents not identity-certified)"
+    },
+    {
+      "status": "WAIT",
+      "check": "staging_acceptance",
+      "detail": "Human review pending"
+    },
+    {
+      "status": "WAIT",
+      "check": "staging_delivery",
+      "detail": "Staging deployment and served acceptance pending; reopen: TIDR delivers versioned served acceptance"
+    },
+    {
+      "status": "WAIT",
+      "check": "workflow",
+      "detail": "Request is not a completed evidence handoff"
+    }
+  ]
+}

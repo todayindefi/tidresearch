@@ -1,0 +1,123 @@
+{
+  "contract_version": 1,
+  "task_id": "reserve-hierarchy-tidr-staging-2026-11-13",
+  "summary": "User-authorized Reserve family/Yield/Index staging publication",
+  "owner": "riskAnalyst",
+  "recipient": "TIDR",
+  "state": "requested",
+  "authority": {
+    "max_stage": "staging",
+    "reference": "User explicitly said ok send it after reviewing pushed hierarchy and TIDR staging plan; production excluded"
+  },
+  "scope": [
+    {
+      "project": "reserve-protocol",
+      "component": "shared-yield-index-architecture",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "documentary-family-context-not-deployment-assurance"
+      ]
+    }
+  ],
+  "evidence_version": "reserve-eusd-documentary-2026-11-13-v1",
+  "assessment_version": "reserve-protocol-architecture-2026-11-13-v2",
+  "artifacts": [
+    {
+      "id": "source_0",
+      "path": "/home/danger/riskAnalyst/reports/reserve-protocol.md",
+      "sha256": "3a67fc449265d894727cdc4ee3ae06df407541df7cc0ee2f78ddaee621d7420c",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "git:15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "source_refs": [
+        "Committed riskAnalyst source15a278e; direct user staging commission"
+      ],
+      "observed_at": null,
+      "retrieved_at": null,
+      "clock_note": "Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "id": "source_1",
+      "path": "/home/danger/riskAnalyst/reports/reserve-yield-protocol.md",
+      "sha256": "0e42bb4c2b90532c483504ce310fbd2b1e414a1ba1bb76e901d61329cd56dbd2",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "git:15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "source_refs": [
+        "Committed riskAnalyst source15a278e; direct user staging commission"
+      ],
+      "observed_at": null,
+      "retrieved_at": null,
+      "clock_note": "Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "id": "source_2",
+      "path": "/home/danger/riskAnalyst/reports/reserve-index-protocol.md",
+      "sha256": "884c1ce6d34b5d154744b33ad6ce71b9d27aea0ba711717e1fcb1315b564e513",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "git:15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "source_refs": [
+        "Committed riskAnalyst source15a278e; direct user staging commission"
+      ],
+      "observed_at": null,
+      "retrieved_at": null,
+      "clock_note": "Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    },
+    {
+      "id": "source_3",
+      "path": "/home/danger/riskAnalyst/specs/handoffs/reserve-report-hierarchy-tidr-staging-plan-2026-11-13.md",
+      "sha256": "ea2a7c6e9515ca347647634c4a843c689a33bcae1df3624332590226d14b7855",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "git:15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+      "source_refs": [
+        "Committed riskAnalyst source15a278e; direct user staging commission"
+      ],
+      "observed_at": null,
+      "retrieved_at": null,
+      "clock_note": "Authored source versions; original documentary clocks retained in report, no live deployment verification inferred"
+    }
+  ],
+  "checks": [
+    {
+      "id": "staging_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "pending",
+      "note": "TIDR must return served parity, privacy/navigation and desktop/mobile receipt; no completed staging claim yet"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "staging_delivery",
+      "description": "Staging deployment and served acceptance pending",
+      "blocking": true,
+      "reopen_when": "TIDR delivers versioned served acceptance"
+    }
+  ]
+}

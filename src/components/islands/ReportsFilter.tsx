@@ -5,12 +5,15 @@ export interface ReportRow {
   asset: string;
   aliases?: string[];
   category: string;
-  assessment_type: "full" | "light";
+  assessment_type: "full" | "light" | "dependency" | "architecture_review";
   audience?: "retail" | "institutional";
   chains: string[];
   chain_labels: string[];
-  overall_score: number;
-  last_verified: string;
+  overall_score?: number;
+  child_protocols?: Array<{ slug: string; asset: string }>;
+  assessed_chains?: string[];
+  assessment_version?: string;
+  last_verified?: string;
   last_revised?: string;
   featured?: boolean;
   /** a live backing dashboard exists for this ASSET (see src/lib/dashboards.ts) */
@@ -76,7 +79,7 @@ export default function ReportsFilter({
     return reports.filter((r) => {
       if (category !== "all" && r.category !== category) return false;
       if (chain !== "all" && !r.chain_labels.includes(chain)) return false;
-      if (!bandFn(r.overall_score)) return false;
+      if (band !== "any" && (typeof r.overall_score !== "number" || !bandFn(r.overall_score))) return false;
       if (monitoredOnly && !r.has_dashboard) return false;
       if (qq && ![r.asset, ...(r.aliases ?? [])].some((name) => name.toLowerCase().includes(qq))) return false;
       return true;
@@ -152,9 +155,11 @@ export default function ReportsFilter({
             const href = isInstitutional
               ? `${basePath}/${r.slug}/request`
               : `${basePath}/${r.slug}`;
-            return (
+            const card = (
             <a
               key={r.slug}
+              data-assessment-version={r.assessment_version}
+              data-assessed-chains={r.assessed_chains ? JSON.stringify(r.assessed_chains) : undefined}
               href={href}
               className="block bg-card border border-border/60 hover:border-primary/60 transition-colors p-6 group"
             >
@@ -174,7 +179,7 @@ export default function ReportsFilter({
                     <span className="uppercase tracking-widest text-xs text-muted-foreground/80 font-semibold">
                       {categoryLabel(r.category)}
                     </span>
-                    {r.assessment_type === "full" && (
+                    {r.assessment_type === "full" && r.assessed_chains?.length !== 0 && (
                       <span className="uppercase tracking-widest text-xs text-muted-foreground/40 font-semibold">
                         · Full
                       </span>
@@ -184,13 +189,16 @@ export default function ReportsFilter({
                     {r.asset}
                   </h3>
                 </div>
-                <span
+                {typeof r.overall_score === "number" ? <span
                   className={`inline-flex items-center gap-1 font-mono font-bold border px-2.5 py-1 text-sm shrink-0 ${tone(r.overall_score)}`}
                 >
                   <span className="opacity-70 font-normal mr-1">Score</span>
                   {r.overall_score.toFixed(1)}
-                </span>
+                </span> : <span className="text-sm text-muted-foreground border border-border px-2.5 py-1">Unscored</span>}
               </div>
+              {r.assessed_chains?.length === 0 && (
+                <p className="text-sm text-muted-foreground mb-3">{r.assessment_type === "architecture_review" ? "Unscored architecture · deployments unassessed" : "Provisional family grade · deployments unassessed"}</p>
+              )}
               <div className="flex flex-wrap gap-1 mb-3">
                 {r.is_dependency && (
                   <span
@@ -208,7 +216,7 @@ export default function ReportsFilter({
                     Live dashboard
                   </span>
                 )}
-                {r.chain_labels.map((c) => (
+                {r.assessment_type !== "architecture_review" && r.chain_labels.map((c) => (
                   <span
                     key={c}
                     className="inline-flex items-center px-2 py-0.5 text-xs font-mono uppercase tracking-wider border border-border text-muted-foreground"
@@ -217,6 +225,7 @@ export default function ReportsFilter({
                   </span>
                 ))}
               </div>
+              {r.assessment_type === "architecture_review" && <p className="text-xs text-muted-foreground mb-3">Documented context: {r.chain_labels.join(", ")}. No verified chain grades.</p>}
               {/* ⚠️ ONE date, the LATER of the two, labelled "Last reviewed" — owner
                   decision 2026-09-07. The word is the point: a page saying
                   "Verified" after a partial pass claims a full re-check that did
@@ -233,12 +242,13 @@ export default function ReportsFilter({
                   unambiguous label. */}
               <p className="text-xs text-muted-foreground font-mono">
                 Last reviewed{" "}
-                {r.last_revised && r.last_revised > r.last_verified
+                {r.last_revised && (!r.last_verified || r.last_revised > r.last_verified)
                   ? r.last_revised
                   : r.last_verified}
               </p>
             </a>
             );
+            return r.child_protocols?.length ? <div key={r.slug}>{card}<nav aria-label={`${r.asset} component reports`} className="border border-t-0 border-border/60 px-6 py-4 flex flex-wrap gap-4 text-sm">{r.child_protocols.map((child) => <a key={child.slug} href={`${basePath}/${child.slug}/`}>{child.asset} →</a>)}</nav></div> : card;
           })}
         </div>
       )}

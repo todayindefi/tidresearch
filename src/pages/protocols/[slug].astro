@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import ReportLayout from "@/layouts/ReportLayout.astro";
+import ArchitectureReportLayout from "@/layouts/ArchitectureReportLayout.astro";
 import { sectionEnabled, visibleAtCurrentStage } from "@/lib/stage";
 
 export async function getStaticPaths() {
@@ -17,8 +18,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
+const Layout = entry.data.assessment_type === "architecture_review" ? ArchitectureReportLayout : ReportLayout;
 ---
 
-<ReportLayout data={entry.data} headings={headings}>
+<Layout data={entry.data} headings={headings}>
   <Content />
-</ReportLayout>
+</Layout>

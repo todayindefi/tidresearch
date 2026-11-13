@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+import { chainLabel } from "@/lib/chains";
+const { data } = Astro.props;
+const parent = data.parent_protocol ? await getEntry("protocols", data.parent_protocol) : null;
+const children = await Promise.all((data.child_protocols ?? []).map((slug: string) => getEntry("protocols", slug)));
+const assets = await Promise.all((data.related_assets ?? []).map(async (slug: string) => ({ slug, entry: await getEntry("reports", slug) })));
+const names: Record<string, string> = { eusd: "eUSD", usd3: "USD3", ethplus: "ETH+" };
+---
+<BaseLayout title={`${data.protocol} — Architecture Risk Report | TID Research`} description={`${data.protocol}: unscored documentary architecture and governance review.`}>
+  <article class="container-page py-12 max-w-5xl" data-architecture-report={data.slug} data-assessment-version={data.assessment_version} data-source-commit={data.source_commit} data-assessed-chains="[]" data-score-status="unscored">
+    <nav aria-label="Protocol hierarchy" class="flex flex-wrap gap-3 text-sm mb-8">
+      <a href="/protocols/">All protocols</a>
+      {parent && <a href={`/protocols/${parent.data.slug}/`}>← {parent.data.protocol}</a>}
+    </nav>
+    <p class="text-sm text-muted-foreground mb-4">Unscored architecture review · no verified chain grades</p>
+    <div class="prose-report min-w-0"><slot /></div>
+    {children.length > 0 && <nav aria-label="Component reports" class="grid md:grid-cols-2 gap-4 mt-10">
+      {children.map((child) => child && <a class="border border-border bg-card p-5" href={`/protocols/${child.data.slug}/`}><span class="font-semibold">{child.data.protocol}</span><span class="block text-sm text-muted-foreground mt-2">Unscored component architecture review →</span></a>)}
+    </nav>}
+    {assets.length > 0 && <section class="mt-10" aria-label="Related Yield assets"><h2 class="text-xl font-bold mb-3">Related Yield assets</h2><ul class="space-y-2">{assets.map(({ slug, entry }) => <li>{entry ? <a href={`/reports/${entry.data.slug}/`}>{entry.data.asset} — independent asset assessment</a> : <span>{names[slug] ?? slug} — asset report unavailable / pending</span>}</li>)}</ul></section>}
+    <section class="mt-10 border-t border-border pt-6 text-sm text-muted-foreground [overflow-wrap:anywhere]" aria-label="Assessment provenance">
+      <p>Documentary assessment: {new Date(data.date).toISOString().slice(0, 10)}. No current whole-report or deployment verification date is claimed.</p>
+      <p class="mt-2">Documented context: {data.chains.map(chainLabel).join(", ")}. All deployments remain unassessed.</p>
+      <p class="mt-2">Assessment: {data.assessment_version}. Evidence selection: {data.selected_evidence_version}.</p>
+      <p class="mt-2">Source version: {data.source_commit}.</p>
+    </section>
+  </article>
+</BaseLayout>

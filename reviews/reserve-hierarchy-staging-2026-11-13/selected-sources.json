@@ -1,0 +1,17 @@
+{
+  "reserve-protocol": {
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "sha256": "3a67fc449265d894727cdc4ee3ae06df407541df7cc0ee2f78ddaee621d7420c",
+    "assessment_version": "reserve-protocol-architecture-2026-11-13-v2"
+  },
+  "reserve-yield-protocol": {
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "sha256": "0e42bb4c2b90532c483504ce310fbd2b1e414a1ba1bb76e901d61329cd56dbd2",
+    "assessment_version": "reserve-yield-protocol-architecture-2026-11-13-v1"
+  },
+  "reserve-index-protocol": {
+    "source_commit": "15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+    "sha256": "884c1ce6d34b5d154744b33ad6ce71b9d27aea0ba711717e1fcb1315b564e513",
+    "assessment_version": "reserve-index-protocol-architecture-2026-11-13-v1"
+  }
+}

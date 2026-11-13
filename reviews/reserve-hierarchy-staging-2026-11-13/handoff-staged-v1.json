@@ -1,0 +1,321 @@
+{
+  "contract_version": 1,
+  "task_id": "reserve-hierarchy-tidr-staged-2026-11-13-v1",
+  "summary": "Completed staging-only Reserve family/Yield/Index unscored architecture hierarchy",
+  "owner": "TIDR",
+  "recipient": "riskAnalyst",
+  "state": "staged",
+  "authority": {
+    "max_stage": "staging",
+    "reference": "User explicitly said ok send it after reviewing pushed hierarchy and TIDR staging plan; production excluded"
+  },
+  "scope": [
+    {
+      "project": "reserve-protocol",
+      "component": "shared-yield-index-architecture",
+      "chain_id": "eip155:1",
+      "identifiers": [
+        "documentary-family-context-not-deployment-assurance"
+      ]
+    }
+  ],
+  "evidence_version": "reserve-eusd-documentary-2026-11-13-v1",
+  "assessment_version": "reserve-protocol-architecture-2026-11-13-v2",
+  "artifacts": [
+    {
+      "id": "receipt",
+      "path": "acceptance.json",
+      "sha256": "ba24b9d8ac29661a8e674e1158b7bbfeaef8913ca7704890151d87b3397f15a9",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "consumer",
+      "path": "consumer-pages.json",
+      "sha256": "49e10f3e1dd961493b07afe8d4d772fa941b126a81b758e656223999cf6e13bb",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "sources",
+      "path": "selected-sources.json",
+      "sha256": "ab01c9d10efef73f744f55b8de71eeb275639c69b28b2f0fced2e453c59f1693",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "index",
+      "path": "selected-index-entries.json",
+      "sha256": "7c8fc9e54aee34c5d26a2859b4272ba549a3373be585681072e047d64d120e08",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "served",
+      "path": "served-browser.json",
+      "sha256": "36ace44224773ebcfcf13a0c4e8491f09caa603c61a3df6eba07ab31a283e277",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "local",
+      "path": "local-browser.json",
+      "sha256": "3bfb37e4a11c284388b3955d5e748c4f6f48f1c091c9a1a7e23139dd79322e84",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    },
+    {
+      "id": "boundary",
+      "path": "release-boundary.json",
+      "sha256": "f4b5a8ce19be9ca89cc2b57fdbc5f58ee4817200986b562bc792d9be91a2cce7",
+      "scope": {
+        "project": "reserve-protocol",
+        "component": "shared-yield-index-architecture",
+        "chain_id": "eip155:1",
+        "identifiers": [
+          "documentary-family-context-not-deployment-assurance"
+        ]
+      },
+      "version": "reserve-protocol-architecture-2026-11-13-v2",
+      "source_refs": [
+        "RiskAnalyst committed source15a278e97b8d55c8d987fbe1dda3627e2f29f62d",
+        "TIDR staging deploy6af6a936cde25c575437f232"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-13T06:10:51.693381+00:00",
+      "clock_note": "Consumer retrieval/publication clock. Documentary dateNov13 and pinned component observations retain their own clocks; no live deployment clearance."
+    }
+  ],
+  "checks": [
+    {
+      "id": "reserve-protocol_version",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-protocol/assessment_version",
+      "other_artifact": "sources",
+      "other_pointer": "/reserve-protocol/assessment_version"
+    },
+    {
+      "id": "reserve-protocol_unscored",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-protocol/scores",
+      "expected": {}
+    },
+    {
+      "id": "reserve-protocol_chains",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-protocol/assessed_chains",
+      "expected": []
+    },
+    {
+      "id": "reserve-protocol_no_verification_date",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-protocol/last_verified",
+      "expected": null
+    },
+    {
+      "id": "reserve-yield-protocol_version",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-yield-protocol/assessment_version",
+      "other_artifact": "sources",
+      "other_pointer": "/reserve-yield-protocol/assessment_version"
+    },
+    {
+      "id": "reserve-yield-protocol_unscored",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-yield-protocol/scores",
+      "expected": {}
+    },
+    {
+      "id": "reserve-yield-protocol_chains",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-yield-protocol/assessed_chains",
+      "expected": []
+    },
+    {
+      "id": "reserve-yield-protocol_no_verification_date",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-yield-protocol/last_verified",
+      "expected": null
+    },
+    {
+      "id": "reserve-index-protocol_version",
+      "kind": "json_same",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-index-protocol/assessment_version",
+      "other_artifact": "sources",
+      "other_pointer": "/reserve-index-protocol/assessment_version"
+    },
+    {
+      "id": "reserve-index-protocol_unscored",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-index-protocol/scores",
+      "expected": {}
+    },
+    {
+      "id": "reserve-index-protocol_chains",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-index-protocol/assessed_chains",
+      "expected": []
+    },
+    {
+      "id": "reserve-index-protocol_no_verification_date",
+      "kind": "json_equals",
+      "required": true,
+      "artifact": "consumer",
+      "pointer": "/reserve-index-protocol/last_verified",
+      "expected": null
+    },
+    {
+      "id": "evidence_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "receipt",
+      "note": "Pushed documentary source and matching index selected under explicit user staging commission; no new financial/security assurances inferred."
+    },
+    {
+      "id": "assessment_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "riskAnalyst",
+      "artifact": "receipt",
+      "note": "Authored unscored architecture hierarchy accepted as source; all source/index version and empty-score metadata parity checked. Subsequent owner review of served adaptation remains separate."
+    },
+    {
+      "id": "staging_acceptance",
+      "kind": "review",
+      "required": true,
+      "status": "accepted",
+      "reviewer": "TIDR",
+      "artifact": "receipt",
+      "note": "Served parity, desktop/mobile contrast/navigation/privacy/unscored semantics and production boundary accepted. Missing eUSD/ETH+ asset pages are disclosed nonblocking coverage gaps per explicit owner clarification."
+    }
+  ],
+  "gaps": [
+    {
+      "id": "missing_asset_pages",
+      "description": "Reserve eUSD and ETH+ asset reports absent; no dead links/new assessments. USD3 crosslinked with unchanged scores/dates. Owner explicitly accepted coverage gap.",
+      "blocking": false,
+      "reopen_when": "Separate approved asset report commission and completed assessment supplied"
+    },
+    {
+      "id": "deployed_control_assurance",
+      "description": "Complete current authority/audit/runtime binding unverified; all three reviews remain unscored, assessed_chains empty",
+      "blocking": false,
+      "reopen_when": "Accepted exact deployment evidence and new scored assessment"
+    },
+    {
+      "id": "owner_served_parity_review",
+      "description": "TIDR staging accepted; RiskAnalyst may review served adaptation before marking its downstream publication task complete",
+      "blocking": false,
+      "reopen_when": "Owner reviews returned staging receipt"
+    }
+  ]
+}
