@@ -1,0 +1,78 @@
+{
+  "receipt_version": 1,
+  "status": "staging_renderer_and_gap_panels_verified",
+  "checked_at": "2026-11-13T14:49:34.276047+00:00",
+  "url": "https://staging.tidresearch.com/previews/eusd/?asset=eusd",
+  "deploy_id": "6af722cc15137c456cd4a559",
+  "baseline_deploy": "6af6b4394242498af7a86107",
+  "source_commit": "26f8c8121b",
+  "static_manifest_sha256": "6dfb301c07b5fc9d30b56f584644b2e5159e931d5e0c8305d80136b269a92630",
+  "renderer_sha256": "2fe903f44d14631ccc998fc09afceda3ef41a0403314b5db3329af8ce5ff4842",
+  "renderer_bytes": 39520,
+  "selected_generation": "0cd53d6d21a87b0f20b92547000c8e8f2653f6d125fa60a903e578f41e2e11c7",
+  "data_manifest_sha256": "0cd53d6d21a87b0f20b92547000c8e8f2653f6d125fa60a903e578f41e2e11c7",
+  "financial_source_clock": {
+    "block_hash": "0xaa6d2133fe14ef57500e949c0fa6348b4f36a5ee66845695db0fce97f8aff913",
+    "block_number": 26406508,
+    "block_timestamp": "2026-11-13T14:01:59+00:00",
+    "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+    "observed_at": "2026-11-13T14:17:59.597227+00:00",
+    "pinning": "one_block_number_with_end_hash_check"
+  },
+  "runtime": {
+    "dynamic_seconds": 7200,
+    "last_assembly_completed_at": "2026-11-13T14:44:46.144571+00:00",
+    "last_collection_completed_at": "2026-11-13T14:17:59.597227+00:00",
+    "owner": "BackingMonitor",
+    "schedule_installed": true,
+    "scope": "Reserve Ethereum eUSD only; documentary/Security observations retain separate clocks"
+  },
+  "original_security_clock": {
+    "block_hash": "0x760b0ef34f4f74faad95d55aad380a3268b04fe4fb64dde959090cb0df21bcfc",
+    "block_number": 26403764,
+    "block_timestamp": "2026-11-13T04:51:11+00:00",
+    "clock_policy": "Preserve this Security source block/time separately from financial refresh times; a later 2h dashboard fetch does not reverify controls.",
+    "observed_at": "2026-11-13T04:51:59.571101+00:00",
+    "pinning": "one_block_number_with_end_hash_check",
+    "reviewed_at": "2026-11-13T06:07:24.798351+00:00",
+    "security_observed_at": "2026-11-13T06:01:02.276769+00:00",
+    "supplement_observed_at": "2026-11-13T06:03:50.717150+00:00"
+  },
+  "clock_policy": "Assembly14:44:46 is not a new financial collection. Native block26406508/14:01:59 UTC and read14:17:59.597227 retained. Security/extension, quote, lookthrough, reconciliation and simulation fields retain their own dataset clocks.",
+  "checks": {
+    "renderer_http_sha256_matches_frozen": true,
+    "all_four_selected_json_hashes_and_bytes_verified": true,
+    "browser_widths": [
+      1440,
+      390
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "expanded_owner_and_completion_tracker": true,
+    "actual_retained_history": true,
+    "conditional_composed_cash_simulation_panel": true,
+    "holder_balance_limited_label_retained": true,
+    "bounded_security_controller_rsr_extension": true,
+    "accrued_reconciliation_and_recorded_deficit_panel": true,
+    "page_errors": [],
+    "no_document_overflow": true,
+    "no_private_paths_or_holder_fields_in_visible_ui": true,
+    "only_deployed_file_change": [
+      "/previews/eusd/js/renderers/eusd.js"
+    ],
+    "outside_prefix_all_file_hashes_preserved": true,
+    "all_other_preview_static_hashes_preserved": true,
+    "no_files_added_or_deleted": true,
+    "reserve_hierarchy_and_eusd_asset_report_hashes_preserved": true,
+    "forced_data_route_and_processed_config_hash_preserved": true
+  },
+  "production_before": "6af4712bb4a3f7dff8a2552d",
+  "production_after": "6af4712bb4a3f7dff8a2552d",
+  "production_deploy_or_config_change": false,
+  "report_score_or_date_changes": false,
+  "recurring_jobs_added_or_modified_by_TIDR": false,
+  "scope_limit": "Only consume and display owner-produced evidence. Conditional simulation is not a settled execution, unrestricted holder capacity or stress-recovery proof. No score reassessment or report dispatch follows automatically.",
+  "source_branch": "staging/eusd-preview-source-2026-11-13"
+}

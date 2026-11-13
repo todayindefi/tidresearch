@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "sha256": "2fe903f44d14631ccc998fc09afceda3ef41a0403314b5db3329af8ce5ff4842",
+  "bytes": 39520,
+  "expected": {
+    "sha256": "2fe903f44d14631ccc998fc09afceda3ef41a0403314b5db3329af8ce5ff4842",
+    "bytes": 39520
+  },
+  "matches": true
+}
