@@ -1,0 +1,2787 @@
+/**
+ * Saturn renderer — USDat (synthetic stablecoin) + sUSDat (ERC-4626 vault share).
+ *
+ * Single renderer registered for both slugs; the two assets share the audit
+ * set, the admin EOA, and the cross-asset family panel. Asset-specific
+ * divergence lives in:
+ *   - asset_specific.type ('usdat' | 'susdat')
+ *   - _renderHeadlineCard (different headline metrics)
+ *   - _renderUsdatBackingComposition + _renderUsdatDriftProbe (USDat only)
+ *   - _renderSusdatReserveSplit + _renderSusdatNavTrajectory (sUSDat only)
+ *
+ * Data sources:
+ *   - data/usdat_backing.json + data/usdat_backing_history.json
+ *   - data/susdat_backing.json + data/susdat_backing_history.json
+ *   - data/saturn_family.json (async-loaded for the cross-asset family panel)
+ *
+ * Modeled on js/renderers/apyx.js — same Trust Stack pattern, same suppression
+ * of common panels, same async family-panel load. Materially simpler than apyx
+ * (no CCIP bridge, no live Accountable feed, single chain).
+ */
+
+var SATURN_ADDRS = {
+    USDAT:             '0x23238f20b894f29041f48d88ee91131c395aaa71',
+    SUSDAT:            '0xd166337499e176bbc38a1fbd113ab144e5bd2df7',
+    USDAT_PROXY_ADMIN: '0xcf1072da5f0d127aef99136489bad08bfa3d1a7d',
+    ADMIN_EOA:         '0x610182581C93687Ca03F4a8E7f124f8cEC616820',
+    M_TOKEN:           '0x866A2BF4E572CbcF37D5071A7a58503Bfb36be1b',
+    USDC:              '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+};
+
+var SATURN_COLORS = {
+    M:      '#10b981',  // emerald — $M (T-bill-backed)
+    PYUSDx: '#8b5cf6',  // violet — MoonPay-issued extension on M0 infrastructure
+    USDC:   '#3b82f6',  // blue — on-chain dollar
+    STRC:   '#f59e0b',  // amber — oracle-attested off-chain
+    OTHER:  '#ef4444',  // red — would be a drift signal
+    _FALLBACK: '#64748b' // slate — an asset the reserve rotated into that this
+                         // map does not know yet. A missing colour must never be
+                         // a reason a row does not render.
+};
+
+// Display labels for known reserve assets. A key absent here renders under its
+// own symbol rather than being skipped.
+var SATURN_ASSET_LABELS = {
+    M: '$M  <span class="text-xs text-slate-500 font-normal">(M^0 T-bill backed)</span>',
+    PYUSDx: 'PYUSDx  <span class="text-xs text-slate-500 font-normal">(MoonPay / M0 extension)</span>'
+};
+
+// Preferred display order; anything else follows in feed order.
+var SATURN_ASSET_ORDER = ['M', 'PYUSDx', 'USDC', 'STRC'];
+
+var SaturnRenderer = {
+
+    // ============================================================
+    // helpers
+    // ============================================================
+    _isSaturn: function(t) { return t === 'usdat' || t === 'susdat'; },
+
+    _truncAddr: function(addr) {
+        if (!addr) return '-';
+        return addr.slice(0, 6) + '...' + addr.slice(-4);
+    },
+
+    _escHtml: function(v) {
+        if (v == null) return '';
+        return String(v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    },
+
+    _explorerLink: function(addr) {
+        if (!addr) return '';
+        return '<a href="https://etherscan.io/address/' + addr + '" target="_blank" rel="noopener noreferrer" ' +
+            'class="text-blue-500 hover:underline text-xs" title="' + addr + '">↗</a>';
+    },
+
+    _addrCell: function(addr) {
+        if (!addr) return '<span class="text-slate-400">-</span>';
+        return '<span class="font-mono text-xs" title="' + addr + '">' +
+            SaturnRenderer._truncAddr(addr) +
+            '</span> ' + SaturnRenderer._explorerLink(addr);
+    },
+
+    _statusDot: function(state) {
+        var color;
+        if (state === 'ok')            color = '#22c55e';
+        else if (state === 'warn')     color = '#f59e0b';
+        else if (state === 'critical') color = '#ef4444';
+        else                           color = '#94a3b8';
+        return '<span class="inline-block w-2 h-2 rounded-full align-middle" ' +
+            'style="background:' + color + '"></span>';
+    },
+
+    _statusPill: function(label, state, extra) {
+        var bg, fg;
+        if (state === 'ok')            { bg = 'bg-green-100'; fg = 'text-green-800'; }
+        else if (state === 'warn')     { bg = 'bg-amber-100'; fg = 'text-amber-800'; }
+        else if (state === 'critical') { bg = 'bg-red-100';   fg = 'text-red-800'; }
+        else                           { bg = 'bg-slate-100'; fg = 'text-slate-700'; }
+        return '<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ' + bg + ' ' + fg + '">' +
+            SaturnRenderer._statusDot(state) +
+            '<span>' + label + (extra ? ' <span class="font-mono">' + extra + '</span>' : '') + '</span>' +
+        '</span>';
+    },
+
+    _anchor: function(id, html) {
+        if (!html || typeof html !== 'string') return html;
+        return html.replace(/^(<div class="panel")/, '<div id="' + id + '" class="panel"');
+    },
+
+    _backingRatioState: function(ratio) {
+        if (ratio == null) return 'unknown';
+        if (ratio >= 0.999) return 'ok';
+        if (ratio >= 0.99)  return 'warn';
+        return 'critical';
+    },
+
+    _bufferRatioState: function(ratio) {
+        if (ratio == null) return 'unknown';
+        if (ratio >= 0.10) return 'ok';
+        if (ratio >= 0.05) return 'warn';
+        return 'critical';
+    },
+
+    _apyState: function(apy) {
+        // Headline target is 11% per Saturn docs; alerter thresholds:
+        //   > 8% ok, 3-8% watch, < 3% stall.
+        if (apy == null) return 'unknown';
+        if (apy >= 0.08) return 'ok';
+        if (apy >= 0.03) return 'warn';
+        return 'critical';
+    },
+
+    _pegStatusClass: function(pctValue) { return CommonRenderer.pegStatusClass(pctValue); },
+    _pegStatusLabel: function(state)    { return CommonRenderer.pegStatusLabel(state); },
+    _pegPctText:     function(pct, d)   { return CommonRenderer.pegPctText(pct, d); },
+    _pegPctClass:    function(state)    { return CommonRenderer.pegPctClass(state); },
+
+    // Stored discount_to_nav_pct = (NAV - price) / NAV * 100, positive = discount.
+    // Display convention is price-vs-NAV: positive = premium, negative = discount.
+    _navDevDisplay: function(nav, price, storedDiscount) {
+        if (nav != null && price != null && nav > 0) {
+            return (price - nav) / nav * 100;
+        }
+        return storedDiscount != null ? -storedDiscount : null;
+    },
+
+    _navDevState: function(disp) {
+        if (disp == null) return 'unknown';
+        if (disp >= 0) {
+            if (disp < 1.0) return 'ok';
+            if (disp < 3.0) return 'warn';
+            return 'critical';
+        }
+        var a = -disp;
+        if (a < 0.5) return 'ok';
+        if (a < 1.5) return 'warn';
+        return 'critical';
+    },
+
+    _navDevWord: function(disp) {
+        if (disp == null) return '—';
+        if (Math.abs(disp) < 0.05) return 'at NAV';
+        return disp > 0 ? 'premium · trades above NAV' : 'discount · trades below NAV';
+    },
+
+    // ============================================================
+    // pre-render — runs before common renderer paints
+    // ============================================================
+    // Saturn summary blocks don't match common renderer's expected shape
+    // (total_supply / total_backing / collateral_ratio / backing_breakdown).
+    // We synthesize the minimum so common.js doesn't crash, then suppress
+    // its panels in render() and paint the rich custom panels below.
+    _applyUsdatAccountingReview: function(data) {
+        var specific = data.asset_specific || {}, s = data.summary || {};
+        var implementation = '0x496a4a33b6181f4536203488d9a05ac1429e702c';
+        if (specific.type !== 'usdat' || String(data.chain || '').toLowerCase() !== 'ethereum' ||
+            String(s.implementation || '').toLowerCase() !== implementation ||
+            String((specific.trust_stack || {}).implementation || '').toLowerCase() !== implementation) return;
+        // October 14 TIDR technical reassessment: runtime matches Sourcify and
+        // the main USDat source matches Adevar's audit-final commit 26507265.
+        // Version-scoped consumer correction pending producer/overlay repair.
+        data.accounting_review = {
+            implementation: implementation,
+            semantics: 'primary_pyusdx_separate_from_alternative_assets',
+            as_of: '2026-10-14',
+            source: 'https://tidresearch.com/evidence/saturn/usdat-reassessment-2026-10-14.json'
+        };
+        data.risk_flags = (data.risk_flags || []).filter(function(flag) {
+            return !/^USDat accounting divergence:/.test(flag.message || '') &&
+                   !/^USDat implementation drifted from published:/.test(flag.message || '');
+        });
+        if (data.backing) {
+            data.backing.collateral_ratio_basis = 'Ethereum reserve-token holdings / supply, with PYUSDx marked at par. This verifies token-unit coverage, not MoonPay custody or ultimate dollar reserves. totalAssets() counts alternative assets only; primary PYUSDx is accounted separately, so zero is valid for an all-PYUSDx reserve.';
+            data.backing.accounting_divergence_reading = 'October 14 technical reassessment supersedes the legacy accounting diagnosis: totalAssets() excludes primary PYUSDx and isAllowedAsset(PYUSDx)=false is expected. Neither establishes missing reserves or a failed redemption denominator. Primary settlement eligibility and upstream reserves remain separately qualified.';
+            data.backing.accounting_divergence_reading_source = 'tidresearch:technical-reassessment-2026-10-14';
+        }
+    },
+
+    _usdatAccountingReviewHtml: function(data) {
+        if (!data.accounting_review) return '';
+        return '<div class="panel"><div class="panel-title">Reserve accounting scope</div>' +
+            '<p class="text-sm text-slate-600">totalAssets() measures alternative assets, excluding primary PYUSDx. Zero is expected for an all-PYUSDx reserve; it is not evidence of an accounting defect or missing backing.</p>' +
+            '<details class="text-xs text-slate-500 mt-2"><summary>Implementation verification and remaining limits</summary>' +
+            'October 14 reassessment matched the deployed runtime to verified source and the main USDat source to the audit-final version. Full dependency audit parity, upstream custody and eligible-holder redemption remain incompletely verified. ' +
+            '<a class="text-blue-600" target="_blank" rel="noopener noreferrer" href="' +
+            CommonRenderer._escapeAttr(data.accounting_review.source) + '">Technical evidence ↗</a></details></div>';
+    },
+
+    preRender: function(data, history) {
+        var specific = data.asset_specific || {};
+        if (!SaturnRenderer._isSaturn(specific.type)) return;
+        var s = data.summary || {};
+        data.summary = s;
+        this._applyUsdatAccountingReview(data);
+        if (specific.type === 'usdat' && !data.accounting_review) {
+            data.risk_flags = (data.risk_flags || []).map(function(flag) {
+                var updated = Object.assign({}, flag);
+                if (/^USDat accounting divergence:/.test(flag.message || '')) {
+                    updated.message = 'Ongoing accounting mismatch: ' + CommonRenderer.formatCurrency(s.backing_total_usd) +
+                        ' of reserve tokens held; totalAssets() reports ' + CommonRenderer.formatCurrency(s.contract_total_assets_usd) +
+                        '. Holdings are present; accounting and redemption compatibility need clarification.';
+                } else if (/^USDat implementation drifted from published:/.test(flag.message || '')) {
+                    if (String(s.implementation).toLowerCase() === '0x496a4a33b6181f4536203488d9a05ac1429e702c') {
+                        updated.severity = 'warning';
+                        updated.message = 'Implementation baseline outdated: the deployed address matches Saturn’s official repository. Deployed-bytecode correspondence and audit coverage remain to be verified.';
+                    } else {
+                        updated.message = 'Implementation differs from the monitored baseline: ' + s.implementation + '. Source and audit coverage need confirmation.';
+                    }
+                }
+                return updated;
+            });
+            if (data.backing && typeof data.backing.collateral_ratio_basis === 'string') {
+                data.backing.collateral_ratio_basis = data.backing.collateral_ratio_basis.replace(
+                    /reports ~\$38/, 'reports ' + CommonRenderer.formatCurrency(s.contract_total_assets_usd));
+            }
+        }
+
+        // Layer 1 (PegTracker) emits Saturn JSONs with `as_of` rather than the
+        // legacy `timestamp` field, and omits `asset` / `chain` (single-chain
+        // Ethereum-only product). Alias these so the common app.js header
+        // (which reads data.timestamp / data.asset / data.chain) renders.
+        if (!data.timestamp && data.as_of) data.timestamp = data.as_of;
+        if (!data.asset) data.asset = (specific.type === 'usdat') ? 'USDat' : 'sUSDat';
+        if (!data.chain) data.chain = 'ethereum';
+
+        // Common renderSummaryCards reads s.collateral_ratio_alt.label
+        // unconditionally — synthesize it then hide via card_overrides.
+        if (!s.collateral_ratio_alt) {
+            s.collateral_ratio_alt = { label: '_saturnAltHidden', value: 0, is_currency: false };
+        }
+        specific.card_overrides = specific.card_overrides || {};
+        specific.card_overrides['_saturnAltHidden'] = { hidden: true };
+        specific.card_overrides['Surplus / Deficit'] = { hidden: true };
+
+        // Synthesize the common fields so the unused common renderer doesn't
+        // NPE before we hide its panels. Values are overwritten in display
+        // by our custom headline card.
+        if (specific.type === 'usdat') {
+            if (s.total_supply == null)      s.total_supply      = s.supply_usd;
+            if (s.total_backing == null)     s.total_backing     = s.backing_total_usd;
+            if (s.collateral_ratio == null && s.backing_ratio != null) {
+                s.collateral_ratio = s.backing_ratio * 100;
+            }
+            if (s.surplus_deficit == null && s.net_buffer_usd != null) {
+                s.surplus_deficit = s.net_buffer_usd;
+            }
+        } else {
+            if (s.total_supply == null)  s.total_supply  = s.total_assets_usd;
+            if (s.total_backing == null) s.total_backing = s.total_assets_usd;
+            // sUSDat is a vault share — supply_unit signals common renderer
+            // to format as "shares" not USD. But we hide the card anyway.
+            // ⚠️ Manufactured placeholders, not producer values. They exist so the
+            // common renderer has something to format in the (hidden) legacy card.
+            // Mark them: preRender runs before rendering, so downstream a
+            // manufactured 100 is otherwise indistinguishable from an emitted one,
+            // and CommonRenderer.backingRating falls back to summary when
+            // backing.collateral_ratio is null. Rating a placeholder is the same
+            // error as manufacturing one — see susdai, where the band showed
+            // "BACKING 100.00% · Watch 3/5" on a vault with no collateral ratio.
+            if (s.collateral_ratio == null) {
+                s.collateral_ratio = 100;
+                s.collateral_ratio_synthetic = true;
+            }
+            if (s.surplus_deficit == null) {
+                s.surplus_deficit = 0;
+                s.surplus_deficit_synthetic = true;
+            }
+        }
+
+        // backing_breakdown — empty array so common.js loops cleanly.
+        if (!Array.isArray(data.backing_breakdown)) {
+            data.backing_breakdown = [];
+        }
+
+        // History entries also need a synthetic collateral_ratio so the
+        // common CR chart could plot — but we hide that chart anyway.
+        if (history && Array.isArray(history.entries)) {
+            history.entries.forEach(function(e) {
+                if (e.collateral_ratio == null) {
+                    if (specific.type === 'usdat' && e.backing_ratio != null) {
+                        e.collateral_ratio = e.backing_ratio * 100;
+                    } else {
+                        e.collateral_ratio = 100;
+                    }
+                }
+            });
+        }
+    },
+
+    // ============================================================
+    // entry point
+    // ============================================================
+    render: function(data) {
+        var container = document.getElementById('asset-specific-panels');
+        if (!container) return;
+        var specific = data.asset_specific || {};
+        if (!SaturnRenderer._isSaturn(specific.type)) return;
+
+        SaturnRenderer._suppressCommonPanels(data);
+
+        var slug = data.asset_slug;
+        var s = data.summary || {};
+        var anc = SaturnRenderer._anchor;
+        var html = '';
+
+        // 5-axis grouping (tier 3). Nothing dropped — the same panels regrouped
+        // under numbered heads so the stream reads in the order the band above
+        // presents them. The Liquidity panel already carried a peg sub-section and
+        // a depth sub-section as separate functions, so §1/§2 is a split of an
+        // existing seam rather than a rewrite.
+        var head = SaturnRenderer._axisHead;
+        var pegSub = (slug === 'susdat') ? 'market price vs NAV' : 'market price vs $1';
+
+        html += anc('panel-headline', SaturnRenderer._renderHeadlineCard(specific, s, slug));
+
+        html += head(1, 'Peg', pegSub);
+        html += SaturnRenderer._axisRationaleSlot('peg',slug);
+        html += SaturnRenderer._renderPegPanel(specific, s, slug);
+
+        html += head(2, 'Backing', (slug === 'usdat')
+            ? 'composition and the drift watchdog'
+            : 'reserve split and NAV trajectory');
+        html += SaturnRenderer._axisRationaleSlot('backing',slug);
+        html += SaturnRenderer._renderSupplyScopeNote(s, data);
+        if (slug === 'usdat') {
+            html += anc('panel-backing',   SaturnRenderer._renderUsdatBackingComposition(specific, s, data.backing));
+            html += SaturnRenderer._usdatAccountingReviewHtml(data);
+            html += anc('panel-drift',     SaturnRenderer._renderUsdatDriftProbe(specific));
+        } else {
+            html += anc('panel-reserve',   SaturnRenderer._renderSusdatReserveSplit(specific, s));
+            html += anc('panel-nav',       SaturnRenderer._renderSusdatNavTrajectory(specific, s));
+        }
+
+        html += head(3, 'Liquidity & Exit', 'exit depth, venue spread and slippage');
+        html += SaturnRenderer._axisRationaleSlot('liquidity',slug);
+        var liquidityEvidence = typeof LiquidityEvidence !== 'undefined' ? LiquidityEvidence.legacyHtml(data) : '';
+        html += anc('panel-liquidity', SaturnRenderer._renderLiquidityPanel(specific, s, slug) +
+            (liquidityEvidence ? '<div class="panel">' + liquidityEvidence + '</div>' : ''));
+        html += '<div id="saturn-exit-review" aria-live="polite"></div>';
+
+        html += head(4, 'Dependencies', 'what this depends on, and what depends on it',
+            CommonRenderer.authoredScoreChipHtml(data.dependencies, ['underlying_score'], 'Dependencies'));
+        html += SaturnRenderer._axisRationaleSlot('dependencies',slug);
+        html += SaturnRenderer._renderDependenciesPanel(data);
+
+        // ⚠️ This head said "Issuer" while the panel under it is admin topology —
+        // roles, thresholds, timelocks, the shared-control finding. That is
+        // Contract & Admin. USDat is the case the split exists for: 4-of-6 behind
+        // 72h at token level, and a 3-of-6 with NO timelock owning the CCIP pools.
+        html += head(5, 'Contract & Admin', 'trust stack \u2014 admin topology and attestation');
+        html += SaturnRenderer._axisRationaleSlot('contract',slug);
+        html += anc('panel-trust',     SaturnRenderer._renderTrustStack(specific, slug));
+
+        html += head(6, 'Issuer', 'editorial \u2014 subjective axis');
+        html += SaturnRenderer._axisRationaleSlot('issuer',slug);
+        html += CommonRenderer.issuerPanelHtml(data) + SaturnRenderer._issuerFeedWarningsHtml(data) + CommonRenderer._issuerContextHtml(data);
+        html += '<div id="saturn-family-panel"></div>';
+
+        container.innerHTML = html;
+        if(slug==='usdat')SaturnRenderer._placeAxisRationales();
+
+        SaturnRenderer._setupAnchorNav(slug);
+        SaturnRenderer._setupCompanionLink(slug);
+
+        // Post-render chart paints — DOM nodes must exist first.
+        if (slug === 'usdat') {
+            SaturnRenderer._renderUsdatBackingDonut(specific);
+        } else {
+            SaturnRenderer._renderSusdatReserveDonut(specific);
+            SaturnRenderer._loadSusdatNavChart(slug, s);
+        }
+        SaturnRenderer._loadPegHistoryChart(slug, s);
+        SaturnRenderer._loadFamilyPanel(slug);
+        SaturnRenderer._loadExitReview();
+    },
+
+    _axisRationaleSlot: function(axis,slug) {
+        if(slug!=='usdat')return '';
+        return '<details class="score-basis mb-4" id="usdat-rationale-'+axis+'" hidden><summary class="score-basis-toggle">Score rationale</summary><div class="score-basis-body" data-axis-rationale-body></div></details>';
+    },
+
+    _placeAxisRationales: function() {
+        // Move the original notes before the shared fallback lifts hidden notes
+        // above the summary. Keep each explanation with its own custom axis.
+        ['peg','backing','liquidity','dependencies','contract','issuer'].forEach(function(axis){
+            var source=document.getElementById('section-'+axis);
+            var target=document.getElementById('usdat-rationale-'+axis);
+            if(!source || !target)return;
+            var body=target.querySelector('[data-axis-rationale-body]');
+            source.querySelectorAll('.axis-basis-note, details.score-basis').forEach(function(note){
+                var wrapper=note.closest('.axis-basis-note');
+                if(wrapper && wrapper!==note)return;
+                var disclosures=note.matches('details.score-basis') ? [note] : Array.from(note.querySelectorAll('details.score-basis'));
+                disclosures.forEach(function(detail){
+                    // One click opens the rationale; do not require a second
+                    // click on the old "Why this score" disclosure inside it.
+                    detail.open=true;
+                    var summary=detail.querySelector(':scope > summary');
+                    if(summary)summary.hidden=true;
+                });
+                body.appendChild(note);
+            });
+            target.hidden=!body.children.length;
+        });
+    },
+
+    _issuerFeedWarningsHtml: function(data) {
+        if (data.asset_slug!=='usdat') return '';
+        var flags=(data.risk_flags || []).filter(function(f){
+            return f.code==='RISK_FEED_STALE' && f.severity!=='critical' && /issuer_score/.test(f.message || '');
+        });
+        return flags.map(function(f){return '<p class="text-sm text-amber-700 mb-4" data-usdat-issuer-warning="true">'+CommonRenderer._escapeAttr(f.message)+'</p>';}).join('');
+    },
+
+    _suppressCommonPanels: function(data) {
+        var has5axis = (typeof CommonRenderer !== 'undefined') && CommonRenderer.hasAxisBlocks(data);
+
+        // #summary-cards holds the legacy CR cards in legacy mode, but the 5-axis
+        // summary BAND in 5-axis mode. Band-only design: KEEP it when 5-axis (show
+        // the band), hide only in legacy mode where the §1 Headline supersedes it.
+        var summaryCards = document.getElementById('summary-cards');
+        if (summaryCards && !has5axis) summaryCards.style.display = 'none';
+
+        // Band-only: hide ALL the generic per-axis sections (app.js reveals them in
+        // renderAxisSections, which runs before this bespoke renderer). Saturn keeps
+        // none of them — every axis has a richer custom panel below, and #chart-panel
+        // (inside #section-backing) is already hidden — so we can hide section-backing
+        // too, unlike Ethena which keeps its Coverage chart there.
+        if (has5axis) {
+            // ⚠️ 'section-contract' added with the six-axis split. Every one of these
+            // lists was written when there were five sections, and a new section
+            // leaks through a hardcoded list silently — it rendered a SECOND,
+            // empty Contract & Admin axis under the bespoke one on all five pages.
+            ['section-peg', 'section-liquidity', 'section-contract', 'section-backing', 'section-dependencies', 'section-issuer']
+                .forEach(function(id) { var s = document.getElementById(id); if (s) s.style.display = 'none'; });
+            var bh = document.getElementById('axis-backing-head'); if (bh && data.asset_slug!=='usdat') bh.innerHTML = '';
+            // ⚠️ OPT IN TO HAVING THE AXIS-BASIS NOTES LIFTED BACK OUT. Hiding these
+            // sections is about the duplicate per-axis PANELS; the "Why the report
+            // scores X differently" disclosure lines live in the section HEADS and were
+            // collateral. On usdat that cost the reader the only readable path to
+            // riskAnalyst's reasoning for a 10/10 band sitting beside a Derived Score of
+            // 5.5 — it survived only as a 4,031-character chip tooltip.
+            // app.js performs the lift after the DOM settles; see
+            // CommonRenderer.liftHiddenAxisNotes for why this is per-renderer opt-in
+            // rather than fleet-wide.
+            CommonRenderer.LIFT_AXIS_NOTES = true;
+        }
+
+        // Hide the common CR History chart — for USDat the meaningful trend
+        // is the supply/backing ratio (always ~100% by design), and for sUSDat
+        // it's the NAV trajectory; both have dedicated panels below.
+        var chartPanel = document.getElementById('chart-panel');
+        if (chartPanel) chartPanel.style.display = 'none';
+
+        // Hide the default breakdown table + pie chart — we use a custom
+        // composition donut + verifiability-tiered table.
+        var bd = document.getElementById('breakdown-table');
+        if (bd) {
+            var p = bd.closest('.panel');
+            if (p) p.style.display = 'none';
+        }
+        var pie = document.getElementById('pie-chart');
+        if (pie) {
+            var p2 = pie.closest('.panel');
+            if (p2) p2.style.display = 'none';
+        }
+
+        // Risk flags: hide when only "No risk flags" would render — structural
+        // caveats are surfaced in Trust Stack + Reserve panels; a green
+        // placeholder here misleads. Stretch the panel when real flags fire.
+        var hasRealFlags = data && Array.isArray(data.risk_flags) && data.risk_flags.length > 0;
+        var risk = document.getElementById('risk-flags');
+        if (risk) {
+            var riskPanel = risk.closest('.panel');
+            if (riskPanel) {
+                if (!hasRealFlags) {
+                    riskPanel.style.display = 'none';
+                } else {
+                    var wrapper = riskPanel.parentElement;
+                    if (wrapper && !wrapper.classList.contains('lg:col-span-3')) {
+                        wrapper.classList.add('lg:col-span-3');
+                    }
+                }
+            }
+        }
+    },
+
+    _setupAnchorNav: function(slug) {
+        var navEl = document.getElementById('asset-anchor-nav');
+        var inner = document.getElementById('asset-anchor-nav-inner');
+        if (!navEl || !inner) return;
+
+        var items;
+        if (slug === 'usdat') {
+            items = [
+                { id: 'panel-headline',       label: 'Asset' },
+                { id: 'panel-backing',        label: 'Backing' },
+                { id: 'panel-drift',          label: 'Drift' },
+                { id: 'panel-liquidity',      label: 'Liquidity' },
+                { id: 'panel-trust',          label: 'Trust' },
+                { id: 'saturn-family-panel',  label: 'Family' }
+            ];
+        } else if (slug === 'susdat') {
+            items = [
+                { id: 'panel-headline',       label: 'Asset' },
+                { id: 'panel-reserve',        label: 'Reserve' },
+                { id: 'panel-nav',            label: 'NAV' },
+                { id: 'panel-liquidity',      label: 'Liquidity' },
+                { id: 'panel-trust',          label: 'Trust' },
+                { id: 'saturn-family-panel',  label: 'Family' }
+            ];
+        } else {
+            return;
+        }
+
+        inner.innerHTML = items.map(function(item) {
+            return '<a href="#' + item.id + '" ' +
+                   'class="text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 ' +
+                   'px-2 py-0.5 rounded transition-colors">' +
+                   item.label +
+                   '</a>';
+        }).join('');
+        navEl.classList.remove('hidden');
+    },
+
+    _setupCompanionLink: function(slug) {
+        var link = document.getElementById('header-companion-link');
+        if (!link) return;
+        var sibling, label;
+        if (slug === 'usdat')       { sibling = 'susdat'; label = 'View sUSDat ↗'; }
+        else if (slug === 'susdat') { sibling = 'usdat';  label = 'View USDat ↗'; }
+        else return;
+        link.setAttribute('href', '?asset=' + sibling);
+        link.textContent = label;
+        link.classList.remove('hidden');
+    },
+
+    // ============================================================
+    // §1 Headline card
+    // ============================================================
+    _renderHeadlineCard: function(specific, s, slug) {
+        var pausedState = s.paused ? 'critical' : 'ok';
+        var pausedLabel = s.paused ? 'PAUSED' : 'Active';
+        var chainBadge =
+            '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">Ethereum</span>';
+
+        var headerLeft, metricsRow, badgeRow;
+
+        if (slug === 'usdat') {
+            headerLeft =
+                '<div class="text-xl font-bold text-slate-800">USDat</div>' +
+                '<div class="text-xs text-slate-500 mt-1">Saturn Labs · Synthetic stablecoin, $M + USDC backed (on-chain verifiable)</div>';
+
+            var ratioState = SaturnRenderer._backingRatioState(s.backing_ratio);
+            var ratioCls = ratioState === 'ok' ? 'text-green-600' :
+                           ratioState === 'warn' ? 'text-amber-600' : 'text-red-600';
+            var ratioTxt = (s.backing_ratio != null) ? (s.backing_ratio * 100).toFixed(4) + '%' : '—';
+            var pegState = SaturnRenderer._pegStatusClass(s.peg_deviation_pct);
+            var pegCls   = SaturnRenderer._pegPctClass(pegState);
+
+            metricsRow =
+                '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Supply</div>' +
+                        '<div class="text-lg font-bold text-slate-800">' + CommonRenderer.formatCurrency(s.supply_usd) + '</div></div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Backing Ratio</div>' +
+                        '<div class="text-lg font-bold ' + ratioCls + '">' + ratioTxt + '</div>' +
+                        (function() {
+                            var buf = s.net_buffer_usd;
+                            if (buf == null) return '';
+                            var sign = buf >= 0 ? '+' : '−';
+                            var bufCls = buf >= 0 ? 'text-green-600' : 'text-red-600';
+                            var bufMag = (Math.abs(buf) >= 1e6) ?
+                                '$' + (Math.abs(buf) / 1e6).toFixed(2) + 'M' :
+                                '$' + Math.abs(buf).toLocaleString('en-US', { maximumFractionDigits: 0 });
+                            return '<div class="text-xs text-slate-500 mt-0.5">' +
+                                'Buffer: <span class="font-mono ' + bufCls + '">' + sign + bufMag + '</span>' +
+                            '</div>';
+                        })() +
+                    '</div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Curve Peg</div>' +
+                        '<div class="text-lg font-bold text-slate-800">' +
+                            (s.peg_curve_usdc != null ? '$' + s.peg_curve_usdc.toFixed(4) : '—') +
+                        '</div>' +
+                        '<div class="text-xs ' + pegCls + ' mt-0.5 font-mono">' +
+                            SaturnRenderer._pegPctText(s.peg_deviation_pct, 3) +
+                        '</div>' +
+                    '</div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Status</div>' +
+                        '<div class="text-lg">' + SaturnRenderer._statusPill(pausedLabel, pausedState) + '</div></div>' +
+                '</div>';
+
+            var driftClean = !(specific.drift_probe && specific.drift_probe.tier1_drift_flagged);
+            var driftLabel = driftClean ? 'Allowlist clean' : 'Allowlist BREACH';
+            var driftState = driftClean ? 'ok' : 'critical';
+
+            badgeRow =
+                '<div class="flex flex-wrap items-center gap-2 mt-3">' +
+                    SaturnRenderer._onChainVerifiableBadge(true) +
+                    SaturnRenderer._statusPill(driftLabel, driftState) +
+                '</div>';
+        } else {
+            // sUSDat
+            headerLeft =
+                '<div class="text-xl font-bold text-slate-800">sUSDat</div>' +
+                '<div class="text-xs text-slate-500 mt-1">Saturn Labs · ERC-4626 vault share over USDat</div>' +
+                '<div class="risk-flag risk-warning mt-3"><strong>Source scope disagreement:</strong> Current Saturn disclosures describe STRC exposure through Ondo STRCon. This producer still labels the non-USDat remainder as off-chain STRC inferred from the vault oracle. Those labels do not verify STRCon holdings, custody or migration. Ethereum sUSDat observations do not establish Monad srUSDat or PT coverage. ' +
+                '<a href="https://saturn.credit/" target="_blank" rel="noopener noreferrer">Issuer disclosure ↗</a></div>';
+
+            var nav = s.nav_per_share;
+            var apy = s.implied_apy_30d;
+            var apyState = SaturnRenderer._apyState(apy);
+            var apyCls = apyState === 'ok' ? 'text-green-600' :
+                         apyState === 'warn' ? 'text-amber-600' : 'text-red-600';
+            var apyTxt = (apy != null) ? (apy * 100).toFixed(2) + '%' : '—';
+
+            metricsRow =
+                '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Total Assets</div>' +
+                        '<div class="text-lg font-bold text-slate-800">' + CommonRenderer.formatCurrency(s.total_assets_usd) + '</div>' +
+                        '<div class="text-xs text-slate-500 mt-0.5">USDat-denominated</div></div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">NAV per share</div>' +
+                        '<div class="text-lg font-bold text-slate-800">' +
+                            (nav != null ? nav.toFixed(6) : '—') +
+                        '</div>' +
+                        '<div class="text-xs text-slate-500 mt-0.5">USDat per share (not $/share)</div></div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Implied APY (30d)</div>' +
+                        '<div class="text-lg font-bold ' + apyCls + '">' + apyTxt + '</div>' +
+                        '<div class="text-xs text-slate-500 mt-0.5">vs 11% target</div></div>' +
+                    '<div><div class="text-xs text-slate-400 font-medium uppercase">Status</div>' +
+                        '<div class="text-lg">' + SaturnRenderer._statusPill(pausedLabel, pausedState) + '</div></div>' +
+                '</div>';
+
+            var bufRatio = s.buffer_ratio;
+            var bufState = SaturnRenderer._bufferRatioState(bufRatio);
+            var bufPctTxt = (bufRatio != null) ? (bufRatio * 100).toFixed(2) + '% on-chain buffer' : 'buffer ratio —';
+            var sc = specific.self_consistency || {};
+            var scState = (sc.delta_bps != null && sc.delta_bps < 1) ? 'ok' : 'warn';
+            var scLabel = (scState === 'ok') ? 'Self-consistency ✓' : 'Self-consistency drift';
+            var scExtra = (sc.delta_bps != null) ? sc.delta_bps.toFixed(3) + ' bps' : '';
+
+            // ⚠️ THE BUFFER PILL SHOWS A LEVEL AND NOT A MOVE. On 2026-09-14 it read
+            // "1.04% on-chain buffer" — the same quantity the Backing tile renders as
+            // "1.0% on-chain verifiable" — while the series had held ~1.50-1.54% for
+            // days and stepped to 1.02% in a SINGLE observation on 09-13. A number at
+            // the bottom of its own 30-day range, rendered bare, reads as steady state.
+            // Filled from the history the NAV chart already fetches, so it cannot
+            // disagree with the chart and cannot go stale.
+            badgeRow =
+                '<div class="flex flex-wrap items-center gap-2 mt-3">' +
+                    SaturnRenderer._statusPill(bufPctTxt, bufState) +
+                    SaturnRenderer._statusPill(scLabel, scState, scExtra) +
+                '</div>' +
+                '<div id="saturn-buffer-context" class="text-xs text-slate-500 mt-2 leading-relaxed"></div>';
+        }
+
+        return '<div class="panel">' +
+            '<div class="flex items-start justify-between gap-4">' +
+                '<div>' + headerLeft + '</div>' +
+                '<div class="flex flex-wrap gap-1 justify-end">' + chainBadge + '</div>' +
+            '</div>' +
+            metricsRow +
+            badgeRow +
+        '</div>';
+    },
+
+    // The Saturn USP — distinct from regular status pills.
+    _onChainVerifiableBadge: function(active) {
+        if (!active) return '';
+        return '<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ' +
+            'bg-emerald-50 text-emerald-800 border border-emerald-200" ' +
+            'title="USDat backing is verifiable on-chain via three balanceOf reads. See verification commands below.">' +
+            '<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">' +
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />' +
+            '</svg>' +
+            '100% On-Chain Verifiable' +
+        '</span>';
+    },
+
+    // ============================================================
+    // §2u USDat Backing Composition  (USDat only — the marquee panel)
+    // ============================================================
+    _renderUsdatBackingComposition: function(specific, s, backing) {
+        var comp = specific.composition || {};
+        var rows = [];
+
+        function row(label, data, color, verifyHtml) {
+            var bal = data && data.balance;
+            var pct = data && data.pct_of_supply;
+            return '<tr>' +
+                '<td class="font-medium">' +
+                    '<span class="inline-block w-2.5 h-2.5 rounded-sm mr-2 align-middle" style="background:' + color + '"></span>' +
+                    label +
+                '</td>' +
+                '<td class="text-right font-mono">' + (bal != null ? CommonRenderer.formatCurrencyExact(bal) : '—') + '</td>' +
+                '<td class="text-right font-mono">' + (pct != null ? (pct * 100).toFixed(2) + '%' : '—') + '</td>' +
+                '<td>' + verifyHtml + '</td>' +
+            '</tr>';
+        }
+
+        var verifyOnchain = '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">✓ on-chain</span>';
+
+        // ⚠️ ITERATE the composition. This was two hardcoded lines — comp.M and
+        // comp.USDC — written when USDat was backed by those two. The reserve
+        // rotated into PYUSDx, which is now 100% of backing and had NO ROW: the
+        // table showed $M 0%, USDC 0%, dust, then "Total backing $82,222,150"
+        // that no visible row accounted for.
+        //
+        // That is worse than an empty table. Two zero rows do not read as
+        // incomplete — they read as "USDat holds no M and no USDC", which is true,
+        // irrelevant, and leaves the reader believing they have seen the
+        // composition. A blank would have prompted the question.
+        //
+        // Adding a third `if` would fix today and re-break on the next rotation.
+        // Known assets keep their order, label and colour; anything else renders
+        // under its own symbol in a neutral colour. The table can no longer omit
+        // an asset the feed reports.
+        var seen = {};
+        SATURN_ASSET_ORDER.concat(Object.keys(comp)).forEach(function(k) {
+            if (k === 'OTHER' || seen[k]) return;
+            var entry = comp[k];
+            // Scalar reserve entries only — OTHER is an array, handled below.
+            if (!entry || Array.isArray(entry) || typeof entry !== 'object') return;
+            seen[k] = true;
+            rows.push(row(SATURN_ASSET_LABELS[k] || SaturnRenderer._escHtml(k),
+                          entry,
+                          SATURN_COLORS[k] || SATURN_COLORS._FALLBACK,
+                          verifyOnchain));
+        });
+
+        // OTHER is an array of non-allowlist holdings from the drift probe. Each entry
+        // carries .flagged — true for ≥$10K real drift (loud red row each), false for
+        // sub-threshold airdrop dust (collapsed into one quiet grey row). See
+        // saturn_backing_analyzer.py scan_drift + handoff usdat-drift-probe-dollar-filter.
+        var other = comp.OTHER;
+        if (Array.isArray(other) && other.length > 0) {
+            var flaggedOther = other.filter(function(o) { return o.flagged === true; });
+            var dustOther    = other.filter(function(o) { return o.flagged !== true; });
+
+            flaggedOther.forEach(function(o) {
+                var verifyBreach = '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200" ' +
+                    'title="Non-allowlist ERC20 (≥$10K) held by USDat treasury — investigate.">⚠ drift</span>';
+                rows.push(row(
+                    (o.symbol || 'Unknown') + ' <span class="text-xs text-slate-500 font-mono">' + SaturnRenderer._truncAddr(o.address || '') + '</span>',
+                    o, SATURN_COLORS.OTHER, verifyBreach));
+            });
+
+            if (dustOther.length > 0) {
+                var drift   = specific.drift_probe || {};
+                var dustN   = drift.airdrop_dust_count != null ? drift.airdrop_dust_count : dustOther.length;
+                var dustUsd = drift.airdrop_dust_total_usd || 0;
+                var thresh  = drift.drift_value_threshold_usd || 10000;
+                rows.push('<tr class="text-slate-400">' +
+                    '<td>' +
+                        '<span class="inline-block w-2.5 h-2.5 rounded-sm mr-2 align-middle" style="background:' + SATURN_COLORS.OTHER + ';opacity:0.3"></span>' +
+                        'Airdrop dust <span class="text-xs">(' + dustN + ' tokens &lt; $' + thresh.toLocaleString() + ')</span>' +
+                    '</td>' +
+                    '<td class="text-right font-mono">' + (dustUsd > 0 ? CommonRenderer.formatCurrencyExact(dustUsd) : '$0') + '</td>' +
+                    '<td class="text-right font-mono">≈ 0%</td>' +
+                    '<td><span class="text-xs text-slate-400 italic">filtered, no exit value</span></td>' +
+                '</tr>');
+            }
+        } else {
+            // Explicit Other = 0 line — the absence of this row would hide
+            // the signal that allowlist breach is monitored.
+            rows.push('<tr class="text-slate-400">' +
+                '<td>' +
+                    '<span class="inline-block w-2.5 h-2.5 rounded-sm mr-2 align-middle" style="background:' + SATURN_COLORS.OTHER + ';opacity:0.3"></span>' +
+                    'Other (non-allowlist ERC20)' +
+                '</td>' +
+                '<td class="text-right font-mono">$0</td>' +
+                '<td class="text-right font-mono">0.00%</td>' +
+                '<td><span class="text-xs text-slate-400 italic">monitored, clean</span></td>' +
+            '</tr>');
+        }
+
+        var totalBacking = s.backing_total_usd;
+        var supply = s.supply_usd;
+        var ratio = s.backing_ratio;
+        var ratioCls = (ratio != null && ratio >= 0.999) ? 'text-green-600' : 'text-red-600';
+
+        // ⚠️ Invariant: the rendered rows must sum to the printed total. When
+        // PYUSDx had no row they summed to $0 against $82,222,150 and nothing
+        // complained — the table was internally contradictory and looked fine.
+        // A composition that does not add up is the one thing this panel can
+        // always check about itself, so say so on the page rather than trusting
+        // that every asset got a row.
+        var rowSum = 0;
+        Object.keys(comp).forEach(function(k) {
+            var e = comp[k];
+            if (k === 'OTHER' && Array.isArray(e)) {
+                e.forEach(function(o) { rowSum += (o && o.value_usd) || 0; });
+            } else if (e && !Array.isArray(e) && typeof e === 'object' && e.balance != null) {
+                rowSum += e.balance;
+            }
+        });
+        // ⚠️ A sum check is only valid when both sides come from the SAME read.
+        //
+        // riskAnalyst measured this on yzUSD: an exposure breakdown and a live
+        // total appeared to differ by a fixed $1,065,012.24, and 18 hours later
+        // the gap had CHANGED SIGN to -$156,498.87 — the breakdown identical to
+        // the cent, the total moved. A fixed discrepancy cannot change sign; a
+        // stale numerator against a live denominator does exactly that.
+        //
+        // usdat's composition and backing_total_usd currently come from one read
+        // and tie to $0.00, so the check below is sound today. If the producer
+        // ever stamps the composition separately, the difference becomes drift
+        // rather than a defect and this would fire permanently on a correct page.
+        // Detect that rather than assume it stays true.
+        var compAsOf = specific.composition_as_of || specific.exposure_as_of;
+        var payloadAsOf = specific.as_of || null;
+        var mixedReads = !!(compAsOf && payloadAsOf && compAsOf !== payloadAsOf);
+
+        var sumMismatch = '';
+        if (mixedReads) {
+            sumMismatch =
+                '<div class="text-xs text-slate-500 mt-2">' +
+                    'Composition is stamped <span class="font-mono">' +
+                    SaturnRenderer._escHtml(String(compAsOf)) + '</span> against a live total \u2014 ' +
+                    'any difference is drift between two reads, not a missing asset, so the rows ' +
+                    'are not totalled against it here.' +
+                '</div>';
+        } else if (totalBacking != null && totalBacking > 0) {
+            var gap = Math.abs(rowSum - totalBacking);
+            if (gap / totalBacking > 0.005) {
+                sumMismatch =
+                    '<div class="text-xs text-amber-800 dark:text-amber-200 bg-amber-50 ' +
+                        'dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded p-2 mt-2">' +
+                        '<span class="font-semibold">Rows do not sum to the total.</span> Listed assets come to ' +
+                        CommonRenderer.formatCurrencyExact(rowSum) + ' against a stated ' +
+                        CommonRenderer.formatCurrencyExact(totalBacking) + '. Something in the reserve is not ' +
+                        'being displayed \u2014 treat this composition as incomplete rather than as the whole picture.' +
+                    '</div>';
+            }
+        }
+
+        rows.push('<tr class="font-bold border-t-2 border-slate-200">' +
+            '<td>Total backing</td>' +
+            '<td class="text-right font-mono">' + CommonRenderer.formatCurrencyExact(totalBacking) + '</td>' +
+            '<td class="text-right font-mono ' + ratioCls + '">' +
+                (ratio != null ? (ratio * 100).toFixed(4) + '%' : '—') +
+            '</td>' +
+            '<td></td>' +
+        '</tr>');
+
+        var headerRight =
+            '<div class="flex items-center gap-2">' +
+                SaturnRenderer._onChainVerifiableBadge(true) +
+            '</div>';
+
+        var donutBlock =
+            '<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">' +
+                '<div class="lg:col-span-3">' +
+                    '<div class="text-sm font-semibold text-slate-700 mb-2">Backing split</div>' +
+                    '<div class="data-table-scroll">' +
+                        '<table class="data-table">' +
+                            '<thead><tr>' +
+                                '<th>Asset</th>' +
+                                '<th class="text-right">Balance</th>' +
+                                '<th class="text-right">% of supply</th>' +
+                                '<th>Verifiability</th>' +
+                            '</tr></thead>' +
+                            '<tbody>' + rows.join('') + '</tbody>' +
+                        '</table>' +
+                    '</div>' +
+                    sumMismatch +
+                    '<div class="text-xs text-slate-500 mt-2">' +
+                        'Supply ' + CommonRenderer.formatCurrencyExact(supply) +
+                        (s.net_buffer_usd != null ?
+                            ' · Net buffer <span class="font-mono">' + CommonRenderer.formatCurrencyExact(s.net_buffer_usd) + '</span>' :
+                            '') +
+                    '</div>' +
+                '</div>' +
+                '<div class="lg:col-span-2">' +
+                    '<div class="text-sm font-semibold text-slate-700 mb-2">Composition</div>' +
+                    '<div style="height: 240px; position: relative;">' +
+                        '<canvas id="saturn-usdat-donut"></canvas>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+
+        // Reveal-on-click verification commands — the Saturn USP made literal.
+        var verifyBlock = SaturnRenderer._renderVerifyCommands();
+
+        var reserve = backing && backing.reserve_evidence;
+        var reserveHtml = reserve ? '<div class="mt-4 border-t border-slate-200 pt-3 text-sm space-y-2">' +
+            '<div class="font-semibold">Underlying PYUSD located · attribution pending</div>' +
+            '<div class="text-xs text-slate-500">Snapshot ' + CommonRenderer._escapeAttr(reserve.as_of) + ' · ' + CommonRenderer._escapeAttr(reserve.scope) + '</div>' +
+            '<div>Candidate PYUSD: ' + CommonRenderer.formatCurrency(reserve.main_candidate_pyusd) + ' / circulating PYUSDx: ' + CommonRenderer.formatCurrency(reserve.circulating_supply) +
+            ' · ' + reserve.main_candidate_coverage_pct.toFixed(3) + '%</div>' +
+            '<div>' + CommonRenderer._escapeAttr(reserve.limit) + '</div>' +
+            '<details><summary>Observed settlement and next evidence</summary><div>' + CommonRenderer._escapeAttr(reserve.settlement_note) +
+            '</div><div>' + CommonRenderer._escapeAttr(reserve.next) + '</div></details></div>' : '';
+        var methodology =
+            '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                'The current Ethereum producer measures reserve-token holdings, including primary PYUSDx, ' +
+                'against Ethereum USDat supply at par. <strong>Token balances do not establish upstream solvency.</strong> ' +
+                'Saturn discloses PayPal USD backing through PYUSDx; upstream reserves, custody, eligibility and ' +
+                'settlement are separate checks. A balanceOf read is not a holder redemption simulation or global-chain coverage.' +
+            '</div>';
+
+        return '<div class="panel">' +
+            '<div class="flex items-center justify-between">' +
+                '<div class="panel-title" style="margin-bottom:0;">Backing Composition</div>' +
+                headerRight +
+            '</div>' +
+            '<div style="margin-bottom:1rem;"></div>' +
+            donutBlock +
+            verifyBlock +
+            (reserve ? reserveHtml : methodology) +
+        '</div>';
+    },
+
+    _renderVerifyCommands: function() {
+        var cmds =
+            '# 1. USDat supply\n' +
+            'cast call ' + SATURN_ADDRS.USDAT + ' "totalSupply()(uint256)" \\\n' +
+            '     --rpc-url $RPC\n\n' +
+            '# 2. $M held by USDat\n' +
+            'cast call ' + SATURN_ADDRS.M_TOKEN + ' \\\n' +
+            '     "balanceOf(address)(uint256)" \\\n' +
+            '     ' + SATURN_ADDRS.USDAT + ' \\\n' +
+            '     --rpc-url $RPC\n\n' +
+            '# 3. USDC held by USDat\n' +
+            'cast call ' + SATURN_ADDRS.USDC + ' \\\n' +
+            '     "balanceOf(address)(uint256)" \\\n' +
+            '     ' + SATURN_ADDRS.USDAT + ' \\\n' +
+            '     --rpc-url $RPC\n\n' +
+            '# Sum (2) + (3), divide by 1e6, compare to (1) / 1e6.';
+
+        return '<details class="mt-4 group">' +
+            '<summary class="cursor-pointer text-sm font-semibold text-emerald-700 hover:text-emerald-900 select-none" ' +
+                'style="list-style:none;">' +
+                '<span class="inline-block transform group-open:rotate-90 transition-transform">▶</span> ' +
+                'Show verification commands' +
+            '</summary>' +
+            '<div class="mt-2 relative">' +
+                '<button onclick="SaturnRenderer._copyVerify(this)" ' +
+                    'class="absolute top-2 right-2 px-2 py-0.5 text-xs rounded bg-slate-700 text-slate-100 hover:bg-slate-600 transition-colors">' +
+                    'Copy' +
+                '</button>' +
+                '<pre id="saturn-verify-cmds" class="text-xs bg-slate-900 text-slate-100 p-3 pr-16 rounded overflow-x-auto font-mono leading-relaxed">' +
+                    cmds +
+                '</pre>' +
+                '<div class="text-xs text-slate-400 italic mt-2">' +
+                    'Set <span class="font-mono">$RPC</span> to any Ethereum mainnet endpoint. ' +
+                    'You should get the same numbers shown in the table above (within block-timing tolerance).' +
+                '</div>' +
+            '</div>' +
+        '</details>';
+    },
+
+    _copyVerify: function(btn) {
+        var pre = document.getElementById('saturn-verify-cmds');
+        if (!pre) return;
+        var text = pre.textContent || pre.innerText;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function() {
+                var orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(function() { btn.textContent = orig; }, 1500);
+            });
+        }
+    },
+
+    _renderUsdatBackingDonut: function(specific) {
+        var ctx = document.getElementById('saturn-usdat-donut');
+        if (!ctx || typeof Chart === 'undefined') return;
+        var comp = specific.composition || {};
+
+        var labels = [];
+        var values = [];
+        var colors = [];
+        if (comp.M)    { labels.push('$M');   values.push(comp.M.balance || 0);    colors.push(SATURN_COLORS.M); }
+        if (comp.USDC) { labels.push('USDC'); values.push(comp.USDC.balance || 0); colors.push(SATURN_COLORS.USDC); }
+        if (Array.isArray(comp.OTHER)) {
+            var flaggedOther = comp.OTHER.filter(function(o) { return o.flagged === true; });
+            var dustOther    = comp.OTHER.filter(function(o) { return o.flagged !== true; });
+            flaggedOther.forEach(function(o) {
+                labels.push(o.symbol || 'Other');
+                values.push(o.balance || 0);
+                colors.push(SATURN_COLORS.OTHER);
+            });
+            if (dustOther.length > 0) {
+                var drift = specific.drift_probe || {};
+                var dustN = drift.airdrop_dust_count != null ? drift.airdrop_dust_count : dustOther.length;
+                labels.push('Airdrop dust (' + dustN + ')');
+                values.push(drift.airdrop_dust_total_usd || 0);
+                colors.push(SATURN_COLORS.OTHER);
+            }
+        }
+
+        if (window._saturnUsdatDonut) {
+            try { window._saturnUsdatDonut.destroy(); } catch (e) {}
+        }
+        window._saturnUsdatDonut = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) {
+                                var total = c.dataset.data.reduce(function(a, b) { return a + b; }, 0);
+                                var pct = total > 0 ? (c.raw / total * 100).toFixed(2) : '0.00';
+                                return c.label + ': ' + CommonRenderer.formatCurrencyExact(c.raw) + ' (' + pct + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    },
+
+    // ============================================================
+    // §3u USDat Drift Probe  (USDat only)
+    // ============================================================
+    _renderUsdatDriftProbe: function(specific) {
+        var drift = specific.drift_probe || {};
+        var allowlist = drift.allowlist || ['M', 'USDC'];
+        var breaches = drift.non_allowlist_holdings || [];
+        var flagged = drift.tier1_drift_flagged === true;
+
+        var dustN = drift.airdrop_dust_count || 0;
+        var dustThresh = drift.drift_value_threshold_usd || 10000;
+        var dustNote = dustN > 0
+            ? '<div class="text-xs text-slate-400 mt-2">Sub-threshold dust filtered: ' +
+                '<span class="font-mono">' + dustN + '</span> non-allowlist tokens below $' +
+                dustThresh.toLocaleString() + ' (typically airdrop spam — no liquid market, $0 exit value).</div>'
+            : '';
+
+        if (!flagged) {
+            // Quiet green state — one-line confirmation, low visual weight.
+            return '<div class="panel">' +
+                '<div class="panel-title">Drift Probe <span class="text-xs font-normal text-slate-500">— composition watchdog</span></div>' +
+                '<div class="text-sm text-slate-600">' +
+                    '<strong>No additional material token drift flagged.</strong> ' +
+                    'This scanner result does not verify the contract asset allowlist or underlying reserve coverage.' +
+                '</div>' +
+                '<details class="text-xs text-slate-500 mt-3"><summary>Scanner scope</summary>' +
+                    'Monitored baseline: ' + allowlist.join(', ') + '. Known reserve assets and sub-threshold dust are handled separately; a clear scanner result is not contract allowlist approval.' +
+                '</details>' +
+                dustNote +
+            '</div>';
+        }
+
+        // BREACH STATE — promoted to full red callout. Dust entries stay out of this
+        // table even when a separate real breach is firing.
+        var flaggedBreaches = breaches.filter(function(b) { return b.flagged === true; });
+        var breachRows = flaggedBreaches.map(function(b) {
+            return '<tr>' +
+                '<td class="font-semibold text-red-700">' + (b.symbol || 'Unknown') + '</td>' +
+                '<td>' + SaturnRenderer._addrCell(b.address) + '</td>' +
+                '<td class="text-right font-mono">' + CommonRenderer.formatCurrencyExact(b.value_usd || 0) + '</td>' +
+            '</tr>';
+        }).join('');
+
+        return '<div class="panel">' +
+            '<div class="panel-title">Drift Probe <span class="text-xs font-normal text-red-600">— ALLOWLIST BREACH</span></div>' +
+            '<div class="risk-flag risk-critical">' +
+                '<strong>🚨 Backing composition drift detected.</strong> ' +
+                'A non-allowlist ERC20 is held by the USDat treasury. ' +
+                'This may reflect the planned STRC rotation or an unauthorized minting/transfer — investigate immediately.' +
+            '</div>' +
+            '<table class="data-table mt-3">' +
+                '<thead><tr><th>Token</th><th>Address</th><th class="text-right">Value (USD)</th></tr></thead>' +
+                '<tbody>' + breachRows + '</tbody>' +
+            '</table>' +
+            dustNote +
+        '</div>';
+    },
+
+    // ============================================================
+    // §2s sUSDat Reserve Split  (sUSDat only)
+    // ============================================================
+    _renderSusdatReserveSplit: function(specific, s) {
+        var rs = specific.reserve_split || {};
+        var on = rs.onchain_usdat || {};
+        var off = rs.offchain_strc || {};
+        var totalAssets = s.total_assets_usd;
+
+        var verifyOn = '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200" title="USDat held by sUSDat vault — readable via USDat.balanceOf(sUSDat).">✓ on-chain</span>';
+        var verifyOff = '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200" title="STRC NAV is reported via sUSDat.totalAssets() but not independently verified by an oracle or PoR feed. Accountable + Chainlink NAV oracle planned, not live.">⚠ oracle-unverified</span>';
+
+        var resRows = '';
+        resRows += '<tr>' +
+            '<td class="font-medium">' +
+                '<span class="inline-block w-2.5 h-2.5 rounded-sm mr-2 align-middle" style="background:' + SATURN_COLORS.USDC + '"></span>' +
+                'On-chain USDat buffer' +
+            '</td>' +
+            '<td class="text-right font-mono">' + CommonRenderer.formatCurrencyExact(on.value_usd) + '</td>' +
+            '<td class="text-right font-mono">' + (on.pct != null ? (on.pct * 100).toFixed(2) + '%' : '—') + '</td>' +
+            '<td>' + verifyOn + '</td>' +
+        '</tr>';
+        resRows += '<tr>' +
+            '<td class="font-medium">' +
+                '<span class="inline-block w-2.5 h-2.5 rounded-sm mr-2 align-middle" style="background:' + SATURN_COLORS.STRC + '"></span>' +
+                'Off-chain STRC (Strategy digital credit)' +
+            '</td>' +
+            '<td class="text-right font-mono">' + CommonRenderer.formatCurrencyExact(off.value_usd) + '</td>' +
+            '<td class="text-right font-mono">' + (off.pct != null ? (off.pct * 100).toFixed(2) + '%' : '—') + '</td>' +
+            '<td>' + verifyOff + '</td>' +
+        '</tr>';
+        resRows += '<tr class="font-bold border-t-2 border-slate-200">' +
+            '<td>Total assets</td>' +
+            '<td class="text-right font-mono">' + CommonRenderer.formatCurrencyExact(totalAssets) + '</td>' +
+            '<td class="text-right">100.00%</td>' +
+            '<td><span class="text-xs text-slate-500">via totalAssets()</span></td>' +
+        '</tr>';
+
+        // Self-consistency pill — the on-chain check that NAV × supply ≈ totalAssets.
+        var sc = specific.self_consistency || {};
+        var scState = (sc.delta_bps != null && sc.delta_bps < 1) ? 'ok' :
+                      (sc.delta_bps != null && sc.delta_bps < 100) ? 'warn' : 'critical';
+        var scPill = SaturnRenderer._statusPill(
+            'Self-consistency: ' + (scState === 'ok' ? '✓' : 'drift'),
+            scState,
+            (sc.delta_bps != null) ? sc.delta_bps.toFixed(3) + ' bps' : ''
+        );
+
+        // LTV-band table — published thresholds (analyzer can't supply current_strc_target_pct yet).
+        var lb = specific.ltv_band || {};
+        var bands = Array.isArray(lb.published_thresholds) ? lb.published_thresholds : [];
+        var ltvRows = bands.map(function(b) {
+            return '<tr>' +
+                '<td class="font-mono text-right">&lt; ' + (b.max_ltv * 100).toFixed(2) + '%</td>' +
+                '<td class="font-mono text-right">' + (b.strc_pct * 100).toFixed(0) + '%</td>' +
+            '</tr>';
+        }).join('');
+        // The terminal threshold per Saturn docs — when LTV > 100% the policy is 0% STRC.
+        ltvRows += '<tr><td class="font-mono text-right">&gt; 100.00%</td><td class="font-mono text-right">0%</td></tr>';
+
+        var currentLtv = lb.current_strc_target_pct;
+        var ltvHeader = (currentLtv != null) ?
+            'Current target: <span class="font-mono">' + (currentLtv * 100).toFixed(2) + '% STRC</span>' :
+            '<span class="italic text-slate-400">Current LTV not available (no live Strategy NAV input)</span>';
+
+        var donutBlock =
+            '<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">' +
+                '<div class="lg:col-span-3">' +
+                    '<div class="flex items-center justify-between mb-2">' +
+                        '<div class="text-sm font-semibold text-slate-700">Reserve split</div>' +
+                        scPill +
+                    '</div>' +
+                    '<div class="data-table-scroll">' +
+                        '<table class="data-table">' +
+                            '<thead><tr>' +
+                                '<th>Component</th>' +
+                                '<th class="text-right">USD value</th>' +
+                                '<th class="text-right">%</th>' +
+                                '<th>Verifiability</th>' +
+                            '</tr></thead>' +
+                            '<tbody>' + resRows + '</tbody>' +
+                        '</table>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="lg:col-span-2">' +
+                    '<div class="text-sm font-semibold text-slate-700 mb-2">Composition</div>' +
+                    '<div style="height: 240px; position: relative;">' +
+                        '<canvas id="saturn-susdat-donut"></canvas>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+
+        var ltvBlock =
+            '<div class="mt-6">' +
+                '<div class="flex items-center justify-between mb-2">' +
+                    '<div class="text-sm font-semibold text-slate-700">LTV-band policy <span class="text-xs font-normal text-slate-500">(published — STRC % vs Strategy LTV)</span></div>' +
+                    '<div class="text-xs text-slate-500">' + ltvHeader + '</div>' +
+                '</div>' +
+                '<div class="data-table-scroll" style="max-width:360px;">' +
+                    '<table class="data-table">' +
+                        '<thead><tr><th class="text-right">If LTV is</th><th class="text-right">Target STRC</th></tr></thead>' +
+                        '<tbody>' + ltvRows + '</tbody>' +
+                    '</table>' +
+                '</div>' +
+            '</div>';
+
+        var methodology =
+            '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                '<strong>~19% on-chain, ~81% oracle-unverified</strong> — the USDat buffer is readable directly ' +
+                'via <span class="font-mono">USDat.balanceOf(sUSDat)</span>; the STRC leg is reported by ' +
+                'the vault\'s own <span class="font-mono">totalAssets()</span> with no independent oracle ' +
+                'or proof-of-reserves verifying the off-chain custodian. Accountable + Chainlink NAV oracle ' +
+                'pipeline is planned but not live as of this snapshot — until the feed activates, the 81% ' +
+                'leg relies on the contract\'s own report (trust-the-oracle, where the contract is the ' +
+                'oracle). Self-consistency only proves NAV × supply ≈ totalAssets — it does not prove the ' +
+                'STRC actually exists at the reported value.' +
+            '</div>';
+
+        return '<div class="panel">' +
+            '<div class="flex items-center justify-between">' +
+                '<div class="panel-title" style="margin-bottom:0;">Reserve Composition</div>' +
+                '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Mixed verification</span>' +
+            '</div>' +
+            '<div style="margin-bottom:1rem;"></div>' +
+            donutBlock +
+            ltvBlock +
+            methodology +
+        '</div>';
+    },
+
+    _renderSusdatReserveDonut: function(specific) {
+        var ctx = document.getElementById('saturn-susdat-donut');
+        if (!ctx || typeof Chart === 'undefined') return;
+        var rs = specific.reserve_split || {};
+        var on = rs.onchain_usdat || {};
+        var off = rs.offchain_strc || {};
+
+        if (window._saturnSusdatDonut) {
+            try { window._saturnSusdatDonut.destroy(); } catch (e) {}
+        }
+        window._saturnSusdatDonut = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['USDat buffer (on-chain)', 'STRC (oracle-unverified)'],
+                datasets: [{
+                    data: [on.value_usd || 0, off.value_usd || 0],
+                    backgroundColor: [SATURN_COLORS.USDC, SATURN_COLORS.STRC],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) {
+                                var total = c.dataset.data.reduce(function(a, b) { return a + b; }, 0);
+                                var pct = total > 0 ? (c.raw / total * 100).toFixed(2) : '0.00';
+                                return c.label + ': ' + CommonRenderer.formatCurrencyExact(c.raw) + ' (' + pct + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    },
+
+    // ============================================================
+    // §3s sUSDat NAV Trajectory  (sUSDat only)
+    // ============================================================
+    _renderSusdatNavTrajectory: function(specific, s) {
+        var apy30 = s.implied_apy_30d;
+        var apyTxt = (apy30 != null) ? (apy30 * 100).toFixed(2) + '%' : '—';
+        var apyState = SaturnRenderer._apyState(apy30);
+        var apyCls = SaturnRenderer._pegPctClass(apyState === 'ok' ? 'ok' : apyState === 'warn' ? 'warn' : 'critical');
+        var apyLabel = (apyState === 'ok') ? 'On track' :
+                       (apyState === 'warn') ? 'Below target' :
+                       (apyState === 'critical') ? 'Stalled' : '—';
+
+        var statCards =
+            '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">' +
+                '<div class="summary-card"><div class="card-label">NAV per share</div>' +
+                    '<div class="card-value">' + (s.nav_per_share != null ? s.nav_per_share.toFixed(6) : '—') + '</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">USDat per share (not $/share)</div></div>' +
+                '<div class="summary-card"><div class="card-label">$ NAV per share</div>' +
+                    '<div class="card-value">' + (
+                        (s.nav_per_share != null && s.peg_curve_usdc != null)
+                            ? '$' + (s.nav_per_share * s.peg_curve_usdc).toFixed(4)
+                            : '—'
+                    ) + '</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">' + (
+                        (s.nav_per_share != null && s.peg_curve_usdc != null)
+                            ? s.nav_per_share.toFixed(6) + ' USDat × $' + s.peg_curve_usdc.toFixed(4) + ' (Curve)'
+                            : 'Curve-implied USDat × 4626 NAV'
+                    ) + '</div></div>' +
+                '<div class="summary-card"><div class="card-label">30d implied APY</div>' +
+                    '<div class="card-value ' + apyCls + '">' + apyTxt + '</div>' +
+                    '<div class="mt-1">' + SaturnRenderer._statusPill(apyLabel, apyState) + '</div></div>' +
+                '<div class="summary-card"><div class="card-label">Headline target</div>' +
+                    '<div class="card-value">11.00%</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">Saturn docs APY target</div></div>' +
+            '</div>';
+
+        var chartBlock =
+            '<div class="mt-6">' +
+                '<div class="text-sm font-semibold text-slate-700 mb-2">' +
+                    'NAV per share — 30d' +
+                    ' <span class="text-xs font-normal text-slate-500">(solid = actual · dashed = 11% target line)</span>' +
+                '</div>' +
+                '<div style="height: 320px; position: relative;">' +
+                    '<canvas id="saturn-susdat-nav-chart"></canvas>' +
+                '</div>' +
+            '</div>';
+
+        var methodology =
+            '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                // ⚠️ THIS SENTENCE USED TO READ "NAV must monotonically rise under
+                // ERC-4626 vesting — a drop between cycles implies an STRC loss
+                // event." IT IS FALSE HERE, and measurably so: 48 declines in the
+                // 30-day window as of 2026-09-14, median −10 bps, and the off-chain
+                // mark moved in every one of them. On the old sentence's logic that
+                // is 48 STRC loss events in a month.
+                // ⚠️ The claim is TRUE for its sibling — sUSDai's NAV has 0 declines
+                // in 743 observations, because its assets are accruing loan interest
+                // with no mark-to-market leg. The wording was carried across to an
+                // asset whose reserve is ~99% an oracle-marked off-chain claim. Do
+                // not re-sync these two paragraphs; usdai.js is correct as written.
+                '<span class="text-amber-700">NAV is not monotonic here, and a decline does not imply a loss ' +
+                'event.</span> ~99% of the reserve is an off-chain STRC claim carried at an oracle mark, so NAV ' +
+                'is marked to that price between cycles and falls whenever the mark falls. ' +
+                '<span id="saturn-nav-decline-stats"></span>' +
+                'Vesting sets the upward drift; the mark sets the noise around it — read a decline by size and ' +
+                'persistence, not by direction, because a single hourly tick is ordinary mark movement. ' +
+                // ⚠️ THE DURATION IS GONE FROM THIS SENTENCE AND MUST NOT RETURN AS A LITERAL.
+                // It read "30-day vesting design ... for its first 30 days". That 30 is
+                // `vesting_period_days`, a HARDCODED CONSTANT in PegTracker's analyzer returned
+                // by NO on-chain getter — riskAnalyst tried 18 candidate signatures on the vault
+                // and the WithdrawalQueue, with a fabricated getter reverting as the control.
+                // The measured parameter is `vestingPeriod()` = 259,200s = 3 DAYS under a 90-day
+                // ceiling, so the figure was ALSO WRONG BY 10x for the yield drip it described.
+                //
+                // ⚠️ AND THE PAGE CONTRADICTED ITSELF. The "Exit / redemption delay" row already
+                // renders "Not established — both candidate figures ruled out", while these
+                // sentences used the ruled-out figure as the causal explanation for the
+                // premium/discount: one row disowning a number three sentences leaned on.
+                //
+                // ⚠️ NOT REPLACED WITH "3-day", DELIBERATELY. That value lives only in
+                // riskAnalyst's prose, not in any feed we read, so hardcoding it swaps an
+                // unsourced literal for a better-sourced one that still cannot refresh — the
+                // same defect in a nicer costume. The mechanism needs no duration to be true,
+                // and the Exit row carries the measured position. If the figure is wanted on
+                // the page, the fix is PegTracker publishing `vestingPeriod()` and this
+                // reading it live.
+                'Vesting intentionally delays yield landing, so a fresh ' +
+                'sUSDat position accrues with a lag at first. Implied APY is computed from ' +
+                'the NAV slope over the trailing window; the 11% headline target is a Saturn-disclosed ' +
+                'design number, not a guarantee. sUSDat NAV is denominated in USDat (the vault\'s underlying), ' +
+                'not USD. USDat\'s own peg deviation stacks on top, so $-equivalent NAV ≈ 4626 NAV × current USDat peg.' +
+            '</div>';
+
+        return '<div class="panel">' +
+            '<div class="panel-title">NAV Trajectory <span class="text-xs font-normal text-slate-500">— yield landing</span></div>' +
+            statCards +
+            chartBlock +
+            methodology +
+        '</div>';
+    },
+
+    _loadSusdatNavChart: function(slug, s) {
+        var ctx = document.getElementById('saturn-susdat-nav-chart');
+        if (!ctx || typeof Chart === 'undefined') return;
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/' + slug + '_backing_history.json?nocache=' + nocache)
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(hist) {
+                if (!hist || !Array.isArray(hist.entries) || hist.entries.length < 2) {
+                    ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">NAV history not yet available — chart populates after a few hours of samples.</div>';
+                    return;
+                }
+                SaturnRenderer._drawSusdatNavChart(ctx, hist.entries);
+            })
+            .catch(function() {
+                ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">NAV history unavailable.</div>';
+            });
+    },
+
+    // Buffer-ratio context. States the range and the last step; makes no claim
+    // about cause. A step is a fact about the series — two adjacent observations
+    // differing by more than a tenth of their own level — not an interpretation.
+    _fillBufferContext: function(windowed) {
+        var el = document.getElementById('saturn-buffer-context');
+        if (!el) return;
+        var pts = (windowed || []).filter(function(e) { return e && e.buffer_ratio != null; });
+        if (pts.length < 5) return;
+        var vals = pts.map(function(e) { return e.buffer_ratio * 100; });
+        var sorted = vals.slice().sort(function(a, b) { return a - b; });
+        var cur = vals[vals.length - 1];
+        var lo = sorted[0], hi = sorted[sorted.length - 1], med = sorted[Math.floor(sorted.length / 2)];
+        var below = vals.filter(function(v) { return v <= cur; }).length;
+        var pct = below / vals.length * 100;
+
+        // Most recent step: scan back for the last adjacent pair differing >10% relative.
+        // ⚠️ AND CLASSIFY IT FROM THE DATA RATHER THAN ASSERTING IT. A buffer drop with
+        // share_supply falling in the same observation and NAV/share NOT falling is a
+        // REDEMPTION paid out of the buffer; a drop with shares unchanged is a mark or
+        // transfer and must not be called a redemption. The renderer checks its own
+        // claim against the series instead of inheriting one.
+        var stepTxt = '', capTxt = '';
+        for (var i = vals.length - 1; i > 0; i--) {
+            var a = vals[i - 1], b = vals[i];
+            if (!(a > 0 && Math.abs(b - a) / a > 0.10)) continue;
+            var prev = pts[i - 1], now = pts[i];
+            var ts = (now.timestamp || '').slice(0, 10);
+            var dBuf = (prev.onchain_buffer_usd != null && now.onchain_buffer_usd != null)
+                ? prev.onchain_buffer_usd - now.onchain_buffer_usd : null;
+            var dSh = (prev.share_supply != null && now.share_supply != null)
+                ? prev.share_supply - now.share_supply : null;
+            var navHeld = (prev.nav_per_share != null && now.nav_per_share != null)
+                ? now.nav_per_share >= prev.nav_per_share : false;
+            var isRedemption = (dBuf > 0 && dSh > 0 && navHeld);
+
+            stepTxt = ' It held <span class="font-mono">' + a.toFixed(2) + '%</span> and moved to ' +
+                '<span class="font-mono">' + b.toFixed(2) + '%</span> in a single observation on ' +
+                '<span class="font-mono">' + ts + '</span> — a step, not a drift.';
+
+            if (isRedemption && prev.share_supply > 0) {
+                stepTxt += ' <strong>Shares fell ' +
+                    CommonRenderer.formatPercent(dSh / prev.share_supply * 100, 2) +
+                    ' in the same hour while NAV/share did not — a redemption paid out of the buffer</strong>, ' +
+                    'not a mark change.';
+
+                // Exit-capacity arithmetic, from the post-step recovery.
+                var curBuf = pts[pts.length - 1].onchain_buffer_usd;
+                var t0 = Date.parse(now.timestamp), t1 = Date.parse(pts[pts.length - 1].timestamp);
+                var hrs = (t1 - t0) / 3600000;
+                var gained = curBuf - now.onchain_buffer_usd;
+                var perDay = (hrs > 1 && gained > 0) ? gained / hrs * 24 : null;
+                capTxt =
+                    '<div class="mt-2">⚠️ <strong>Read this as exit capacity, not solvency.</strong> ' +
+                    'Backing is intact and NAV is above par; what the buffer measures is the pocket a ' +
+                    'redeemer is paid from. At <span class="font-mono">' +
+                    CommonRenderer.formatCurrency(curBuf) + '</span> it is ' +
+                    '<strong>' + (curBuf / dBuf).toFixed(1) + '×</strong> the one redemption observed above (' +
+                    CommonRenderer.formatCurrency(dBuf) + ')' +
+                    (perDay
+                        ? ', and it has refilled at about <span class="font-mono">' +
+                          CommonRenderer.formatCurrency(perDay) + '/day</span> since — roughly <strong>' +
+                          Math.round(dBuf / perDay) + ' days</strong> to replace that single exit.'
+                        : '.') +
+                    ' ⚠️ One observation is not a distribution: this says how deep the pocket is ' +
+                    'against the only withdrawal we have measured, not how large the next one will be.' +
+                    '</div>';
+            }
+            break;
+        }
+        el.innerHTML =
+            'Over the ' + vals.length + ' observations plotted above the buffer ranged ' +
+            '<span class="font-mono">' + lo.toFixed(2) + '%–' + hi.toFixed(2) + '%</span> (median ' +
+            '<span class="font-mono">' + med.toFixed(2) + '%</span>); today sits at the ' +
+            '<strong>' + pct.toFixed(0) + 'th percentile</strong> of that range.' + stepTxt +
+            ' ⚠️ This is the same quantity the Backing tile shows as on-chain verifiable — when it ' +
+            'falls, a larger share of the reserve rests on the oracle-marked off-chain claim.' + capTxt;
+    },
+
+    _drawSusdatNavChart: function(ctx, entries) {
+        var cutoff = Date.now() - 30 * 24 * 3600 * 1000;
+        var windowed = entries.filter(function(e) {
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts).getTime() >= cutoff && e.nav_per_share != null;
+        });
+        if (windowed.length < 2) {
+            ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">NAV history not yet available — chart populates after a few hours of samples.</div>';
+            return;
+        }
+
+        var labels = windowed.map(function(e) {
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts);
+        });
+        var navSeries = windowed.map(function(e) { return e.nav_per_share; });
+
+        // Decline stats for the methodology note, computed from the SAME windowed
+        // array this chart plots — so the sentence and the line above it cannot
+        // disagree, and neither can go stale the way a hardcoded count would.
+        SaturnRenderer._fillBufferContext(windowed);
+
+        var statsEl = document.getElementById('saturn-nav-decline-stats');
+        if (statsEl) {
+            var drops = [];
+            for (var di = 1; di < windowed.length; di++) {
+                var prev = windowed[di - 1].nav_per_share, cur = windowed[di].nav_per_share;
+                if (cur < prev && prev > 0) drops.push((cur / prev - 1) * 1e4);
+            }
+            if (drops.length === 0) {
+                statsEl.innerHTML = 'No decline appears in the plotted window. ';
+            } else {
+                drops.sort(function(a, b) { return a - b; });
+                var med = drops[Math.floor(drops.length / 2)];
+                var net = (navSeries[navSeries.length - 1] / navSeries[0] - 1) * 100;
+                statsEl.innerHTML = 'Over the ' + (windowed.length - 1) + ' transitions plotted above, <strong>' +
+                    drops.length + '</strong> are declines (median ' + med.toFixed(1) + ' bps, largest ' +
+                    drops[0].toFixed(1) + ' bps) while NAV is <strong>' + (net >= 0 ? '+' : '') +
+                    net.toFixed(2) + '%</strong> net across the window. ';
+            }
+        }
+
+        // 11% APY target line — extrapolated from the first NAV sample.
+        var navStart = windowed[0].nav_per_share;
+        var tsStart = new Date(windowed[0].timestamp.endsWith('Z') ? windowed[0].timestamp : windowed[0].timestamp + 'Z').getTime();
+        var apyTarget = 0.11;
+        var targetSeries = windowed.map(function(e) {
+            var ts = new Date(e.timestamp.endsWith('Z') ? e.timestamp : e.timestamp + 'Z').getTime();
+            var years = (ts - tsStart) / (365.25 * 24 * 3600 * 1000);
+            return navStart * Math.pow(1 + apyTarget, years);
+        });
+
+        if (window._saturnSusdatNavChart) {
+            try { window._saturnSusdatNavChart.destroy(); } catch (e) {}
+        }
+        window._saturnSusdatNavChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'NAV per share (actual)',
+                        data: navSeries,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                        fill: true,
+                        tension: 0.25,
+                        pointRadius: 0,
+                        borderWidth: 2,
+                        spanGaps: true
+                    },
+                    {
+                        label: '11% APY target',
+                        data: targetSeries,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'transparent',
+                        borderDash: [5, 4],
+                        fill: false,
+                        tension: 0,
+                        pointRadius: 0,
+                        borderWidth: 2,
+                        spanGaps: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { unit: 'day', displayFormats: { day: 'MMM d' } },
+                        grid: { display: false },
+                        ticks: { maxTicksLimit: 8, font: { size: 11 } }
+                    },
+                    y: {
+                        title: { display: true, text: 'NAV (USDat per sUSDat)', font: { size: 11 }, color: '#64748b' },
+                        grid: { color: '#f1f5f9' },
+                        ticks: {
+                            font: { size: 11 },
+                            callback: function(v) { return Number(v).toFixed(4); }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) { return c.dataset.label + ': ' + Number(c.raw).toFixed(6) + ' USDat'; }
+                        }
+                    }
+                },
+                interaction: { intersect: false, mode: 'index' }
+            }
+        });
+    },
+
+    // ============================================================
+    // §4b Peg Performance — 30d history
+    //
+    // USDat: Curve-derived peg vs $1.00 (fixed-peg model).
+    // sUSDat: price-vs-NAV vs 0% baseline (vault-share — absolute price vs
+    // $1 would mis-state the gap because NAV grows).
+    // Sources from {slug}_backing_history.json — same file the NAV
+    // trajectory chart loads on sUSDat, browser HTTP cache makes the
+    // second fetch effectively free.
+    // ============================================================
+    _renderPegHistory: function(specific, s, slug) {
+        return '<div class="panel">' +
+            '<div class="panel-title">Peg Performance</div>' +
+            SaturnRenderer._renderPegHistoryInner(specific, s, slug) +
+        '</div>';
+    },
+
+    // Inner body shared by the standalone Peg Performance panel (sUSDat)
+    // and the consolidated Liquidity parent's Peg sub-section (USDat).
+    _renderPegHistoryInner: function(specific, s, slug) {
+        var headline, methodology, chartTitle;
+
+        if (slug === 'usdat') {
+            var pegState = SaturnRenderer._pegStatusClass(s.peg_deviation_pct);
+            var pegCls   = SaturnRenderer._pegPctClass(pegState);
+            var pegTxt   = (s.peg_curve_usdc != null) ? '$' + s.peg_curve_usdc.toFixed(4) : '—';
+            headline =
+                '<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">' +
+                    '<div class="summary-card"><div class="card-label">Current peg (Curve)</div>' +
+                        '<div class="card-value">' + pegTxt + '</div>' +
+                        '<div class="text-xs ' + pegCls + ' mt-0.5 font-mono">' +
+                            SaturnRenderer._pegPctText(s.peg_deviation_pct, 3) +
+                        '</div>' +
+                        '<div class="mt-1">' + SaturnRenderer._statusPill(SaturnRenderer._pegStatusLabel(pegState), pegState) + '</div>' +
+                    '</div>' +
+                    '<div class="summary-card"><div class="card-label">24h range</div>' +
+                        '<div class="card-value text-base" id="saturn-peg-range-24h">—</div>' +
+                        '<div class="text-xs text-slate-400 mt-1">min · max</div></div>' +
+                    '<div class="summary-card"><div class="card-label">7d range</div>' +
+                        '<div class="card-value text-base" id="saturn-peg-range-7d">—</div>' +
+                        '<div class="text-xs text-slate-400 mt-1">min · max</div></div>' +
+                '</div>';
+            chartTitle = '30-day peg vs $1.00 (Curve USDAT/USDC)';
+            methodology =
+                '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                    'Peg sampled per hourly analyzer cycle as the Curve USDAT/USDC implied rate; ±25 bps healthy, ' +
+                    '±50 bps watch, ±100 bps stress (same bands as the Layer-3 alerter). Higher-fidelity than ' +
+                    'CoinGecko aggregate price for short-window observation — analyzer reads pool state directly.' +
+                '</div>';
+        } else {
+            // sUSDat — price-vs-NAV, not absolute price.
+            var sec = specific.secondary || {};
+            var poolPrice = sec.curve_susdat_usdc && sec.curve_susdat_usdc.implied_price;
+            var d = SaturnRenderer._navDevDisplay(s.nav_per_share, s.peg_curve_usdc, s.discount_to_nav_pct);
+            var dState = SaturnRenderer._navDevState(d);
+            var dCls = SaturnRenderer._pegPctClass(dState);
+            var dWord = SaturnRenderer._navDevWord(d);
+            headline =
+                '<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">' +
+                    '<div class="summary-card"><div class="card-label">Price vs NAV</div>' +
+                        '<div class="card-value ' + dCls + '">' + SaturnRenderer._pegPctText(d, 3) + '</div>' +
+                        '<div class="text-xs text-slate-500 mt-0.5">' + dWord + ' · Curve sUSDat/USDC vs contract NAV</div>' +
+                        '<div class="mt-1">' + SaturnRenderer._statusPill(SaturnRenderer._pegStatusLabel(dState), dState) + '</div>' +
+                    '</div>' +
+                    '<div class="summary-card"><div class="card-label">Current NAV</div>' +
+                        '<div class="card-value text-base">' +
+                            (s.nav_per_share != null ? s.nav_per_share.toFixed(6) : '—') +
+                        '</div>' +
+                        '<div class="text-xs text-slate-400 mt-1">USDat / sUSDat</div></div>' +
+                    '<div class="summary-card"><div class="card-label">Curve market price</div>' +
+                        '<div class="card-value text-base">' +
+                            (poolPrice != null ? '$' + poolPrice.toFixed(4) :
+                                (s.peg_curve_usdc != null ? '$' + s.peg_curve_usdc.toFixed(4) : '—')) +
+                        '</div>' +
+                        '<div class="text-xs text-slate-400 mt-1">Curve sUSDat/USDC spot</div></div>' +
+                '</div>';
+            chartTitle = '30-day price vs NAV (sUSDat)';
+            methodology =
+                '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                    '<strong>Vault-share peg is measured against contract NAV, not $1.00.</strong> ' +
+                    'NAV accrues over time (currently ~$' + (s.nav_per_share != null ? s.nav_per_share.toFixed(4) : '1.0007') +
+                    ' and growing under the 11% APY design target), so absolute-price comparisons would mis-state ' +
+                    'the true gap. Positive (+) = premium: market paying above NAV, often when buyers want to skip ' +
+                    'the vesting queue. Negative (-) = discount: market trading below NAV. A persistent small ' +
+                    'discount is not a peg break.' +
+                '</div>';
+        }
+
+        var chartBlock =
+            '<div class="mt-4">' +
+                '<div class="text-sm font-semibold text-slate-700 mb-2">' + chartTitle + '</div>' +
+                '<div style="height: 320px; position: relative;">' +
+                    '<canvas id="saturn-peg-history-chart"></canvas>' +
+                '</div>' +
+            '</div>';
+
+        return headline + chartBlock + methodology;
+    },
+
+    _loadPegHistoryChart: function(slug, s) {
+        var ctx = document.getElementById('saturn-peg-history-chart');
+        if (!ctx || typeof Chart === 'undefined') return;
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/' + slug + '_backing_history.json?nocache=' + nocache)
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(hist) {
+                if (!hist || !Array.isArray(hist.entries) || hist.entries.length < 2) {
+                    ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">Peg history not yet available — chart populates after a few hours of samples.</div>';
+                    return;
+                }
+                if (slug === 'usdat') {
+                    SaturnRenderer._drawUsdatPegChart(ctx, hist.entries, s);
+                } else {
+                    SaturnRenderer._drawSusdatDiscountChart(ctx, hist.entries, s);
+                }
+            })
+            .catch(function() {
+                ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">Peg history unavailable.</div>';
+            });
+    },
+
+    _drawUsdatPegChart: function(ctx, entries, s) {
+        var cutoff = Date.now() - 30 * 24 * 3600 * 1000;
+        var windowed = entries.filter(function(e) {
+            if (e.peg_curve_usdc == null) return false;
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts).getTime() >= cutoff;
+        });
+        if (windowed.length < 2) {
+            ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">Peg history not yet available — chart populates after a few hours of samples.</div>';
+            return;
+        }
+
+        // Backfill 24h / 7d range tiles populated by _renderPegHistory.
+        SaturnRenderer._fillPegRangeTiles(windowed);
+
+        var labels = windowed.map(function(e) {
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts);
+        });
+        var values = windowed.map(function(e) { return e.peg_curve_usdc; });
+
+        // Y range — anchored at $1.00 with ±0.5% padding default, but auto-rescale
+        // if real data widens beyond. Per spec: "auto-rescale if a stress event
+        // widens the range".
+        var minV = Math.min.apply(null, values);
+        var maxV = Math.max.apply(null, values);
+        var pad = Math.max(0.005, (maxV - minV) * 0.4);
+        var yMin = Math.min(1 - 0.005, minV - pad);
+        var yMax = Math.max(1 + 0.005, maxV + pad);
+
+        var pointColors = values.map(function(v) {
+            var dev = (v - 1) * 100;
+            var st = SaturnRenderer._pegStatusClass(dev);
+            if (st === 'ok')       return '#3b82f6';
+            if (st === 'warn')     return '#f59e0b';
+            if (st === 'critical') return '#ef4444';
+            return '#94a3b8';
+        });
+
+        if (window._saturnPegChart) {
+            try { window._saturnPegChart.destroy(); } catch (e) {}
+        }
+        window._saturnPegChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Curve USDAT/USDC',
+                    data: values,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                    pointBackgroundColor: pointColors,
+                    pointBorderColor: pointColors,
+                    fill: true,
+                    tension: 0.25,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    spanGaps: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { unit: 'day', displayFormats: { day: 'MMM d' } },
+                        grid: { display: false },
+                        ticks: { maxTicksLimit: 8, font: { size: 11 } }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        suggestedMin: yMin,
+                        suggestedMax: yMax,
+                        ticks: {
+                            font: { size: 11 },
+                            callback: function(v) { return '$' + Number(v).toFixed(4); }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) {
+                                var v = c.raw;
+                                var dev = (v - 1) * 100;
+                                var sign = dev >= 0 ? '+' : '';
+                                return 'Curve: $' + Number(v).toFixed(6) + '  (' + sign + (dev * 100).toFixed(1) + ' bps)';
+                            }
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            peg: {
+                                type: 'line', yMin: 1.0, yMax: 1.0,
+                                borderColor: '#94a3b8', borderWidth: 1, borderDash: [4, 4],
+                                label: { content: '$1.00', display: true, position: 'end', font: { size: 9 }, color: '#64748b' }
+                            }
+                        }
+                    }
+                },
+                interaction: { intersect: false, mode: 'index' }
+            }
+        });
+    },
+
+    _drawSusdatDiscountChart: function(ctx, entries, s) {
+        var cutoff = Date.now() - 30 * 24 * 3600 * 1000;
+        var windowed = entries.filter(function(e) {
+            if (e.discount_to_nav_pct == null &&
+                (e.nav_per_share == null || e.peg_curve_usdc == null || e.nav_per_share <= 0)) return false;
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts).getTime() >= cutoff;
+        });
+        if (windowed.length < 2) {
+            ctx.parentElement.innerHTML = '<div class="text-xs text-slate-400 italic">Discount history not yet available — chart populates after a few hours of samples.</div>';
+            return;
+        }
+
+        var labels = windowed.map(function(e) {
+            var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+            return new Date(ts);
+        });
+        var values = windowed.map(function(e) {
+            return SaturnRenderer._navDevDisplay(e.nav_per_share, e.peg_curve_usdc, e.discount_to_nav_pct);
+        });
+        var navMap = windowed.map(function(e) { return e.nav_per_share; });
+        var priceMap = windowed.map(function(e) { return e.peg_curve_usdc; });
+
+        // Y range — anchored at 0% with ±2% padding default, auto-rescale if real
+        // data widens.
+        var absMax = Math.max.apply(null, values.map(function(v) { return Math.abs(v || 0); }));
+        var padPct = Math.max(2.0, absMax * 1.2);
+
+        var pointColors = values.map(function(v) {
+            var st = SaturnRenderer._navDevState(v);
+            if (st === 'ok')       return '#3b82f6';
+            if (st === 'warn')     return '#f59e0b';
+            if (st === 'critical') return '#ef4444';
+            return '#94a3b8';
+        });
+
+        if (window._saturnPegChart) {
+            try { window._saturnPegChart.destroy(); } catch (e) {}
+        }
+        window._saturnPegChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Price vs NAV',
+                    data: values,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                    pointBackgroundColor: pointColors,
+                    pointBorderColor: pointColors,
+                    fill: false,
+                    tension: 0.25,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    spanGaps: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { unit: 'day', displayFormats: { day: 'MMM d' } },
+                        grid: { display: false },
+                        ticks: { maxTicksLimit: 8, font: { size: 11 } }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        suggestedMin: -padPct,
+                        suggestedMax:  padPct,
+                        title: { display: true, text: 'Price vs NAV (%) - positive premium · negative discount', font: { size: 11 } },
+                        ticks: {
+                            font: { size: 11 },
+                            callback: function(v) { return (v > 0 ? '+' : '') + Number(v).toFixed(2) + '%'; }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(c) {
+                                var idx = c.dataIndex;
+                                var nav = navMap[idx];
+                                var p   = priceMap[idx];
+                                var dev = c.raw;
+                                var sign = dev >= 0 ? '+' : '';
+                                var word = SaturnRenderer._navDevWord(dev);
+                                return [
+                                    sign + Number(dev).toFixed(3) + '% · ' + word,
+                                    'NAV: ' + (nav != null ? Number(nav).toFixed(6) : '—'),
+                                    'Curve: ' + (p != null ? '$' + Number(p).toFixed(4) : '—')
+                                ];
+                            }
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            zero: {
+                                type: 'line', yMin: 0, yMax: 0,
+                                borderColor: '#94a3b8', borderWidth: 1, borderDash: [4, 4],
+                                label: { content: 'NAV', display: true, position: 'end', font: { size: 9 }, color: '#64748b' }
+                            }
+                        }
+                    }
+                },
+                interaction: { intersect: false, mode: 'index' }
+            }
+        });
+    },
+
+    // Helper for the 24h / 7d range tiles on the USDat peg panel.
+    _fillPegRangeTiles: function(entries) {
+        var now = Date.now();
+        var cutoff24h = now - 24 * 3600 * 1000;
+        var cutoff7d  = now - 7 * 24 * 3600 * 1000;
+
+        function rangeOver(threshold) {
+            var vals = entries.filter(function(e) {
+                if (e.peg_curve_usdc == null) return false;
+                var ts = e.timestamp.endsWith('Z') ? e.timestamp : (e.timestamp + 'Z');
+                return new Date(ts).getTime() >= threshold;
+            }).map(function(e) { return e.peg_curve_usdc; });
+            if (vals.length === 0) return null;
+            return { min: Math.min.apply(null, vals), max: Math.max.apply(null, vals), n: vals.length };
+        }
+
+        function setTile(id, range) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            if (range == null) {
+                el.textContent = '—';
+                return;
+            }
+            el.textContent = '$' + range.min.toFixed(4) + ' · $' + range.max.toFixed(4);
+        }
+
+        setTile('saturn-peg-range-24h', rangeOver(cutoff24h));
+        setTile('saturn-peg-range-7d',  rangeOver(cutoff7d));
+    },
+
+    // ============================================================
+    // §4 Secondary Market
+    // ============================================================
+    _renderSecondaryMarket: function(specific, s, slug) {
+        return '<div class="panel">' +
+            '<div class="panel-title">Secondary Market</div>' +
+            SaturnRenderer._renderSecondaryMarketInner(specific, s, slug) +
+        '</div>';
+    },
+
+    // Inner body shared by the standalone Secondary Market panel (sUSDat)
+    // and the consolidated Liquidity parent's Depth sub-section (USDat).
+    // Returns the inner content with no panel/title wrap; returns the empty
+    // "No Curve pool data" placeholder directly when pool data is missing.
+    _renderSecondaryMarketInner: function(specific, s, slug) {
+        var sec = specific.secondary || {};
+        s = s || {};
+        var slip = specific.slippage_tiers || {};
+        var pool, secondPool, headlineMetric, quoteKey, pairLabel;
+
+        if (slug === 'usdat') {
+            pool = sec.curve_usdat_usdc;
+            quoteKey = 'usdat_to_usdc';
+            pairLabel = 'USDat → USDC';
+            headlineMetric = 'price';
+        } else {
+            pool = sec.curve_susdat_usdc;
+            secondPool = sec.curve_susdat_frxusd;
+            quoteKey = 'susdat_to_usdc';
+            pairLabel = 'sUSDat → USDC';
+            headlineMetric = 'price_vs_nav';
+        }
+
+        if (!pool) {
+            return '<div class="text-xs text-slate-400 italic">No Curve pool data in this snapshot.</div>';
+        }
+
+        // Headline tile — price (USDat) vs price-vs-NAV (sUSDat) per the
+        // vault-share peg-metric rule.
+        var headlineTile;
+        if (headlineMetric === 'price') {
+            var pegState = SaturnRenderer._pegStatusClass(pool.deviation_pct);
+            var pegCls   = SaturnRenderer._pegPctClass(pegState);
+            headlineTile =
+                '<div class="summary-card"><div class="card-label">Implied price (Curve)</div>' +
+                    '<div class="card-value">' + (pool.implied_price != null ? '$' + pool.implied_price.toFixed(4) : '—') + '</div>' +
+                    '<div class="text-xs ' + pegCls + ' mt-0.5 font-mono">' +
+                        SaturnRenderer._pegPctText(pool.deviation_pct, 3) +
+                    '</div>' +
+                    '<div class="mt-1">' + SaturnRenderer._statusPill(SaturnRenderer._pegStatusLabel(pegState), pegState) + '</div>' +
+                '</div>';
+        } else {
+            // sUSDat: display price-vs-NAV, while stored discount_to_nav_pct is NAV-price.
+            var d = SaturnRenderer._navDevDisplay(s.nav_per_share, pool.implied_price, pool.discount_to_nav_pct);
+            var dState = SaturnRenderer._navDevState(d);
+            var dCls = SaturnRenderer._pegPctClass(dState);
+            var dWord = SaturnRenderer._navDevWord(d);
+            headlineTile =
+                '<div class="summary-card"><div class="card-label">Price vs NAV</div>' +
+                    '<div class="card-value ' + dCls + '">' + SaturnRenderer._pegPctText(d, 3) + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-0.5">' + dWord + ' · Curve sUSDat/USDC vs contract NAV</div>' +
+                    '<div class="mt-1">' + SaturnRenderer._statusPill(SaturnRenderer._pegStatusLabel(dState), dState) + '</div>' +
+                '</div>';
+        }
+
+        var poolMeta =
+            '<div class="summary-card"><div class="card-label">' + (headlineMetric === 'price' ? 'Curve USDAT/USDC' : 'Curve sUSDAT/USDC') + '</div>' +
+                '<div class="card-value text-base">' + CommonRenderer.formatCurrency(pool.tvl_usd) + ' TVL</div>' +
+                '<div class="text-xs text-slate-400 mt-1">' + CommonRenderer.formatCurrency(pool.vol_24h_usd) + ' / 24h vol</div>' +
+                '<div class="text-xs mt-1">' + SaturnRenderer._addrCell(pool.address) + '</div>' +
+            '</div>';
+
+        var secondTile = '';
+        if (secondPool) {
+            secondTile =
+                '<div class="summary-card"><div class="card-label">Curve sUSDAT/frxUSD <span class="text-[10px] font-normal text-slate-400">(secondary)</span></div>' +
+                    '<div class="card-value text-base">' + CommonRenderer.formatCurrency(secondPool.tvl_usd) + ' TVL</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">' + CommonRenderer.formatCurrency(secondPool.vol_24h_usd) + ' / 24h vol</div>' +
+                    '<div class="text-xs mt-1">' + SaturnRenderer._addrCell(secondPool.address) + '</div>' +
+                '</div>';
+        }
+
+        var topRow =
+            '<div class="grid grid-cols-1 md:grid-cols-' + (secondTile ? '3' : '2') + ' gap-3 mt-4">' +
+                headlineTile +
+                poolMeta +
+                secondTile +
+            '</div>';
+
+        // Slippage tiers
+        var qm = slip[quoteKey] || {};
+        var tiers = Object.keys(qm).filter(function(t) { return /^\d+(?:\.\d+)?$/.test(t); }).sort(function(a,b) { return Number(a)-Number(b); });
+        var hasAnyQuotes = tiers.length > 0;
+
+        var slipBlock = '';
+        if (hasAnyQuotes) {
+            var rows = tiers.map(function(t) {
+                var q = qm[t] || {};
+                var sizeTxt = CommonRenderer.formatCurrencyExact(Number(t));
+                if (q.error) return '<tr><td class="font-mono text-right">' + sizeTxt + '</td><td colspan="2" class="text-amber-700">Quote failed: ' + CommonRenderer._escapeAttr(String(q.error)) + ' — not a measurement of zero liquidity</td></tr>';
+                var output = q.output_usd == null ? q.out : q.output_usd;
+                var outTxt = (typeof output === 'number') ? CommonRenderer.formatCurrencyExact(output) : '—';
+                var slipBps = typeof q.slippage_bps === 'number' ? q.slippage_bps : null;
+                var slipState = (slipBps == null) ? 'unknown' :
+                                (Math.abs(slipBps) < 25) ? 'ok' :
+                                (Math.abs(slipBps) < 100) ? 'warn' : 'critical';
+                var slipCls = slipState === 'ok' ? 'text-green-600' :
+                              slipState === 'warn' ? 'text-amber-600' :
+                              slipState === 'critical' ? 'text-red-600' : 'text-slate-500';
+                return '<tr>' +
+                    '<td class="font-mono text-right">' + sizeTxt + '</td>' +
+                    '<td class="font-mono text-right">' + outTxt + '</td>' +
+                    '<td class="font-mono text-right ' + slipCls + '">' +
+                        (slipBps != null ? slipBps.toFixed(0) + ' bps' : '—') +
+                    '</td>' +
+                '</tr>';
+            }).join('');
+            slipBlock =
+                '<div class="mt-6">' +
+                    '<div class="text-sm font-semibold text-slate-700 mb-2">Slippage tiers — ' + pairLabel + '</div>' +
+                    '<div class="dashboard-table-scroll" tabindex="0" role="region" aria-label="Saturn quote observations"><table class="data-table" data-saturn-rungs>' +
+                        '<thead><tr><th class="text-right">Size</th><th class="text-right">Output (publisher USD mark)</th><th class="text-right">Published cost</th></tr></thead>' +
+                        '<tbody>' + rows + '</tbody>' +
+                    '</table></div>' +
+                    '<p class="text-xs text-slate-500 mt-2">Read the producer’s cost convention and clock metadata below. Quoted output does not establish a settled cash exit.</p>' +
+                '</div>';
+        }
+
+        var note = (slug === 'susdat') ?
+            '<div class="text-xs text-slate-500 italic leading-relaxed mt-4 pt-3 border-t border-slate-200">' +
+                'Price-vs-NAV is the meaningful metric for a vault share — Curve sUSDat/USDC spot ' +
+                'is not "the peg" because 1 sUSDat ≠ $1 by design. Positive (+) = premium above NAV; ' +
+                'negative (-) = discount below NAV. Persistent small discount typically reflects the ' +
+                'vesting queue (arbs can\'t close the gap atomically), not a backing problem.' +
+            '</div>' : '';
+
+        return topRow + slipBlock + note;
+    },
+
+    // ============================================================
+    // §4 Liquidity (consolidated parent — USDat)
+    //
+    // One panel mapped to the report's "Liquidity" axis, replacing the
+    // prior three (Secondary Market + Peg Performance + Derived score).
+    // Sub-sections render summary → detail: Derived Score (summary tile +
+    // components reveal) → Peg Performance → Secondary Market Depth.
+    // sUSDat still ships as three separate panels until a follow-up
+    // consolidation pass — see saturn-usdat-liquidity-panel-consolidation
+    // handoff for the USDat-only scope.
+    // ============================================================
+    // Axis section divider — same shape/styling as syrupusdc.js, hastra-prime.js
+    // and usdai.js so the in-stream headers match the band above.
+    // ⚠️ USDat's backing_ratio is exactly 1.000000 and the page rated it
+    // Healthy 4/5 with nothing saying what it is a ratio OF. The analyzer's own
+    // comment names the failure: "A ratio of exactly 1.0000 invites being read
+    // as 'fully backed, everywhere'. It is not measured to be that."
+    //
+    // Both notes were published in summary and rendered nowhere: supply_scope_note
+    // (the ratio is an Ethereum statement; BSC's backing is UNREAD, not absent)
+    // and global_supply_note (summing the chains would double-count, because
+    // Ethereum bridges by LockRelease so its totalSupply already contains the
+    // bridged portion).
+    //
+    // saturn.js clears axis-backing-head to build its own, so the generic basis
+    // line cannot reach this page — it needs placing here.
+    _renderSupplyScopeNote: function(s, data) {
+        s = s || {};
+        var scopeNote = s.supply_scope_note;
+        var globalNote = s.global_supply_note;
+        // ⚠️ sUSDat's tile reads 100.82% with its basis available only on hover:
+        // "NAV per share vs $1-par issuance. ⚠️ ATTESTED, NOT MEASURED: 96.2% of
+        // the reserve is an OFF-CHAIN STRC claim." Attested-not-measured is the
+        // single most important thing about that number and it was behind a
+        // tooltip, which does not exist on a touch device.
+        var bk = (data && data.backing) || {};
+        var crBasis = bk.collateral_ratio_basis || null;
+        var sdBasis = (bk.surplus_deficit != null) ? (bk.surplus_deficit_basis || null) : null;
+        if (!scopeNote && !globalNote && !crBasis && !sdBasis) return '';
+        return '<div class="panel">' +
+            '<div class="panel-title" style="margin-bottom:0.35rem;">What this ratio covers</div>' +
+            (scopeNote ? '<div class="text-xs text-slate-600" style="line-height:1.5;">' +
+                SaturnRenderer._escHtml(scopeNote) + '</div>' : '') +
+            (globalNote ? '<div class="text-xs text-slate-500 mt-2" style="line-height:1.5;">' +
+                SaturnRenderer._escHtml(globalNote) + '</div>' : '') +
+            (crBasis ? '<div class="text-xs text-slate-600 mt-2" style="line-height:1.5;">' +
+                '<span class="font-semibold">Ratio basis:</span> ' +
+                SaturnRenderer._escHtml(crBasis) + '</div>' : '') +
+            (sdBasis ? '<div class="text-xs text-slate-500 mt-2" style="line-height:1.5;">' +
+                '<span class="font-semibold">Surplus basis:</span> ' +
+                SaturnRenderer._escHtml(sdBasis) + '</div>' : '') +
+        '</div>';
+    },
+
+    // ⚠️ `chip` carries an authored axis score into a bespoke header. This page
+    // hides the shared axis section, so anything CommonRenderer writes into that
+    // head is invisible here — which is how riskAnalyst's dependencies score sat
+    // in the DOM behind `display:none` with nobody able to read it.
+    _axisHead: function(num, title, sub, chip) {
+        return '<div class="axis-head">' +
+            '<span class="axis-num">' + num + '</span>' +
+            '<span class="axis-title">' + title + '</span>' +
+            (sub ? '<span class="axis-sub">' + sub + '</span>' : '') +
+            (chip || '') +
+        '</div>';
+    },
+
+    // §4 Dependencies — dependencies.upstream/.downstream are published and were
+    // rendered nowhere. downstream_tracked is shown as its own state: "nothing
+    // downstream" and "downstream not measured" are different claims.
+    _renderDependenciesPanel: function(data) {
+        var dep = (data && data.dependencies) || {};
+        var up = Array.isArray(dep.upstream) ? dep.upstream : [];
+        var down = Array.isArray(dep.downstream) ? dep.downstream : [];
+        if (!up.length && !down.length && dep.downstream_tracked !== false) return '';
+        function rows(list) {
+            return list.map(function(x) {
+                var nm = SaturnRenderer._escHtml(x.name || '\u2014');
+                var label = (x.link && x.link_type === 'internal')
+                    ? '<a href="' + SaturnRenderer._escHtml(x.link) + '" class="text-blue-500 hover:underline">' + nm + ' \u2192</a>'
+                    : nm;
+                return '<tr><td class="font-medium">' + label + '</td>' +
+                    '<td class="text-xs text-slate-600 dark:text-slate-300">' +
+                        SaturnRenderer._escHtml(x.metric || '') + '</td></tr>';
+            }).join('');
+        }
+        var body = '';
+        if (up.length) {
+            body += '<div class="text-sm font-semibold text-slate-700 mb-1 mt-2">Upstream \u2014 what this depends on</div>' +
+                '<table class="data-table"><tbody>' + rows(up) + '</tbody></table>';
+        }
+        body += '<div class="text-sm font-semibold text-slate-700 mb-1 mt-3">Downstream \u2014 what depends on this</div>';
+        body += down.length
+            ? '<table class="data-table"><tbody>' + rows(down) + '</tbody></table>'
+            : '<div class="text-xs text-slate-500">' + (dep.downstream_tracked === false
+                ? 'Not tracked \u2014 this feed does not measure downstream holders, which is not the same as there being none.'
+                : 'None recorded.') + '</div>';
+        return '<div class="panel" id="panel-dependencies">' +
+            '<div class="panel-title">Dependencies</div>' + body +
+        '</div>';
+    },
+
+    // Split of _renderLiquidity into its §1 (peg) and §2 (depth) halves. The
+    // combined panel is kept for any caller that wants both.
+    _renderPegPanel: function(specific, s, slug) {
+        var pegHeading = (slug === 'susdat') ? 'Price vs NAV' : 'Peg Performance';
+        return '<div class="panel" id="panel-peg">' +
+            '<div class="panel-title">' + pegHeading + '</div>' +
+            SaturnRenderer._renderLiquidityPegSection(specific, s, slug) +
+        '</div>';
+    },
+
+    _renderLiquidityPanel: function(specific, s, slug) {
+        var divider = '<div class="border-t border-slate-200 pt-6 mt-6"></div>';
+        return '<div class="panel">' +
+            '<div class="panel-title">Liquidity</div>' +
+            SaturnRenderer._renderLiquidityScoreSection(specific, s, slug) +
+            divider +
+            '<h3 class="text-sm font-semibold text-slate-900 mt-0 mb-3">Secondary Market Depth</h3>' +
+            SaturnRenderer._renderLiquidityDepthSection(specific, s, slug) +
+        '</div>';
+    },
+
+    _renderLiquidity: function(specific, s, slug) {
+        var divider = '<div class="border-t border-slate-200 pt-6 mt-6"></div>';
+        // Vault-share peg metric is price-vs-NAV, not absolute price vs $1 —
+        // the sub-section heading reflects that for sUSDat.
+        var pegHeading = (slug === 'susdat') ? 'Price vs NAV' : 'Peg Performance';
+        return '<div class="panel">' +
+            '<div class="panel-title">Liquidity</div>' +
+            SaturnRenderer._renderLiquidityScoreSection(specific, s, slug) +
+            divider +
+            '<h3 class="text-sm font-semibold text-slate-900 mt-0 mb-3">' + pegHeading + '</h3>' +
+            SaturnRenderer._renderLiquidityPegSection(specific, s, slug) +
+            divider +
+            '<h3 class="text-sm font-semibold text-slate-900 mt-0 mb-3">Secondary Market Depth</h3>' +
+            SaturnRenderer._renderLiquidityDepthSection(specific, s, slug) +
+        '</div>';
+    },
+
+    // Score sub-section — live-derived liquidity score + its component breakdown
+    // (the "How this score is computed" reveal). No editorial reference: the
+    // score is fully derivable (depth + peg + venues) and recomputed each
+    // refresh, so the dashboard shows the live number only — qualitative
+    // judgment lives in the linked report, not a stale-prone constant here.
+    _renderLiquidityScoreSection: function(specific, s, slug) {
+        var ld = s.liquidity_depth_derived;
+        if (!ld) {
+            return '<div class="risk-flag" style="background:#f1f5f9;color:#475569;border-left:4px solid #94a3b8;">' +
+                '<strong>Liquidity derivation pending.</strong> Formula codified, awaiting analyzer wire-up. ' +
+                'See <span class="font-mono">specs/handoffs/saturn-liquidity-derivation-pegtracker.md</span>.' +
+            '</div>';
+        }
+
+        var derived = ld.score;
+        var derivedTxt = (derived != null) ? derived.toFixed(1) + ' / 10' : '—';
+
+        var comp = ld.components || {};
+        var sec = specific.secondary || {};
+        var poolKey = (slug === 'usdat') ? 'curve_usdat_usdc' : 'curve_susdat_usdc';
+        var poolTvl = sec[poolKey] && sec[poolKey].tvl_usd;
+
+        function fmtUsdShort(v) {
+            if (v == null) return '—';
+            if (v >= 1e6) return '$' + (v / 1e6).toFixed(1) + 'M';
+            if (v >= 1e3) return '$' + (v / 1e3).toFixed(0) + 'K';
+            return '$' + v.toFixed(0);
+        }
+        function fmtAdj(v) {
+            if (v == null) return '—';
+            if (v === 0) return '0.0';
+            return (v > 0 ? '+' : '−') + Math.abs(v).toFixed(1);
+        }
+        function adjCls(v) {
+            if (v == null) return 'text-slate-500';
+            if (v === 0) return 'text-slate-600';
+            return v > 0 ? 'text-emerald-700' : 'text-red-600';
+        }
+
+        var rows = [
+            {
+                label: 'Depth tier',
+                value: comp.depth_tier != null ? comp.depth_tier.toFixed(1) : '—',
+                valueCls: 'text-slate-800',
+                context: (comp.effective_max_under_25bps_usd != null ?
+                          fmtUsdShort(comp.effective_max_under_25bps_usd) + ' under 25 bps' :
+                          '—') +
+                         (poolTvl != null ?
+                          ', capped to 5% × ' + fmtUsdShort(poolTvl) + ' Curve TVL' :
+                          '')
+            },
+            {
+                label: 'Peg band 30d',
+                value: fmtAdj(comp.peg_adj),
+                valueCls: adjCls(comp.peg_adj),
+                context: (comp.peg_band_30d_bps != null ?
+                          comp.peg_band_30d_bps.toFixed(2) + ' bps over window' :
+                          '—') +
+                         (comp.peg_band_30d_partial === true ?
+                          ' · <em>partial 30d window</em>' :
+                          '')
+            },
+            {
+                label: 'Venues ≥ $1M TVL',
+                value: fmtAdj(comp.venue_adj),
+                valueCls: adjCls(comp.venue_adj),
+                context: (comp.deep_venues_count != null ?
+                          comp.deep_venues_count + ' deep venue' + (comp.deep_venues_count === 1 ? '' : 's') :
+                          '—')
+            },
+            {
+                label: 'Turnover (24h vol / TVL)',
+                value: fmtAdj(comp.turnover_adj),
+                valueCls: adjCls(comp.turnover_adj),
+                context: comp.turnover_ratio_24h != null ? (comp.turnover_ratio_24h * 100).toFixed(1) + '%' : '—'
+            },
+            {
+                label: 'Pool / supply ratio',
+                value: fmtAdj(comp.pool_adj),
+                valueCls: adjCls(comp.pool_adj),
+                context: comp.pool_supply_ratio != null ? (comp.pool_supply_ratio * 100).toFixed(1) + '%' : '—'
+            }
+        ];
+
+        var compRows = rows.map(function(r) {
+            return '<tr>' +
+                '<td class="font-medium text-slate-700">' + r.label + '</td>' +
+                '<td class="text-right font-mono ' + r.valueCls + '">' + r.value + '</td>' +
+                '<td class="text-xs text-slate-500">' + r.context + '</td>' +
+            '</tr>';
+        }).join('');
+
+        var scoreHeader =
+            '<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">' +
+                '<div>' +
+                    '<h3 class="text-sm font-semibold text-slate-900" style="margin:0;">Derived Score</h3>' +
+                    '<div class="text-xs text-slate-500 mt-1">Live metric — recomputed each refresh from depth · peg · venues</div>' +
+                '</div>' +
+                '<div class="text-2xl font-bold text-slate-800 sm:text-right whitespace-nowrap">' + derivedTxt + '</div>' +
+            '</div>';
+
+        var componentsReveal =
+            '<details class="mt-3 group">' +
+                '<summary class="cursor-pointer text-xs font-medium text-blue-700 hover:text-blue-900 select-none" style="list-style:none;">' +
+                    '<span class="inline-block transform group-open:rotate-90 transition-transform">▶</span> How this score is computed' +
+                '</summary>' +
+                '<div class="mt-3 data-table-scroll">' +
+                    '<table class="data-table">' +
+                        '<thead><tr>' +
+                            '<th>Component</th>' +
+                            '<th class="text-right">Contribution</th>' +
+                            '<th>Detail</th>' +
+                        '</tr></thead>' +
+                        '<tbody>' + compRows + '</tbody>' +
+                    '</table>' +
+                '</div>' +
+                '<div class="text-xs text-slate-500 italic leading-relaxed mt-3">' +
+                    'Pure-data formula — observed depth + peg behavior + venue diversification. ' +
+                    'Permissioning and addressable-universe constraints score in the <strong>Issuer</strong> axis, not here.' +
+                '</div>' +
+            '</details>';
+
+        return scoreHeader + componentsReveal;
+    },
+
+    // Peg sub-section — wraps the shared Peg Performance inner body
+    // (3 tiles + chart canvas + methodology). Canvas id is preserved as
+    // saturn-peg-history-chart so _loadPegHistoryChart finds it unchanged.
+    _renderLiquidityPegSection: function(specific, s, slug) {
+        return SaturnRenderer._renderPegHistoryInner(specific, s, slug);
+    },
+
+    // Depth sub-section — wraps the shared Secondary Market inner body
+    // (headline tile + pool meta + slippage tiers + methodology note).
+    _renderLiquidityDepthSection: function(specific, s, slug) {
+        return SaturnRenderer._renderSecondaryMarketInner(specific, s, slug);
+    },
+
+    // ============================================================
+    // §5 Trust Stack
+    // ============================================================
+    _renderTrustStack: function(specific, slug) {
+        var ts = specific.trust_stack || {};
+        var s = specific; // for occasional reads from sibling fields
+
+        var proxyType = ts.proxy_type || (slug === 'usdat' ? 'TransparentUpgradeableProxy' : 'ERC1967Proxy');
+        var proxyAdminContract = ts.proxy_admin_contract;
+        var proxyAdminOwner = ts.proxy_admin_owner || ts.admin_role_holder;
+        var adminIsEoa = (slug === 'usdat') ? ts.proxy_admin_owner_is_eoa : ts.admin_role_holder_is_eoa;
+        var impl = (specific.summary && specific.summary.implementation) || null;
+        // (impl normally lives on the top-level summary, not on trust_stack — render reads it where present)
+
+        function row(label, value, extra) {
+            return '<tr>' +
+                '<td class="font-medium">' + label + '</td>' +
+                '<td>' + value + '</td>' +
+                (extra ? '<td class="text-xs text-slate-500">' + extra + '</td>' : '<td></td>') +
+            '</tr>';
+        }
+
+        var rows = '';
+        rows += row('Proxy type', '<span class="font-mono text-xs">' + proxyType + '</span>',
+            (slug === 'usdat') ? 'OZ TransparentUpgradeableProxy — upgrade authority routes through ProxyAdmin' : 'OZ ERC1967Proxy — upgrade authority is DEFAULT_ADMIN_ROLE holder');
+
+        if (slug === 'usdat' && proxyAdminContract) {
+            rows += row('ProxyAdmin contract', SaturnRenderer._addrCell(proxyAdminContract), 'Owns the USDat upgrade path');
+        }
+        rows += row(
+            (slug === 'usdat') ? 'ProxyAdmin owner' : 'DEFAULT_ADMIN_ROLE holder',
+            SaturnRenderer._addrCell(proxyAdminOwner),
+            'Same address controls USDat + sUSDat'
+        );
+        // ⚠️ THIS ROW USED TO NAME NO ADDRESS, AND SILENTLY RE-POINTED ITSELF.
+        //
+        // It rendered "Admin custody: Saturn-stated Fireblocks 2-of-3 MPC"
+        // unconditionally, directly beneath the ProxyAdmin-owner row, with a
+        // tooltip beginning "Saturn represents THIS ADDRESS as a Fireblocks
+        // 2-of-3 MPC wallet ... the address shows no contract code".
+        //
+        // That was true when ProxyAdmin.owner() WAS the Saturn EOA. In August the
+        // upstream correction re-pointed proxy_admin_owner at the self-administered
+        // 5-day TimelockController — a CONTRACT, code_size 5497 — and this row did
+        // not move. So a custody claim about an EOA, including the words "no
+        // contract code", came to describe a timelock contract by adjacency alone.
+        // Nothing failed: the row had no address to disagree with.
+        //
+        // ⚠️ The MPC disclosure is REAL and still applies — to admin_eoa /
+        // admin_controller.operator_address (0x610182…), which is the timelock's
+        // PROPOSER and CANCELLER. So the fix is to name the address, not to drop
+        // the claim. Anchoring it to a field means the next re-point moves the row
+        // or blanks it, instead of quietly relabelling whatever sits above.
+        var ac = ts.admin_controller || {};
+        var custodyAddr = ac.operator_address ||
+            ((specific.admin_eoa && specific.admin_eoa.address) || null);
+
+        if (ac.kind === 'timelock' && ac.min_delay_days != null) {
+            rows += row(
+                'Upgrade delay',
+                '<span class="font-mono">' + ac.min_delay_days + ' days</span>' +
+                (ac.self_administered
+                    ? ' <span class="text-xs text-slate-500">· self-administered</span>' : ''),
+                (ac.self_administered
+                    ? 'Shortening the delay must itself clear the delay'
+                    : '\u26a0\ufe0f Not self-administered \u2014 the delay may be shortenable without notice') +
+                (ac.execution_permissionless
+                    ? ' \u00b7 execution is permissionless once matured'
+                    : '')
+            );
+        }
+
+        if (custodyAddr) {
+            // ⚠️ Published by the feed and rendered NOWHERE until now: the operator
+            // is BOTH proposer and canceller, so nobody independent can veto what
+            // it queues. That is the fact the delay's value actually turns on.
+            var bothRoles = (ac.operator_is_proposer === true && ac.operator_is_canceller === true);
+            rows += row(
+                bothRoles ? 'Timelock proposer / canceller' : 'Admin custody',
+                SaturnRenderer._addrCell(custodyAddr) +
+                ' <span class="font-medium">Saturn-stated Fireblocks 2-of-3 MPC</span>' +
+                ' <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200 ml-1 cursor-help" ' +
+                'title="Saturn represents THIS address (' + custodyAddr + ') as a Fireblocks 2-of-3 MPC wallet. On-chain reads cannot distinguish MPC from a single-key EOA \u2014 the address shows no contract code and a low outbound nonce either way. Claim taken at face value pending independent attestation. The raw single-key-compromise vector is closed by the quorum requirement; signers remain internal to Saturn\'s custody process and Fireblocks publishes no customer-verifiable infrastructure proof.">\u24d8 on-chain indistinguishable</span>',
+                bothRoles
+                    ? '\u26a0\ufe0f Holds BOTH roles \u2014 it can queue a full-reach upgrade and is also the only party that can cancel one, so there is no independent veto. It cannot execute.'
+                    : 'Same (shared address)'
+            );
+        }
+
+        // ⚠️ THIS RENDERED AN UNSOURCED CONSTANT AS A MEASURED REDEMPTION QUEUE.
+        //
+        // `vesting_period_days: 30` is a HARDCODED LITERAL in
+        // PegTracker/saturn_backing_analyzer.py:1856, sitting in a dict of
+        // constants between deposit_fee_bps and min_withdrawal_usdat. It is not a
+        // measurement, and riskAnalyst established 2026-09-10 that NO on-chain
+        // getter returns 2,592,000s across 18 candidate signatures on either the
+        // vault or the WithdrawalQueue.
+        //
+        // ⚠️ AND THE OTHER CANDIDATE IS ALSO NOT THE EXIT PATH. vestingPeriod()
+        // reads 259,200s (3d), but it pairs with lastDistributionTimestamp under a
+        // 90d MAX_VESTING_PERIOD ceiling — that is the ERC-4626 YIELD-DRIP pattern,
+        // not a redemption queue. Both numbers that looked like answers are ruled
+        // out and the WithdrawalQueue exposes no delay getter at all.
+        //
+        // This matters beyond tidiness: whether the 5-day admin notice is usable
+        // depends entirely on the exit being SHORTER than it, so a number labelled
+        // "redemption queue" is load-bearing for a risk argument. Rendering the
+        // constant under that label answered the question with a figure that means
+        // nothing. The row now states the unknown and shows its work.
+        if (slug === 'susdat' && specific.trust_stack &&
+            specific.trust_stack.vesting_period_days != null) {
+            rows += row(
+                'Exit / redemption delay',
+                '<span class="font-medium text-amber-700">\u26a0\ufe0f Not established</span>' +
+                ' <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200 ml-1 cursor-help" ' +
+                'title="The feed publishes vesting_period_days = ' + specific.trust_stack.vesting_period_days +
+                ', a hardcoded constant returned by no on-chain getter (18 candidate signatures tried on the vault and the WithdrawalQueue, with a fabricated getter reverting as the control). vestingPeriod() reads 259,200s (3 days), but it pairs with lastDistributionTimestamp under a 90-day MAX_VESTING_PERIOD ceiling \u2014 an ERC-4626 yield drip, not a redemption queue. Neither figure is the exit path.">\u24d8 both candidate figures ruled out</span>',
+                'Unknown, not zero. \u26a0\ufe0f The 5-day admin notice only protects if the exit is SHORTER than it \u2014 that comparison cannot be made from published sources.'
+            );
+        }
+        if (slug === 'susdat' && specific.trust_stack && specific.trust_stack.deposit_fee_bps != null) {
+            rows += row('Deposit fee', '<span class="font-mono">' + specific.trust_stack.deposit_fee_bps + ' bps</span>', '');
+        }
+        if (slug === 'susdat' && specific.trust_stack && specific.trust_stack.min_withdrawal_usdat != null) {
+            rows += row('Min withdrawal', '<span class="font-mono">' + specific.trust_stack.min_withdrawal_usdat + ' USDat</span>', '');
+        }
+
+        // Pause + timelock state
+        rows += row('Timelock', ts.timelock ? SaturnRenderer._statusPill('Set', 'ok') : SaturnRenderer._statusPill('None', 'warn'),
+            ts.timelock ? '' : 'Admin actions execute instantly');
+
+        // Audits — handoff lists Three Sigma ×1 + Certora ×2, shared across both tokens.
+        var audits = Array.isArray(ts.audits) ? ts.audits : null;
+        var auditList = audits ?
+            audits.map(function(a) { return a.firm + (a.id ? ' (' + a.id + ')' : ''); }).join(' · ') :
+            'Three Sigma + Certora ×2 (shared with sibling)';
+
+        var auditLine =
+            '<div class="text-sm text-slate-600 mt-3 pt-3 border-t border-slate-200">' +
+                'Audits: <strong>' + auditList + '</strong>' +
+                ' · <span class="text-xs text-slate-500">audit set is shared across USDat + sUSDat</span>' +
+            '</div>';
+
+        // Admin posture callout — Saturn-represented Fireblocks 2-of-3 MPC.
+        // Amber/warn rather than red/crit: the raw single-key vector is
+        // closed by the MPC quorum (taking Saturn's representation at face
+        // value), but three structural residuals remain — surfaced inline.
+        var adminCallout = '';
+        if (adminIsEoa) {
+            adminCallout =
+                '<div class="risk-flag risk-warning mt-3">' +
+                    '<strong>Admin layer is a Saturn-represented Fireblocks 2-of-3 MPC</strong> ' +
+                    '<span class="text-xs font-normal">(on-chain reads cannot distinguish MPC from single-key EOA)</span> ' +
+                    'at ' + SaturnRenderer._addrCell(proxyAdminOwner) + '. ' +
+                    'Taking the claim at face value, the raw single-key-compromise vector is closed — a 2-of-3 quorum is required for any admin action. ' +
+                    'Three residual concerns remain: signers are internal to Saturn\'s custody process (not multi-org), ' +
+                    'there is no on-chain timelock (admin actions land immediately once the quorum signs), and Fireblocks ' +
+                    'doesn\'t publish customer-verifiable infrastructure proofs. ' +
+                    'Same residual risk class as Apyx\'s admin posture.' +
+                '</div>';
+        }
+
+        return '<div class="panel">' +
+            '<div class="panel-title">Trust Stack</div>' +
+            '<div class="data-table-scroll">' +
+                '<table class="data-table">' +
+                    '<thead><tr><th>Component</th><th>Value</th><th>Notes</th></tr></thead>' +
+                    '<tbody>' + rows + '</tbody>' +
+                '</table>' +
+            '</div>' +
+            adminCallout +
+            auditLine +
+        '</div>';
+    },
+
+    // ============================================================
+    // §6 Family panel (async)
+    // ============================================================
+    // Dated owner-review fields, separate from live backing/depth and queues.
+    // No portfolio quantities, holder identities or simulation payloads belong here.
+    _exitReviewHtml: function(review) {
+        var esc = SaturnRenderer._escHtml;
+        if (!review || review.schema_version !== 'saturn-exit-review/1' ||
+                review.kind !== 'dated_review_not_live_route_or_eligibility_monitor') {
+            return '<div class="panel"><div class="panel-title">USDat / srUSDat exit dependencies</div>' +
+                '<p class="text-sm text-slate-500">Dated exit review unavailable. Current queue eligibility, timing and complete-route settlement are unknown.</p></div>';
+        }
+        var sales = review.secondary_sales || {}, issuer = review.issuer || {}, valuation = review.valuation || {};
+        var observations = (Array.isArray(sales.observations) ? sales.observations : []).filter(function(o) {
+            var t = Date.parse(o.source_timestamp);
+            return ['eth', 'monad'].indexOf(o.chain) !== -1 && Number.isFinite(t) && t <= Date.now() && Number.isSafeInteger(o.block) && o.block > 0;
+        });
+        var both = observations.some(function(o) { return o.chain === 'eth'; }) && observations.some(function(o) { return o.chain === 'monad'; });
+        var html = '<div class="panel"><div class="panel-title">USDat / srUSDat exit dependencies</div>' +
+            '<p class="text-xs text-slate-500 mb-3">Dated owner review · ' + esc(review.review_date || 'date unavailable') +
+            ' · separate from live liquidity measurements and queue monitoring</p>' +
+            '<p class="text-sm mb-2"><strong>Issuer layers:</strong> ' + esc(issuer.pyusdx || 'PYUSDx issuer detail unavailable.') + ' ' + esc(issuer.underlying || '') + '</p>';
+        if (issuer.source_url && issuer.source_url.indexOf('https://www.m0.org/') === 0) {
+            html += '<p class="text-xs mb-3"><a href="' + esc(issuer.source_url) + '" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">M0 issuer disclosure</a> · ' + esc(issuer.source_date || '') + '</p>';
+        }
+        html += '<p class="text-sm mb-2"><strong>USDat secondary sale:</strong> ' +
+            (both && sales.status === 'positive_dated_size_specific_quotes' ? esc(sales.reading) : 'Chain-specific dated quote evidence is incomplete or unavailable; no two-chain liquidity conclusion is drawn.') + '</p>';
+        html += '<div class="text-xs text-slate-500 mb-3">' + observations.map(function(o) {
+            return esc(o.chain === 'eth' ? 'Ethereum' : 'Monad') + ' · block ' + esc(o.block) + ' · ' + esc(o.source_timestamp) + ' · ' + esc(o.evidence_class);
+        }).join('<br>') + '</div><p class="text-xs text-slate-500 mb-3">' + esc(sales.limits || '') + '</p>';
+        (Array.isArray(review.exit_stages) ? review.exit_stages : []).forEach(function(stage) {
+            html += '<div class="border-t border-slate-200 pt-2 mt-2"><div class="text-sm font-semibold">' + esc(stage.name) + '</div>' +
+                '<p class="text-sm">' + esc(stage.reading) + '</p>' +
+                (stage.eligibility ? '<p class="text-xs text-slate-500">Queue eligibility: ' + esc(stage.eligibility) + ' · timing: ' + esc(stage.timing || 'unknown') + '</p>' : '') + '</div>';
+        });
+        html += '<div class="border-t border-slate-200 pt-3 mt-3"><div class="text-sm font-semibold">Oracle / HF versus market exit</div><p class="text-sm">' +
+            esc(valuation.reading || 'Oracle/NAV and market-exit risks require separate evidence.') + '</p><p class="text-xs text-slate-500 mt-1">' + esc(valuation.scope || '') + '</p></div></div>';
+        return html;
+    },
+
+    _loadExitReview: function() {
+        var target = document.getElementById('saturn-exit-review');
+        if (!target) return;
+        target.innerHTML = SaturnRenderer._exitReviewHtml(null);
+        fetch('data/saturn_exit_review.json?review=' + Math.floor(Date.now() / 60000))
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(review) { if (target.isConnected) target.innerHTML = SaturnRenderer._exitReviewHtml(review); })
+            .catch(function() { if (target.isConnected) target.innerHTML = SaturnRenderer._exitReviewHtml(null); });
+    },
+
+    _loadFamilyPanel: function(currentSlug) {
+        var target = document.getElementById('saturn-family-panel');
+        if (!target) return;
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/saturn_family.json?nocache=' + nocache)
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(fam) {
+                if (!fam) {
+                    target.innerHTML = '';
+                    return;
+                }
+                target.innerHTML = SaturnRenderer._renderFamilyHtml(fam, currentSlug);
+            })
+            .catch(function() { target.innerHTML = ''; });
+    },
+
+    // Control paths over the Saturn stack, straight from `shared_control`.
+    //
+    // Framing rule, deliberate: `single_authority` is forced FALSE by the
+    // analyzer whenever any path is unresolved. "Not single_authority" therefore
+    // means "not established", NEVER "independent gates confirmed" — absence of
+    // a resolved single authority is not evidence of multiple authorities. The
+    // unresolved case must read as unknown, not as reassurance.
+    _renderSharedControlHtml: function(sc) {
+        if (!sc || !Array.isArray(sc.paths) || !sc.paths.length) return '';
+
+        var rows = sc.paths.map(function(p) {
+            var resolved = p.resolved === true;
+            return '<tr>' +
+                '<td class="font-medium">' + SaturnRenderer._escHtml(p.path) + '</td>' +
+                '<td>' + (resolved ? SaturnRenderer._addrCell(p.holder) :
+                    '<span class="text-slate-400 text-xs">unresolved</span>') + '</td>' +
+                '<td>' + (resolved ?
+                    '<span class="text-xs text-slate-600">' + SaturnRenderer._escHtml(p.kind || '—') + '</span>' :
+                    SaturnRenderer._statusPill('unknown', 'unknown')) + '</td>' +
+            '</tr>';
+        }).join('');
+
+        var unresolved = sc.paths.filter(function(p) { return p.resolved !== true; }).length;
+        var count = sc.distinct_authority_count;
+        var headline;
+        if (sc.single_authority === true) {
+            headline = SaturnRenderer._statusPill('Single point of control over both layers', 'critical');
+        } else if (sc.all_paths_resolved === true && count != null) {
+            headline = SaturnRenderer._statusPill(count + ' distinct authorities resolved', 'warn');
+        } else {
+            headline = SaturnRenderer._statusPill(
+                'Not established — ' + unresolved + ' of ' + sc.paths.length + ' path(s) unresolved', 'unknown');
+        }
+
+        var caveat = (sc.single_authority !== true && sc.all_paths_resolved !== true) ?
+            '<div class="text-xs text-slate-500 mt-2">' +
+                'Unresolved paths mean <em>unknown</em>, not "no authority". These layers are not ' +
+                'confirmed to be independent gates.' +
+            '</div>' : '';
+
+        var note = sc.note ?
+            '<div class="text-xs mt-2 ' +
+                (sc.single_authority === true ?
+                    'text-red-800 bg-red-50 border border-red-200 rounded p-2' :
+                    'text-slate-500 italic') + '">' +
+                SaturnRenderer._escHtml(sc.note) +
+            '</div>' : '';
+
+        return '<div class="mt-4 pt-3 border-t border-slate-200">' +
+            '<div class="flex flex-wrap items-center gap-2 mb-2">' +
+                '<span class="text-sm font-semibold text-slate-700">Control paths</span>' +
+                headline +
+            '</div>' +
+            '<div style="max-width:100%;overflow-x:auto"><table class="data-table"><thead><tr>' +
+                '<th>Path</th><th>Holder</th><th>Kind</th>' +
+            '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
+            note +
+            caveat +
+        '</div>';
+    },
+
+    _renderFamilyHtml: function(fam, currentSlug) {
+        var admin = fam.shared_admin_eoa || {};
+        var totals = fam.totals || {};
+        var acc = fam.accountable || {};
+        var recon = fam.cross_reconciliation || {};
+
+        // Aggregate AUM card
+        var aumLines = [];
+        if (totals.usdat_supply_usd != null) {
+            aumLines.push('<div class="flex justify-between text-sm py-1">' +
+                '<span class="text-slate-600">USDat supply</span>' +
+                '<span class="font-mono">' + CommonRenderer.formatCurrencyExact(totals.usdat_supply_usd) + '</span></div>');
+        }
+        if (totals.susdat_total_assets_usd != null) {
+            aumLines.push('<div class="flex justify-between text-sm py-1">' +
+                '<span class="text-slate-600">sUSDat total assets</span>' +
+                '<span class="font-mono">' + CommonRenderer.formatCurrencyExact(totals.susdat_total_assets_usd) + '</span></div>');
+        }
+        if (recon.usdat_in_susdat_vs_susdat_buffer && recon.usdat_in_susdat_vs_susdat_buffer.value_usd != null) {
+            aumLines.push('<div class="flex justify-between text-sm py-1 text-slate-400">' +
+                '<span>Less USDat held by sUSDat</span>' +
+                '<span class="font-mono">−' + CommonRenderer.formatCurrencyExact(recon.usdat_in_susdat_vs_susdat_buffer.value_usd) + '</span></div>');
+        }
+        if (totals.combined_aum_usd != null) {
+            aumLines.push('<div class="flex justify-between text-base font-bold py-1 border-t border-slate-200 mt-1">' +
+                '<span>Combined family AUM</span>' +
+                '<span class="font-mono text-indigo-700">' + CommonRenderer.formatCurrencyExact(totals.combined_aum_usd) + '</span></div>');
+        }
+        var aumCard =
+            '<div>' +
+                '<div class="text-sm font-semibold text-slate-700 mb-2">Aggregate AUM</div>' +
+                aumLines.join('') +
+                (totals.comment ? '<div class="text-xs text-slate-500 italic mt-2">' + totals.comment + '</div>' : '') +
+            '</div>';
+
+        // Shared admin card — Saturn-represented Fireblocks 2-of-3 MPC
+        // (on-chain shape is EOA-shaped — no contract code, low nonce). Title
+        // + subtitle carry the MPC framing; the on-chain shape stays visible
+        // in the Type row so the indistinguishability is legible.
+        //
+        // This key is a WATCH target, not the controller. It holds none of the
+        // Saturn control paths — those resolve to the timelock and are rendered
+        // from `shared_control` below. Never restate control from `controls` or
+        // from any address comparison done here: a hardcoded `controls` list on
+        // this block once published exactly that false claim.
+        var adminRole = admin.role ? SaturnRenderer._escHtml(admin.role) : '';
+        var adminCard =
+            '<div>' +
+                '<div class="text-sm font-semibold text-slate-700 mb-1">Shared admin MPC — watched key</div>' +
+                '<div class="text-xs text-slate-500 mb-2">Saturn-stated Fireblocks 2-of-3 — on-chain EOA-shaped</div>' +
+                '<table class="data-table"><tbody>' +
+                    '<tr><td class="font-medium">Address</td><td>' + SaturnRenderer._addrCell(admin.address) + '</td></tr>' +
+                    '<tr><td class="font-medium">On-chain shape</td><td>' +
+                        (admin.is_eoa ?
+                            SaturnRenderer._statusPill('EOA (no code)', 'warn') :
+                            SaturnRenderer._statusPill('Contract', 'warn')) +
+                    '</td></tr>' +
+                    (admin.holds_listed_authority != null ?
+                        '<tr><td class="font-medium">Listed authority</td><td>' +
+                            (admin.holds_listed_authority ?
+                                SaturnRenderer._statusPill('Holds a listed control path', 'critical') :
+                                SaturnRenderer._statusPill('None — watch only', 'ok')) +
+                        '</td></tr>' : '') +
+                    '<tr><td class="font-medium">Outbound nonce</td><td><span class="font-mono">' +
+                        (admin.nonce != null ? admin.nonce : '—') +
+                    '</span> <span class="text-xs text-slate-500">(any tick is a signal)</span></td></tr>' +
+                    '<tr><td class="font-medium">ETH balance</td><td><span class="font-mono">' +
+                        (admin.balance_eth != null ? admin.balance_eth.toFixed(6) + ' ETH' : '—') +
+                    '</span></td></tr>' +
+                '</tbody></table>' +
+                (adminRole ?
+                    '<div class="text-xs text-slate-500 mt-2">' + adminRole + '</div>' : '') +
+            '</div>';
+
+        // Control paths — rendered ONLY from the analyzer's resolved reads.
+        var controlBlock = SaturnRenderer._renderSharedControlHtml(fam.shared_control);
+
+        // Accountable feed status
+        var accBlock = '';
+        if (acc.status) {
+            var accState = acc.status === 'live' ? 'ok' : 'warn';
+            var accLabel = acc.status === 'live' ? 'Accountable feed: LIVE' : 'Accountable feed: not live';
+            accBlock =
+                '<div class="mt-4 pt-3 border-t border-slate-200">' +
+                    '<div class="flex flex-wrap items-center gap-2">' +
+                        SaturnRenderer._statusPill(accLabel, accState) +
+                        '<span class="text-xs text-slate-500">' +
+                            'STRC PoR feed is planned per Saturn docs. ' +
+                            (Array.isArray(acc.probed_urls) && acc.probed_urls.length ?
+                                'Probing: <span class="font-mono">' + acc.probed_urls.length + '</span> candidate endpoint(s).' :
+                                '') +
+                        '</span>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        // Family AUM ts
+        var asOf = fam.as_of || fam.timestamp;
+
+        return '<div class="panel">' +
+            '<div class="panel-title">Saturn Family — cross-asset snapshot</div>' +
+            '<div class="grid grid-cols-1 md:grid-cols-2 gap-6">' +
+                aumCard +
+                adminCard +
+            '</div>' +
+            controlBlock +
+            accBlock +
+            '<div class="text-xs text-slate-400 mt-3">As of ' + CommonRenderer.formatDate(asOf) + ' · self-computed.</div>' +
+        '</div>';
+    }
+};

@@ -1,0 +1,1926 @@
+/**
+ * STRC renderer — Strategy Series A Perpetual Preferred Stock (STRC) +
+ * Backed STRCx on-chain wrapper.
+ *
+ * Mixes TradFi market data (mNAV, MSTR/BTC, STRC secondary, dividend rate)
+ * with on-chain STRCx wrapper state (multi-chain supply, top holders,
+ * multiplier) and downstream portfolio exposure (Apyx + Saturn).
+ *
+ * Schema diverges from the standard backing-monitor shape: top-level
+ * `tradfi`, `wrapper_strcx`, `downstream_exposure` instead of `summary` +
+ * `backing_breakdown`. preRender() backfills hidden scaffolding so common.js
+ * renderers don't NPE; render() then suppresses the common panels and paints
+ * its own 7-panel layout.
+ *
+ * History file (data/strc_backing_history.json) is `{series: [...]}` not
+ * `{entries: [...]}`, so CommonRenderer.renderCRChart short-circuits.
+ *
+ * Framework: ~/riskAnalyst/assets/_frameworks/strc-framework.md
+ * Analyzer:  PegTracker strc_backing_analyzer.py
+ */
+
+// ============================================================
+// Digital Credit Capital Framework (06-29 8-K, acc 0001193125-26-286871).
+// Asset-namespaced top-level consts per the renderer global-scope rule
+// (strc.js + mstr.js share JS global scope — bare `framework`/`policy`/`card`
+// names would silently collide across files). STRC-side definitions live here;
+// MSTR-side mirrors live in mstr.js as MSTR_FRAMEWORK_CARD.
+// ============================================================
+
+// STRC dividend-defense regime copy — the 06-29 reframing from a rate-ratchet
+// "par defense" to a discretionary soft floor (mirrors strc.md §II addendum).
+var STRC_DIV_POLICY_REGIME = {
+    label: 'Discretionary soft floor (not a peg)',
+    blurb: 'As of the 06-29 Digital Credit Capital Framework, Strategy ' +
+        '<strong>will not necessarily raise the STRC dividend just because STRC trades below par</strong>. ' +
+        'It may defend value through the <strong>$1B STRC-priority buyback</strong>, reserve ' +
+        'management, or BTC monetization. Net: a discretionary issuer <strong>bid under</strong> STRC plus a ' +
+        'current USD reserve cushioning the downside — but <strong>no commitment to return STRC to $100</strong>, ' +
+        'no put, no contractual floor. Mark to secondary price with a soft floor beneath it.'
+};
+
+// Shared status-pill for the framework card. A zero/missing execution field
+// means only that the current payload reports no execution; it must not erase
+// historical activity that may be absent from a stale payload.
+function strcFrameworkPill(kind) {
+    var base = 'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border ';
+    if (kind === 'armed')   return '<span class="' + base + 'border-amber-300 bg-amber-50 text-amber-800 dark:bg-amber-900/20 dark:text-amber-200">NO EXECUTION REPORTED</span>';
+    if (kind === 'idle')    return '<span class="' + base + 'border-amber-300 bg-amber-50 text-amber-800 dark:bg-amber-900/20 dark:text-amber-200">IDLE THIS PERIOD</span>';
+    if (kind === 'live')    return '<span class="' + base + 'border-green-300 bg-green-50 text-green-800 dark:bg-green-900/20 dark:text-green-200">LIVE</span>';
+    if (kind === 'policy')  return '<span class="' + base + 'border-blue-300 bg-blue-50 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200">STANDING POLICY</span>';
+    if (kind === 'discr')   return '<span class="' + base + 'border-slate-300 bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-200">DISCRETIONARY</span>';
+    return '';
+}
+
+function strcBtcMonetizationState(btc) {
+    btc = btc || {};
+    var inferredDraw = (btc.btc_drawn != null)
+        ? btc.btc_drawn
+        : ((btc.observed_btc_count != null && btc.baseline_btc_count != null)
+            ? Math.max(0, btc.baseline_btc_count - btc.observed_btc_count) : null);
+    // ⚠️ `executed` IS A HISTORICAL FLAG AND THIS READ IT AS CURRENT-PERIOD STATE.
+    //
+    // The comment here called it "the explicit current-period flag". It never was.
+    // PegTracker confirmed 2026-09-22: `executed` and `at_scale` record that the leg
+    // has EVER executed / EVER been at scale — first print 2026-07-06, at scale by
+    // 2026-08-10 — and they never go back to false. So `currentWeekLive` was true
+    // permanently once the programme had run once.
+    //
+    // ⚠️ WHAT THAT PUT ON THREE PUBLISHED PAGES: the caption's live branch reads
+    // "BTC monetization is LIVE in the current reporting period … The current payload
+    // reports an active BTC-sale leg", and the framework row renders a `live` pill.
+    // There has been no BTC SALE since 2026-08-10, and in the 09-21 filing week
+    // Strategy was a net BUYER. The pages asserted an active monetization programme
+    // that was not running.
+    //
+    // ⚠️ THE FALLBACK DELIBERATELY DOES NOT READ `executed`. For a payload predating
+    // `currently_active` we infer from the DRAW, which is at least a current-period
+    // quantity. Falling back to a field we now know means something else would be
+    // knowingly asserting the wrong meaning wherever the new field is missing.
+    var currentWeekLive = (typeof btc.currently_active === 'boolean')
+        ? btc.currently_active
+        : (inferredDraw != null && inferredDraw > 0);
+    // Historical is what `executed` / `at_scale` were always for.
+    var historicalLive = currentWeekLive ||
+        btc.executed === true || btc.at_scale === true ||
+        btc.dividend_service_executed === true || !!btc.first_print;
+    return {
+        currentWeekLive: currentWeekLive,
+        historicalLive: historicalLive,
+        btcDrawn: inferredDraw,
+        // Carried so the caption can be specific about WHEN rather than vague about
+        // whether — the producer publishes both.
+        lastSaleDate: btc.last_btc_sale_filing_date || null,
+        sales28d: (typeof btc.btc_sales_last_28d === 'number') ? btc.btc_sales_last_28d : null
+    };
+}
+
+function strcBtcMonetizationCaption(btc) {
+    btc = btc || {};
+    var state = strcBtcMonetizationState(btc);
+    var holdingsTxt = btc.observed_btc_count != null
+        ? btc.observed_btc_count.toLocaleString('en-US') + ' BTC'
+        : 'unavailable';
+    var drawTxt = state.btcDrawn != null && state.btcDrawn > 0
+        ? ', down ' + state.btcDrawn.toLocaleString('en-US') + ' from the reported baseline'
+        : '';
+
+    if (state.currentWeekLive) {
+        return '<span class="font-semibold">BTC monetization is LIVE in the current reporting period.</span> ' +
+            'Reported holdings are <span class="font-mono">' + holdingsTxt + '</span>' + drawTxt + '. ' +
+            'The current payload reports an active BTC-sale leg; amounts and use of proceeds should follow the latest filing fields as they become available.';
+    }
+    if (state.historicalLive) {
+        // ⚠️ Name the date rather than saying "no current-period sale". The producer
+        // publishes `last_btc_sale_filing_date` and `btc_sales_last_28d`; "idle" with
+        // a date a reader can check is a different statement from "idle" alone, and
+        // the vaguer one is what let the live branch go unquestioned.
+        var since = state.lastSaleDate
+            ? ' Last reported BTC sale: <span class="font-mono">' +
+              CommonRenderer._escapeAttr(String(state.lastSaleDate)) + '</span>.'
+            : '';
+        var win = (state.sales28d === 0)
+            ? ' No BTC sales in the last 28 days.'
+            : (state.sales28d != null
+                ? ' BTC sales in the last 28 days: <span class="font-mono">' + state.sales28d + '</span>.'
+                : '');
+        return '<span class="font-semibold">BTC monetization has executed historically, but is NOT running now.</span> ' +
+            'Reported holdings are <span class="font-mono">' + holdingsTxt + '</span>.' + since + win +
+            ' This is an idle-period status, not a claim that holdings were unchanged — ' +
+            'the stack can move through purchases while the sale leg is idle.';
+    }
+    return '<span class="font-semibold">BTC monetization is authorized but no execution is reported.</span> ' +
+        'Reported holdings are <span class="font-mono">' + holdingsTxt + '</span>.';
+}
+
+function strcMnavWatchCaption(tradfi, dcf) {
+    tradfi = tradfi || {};
+    dcf = dcf || {};
+    var mnav = tradfi.mnav || {};
+    var watch = mnav.rearm_watch || {};
+    var val = (mnav.value != null) ? mnav.value.toFixed(4) : '—';
+    var money = function (v) {
+        return (v != null && typeof STRCRenderer !== 'undefined')
+            ? STRCRenderer._fmtMoneyShort(v) : null;
+    };
+
+    // ⚠️ TWO SERIES FOR ONE QUANTITY. `rearm_watch.reserve_trajectory` is the gate's
+    // input; `digital_credit_framework.usd_reserve_policy` is the same payload's
+    // current USD Reserve figure. They are maintained independently, and the
+    // trajectory has been a frozen literal since 2026-08-11 (last entry as_of
+    // 2026-08-09, $4.65B) while the policy block tracked the weekly 8-K to
+    // 2026-09-21 ($5.04B, first decline in the series). Rendering the trajectory
+    // alone put two values for one quantity, six weeks apart, on one page.
+    // We do NOT recompute the leg from the fresher series — the rule's window and
+    // threshold are the producer's, not ours. We name the lag and decline to
+    // attribute the watch's inactivity to a leg whose input is stale.
+    var reserveTrail = Array.isArray(watch.reserve_trajectory) ? watch.reserve_trajectory : [];
+    var latestReserve = reserveTrail.length ? reserveTrail[reserveTrail.length - 1] : null;
+    var gateTxt = latestReserve ? money(latestReserve.cash_and_equivalents_usd) : null;
+    var gateAsOf = latestReserve && latestReserve.as_of;
+
+    var policy = dcf.usd_reserve_policy || {};
+    var liveTxt = money(policy.balance_usd);
+    var liveAsOf = policy.as_of;
+
+    // Structural staleness test: is the gate's input older than this payload's own
+    // current reserve as_of? Date comparison, never magnitude — the direction of
+    // the reserve is exactly the thing in dispute.
+    var lagDays = null;
+    if (gateAsOf && liveAsOf && /^\d{4}-\d{2}-\d{2}$/.test(gateAsOf) && /^\d{4}-\d{2}-\d{2}$/.test(liveAsOf)) {
+        var dg = Date.parse(gateAsOf + 'T00:00:00Z');
+        var dl = Date.parse(liveAsOf + 'T00:00:00Z');
+        if (!isNaN(dg) && !isNaN(dl) && dl > dg) lagDays = Math.round((dl - dg) / 86400000);
+    }
+    var gateStale = lagDays != null && lagDays >= 7;
+
+    var printCount = watch.sub_1_0_weekly_prints != null ? watch.sub_1_0_weekly_prints : null;
+    var printsNeeded = watch.required_sub_1_0_weekly_prints != null ? watch.required_sub_1_0_weekly_prints : null;
+    var watchState = watch.state || (watch.armed === false ? 'watch_not_armed' : null);
+    var stateTxt = watchState ? ' <span class="font-mono">' + watchState + '</span>.' : '.';
+    var thresholdSide = 'at';
+    if (mnav.value != null && mnav.value < 1.0) thresholdSide = 'below';
+    else if (mnav.value != null && mnav.value > 1.0) thresholdSide = 'above';
+    var thresholdTxt = (mnav.value != null)
+        ? 'mNAV is near the 1.0 line at ' + val + ' (' + thresholdSide + ' 1.0).'
+        : 'mNAV is near the 1.0 line.';
+
+    // Leg 1 — persistence. Published booleans + counters only.
+    var persistenceClause = '';
+    if (watch.persistence_leg_satisfied === false && printCount != null && printsNeeded != null) {
+        persistenceClause = ' Sustained-sub-1.0 leg: <span class="font-mono">' + printCount +
+            '</span> of <span class="font-mono">' + printsNeeded + '</span> required weekly prints — not satisfied.';
+    } else if (watch.persistence_leg_satisfied === true) {
+        persistenceClause = ' Sustained-sub-1.0 leg: satisfied.';
+    }
+
+    // Leg 2 — reserve. When the gate input lags, render the lag instead of the
+    // conclusion; the published leg status is still reported, but not used to
+    // explain why the watch is inactive.
+    var reserveClause;
+    if (gateStale) {
+        reserveClause = ' <span class="font-semibold">⚠️ The reserve leg is reading a stale series.</span>' +
+            ' Its trajectory ends ' + (gateTxt ? 'at ' + gateTxt + ' ' : '') + 'as of <span class="font-mono">' +
+            gateAsOf + '</span>, while this payload\'s current USD Reserve is ' +
+            (liveTxt ? '<span class="font-mono">' + liveTxt + '</span> ' : '') +
+            'as of <span class="font-mono">' + liveAsOf + '</span> — <span class="font-mono">' + lagDays +
+            '</span> days behind. The producer still publishes this leg as ' +
+            (watch.reserve_flat_to_down_leg_satisfied === false ? 'not satisfied' : 'satisfied') +
+            ', but that status rests on the stale trajectory, so it is not a reason the watch is inactive.' +
+            ' Treat the reserve leg as unverified here and read the USD Reserve policy panel for the current figure.';
+    } else if (watch.reserve_flat_to_down_leg_satisfied === false) {
+        reserveClause = ' Flat-to-declining reserve leg: not satisfied' +
+            (gateTxt ? ' (trajectory at ' + gateTxt + (gateAsOf ? ' as of ' + gateAsOf : '') + ')' : '') + '.';
+    } else if (watch.reserve_flat_to_down_leg_satisfied === true) {
+        reserveClause = ' Flat-to-declining reserve leg: satisfied' +
+            (gateTxt ? ' (trajectory at ' + gateTxt + (gateAsOf ? ' as of ' + gateAsOf : '') + ')' : '') + '.';
+    } else {
+        reserveClause = '';
+    }
+
+    return '<span class="font-semibold">' + thresholdTxt + '</span> ' +
+        // ⚠️ `> 0`, NOT `!= null`. sub_1_0_weekly_prints is 0 today and 0 is not
+        // null, so this rendered "This is sub-1.0 weekly print #0" — a sentence
+        // that says a thing happened zero times while counting it.
+        (printCount != null && printCount > 0
+            ? 'This is sub-1.0 weekly print #' + printCount + '; ' : '') +
+        'no discount-regime break alert because the re-arm rule requires sustained sub-1.0 mNAV plus a flat-to-declining reserve.' +
+        persistenceClause + reserveClause + stateTxt +
+        // ⚠️ REMOVED: " The ~0.98 print is held down partly by the record cash
+        // deduction, not equity weakness; MSTR rose this week." Authored prose with
+        // no producer and no as_of, asserting a ~0.98 mNAV print. The live value is
+        // 1.1069 — the sentence had been ~13% wrong for as long as mNAV has been
+        // above parity, on both this page and MSTR's, and "MSTR rose this week" was
+        // frozen the day it was typed. NOT replaced with a generated equivalent:
+        // there is no field that says why a print sits where it does, and inventing
+        // one here is the same defect with fresher numbers.
+        strcFamilyOverallsClause();
+}
+
+// ⚠️ WAS THE HARDCODED STRING "Scores held (MSTR 4.5 / STRC 4.0 / STRCx 3.0)."
+// Three editorial scores in reader-facing prose with no producer, no as_of and
+// nothing to refresh them — accurate on the day it was typed, and wrong the first
+// time any of the three moved without anyone noticing the sentence existed.
+//
+// riskAnalyst now publishes them in strc_axis_basis.json's `family_overalls`, with
+// a PER-ASSET last_verified (08-26 / 08-24 / 08-18, which diverge by design — a
+// block-level date would render at least one of them false) and an authored
+// `movement` string. They verified "held" rather than asserting it, by walking each
+// report's overall_score through git history: MSTR 5.0→4.5 and STRC 5.0→4.0 both on
+// 2026-06-25, STRCx 4.0→3.0 on 2026-05-30.
+//
+// ⚠️ NO FALLBACK, BY DESIGN AND BY AGREEMENT. If the block is absent this renders
+// NOTHING — it must never fall back to a remembered constant, because a constant
+// standing in for a live number is exactly how the sentence it replaces went stale.
+// A parenthetical a reader loses beats a 2026 number read in 2027. The producer
+// endorsed this in the block's own note.
+//
+// ⚠️ `family_overalls.note` is NOT rendered: it is addressed to this renderer, not
+// to a reader, and check_feeds.py's internal-vocabulary guard flags it for exactly
+// that reason.
+function strcFamilyOverallsClause() {
+    var env = (typeof CommonRenderer !== 'undefined') ? CommonRenderer.FAMILY_ENVELOPE : null;
+    var fo = env && env.family_overalls;
+    var rows = (fo && Array.isArray(fo.assets)) ? fo.assets : [];
+    var parts = rows.map(function (a) {
+        if (!a || a.overall_score == null) return null;
+        var label = a.label || a.slug || '';
+        // Each score carries its OWN verified date and movement on hover — the two
+        // facts that make a number checkable, and the two a shared block-level date
+        // would have destroyed.
+        var title = [
+            a.last_verified ? 'Last verified ' + a.last_verified : null,
+            a.movement || null,
+            fo.source ? 'Source: ' + fo.source : null
+        ].filter(Boolean).join(' \u00b7 ');
+        return '<span title="' + CommonRenderer._escapeAttr(title) + '">' +
+            CommonRenderer._escapeAttr(label) + ' ' + a.overall_score.toFixed(1) + '</span>';
+    }).filter(Boolean);
+    if (!parts.length) return '';
+    return ' Overall scores: ' + parts.join(' \u00b7 ') + '.';
+}
+
+// Builds the Digital Credit Capital Framework card from the `digital_credit_framework`
+// JSON block. Used by BOTH views (the STRC view passes lens='credit', the MSTR
+// view's MSTR_FRAMEWORK_CARD delegates here with lens='issuer').
+function renderDigitalCreditFrameworkCard(dcf, lens) {
+    if (!dcf) return '';
+    var fmt = (typeof STRCRenderer !== 'undefined' && STRCRenderer._fmtMoneyShort)
+        ? STRCRenderer._fmtMoneyShort
+        : function (n) { return n != null ? '$' + n : '—'; };
+
+    var reserve = dcf.usd_reserve_policy || {};
+    var div = dcf.strc_dividend_policy || {};
+    var dcs = dcf.dcs_repurchase_program || {};
+    var common = dcf.common_repurchase_program || {};
+    var btc = dcf.btc_monetization_program || {};
+
+    var dcsLive = dcs.executed === true || (dcs.executed_usd != null && dcs.executed_usd > 0);
+    var dcsArmed = !dcsLive;
+    var commonArmed = (common.executed_usd == null) || (common.executed_usd === 0);
+
+    // BTC monetization state: current-period status follows the explicit
+    // execution field while historical first-print context is preserved.
+    var btcState = strcBtcMonetizationState(btc);
+    var btcDrawn = btcState.btcDrawn;
+    var btcLive = btcState.currentWeekLive;
+    var btcHistorical = btcState.historicalLive;
+    // reserve_funding_cap_usd was RENAMED reserve_build_cap_usd — read new,
+    // fall back to old so the tile never renders blank.
+    var reserveBuildCap = (btc.reserve_build_cap_usd != null) ? btc.reserve_build_cap_usd : btc.reserve_funding_cap_usd;
+    var reserveBuildUsed = (btc.reserve_build_executed_usd != null) ? btc.reserve_build_executed_usd : 0;
+
+    function row(component, detail, pillHtml) {
+        return '<tr>' +
+            '<td class="font-medium align-top whitespace-nowrap">' + component + '</td>' +
+            '<td class="text-xs text-slate-600 dark:text-slate-300 leading-snug align-top">' + detail + '</td>' +
+            '<td class="align-top text-right whitespace-nowrap">' + pillHtml + '</td>' +
+        '</tr>';
+    }
+
+    var reserveDetail = '<span class="font-mono font-semibold">' + fmt(reserve.balance_usd) + '</span> balance · ' +
+        '<strong>' + (reserve.min_months_coverage != null ? reserve.min_months_coverage + '-mo-minimum' : '—') + '</strong> coverage floor (Board policy) · ' +
+        (reserve.coverage_months_total != null ? '<strong>~' + reserve.coverage_months_total + ' mo</strong> total-preferred / <strong>~' + reserve.coverage_months_strc_only + ' mo</strong> STRC-only · ' : '') +
+        (reserve.slack_months_above_minimum != null ? '<strong>~' + reserve.slack_months_above_minimum + ' mo slack</strong> above the floor · ' : '') +
+        (reserve.build_streak_weeks != null ? reserve.build_streak_weeks + 'th straight weekly build; <strong>+' + fmt(reserve.weekly_build_usd) + '</strong>, largest in the series · ' : '') +
+        'restricted to ' + (reserve.restricted_use || 'preferred dividends + interest') +
+        (reserve.as_of ? ' · as of <span class="font-mono">' + reserve.as_of + '</span>' : '');
+
+    var reserveBalanceTxt = fmt(reserve.balance_usd);
+    var divDetail = '<strong>Discretionary soft floor</strong> · <em>will not necessarily hike solely because STRC &lt; par</em>' +
+        (div.auto_hike_on_subpar === false ? '' : '') +
+        ' · ' + reserveBalanceTxt +
+        // ⚠️ Same figure, second appearance, and it was undated here while the
+        // reserve row above carries its stamp. A number that is right this week
+        // only because the reserve was flat is invisible until the week it is not.
+        (reserve.as_of ? ' <span class="text-slate-500">(' + reserve.as_of + ')</span>' : '') +
+        ' reserve cushioning the downside · evaluated monthly on price / yields / spreads / BTC vol / reserve coverage.';
+
+    // ⚠️ THIS STAMP WAS WRITTEN FOR EXACTLY THIS PROBLEM AND THEN NEVER FIRED.
+    // It was gated on `dcs.as_of`, and the payload has no such field — it stamps
+    // each figure separately (`remaining_as_of`, `executed_as_of`,
+    // `authorized_as_of`, `shares_retired_as_of`). So the guard was always false
+    // and $1.19B rendered bare, in a file written minutes earlier, six days after
+    // the figure it carries. ⚠️ A fix keyed to a field name that does not exist is
+    // indistinguishable at review time from no fix at all — the comment beside it
+    // described behaviour the code could not produce.
+    // riskAnalyst raised it 2026-09-14; the DCS figure was $1.19B as of 09-08
+    // against $1.05B actual by 09-13.
+    //
+    // Reads the per-field stamps that DO exist. One date if they agree, the
+    // figure-by-figure pairs if they diverge, so a reader is never told a single
+    // date covers numbers taken on different days.
+    var dcsStampFields = [
+        ['authorized', dcs.authorized_as_of],
+        ['executed', dcs.executed_as_of],
+        ['remaining', dcs.remaining_as_of],
+        ['shares retired', dcs.shares_retired_as_of]
+    ].filter(function(f) { return !!f[1]; });
+    var dcsDates = dcsStampFields.map(function(f) { return f[1]; })
+        .filter(function(v, i, a) { return a.indexOf(v) === i; });
+    var dcsStamp = '';
+    if (dcs.as_of || dcsDates.length) {
+        var stampTxt = dcs.as_of ? dcs.as_of
+            : (dcsDates.length === 1 ? dcsDates[0]
+                : dcsStampFields.map(function(f) { return f[0] + ' ' + f[1]; }).join(', '));
+        dcsStamp = ' <span class="text-slate-500">(source stamps <span class="font-mono">' + stampTxt + '</span>' +
+            (dcs.source_accession ? ', accession <span class="font-mono">' + dcs.source_accession + '</span>' : '') +
+            '; filing-stamped, later filings may supersede)</span>';
+    }
+
+    var fundingLabels = {usd_cash:'USD Cash', btc_sales:'BTC sales', mstr_atm:'MSTR ATM proceeds'};
+    var fundingDetail = dcs.funding ? ' · Historical funding designation: ' +
+        CommonRenderer._escapeAttr(fundingLabels[dcs.funding] || String(dcs.funding)) +
+        ' (as of ' + CommonRenderer._escapeAttr(dcs.funding_as_of || 'date not supplied') +
+        '); not this week’s funding attribution · ' : ' · Funding designation unavailable · ';
+    var dcsDetail = '<span class="font-mono font-semibold">' + fmt(dcs.authorized_usd) + '</span> authorized · ' +
+        '<strong>' + (dcs.initial_priority || 'STRC') + ' = initial priority</strong> (if accretive)' + fundingDetail +
+        // ⚠️ `executed_usd` CAN VANISH BETWEEN RUNS, AND `|| 0` TURNED THAT INTO A
+        // WRONG NUMBER. The 2026-09-14 8-K parse dropped the field entirely (it was
+        // $810M the run before), and this line rendered "executed $0" beside
+        // "$1.05B remaining of $2.00B authorized" — a self-contradiction on one row.
+        // A missing field is not zero. Prefer the published figure; where it is
+        // absent and both authorized and remaining ARE published, show the
+        // difference and SAY it is derived; otherwise show nothing.
+        'executed ' + (function () {
+            if (dcs.executed_usd != null) {
+                return '<span class="font-mono font-semibold">' + fmt(dcs.executed_usd) + '</span>';
+            }
+            if (dcs.authorized_usd != null && dcs.remaining_usd != null) {
+                return '<span class="font-mono font-semibold">' + fmt(dcs.authorized_usd - dcs.remaining_usd) + '</span>' +
+                    '<span class="text-slate-500"> (derived: authorized − remaining; the feed published no executed figure this run)</span>';
+            }
+            return '<span class="text-slate-400">not published this run</span>';
+        })() +
+        (dcs.used_pct != null ? ' (<strong>' + dcs.used_pct.toFixed(1) + '% used</strong>)' : '') +
+        (dcs.shares_repurchased != null ? ' · <span class="font-mono">' + dcs.shares_repurchased.toLocaleString('en-US') + ' sh' +
+            (dcs.average_price_usd != null ? ' @ ~$' + dcs.average_price_usd.toFixed(2) : '') + '</span>' : '') +
+        (dcs.remaining_usd != null ? ' · <span class="font-mono">' + fmt(dcs.remaining_usd) + ' remaining</span>' : '') +
+        // This block is a filing-stamped constant, not a live figure — the event
+        // stream (strategy_events.json repurchase_program) advances ahead of it.
+        // The payload dates it honestly; the renderer used to drop the stamp, so
+        // a stale number appeared as current. Surface the date and accession so a
+        // reader who sees a newer figure elsewhere can tell which is older rather
+        // than which is wrong.
+        dcsStamp;
+
+    var commonDetail = '<span class="font-mono font-semibold">' + fmt(common.authorized_usd) + '</span> authorized · BTC-funded · ' +
+        'executed <span class="font-mono">' + fmt(common.executed_usd != null ? common.executed_usd : 0) + '</span>';
+
+    var btcDetail;
+    if (btcLive) {
+        var fp = btc.first_print || {};
+        var printDate = (typeof fp.period === 'string' && fp.period.indexOf('..') >= 0)
+            ? fp.period.split('..').pop() : 'date unavailable';
+        btcDetail = '<strong class="text-green-700 dark:text-green-300">LIVE — current reporting period</strong>: ' +
+            (btc.observed_btc_count != null ? '<span class="font-mono font-semibold">' + btc.observed_btc_count.toLocaleString('en-US') + ' BTC</span>' : 'holdings unavailable') +
+            (btcDrawn != null && btcDrawn > 0 ? ' · <span class="font-mono">−' + btcDrawn.toLocaleString('en-US') + ' BTC from reported baseline</span>' : '') +
+            '. Historical first reported print: ' + printDate +
+            (fp.btc_sold != null ? ' (<span class="font-mono">−' + fp.btc_sold.toLocaleString('en-US') + ' BTC</span>)' : '') +
+            '<br><span class="text-slate-500">Reserve-build sub-cap: <span class="font-mono font-semibold">' + fmt(reserveBuildCap) + '</span> untapped' +
+            ' (<span class="font-mono">' + fmt(reserveBuildUsed) + '</span> used — distinct from the dividend-service print above)</span>';
+    } else if (btcHistorical) {
+        var hist = btc.first_print || {};
+        var histDate = (typeof hist.period === 'string' && hist.period.indexOf('..') >= 0)
+            ? hist.period.split('..').pop() : 'date unavailable';
+        btcDetail = '<strong class="text-amber-700 dark:text-amber-300">IDLE — current reporting period</strong>: ' +
+            'no current-period BTC sale is reported; ' +
+            (btc.observed_btc_count != null ? '<span class="font-mono">' + btc.observed_btc_count.toLocaleString('en-US') + '</span> BTC reported. ' : 'BTC holdings unavailable. ') +
+            'Historical first print remains ' + histDate +
+            (hist.btc_sold != null ? ' (<span class="font-mono">−' + hist.btc_sold.toLocaleString('en-US') + ' BTC</span>)' : '') +
+            '.<br><span class="text-slate-500">Reserve-build sub-cap: <span class="font-mono font-semibold">' + fmt(reserveBuildCap) + '</span> untapped' +
+            ' (<span class="font-mono">' + fmt(reserveBuildUsed) + '</span> used — distinct from dividend-service history)</span>';
+    } else {
+        btcDetail = '≤ <span class="font-mono font-semibold">' + fmt(reserveBuildCap) + '</span> to reserve ' +
+            '(+ uncapped dividend / interest / buyback funding) · not yet executed · ' +
+            (btc.observed_btc_count != null ? '<span class="font-mono">' + btc.observed_btc_count.toLocaleString('en-US') + '</span> BTC reported' : 'BTC holdings unavailable');
+    }
+
+    var rows =
+        row('USD Reserve policy', reserveDetail, strcFrameworkPill('policy')) +
+        row('STRC dividend policy', divDetail, strcFrameworkPill('discr')) +
+        row('DCS repurchase', dcsDetail, strcFrameworkPill(dcsArmed ? 'armed' : 'live')) +
+        row('Common repurchase', commonDetail, strcFrameworkPill(commonArmed ? 'armed' : 'policy')) +
+        row('BTC Monetization', btcDetail, strcFrameworkPill(btcLive ? 'live' : (btcHistorical ? 'idle' : 'armed')));
+
+    // Deployment note follows the execution fields without treating a zero or
+    // missing DCS value as proof that the program has never been used.
+    var buybackNote = dcsArmed
+        ? ' No DCS execution is reported in the current payload;'
+        : ' <span class="text-green-700 dark:text-green-300 font-semibold">STRC buyback is LIVE;</span>';
+    var deployNote = btcLive
+        ? buybackNote + ' <span class="text-green-700 dark:text-green-300 font-semibold">BTC monetization is LIVE this week</span>.'
+        : btcHistorical
+            ? buybackNote + ' BTC monetization has historical execution and is <span class="text-amber-700 dark:text-amber-300 font-semibold">idle in the current reporting period</span>.'
+            : ' <strong>not capital deployed</strong> — buybacks and BTC sales are at $0 / not-yet-executed.';
+    var lensLine = (lens === 'issuer')
+        ? 'Standing capital-allocation programs the 06-29 8-K introduced. Each row is capacity Strategy authorized;' + deployNote
+        : 'Issuer-level capacity that backstops STRC holders. The reserve + STRC-priority buyback are the discretionary <strong>bid under</strong> STRC.' + deployNote;
+
+    var acc = dcf.source_accession ? ' · 8-K acc ' + dcf.source_accession : '';
+
+    return '<div class="panel">' +
+        '<div class="panel-title">Digital Credit Capital Framework ' +
+            '<span class="text-xs font-normal text-slate-500">— 06-29 8-K (standing programs)</span></div>' +
+        '<div class="text-xs text-slate-500 leading-relaxed mb-3">' + lensLine +
+            ' <span class="text-slate-400">Announced ' + (dcf.announced || '—') + acc + '.</span></div>' +
+        '<div class="data-table-scroll">' +
+            '<table class="data-table">' +
+                '<thead><tr><th>Component</th><th>Policy / authorization</th><th class="text-right">Status</th></tr></thead>' +
+                '<tbody>' + rows + '</tbody>' +
+            '</table>' +
+        '</div>' +
+    '</div>';
+}
+
+// STRC-view entry point (asset-namespaced per the global-scope rule).
+var STRC_FRAMEWORK_CARD = function (dcf) {
+    return renderDigitalCreditFrameworkCard(dcf, 'credit');
+};
+
+var STRCRenderer = {
+
+    // ============================================================
+    // helpers
+    // ============================================================
+    _fmtMoney: function (n, decimals) {
+        if (n == null) return '—';
+        decimals = decimals != null ? decimals : 0;
+        return '$' + n.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals });
+    },
+    _fmtMoneyShort: function (n) {
+        if (n == null) return '—';
+        var abs = Math.abs(n);
+        if (abs >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+        if (abs >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+        if (abs >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'K';
+        return '$' + n.toFixed(0);
+    },
+    _fmtNum: function (n, decimals) {
+        if (n == null) return '—';
+        decimals = decimals != null ? decimals : 0;
+        return n.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals });
+    },
+    _truncAddr: function (addr) {
+        if (!addr) return '—';
+        return addr.slice(0, 6) + '…' + addr.slice(-4);
+    },
+    _etherscanLink: function (addr, label) {
+        if (!addr) return '';
+        return '<a href="https://etherscan.io/address/' + addr + '" target="_blank" rel="noopener noreferrer" ' +
+            'class="text-blue-500 hover:underline text-xs" title="' + addr + '">' + (label || '↗') + '</a>';
+    },
+
+    // mNAV regime → border/background/text classes. Green/amber/orange/red
+    // for premium/parity/discount/distress (per framework regime thresholds).
+    _mnavBandClass: function (regime) {
+        if (regime === 'premium')  return 'border-green-300 bg-green-50 text-green-800 dark:bg-green-900/20 dark:text-green-200';
+        if (regime === 'parity')   return 'border-amber-300 bg-amber-50 text-amber-800 dark:bg-amber-900/20 dark:text-amber-200';
+        if (regime === 'discount') return 'border-orange-300 bg-orange-50 text-orange-800 dark:bg-orange-900/20 dark:text-orange-200';
+        if (regime === 'distress') return 'border-red-300 bg-red-50 text-red-800 dark:bg-red-900/20 dark:text-red-200';
+        return 'border-slate-300 bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-200';
+    },
+    _mnavBandLabel: function (regime) {
+        if (regime === 'premium')  return 'PREMIUM';
+        if (regime === 'parity')   return 'PARITY';
+        if (regime === 'discount') return 'DISCOUNT';
+        if (regime === 'distress') return 'DISTRESS';
+        return (regime || '—').toUpperCase();
+    },
+
+    // STRC secondary-price color band — per handoff thresholds.
+    // green $99.50–$100.50 · amber $98–$101.50 · orange $95–$103 · red outside
+    _strcPriceClass: function (p) {
+        if (p == null) return 'text-slate-700 dark:text-slate-200';
+        if (p >= 99.5 && p <= 100.5) return 'text-green-700 dark:text-green-300';
+        if (p >= 98 && p <= 101.5)   return 'text-amber-700 dark:text-amber-300';
+        if (p >= 95 && p <= 103)     return 'text-orange-700 dark:text-orange-300';
+        return 'text-red-700 dark:text-red-300';
+    },
+
+    // Strategy announces the next STRC rate near mid-month for the following
+    // month. Estimate the next mid-month tick using the real clock (data may
+    // be hours stale; countdown should reflect actual time-to-decision).
+    _nextRateDecision: function () {
+        var now = new Date();
+        var y = now.getUTCFullYear();
+        var m = now.getUTCMonth();
+        var candidate = new Date(Date.UTC(y, m, 15));
+        if (candidate.getTime() <= now.getTime()) {
+            candidate = new Date(Date.UTC(y, m + 1, 15));
+        }
+        var daysAway = Math.ceil((candidate.getTime() - now.getTime()) / 86400000);
+        return { date: candidate, daysAway: daysAway };
+    },
+
+    _mnavCaption: function (regime) {
+        if (regime === 'premium')  return 'ATM equity issuance accretive — BTC accumulation funding model intact.';
+        if (regime === 'parity')   return 'Parity/boundary read — band remains parity. Sub-1.0 mNAV alone does not arm the discount-regime watch; reserve trajectory is the gate.';
+        if (regime === 'discount') return 'ATM equity issuance dilutive vs gross BTC NAV. BTC-accumulation funding leg compressed; STRC issuance + BTC sales the load-bearing legs for preferred service.';
+        if (regime === 'distress') return 'Funding model under acute stress. STRC dividend coverage analysis required.';
+        return '—';
+    },
+
+    _renderCommonBtcCoverageLine: function (tradfi) {
+        var coverage = (tradfi.common_btc_coverage || {}).value;
+        if (coverage == null) return '';
+        return '<div class="text-xs text-slate-500 mt-3 leading-snug border-t border-slate-200 dark:border-slate-700 pt-3">' +
+            'Common-equity coverage (MktCap/BTC) = <span class="font-semibold">' + coverage.toFixed(2) + '</span>. ' +
+            'Leverage indicator only — NOT mNAV. Less than 1.0 is mechanically expected with $22B of senior claims ahead of common.' +
+        '</div>';
+    },
+
+    // ============================================================
+    // preRender — runs before common.renderSummaryCards / renderBreakdown.
+    // Scaffold the standard schema so common.js doesn't NPE; render()
+    // hides the common panels and paints the STRC-specific layout.
+    // ============================================================
+    preRender: function (data) {
+        if (!data) return;
+
+        var tradfi = data.tradfi || {};
+        var wrapper = data.wrapper_strcx || {};
+        var supplyUsd = wrapper.total_supply_usd || 0;
+        var mnavValue = (tradfi.mnav && tradfi.mnav.value != null) ? tradfi.mnav.value : null;
+
+        // Header alias — common path renders "<asset> (<chain>)" in the
+        // subtitle; bare "strc" is too terse.
+        // ⚠️ WAS 'STRC + STRCx'. The wrapper is ?asset=strcx now; a title naming two
+        // assets on a page that scores one is how the two got conflated to begin with.
+        if (data.asset === 'strc') data.asset = 'STRC';
+        // ⚠️ WAS 'NYSE + multi-chain wrapper' — wrong on BOTH halves. The wrapper is
+        // ?asset=strcx now, and the venue was never NYSE: Strategy Inc's 10-Q cover
+        // page (CIK 0001050446, accession 0001050446-26-000044, period 2026-06-30)
+        // lists the Variable Rate Series A Perpetual Stretch Preferred on THE NASDAQ
+        // GLOBAL SELECT MARKET, and "NYSE" appears zero times in that filing.
+        // ⚠️ THE CITATION IS IN THIS REPO, not in a message — data/strcx_axis_basis.json
+        // carries the accession, the registered title, the "10-Q cover" locator and
+        // the 508,121-char zero-hit NYSE control, so a future reader can check the
+        // venue without trusting a peer's account of it. That is what makes this a
+        // registry fact rather than a claim borrowed from another session. The only
+        // local source saying otherwise is a yfinance session string.
+        if (!data.chain) data.chain = 'Nasdaq';
+        if (!data.timestamp && data.timestamp_utc) data.timestamp = data.timestamp_utc;
+
+        // Synthesize summary for common.renderSummaryCards. The whole strip
+        // is hidden in _suppressCommonPanels, so values here never paint —
+        // they only need to exist to avoid NPE on `s.collateral_ratio_alt.label`.
+        if (!data.summary) {
+            data.summary = {
+                total_supply: supplyUsd,
+                total_backing: supplyUsd,
+                // ⚠️ WAS 100, AND IT WAS NOT INERT. The strip these values exist to
+                // protect is hidden, but the common frame RATES axis 2 off
+                // collateral_ratio — 100 lands at 3/5 in the [130,110,100,90] band, so
+                // the Backing head has been printing "Watch · 6/10" on STRC and MSTR:
+                // a rating derived from a placeholder this renderer invented for an
+                // instrument that has no collateral ratio at all. null rates as
+                // "Not rated", which is the honest reading.
+                collateral_ratio: null,
+                collateral_ratio_alt: {
+                    label: 'mNAV',
+                    value: mnavValue != null ? mnavValue * 100 : 0,
+                    is_currency: false
+                },
+                surplus_deficit: 0
+            };
+        }
+        if (!Array.isArray(data.backing_breakdown)) data.backing_breakdown = [];
+        if (!data.asset_specific) data.asset_specific = { type: 'strc' };
+    },
+
+    // ============================================================
+    // render — entry point.
+    // ============================================================
+    render: function (data) {
+        var container = document.getElementById('asset-specific-panels');
+        if (!container) return;
+
+        STRCRenderer._suppressCommonPanels(data);
+
+        var tradfi = data.tradfi || {};
+        var wrapper = data.wrapper_strcx || {};
+        var downstream = data.downstream_exposure || {};
+        var riskFlags = data.risk_flags || [];
+
+        // 7-panel layout (post-reorg):
+        //   1. STRC headline (instrument-native)
+        //   2. STRC instrument (rate mechanics + secondary chart)
+        //   3. STRC dividend obligation + STRC-only runway + rate-ceiling
+        //   4. STRCx handoff card (the wrapper itself is its own dashboard)
+        //   5. Downstream portfolio exposure
+        //   6. Dependency: Strategy Funding Regime (mNAV + issuer snapshot)
+        //   7. Strategy event log (EDGAR)
+        // Issuer-side analysis (capital structure, full cash-service
+        // waterfall, per-share BTC NAV) lives on the MSTR dashboard.
+        var html = '';
+        html += STRCRenderer._renderHeadlineBanner(tradfi);
+        html += STRCRenderer._renderStrcInstrument(tradfi);
+        html += STRCRenderer._renderStrcDividendObligation(data);
+        html += STRC_FRAMEWORK_CARD(data.digital_credit_framework);
+        html += STRCRenderer._renderStrcxHandoffCard(wrapper);
+        html += STRCRenderer._renderDownstreamExposure(downstream);
+        html += STRCRenderer._renderDependencyStrategyFunding(tradfi, data.digital_credit_framework);
+        html += '<div id="strc-event-log-panel" class="panel"><div class="panel-title">Strategy Event Log <span class="text-xs font-normal text-slate-500">— issuer + EDGAR monitor</span></div><div class="text-xs text-slate-500 loading-pulse">Loading Strategy disclosures…</div></div>';
+        html += STRCRenderer._renderFreshness(data);
+
+        container.innerHTML = html;
+
+        // Sibling-dashboard affordance in the page header (above panel 1).
+        STRCRenderer._setupCompanionLink();
+
+        // \u26a0\ufe0f REPLACES the common Peg Performance card, which rendered four dashes
+        // on a security whose discount to par IS published. Same cause as STRCx: the
+        // analyzer emits no `peg` block, so the common card has nothing to read while
+        // `strc_secondary.discount_to_par_bps` sits in the feed unrendered. app.js runs
+        // renderAxisSections() before this, so this write is the last one and wins.
+        STRCRenderer._renderPegVsPar(tradfi, wrapper);
+
+        // Post-paint chart renders — DOM nodes must exist first.
+        STRCRenderer._loadHistoryAndPaintCharts(tradfi);
+        // Async: events JSON populates the event-log panel + appends any
+        // events-side risk flags to the common Risk Flags panel.
+        STRCRenderer._loadStrategyEventLog();
+    },
+
+    // Persistent header link to the sibling MSTR dashboard. Reuses the
+    // shared #header-companion-link slot (also used by the apyx renderer
+    // for apxUSD ↔ apyUSD). app.js resets the link to hidden on each
+    // route, so we re-reveal it on every STRC render.
+    _setupCompanionLink: function () {
+        var link = document.getElementById('header-companion-link');
+        if (!link) return;
+        link.setAttribute('href', '?asset=mstr');
+        link.textContent = 'Strategy issuer analysis → MSTR dashboard ↗';
+        link.classList.remove('hidden');
+    },
+
+    _suppressCommonPanels: function (data) {
+        // Top summary-card strip — STRC's Headline banner (panel 1) replaces it.
+        var s = document.getElementById('summary-cards');
+        if (s) s.style.display = 'none';
+        // Backing breakdown table — not meaningful for STRC.
+        var bd = document.getElementById('breakdown-table');
+        if (bd) { var p = bd.closest('.panel'); if (p) p.style.display = 'none'; }
+        // Allocation pie chart — not meaningful for STRC.
+        var pie = document.getElementById('pie-chart');
+        if (pie) { var p2 = pie.closest('.panel'); if (p2) p2.style.display = 'none'; }
+        // CR history chart — STRC has no CR; the mNAV chart in panel 2 is the
+        // load-bearing trend chart.
+        var cp = document.getElementById('chart-panel');
+        if (cp) cp.style.display = 'none';
+
+        // Risk flags panel — keep visible; widen its column since the
+        // breakdown table on its left is hidden. When no flags fire, hide.
+        var hasFlags = data && Array.isArray(data.risk_flags) && data.risk_flags.length > 0;
+        var risk = document.getElementById('risk-flags');
+        if (risk) {
+            var rp = risk.closest('.panel');
+            if (rp) {
+                if (!hasFlags) {
+                    rp.style.display = 'none';
+                } else {
+                    var wrap = rp.parentElement;
+                    if (wrap && !wrap.classList.contains('lg:col-span-3')) {
+                        wrap.classList.add('lg:col-span-3');
+                    }
+                }
+            }
+        }
+    },
+
+    // ============================================================
+    // Panel 1 — STRC headline (refocused; STRC primary, mNAV secondary)
+    // ============================================================
+    _renderHeadlineBanner: function (tradfi) {
+        var mnav = tradfi.mnav || {};
+        var strc = tradfi.strc_secondary || {};
+        var div = tradfi.strc_dividend || {};
+        var mnavCls = STRCRenderer._mnavBandClass(mnav.regime);
+        var mnavLabel = STRCRenderer._mnavBandLabel(mnav.regime);
+        var mnavVal = (mnav.value != null) ? mnav.value.toFixed(2) : '—';
+        var priceCls = STRCRenderer._strcPriceClass(strc.price_usd);
+        var priceVal = (strc.price_usd != null) ? '$' + strc.price_usd.toFixed(2) : '—';
+        var isRegularSession = strc.market_session === 'regular';
+        var quoteLabel = strc.quote_label || (isRegularSession ? 'Live market quote' : 'Latest market quote');
+        // Venue stripped — the feed says NYSE and the 10-Q says Nasdaq. See
+        // CommonRenderer.sanitizeQuoteDetail.
+        var quoteDetail = CommonRenderer.sanitizeQuoteDetail(strc.quote_detail) ||
+            (strc.market_session ? '' : 'session unknown');
+        var bpsTxt = '';
+        if (strc.discount_to_par_bps != null) {
+            var sign = strc.discount_to_par_bps >= 0 ? '+' : '';
+            bpsTxt = sign + strc.discount_to_par_bps + ' bps vs par';
+        }
+        var rateTxt = (div.current_rate != null) ? (div.current_rate * 100).toFixed(2) + '%' : '—';
+        var nextRate = STRCRenderer._nextRateDecision();
+        var nextDateStr = nextRate.date.toISOString().slice(0, 10);
+        var nextLabel = nextRate.daysAway + ' day' + (nextRate.daysAway === 1 ? '' : 's');
+
+        return '<div class="panel">' +
+            '<div class="panel-title">STRC headline <span class="text-xs font-normal text-slate-500">— instrument-native metrics</span></div>' +
+            // Primary row: STRC's own metrics.
+            '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">STRC secondary price</div>' +
+                    '<div class="text-3xl font-bold mt-1 ' + priceCls + '">' + priceVal + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">' + bpsTxt + '</div>' +
+                    '<div class="text-[10px] text-slate-400 mt-0.5">' + quoteLabel + (quoteDetail ? ' · ' + quoteDetail : '') + '</div>' +
+                    '<div class="text-[10px] text-slate-500 mt-1">07-26 weekly close ~$88.90 · ~−11% to par · best since early July</div>' +
+                '</div>' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">Current monthly rate</div>' +
+                    '<div class="text-3xl font-bold mt-1 text-slate-800 dark:text-slate-100">' + rateTxt + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">annualized · discretionary monthly reset</div>' +
+                '</div>' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">Next rate decision (est.)</div>' +
+                    '<div class="text-3xl font-bold mt-1 text-slate-800 dark:text-slate-100">' + nextLabel + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">' + nextDateStr + ' · mid-month VWAP reset</div>' +
+                '</div>' +
+            '</div>' +
+            // Secondary row: small dependency indicator pointing at MSTR dashboard.
+            '<div class="mt-4 flex flex-wrap items-center justify-end gap-2 text-xs">' +
+                '<span class="text-slate-500">Strategy funding regime (dependency):</span>' +
+                '<span class="inline-flex items-center px-2 py-0.5 rounded-full border ' + mnavCls + ' font-semibold">mNAV ' + mnavVal + ' · ' + mnavLabel + '</span>' +
+                '<a href="?asset=mstr" class="text-blue-500 hover:underline">→ MSTR dashboard</a>' +
+            '</div>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Panel 6 — Dependency: Strategy Funding Regime (RELABELED + merges
+    // old mNAV regime panel + old MSTR/BTC overview snapshot row).
+    //
+    // STRC's risk is downstream of Strategy's funding model. This panel
+    // surfaces the upstream regime + issuer-side inputs (BTC, MSTR, BTC
+    // stack) for STRC holders, with explicit dependency framing so the
+    // chart isn't mistaken for STRC-native analysis.
+    // ============================================================
+    _renderDependencyStrategyFunding: function (tradfi, dcf) {
+        var mnav = tradfi.mnav || {};
+        var mstr = tradfi.mstr || {};
+        var btc = tradfi.btc || {};
+        var hold = tradfi.strategy_btc_holdings || {};
+        var val = (mnav.value != null) ? mnav.value.toFixed(4) : '—';
+        var regime = mnav.regime || 'unknown';
+        var caption = STRCRenderer._mnavCaption(regime);
+        var bandCls = STRCRenderer._mnavBandClass(regime);
+        var label = STRCRenderer._mnavBandLabel(regime);
+        var btcNav = (hold.count != null && btc.price_usd != null) ? hold.count * btc.price_usd : null;
+
+        // BTC monetization state and stack draw feed the trajectory note and
+        // shared funding caption.
+        var btcm = (dcf && dcf.btc_monetization_program) || {};
+        var btcState = strcBtcMonetizationState(btcm);
+        var btcDrawn = btcState.btcDrawn;
+        var monetizationLive = btcState.currentWeekLive;
+        var monetizationHistorical = btcState.historicalLive;
+        var baselineTxt = btcm.baseline_btc_count != null ? btcm.baseline_btc_count.toLocaleString('en-US') : null;
+        var declineNote = monetizationHistorical && btcDrawn
+            ? '<div class="text-[10px] text-red-600 dark:text-red-400 mt-0.5">−' + btcDrawn.toLocaleString('en-US') +
+                (baselineTxt ? ' from ' + baselineTxt + ' reported baseline' : ' from reported baseline') + '</div>'
+            : '';
+
+        // BTC/MSTR snapshot row — issuer-side inputs the regime is derived from.
+        var snapshotRow =
+            '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">' +
+                '<div class="rounded border border-slate-200 dark:border-slate-700 p-3">' +
+                    '<div class="text-[10px] uppercase font-semibold text-slate-500">BTC price</div>' +
+                    '<div class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-0.5">' + STRCRenderer._fmtMoney(btc.price_usd, 0) + '</div>' +
+                '</div>' +
+                '<div class="rounded border border-slate-200 dark:border-slate-700 p-3">' +
+                    '<div class="text-[10px] uppercase font-semibold text-slate-500">MSTR price</div>' +
+                    '<div class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-0.5">' + STRCRenderer._fmtMoney(mstr.price_usd, 2) + '</div>' +
+                    '<div class="text-[10px] text-slate-500">mcap ' + STRCRenderer._fmtMoneyShort(mstr.market_cap_usd) + '</div>' +
+                '</div>' +
+                '<div class="rounded border border-slate-200 dark:border-slate-700 p-3">' +
+                    '<div class="text-[10px] uppercase font-semibold text-slate-500">Strategy BTC holdings</div>' +
+                    '<div class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-0.5">' + STRCRenderer._fmtNum(hold.count) + ' BTC</div>' +
+                    '<div class="text-[10px] text-slate-500">NAV ' + STRCRenderer._fmtMoneyShort(btcNav) + '</div>' +
+                    declineNote +
+                '</div>' +
+                '<div class="rounded border border-slate-200 dark:border-slate-700 p-3">' +
+                    '<div class="text-[10px] uppercase font-semibold text-slate-500">Implied mNAV</div>' +
+                    '<div class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-0.5">' + val + '</div>' +
+                    '<div class="text-[10px] text-slate-500">EV ÷ BTC NAV</div>' +
+                '</div>' +
+            '</div>';
+
+        return '<div class="panel">' +
+            '<div class="panel-title">Dependency: Strategy Funding Regime <span class="text-xs font-normal text-slate-500">— upstream of STRC</span></div>' +
+            '<div class="text-xs text-slate-500 leading-relaxed mb-3">' +
+                'STRC\'s risk is downstream of Strategy\'s funding model — this view shows the upstream regime. ' +
+                'For the canonical issuer analysis (per-share BTC NAV, capital structure, cash-service waterfall, dilution mechanics), see the ' +
+                '<a href="?asset=mstr" class="text-blue-500 hover:underline">MSTR dashboard →</a>' +
+            '</div>' +
+            '<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">' +
+                '<div class="lg:col-span-1">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500 mb-1">Current mNAV</div>' +
+                    '<div class="text-5xl font-bold text-slate-800 dark:text-slate-100">' + val + '</div>' +
+                    '<div class="mt-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold border ' + bandCls + '">' + label + '</span></div>' +
+                    '<div class="text-xs text-slate-500 mt-3 leading-relaxed">' +
+                        'Regime bands: premium ≥1.05 · parity 0.95–1.05 · discount 0.85–0.95 · distress &lt;0.85' +
+                    '</div>' +
+                    STRCRenderer._renderCommonBtcCoverageLine(tradfi) +
+                '</div>' +
+                '<div class="lg:col-span-2">' +
+                    '<div style="height: 240px; position: relative;"><canvas id="strc-mnav-chart"></canvas></div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="mt-4 p-3 rounded border ' + bandCls + '">' +
+                '<div class="text-sm">' + caption + '</div>' +
+            '</div>' +
+            '<div class="mt-3 p-3 rounded border border-slate-300 bg-slate-50 dark:bg-slate-800/40 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">' +
+                strcMnavWatchCaption(tradfi, dcf) +
+            '</div>' +
+            ((monetizationLive || monetizationHistorical) ?
+            '<div class="mt-3 p-3 rounded border border-amber-300 bg-amber-50 dark:bg-amber-900/10 dark:border-amber-700/50 text-xs text-amber-800 dark:text-amber-200 leading-relaxed">' +
+                strcBtcMonetizationCaption(btcm) + ' ' +
+                '<strong>BTC purchases are paused until STRC returns to $100 par</strong> — a par-conditioned pause, not an indefinite halt.' +
+            '</div>' : '') +
+            snapshotRow +
+            '<div class="text-xs text-slate-500 mt-3">' +
+                'Methodology: mNAV = enterprise value ÷ (Strategy BTC count × BTC spot). See ' +
+                '<a href="https://tidresearch.com/reports/mstr" ' +
+                'target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">' +
+                'MSTR report — “The mNAV mechanism” ↗</a>. ' +
+                'Canonical issuer analysis: <a href="?asset=mstr" class="text-blue-500 hover:underline">MSTR dashboard →</a>' +
+            '</div>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Panel 2 — STRC instrument
+    // ============================================================
+    _renderStrcInstrument: function (tradfi) {
+        var div = tradfi.strc_dividend || {};
+        var rate = div.current_rate;
+        var rateTxt = (rate != null) ? (rate * 100).toFixed(2) + '%' : '—';
+        var history = Array.isArray(div.rate_history) ? div.rate_history : [];
+        var prevRate = history.length >= 2 ? history[history.length - 2].rate : null;
+        var rateChangeBadge = '';
+        if (prevRate != null && rate != null) {
+            var deltaBps = (rate - prevRate) * 10000;
+            if (deltaBps > 0) {
+                rateChangeBadge = '<span class="text-xs ml-2 text-green-600">+' + deltaBps.toFixed(0) + ' bps MoM</span>';
+            } else if (deltaBps < 0) {
+                rateChangeBadge = '<span class="text-xs ml-2 text-red-600">' + deltaBps.toFixed(0) + ' bps MoM</span>';
+            } else {
+                rateChangeBadge = '<span class="text-xs ml-2 text-slate-500">No change MoM</span>';
+            }
+        }
+
+        return '<div class="panel">' +
+            '<div class="panel-title">STRC instrument <span class="text-xs font-normal text-slate-500">— monthly-reset preferred</span></div>' +
+            // The published report links forward to this dashboard; link back.
+            // A reader who needs the instrument explained (Token-2022 scaled-UI
+            // multiplier, the Backed/Kraken/Alpaca redemption path) is on this
+            // page precisely because the numbers alone did not explain it.
+            // ⚠️ WAS THE STRCx REPORT, LABELLED "STRC + STRCx". Two reports exist —
+            // assets/strc.md and assets/strcx.md — and this page is the preferred's.
+            // Linking the wrapper's write-up from the underlying's instrument panel
+            // is the same conflation the combined dashboard was, in one line.
+            '<div class="text-xs text-slate-500 mb-3">' +
+                'What this instrument is, in full: ' +
+                '<a href="https://tidresearch.com/reports/strc" target="_blank" rel="noopener noreferrer" ' +
+                'class="text-blue-500 hover:underline">STRC risk report \u2197</a>' +
+            '</div>' +
+            '<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">' +
+                '<div>' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500 mb-1">Current annualized rate</div>' +
+                    '<div class="flex items-baseline">' +
+                        '<div class="text-4xl font-bold text-slate-800 dark:text-slate-100">' + rateTxt + '</div>' +
+                        rateChangeBadge +
+                    '</div>' +
+                    // ⚠️ "last N months" ASSERTED RECENCY THE SERIES DOES NOT HAVE. On
+                    // 2026-10-04 the 10 entries run 2025-10 → 2026-07, so "last 10 months"
+                    // described a window ending three months before the reader. The label
+                    // now states the window the data actually covers, read from the entries.
+                    '<div class="text-xs text-slate-500 mt-4 mb-1">Rate history ' +
+                        (history.length
+                            ? '<span class="font-mono">' + CommonRenderer._escapeAttr(String(history[0].month)) +
+                              '</span> \u2192 <span class="font-mono">' +
+                              CommonRenderer._escapeAttr(String(history[history.length - 1].month)) + '</span>' +
+                              ' (' + history.length + ' months)'
+                            : '(none published)') +
+                    '</div>' +
+                    '<div style="height: 180px; position: relative;"><canvas id="strc-rate-chart"></canvas></div>' +
+                '</div>' +
+                '<div>' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500 mb-1">Secondary price (recent)</div>' +
+                    '<div style="height: 220px; position: relative;"><canvas id="strc-price-chart"></canvas></div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="mt-4 p-3 rounded border border-slate-300 bg-slate-50 dark:bg-slate-800/40 dark:border-slate-700">' +
+                '<div class="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-1">STRC defense = ' + STRC_DIV_POLICY_REGIME.label + '</div>' +
+                '<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">' + STRC_DIV_POLICY_REGIME.blurb + '</div>' +
+            '</div>' +
+            // ⚠️ THIS PANEL CARRIED A FORECAST FOR AN EVENT THREE MONTHS PAST, then my
+            // own wrong explanation of why the series was behind, and now reads the
+            // producer's provenance instead of either. The history of that is worth keeping
+            // because each step was a smaller version of the same error:
+            //
+            //  1. "Next reset: pending late July. Base case remains +50 bps to 12.50%" —
+            //     hardcoded, rendered on 2026-10-04, for a reset that had happened, with
+            //     the sentence's own hedge being the outcome.
+            //  2. My replacement said "the published series appends every month" — inferred
+            //     from 2026-04/-05/-06 repeating 11.50%. FALSE: `rate_history` was a
+            //     hand-typed constant that never appended, and the feed's own `source`
+            //     string said "dividend rate history manual cadence" in text I had printed
+            //     and not read to the end of.
+            //  3. PegTracker then derived the series from the rate 8-Ks in
+            //     strategy_events.json. `current_rate_source` now states the basis, and
+            //     this renders that rather than reasoning about it.
+            //
+            // ⚠️ THREE STATES, ALL FROM THEIR PUBLISHED CONTRACT, AND NO CLOCK. Deriving
+            // staleness from "is the last month behind today" would need a clock this
+            // function does not have, and would re-introduce an inference. Their `basis`
+            // field answers it directly:
+            //   '8-K'                -> cite the filing; nothing is stale
+            //   'hand_list_fallback' -> strategy_events.json was unavailable, so the rate
+            //                           fell back to the hand-typed list and MAY lag
+            //   absent               -> a feed predating their fix; keep the old warning
+            //
+            // The absent branch self-clears the moment the sync lands, and the fallback
+            // branch brings the warning back if their derivation ever breaks — which
+            // deleting the note outright would not have done.
+            (function() {
+                var cs = div.current_rate_source;
+                var lastMonth = history.length
+                    ? CommonRenderer._escapeAttr(String(history[history.length - 1].month)) : null;
+                if (cs && cs.basis === '8-K') {
+                    return '<div class="text-xs text-slate-500 mt-3 leading-relaxed">' +
+                        '<strong>Rate basis:</strong> the ' +
+                        (cs.filing_date
+                            ? '<span class="font-mono">' + CommonRenderer._escapeAttr(String(cs.filing_date)) + '</span> '
+                            : '') + 'rate 8-K' +
+                        (cs.accession
+                            ? ' (accession <span class="font-mono">' +
+                              CommonRenderer._escapeAttr(String(cs.accession)) + '</span>)'
+                            : '') +
+                        '. Months through 2026-07 are a hand-typed list; later months are read ' +
+                        'from the filings, and a month with no filing shows as a gap rather than ' +
+                        'the previous rate.' +
+                    '</div>';
+                }
+                if (cs && cs.basis === 'hand_list_fallback') {
+                    return '<div class="text-xs text-amber-700 mt-3 leading-relaxed">' +
+                        '\u26a0\ufe0f <strong>Rate basis: hand-typed fallback.</strong> The filing feed ' +
+                        'was unavailable, so this rate comes from a manually maintained list ' +
+                        'rather than a rate 8-K, and may lag an announcement.' +
+                    '</div>';
+                }
+                if (!lastMonth) return '';
+                return '<div class="text-xs text-slate-500 mt-3 leading-relaxed">' +
+                    '<strong>Rate history ends <span class="font-mono">' + lastMonth +
+                    '</span>.</strong> This is a hand-maintained list, not an automatic series ' +
+                    '\u2014 the feed\u2019s own source note ends \u201cdividend rate history ' +
+                    'manual cadence\u201d \u2014 so a later month missing here means it has not ' +
+                    'been added, which is not the same as the rate being unchanged. The monthly ' +
+                    'reset is discretionary and no forward rate is published here.' +
+                '</div>';
+            })() +
+            '<div class="text-xs text-slate-500 mt-3 leading-relaxed">' +
+                '<strong>Indicative VWAP rate schedule</strong> (prospectus mechanic — <em>no longer an automatic par defense</em> ' +
+                'as of the 06-29 framework; the monthly reset is now discretionary): ' +
+                '&lt;$95 → +50 bps or more · ' +
+                '$95–$98.99 → +25 bps · ' +
+                '$99–$100.99 → no change · ' +
+                '≥$101 → −25 bps or more. ' +
+                'Outstanding par <span class="font-mono">' + STRCRenderer._fmtMoneyShort(div.outstanding_par_usd) + '</span> ' +
+                'across <span class="font-mono">' + STRCRenderer._fmtNum(div.outstanding_shares) + '</span> shares.' +
+            '</div>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Axis 1 · Price vs par.
+    //
+    // ⚠️ A DIFFERENT MEASUREMENT FROM THE WRAPPER'S, AND THE PANEL SAYS SO. STRCx's
+    // axis 1 asks whether the wrapper tracks the share it holds (−15.7 bps). This one
+    // asks whether the preferred trades at its $100 par (−136 bps). A reader who meets
+    // both and adds them gets a number describing nothing, so the non-stacking is a
+    // tile on this panel rather than a sentence under it.
+    //
+    // ⚠️ NO RATED CHIP, and NOT for the reason the figure is unquotable — this figure
+    // IS quotable, because par is a constant and carries none of the source dispersion
+    // that makes the wrapper premium soft. The reason is the frame: populating data.peg
+    // makes pegRating() compute a band, 1.36% rates 1/5 against the [0.15,0.30,0.50,1.0]
+    // cutoffs, and _divergenceChipHtml returns '' unconditionally — so a 2/10 band would
+    // DELETE riskAnalyst's authored 5.0 rather than sit beside it. Their 5.0 prices the
+    // par-anchor MECHANISM (a cumulative dividend reset that works and is slow); a band
+    // prices today's realized discount. Replacing one with the other reads as a
+    // refutation of a score that was never about that.
+    //
+    // ⚠️ THE HEADLINE IS THE PUBLISHED FIELD, the range is computed — and they agree by
+    // arithmetic, not by luck: (98.64/100 − 1) × 10000 = −136.0 reproduces
+    // discount_to_par_bps = −136 exactly. There is no published discount SERIES, so the
+    // range is computed from the published price history against the published par,
+    // which is arithmetic on two published quantities rather than a re-derivation of a
+    // figure the feed already provides. That distinction is what went wrong on the
+    // STRCx panel, where a derived headline landed outside its own published range.
+    _renderPegVsPar: function (tradfi, wrapper) {
+        var body = document.getElementById('axis-peg-body');
+        var sec = (tradfi || {}).strc_secondary || {};
+        if (!body || sec.price_usd == null || sec.par_usd == null) return;
+
+        var px = sec.price_usd, par = sec.par_usd;
+        var bps = (sec.discount_to_par_bps != null) ? sec.discount_to_par_bps
+                                                    : (px / par - 1) * 10000;
+        var fmtBps = function (v) { return (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + ' bps'; };
+        var tile = function (label, value, sub) {
+            return '<div class="summary-card">' +
+                '<div class="card-label">' + label + '</div>' +
+                '<div class="card-value">' + value + '</div>' +
+                '<div class="text-xs text-slate-400 mt-1">' + sub + '</div>' +
+            '</div>';
+        };
+        // ⚠️ COMPUTED FROM THE WRAPPER BLOCK, NOT FROM THE HISTORY. The first version
+        // read `premium_discount_pct` out of strc_backing_history — which is NOT the
+        // wrapper premium at all: it is mstr_view.premium_discount_pct, MSTR's price
+        // against per-share BTC NAV, as a FRACTION. No series of the wrapper premium is
+        // published, so this is a point-in-time computation and carries no range.
+        var wrapBps = '—';
+        if (wrapper && wrapper.market_price_usd != null && wrapper.underlying_strc_price_usd != null) {
+            var wb = (wrapper.market_price_usd / wrapper.underlying_strc_price_usd - 1) * 10000;
+            wrapBps = (wb >= 0 ? '+' : '−') + Math.abs(wb).toFixed(1) + ' bps';
+        }
+        var session = sec.market_session === 'regular' ? 'regular session'
+            : (CommonRenderer.sanitizeQuoteDetail(sec.quote_detail) || 'outside regular session');
+
+        body.innerHTML =
+            '<div class="panel">' +
+                '<div class="panel-title">Price vs par ' +
+                    '<span class="text-xs font-normal text-slate-500">— the preferred against its $100 claim</span></div>' +
+                '<div class="grid grid-cols-1 md:grid-cols-4 gap-3">' +
+                    tile('Market price', '$' + px.toFixed(2),
+                         CommonRenderer._escapeAttr(String(sec.source || 'quote')) + ' · ' +
+                         CommonRenderer._escapeAttr(session)) +
+                    tile('Par value', '$' + par.toFixed(2),
+                         'a constant — no source dispersion') +
+                    tile('Discount to par', fmtBps(bps),
+                         '<span id="strc-par-7d">7-day range loading…</span>') +
+                    tile('Wrapper tracking', wrapBps,
+                         'STRCx vs THIS security — <a href="?asset=strcx" ' +
+                         'class="text-blue-500 hover:underline">its axis 1 →</a>') +
+                '</div>' +
+                '<div class="text-xs text-slate-500 leading-relaxed mt-4">' +
+                    '<strong>These two numbers do not stack.</strong> The discount to par is this ' +
+                    'security against its own $100 claim. The wrapper figure beside it is STRCx ' +
+                    'against <em>this security</em> — a different reference. Adding them produces ' +
+                    'nothing meaningful, and the gap between them is the point: the wrapper tracks ' +
+                    'its underlying far more tightly than the underlying tracks par.' +
+                '</div>' +
+                '<div class="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-5 mb-2">' +
+                    'STRC price against its $100 par</div>' +
+                '<div style="height: 200px; position: relative;"><canvas id="strc-par-chart"></canvas></div>' +
+                '<div class="text-xs text-slate-400 mt-1" id="strc-par-chartnote">' +
+                    'STRC’s secondary price against its $100 par — the gap to the dashed line ' +
+                    'is the discount, currently ' +
+                    (sec.discount_to_par_bps != null ? fmtBps(sec.discount_to_par_bps) : '—') +
+                    '.</div>' +
+            '</div>';
+
+        fetch('data/strc_backing_history.json?nocache=' + Math.floor(Date.now() / 60000))
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (h) {
+                var pts = (h && Array.isArray(h.series)) ? h.series : [];
+                var cut = Date.now() - 7 * 24 * 3600 * 1000;
+                var vals = [], entries = [];
+                for (var i = 0; i < pts.length; i++) {
+                    var p = pts[i]; if (!p || !p.ts) continue;
+                    var t = Date.parse(p.ts); if (isNaN(t)) continue;
+                    if (p.strc_price != null) {
+                        var devPct = (p.strc_price / par - 1) * 100;
+                        // Price with a par reference line, matching the fleet's peg charts.
+                        entries.push({ timestamp: p.ts, price: p.strc_price });
+                        if (t >= cut) vals.push(devPct * 100);
+                    }
+
+                }
+                var el = document.getElementById('strc-par-7d');
+                if (el) {
+                    el.textContent = vals.length
+                        ? '7-day ' + fmtBps(Math.min.apply(null, vals)) + ' to ' +
+                          fmtBps(Math.max.apply(null, vals)) + ' (' + vals.length + ' pts)'
+                        : '7-day range unavailable';
+                }
+                if (entries.length && CommonRenderer._renderPegChart) {
+                    try {
+                        CommonRenderer._renderPegChart(
+                            { peg: { history_field: 'price' } },
+                            { entries: entries }, 'strc-par-chart', null, undefined, par);
+                    } catch (e) { /* chart optional; the figures are not */ }
+                }
+            })
+            .catch(function () {
+                var el = document.getElementById('strc-par-7d');
+                if (el) el.textContent = 'history unavailable';
+            });
+    },
+
+    // ============================================================
+    // Panel 4 — STRCx handoff.
+    //
+    // ⚠️ THE WRAPPER PANEL USED TO BE HERE AND IS NOW ?asset=strcx. It did not get
+    // copied: STRCx carries its own six axes (peg 4.5 / backing 4.0 / liquidity 2.5
+    // / issuer = Backed, against this asset's 5.0 and 7.0), and the axis-basis
+    // envelope has ONE identity and one score per axis, so the two cannot share a
+    // page without deleting one of them. Keeping the panel in both places would
+    // have meant maintaining STRCx twice, which is the thing that diverges.
+    //
+    // What stays is the pointer plus the two figures a STRC reader actually needs
+    // about the wrapper: how much of this preferred is wrapped, and at what mark.
+    // ============================================================
+    _renderStrcxHandoffCard: function (wrapper) {
+        var supply = wrapper.total_supply_all_chains;
+        var supplyUsd = wrapper.total_supply_usd;
+        var mult = wrapper.multiplier;
+        return '<div class="panel">' +
+            '<div class="panel-title">STRCx wrapper ' +
+                '<span class="text-xs font-normal text-slate-500">\u2014 Backed, on-chain mirror of this security</span></div>' +
+            '<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">' +
+                '<div class="summary-card">' +
+                    '<div class="card-label">Wrapped supply</div>' +
+                    '<div class="card-value">' + STRCRenderer._fmtNum(supply, 0) + ' STRCx</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">\u2248 ' + STRCRenderer._fmtMoneyShort(supplyUsd) + '</div>' +
+                '</div>' +
+                '<div class="summary-card">' +
+                    '<div class="card-label">Current multiplier</div>' +
+                    '<div class="card-value">' + (mult != null ? mult.toFixed(6) : '\u2014') + '</div>' +
+                    '<div class="text-xs text-slate-400 mt-1">issuer-set by Backed</div>' +
+                '</div>' +
+                '<div class="summary-card flex flex-col justify-center">' +
+                    '<a href="?asset=strcx" class="text-blue-500 hover:underline font-semibold">STRCx dashboard \u2192</a>' +
+                    '<div class="text-xs text-slate-400 mt-1">per-chain supply, holders, admin, its own axes</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="text-xs text-slate-500 leading-relaxed">' +
+                'STRCx is a separate asset with a separate risk profile: it adds Backed as a ' +
+                'wrapper issuer, an issuer-set rebasing multiplier, and DEX-only exit, on top of ' +
+                'everything on this page. Its scores are not this page\'s scores.' +
+            '</div>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Panel 7 — Downstream exposure
+    // ============================================================
+    _renderDownstreamExposure: function (downstream) {
+        var apyx = downstream.apyx;
+        var saturn = downstream.saturn;
+        var total = downstream.portfolio_total_strc_family_usd;
+
+        function unavailableRow(label, slug) {
+            return '<tr><td class="font-medium">' + label + '</td>' +
+                '<td colspan="3" class="text-slate-400 italic">data unavailable — check ' +
+                '<a href="?asset=' + slug + '" class="text-blue-500 hover:underline">' + slug + '</a> dashboard</td></tr>';
+        }
+        function dataRow(label, slug, valueUsd, sharePct, note) {
+            var shareTxt = (sharePct != null) ? (sharePct * 100).toFixed(1) + '%' : '—';
+            return '<tr>' +
+                '<td class="font-medium"><a href="?asset=' + slug + '" class="text-slate-700 dark:text-slate-200 hover:text-blue-600">' + label + ' ↗</a></td>' +
+                '<td class="text-right font-mono">' + STRCRenderer._fmtMoneyShort(valueUsd) + '</td>' +
+                '<td class="text-right font-mono">' + shareTxt + '</td>' +
+                '<td class="text-xs text-slate-500">' + (note || '') + '</td>' +
+            '</tr>';
+        }
+
+        var apyxRow = apyx ?
+            dataRow('Apyx (apxUSD + apyUSD)', 'apxusd', apyx.strc_bucket_usd, apyx.strc_share_of_reserves,
+                'Accountable feed; bucket bundles brokerage STRC + on-chain STRCx. Raw-STRC portion (' +
+                STRCRenderer._fmtMoneyShort(apyx.strc_raw_implied_usd) + ') is implied \u2014 bucket less the measured STRCx balance') :
+            unavailableRow('Apyx (apxUSD + apyUSD)', 'apxusd');
+        var saturnRow = saturn ?
+            dataRow('Saturn (sUSDat)', 'susdat', saturn.strc_raw_usd, saturn.strc_share_of_reserves,
+                (saturn.verifiable === 'oracle_unverified') ? 'Off-chain STRC; oracle unverified (PoR feed planned) \u2014 not an independently attested balance' : '') :
+            unavailableRow('Saturn (sUSDat)', 'susdat');
+
+        // Only one component of this total is directly measured: Apyx's on-chain
+        // STRCx balance. Apyx's raw-STRC leg is the bucket MINUS that balance
+        // (the payload names it *_implied), and Saturn's leg is flagged
+        // oracle_unverified. Rendering the sum as one figure presents a mostly
+        // derived number as if it were uniformly attested — the aggregate is
+        // the weakest of its parts, not the strongest. Split it, using only
+        // fields the payload already carries; nothing is re-derived here.
+        var measuredUsd = (apyx && apyx.strcx_onchain_usd != null) ? apyx.strcx_onchain_usd : null;
+        var splitNote = '';
+        if (measuredUsd != null && total) {
+            var derivedUsd = total - measuredUsd;
+            var measuredPct = measuredUsd / total * 100;
+            splitNote =
+                '<div class="text-xs text-amber-800 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/40 ' +
+                    'border border-amber-200 dark:border-amber-800 rounded p-2 mt-2">' +
+                    'Directly measured on-chain: <span class="font-mono font-semibold">' +
+                        STRCRenderer._fmtMoneyShort(measuredUsd) + '</span> (' + measuredPct.toFixed(1) + '%) \u2014 ' +
+                    'Apyx\u2019s STRCx balance. The remaining <span class="font-mono font-semibold">' +
+                        STRCRenderer._fmtMoneyShort(derivedUsd) + '</span> (' + (100 - measuredPct).toFixed(1) + '%) ' +
+                    'is <em>implied by subtraction</em> or oracle-unverified, not an attested holding. ' +
+                    'The raw-STRC share and the unmeasured share are the same positions \u2014 read this ' +
+                    'total as an upper bound on what is verifiable, not as a confirmed balance.' +
+                '</div>';
+        }
+
+        return '<div class="panel">' +
+            '<div class="panel-title">Downstream portfolio exposure</div>' +
+            '<div class="summary-card mb-4">' +
+                '<div class="card-label">Combined portfolio STRC-family exposure</div>' +
+                '<div class="card-value">' + STRCRenderer._fmtMoneyShort(total) + '</div>' +
+                '<div class="text-xs text-slate-400 mt-1">Apyx + Saturn aggregation</div>' +
+                splitNote +
+            '</div>' +
+            '<div class="data-table-scroll">' +
+                '<table class="data-table">' +
+                    '<thead><tr><th>Consumer</th><th class="text-right">STRC family (USD)</th><th class="text-right">Share of reserves</th><th>Note</th></tr></thead>' +
+                    '<tbody>' + apyxRow + saturnRow + '</tbody>' +
+                '</table>' +
+            '</div>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Freshness footer
+    // ============================================================
+    _renderFreshness: function (data) {
+        var ts = data.timestamp_utc || data.timestamp;
+        var age = data.freshness_seconds;
+        var strcQuote = data.tradfi && data.tradfi.strc_secondary;
+        var quoteTs = strcQuote && strcQuote.quote_fetched_at;
+        var quoteLabel = strcQuote && strcQuote.quote_label;
+        var ageTxt = '';
+        if (age != null) {
+            if (age < 60) ageTxt = age + 's ago';
+            else if (age < 3600) ageTxt = Math.round(age / 60) + 'm ago';
+            else if (age < 86400) ageTxt = Math.round(age / 3600) + 'h ago';
+            else ageTxt = Math.round(age / 86400) + 'd ago';
+        }
+        return '<div class="text-xs text-slate-500 mt-4 text-center">' +
+            'Data refreshed ' + (ts ? CommonRenderer.formatDate(ts) : '—') +
+            (ageTxt ? ' (' + ageTxt + ')' : '') +
+            (quoteTs ? ' · STRC quote: ' + (quoteLabel || 'Latest market quote') + ' at ' + CommonRenderer.formatDate(quoteTs) : '') +
+            ' · framework_version <span class="font-mono">' + (data.framework_version || '—') + '</span>' +
+        '</div>';
+    },
+
+    // ============================================================
+    // Chart paint helpers
+    // ============================================================
+    _loadHistoryAndPaintCharts: function (tradfi) {
+        // Rate chart reads from current snapshot — paint immediately.
+        STRCRenderer._paintRateChart(tradfi);
+
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/strc_backing_history.json?nocache=' + nocache)
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (hist) {
+                var series = (hist && Array.isArray(hist.series)) ? hist.series : [];
+                STRCRenderer._paintMnavChart(series);
+                STRCRenderer._paintStrcPriceChart(series);
+                STRCRenderer._paintMultiplierChart(series);
+                STRCRenderer._paintRateTrajectoryChart(series);
+            })
+            .catch(function () { /* history optional */ });
+    },
+
+    _seriesXY: function (series, field) {
+        return series.filter(function (p) { return p && p[field] != null && p.ts; }).map(function (p) {
+            var ts = p.ts.endsWith('Z') ? p.ts : p.ts + 'Z';
+            return { x: new Date(ts), y: p[field] };
+        });
+    },
+
+    _baseChartOpts: function (annotations) {
+        return {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: { unit: 'day', displayFormats: { day: 'MMM d' } },
+                    grid: { display: false },
+                    ticks: { maxTicksLimit: 6, font: { size: 10 } }
+                },
+                y: {
+                    grid: { color: '#f1f5f9' },
+                    ticks: { font: { size: 10 } }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                annotation: annotations ? { annotations: annotations } : undefined,
+                tooltip: { intersect: false, mode: 'index' }
+            },
+            interaction: { intersect: false, mode: 'index' }
+        };
+    },
+
+    _paintMnavChart: function (series) {
+        var ctx = document.getElementById('strc-mnav-chart');
+        if (!ctx) return;
+        var data = STRCRenderer._seriesXY(series, 'mnav');
+        var ann = {
+            parity:   { type: 'line', yMin: 1.00, yMax: 1.00, borderColor: '#22c55e', borderWidth: 1, borderDash: [4, 4],
+                        label: { content: 'parity 1.00', display: true, position: 'end', font: { size: 9 }, color: '#16a34a' } },
+            discount: { type: 'line', yMin: 0.95, yMax: 0.95, borderColor: '#f59e0b', borderWidth: 1, borderDash: [4, 4],
+                        label: { content: 'discount 0.95', display: true, position: 'end', font: { size: 9 }, color: '#d97706' } },
+            distress: { type: 'line', yMin: 0.85, yMax: 0.85, borderColor: '#ef4444', borderWidth: 1, borderDash: [4, 4],
+                        label: { content: 'distress 0.85', display: true, position: 'end', font: { size: 9 }, color: '#dc2626' } }
+        };
+        if (window._strcMnavChart) window._strcMnavChart.destroy();
+        window._strcMnavChart = new Chart(ctx, {
+            type: 'line',
+            data: { datasets: [{
+                label: 'mNAV',
+                data: data,
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.1)',
+                fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2
+            }] },
+            options: STRCRenderer._baseChartOpts(ann)
+        });
+    },
+
+    _paintRateChart: function (tradfi) {
+        var ctx = document.getElementById('strc-rate-chart');
+        if (!ctx) return;
+        var div = (tradfi && tradfi.strc_dividend) || {};
+        var history = Array.isArray(div.rate_history) ? div.rate_history : [];
+        var labels = history.map(function (r) { return r.month; });
+        var values = history.map(function (r) { return r.rate != null ? r.rate * 100 : null; });
+        if (window._strcRateChart) window._strcRateChart.destroy();
+        window._strcRateChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Rate',
+                    data: values,
+                    backgroundColor: 'rgba(99,102,241,0.6)',
+                    borderColor: '#6366f1',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+                    y: { grid: { color: '#f1f5f9' }, ticks: { callback: function (v) { return v + '%'; }, font: { size: 10 } } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: function (c) { return (c.raw != null ? c.raw.toFixed(2) : '—') + '%'; } } }
+                }
+            }
+        });
+    },
+
+    _paintStrcPriceChart: function (series) {
+        var ctx = document.getElementById('strc-price-chart');
+        if (!ctx) return;
+        var data = STRCRenderer._seriesXY(series, 'strc_price');
+        var ann = {
+            hike: { type: 'line', yMin: 95, yMax: 95, borderColor: '#ef4444', borderWidth: 1, borderDash: [4, 4],
+                    label: { content: '$95 · soft-floor watch (discretionary)', display: true, position: 'end', font: { size: 9 }, color: '#dc2626' } },
+            parLow: { type: 'line', yMin: 99, yMax: 99, borderColor: '#22c55e', borderWidth: 1, borderDash: [3, 3],
+                      label: { content: '$99 no-change band', display: true, position: 'end', font: { size: 9 }, color: '#16a34a' } },
+            cut: { type: 'line', yMin: 101, yMax: 101, borderColor: '#3b82f6', borderWidth: 1, borderDash: [4, 4],
+                   label: { content: '$101 cut trigger', display: true, position: 'end', font: { size: 9 }, color: '#2563eb' } }
+        };
+        if (window._strcPriceChart) window._strcPriceChart.destroy();
+        window._strcPriceChart = new Chart(ctx, {
+            type: 'line',
+            data: { datasets: [{
+                label: 'STRC',
+                data: data,
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14,165,233,0.1)',
+                fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2
+            }] },
+            options: STRCRenderer._baseChartOpts(ann)
+        });
+    },
+
+    _paintMultiplierChart: function (series) {
+        var ctx = document.getElementById('strc-multiplier-chart');
+        if (!ctx) return;
+        var data = STRCRenderer._seriesXY(series, 'multiplier');
+        if (window._strcMultiplierChart) window._strcMultiplierChart.destroy();
+        window._strcMultiplierChart = new Chart(ctx, {
+            type: 'line',
+            data: { datasets: [{
+                label: 'multiplier',
+                data: data,
+                borderColor: '#a855f7',
+                backgroundColor: 'rgba(168,85,247,0.1)',
+                fill: true, stepped: true, pointRadius: 2, borderWidth: 1.5
+            }] },
+            options: STRCRenderer._baseChartOpts()
+        });
+    },
+
+    // ============================================================
+    // Panel 3 — STRC dividend obligation + runway (STRC-slice only)
+    //
+    // Restructured from the v2a Cash-Service Waterfall: the full multi-tier
+    // waterfall + treasury breakdown + all-preferred runway scenarios moved
+    // to the MSTR dashboard (those are MSTR capital-structure objects). This
+    // STRC panel keeps only the STRC-instrument-specific slice: STRC annual
+    // obligation, BTC/yr to service it, STRC-only runway, and the STRC rate-
+    // ceiling overlay (which is STRC-specific stress, not issuer-level).
+    // ============================================================
+    _runwayClass: function (years) {
+        if (years == null) return 'text-slate-700 dark:text-slate-200';
+        if (years > 40) return 'text-green-700 dark:text-green-300';
+        if (years >= 25) return 'text-amber-700 dark:text-amber-300';
+        if (years >= 15) return 'text-orange-700 dark:text-orange-300';
+        return 'text-red-700 dark:text-red-300';
+    },
+
+    // Cash-runway color bands (months): >12 green, 6–12 amber, 3–6 orange, <3 red.
+    _cashRunwayClass: function (months) {
+        if (months == null) return 'text-slate-700 dark:text-slate-200';
+        if (months > 12) return 'text-green-700 dark:text-green-300';
+        if (months >= 6) return 'text-amber-700 dark:text-amber-300';
+        if (months >= 3) return 'text-orange-700 dark:text-orange-300';
+        return 'text-red-700 dark:text-red-300';
+    },
+
+    _renderOutstandingBasis: function (data) {
+        var div = ((data || {}).tradfi || {}).strc_dividend || {};
+        var deriv = div.outstanding_derivation;
+        if (!deriv || deriv.status !== 'derived') return '';
+        var esc = CommonRenderer._escapeAttr;
+        return '<div class="text-xs text-slate-500 mt-3 mb-3 leading-relaxed">' +
+            '<strong>Derived STRC outstanding:</strong> ' + STRCRenderer._fmtNum(div.outstanding_shares) +
+            ' shares; stated amount ' + STRCRenderer._fmtMoney(div.outstanding_par_usd, 0) +
+            '; annual dividends at ' + ((div.current_rate || 0) * 100).toFixed(2) + '%: ' +
+            STRCRenderer._fmtMoney(div.annual_dividend_obligation_usd, 0) + '. ' +
+            'Filed base: ' + STRCRenderer._fmtNum(deriv.base_shares) + ' shares as of ' +
+            esc(String(deriv.base_as_of || 'unknown')) + ', less ' +
+            STRCRenderer._fmtNum(deriv.shares_retired) + ' retirements through ' +
+            esc(String(deriv.shares_retired_as_of || 'unknown')) + '. ' +
+            (typeof deriv.base_age_days === 'number' ? 'Base age: ' + deriv.base_age_days + ' days. ' : '') +
+            'This is a roll-forward, not a new share-count filing. The calendar-age and subsequent-issuance checks still apply. ' +
+            'Service and runway remain provisional model outputs; this reconciliation does not certify the other stack inputs. ' +
+            '</div>';
+    },
+
+    _renderStrcDividendObligation: function (data) {
+        var csw = data.cash_service_waterfall;
+        if (!csw) {
+            return '<div class="panel">' +
+                '<div class="panel-title">STRC dividend obligation + runway</div>' +
+                '<div class="risk-flag risk-warning">cash_service_waterfall block not present in this snapshot — analyzer may be running an older schema.</div>' +
+            '</div>';
+        }
+
+        var obl = csw.annual_obligation_usd || {};
+        var btcYr = csw.btc_per_year_at_current_price || {};
+        var pctStack = csw.pct_of_stack_per_year || {};
+        var runway = csw.runway_years_flat_btc || {};
+        var assum = csw.assumptions || {};
+        var rateCeiling = csw.runway_at_rate_ceiling || {};
+        var strcDiv = (data.tradfi && data.tradfi.strc_dividend) || {};
+
+        var strcAnnual = obl.strc_dividend;
+        var strcBtcYr = btcYr.strc_only;
+        var strcRunway = runway.strc_only;
+        var strcRunwayCls = STRCRenderer._runwayClass(strcRunway);
+        var btcPx = assum.btc_price_usd;
+        var strcPctStack = pctStack.strc_only;
+        var rateTxt = (strcDiv.current_rate != null) ? (strcDiv.current_rate * 100).toFixed(2) + '%' : '—';
+
+        // ---- Headline strip: STRC obligation primary, BTC/yr + runway secondary.
+        var headline =
+            '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">STRC annual dividend obligation</div>' +
+                    '<div class="text-3xl font-bold mt-1 text-slate-800 dark:text-slate-100">' + STRCRenderer._fmtMoneyShort(strcAnnual) + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">at current ' + rateTxt + ' on ' + STRCRenderer._fmtMoneyShort(strcDiv.outstanding_par_usd) + ' outstanding</div>' +
+                '</div>' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">BTC sold per year to service STRC</div>' +
+                    '<div class="text-3xl font-bold mt-1 text-slate-800 dark:text-slate-100">' + (strcBtcYr != null ? STRCRenderer._fmtNum(strcBtcYr) + ' BTC' : '—') + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">at BTC ' + STRCRenderer._fmtMoney(btcPx, 0) + (strcPctStack != null ? ' · ' + (strcPctStack * 100).toFixed(2) + '% of stack/yr' : '') + '</div>' +
+                '</div>' +
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">STRC-only runway (flat BTC)</div>' +
+                    '<div class="text-3xl font-bold mt-1 ' + strcRunwayCls + '">' + (strcRunway != null ? strcRunway + ' yr' : '—') + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1">BTC stack ÷ STRC BTC/yr · &gt;40 green · 25–40 amber · 15–25 orange</div>' +
+                '</div>' +
+            '</div>';
+
+        // ---- STRC-specific rate-ceiling overlay (kept here — it's STRC's own stress).
+        var midCycles = rateCeiling.stress_cycles_to_mid;
+        var topCycles = rateCeiling.stress_cycles_to_top;
+        var midColor = (midCycles != null && midCycles <= 3) ? 'amber' : 'neutral';
+        function ceilingCard(label, sub, years, color) {
+            var cls = 'border-slate-200 dark:border-slate-700';
+            var yearsCls = 'text-slate-800 dark:text-slate-100';
+            if (color === 'amber') { cls = 'border-amber-300 bg-amber-50 dark:bg-amber-900/10'; yearsCls = 'text-amber-700 dark:text-amber-300'; }
+            else if (color === 'red') { cls = 'border-red-300 bg-red-50 dark:bg-red-900/10'; yearsCls = 'text-red-700 dark:text-red-300'; }
+            return '<div class="rounded-lg border p-3 ' + cls + '">' +
+                '<div class="text-xs uppercase font-semibold text-slate-500">' + label + '</div>' +
+                '<div class="text-xs text-slate-500 mt-0.5">' + sub + '</div>' +
+                '<div class="text-2xl font-bold mt-1 ' + yearsCls + '">' + (years != null ? years + ' yr' : '—') + '</div>' +
+            '</div>';
+        }
+        var ceilingRow =
+            '<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">' +
+                ceilingCard('Current rate', ((rateCeiling.current_rate || 0) * 100).toFixed(2) + '%', rateCeiling.runway_at_current_rate_years, 'neutral') +
+                ceilingCard('Mid-ceiling', ((rateCeiling.mid_ceiling_rate || 0) * 100).toFixed(0) + '% — ' + (midCycles != null ? midCycles + ' stress ' + (midCycles === 1 ? 'cycle' : 'cycles') + ' away' : ''), rateCeiling.runway_at_mid_ceiling_years, midColor) +
+                ceilingCard('Top-ceiling', ((rateCeiling.top_ceiling_rate || 0) * 100).toFixed(0) + '% — ' + (topCycles != null ? topCycles + ' stress cycles away' : ''), rateCeiling.runway_at_top_ceiling_years, 'red') +
+            '</div>';
+
+        var launchRate = 0.1025;
+        var topRate = (rateCeiling.top_ceiling_rate != null) ? rateCeiling.top_ceiling_rate : 0.16;
+        var midRate = (rateCeiling.mid_ceiling_rate != null) ? rateCeiling.mid_ceiling_rate : 0.14;
+        var currRate = (rateCeiling.current_rate != null) ? rateCeiling.current_rate : 0.115;
+        function pctAcross(rate) {
+            var x = (rate - launchRate) / (topRate - launchRate) * 100;
+            return Math.max(0, Math.min(100, x));
+        }
+        var headroomBar =
+            '<div class="mt-2 mb-3">' +
+                '<div class="text-xs text-slate-500 mb-1">Rate-ceiling headroom (launch 10.25% → top 16%)</div>' +
+                '<div class="relative h-6 rounded bg-slate-100 dark:bg-slate-700">' +
+                    '<div class="absolute top-0 left-0 h-full rounded-l bg-gradient-to-r from-green-400 via-amber-400 to-red-500" style="width:' + pctAcross(currRate).toFixed(2) + '%; opacity:0.5"></div>' +
+                    '<div class="absolute top-0 h-full border-l-2 border-amber-600" style="left:' + pctAcross(midRate).toFixed(2) + '%"><div class="absolute -top-4 -translate-x-1/2 text-[10px] font-semibold text-amber-700">14%</div></div>' +
+                    '<div class="absolute top-0 h-full border-l-2 border-red-600" style="left:' + pctAcross(topRate).toFixed(2) + '%"><div class="absolute -top-4 -translate-x-1/2 text-[10px] font-semibold text-red-700">16%</div></div>' +
+                    '<div class="absolute top-0 h-full border-l-2 border-blue-600" style="left:' + pctAcross(currRate).toFixed(2) + '%"><div class="absolute -bottom-4 -translate-x-1/2 text-[10px] font-semibold text-blue-700">' + (currRate * 100).toFixed(2) + '%</div></div>' +
+                '</div>' +
+                '<div class="text-xs text-slate-500 mt-5">' +
+                    (midCycles != null ? midCycles + ' stress ' + (midCycles === 1 ? 'cycle' : 'cycles') + ' to 14% ceiling' : '—') +
+                    (topCycles != null ? ' · ' + topCycles + ' to 16%' : '') +
+                    ' · one stress cycle ≈ 125 bp (observed Oct 2025 → Mar 2026)' +
+                '</div>' +
+            '</div>';
+
+        var ceilingCaption =
+            '<div class="text-xs text-slate-500 italic mt-2 leading-relaxed">' +
+                'STRC rate trends monotonically upward (sticky on recovery — framework §IV.5). ' +
+                'At ~14–16% Strategy may elect dividend suspension over further hikes.' +
+            '</div>';
+
+        var ceilingSubPanel =
+            '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 mt-4 bg-slate-50/40 dark:bg-slate-800/30">' +
+                '<div class="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">STRC rate-ceiling overlay <span class="text-xs font-normal text-slate-500">— framework §IV.5</span></div>' +
+                ceilingRow +
+                headroomBar +
+                ceilingCaption +
+                '<div style="height: 180px; position: relative;" class="mt-3"><canvas id="strc-rate-trajectory-chart"></canvas></div>' +
+                '<div class="text-xs text-slate-500 italic mt-1">Stress cycles ratchet up; recovery does not ratchet down.</div>' +
+            '</div>';
+
+        // ---- Cash-buffer callout (dependency data point + cross-link).
+        // Strategy's cash position is an MSTR-issuer concern, but STRC holders
+        // need the headline number to size short-term dividend-suspension risk.
+        // Small + dependency-framed, consistent with the d373a1d6 reorg pattern.
+        var cashRunway = csw.cash_runway || null;
+        var seq = csw.sequenced_runway || null;
+        var cashSubPanel = '';
+        if (cashRunway) {
+            var monthsByTier = cashRunway.months_until_btc_sales_required || {};
+            var monthlyObl = cashRunway.monthly_obligation_usd || {};
+            var totalMonths = monthsByTier.total_preferred_plus_interest;
+            var strcOnlyMonths = monthsByTier.strc_only;
+            var monthsCls = STRCRenderer._cashRunwayClass(totalMonths);
+            var cashTxt = STRCRenderer._fmtMoneyShort(cashRunway.cash_and_equivalents_usd);
+            var asOf = cashRunway.cash_as_of || '—';
+
+            var saleStart = seq && seq.btc_sale_start_date_approx;
+            var saleStartCls =
+                (totalMonths != null && totalMonths < 6) ? 'text-red-700 dark:text-red-300' :
+                (totalMonths != null && totalMonths < 12) ? 'text-amber-700 dark:text-amber-300' :
+                'text-slate-800 dark:text-slate-100';
+            var saleBorder =
+                (totalMonths != null && totalMonths < 6) ? 'border-red-300 bg-red-50 dark:bg-red-900/10' :
+                (totalMonths != null && totalMonths < 12) ? 'border-amber-300 bg-amber-50 dark:bg-amber-900/10' :
+                'border-slate-200 dark:border-slate-700';
+
+            var saleStartCard =
+                '<div class="rounded-lg border-2 ' + saleBorder + ' p-4 mb-3">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">BTC-sale window opens (aggregate basis)</div>' +
+                    '<div class="text-xs text-slate-500 mt-0.5">First-line cash service exhausts — Phase 2 BTC sales begin</div>' +
+                    '<div class="text-3xl font-bold mt-2 ' + saleStartCls + '">' + (saleStart || '—') + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-1 font-mono">' +
+                        (totalMonths != null ? '~' + totalMonths.toFixed(1) + ' months out · ' : '') +
+                        'zero-issuance assumption' +
+                    '</div>' +
+                '</div>';
+
+            var cashDetail =
+                '<div class="text-sm text-slate-700 dark:text-slate-200 mb-2">' +
+                    '<span class="font-bold ' + monthsCls + '">' + (totalMonths != null ? '~' + totalMonths.toFixed(1) + ' months' : '—') + '</span> ' +
+                    'until BTC sales operationally required. ' +
+                    'Cash <span class="font-mono">' + cashTxt + '</span> as of <span class="font-mono">' + asOf + '</span>.' +
+                '</div>';
+            function cashRunwayCard(label, sub, months, monthly) {
+                var cls = STRCRenderer._cashRunwayClass(months);
+                return '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-3">' +
+                    '<div class="text-xs uppercase font-semibold text-slate-500">' + label + '</div>' +
+                    '<div class="text-xs text-slate-500 mt-0.5">' + sub + '</div>' +
+                    '<div class="text-2xl font-bold mt-1 ' + cls + '">' + (months != null ? '~' + months.toFixed(1) + ' mo' : '—') + '</div>' +
+                    '<div class="text-[10px] text-slate-500 mt-1 font-mono">' + (monthly != null ? STRCRenderer._fmtMoneyShort(monthly) + '/mo obligation' : '—') + '</div>' +
+                '</div>';
+            }
+            var cashRunwayCards =
+                '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">' +
+                    cashRunwayCard('Total preferred + interest', 'All preferred + STRK/STRD residual', totalMonths, monthlyObl.total_preferred_plus_interest) +
+                    cashRunwayCard('STRC-only cash runway', 'STRC dividend only', strcOnlyMonths, monthlyObl.strc_only) +
+                '</div>';
+
+            var cashCaption =
+                '<div class="text-xs text-slate-500 italic leading-relaxed">' +
+                    'STRC dividends are serviced from Strategy\'s cash buffer first; BTC sales activate only when cash exhausts. ' +
+                    'This is the binding near-term signal for STRC holders — BTC sales trigger reflexive BTC-price feedback (see strc.md §V). ' +
+                    '<a href="?asset=mstr" class="text-blue-500 hover:underline">→ Full sequenced waterfall + Phase 2 BTC-stack detail on MSTR dashboard</a>' +
+                '</div>';
+
+            cashSubPanel =
+                '<div class="rounded-lg border border-slate-200 dark:border-slate-700 p-4 mt-4 bg-slate-50/40 dark:bg-slate-800/30">' +
+                    '<div class="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">Strategy cash service horizon <span class="text-xs font-normal text-slate-500">— Phase 1 buffer before BTC sales activate</span></div>' +
+                    saleStartCard +
+                    cashDetail +
+                    cashRunwayCards +
+                    cashCaption +
+                '</div>';
+        }
+
+        // ---- Footer affordance to MSTR for the full-stack waterfall.
+        var footer =
+            '<div class="text-xs text-slate-500 mt-4 leading-relaxed">' +
+                'STRC is one tier in Strategy\'s preferred stack. The aggregate-preferred runway, multi-tier seniority waterfall (Senior Converts / STRF / STRC / STRK+STRD), and treasury-available breakdown all live on the issuer dashboard: ' +
+                '<a href="?asset=mstr" class="text-blue-500 hover:underline">→ Full Cash-Service Waterfall + all-preferred runway analysis (MSTR dashboard)</a>' +
+            '</div>';
+
+        return '<div class="panel">' +
+            '<div class="panel-title">STRC dividend obligation + runway <span class="text-xs font-normal text-slate-500">— STRC-slice cash service</span></div>' +
+            headline +
+            STRCRenderer._renderOutstandingBasis(data) +
+            cashSubPanel +
+            ceilingSubPanel +
+            footer +
+        '</div>';
+    },
+
+    // ============================================================
+    // Strategy Event Log (v2b) — async-loaded after main render.
+    // ============================================================
+    _loadStrategyEventLog: function (targetId) {
+        var target = document.getElementById(targetId || 'strc-event-log-panel');
+        if (!target) return;
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/strategy_events.json?nocache=' + nocache)
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (events) {
+                target.innerHTML = STRCRenderer._renderStrategyEventLogHtml(events);
+                STRCRenderer._wireEventFilterChips();
+                STRCRenderer._appendEventRiskFlags(events && events.risk_flags);
+            })
+            .catch(function () {
+                target.innerHTML = STRCRenderer._renderStrategyEventLogHtml(null);
+            });
+    },
+
+    _renderStrategyEventLogHtml: function (events) {
+        if (!events || !Array.isArray(events.events)) {
+            return '<div class="panel-title">Strategy Event Log <span class="text-xs font-normal text-slate-500">— issuer + EDGAR monitor</span></div>' +
+                '<div class="risk-flag risk-warning">Strategy disclosure monitor data not available in this snapshot.</div>';
+        }
+
+        // Type-count badges across the top.
+        var counts = events.events_by_type_count_last_90d || {};
+        var typeOrder = ['DCS_REPURCHASE', 'BTC_SALE', 'BTC_PURCHASE', 'PREFERRED_ISSUANCE', 'STRC_RATE_ANNOUNCEMENT', 'ATM_PROGRAM_UPDATE', 'OTHER'];
+        function badgeClass(type, count) {
+            if (type === 'BTC_SALE')              return count > 0 ? 'bg-red-100 text-red-800 border-red-200'      : 'bg-slate-100 text-slate-500';
+            if (type === 'BTC_PURCHASE')          return count > 0 ? 'bg-blue-100 text-blue-800 border-blue-200'   : 'bg-slate-100 text-slate-500';
+            if (type === 'DCS_REPURCHASE')        return count > 0 ? 'bg-green-100 text-green-800 border-green-200' : 'bg-slate-100 text-slate-500';
+            if (type === 'PREFERRED_ISSUANCE')    return count > 0 ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-slate-100 text-slate-500';
+            return 'bg-slate-100 text-slate-700';
+        }
+        var badges = typeOrder.map(function (t) {
+            var c = counts[t] || 0;
+            return '<span class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium border ' + badgeClass(t, c) + '">' +
+                '<span class="font-mono">' + c + '</span><span>' + t.replace(/_/g, ' ') + '</span>' +
+            '</span>';
+        }).join('');
+
+        // Filter chips — same as types plus an "All".
+        var chips = '<button type="button" class="strc-event-chip px-2 py-0.5 rounded-full text-xs font-medium bg-blue-600 text-white" data-filter="ALL">All</button>' +
+            typeOrder.map(function (t) {
+                return '<button type="button" class="strc-event-chip px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="' + t + '">' + t.replace(/_/g, ' ') + '</button>';
+            }).join('');
+
+        // Sort events newest first (PegTracker may emit either order — be defensive).
+        var sorted = events.events.slice().sort(function (a, b) {
+            return (b.ts_utc || '').localeCompare(a.ts_utc || '');
+        });
+        var rows = sorted.map(function (e) { return STRCRenderer._eventRowHtml(e); }).join('');
+        if (!rows) {
+            rows = '<div class="text-xs text-slate-500 italic">No events in current window.</div>';
+        }
+
+        // EDGAR health footer.
+        var health = events.edgar_health || {};
+        var lastPoll = health.last_successful_fetch_utc || events.last_edgar_poll_utc;
+        var failures = health.consecutive_failures != null ? health.consecutive_failures : 0;
+        var healthCls = failures >= 4 ? 'text-red-700' : failures > 0 ? 'text-amber-700' : 'text-slate-500';
+        var healthIcon = failures >= 4 ? '⚠' : failures > 0 ? '△' : '✓';
+        var healthFooter =
+            '<div class="text-xs ' + healthCls + ' mt-4 pt-3 border-t border-slate-200 flex items-center gap-2">' +
+                '<span>' + healthIcon + '</span>' +
+                '<span>EDGAR last polled ' + (lastPoll ? CommonRenderer.formatDate(lastPoll) : '—') + ' · ' + failures + ' consecutive failures</span>' +
+            '</div>';
+
+        return '<div class="panel-title">Strategy Event Log <span class="text-xs font-normal text-slate-500">— issuer + EDGAR monitor</span></div>' +
+            '<div class="flex flex-wrap gap-2 mb-3">' + badges + '</div>' +
+            '<div class="flex flex-wrap gap-1.5 mb-3">' + chips + '</div>' +
+            '<div id="strc-event-timeline" class="space-y-2">' + rows + '</div>' +
+            healthFooter;
+    },
+
+    _eventRowHtml: function (e) {
+        var type = e.type || 'OTHER';
+        var sev = e.severity_hint || 'info';
+        var sevCls = sev === 'critical' ? 'bg-red-100 text-red-800' :
+                     sev === 'high'     ? 'bg-orange-100 text-orange-800' :
+                     sev === 'warning'  ? 'bg-amber-100 text-amber-800' :
+                                          'bg-slate-100 text-slate-700';
+        var ts = e.ts_utc || e.filing_date;
+        var dateTxt = ts ? CommonRenderer.formatDate(ts) : '—';
+        var ageTxt = '';
+        if (ts) {
+            var ageDays = Math.floor((Date.now() - new Date(ts.endsWith('Z') ? ts : ts + 'Z').getTime()) / 86400000);
+            ageTxt = ageDays === 0 ? 'today' :
+                     ageDays === 1 ? '1 day ago' :
+                     ageDays < 30  ? ageDays + ' days ago' :
+                                     Math.round(ageDays / 30) + ' months ago';
+        }
+        var extracted = e.extracted || {};
+        var detailParts = [];
+        if (extracted.btc_count != null) detailParts.push(STRCRenderer._fmtNum(extracted.btc_count) + ' BTC');
+        if (extracted.shares != null) detailParts.push(STRCRenderer._fmtNum(extracted.shares) + ' shares');
+        if (extracted.amount_usd != null) detailParts.push(STRCRenderer._fmtMoneyShort(extracted.amount_usd));
+        if (extracted.average_price_usd != null) detailParts.push('~' + STRCRenderer._fmtMoney(extracted.average_price_usd, 2) + '/sh');
+        if (extracted.remaining_authorization_usd != null) detailParts.push(STRCRenderer._fmtMoneyShort(extracted.remaining_authorization_usd) + ' remaining');
+        if (extracted.series) detailParts.push(extracted.series);
+        if (extracted.new_rate != null) detailParts.push((extracted.new_rate * 100).toFixed(2) + '%');
+        var detail = detailParts.join(' · ');
+        if (!detail && e.context) {
+            var ctx = e.context.length > 140 ? e.context.slice(0, 140) + '…' : e.context;
+            detail = '<span class="italic text-slate-500">' + ctx + '</span>';
+        }
+        var title = e.title || '(untitled filing)';
+        var titleTxt = title.length > 110 ? title.slice(0, 110) + '…' : title;
+        var sourceLabel = e.source_kind === 'issuer_release' ? 'issuer release' : 'filing';
+        var linkHtml = e.filing_url ?
+            '<a href="' + e.filing_url + '" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline text-xs">' + sourceLabel + ' ↗</a>' : '';
+
+        return '<div class="strc-event-row rounded border border-slate-200 dark:border-slate-700 p-3" data-type="' + type + '">' +
+            '<div class="flex items-start justify-between gap-3">' +
+                '<div class="flex-1 min-w-0">' +
+                    '<div class="flex items-center gap-2 flex-wrap mb-1">' +
+                        '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ' + sevCls + '">' + type.replace(/_/g, ' ') + '</span>' +
+                        '<span class="text-xs text-slate-500">' + dateTxt + (ageTxt ? ' · ' + ageTxt : '') + '</span>' +
+                    '</div>' +
+                    '<div class="text-sm text-slate-800 dark:text-slate-100" title="' + title.replace(/"/g, '&quot;') + '">' + titleTxt + '</div>' +
+                    (detail ? '<div class="text-xs text-slate-600 dark:text-slate-300 mt-1">' + detail + '</div>' : '') +
+                '</div>' +
+                '<div class="shrink-0">' + linkHtml + '</div>' +
+            '</div>' +
+        '</div>';
+    },
+
+    _wireEventFilterChips: function () {
+        var chips = document.querySelectorAll('.strc-event-chip');
+        if (!chips.length) return;
+        chips.forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                var filter = chip.getAttribute('data-filter');
+                chips.forEach(function (c) {
+                    var active = (c === chip);
+                    c.className = 'strc-event-chip px-2 py-0.5 rounded-full text-xs font-medium ' +
+                        (active ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200');
+                });
+                var rows = document.querySelectorAll('.strc-event-row');
+                rows.forEach(function (row) {
+                    if (filter === 'ALL' || row.getAttribute('data-type') === filter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    },
+
+    // Surface events-side risk flags into the common Risk Flags panel.
+    // Appends rather than overwriting so the backing-side flags remain visible.
+    // Shared by the STRC and MSTR dashboards (MSTR reuses _loadStrategyEventLog).
+    _appendEventRiskFlags: function (flags) {
+        if (!Array.isArray(flags) || !flags.length) return;
+        var container = document.getElementById('risk-flags');
+        if (!container) return;
+        // If the panel was hidden because backing had no flags, reveal it.
+        var panel = container.closest('.panel');
+        if (panel) panel.style.display = '';
+        // CommonRenderer.renderRiskFlags writes a "No risk flags" placeholder
+        // when the backing payload has none. Appending an EDGAR flag beneath
+        // that placeholder renders a panel that says both at once — and the
+        // reassuring half reads first. Drop it before appending: absence of
+        // backing flags is not absence of flags once EDGAR has one.
+        if (!container.querySelector('.risk-flag')) container.innerHTML = '';
+        var wrap = panel && panel.parentElement;
+        if (wrap && !wrap.classList.contains('lg:col-span-3')) wrap.classList.add('lg:col-span-3');
+
+        var appended = flags.map(function (f) {
+            return '<div class="risk-flag risk-' + (f.severity || 'info') + '">' +
+                '<span class="font-semibold mr-1">[EDGAR]</span>' + (f.message || f.code || '—') +
+            '</div>';
+        }).join('');
+        container.insertAdjacentHTML('beforeend', appended);
+    },
+
+    // STRC rate-trajectory chart — small inline chart inside the rate-
+    // ceiling overlay sub-panel (Panel 3). Visualizes the §IV.5 one-way
+    // ratchet: stress cycles bump the rate up, recovery doesn't bring it
+    // back down.
+    _paintRateTrajectoryChart: function (series) {
+        var ctx = document.getElementById('strc-rate-trajectory-chart');
+        if (!ctx) return;
+        // Convert fraction → percent for plotting.
+        var raw = STRCRenderer._seriesXY(series, 'strc_current_rate');
+        var data = raw.map(function (p) { return { x: p.x, y: p.y * 100 }; });
+        var ann = {
+            launch: { type: 'line', yMin: 10.25, yMax: 10.25, borderColor: '#22c55e', borderWidth: 1, borderDash: [3, 3],
+                      label: { content: '10.25% launch', display: true, position: 'end', font: { size: 9 }, color: '#16a34a' } },
+            mid:    { type: 'line', yMin: 14, yMax: 14, borderColor: '#f59e0b', borderWidth: 1, borderDash: [4, 4],
+                      label: { content: '14% mid-ceiling', display: true, position: 'end', font: { size: 9 }, color: '#d97706' } },
+            top:    { type: 'line', yMin: 16, yMax: 16, borderColor: '#ef4444', borderWidth: 1, borderDash: [4, 4],
+                      label: { content: '16% top-ceiling', display: true, position: 'end', font: { size: 9 }, color: '#dc2626' } }
+        };
+        if (window._strcRateTrajChart) window._strcRateTrajChart.destroy();
+        window._strcRateTrajChart = new Chart(ctx, {
+            type: 'line',
+            data: { datasets: [{
+                label: 'STRC rate (%)',
+                data: data,
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14,165,233,0.1)',
+                fill: true, stepped: true, pointRadius: 2, borderWidth: 2
+            }] },
+            options: Object.assign({}, STRCRenderer._baseChartOpts(ann), {
+                scales: {
+                    x: { type: 'time', time: { unit: 'day', displayFormats: { day: 'MMM d' } }, grid: { display: false }, ticks: { maxTicksLimit: 6, font: { size: 10 } } },
+                    y: { grid: { color: '#f1f5f9' }, ticks: { callback: function (v) { return v + '%'; }, font: { size: 10 } } }
+                },
+                plugins: { legend: { display: false }, annotation: { annotations: ann } }
+            })
+        });
+    }
+};

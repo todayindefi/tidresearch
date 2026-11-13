@@ -1,0 +1,460 @@
+/**
+ * crvUSD renderer
+ *
+ * Supply = mint markets + YB deployed + CurveLendOperator + PK debt
+ * CR = (mint collateral + YB BTC/ETH) / supply
+ *
+ * Section order:
+ * 1. Supply Breakdown (minting sources + recirculation)
+ * 2. Collateral Breakdown (all $329M — YB + mint, matching header)
+ * 3. Collateral & Peg Defense (CR, PK burn cap, peg defense liquidity)
+ * 4. YB Pools (per-pool detail with balance ratios)
+ * 5. Minting Markets (per-market detail)
+ * 6. LlamaLend (recirculation detail)
+ *
+ * PK pool per-pool liquidity now lives in the common Liquidity section (Balance column =
+ * balance_ratio); the PK-debt burn narrative + aggregate imbalance callout fold into Peg Defense.
+ */
+
+var CrvUSDRenderer = {
+
+    render(data) {
+        var container = document.getElementById('asset-specific-panels');
+        var specific = data.asset_specific;
+        if (!specific || specific.type !== 'crvusd') return;
+
+        var html = '';
+        var s = data.summary;
+        var supplyRecon = s.supply_reconciliation || {};
+
+        // ====== 1. Supply Breakdown ======
+        var sb = specific.supply_breakdown;
+        if (sb) {
+            var total = sb.total || 1;
+            var rawSupply = supplyRecon.total_supply_raw != null ? supplyRecon.total_supply_raw : sb.total_supply_raw;
+            var lensSupply = supplyRecon.lens_circulating;
+            var cgSupply = supplyRecon.cg_circulating != null ? supplyRecon.cg_circulating : sb.cg_circulating;
+            var constructedSupply = supplyRecon.constructed_supply != null ? supplyRecon.constructed_supply : sb.total;
+
+            var rc = specific.recirculation || {};
+            var formatSupplyDefinition = function(value) {
+                if (Math.abs(value) >= 1e9) return '$' + (value / 1e9).toFixed(2) + 'B';
+                if (Math.abs(value) >= 1e6) return '$' + (value / 1e6).toFixed(2) + 'M';
+                return CommonRenderer.formatCurrency(value);
+            };
+            var supplyDefinitions = '';
+            if (rawSupply != null || lensSupply != null) {
+                supplyDefinitions = ' Other supply definitions:' +
+                    (rawSupply != null ? ' <code>totalSupply()</code> returns <strong>' + formatSupplyDefinition(rawSupply) + '</strong> (mint authorization capacity, including undeployed ceiling buffers)' : '') +
+                    (rawSupply != null && lensSupply != null ? ';' : '') +
+                    (lensSupply != null ? ' <code>StablecoinLens.circulating_supply</code> returns <strong>' + formatSupplyDefinition(lensSupply) + '</strong> (Controllers + PegKeepers only — excludes YieldBasis and operator mints)' : '') +
+                    '.';
+            }
+            var reconciliationBlock = '';
+            if (constructedSupply != null && cgSupply != null &&
+                    supplyRecon.delta_usd != null && supplyRecon.delta_pct != null) {
+                var deltaUsd = supplyRecon.delta_usd;
+                var deltaPct = supplyRecon.delta_pct;
+                var deltaClass = Math.abs(deltaPct) < 3 ? 'positive' : Math.abs(deltaPct) <= 10 ? 'warning' : 'negative';
+                var signedDeltaUsd = (deltaUsd >= 0 ? '+' : '-') + CommonRenderer.formatCurrency(Math.abs(deltaUsd));
+                var signedDeltaPct = (deltaPct >= 0 ? '+' : '-') + Math.abs(deltaPct).toFixed(2) + '%';
+                reconciliationBlock =
+                    '<div class="mt-4 pt-3 border-t border-slate-200">' +
+                        '<div class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">Reconciliation</div>' +
+                        '<div class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">' +
+                            '<div>Constructed supply (this table)</div><div class="text-right font-mono">' + CommonRenderer.formatCurrency(constructedSupply) + '</div>' +
+                            '<div>CoinGecko circulating (cross-check)</div><div class="text-right font-mono">' + CommonRenderer.formatCurrency(cgSupply) + '</div>' +
+                            '<div class="font-semibold">Delta</div><div class="text-right font-mono font-semibold ' + deltaClass + '">' + signedDeltaUsd + ' (' + signedDeltaPct + ')</div>' +
+                        '</div>' +
+                        (supplyRecon.note ? '<p class="text-xs text-slate-400 mt-2">' + supplyRecon.note + '</p>' : '') +
+                    '</div>';
+            }
+
+            html += '<div class="panel">' +
+                '<div class="panel-title">Supply Breakdown</div>' +
+                '<p class="text-sm text-slate-500 mb-3">Issuance-side and Ethereum-scoped: only sources that mint new crvUSD. crvUSD on other chains is bridged from Ethereum (lock-and-mint), so it is already counted here — cross-chain balances must not be added on top.' + supplyDefinitions + '</p>' +
+                // ⚠️ THE % COLUMNS WERE BARE AND THE PAGE CARRIES THREE DIFFERENT YIELDBASIS
+                // SHARES. Supply Breakdown reads 51.2%, Collateral Breakdown 37.4%, and the
+                // Dependencies list 41.5% — all correct, none reconcilable by a reader,
+                // because the numerator changes as well as the denominator: "deployed" is
+                // crvUSD MINTED TO YieldBasis (debt owed), "YB pool BTC/ETH" is the BTC it
+                // POSTED (asset securing it). Naming only the denominator would still imply
+                // one quantity measured two ways.
+                '<table class="data-table"><thead><tr><th colspan="3" class="text-xs uppercase tracking-wide text-slate-500">Deployed issuance sources (reconciles to displayed supply)</th></tr><tr><th>Source</th><th class="text-right">Amount</th><th class="text-right">% of deployed-basis supply</th></tr></thead><tbody>' +
+                '<tr><td>YieldBasis deployed (AMM get_debt)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(sb.yb_deployed) + '</td><td class="text-right">' + (sb.yb_deployed / total * 100).toFixed(1) + '%</td></tr>' +
+                '<tr><td>Minting markets (collateral-backed CDPs)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(sb.minting_markets) + '</td><td class="text-right">' + (sb.minting_markets / total * 100).toFixed(1) + '%</td></tr>' +
+                (sb.operator_deployed != null ? '<tr><td>CurveLendOperator deployed (sreUSD market)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(sb.operator_deployed) + '</td><td class="text-right">' + (sb.operator_deployed / total * 100).toFixed(1) + '%</td></tr>' : '') +
+                '<tr><td>PegKeeper debt</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(sb.pegkeeper_debt) + '</td><td class="text-right">' + (sb.pegkeeper_debt / total * 100).toFixed(1) + '%</td></tr>' +
+                '<tr class="font-bold border-t-2 border-slate-200"><td>Total deployed-basis supply (Ethereum)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(total) + '</td><td class="text-right">100%</td></tr>' +
+                '</tbody></table>' +
+                '<div class="mt-3 text-sm" id="crvusd-operator-accounting">Operator minted: <strong>' + CommonRenderer.formatCurrencyExact(sb.operator_minted) + '</strong> · deployed: <strong>' + CommonRenderer.formatCurrencyExact(sb.operator_deployed) + '</strong> · excluded idle: <strong>' + CommonRenderer.formatCurrencyExact(sb.operator_idle_excluded) + '</strong>.<br>Deployed collateral ratio: ' + CommonRenderer.formatPercent(s.collateral_ratio) + ' · minted-basis sensitivity: ' + CommonRenderer.formatPercent(s.collateral_ratio_minted_basis) + '. The sensitivity includes idle issuance; it does not establish realized insolvency.<br>YieldBasis deployed share: ' + (sb.yb_deployed / total * 100).toFixed(2) + '% · source ' + CommonRenderer._escapeAttr(data.timestamp || 'unavailable') + '. See the dated Contract &amp; Admin security follow-up for policy/eDAO authority scope; proposal status does not update current role measurements.</div>' + reconciliationBlock +
+                '<table class="data-table mt-4"><thead><tr><th colspan="2" class="text-xs uppercase tracking-wide text-slate-500">Recirculation (uses existing crvUSD, not minting)</th></tr></thead><tbody>' +
+                '<tr><td>LlamaLend borrowed</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(rc.llamalend_borrowed || 0) + '</td></tr>' +
+                '<tr><td>scrvUSD savings vault</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(rc.scrvusd_savings || 0) + '</td></tr>' +
+                '</tbody></table></div>';
+        }
+
+        // ====== 1b. Supply Composition Over Time (stacked area + YB% danger line) ======
+        // Canvases are populated by _loadSupplyCompChart() after innerHTML is set below.
+        html += '<div class="panel">' +
+            '<div class="panel-title">Supply Composition Over Time</div>' +
+            '<p class="text-sm text-slate-500 mb-3">crvUSD supply by source. YieldBasis is the watch-item — its share is tracked against the report\'s 80%-of-supply concentration danger line.</p>' +
+            '<div id="crvusd-supply-comp-section">' +
+                '<div class="text-sm font-semibold text-slate-700 mb-2">Supply by source (stacked, reconciles to total supply)</div>' +
+                '<div style="height:320px;position:relative;"><canvas id="crvusd-supply-comp-chart"></canvas></div>' +
+            '</div>' +
+            '<div id="crvusd-yb-pct-section">' +
+                '<div class="text-sm font-semibold text-slate-700 mb-2 mt-5">YieldBasis % of supply</div>' +
+                '<div style="height:220px;position:relative;"><canvas id="crvusd-yb-pct-chart"></canvas></div>' +
+            '</div>' +
+            '<p class="text-xs text-slate-400 mt-2">Supply-composition history begins 2026-05-26 (when per-source persistence was added). The window lengthens on its own as samples accumulate.</p>' +
+            '</div>';
+
+        // ====== 2. Collateral Breakdown (matches Total Backing header) ======
+        var cb = specific.collateral_breakdown;
+        if (cb) {
+            var pkStables = s.pk_stables || 0;
+            var inclusiveTotal = s.total_backing_inclusive || (cb.total + pkStables);
+            var consCls = s.collateral_ratio < 100 ? 'negative' : s.collateral_ratio < 120 ? 'warning' : 'positive';
+            var inclCls = s.inclusive_cr < 100 ? 'negative' : s.inclusive_cr < 120 ? 'warning' : 'positive';
+            var denom = inclusiveTotal > 0 ? inclusiveTotal : 1;
+            var ybPct = (cb.yb_btc_collateral / denom * 100).toFixed(1);
+            var mintPct = (cb.mint_collateral / denom * 100).toFixed(1);
+            var consPct = (cb.total / denom * 100).toFixed(1);
+            var pkPct = (pkStables / denom * 100).toFixed(1);
+
+            html += '<div class="panel">' +
+                '<div class="panel-title">Collateral Breakdown</div>' +
+                '<p class="text-sm text-slate-500 mb-3">Conservative CR: <span class="font-bold ' + consCls + '">' + CommonRenderer.formatPercent(s.collateral_ratio, 1) + '</span> &nbsp;·&nbsp; Inclusive CR: <span class="font-bold ' + inclCls + '">' + CommonRenderer.formatPercent(s.inclusive_cr, 1) + '</span>. Conservative drops PegKeeper debt from supply and PK pool stables from collateral; inclusive counts both. PK pool stables are LP-owned (not protocol-owned) — they defend the peg via arbitrage but aren\'t a redemption-style backing claim.</p>' +
+                // ⚠️ "incl. PegKeeper" IS LOAD-BEARING, not a nicety: this column divides by
+                // total_backing_inclusive (276.97M) while the Dependencies list divides the
+                // SAME YB numerator by total_backing (249.29M), which is why one says 37.4%
+                // and the other 41.5%. The delta is $27.68M of PegKeeper stables.
+                '<table class="data-table"><thead><tr><th>Component</th><th class="text-right">Value</th><th class="text-right">% of backing (incl. PegKeeper)</th></tr></thead><tbody>' +
+                '<tr><td>YB pool BTC/ETH</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(cb.yb_btc_collateral) + '</td><td class="text-right">' + ybPct + '%</td></tr>' +
+                '<tr><td>Minting market collateral</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(cb.mint_collateral) + '</td><td class="text-right">' + mintPct + '%</td></tr>' +
+                '<tr class="border-t border-slate-200"><td class="italic text-slate-600">Subtotal: locked collateral (conservative)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(cb.total) + '</td><td class="text-right">' + consPct + '%</td></tr>' +
+                '<tr><td>PK pool stables <span class="text-xs text-slate-400">(peg-defense, LP-owned)</span></td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(pkStables) + '</td><td class="text-right">' + pkPct + '%</td></tr>' +
+                '<tr class="font-bold border-t-2 border-slate-200"><td>Total Backing (inclusive)</td><td class="text-right font-mono">' + CommonRenderer.formatCurrency(inclusiveTotal) + '</td><td class="text-right">100%</td></tr>' +
+                '</tbody></table></div>';
+        }
+
+        // ====== 3. Peg Defense ======
+        var pd = specific.peg_defense;
+        if (pd) {
+            var pkCls = pd.pk_burn_capacity > 0 ? (pd.pk_burn_capacity / s.total_supply > 0.05 ? 'positive' : 'warning') : 'negative';
+
+            // PK-debt -> burn-capacity narrative (relocated from former PK Pool Liquidity panel).
+            var pkDebt = s.total_pegkeeper_debt || 0;
+            var pkDesc = pkDebt > 0 ?
+                'PK debt: ' + CommonRenderer.formatCurrency(pkDebt) + '. PegKeepers can actively withdraw and burn crvUSD from these pools to push price up (protocol-controlled defense).' :
+                'PK debt: $0 (no protocol-controlled burn capacity). PK withdraw-and-burn capacity is zero. Pool liquidity, market arbitrage and other protocol channels remain distinct. Pool stablecoin reserves (' + CommonRenderer.formatCurrency(s.pk_stables) + '). PegKeeper active defense (withdraw + burn) is unavailable until PK debt > $0.';
+
+            // Aggregate crvUSD fraction across PK pools (relocated imbalance callout).
+            var pkPools = specific.pk_pool_liquidity;
+            var aggCallout = '';
+            if (pkPools && Object.keys(pkPools).length > 0) {
+                var stableTotal = 0, crvTotal = 0;
+                Object.entries(pkPools).filter(function(e) { return e[1].stables > 1000 || e[1].crvusd > 1000; }).forEach(function(e) {
+                    stableTotal += e[1].stables;
+                    crvTotal += e[1].crvusd;
+                });
+                var totalPct = (stableTotal + crvTotal) > 0 ? (crvTotal / (stableTotal + crvTotal) * 100) : 0;
+                if (totalPct > 70) {
+                    aggCallout = '<p class="text-sm text-amber-600 mt-3">PK pools are ' + totalPct.toFixed(0) + '% crvUSD (balanced = 50%). Indicates persistent selling pressure — consistent with crvUSD trading slightly below peg. Stablecoin reserves (' + CommonRenderer.formatCurrency(stableTotal) + ') absorb further depeg pressure.</p>';
+                }
+            }
+
+            html += '<div class="panel">' +
+                '<div class="panel-title">Peg Defense</div>' +
+                '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">' +
+                    '<div class="summary-card"><div class="card-label">PK Burn Capacity</div><div class="card-value ' + pkCls + '">' + CommonRenderer.formatCurrency(pd.pk_burn_capacity) + '</div><div class="text-xs text-slate-400 mt-1">Protocol-controlled supply removal</div></div>' +
+                    '<div class="summary-card"><div class="card-label">Peg Defense Liquidity</div><div class="card-value">' + CommonRenderer.formatCurrency(pd.pk_pool_stables) + '</div><div class="text-xs text-slate-400 mt-1">LP-owned stables in PK pools, not guaranteed</div></div>' +
+                '</div>' +
+                '<p class="text-sm text-slate-500 mt-3">' + pkDesc + '</p>' +
+                aggCallout +
+                '</div>';
+        }
+
+        // ====== 3. YB Pool Detail ======
+        var ybPools = specific.yb_pools;
+        if (ybPools && Object.keys(ybPools).length > 0) {
+            html += '<div class="panel">' +
+                '<div class="panel-title">YieldBasis Pools</div>' +
+                '<p class="text-sm text-slate-500 mb-3">Debt = crvUSD borrowed by YB (counts as supply). Collateral = BTC/ETH in underlying Cryptoswap pools backing YB positions.</p>' +
+                '<table class="data-table"><thead><tr><th>Pool</th><th class="text-right" style="width:140px">Debt (supply)</th><th class="text-right" style="width:140px">Collateral (USD)</th></tr></thead><tbody>';
+            var ybTotal = {debt: 0, collateral: 0};
+            Object.entries(ybPools).sort(function(a, b) { return (b[1].debt || b[1].crvusd || 0) - (a[1].debt || a[1].crvusd || 0); }).forEach(function(e) {
+                var debt = e[1].debt || e[1].crvusd || 0;
+                var collat = e[1].collateral_usd || 0;
+                ybTotal.debt += debt;
+                ybTotal.collateral += collat;
+                html += '<tr><td class="font-medium">' + e[0] + '</td>' +
+                    '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(debt) + '</td>' +
+                    '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(collat) + '</td></tr>';
+            });
+            html += '<tr class="font-bold border-t-2 border-slate-200"><td>Total</td>' +
+                '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(ybTotal.debt) + '</td>' +
+                '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(ybTotal.collateral) + '</td></tr>' +
+                '</tbody></table>' +
+                '<p class="text-xs text-slate-400 mt-2">Detailed pool composition: <a href="https://yieldbasis.com/analytics/markets" target="_blank" class="text-blue-500 hover:underline">yieldbasis.com/analytics/markets</a></p></div>';
+        }
+
+        // ====== 4. Minting Markets ======
+        var markets = specific.markets;
+        if (markets && markets.length > 0) {
+            var debtMarkets = markets.filter(function(m) { return m.debt >= 1; });
+            var activeMarkets = debtMarkets.filter(function(m) { return !m.wind_down; });
+            var windDownMarkets = debtMarkets.filter(function(m) { return m.wind_down; });
+            var summaryCountsReady = typeof s.n_active_markets === 'number' && typeof s.n_winddown_markets === 'number';
+            var activeCount = summaryCountsReady ? s.n_active_markets : activeMarkets.length;
+            var windDownCount = summaryCountsReady ? s.n_winddown_markets : windDownMarkets.length;
+            var countLabel = activeCount + ' active' + (windDownCount ? ' + ' + windDownCount + ' wind-down' : '');
+            html += '<div class="panel">' +
+                '<div class="panel-title">Minting Markets (' + countLabel + ', CR ' + CommonRenderer.formatPercent(s.mint_cr, 1) + ')</div>' +
+                '<div class="overflow-x-auto"><table class="data-table"><thead><tr>' +
+                '<th>Collateral</th><th class="text-right">Debt</th><th class="text-right">Ceiling</th><th class="text-right">CR</th><th class="text-right">Loans</th><th class="text-right">APR</th>' +
+                '</tr></thead><tbody>';
+            debtMarkets.forEach(function(m) {
+                var crClass = m.collateral_ratio < 120 ? 'text-red-600' : m.collateral_ratio < 150 ? 'text-amber-600' : 'text-green-600';
+                var windDown = m.wind_down ? ' <span class="tag" style="background:#fef2f2;color:#dc2626">WIND-DOWN</span>' : '';
+                html += '<tr><td class="font-medium">' + m.collateral + windDown + '</td>' +
+                    '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(m.debt) + '</td>' +
+                    '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(m.debt_ceiling) + '</td>' +
+                    '<td class="text-right font-mono ' + crClass + '">' + CommonRenderer.formatPercent(m.collateral_ratio, 1) + '</td>' +
+                    '<td class="text-right font-mono">' + m.n_loans + '</td>' +
+                    '<td class="text-right font-mono">' + CommonRenderer.formatPercent(m.borrow_apr, 1) + '</td></tr>';
+            });
+            html += '</tbody></table></div></div>';
+        }
+
+        // ====== 7. PegKeeper Debt (only show if debt > 0) ======
+        //
+        // ⚠️ THIS REDUCED FIFTEEN KEEPERS TO ONE SUM AND THREW THE REST AWAY.
+        //
+        // `asset_specific.pegkeepers[]` carries every registered keeper with its
+        // index, address, pool and debt. The render summed them into a single
+        // "Total PK Debt" card, so the most load-bearing fact about crvUSD's
+        // downside defence was invisible on the page that exists to show it:
+        // ONE keeper holds the entire burn buffer and the other fourteen are at
+        // exactly zero. A reader seeing "$15.8M" would reasonably assume it is
+        // spread across a fifteen-keeper set. It is not, and a disruption
+        // specific to that one pool takes the whole buffer.
+        //
+        // ⚠️ THE LEVEL IS THE VOLATILE FACT AND THE CONCENTRATION IS THE STABLE
+        // ONE — which is the wrong way round for a card that shows only the
+        // level. Total PK debt ran 33.75M (08-13) -> 98.60M (08-24) -> 36.98M
+        // (09-07) -> 15.80M today while the 100% share did not move through any
+        // of it. The total only ever shows the number that moves.
+        //
+        // ⚠️ EVERYTHING HERE IS COMPUTED. No count, share or address is written
+        // in: when a second keeper takes on debt the line re-derives, and if the
+        // set is genuinely spread the headline says so instead. A hardcoded "1 of
+        // 15" would be a constant nothing recomputes — the exact defect class
+        // this repo has been removing all day.
+        var pks = specific.pegkeepers;
+        if (pks && pks.length > 0) {
+            var totalPkDebt = pks.reduce(function(a, pk) { return a + (pk.debt || 0); }, 0);
+            if (totalPkDebt > 0) {
+                var active = pks.filter(function(pk) { return (pk.debt || 0) > 0; })
+                                .sort(function(a, b) { return b.debt - a.debt; });
+                var topShare = (active[0].debt / totalPkDebt) * 100;
+                var concentrated = active.length === 1 || topShare >= 90;
+                var shortAddr = function(a) {
+                    return a ? a.slice(0, 8) + '\u2026' + a.slice(-6) : '\u2014';
+                };
+                var note = concentrated
+                    ? '<div class="risk-flag risk-warning mt-3">' +
+                          '<strong>' + active.length + ' of ' + pks.length +
+                          ' registered keepers ' + (active.length === 1 ? 'holds ' : 'hold ') +
+                          CommonRenderer.formatPercent(topShare, active.length === 1 ? 0 : 1) +
+                          ' of the buffer.</strong> The remaining ' +
+                          (pks.length - active.length) + ' carry no debt, so the burn capacity ' +
+                          'above is not diversified across the keeper set \u2014 a disruption ' +
+                          'confined to the funded pool would remove it.' +
+                      '</div>'
+                    : '<div class="text-xs text-slate-500 mt-3">' + active.length + ' of ' +
+                      pks.length + ' registered keepers carry debt; the largest holds ' +
+                      CommonRenderer.formatPercent(topShare, 1) + '.</div>';
+
+                html += '<div class="panel"><div class="panel-title">PegKeeper Debt</div>' +
+                    '<p class="text-sm text-slate-500 mb-3">PegKeepers have minted crvUSD into pools (circular supply). This debt can be withdrawn and burned.</p>' +
+                    '<div class="summary-card" style="display:inline-block"><div class="card-label">Total PK Debt</div><div class="card-value negative">' + CommonRenderer.formatCurrency(totalPkDebt) + '</div></div>' +
+                    note +
+                    '<div class="data-table-scroll mt-3"><table class="data-table">' +
+                        '<thead><tr><th>#</th><th>Keeper</th><th>Pool</th>' +
+                            '<th class="text-right">Debt</th><th class="text-right">Share</th></tr></thead><tbody>' +
+                        active.map(function(pk) {
+                            return '<tr>' +
+                                '<td class="font-mono">' + pk.index + '</td>' +
+                                '<td class="font-mono text-xs">' + shortAddr(pk.address) + '</td>' +
+                                // ⚠️ PREFER THE PRODUCER'S NAME OVER THE ADDRESS. PegTracker
+                                // b8c7bf3 adds `pair` to each keeper — the pool the funded
+                                // keeper sits in is Curve crvUSD/USDT, and a bare
+                                // 0x390f35…997BF4 made a reader run an on-chain call to
+                                // read their own dashboard. Falls back to the address when
+                                // no name is published: an address renders fine, a guessed
+                                // label renders as fact.
+                                '<td class="font-mono text-xs">' +
+                                    (pk.pair ? CommonRenderer._escapeAttr(pk.pair)
+                                             : shortAddr(pk.pool)) + '</td>' +
+                                '<td class="text-right font-mono">' + CommonRenderer.formatCurrency(pk.debt) + '</td>' +
+                                '<td class="text-right font-mono">' + CommonRenderer.formatPercent((pk.debt / totalPkDebt) * 100, 1) + '</td>' +
+                            '</tr>';
+                        }).join('') +
+                    '</tbody></table></div>' +
+                    // ⚠️ Zero-debt keepers are listed as a COUNT, not as fourteen
+                    // empty rows. They are registered capacity that currently holds
+                    // nothing — real context, but not fourteen rows of it.
+                    (pks.length > active.length
+                        ? '<div class="text-xs text-slate-400 mt-2">' +
+                          (pks.length - active.length) + ' further registered keeper' +
+                          (pks.length - active.length === 1 ? '' : 's') +
+                          ' currently at zero debt, not listed.</div>'
+                        : '') +
+                    '</div>';
+            }
+        }
+
+        container.innerHTML = html;
+
+        // Canvases now exist in the DOM — fetch history and draw.
+        CrvUSDRenderer._loadSupplyCompChart();
+    },
+
+    // ====== Supply-composition charts ======
+
+    // Stride-based downsample that always keeps the first and last point.
+    _downsample: function(arr, max) {
+        if (arr.length <= max) return arr;
+        var step = Math.ceil(arr.length / max);
+        var out = [];
+        for (var i = 0; i < arr.length; i += step) out.push(arr[i]);
+        if (out[out.length - 1] !== arr[arr.length - 1]) out.push(arr[arr.length - 1]);
+        return out;
+    },
+
+    _toDate: function(e) {
+        var t = e.timestamp;
+        return new Date(t.endsWith('Z') ? t : t + 'Z');
+    },
+
+    _loadSupplyCompChart: function() {
+        var canvas = document.getElementById('crvusd-supply-comp-chart');
+        if (!canvas || typeof Chart === 'undefined') return;
+        var nocache = Math.floor(Date.now() / 60000);
+        fetch('data/crvusd_backing_history.json?nocache=' + nocache)
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(hist) {
+                // yb_crvusd_deployed is forward-only (null before 2026-05-26). Without this
+                // filter the "Other" residual swallows the whole YB amount on pre-fix entries
+                // and the stack shows a false cliff the hour the field landed.
+                var entries = (hist && Array.isArray(hist.entries) ? hist.entries : [])
+                    .filter(function(e) { return e.yb_crvusd_deployed != null; });
+                if (entries.length < 2) {
+                    CrvUSDRenderer._compUnavailable();
+                    return;
+                }
+                entries = CrvUSDRenderer._downsample(entries, 300);
+                CrvUSDRenderer._drawSupplyCompChart(canvas, entries);
+                CrvUSDRenderer._drawYbPctChart(entries);
+            })
+            .catch(function() { CrvUSDRenderer._compUnavailable(); });
+    },
+
+    _compUnavailable: function() {
+        var sec = document.getElementById('crvusd-supply-comp-section');
+        if (sec) sec.innerHTML = '<div class="text-xs text-slate-400 italic">Supply-composition history populates after a few hours of samples (per-source persistence began 2026-05-26).</div>';
+        var yb = document.getElementById('crvusd-yb-pct-section');
+        if (yb) yb.style.display = 'none';
+    },
+
+    _drawSupplyCompChart: function(canvas, entries) {
+        var labels = entries.map(CrvUSDRenderer._toDate);
+        var totals = entries.map(function(e) { return e.total_supply || 0; });
+        var mint = entries.map(function(e) { return e.total_market_debt || 0; });
+        var yb   = entries.map(function(e) { return e.yb_crvusd_deployed || 0; });
+        var pk   = entries.map(function(e) { return e.total_pegkeeper_debt || 0; });
+        // "Other" is the residual vs total_supply so the four bands always sum to supply
+        // (absorbs operator-minted / LlamaLend-supplied crvUSD). Clamp at 0 — timing/rounding
+        // can occasionally make it marginally negative.
+        var other = entries.map(function(e) {
+            return Math.max(0, (e.total_supply || 0) - (e.total_market_debt || 0) - (e.yb_crvusd_deployed || 0) - (e.total_pegkeeper_debt || 0));
+        });
+
+        var ds = function(label, data, border, bg) {
+            return { label: label, data: data, borderColor: border, backgroundColor: bg, fill: true, stack: 'supply', tension: 0.2, pointRadius: 0, borderWidth: 1.5 };
+        };
+
+        if (window._crvusdSupplyCompChart) { try { window._crvusdSupplyCompChart.destroy(); } catch (e) {} }
+        window._crvusdSupplyCompChart = new Chart(canvas, {
+            type: 'line',
+            data: { labels: labels, datasets: [
+                // bottom -> top: Mint, YieldBasis (highlighted), PegKeeper, Other
+                ds('Mint markets (CDP)', mint, '#3b82f6', 'rgba(59,130,246,0.55)'),
+                ds('YieldBasis', yb, '#f59e0b', 'rgba(245,158,11,0.75)'),
+                ds('PegKeeper', pk, '#94a3b8', 'rgba(148,163,184,0.5)'),
+                ds('Other (operator / LlamaLend)', other, '#22c55e', 'rgba(34,197,94,0.45)')
+            ] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { intersect: false, mode: 'index' },
+                scales: {
+                    x: { type: 'time', time: { unit: 'day', displayFormats: { day: 'MMM d' } }, grid: { display: false }, ticks: { maxTicksLimit: 8, font: { size: 11 } } },
+                    y: { stacked: true, beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: function(v) { return '$' + (v / 1e6).toFixed(0) + 'M'; } } }
+                },
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                    tooltip: { callbacks: {
+                        label: function(c) {
+                            var tot = totals[c.dataIndex] || 0;
+                            var pct = tot > 0 ? (c.parsed.y / tot * 100).toFixed(1) : '0.0';
+                            return c.dataset.label + ': $' + (c.parsed.y / 1e6).toFixed(1) + 'M (' + pct + '%)';
+                        },
+                        footer: function(items) {
+                            if (!items.length) return '';
+                            var tot = totals[items[0].dataIndex] || 0;
+                            return 'Total supply: $' + (tot / 1e6).toFixed(1) + 'M';
+                        }
+                    } }
+                }
+            }
+        });
+    },
+
+    _drawYbPctChart: function(entries) {
+        var canvas = document.getElementById('crvusd-yb-pct-chart');
+        if (!canvas) return;
+        var labels = entries.map(CrvUSDRenderer._toDate);
+        var pct = entries.map(function(e) {
+            return (e.total_supply > 0) ? e.yb_crvusd_deployed / e.total_supply * 100 : 0;
+        });
+
+        if (window._crvusdYbPctChart) { try { window._crvusdYbPctChart.destroy(); } catch (e) {} }
+        window._crvusdYbPctChart = new Chart(canvas, {
+            type: 'line',
+            data: { labels: labels, datasets: [{
+                label: 'YieldBasis % of supply', data: pct,
+                borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.08)',
+                fill: true, tension: 0.25, pointRadius: 0, borderWidth: 2
+            }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { intersect: false, mode: 'index' },
+                scales: {
+                    x: { type: 'time', time: { unit: 'day', displayFormats: { day: 'MMM d' } }, grid: { display: false }, ticks: { maxTicksLimit: 8, font: { size: 11 } } },
+                    y: { suggestedMin: 0, suggestedMax: 100, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: function(v) { return Number(v).toFixed(0) + '%'; } } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: function(c) { return 'YieldBasis: ' + c.parsed.y.toFixed(1) + '% of supply'; } } },
+                    annotation: { annotations: { ybDanger: {
+                        type: 'line', yMin: 80, yMax: 80,
+                        borderColor: 'rgba(220,38,38,0.8)', borderWidth: 1, borderDash: [4, 4],
+                        label: { content: 'YB concentration danger (80%)', display: true, position: 'end', font: { size: 10 }, color: '#fff', backgroundColor: 'rgba(220,38,38,0.8)' }
+                    } } }
+                }
+            }
+        });
+    }
+};

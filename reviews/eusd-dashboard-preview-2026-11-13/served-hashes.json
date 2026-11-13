@@ -1,0 +1,362 @@
+{
+  "files": [
+    {
+      "path": "css/dashboard-containment.css",
+      "status": 200,
+      "sha256": "c5694caa253a519f28335e487844ab0839da62f389dde5dc97a2edd2dd3ed7d3",
+      "expected_sha256": "c5694caa253a519f28335e487844ab0839da62f389dde5dc97a2edd2dd3ed7d3",
+      "matches": true
+    },
+    {
+      "path": "css/fxsave.css",
+      "status": 200,
+      "sha256": "b03e43e3cf600824202bf6f3c7326c905e9c4189a46175e663767fb824f05c22",
+      "expected_sha256": "b03e43e3cf600824202bf6f3c7326c905e9c4189a46175e663767fb824f05c22",
+      "matches": true
+    },
+    {
+      "path": "css/fxusd.css",
+      "status": 200,
+      "sha256": "05da2ec12505df13fbe608ec7e7d2815ce1ac6bf35d3b8250bb5c1917b44d1d3",
+      "expected_sha256": "05da2ec12505df13fbe608ec7e7d2815ce1ac6bf35d3b8250bb5c1917b44d1d3",
+      "matches": true
+    },
+    {
+      "path": "css/issuer-weekly.css",
+      "status": 200,
+      "sha256": "493cf4a390581746c6f24e9f931d2f4e011e6f7f2f2a759607fca121860c958e",
+      "expected_sha256": "493cf4a390581746c6f24e9f931d2f4e011e6f7f2f2a759607fca121860c958e",
+      "matches": true
+    },
+    {
+      "path": "css/portfolio-refresh.css",
+      "status": 200,
+      "sha256": "41a8ab4963df5157c33de2ec0fda2fcdc92f439f765fff6204c41a924ce7fae6",
+      "expected_sha256": "41a8ab4963df5157c33de2ec0fda2fcdc92f439f765fff6204c41a924ce7fae6",
+      "matches": true
+    },
+    {
+      "path": "css/re-protocol-metrics.css",
+      "status": 200,
+      "sha256": "79eaf6ac6b5cd28c175cb4f5718486376f4fc874db14d2a5aa01d164c44f5f50",
+      "expected_sha256": "79eaf6ac6b5cd28c175cb4f5718486376f4fc874db14d2a5aa01d164c44f5f50",
+      "matches": true
+    },
+    {
+      "path": "css/reusd-liquidity-ladder.css",
+      "status": 200,
+      "sha256": "11edc7453dcc3f867a0612d05ddde16c1407458fd67fd70af7188aea1eaacb11",
+      "expected_sha256": "11edc7453dcc3f867a0612d05ddde16c1407458fd67fd70af7188aea1eaacb11",
+      "matches": true
+    },
+    {
+      "path": "css/styles.css",
+      "status": 200,
+      "sha256": "68456c4817e9d6a5ec939d37f6621eb1ed02673b7266cd09d050de5897defaec",
+      "expected_sha256": "68456c4817e9d6a5ec939d37f6621eb1ed02673b7266cd09d050de5897defaec",
+      "matches": true
+    },
+    {
+      "path": "data/assets.json",
+      "status": 200,
+      "sha256": "476b8435c01c4bdc81d0e69f33f9981ab8dee1fff389f9c62e2939eb81a9d58f",
+      "expected_sha256": "476b8435c01c4bdc81d0e69f33f9981ab8dee1fff389f9c62e2939eb81a9d58f",
+      "matches": true
+    },
+    {
+      "path": "data/eusd_backing.json",
+      "status": 200,
+      "sha256": "7e3daf6010ca00abb7618ba7123d1230a41c954930a6e401f7ccdebba0261247",
+      "expected_sha256": "7e3daf6010ca00abb7618ba7123d1230a41c954930a6e401f7ccdebba0261247",
+      "matches": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "7db2509e2b63a16a9a559dcef7670dd039bd2ea04806aacda1b868ee6f0ba611",
+      "expected_sha256": "7db2509e2b63a16a9a559dcef7670dd039bd2ea04806aacda1b868ee6f0ba611",
+      "matches": true
+    },
+    {
+      "path": "js/app.js",
+      "status": 200,
+      "sha256": "23edbc33118867c53297594aad089d33c07c51ec8ee8a5a80633889cf198acba",
+      "expected_sha256": "23edbc33118867c53297594aad089d33c07c51ec8ee8a5a80633889cf198acba",
+      "matches": true
+    },
+    {
+      "path": "js/frxusd-shared-evidence.js",
+      "status": 200,
+      "sha256": "375efd5a784cd9119c2a367aca9bbc3d2423c6040b708f9665cbb5386c79d36a",
+      "expected_sha256": "375efd5a784cd9119c2a367aca9bbc3d2423c6040b708f9665cbb5386c79d36a",
+      "matches": true
+    },
+    {
+      "path": "js/issuer-family-surfaces.js",
+      "status": 200,
+      "sha256": "875766a7f3ad61bd633e914f7ca4657c2fb10e55c0bb77a16753e7a75b561f89",
+      "expected_sha256": "875766a7f3ad61bd633e914f7ca4657c2fb10e55c0bb77a16753e7a75b561f89",
+      "matches": true
+    },
+    {
+      "path": "js/issuer-project-evidence.js",
+      "status": 200,
+      "sha256": "6e5e8986a885509079f9848c5c7ee8ee43ef368b1d0c23e53082ebc576eb9e74",
+      "expected_sha256": "6e5e8986a885509079f9848c5c7ee8ee43ef368b1d0c23e53082ebc576eb9e74",
+      "matches": true
+    },
+    {
+      "path": "js/liquidity-evidence.js",
+      "status": 200,
+      "sha256": "5b27e161563efe78dffe57d264df8b8ed94e24d5efa7289fbda2600f08558ed3",
+      "expected_sha256": "5b27e161563efe78dffe57d264df8b8ed94e24d5efa7289fbda2600f08558ed3",
+      "matches": true
+    },
+    {
+      "path": "js/re-protocol-metrics.js",
+      "status": 200,
+      "sha256": "337e79951cec2592f117547ccf291624a0017ef76585028041c4795a1fb4f9b2",
+      "expected_sha256": "337e79951cec2592f117547ccf291624a0017ef76585028041c4795a1fb4f9b2",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/apyx.js",
+      "status": 200,
+      "sha256": "0954b0da03865b47c818d5f273b25325b098968387bee98d3d30a21fc606b4b5",
+      "expected_sha256": "0954b0da03865b47c818d5f273b25325b098968387bee98d3d30a21fc606b4b5",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/bmnr.js",
+      "status": 200,
+      "sha256": "b9e18d63a4014699f6000f60bc87dcc4055f31646ed433c82c76e24159479223",
+      "expected_sha256": "b9e18d63a4014699f6000f60bc87dcc4055f31646ed433c82c76e24159479223",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/bold.js",
+      "status": 200,
+      "sha256": "af9ed3cef9b533187379948bfe0039026f0713e01453b41d0319006351835eac",
+      "expected_sha256": "af9ed3cef9b533187379948bfe0039026f0713e01453b41d0319006351835eac",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/cap.js",
+      "status": 200,
+      "sha256": "4b1ca4b45c874e71463e7e7fe6bb6e375c72449e7bcee88aa1f2c974318c7718",
+      "expected_sha256": "4b1ca4b45c874e71463e7e7fe6bb6e375c72449e7bcee88aa1f2c974318c7718",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/common.js",
+      "status": 200,
+      "sha256": "d617a13eec5973dcec1d129b1d64096b5981af8f74961aec7bf140b0794a6a43",
+      "expected_sha256": "d617a13eec5973dcec1d129b1d64096b5981af8f74961aec7bf140b0794a6a43",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/crvusd.js",
+      "status": 200,
+      "sha256": "a4f326e837dda8ff4d0e5e0c9e634bd3fc728706e271f1c7050edcf551202075",
+      "expected_sha256": "a4f326e837dda8ff4d0e5e0c9e634bd3fc728706e271f1c7050edcf551202075",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/dola.js",
+      "status": 200,
+      "sha256": "f8ff856fb2a27307c928ab741c08cb4be0c57365684b34124a5d94c7eaa256e6",
+      "expected_sha256": "f8ff856fb2a27307c928ab741c08cb4be0c57365684b34124a5d94c7eaa256e6",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/dusd-alto.js",
+      "status": 200,
+      "sha256": "4e3b27ed8ffc9eeecf42791f3dcfc35f9775aef5d38428b2aab5b7993f9600af",
+      "expected_sha256": "4e3b27ed8ffc9eeecf42791f3dcfc35f9775aef5d38428b2aab5b7993f9600af",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/ethena.js",
+      "status": 200,
+      "sha256": "1275bc3f4ff6e857756d762bbe45100726aec6250abf19885faaca00deb7986b",
+      "expected_sha256": "1275bc3f4ff6e857756d762bbe45100726aec6250abf19885faaca00deb7986b",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/eusd.js",
+      "status": 200,
+      "sha256": "1b5bca66fefbd1224056c0feff952cb7eb05d3d43ab22129fa576540db49e202",
+      "expected_sha256": "1b5bca66fefbd1224056c0feff952cb7eb05d3d43ab22129fa576540db49e202",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/frax.js",
+      "status": 200,
+      "sha256": "4d0ffe9325f9457954cae8888c6df2a001c4e0c582b6883935498c078df1dd49",
+      "expected_sha256": "4d0ffe9325f9457954cae8888c6df2a001c4e0c582b6883935498c078df1dd49",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/frxusd.js",
+      "status": 200,
+      "sha256": "80c52dcf48626cbdf5b389e24593d862b1a485145417b63b980bc86424492caa",
+      "expected_sha256": "80c52dcf48626cbdf5b389e24593d862b1a485145417b63b980bc86424492caa",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/fxsave.js",
+      "status": 200,
+      "sha256": "c096871073d42260508987bced5c9a0bc6fa8e769daa46e9f76dcf310a376bc4",
+      "expected_sha256": "c096871073d42260508987bced5c9a0bc6fa8e769daa46e9f76dcf310a376bc4",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/fxusd.js",
+      "status": 200,
+      "sha256": "cf9f58de75eb80829640d471f76a54dfdab925036f9ed594c956e4f8c34495bd",
+      "expected_sha256": "cf9f58de75eb80829640d471f76a54dfdab925036f9ed594c956e4f8c34495bd",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/hastra-prime.js",
+      "status": 200,
+      "sha256": "a69add8571e55080eb8417e86e81046f70c0ea7a40adeb2cb4839c3b71ced834",
+      "expected_sha256": "a69add8571e55080eb8417e86e81046f70c0ea7a40adeb2cb4839c3b71ced834",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/mstr.js",
+      "status": 200,
+      "sha256": "f5fbef82b252db8ede62b62fb35b7619e11956d678d0b24217ebf493d16869e7",
+      "expected_sha256": "f5fbef82b252db8ede62b62fb35b7619e11956d678d0b24217ebf493d16869e7",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/msusd-metronome.js",
+      "status": 200,
+      "sha256": "6c4d0e2c9952ffa6c06603ed44c7008ee11b7575e5d86478082d4b76068661cc",
+      "expected_sha256": "6c4d0e2c9952ffa6c06603ed44c7008ee11b7575e5d86478082d4b76068661cc",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/ousd.js",
+      "status": 200,
+      "sha256": "9268c370ddc038ce1ea1a4260fa57e5bd50aa0d4114c1737dbf1c14c0d7aab60",
+      "expected_sha256": "9268c370ddc038ce1ea1a4260fa57e5bd50aa0d4114c1737dbf1c14c0d7aab60",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/saturn.js",
+      "status": 200,
+      "sha256": "b383dfee00e060fc3da0f9b559654d62b6748c7d79cd370fb130ab509e4a7f16",
+      "expected_sha256": "b383dfee00e060fc3da0f9b559654d62b6748c7d79cd370fb130ab509e4a7f16",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/scrvusd.js",
+      "status": 200,
+      "sha256": "07970398580289e965e088c649f505a33e34503a2b2ca80f76f1219ff1c963ff",
+      "expected_sha256": "07970398580289e965e088c649f505a33e34503a2b2ca80f76f1219ff1c963ff",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/sfrxusd.js",
+      "status": 200,
+      "sha256": "9d8ed6245f939335385d37ab806484e87c1a9894b1b328e9739dcaefd9beaaf4",
+      "expected_sha256": "9d8ed6245f939335385d37ab806484e87c1a9894b1b328e9739dcaefd9beaaf4",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/strc.js",
+      "status": 200,
+      "sha256": "7d933fbbd809b906c0cfeeffc87c5c3dfcf1b82574528001e1fe86b0c7d94afc",
+      "expected_sha256": "7d933fbbd809b906c0cfeeffc87c5c3dfcf1b82574528001e1fe86b0c7d94afc",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/strcx.js",
+      "status": 200,
+      "sha256": "0118f1390e496cafb94dc31f33dbe40ebd1bd1967aa4d781a6cd4d358a7d065f",
+      "expected_sha256": "0118f1390e496cafb94dc31f33dbe40ebd1bd1967aa4d781a6cd4d358a7d065f",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/syrupusdc.js",
+      "status": 200,
+      "sha256": "faecee2052aa4c46aa9422f4255d226c131bc48678933e3cba4d9aa5ec63d7c7",
+      "expected_sha256": "faecee2052aa4c46aa9422f4255d226c131bc48678933e3cba4d9aa5ec63d7c7",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/thusd.js",
+      "status": 200,
+      "sha256": "68a9b9a76ddee8e74434f0ff9bdefc27bed77624997a44f18b370825965d8535",
+      "expected_sha256": "68a9b9a76ddee8e74434f0ff9bdefc27bed77624997a44f18b370825965d8535",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/usdai.js",
+      "status": 200,
+      "sha256": "5dee02169424dd0acebbeb12755a176f7313ed9b307ce7a903b09b30b6be289c",
+      "expected_sha256": "5dee02169424dd0acebbeb12755a176f7313ed9b307ce7a903b09b30b6be289c",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/usdd.js",
+      "status": 200,
+      "sha256": "d0b9b45d55d5fba32f3381befff35db9ed16d0c7921d395b6fe22dee9b0ec767",
+      "expected_sha256": "d0b9b45d55d5fba32f3381befff35db9ed16d0c7921d395b6fe22dee9b0ec767",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/usdm.js",
+      "status": 200,
+      "sha256": "86ff9cb6809671795c41e0599aee0763e7418ef5dd93f7b6d576b2f851143b46",
+      "expected_sha256": "86ff9cb6809671795c41e0599aee0763e7418ef5dd93f7b6d576b2f851143b46",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/usg.js",
+      "status": 200,
+      "sha256": "4e2ecd1930101e27e16bbf54fe45d03c6d8cc2655ef2ceb09c877226d7273f6a",
+      "expected_sha256": "4e2ecd1930101e27e16bbf54fe45d03c6d8cc2655ef2ceb09c877226d7273f6a",
+      "matches": true
+    },
+    {
+      "path": "js/renderers/wsteth.js",
+      "status": 200,
+      "sha256": "982dfdfdf19c666455d1a6014370dc05d099d3ff31660ded52f7e192f1fe97e5",
+      "expected_sha256": "982dfdfdf19c666455d1a6014370dc05d099d3ff31660ded52f7e192f1fe97e5",
+      "matches": true
+    },
+    {
+      "path": "js/reusd-liquidity-ladder.js",
+      "status": 200,
+      "sha256": "3174f412ba0b8efa7d05593e839cf4fa146ae2498e59422d0cc0f5cb9f11ddaa",
+      "expected_sha256": "3174f412ba0b8efa7d05593e839cf4fa146ae2498e59422d0cc0f5cb9f11ddaa",
+      "matches": true
+    },
+    {
+      "path": "js/strategy-filing-evidence.js",
+      "status": 200,
+      "sha256": "3e9b129c60aef9ea60b902caaeff3b16f77a92277849e24977345c221334be11",
+      "expected_sha256": "3e9b129c60aef9ea60b902caaeff3b16f77a92277849e24977345c221334be11",
+      "matches": true
+    },
+    {
+      "path": "js/weekly-risk-reconciliation.js",
+      "status": 200,
+      "sha256": "f79afd79f9d704357226d98adc11bfcb52dd14a814adc6f962d5cbee6b8aece3",
+      "expected_sha256": "f79afd79f9d704357226d98adc11bfcb52dd14a814adc6f962d5cbee6b8aece3",
+      "matches": true
+    },
+    {
+      "path": "js/yuzu-exposure-evidence.js",
+      "status": 200,
+      "sha256": "b875d5b6e7bd556987a14e8dd69d941967fbb04feab4236ee82bd8300bba1c75",
+      "expected_sha256": "b875d5b6e7bd556987a14e8dd69d941967fbb04feab4236ee82bd8300bba1c75",
+      "matches": true
+    }
+  ],
+  "all_match": true
+}

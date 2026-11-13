@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "branch": "staging/eusd-preview-source-2026-11-13",
+  "base": "origin/main",
+  "allowed_paths": [
+    "public/previews/eusd/",
+    "reviews/eusd-dashboard-preview-2026-11-13/"
+  ],
+  "public_file_count": 51,
+  "accepted_manifest_sha256": "2d0a66c54d62fe7252ba26739c025d04f890e1074cc4c094c762b7983c46fccd",
+  "validation": "All51 source files hash-match the final accepted manifest; no candidate modification",
+  "deployment_performed": false,
+  "production_branch_or_config_changed": false,
+  "purpose": "Preserve isolated preview prefix for future staging source assembly; not full assessment/readiness",
+  "future_build_instruction": "Carry public/previews/eusd/ into subsequent staging snapshots; this source branch is not a full reconstruction of the live staging build.",
+  "inherited_whitespace": "One trailing space in frozen weekly-risk-reconciliation.js retained to preserve the accepted served hash; no source reformatting."
+}

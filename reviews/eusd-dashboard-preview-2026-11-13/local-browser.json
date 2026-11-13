@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-11-13T04:28:07.657640+00:00",
+  "cases": [
+    {
+      "width": 1440,
+      "document_width": 1440,
+      "sections": {
+        "peg": true,
+        "backing": true,
+        "liquidity": true,
+        "dependencies": true,
+        "contract": true,
+        "issuer": true
+      },
+      "cards": [
+        "Unmeasured",
+        "100.15% basket units",
+        "5,000,000 eUSD",
+        "5 basket receipts",
+        "Review pending",
+        "Selected facts"
+      ],
+      "errors": [],
+      "body_sha256": "50a9d5bccefbbd842a09f2093f2f512a6c71f268fab106321a017a44d44ba9ae"
+    },
+    {
+      "width": 390,
+      "document_width": 390,
+      "sections": {
+        "peg": true,
+        "backing": true,
+        "liquidity": true,
+        "dependencies": true,
+        "contract": true,
+        "issuer": true
+      },
+      "cards": [
+        "Unmeasured",
+        "100.15% basket units",
+        "5,000,000 eUSD",
+        "5 basket receipts",
+        "Review pending",
+        "Selected facts"
+      ],
+      "errors": [],
+      "body_sha256": "50a9d5bccefbbd842a09f2093f2f512a6c71f268fab106321a017a44d44ba9ae"
+    }
+  ],
+  "all_passed": true,
+  "coverage": "Reviewable shell with measuredbacking/selectedissuer; market/history/quote/security gaps explicitly unavailable, not a complete reviewed assessment."
+}

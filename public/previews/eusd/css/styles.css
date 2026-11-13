@@ -1,0 +1,694 @@
+/* Backing Monitor - Light Theme */
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Summary cards */
+.summary-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    transition: box-shadow 0.15s;
+}
+.summary-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.card-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+.card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0.25rem;
+}
+.card-value.positive { color: #16a34a; }
+.card-value.negative { color: #dc2626; }
+.card-value.warning { color: #d97706; }
+
+/* Asset index cards */
+.asset-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.asset-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.data-table th {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+.data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+}
+.data-table tr:hover td {
+    background: #f8fafc;
+}
+
+/* Percentage bar */
+.pct-bar-container {
+    width: 100%;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.pct-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+/* Tags */
+.tag {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    margin-left: 0.375rem;
+}
+.tag-amo { background: #fef2f2; color: #dc2626; }
+.tag-circular { background: #fef2f2; color: #dc2626; }
+.tag-cross-chain { background: #eff6ff; color: #2563eb; }
+.tag-idle { background: #f0fdf4; color: #16a34a; }
+.tag-htx { background: #fef2f2; color: #dc2626; }
+
+/* Risk flags */
+.risk-flag {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    border-left: 4px solid;
+}
+.risk-critical {
+    background: #fef2f2;
+    border-color: #dc2626;
+    color: #991b1b;
+}
+.risk-warning {
+    background: #fffbeb;
+    border-color: #d97706;
+    color: #92400e;
+}
+.risk-info {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+/* Section panels */
+.sfrxusd-panel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    scroll-margin-top: 3rem;
+}
+#chart-panel { scroll-margin-top: 3rem; }
+.panel-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+/* ====== 5-axis frame ====== */
+/* Each risk axis is a top-level section; the head carries a numbered marker,
+   the axis title, a one-line summary, and the computed rating chip. */
+.axis-section { margin-bottom: 2rem; scroll-margin-top: 3rem; }
+.axis-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+.axis-head:empty { display: none; }
+.axis-num {
+    flex: none;
+    width: 1.5rem; height: 1.5rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    align-self: center;
+    border-radius: 9999px;
+    background: #eef2ff; color: #4f46e5;
+    font-size: 0.8rem; font-weight: 700;
+}
+/* Multi-character axis numbers ("1-2" for a merged section) need a pill rather
+   than the fixed 1.5rem circle, which would clip them. Same colours, same height,
+   so a merged head sits in the sequence without looking like a different kind of
+   thing. */
+.axis-num.axis-num-span {
+    width: auto; min-width: 1.5rem;
+    padding: 0 0.4rem;
+    letter-spacing: 0.01em;
+}
+.axis-title { font-size: 1.2rem; font-weight: 700; color: #0f172a; }
+.axis-sub { font-size: 0.8rem; color: #64748b; align-self: center; }
+.axis-rating {
+    margin-left: auto; align-self: center;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 9999px;
+    font-size: 0.8rem; font-weight: 600;
+}
+.axis-rating.r-ok   { background: #f0fdf4; color: #15803d; }
+.axis-rating.r-warn { background: #fffbeb; color: #b45309; }
+.axis-rating.r-crit { background: #fef2f2; color: #b91c1c; }
+.axis-rating.r-na   { background: #f1f5f9; color: #64748b; }
+
+/* ⚠️ A CHIP WHOSE ONLY EXPLANATION IS A TOOLTIP MUST LOOK HOVERABLE.
+   On usdat the band reads "Healthy · 10/10 ⚠️" while the panel below reads
+   "Derived Score 5.5/10", and riskAnalyst's 4,031-character reasoning for the
+   gap is the chip's own title="" — attached to the exact number in dispute. The
+   ⚠️ is a real content-driven cue (it appears only when the producer's note
+   carries one), but the chip rendered with cursor:auto, so nothing told a reader
+   there was anything to hover. The explanation was reachable and undiscoverable.
+   Scoped to [title] so chips with no tooltip keep a normal cursor. */
+.axis-rating[title] { cursor: help; }
+
+/* Indexer-derived figures in a summary-card subtitle (e.g. 24h volume, which is
+   GeckoTerminal-sourced while the depth beside it is an on-chain quote). Dotted
+   underline + tooltip marks the weaker provenance without shouting. */
+.indexer-figure {
+    border-bottom: 1px dotted #cbd5e1;
+    white-space: nowrap;
+    cursor: help;
+}
+body.dark .indexer-figure { border-bottom-color: #475569; }
+
+/* Dependency / generic link cards */
+.dep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
+.dep-card {
+    display: block;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1rem 1.1rem;
+    transition: all 0.15s;
+}
+a.dep-card:hover { border-color: #3b82f6; box-shadow: 0 4px 12px rgba(59,130,246,0.1); transform: translateY(-1px); }
+.dep-card.dep-stub { border-style: dashed; background: #f8fafc; }
+.dep-card-name { font-weight: 700; color: #0f172a; font-size: 0.95rem; }
+.dep-card-metric { font-size: 0.8rem; color: #64748b; margin-top: 0.2rem; }
+.dep-card-link { font-size: 0.7rem; color: #6366f1; margin-top: 0.5rem; font-weight: 600; }
+.dep-card-note { font-size: 0.75rem; color: #475569; margin-top: 0.45rem; line-height: 1.35; }
+.dep-card-note-warn { color: #b45309; font-weight: 600; }
+.dep-block-note { font-size: 0.78rem; color: #64748b; margin-top: 0.75rem; line-height: 1.4; }
+.axis-clock { font-size: 0.68rem; color: #94a3b8; margin-left: auto; white-space: nowrap; }
+.axis-clock-old { color: #b45309; font-weight: 600; }
+.axis-clock-none { color: #cbd5e1; font-style: italic; }
+/* Origin chip — sits right of the axis clock (which carries margin-left:auto,
+   so both land at the right edge). Present ONLY when a per-axis overlay
+   contributed; a block that came whole from the asset feed shows nothing. */
+.axis-src { font-size: 0.68rem; color: #64748b; margin-left: 0.5rem; white-space: normal;
+            max-width: 100%; overflow-wrap: anywhere;
+            border: 1px solid #e2e8f0; border-radius: 0.25rem; padding: 0 0.3rem; }
+.axis-src-mixed { color: #b45309; border-color: #fcd34d; font-weight: 600; }
+/* ⚠️ AMBER, NOT RED, DELIBERATELY. Every chip state here is pipeline
+   provenance — which producer a figure came from — and none of them is an
+   assertion about the ASSET. Red is this dashboard's risk colour; spending it
+   on "a producer's file is not adopted yet" trains the eye to discount it
+   where it means a depeg. Same call as the Saturn admin callout. */
+.axis-src-refused { color: #b45309; border-color: #fbbf24; font-weight: 600; background: #fffbeb; }
+/* Same warning treatment, DIFFERENT meaning: the overlay is being RENDERED, past
+   its horizon, because nothing else can supply the axis. Sharing .axis-src-refused
+   made a kept overlay read as a refused one in the DOM — my own sweep misreported
+   reusde-re because of it, and a later reader would have too. */
+.axis-src-stale { color: #b45309; border-color: #fbbf24; font-weight: 600; background: #fffbeb; }
+body.dark .axis-src { color: #94a3b8; border-color: #334155; }
+body.dark .axis-src-mixed { color: #fbbf24; border-color: #78350f; }
+body.dark .axis-src-refused { color: #fbbf24; border-color: #78350f; background: transparent; }
+body.dark .axis-src-stale { color: #fbbf24; border-color: #78350f; background: transparent; }
+body.dark .axis-clock { color: #64748b; }
+body.dark .axis-clock-old { color: #fbbf24; }
+.axis-basis-note { flex: 0 0 100%; font-size: 0.78rem; color: #64748b; line-height: 1.45; margin-top: 0.15rem; max-width: 88ch; }
+
+body.dark .axis-head { border-color: #334155; }
+body.dark .axis-title { color: #f1f5f9; }
+body.dark .axis-num { background: #312e81; color: #c7d2fe; }
+body.dark .axis-rating.r-ok   { background: #052e16; color: #86efac; }
+body.dark .axis-rating.r-warn { background: #451a03; color: #fcd34d; }
+body.dark .axis-rating.r-crit { background: #450a0a; color: #fca5a5; }
+body.dark .axis-rating.r-na   { background: #1e293b; color: #94a3b8; }
+body.dark .dep-card { background: #1e293b; border-color: #334155; }
+body.dark .dep-card.dep-stub { background: #0f172a; }
+body.dark .dep-card-name { color: #f1f5f9; }
+body.dark .dep-card-note { color: #94a3b8; }
+body.dark .dep-card-note-warn { color: #fbbf24; }
+body.dark .dep-block-note { color: #94a3b8; }
+body.dark .axis-basis-note { color: #94a3b8; }
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    height: 260px;
+}
+
+/* Loading spinner */
+.loading-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* Header */
+.page-header {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+}
+
+/* ====== Dark Mode ====== */
+body.dark {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+body.dark .page-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+body.dark .page-header a { color: #e2e8f0; }
+body.dark .summary-card,
+body.dark .panel {
+    background: #1e293b;
+    border-color: #334155;
+}
+body.dark .card-label { color: #94a3b8; }
+body.dark .card-value { color: #f1f5f9; }
+body.dark .panel-title { color: #f1f5f9; }
+body.dark .asset-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+body.dark .asset-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+body.dark .data-table th {
+    color: #94a3b8;
+    border-color: #334155;
+}
+body.dark .data-table td {
+    border-color: #1e293b;
+}
+body.dark .data-table tr:hover td {
+    background: #0f172a;
+}
+body.dark .pct-bar-container { background: #334155; }
+body.dark .risk-critical { background: #450a0a; color: #fca5a5; }
+body.dark .risk-warning { background: #451a03; color: #fcd34d; }
+body.dark .risk-info { background: #172554; color: #93c5fd; }
+body.dark footer { color: #475569; }
+
+/* R15: mobile table overflow + nav fade ---------------------------- */
+
+/* Wrap data tables so they can scroll horizontally inside their panel
+   at narrow viewports. Right-edge mask telegraphs "more to scroll." */
+.data-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: linear-gradient(to right, black 0, black calc(100% - 18px), transparent 100%);
+            mask-image: linear-gradient(to right, black 0, black calc(100% - 18px), transparent 100%);
+}
+
+/* At md: and up tables fit; drop the fade so it doesn't suggest a
+   scroll affordance that isn't there. overflow-x: auto stays — no-op
+   when content fits, defensive otherwise. */
+@media (min-width: 768px) {
+    .data-table-scroll {
+        -webkit-mask-image: none;
+                mask-image: none;
+    }
+}
+
+/* Sticky anchor nav: same fade so the truncated link list is visibly
+   scrollable. Targets the inner overflow-x-auto div added in 6af51d9. */
+#asset-anchor-nav .overflow-x-auto {
+    -webkit-mask-image: linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%);
+            mask-image: linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%);
+}
+
+/* apxUSD's 9 links fit at sm:; apyUSD's 11 may still scroll on phablets
+   up to ~720px but the fade is harmless when content fits. */
+@media (min-width: 640px) {
+    #asset-anchor-nav .overflow-x-auto {
+        -webkit-mask-image: none;
+                mask-image: none;
+    }
+}
+
+/* First-loss attachment point (tranched assets). Amber when below the norm the
+   report invokes — a cushion thinner than convention is a finding, not decor. */
+.attachment-point { flex-basis: 100%; margin-top: 0.5rem; padding: 0.5rem 0.65rem;
+    border-left: 3px solid #cbd5e1; background: #f8fafc; border-radius: 0.25rem; }
+.attachment-point-warn { border-left-color: #b45309; background: #fffbeb; }
+.ap-label { font-size: 0.78rem; color: #475569; margin-right: 0.5rem; }
+.ap-value { font-size: 1rem; font-weight: 700; color: #0f172a; margin-right: 0.4rem; }
+.ap-norm { font-size: 0.75rem; color: #b45309; font-weight: 600; }
+.ap-note { font-size: 0.72rem; color: #64748b; margin-top: 0.3rem; line-height: 1.45; }
+.ap-note-key { font-weight: 600; color: #475569; }
+.ap-note-direction { color: #92400e; }
+.ap-note-asof { color: #94a3b8; }
+body.dark .attachment-point { background: #0f172a; border-left-color: #334155; }
+body.dark .attachment-point-warn { background: #1c1917; border-left-color: #b45309; }
+body.dark .ap-value { color: #f1f5f9; }
+body.dark .ap-label { color: #cbd5e1; }
+body.dark .ap-note { color: #94a3b8; }
+body.dark .ap-note-key { color: #cbd5e1; }
+body.dark .ap-note-direction { color: #fbbf24; }
+/* Withdrawn attachment point. Deliberately NOT amber: the breach it used to
+   report was true of the retired reading, not a current condition, and amber is
+   the part a reader acts on. Slate/neutral says "this is a record, not a signal". */
+.attachment-point-withdrawn { border-left-color: #64748b; background: #f8fafc; }
+.ap-withdrawn-flag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+    text-transform: uppercase; color: #475569; background: #e2e8f0;
+    padding: 0.1rem 0.4rem; border-radius: 0.25rem; }
+.ap-was s { color: #94a3b8; }
+.ap-withdrawn-reason { color: #475569; }
+.ap-hist { margin-top: 0.45rem; padding-top: 0.35rem; border-top: 1px dashed #cbd5e1; }
+.ap-hist-head { font-weight: 600; color: #94a3b8; text-transform: uppercase;
+    letter-spacing: 0.03em; font-size: 0.66rem; }
+body.dark .attachment-point-withdrawn { background: #0f172a; border-left-color: #475569; }
+body.dark .ap-withdrawn-flag { color: #cbd5e1; background: #1e293b; }
+body.dark .ap-withdrawn-reason { color: #cbd5e1; }
+body.dark .ap-hist { border-top-color: #334155; }
+
+/* NAV write path — who writes the number the discount is measured against.
+   Amber, and the LIMIT renders at the same weight as the claim: a caveat behind
+   a tooltip is unreachable on touch, and this claim is stronger than its
+   evidence (selector presence, no disassembly). */
+.nav-write-path { margin-top: 0.5rem; padding: 0.45rem 0.6rem; border-left: 3px solid #b45309;
+    background: #fffbeb; border-radius: 0.25rem; max-width: 78ch; }
+.nwp-head { font-size: 0.7rem; font-weight: 700; color: #b45309; text-transform: uppercase;
+    letter-spacing: 0.02em; }
+.nwp-claim { font-size: 0.72rem; color: #78350f; line-height: 1.45; margin-top: 0.2rem; }
+.nwp-basis { font-size: 0.68rem; color: #92400e; line-height: 1.4; margin-top: 0.3rem; }
+.nwp-basis-key { font-weight: 700; }
+.nwp-basis-none { color: #b91c1c; font-weight: 600; }
+body.dark .nav-write-path { background: #1c1917; border-left-color: #b45309; }
+body.dark .nwp-claim { color: #fde68a; }
+body.dark .nwp-basis { color: #fbbf24; }
+body.dark .nwp-basis-none { color: #fca5a5; }
+
+/* Issuer-reported reserves — protocol-wide, NOT a coverage figure. Neutral
+   slate rather than amber: the figure is not itself adverse, and the thing that
+   must be read is the SCOPE line, which earns the only warning colour here. */
+.issuer-reserves { flex-basis: 100%; margin-top: 0.6rem; padding: 0.6rem 0.7rem;
+    border: 1px solid #e2e8f0; border-radius: 0.35rem; background: #f8fafc; }
+.irr-head { font-size: 0.7rem; font-weight: 700; color: #475569; text-transform: uppercase;
+    letter-spacing: 0.02em; }
+.irr-total { font-size: 1.35rem; font-weight: 700; color: #0f172a; font-family: ui-monospace, monospace;
+    margin-top: 0.1rem; }
+.irr-scope { font-size: 0.72rem; color: #b45309; line-height: 1.45; margin-top: 0.25rem; max-width: 82ch; }
+.irr-tablewrap { overflow-x: auto; margin-top: 0.5rem; }
+.irr-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
+.irr-table th { text-align: left; color: #64748b; font-weight: 600; padding: 0.2rem 0.5rem 0.2rem 0;
+    border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+.irr-table td { padding: 0.22rem 0.5rem 0.22rem 0; color: #334155; border-bottom: 1px solid #f1f5f9;
+    white-space: nowrap; }
+.irr-table .irr-num { text-align: right; font-family: ui-monospace, monospace; }
+.irr-dominant td { color: #b45309; font-weight: 700; }
+.irr-note { font-size: 0.68rem; color: #64748b; line-height: 1.4; margin-top: 0.35rem; max-width: 82ch; }
+.irr-key { font-weight: 700; color: #475569; }
+body.dark .issuer-reserves { background: #0f172a; border-color: #334155; }
+body.dark .irr-total { color: #f1f5f9; }
+body.dark .irr-head, body.dark .irr-key { color: #cbd5e1; }
+body.dark .irr-table td { color: #cbd5e1; border-bottom-color: #1e293b; }
+body.dark .irr-table th { color: #94a3b8; border-bottom-color: #334155; }
+body.dark .irr-dominant td { color: #fbbf24; }
+body.dark .irr-note { color: #94a3b8; }
+body.dark .irr-scope { color: #fbbf24; }
+
+/* Claim size — supply and claim value, each carrying its own scope inline.
+   The scope is not a footnote: "supply" without "Ethereum only" is a different
+   claim from the one the feed makes. */
+.claim-size { flex-basis: 100%; margin-top: 0.55rem; display: flex; flex-wrap: wrap; gap: 1.6rem; }
+.cs-item { display: flex; flex-direction: column; }
+.cs-key { font-size: 0.68rem; color: #64748b; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.02em; }
+.cs-val { font-size: 1.15rem; font-weight: 700; color: #0f172a; font-family: ui-monospace, monospace; }
+.cs-scope { font-size: 0.66rem; color: #94a3b8; line-height: 1.35; max-width: 34ch; }
+.cs-basis { flex-basis: 100%; font-size: 0.68rem; color: #64748b; line-height: 1.4; max-width: 82ch; }
+body.dark .cs-val { color: #f1f5f9; }
+body.dark .cs-key { color: #cbd5e1; }
+body.dark .cs-scope, body.dark .cs-basis { color: #94a3b8; }
+
+/* Dependency card source line + the overlay-replacement notice. */
+.dep-card-source { font-size: 0.66rem; color: #94a3b8; margin-top: 0.15rem; font-style: italic; }
+.dep-replaced { margin-top: 0.6rem; padding: 0.5rem 0.6rem; border-left: 3px solid #b45309;
+    background: #fffbeb; border-radius: 0.25rem; font-size: 0.7rem; color: #92400e;
+    line-height: 1.45; max-width: 88ch; }
+body.dark .dep-card-source { color: #64748b; }
+body.dark .dep-replaced { background: #1c1917; color: #fbbf24; }
+
+/* Axis 5 — authority walk. Delay cells carry three states, not two: a real
+   duration, an explicit none, and NOT MEASURED. Their coverage audit exists
+   because `unresolved` was read as "no timelock". */
+.topology-walk .tw-headline { font-size: 0.92rem; font-weight: 700; color: #b45309; line-height: 1.45;
+    margin-top: 0.2rem; max-width: 80ch; }
+.tw-sub { font-size: 0.68rem; color: #64748b; line-height: 1.4; margin-top: 0.25rem; max-width: 90ch; }
+.topology-walk .shared-authority { white-space: normal; overflow-wrap: anywhere; }
+.tw-tablewrap { overflow-x: auto; margin-top: 0.6rem; }
+.tw-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
+.tw-table th { text-align: left; color: #64748b; font-weight: 600; padding: 0.2rem 0.7rem 0.2rem 0;
+    border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+.tw-table td { padding: 0.24rem 0.7rem 0.24rem 0; color: #334155; border-bottom: 1px solid #f1f5f9;
+    white-space: nowrap; font-family: ui-monospace, monospace; }
+.tw-ok { color: #15803d; font-weight: 700; }
+.tw-bad { color: #b91c1c; font-weight: 700; }
+.tw-unknown { color: #b45309; font-weight: 700; }
+.tw-flagged { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.tw-flag { font-size: 0.7rem; color: #92400e; background: #fffbeb; border-left: 3px solid #b45309;
+    padding: 0.4rem 0.55rem; border-radius: 0.25rem; line-height: 1.45; max-width: 88ch; }
+.tw-unresolved { margin-top: 0.7rem; padding: 0.55rem 0.65rem; border: 1px solid #fcd34d;
+    background: #fffbeb; border-radius: 0.3rem; }
+.tw-unresolved-head { font-size: 0.72rem; font-weight: 700; color: #b45309; }
+.tw-unresolved ul { margin: 0.35rem 0 0 1.1rem; padding: 0; }
+.tw-unresolved li { font-size: 0.68rem; color: #78350f; line-height: 1.5; margin-bottom: 0.35rem; }
+.tw-details { margin-top: 0.6rem; }
+.tw-details summary { font-size: 0.7rem; color: #64748b; cursor: pointer; }
+.tw-pre { font-size: 0.64rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 0.25rem; padding: 0.5rem; overflow-x: auto; margin-top: 0.4rem;
+    white-space: pre-wrap; line-height: 1.4; }
+body.dark .topology-walk .tw-headline { color: #fbbf24; }
+body.dark .tw-table td { color: #cbd5e1; border-bottom-color: #1e293b; }
+body.dark .tw-flag, body.dark .tw-unresolved { background: #1c1917; }
+body.dark .tw-unresolved li { color: #fde68a; }
+body.dark .tw-pre { background: #0f172a; border-color: #334155; color: #94a3b8; }
+
+/* Issuer axis summary — producer-authored prose. Never composed in the renderer. */
+.issuer-summary { font-size: 0.82rem; color: #334155; line-height: 1.6; margin-bottom: 0.75rem;
+    max-width: 86ch; }
+.issuer-summary-src { font-size: 0.66rem; color: #94a3b8; margin-top: 0.35rem; }
+.issuer-summary-src-none { color: #b45309; font-weight: 600; }
+body.dark .issuer-summary { color: #cbd5e1; }
+body.dark .issuer-summary-src { color: #64748b; }
+
+/* Issuer prose, collapsed when the scannable facts are present. */
+.issuer-summary-details { margin-bottom: 0.75rem; }
+.issuer-summary-toggle { font-size: 0.76rem; font-weight: 600; color: #2563eb; cursor: pointer;
+    list-style: none; }
+.issuer-summary-toggle::-webkit-details-marker { display: none; }
+.issuer-summary-toggle::before { content: '▸ '; color: #94a3b8; }
+details[open] > .issuer-summary-toggle::before { content: '▾ '; }
+.issuer-summary-details .issuer-summary { margin-top: 0.5rem; }
+body.dark .issuer-summary-toggle { color: #60a5fa; }
+
+/* Per-item expander inside the "not established" list. */
+.tw-more { display: inline; }
+.tw-more summary { display: inline; cursor: pointer; color: #2563eb; font-size: 0.66rem; }
+.tw-more[open] summary { display: block; margin-bottom: 0.2rem; }
+.tw-more[open] { display: block; margin-top: 0.2rem; color: #78350f; }
+body.dark .tw-more summary { color: #60a5fa; }
+
+/* Axis 5 compaction: provenance glyph, and a collapsible not-established block
+   whose summary line still names every unmeasured scope. */
+.tw-meta { color: #94a3b8; cursor: help; font-size: 0.72rem; }
+details.tw-unresolved > summary.tw-unresolved-head { cursor: pointer; list-style: none; }
+details.tw-unresolved > summary::-webkit-details-marker { display: none; }
+details.tw-unresolved > summary.tw-unresolved-head::after { content: ' ▸'; color: #b45309; }
+details.tw-unresolved[open] > summary.tw-unresolved-head::after { content: ' ▾'; }
+
+/* "no floor" — a configured delay that is not an enforced one. */
+.tw-nofloor { color: #b45309; font-weight: 700; cursor: help; }
+body.dark .tw-nofloor { color: #fbbf24; }
+
+/* Issuer card: producer's own first sentence as the lead; detail collapses. */
+.issuer-lead { font-size: 0.88rem; font-weight: 600; color: #334155; line-height: 1.5;
+    margin-bottom: 0.4rem; max-width: 86ch; }
+.issuer-facts { margin-bottom: 0.75rem; }
+.issuer-facts-toggle { font-size: 0.76rem; font-weight: 600; color: #2563eb; cursor: pointer;
+    list-style: none; }
+.issuer-facts-toggle::-webkit-details-marker { display: none; }
+.issuer-facts-toggle::before { content: '▸ '; color: #94a3b8; }
+details[open] > .issuer-facts-toggle::before { content: '▾ '; }
+.issuer-facts ul { margin-top: 0.5rem; }
+body.dark .issuer-lead { color: #e2e8f0; }
+body.dark .issuer-facts-toggle { color: #60a5fa; }
+
+.issuer-meta { font-size: 0.7rem; color: #94a3b8; cursor: help; margin-bottom: 0.5rem; }
+
+/* Axis 5 code half — riskAnalyst's audits, collapsed beside the authority walk. */
+.tw-code { margin-top: 0.6rem; }
+.tw-code-toggle { font-size: 0.72rem; font-weight: 600; color: #2563eb; cursor: pointer; list-style: none; }
+.tw-code-toggle::-webkit-details-marker { display: none; }
+.tw-code-toggle::before { content: '▸ '; color: #94a3b8; }
+details[open] > .tw-code-toggle::before { content: '▾ '; }
+.tw-code-list { margin: 0.4rem 0 0 1.1rem; padding: 0; }
+.tw-code-list li { font-size: 0.7rem; color: #475569; line-height: 1.5; margin-bottom: 0.3rem; }
+body.dark .tw-code-toggle { color: #60a5fa; }
+body.dark .tw-code-list li { color: #cbd5e1; }
+
+/* Backing row: when the 2-column breakdown panel is absent (no breakdown data),
+   the sidebar takes the whole row and the flags lay out in columns rather than
+   one short sentence stretched across a 1440px viewport. */
+@media (min-width: 1024px) {
+  .backing-sidebar-full { grid-column: 1 / -1; }
+  .risk-flags-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+}
+@media (min-width: 1400px) {
+  .risk-flags-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Depth scope — which leg was measured, which was excluded, which one binds. */
+.depth-scope { min-width: 0; flex-basis: 100%; margin-top: 0.5rem; padding: 0.45rem 0.6rem;
+    border-left: 3px solid #cbd5e1; background: #f8fafc; border-radius: 0.25rem; max-width: 92ch; }
+.ds-line { font-size: 0.7rem; color: #475569; line-height: 1.45; margin-bottom: 0.2rem; }
+.ds-key { font-weight: 700; color: #334155; }
+.ds-warn { color: #b45309; font-weight: 600; }
+body.dark .depth-scope { background: #0f172a; border-left-color: #334155; }
+body.dark .ds-line { color: #cbd5e1; }
+body.dark .ds-key { color: #e2e8f0; }
+body.dark .ds-warn { color: #fbbf24; }
+
+/* Shared admin authority across sibling assets. Structural rows only — the
+   conclusion belongs to the editorial producer, not to this renderer. */
+.shared-authority { margin-top: 0.65rem; padding: 0.55rem 0.65rem; border: 1px solid #fbbf24;
+    background: #fffbeb; border-radius: 0.3rem; }
+.sa-head { font-size: 0.76rem; font-weight: 700; color: #b45309; }
+.sa-head a { color: #b45309; text-decoration: underline; }
+.sa-sub { font-size: 0.68rem; color: #92400e; margin-top: 0.15rem; }
+.sa-tablewrap { overflow-x: auto; margin-top: 0.4rem; }
+.sa-table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+.sa-table th { text-align: left; color: #92400e; font-weight: 600; padding: 0.15rem 0.6rem 0.15rem 0;
+    border-bottom: 1px solid #fcd34d; white-space: nowrap; }
+.sa-table td { padding: 0.2rem 0.6rem 0.2rem 0; color: #78350f; border-bottom: 1px solid #fef3c7;
+    white-space: nowrap; }
+.sa-addr { font-family: ui-monospace, monospace; cursor: help; }
+body.dark .shared-authority { background: #1c1917; border-color: #78350f; }
+body.dark .sa-head, body.dark .sa-head a { color: #fbbf24; }
+body.dark .sa-sub, body.dark .sa-table td { color: #fde68a; }
+
+/* Walk review — provenance and how far the check went. Describes the
+   MEASUREMENT, never the asset. On the face, because the finding is. */
+.walk-review { margin-top: 0.55rem; padding: 0.5rem 0.62rem; border-left: 3px solid #b45309;
+    background: #fffbeb; border-radius: 0.25rem; max-width: 92ch; }
+.wr-head { font-size: 0.73rem; font-weight: 700; color: #b45309; }
+.wr-line { font-size: 0.69rem; color: #78350f; line-height: 1.45; margin-top: 0.25rem; }
+.wr-key { font-weight: 700; }
+body.dark .walk-review { background: #1c1917; }
+body.dark .wr-head { color: #fbbf24; }
+body.dark .wr-line { color: #fde68a; }
+
+/* Junior capital beside the attachment point — a sibling figure that is NOT the
+   ratio's denominator. The disclaimer is part of the label, not a footnote. */
+.ap-junior { margin-top: 0.3rem; }
+.ap-junior-warn { color: #b91c1c; font-weight: 700; }
+.ap-junior-basis { color: #94a3b8; cursor: help; }
+body.dark .ap-junior-warn { color: #fca5a5; }
+.ap-series { color: #78350f; }
+body.dark .ap-series { color: #fde68a; }
+
+/* Score rationale — collapsed but reachable. A hover tooltip is not a place a
+   2,000-character argument can live: invisible on touch, truncated by browsers. */
+.score-basis { margin-top: 0.2rem; }
+.score-basis-toggle { font-size: 0.72rem; font-weight: 600; color: #2563eb; cursor: pointer;
+    list-style: none; }
+.score-basis-toggle::-webkit-details-marker { display: none; }
+.score-basis-toggle::before { content: '▸ '; color: #94a3b8; }
+details[open] > .score-basis-toggle::before { content: '▾ '; }
+.score-basis-body { font-size: 0.7rem; color: #475569; line-height: 1.5; margin-top: 0.3rem;
+    max-width: 92ch; }
+body.dark .score-basis-toggle { color: #60a5fa; }
+body.dark .score-basis-body { color: #cbd5e1; }
+
+/* Score MOVE — the typed `*_score_change` block, rendered at the top of the
+   authored-argument <details>. ⚠️ Not on the axis face: from/to are authored
+   numbers and belong nowhere near a measured band (same reason the authored
+   score came off the face). */
+.score-change { border-left: 2px solid #cbd5e1; padding-left: 0.5rem; margin-bottom: 0.45rem; }
+.sc-move { font-size: 0.74rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    color: #334155; }
+.sc-move.sc-down { color: #b45309; }
+.sc-move.sc-up { color: #15803d; }
+.sc-meta { font-size: 0.66rem; color: #64748b; margin-left: 0.4rem; text-transform: lowercase; }
+.sc-basis { font-size: 0.7rem; color: #475569; line-height: 1.5; margin-top: 0.2rem; }
+.sc-nlb { font-size: 0.68rem; color: #78350f; line-height: 1.5; margin-top: 0.25rem; }
+.sc-warn { font-size: 0.68rem; color: #b91c1c; font-weight: 600; line-height: 1.5;
+    margin-top: 0.2rem; }
+body.dark .score-change { border-left-color: #475569; }
+body.dark .sc-move { color: #e2e8f0; }
+body.dark .sc-move.sc-down { color: #fbbf24; }
+body.dark .sc-move.sc-up { color: #4ade80; }
+body.dark .sc-meta { color: #94a3b8; }
+body.dark .sc-basis { color: #cbd5e1; }
+body.dark .sc-nlb { color: #fde68a; }
+body.dark .sc-warn { color: #fca5a5; }
+
+/* Score-move addenda: the condition for the next move, and the names of fields
+   the producer published that this renderer does not read. ⚠️ The unread marker
+   names the KEY only — see _scoreChangeHtml for why the value stays off. */
+.sc-trigger { font-size: 0.68rem; color: #0f766e; line-height: 1.5; margin-top: 0.25rem; }
+.sc-unread { font-size: 0.66rem; color: #92400e; line-height: 1.45; margin-top: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; cursor: help; }
+body.dark .sc-trigger { color: #5eead4; }
+body.dark .sc-unread { color: #fcd34d; }
+.sc-caveat { font-size: 0.68rem; color: #9a3412; line-height: 1.5; margin-top: 0.25rem; }
+body.dark .sc-caveat { color: #fdba74; }
+
+/* One authority behind several Safe addresses. ⚠️ Marks the ADDRESS, because
+   that is where a reader forms the belief that two controls exist. */
+.shared-authority { font-size: 0.64rem; color: #9a3412; cursor: help; white-space: nowrap; }
+body.dark .shared-authority { color: #fdba74; }
