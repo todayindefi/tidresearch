@@ -1,0 +1,7 @@
+{
+  "baseline": "6af692100afd0adfda6b365e",
+  "unchanged_dist_files_outside_prefix": 213,
+  "static_prefix_files": 50,
+  "only_route_change": "\n# Isolated eUSD staging evidence feed; keep out of production configuration.\n[[redirects]]\n  from = \"/previews/eusd/data/*\"\n  to = \"https://raw.githubusercontent.com/todayindefi/backing-monitor/refs/heads/staging/eusd-canonical/data/:splat\"\n  status = 200\n  force = true\n",
+  "no_root_production_config_change": true
+}

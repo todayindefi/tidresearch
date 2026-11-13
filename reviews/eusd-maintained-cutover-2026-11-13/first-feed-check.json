@@ -1,0 +1,120 @@
+{
+  "checked_at": "2026-11-13T05:11:39.803748+00:00",
+  "generation": "58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba",
+  "source_clock": {
+    "block_hash": "0x690144abe85631c7a7ef5198b8f4f7e7168b43878aef66810997b00066e3b54b",
+    "block_number": 26403702,
+    "block_timestamp": "2026-11-13T04:38:47+00:00",
+    "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+    "observed_at": "2026-11-13T04:56:11.032836+00:00",
+    "pinning": "one_block_number_with_end_hash_check"
+  },
+  "last_attempt": {
+    "attempt_at": "2026-11-13T04:56:11.038615+00:00",
+    "quote_observation_present": false,
+    "source_clock": {
+      "block_hash": "0x690144abe85631c7a7ef5198b8f4f7e7168b43878aef66810997b00066e3b54b",
+      "block_number": 26403702,
+      "block_timestamp": "2026-11-13T04:38:47+00:00",
+      "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+      "observed_at": "2026-11-13T04:56:11.032836+00:00",
+      "pinning": "one_block_number_with_end_hash_check"
+    },
+    "status": "ok_with_explicit_gaps"
+  },
+  "schedule_installed": false,
+  "runtime": {
+    "dynamic_seconds": 7200,
+    "last_collection_completed_at": "2026-11-13T04:56:11.033999+00:00",
+    "owner": "BackingMonitor",
+    "schedule_installed": false,
+    "scope": "Reserve Ethereum eUSD only; documentary/Security observations retain separate clocks"
+  },
+  "all_four_json_hashes_verified": true,
+  "requests": [
+    {
+      "path": "current.json?attempt=1794546699178",
+      "status": 200,
+      "sha256": "54cf110138e1ca3fc06b23f35f15904efbae4cb74644d6570014c095673108ae",
+      "bytes": 1201,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "W/\"c0fcffe89ecc1afa0b26d47b7001db30d3b1b464f904df94bb68b9314b1dc9b3\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    },
+    {
+      "path": "generations/58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba/manifest.json",
+      "status": 200,
+      "sha256": "58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba",
+      "bytes": 990,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "\"afc7a14b8fcb173c29822b4fa6f6ce0816bdfe4ae1fd035fc8e91dba78feb922\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    },
+    {
+      "path": "generations/58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba/assets.json",
+      "status": 200,
+      "sha256": "79ad1388dd3e357f6dfd667abc8681b77c68edd1b29d154c80fe1dec8794a4e6",
+      "bytes": 289,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "\"179c1346aaa655f88107897b8a1808c25ab761f29900b0bb51ce8530f481a92b\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    },
+    {
+      "path": "generations/58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba/eusd_backing.json",
+      "status": 200,
+      "sha256": "edaab1c4910bc7455bc016013f15df5a84b71e221fd1c884069eabe38c24c968",
+      "bytes": 48888,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "W/\"4f8206a055f02b328c543410f98a8a7fc8f249abde2eb92bc9e7b837b0975c29\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    },
+    {
+      "path": "generations/58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba/eusd_peg_history.json",
+      "status": 200,
+      "sha256": "f66b42b6946eca994a4ad9efdbc12f821ddebf55039610a8e5ea7e441a77b869",
+      "bytes": 123,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "\"2ef13b270531ea14ebd9ef109e146b5940a168f26d7c40d6879e70fc4c76438f\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    },
+    {
+      "path": "generations/58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba/eusd_product.json",
+      "status": 200,
+      "sha256": "ce9539ecc7a02eaa2899d1521a48dc9bc0ecd4e538a6e1fa00ae968f8aae9e18",
+      "bytes": 14292,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "max-age=300",
+        "Age": "0",
+        "ETag": "W/\"79cfa384ff7c41466a074d6952e26728c2e4eaa7a89997a98625551b4c7c857b\"",
+        "Last-Modified": null,
+        "Cache-Status": "\"Netlify Edge\"; fwd=miss; fwd-status=200; stored"
+      }
+    }
+  ]
+}

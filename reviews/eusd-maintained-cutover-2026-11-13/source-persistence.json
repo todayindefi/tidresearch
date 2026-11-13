@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "branch": "staging/eusd-preview-source-2026-11-13",
+  "parent_commit": "dd70dc9c8b84c9cccf34a6707ffec41cbf0a64f3",
+  "allowed_paths": [
+    "public/previews/eusd/",
+    "reviews/eusd-maintained-cutover-2026-11-13/"
+  ],
+  "static_file_count": 50,
+  "manifest_sha256": "90f12f6491d0981edcad68f1a45646584bffd197730549438f72a6753db121b5",
+  "staging_route_overlay": "reviews/eusd-maintained-cutover-2026-11-13/staging-route-snippet.toml",
+  "future_staging_requirement": "Apply recorded overlay when assembling staging config; current public prefix intentionally has no static data fallback. Never apply overlay to production.",
+  "validation": "Exact accepted static SHA parity; served cutover and second generation checked in acceptance.json",
+  "no_new_deploy_for_source_persistence": true
+}

@@ -1,0 +1,21 @@
+{
+  "before_deploy": "6af692100afd0adfda6b365e",
+  "after_deploy": "6af69bdb7cb4c805d82b8855",
+  "outside_prefix_existing_files": 216,
+  "outside_prefix_unchanged_files": 215,
+  "outside_prefix_changed_files": [
+    "/netlify.toml"
+  ],
+  "configuration_change": "Exact isolated route appended to staging input config; preexisting input bytes retained. Netlify stores processed config metadata with its own hash.",
+  "staging_input_config_sha256": "02c4778a15183397a19d6686d8c053093106a1c46e4d25dfa45748a5e3053d13",
+  "netlify_processed_config_sha1": "4614d95636dc1a7e94c0b42532dfc445439ec57a",
+  "root_global_netlify_toml_unchanged": true,
+  "new_prefix_file_count": 50,
+  "removed_legacy_prefix_files": [
+    "/previews/eusd/data/assets.json",
+    "/previews/eusd/data/eusd_backing.json"
+  ],
+  "existing_report_and_dashboard_routes_preserved": true,
+  "production_before": "6af4712bb4a3f7dff8a2552d",
+  "production_after": "6af4712bb4a3f7dff8a2552d"
+}

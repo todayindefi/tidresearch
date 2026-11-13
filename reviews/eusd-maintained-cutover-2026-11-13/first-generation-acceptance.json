@@ -1,0 +1,27 @@
+{
+  "status": "first_generation_served_verified_second_commit_pending",
+  "deploy_id": "6af69bdb7cb4c805d82b8855",
+  "url": "https://staging.tidresearch.com/previews/eusd/?asset=eusd",
+  "static_manifest_sha256": "90f12f6491d0981edcad68f1a45646584bffd197730549438f72a6753db121b5",
+  "first_generation": "58ba68c2af76dbc3d31af974ce445f4b2590d4bcd6d914779fa56b1c5b6fc8ba",
+  "source_clock": {
+    "block_hash": "0x690144abe85631c7a7ef5198b8f4f7e7168b43878aef66810997b00066e3b54b",
+    "block_number": 26403702,
+    "block_timestamp": "2026-11-13T04:38:47+00:00",
+    "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+    "observed_at": "2026-11-13T04:56:11.032836+00:00",
+    "pinning": "one_block_number_with_end_hash_check"
+  },
+  "schedule_installed": false,
+  "checks": {
+    "static_files_verified": 50,
+    "generation_files_verified": 4,
+    "local_browser_cases_passed": 6,
+    "served_browser_cases_passed": 6,
+    "outside_prefix_changes": [
+      "netlify.toml isolated authorized rewrite only"
+    ],
+    "production_unchanged": true
+  },
+  "second_producer_commit_no_redeploy_proof": "pending BM publication"
+}

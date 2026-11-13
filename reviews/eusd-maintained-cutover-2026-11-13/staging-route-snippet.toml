@@ -1,0 +1,7 @@
+
+# Isolated eUSD staging evidence feed; keep out of production configuration.
+[[redirects]]
+  from = "/previews/eusd/data/*"
+  to = "https://raw.githubusercontent.com/todayindefi/backing-monitor/refs/heads/staging/eusd-canonical/data/:splat"
+  status = 200
+  force = true

@@ -1,0 +1,212 @@
+{
+  "version": "eusd-maintained-staging-v2-2026-11-13",
+  "root": "/tmp/eusd-dashboard-maintained-v2-20261113",
+  "prefix": "/previews/eusd/",
+  "data_route": "/previews/eusd/data/*",
+  "upstream": "https://raw.githubusercontent.com/todayindefi/backing-monitor/refs/heads/staging/eusd-canonical/data/:splat",
+  "source_branch": "staging/eusd-product-2026-11-13",
+  "source_commit": "35de903d8a",
+  "static_data_fallback": false,
+  "files": {
+    "css/dashboard-containment.css": {
+      "sha256": "c5694caa253a519f28335e487844ab0839da62f389dde5dc97a2edd2dd3ed7d3",
+      "bytes": 582
+    },
+    "css/fxsave.css": {
+      "sha256": "b03e43e3cf600824202bf6f3c7326c905e9c4189a46175e663767fb824f05c22",
+      "bytes": 2930
+    },
+    "css/fxusd.css": {
+      "sha256": "05da2ec12505df13fbe608ec7e7d2815ce1ac6bf35d3b8250bb5c1917b44d1d3",
+      "bytes": 633
+    },
+    "css/issuer-weekly.css": {
+      "sha256": "493cf4a390581746c6f24e9f931d2f4e011e6f7f2f2a759607fca121860c958e",
+      "bytes": 515
+    },
+    "css/portfolio-refresh.css": {
+      "sha256": "41a8ab4963df5157c33de2ec0fda2fcdc92f439f765fff6204c41a924ce7fae6",
+      "bytes": 626
+    },
+    "css/re-protocol-metrics.css": {
+      "sha256": "79eaf6ac6b5cd28c175cb4f5718486376f4fc874db14d2a5aa01d164c44f5f50",
+      "bytes": 3096
+    },
+    "css/reusd-liquidity-ladder.css": {
+      "sha256": "11edc7453dcc3f867a0612d05ddde16c1407458fd67fd70af7188aea1eaacb11",
+      "bytes": 2663
+    },
+    "css/styles.css": {
+      "sha256": "68456c4817e9d6a5ec939d37f6621eb1ed02673b7266cd09d050de5897defaec",
+      "bytes": 31947
+    },
+    "index.html": {
+      "sha256": "c98bd1aa0880338d13aaf0274f179da0e84902aa89c3f19ce2829ee6d6c91bb4",
+      "bytes": 15359
+    },
+    "js/app.js": {
+      "sha256": "ced574f868e10b5b766ee491094f6977c00e4230ce266b77e706970fc075046e",
+      "bytes": 53646
+    },
+    "js/eusd-data.js": {
+      "sha256": "877651ed16d20cd7a575d1e4c433e3a58b55fd85adae6b5d9ad37f1516b592d0",
+      "bytes": 3222
+    },
+    "js/frxusd-shared-evidence.js": {
+      "sha256": "375efd5a784cd9119c2a367aca9bbc3d2423c6040b708f9665cbb5386c79d36a",
+      "bytes": 6476
+    },
+    "js/issuer-family-surfaces.js": {
+      "sha256": "875766a7f3ad61bd633e914f7ca4657c2fb10e55c0bb77a16753e7a75b561f89",
+      "bytes": 129
+    },
+    "js/issuer-project-evidence.js": {
+      "sha256": "6e5e8986a885509079f9848c5c7ee8ee43ef368b1d0c23e53082ebc576eb9e74",
+      "bytes": 22827
+    },
+    "js/liquidity-evidence.js": {
+      "sha256": "5b27e161563efe78dffe57d264df8b8ed94e24d5efa7289fbda2600f08558ed3",
+      "bytes": 17174
+    },
+    "js/re-protocol-metrics.js": {
+      "sha256": "337e79951cec2592f117547ccf291624a0017ef76585028041c4795a1fb4f9b2",
+      "bytes": 8971
+    },
+    "js/renderers/apyx.js": {
+      "sha256": "0954b0da03865b47c818d5f273b25325b098968387bee98d3d30a21fc606b4b5",
+      "bytes": 181092
+    },
+    "js/renderers/bmnr.js": {
+      "sha256": "b9e18d63a4014699f6000f60bc87dcc4055f31646ed433c82c76e24159479223",
+      "bytes": 40902
+    },
+    "js/renderers/bold.js": {
+      "sha256": "af9ed3cef9b533187379948bfe0039026f0713e01453b41d0319006351835eac",
+      "bytes": 20190
+    },
+    "js/renderers/cap.js": {
+      "sha256": "4b1ca4b45c874e71463e7e7fe6bb6e375c72449e7bcee88aa1f2c974318c7718",
+      "bytes": 44711
+    },
+    "js/renderers/common.js": {
+      "sha256": "d617a13eec5973dcec1d129b1d64096b5981af8f74961aec7bf140b0794a6a43",
+      "bytes": 698164
+    },
+    "js/renderers/crvusd.js": {
+      "sha256": "a4f326e837dda8ff4d0e5e0c9e634bd3fc728706e271f1c7050edcf551202075",
+      "bytes": 34465
+    },
+    "js/renderers/dola.js": {
+      "sha256": "f8ff856fb2a27307c928ab741c08cb4be0c57365684b34124a5d94c7eaa256e6",
+      "bytes": 8455
+    },
+    "js/renderers/dusd-alto.js": {
+      "sha256": "4e3b27ed8ffc9eeecf42791f3dcfc35f9775aef5d38428b2aab5b7993f9600af",
+      "bytes": 49299
+    },
+    "js/renderers/ethena.js": {
+      "sha256": "1275bc3f4ff6e857756d762bbe45100726aec6250abf19885faaca00deb7986b",
+      "bytes": 122285
+    },
+    "js/renderers/eusd.js": {
+      "sha256": "e5bdfb47fd9cdc646f81bf9ed95654715fad48ce9283992f89dec5212f47259f",
+      "bytes": 13697
+    },
+    "js/renderers/frax.js": {
+      "sha256": "4d0ffe9325f9457954cae8888c6df2a001c4e0c582b6883935498c078df1dd49",
+      "bytes": 23051
+    },
+    "js/renderers/frxusd.js": {
+      "sha256": "80c52dcf48626cbdf5b389e24593d862b1a485145417b63b980bc86424492caa",
+      "bytes": 10033
+    },
+    "js/renderers/fxsave.js": {
+      "sha256": "c096871073d42260508987bced5c9a0bc6fa8e769daa46e9f76dcf310a376bc4",
+      "bytes": 50639
+    },
+    "js/renderers/fxusd.js": {
+      "sha256": "cf9f58de75eb80829640d471f76a54dfdab925036f9ed594c956e4f8c34495bd",
+      "bytes": 2902
+    },
+    "js/renderers/hastra-prime.js": {
+      "sha256": "a69add8571e55080eb8417e86e81046f70c0ea7a40adeb2cb4839c3b71ced834",
+      "bytes": 153537
+    },
+    "js/renderers/mstr.js": {
+      "sha256": "f5fbef82b252db8ede62b62fb35b7619e11956d678d0b24217ebf493d16869e7",
+      "bytes": 96238
+    },
+    "js/renderers/msusd-metronome.js": {
+      "sha256": "6c4d0e2c9952ffa6c06603ed44c7008ee11b7575e5d86478082d4b76068661cc",
+      "bytes": 17125
+    },
+    "js/renderers/ousd.js": {
+      "sha256": "9268c370ddc038ce1ea1a4260fa57e5bd50aa0d4114c1737dbf1c14c0d7aab60",
+      "bytes": 23794
+    },
+    "js/renderers/saturn.js": {
+      "sha256": "b383dfee00e060fc3da0f9b559654d62b6748c7d79cd370fb130ab509e4a7f16",
+      "bytes": 157965
+    },
+    "js/renderers/scrvusd.js": {
+      "sha256": "07970398580289e965e088c649f505a33e34503a2b2ca80f76f1219ff1c963ff",
+      "bytes": 27462
+    },
+    "js/renderers/sfrxusd.js": {
+      "sha256": "9d8ed6245f939335385d37ab806484e87c1a9894b1b328e9739dcaefd9beaaf4",
+      "bytes": 18971
+    },
+    "js/renderers/strc.js": {
+      "sha256": "7d933fbbd809b906c0cfeeffc87c5c3dfcf1b82574528001e1fe86b0c7d94afc",
+      "bytes": 122179
+    },
+    "js/renderers/strcx.js": {
+      "sha256": "0118f1390e496cafb94dc31f33dbe40ebd1bd1967aa4d781a6cd4d358a7d065f",
+      "bytes": 55454
+    },
+    "js/renderers/syrupusdc.js": {
+      "sha256": "faecee2052aa4c46aa9422f4255d226c131bc48678933e3cba4d9aa5ec63d7c7",
+      "bytes": 226456
+    },
+    "js/renderers/thusd.js": {
+      "sha256": "68a9b9a76ddee8e74434f0ff9bdefc27bed77624997a44f18b370825965d8535",
+      "bytes": 69246
+    },
+    "js/renderers/usdai.js": {
+      "sha256": "5dee02169424dd0acebbeb12755a176f7313ed9b307ce7a903b09b30b6be289c",
+      "bytes": 121183
+    },
+    "js/renderers/usdd.js": {
+      "sha256": "d0b9b45d55d5fba32f3381befff35db9ed16d0c7921d395b6fe22dee9b0ec767",
+      "bytes": 49043
+    },
+    "js/renderers/usdm.js": {
+      "sha256": "86ff9cb6809671795c41e0599aee0763e7418ef5dd93f7b6d576b2f851143b46",
+      "bytes": 58402
+    },
+    "js/renderers/usg.js": {
+      "sha256": "4e2ecd1930101e27e16bbf54fe45d03c6d8cc2655ef2ceb09c877226d7273f6a",
+      "bytes": 32345
+    },
+    "js/renderers/wsteth.js": {
+      "sha256": "982dfdfdf19c666455d1a6014370dc05d099d3ff31660ded52f7e192f1fe97e5",
+      "bytes": 9522
+    },
+    "js/reusd-liquidity-ladder.js": {
+      "sha256": "3174f412ba0b8efa7d05593e839cf4fa146ae2498e59422d0cc0f5cb9f11ddaa",
+      "bytes": 10178
+    },
+    "js/strategy-filing-evidence.js": {
+      "sha256": "3e9b129c60aef9ea60b902caaeff3b16f77a92277849e24977345c221334be11",
+      "bytes": 6635
+    },
+    "js/weekly-risk-reconciliation.js": {
+      "sha256": "f79afd79f9d704357226d98adc11bfcb52dd14a814adc6f962d5cbee6b8aece3",
+      "bytes": 2969
+    },
+    "js/yuzu-exposure-evidence.js": {
+      "sha256": "b875d5b6e7bd556987a14e8dd69d941967fbb04feab4236ee82bd8300bba1c75",
+      "bytes": 5926
+    }
+  }
+}

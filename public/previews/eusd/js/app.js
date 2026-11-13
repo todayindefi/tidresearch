@@ -926,13 +926,10 @@ function showStagedPending(slug, sourceSlug) {
 function route() {
     var slug = getAssetSlug();
     if (slug) {
-        renderAsset(slug);
+        return renderAsset(slug);
     } else {
-        renderIndex();
+        return renderIndex();
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    route();
-    setInterval(route, REFRESH_INTERVAL);
-});
+document.addEventListener('DOMContentLoaded', async function() { async function update() { try { await EusdData.bootstrap(); await route(); } catch(e) { showError('Canonical eUSD feed unavailable or failed integrity checks: '+e.message); } } await update(); setInterval(update,REFRESH_INTERVAL); });

@@ -1,0 +1,76 @@
+{
+  "all_passed": true,
+  "cases": [
+    {
+      "case": "normal",
+      "width": 1440,
+      "selected": {
+        "generation": "5e7f6c332401cc2dde8283c9f84e0913ba5572d4ccc1b222c6c00826ae07b364",
+        "source_clock": {
+          "block_hash": "0xf39d1288e243681b61ee604000a16e9fe2f0a8c6c1bfb3b6153245fb0c19271f",
+          "block_number": 26403766,
+          "block_timestamp": "2026-11-13T04:51:35+00:00",
+          "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+          "observed_at": "2026-11-13T05:07:27.636663+00:00",
+          "pinning": "one_block_number_with_end_hash_check"
+        },
+        "files": [
+          "assets.json",
+          "eusd_backing.json",
+          "eusd_peg_history.json",
+          "eusd_product.json"
+        ]
+      },
+      "cards": [
+        "Unmeasured",
+        "100.15% basket units",
+        "5,000,000 eUSD basket availability",
+        "5 basket receipts",
+        "Review pending",
+        "Selected facts"
+      ],
+      "schedule_installed": true,
+      "footer": "BM collects supported eUSD dynamic fields every two hours. Documentary, Security and quote clocks remain separate.",
+      "header_timestamp": "Updated: Nov 13, 2026, 12:51 PM GMT+8",
+      "dark_header_color": "rgb(226, 232, 240)",
+      "page_errors": [],
+      "no_overflow": true
+    },
+    {
+      "case": "normal",
+      "width": 390,
+      "selected": {
+        "generation": "5e7f6c332401cc2dde8283c9f84e0913ba5572d4ccc1b222c6c00826ae07b364",
+        "source_clock": {
+          "block_hash": "0xf39d1288e243681b61ee604000a16e9fe2f0a8c6c1bfb3b6153245fb0c19271f",
+          "block_number": 26403766,
+          "block_timestamp": "2026-11-13T04:51:35+00:00",
+          "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+          "observed_at": "2026-11-13T05:07:27.636663+00:00",
+          "pinning": "one_block_number_with_end_hash_check"
+        },
+        "files": [
+          "assets.json",
+          "eusd_backing.json",
+          "eusd_peg_history.json",
+          "eusd_product.json"
+        ]
+      },
+      "cards": [
+        "Unmeasured",
+        "100.15% basket units",
+        "5,000,000 eUSD basket availability",
+        "5 basket receipts",
+        "Review pending",
+        "Selected facts"
+      ],
+      "schedule_installed": true,
+      "footer": "BM collects supported eUSD dynamic fields every two hours. Documentary, Security and quote clocks remain separate.",
+      "header_timestamp": "Updated: Nov 13, 2026, 12:51 PM GMT+8",
+      "dark_header_color": "rgb(226, 232, 240)",
+      "page_errors": [],
+      "no_overflow": true
+    }
+  ],
+  "temporary_server_closed": false
+}
