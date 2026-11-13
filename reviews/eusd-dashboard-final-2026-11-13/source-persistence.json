@@ -1,0 +1,13 @@
+{
+  "branch": "staging/eusd-preview-source-2026-11-13",
+  "source_commit": "dea2160ebc",
+  "static_manifest_sha256": "139e8e9aa21425a6a9bb396db3228d861f4dcf39d72f0f6ecd72d75433294204",
+  "allowed_paths": [
+    "public/previews/eusd/js/renderers/eusd.js",
+    "reviews/eusd-dashboard-final-2026-11-13/"
+  ],
+  "current_static_files": 50,
+  "route_overlay": "reviews/eusd-maintained-cutover-2026-11-13/staging-route-snippet.toml",
+  "future_staging_requirement": "Retain this prefix and existing staging-only forced data route; never apply overlay to production. Branch is a scoped eUSD source delta, not a complete reconstruction of live staging.",
+  "no_production_configuration_or_unrelated_report_changes": true
+}

@@ -1,0 +1,80 @@
+{
+  "receipt_version": 1,
+  "status": "final_merged_eusd_staging_integrity_and_ui_verified",
+  "checked_at": "2026-11-13T06:20:13.635431+00:00",
+  "url": "https://staging.tidresearch.com/previews/eusd/?asset=eusd",
+  "deploy_id": "6af6ab8c7c1d56858f9e7022",
+  "baseline_deploy": "6af6a936cde25c575437f232",
+  "source_commit": "dea2160ebc",
+  "static_manifest_sha256": "139e8e9aa21425a6a9bb396db3228d861f4dcf39d72f0f6ecd72d75433294204",
+  "renderer_sha256": "1d985ae424d193d4182eb81410410ac4e15cf1f2fc459c5b4913aa2ae1c6c510",
+  "selected_data_generation": "a447f22322a5b7ae6f478c6999ebac83b8e8d9975144b4b0ec6397263f3243da",
+  "data_manifest_sha256": "a447f22322a5b7ae6f478c6999ebac83b8e8d9975144b4b0ec6397263f3243da",
+  "backing_source_clock": {
+    "block_hash": "0xac0267e9931e77b4e64e22dcaebd3bee93cecd014fcc4646b4706819ccb117fc",
+    "block_number": 26404086,
+    "block_timestamp": "2026-11-13T05:55:35+00:00",
+    "finality_basis": "RPC finalized tag resolved before reads; block hash rechecked at completion",
+    "observed_at": "2026-11-13T06:12:51.764568+00:00",
+    "pinning": "one_block_number_with_end_hash_check"
+  },
+  "security_source_clock": {
+    "block_hash": "0x760b0ef34f4f74faad95d55aad380a3268b04fe4fb64dde959090cb0df21bcfc",
+    "block_number": 26403764,
+    "block_timestamp": "2026-11-13T04:51:11+00:00",
+    "clock_policy": "Preserve this Security source block/time separately from financial refresh times; a later 2h dashboard fetch does not reverify controls.",
+    "observed_at": "2026-11-13T04:51:59.571101+00:00",
+    "pinning": "one_block_number_with_end_hash_check",
+    "reviewed_at": "2026-11-13T06:07:24.798351+00:00",
+    "security_observed_at": "2026-11-13T06:01:02.276769+00:00",
+    "supplement_observed_at": "2026-11-13T06:03:50.717150+00:00"
+  },
+  "security_scope": "Finite exact Reserve Ethereum eUSD review, with explicit gaps. Original control clock is not renewed by financial collection.",
+  "security_status": "bounded-review-complete-with-explicit-gaps",
+  "checks": {
+    "all_50_http_static_sha256_match": true,
+    "all_4_selected_json_hash_and_byte_counts_match": true,
+    "widths": [
+      1440,
+      390
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "six_evidence_sections_and_tiles": true,
+    "peg_and_coverage_history_charts": true,
+    "premium_reference_tiles": true,
+    "quote_rsr_comparison_and_native_api_allocations_visible": true,
+    "security_bindings": 18,
+    "security_controls": 9,
+    "security_explicit_gaps": 7,
+    "details_expansion_and_dependency_tables": true,
+    "javascript_page_errors": [],
+    "document_overflow": false,
+    "private_paths_or_holder_fields_in_ui": false,
+    "unknown_values_not_claimed_zero_or_fresh": true,
+    "only_changed_deployed_file": [
+      "/previews/eusd/js/renderers/eusd.js"
+    ],
+    "outside_prefix_all_file_hashes_preserved": true,
+    "outside_prefix_count": 221,
+    "route_and_processed_netlify_config_hash_unchanged": true,
+    "reserve_hierarchy_file_hashes_preserved": true,
+    "no_new_global_dashboard_override": true
+  },
+  "runtime": {
+    "dynamic_seconds": 7200,
+    "last_assembly_completed_at": "2026-11-13T06:13:10.439986+00:00",
+    "last_collection_completed_at": "2026-11-13T06:12:51.764568+00:00",
+    "owner": "BackingMonitor",
+    "schedule_installed": true,
+    "scope": "Reserve Ethereum eUSD only; documentary/Security observations retain separate clocks"
+  },
+  "collection_scope": "BM owns collection; financial, quote, API, documentary and Security observations retain independent original clocks. This consumer deployment runs no collectors.",
+  "source_retention_branch": "staging/eusd-preview-source-2026-11-13",
+  "scope_limit": "Dashboard UI/evidence publication only. No report dispatch, asset-grade refresh, full deployment assurance or production promotion. Seven Security gaps remain visible.",
+  "production_before": "6af4712bb4a3f7dff8a2552d",
+  "production_after": "6af4712bb4a3f7dff8a2552d",
+  "production_deploy_or_config_change": false
+}
