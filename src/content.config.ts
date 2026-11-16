@@ -373,6 +373,15 @@ const protocolReport = z.object({
 });
 
 const vaultReport = z.object({
+  identity_kind: z.literal("erc20-vault").default("erc20-vault"),
+  evidence_version: z.string().optional(), aggregate_version: z.string().optional(), aggregate_sha256: z.string().regex(/^[0-9a-f]{64}$/).optional(),
+  category: z.enum(["lending-vault", "lending-vault-wrapper"]).optional(), chain_id: z.number().int().positive().optional(),
+  inner_vault_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/).optional(),
+  assessment_version: z.string().optional(),
+  control_snapshot_block: z.number().int().positive().optional(), control_snapshot_at: z.coerce.date().optional(),
+  thin_buffer_debt_pct: z.number().min(0).max(100).optional(),
+  top_borrower_pct: z.number().min(0).max(100).optional(), market_cash: z.number().nonnegative().optional(),
+  force_deallocation_penalty_pct: z.number().min(0).max(100).optional(), pending_force_deallocation_penalty_pct: z.number().min(0).max(100).optional(),
   vault: z.string(), symbol: z.string(), slug: z.string(),
   protocol: z.string(), chain: z.string(),
   vault_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/),
@@ -384,6 +393,23 @@ const vaultReport = z.object({
   largest_allocation_pct: z.number().min(0).max(100),
   overall_score: score.optional(),
   published: z.boolean().default(true), production: z.boolean().default(false),
+}).superRefine((v, ctx) => {
+  if (v.slug === "beefy-steakhouse-prime-weth-monad") {
+    if (v.category !== "lending-vault-wrapper" || v.chain !== "monad" || v.chain_id !== 143 || v.vault_address !== "0x83b0a383c3d1b94f28a453735c692d166b561681" || v.strategy_address !== "0x11de2d5cf186654f0b9fa3883dd4bfb4a6837467" || v.inner_vault_address !== "0xbeef04b01e0275d4ac2e2986256bb14e3ff6ef42" || v.production || v.overall_score !== 4.5 || v.assessment_version !== "beefy-steakhouse-prime-weth-monad-2026-11-16-v1" || [v.control_snapshot_block, v.top_borrower_pct, v.thin_buffer_debt_pct, v.market_cash, v.force_deallocation_penalty_pct].some((n) => typeof n !== "number")) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Beefy wrapper requires exact Monad wrapper/strategy/inner identities, accepted grade/version, bounded metrics/clocks and staging-only status" });
+    }
+    return;
+  }
+  if (v.slug === "steakhouse-prime-eth-monad") {
+    if (v.category !== "lending-vault" || v.chain !== "monad" || v.chain_id !== 143 || v.vault_address !== "0xbeef04b01e0275d4ac2e2986256bb14e3ff6ef42" || v.strategy_address !== "0xa6b6155b214e1b378344987b6de5e79eae828e35" || v.production || typeof v.overall_score !== "number" || !v.assessment_version || [v.control_snapshot_block, v.top_borrower_pct, v.thin_buffer_debt_pct, v.market_cash, v.force_deallocation_penalty_pct].some((n) => typeof n !== "number")) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Steakhouse direct vault requires exact Monad identity, explicit bounded metrics/clocks and staging-only status" });
+    }
+    return;
+  }
+  if (v.slug !== "re7-weth-optimism") return;
+  if (v.category !== "lending-vault" || v.chain !== "optimism" || v.chain_id !== 10 || v.vault_address !== "0x3d63934715b6d4c4dfbbc1a00fe2a2145079dd76" || v.strategy_address !== "0x2821a2c8e4bea8fd7613d7dd27cab9f1e5b03041" || v.production || typeof v.overall_score !== "number" || !v.assessment_version || !v.control_snapshot_at || [v.control_snapshot_block, v.top_borrower_pct, v.market_cash, v.force_deallocation_penalty_pct, v.pending_force_deallocation_penalty_pct].some((n) => typeof n !== "number")) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Re7 lending-vault report requires exact Optimism identity, explicit metrics/clocks, overall grade and staging-only status" });
+  }
 });
 
 export const collections = {

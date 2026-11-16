@@ -1,0 +1,35 @@
+---
+import RiskBadge from "./RiskBadge.astro";
+const { data: v } = Astro.props;
+const isWrapper = v.category === "lending-vault-wrapper";
+const isMonad = v.chain === "monad";
+const explorer = isMonad ? "https://monadscan.com" : "https://optimistic.etherscan.io";
+const amount = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 6 });
+---
+<article class="container-page py-12" data-vault-report={v.slug} data-assessment-version={v.assessment_version} data-evidence-version={v.evidence_version} data-aggregate-version={v.aggregate_version} data-aggregate-sha256={v.aggregate_sha256} data-vault-kind={v.category} data-vault-scope={isWrapper ? "wrapper" : isMonad ? "direct" : undefined} data-chain-id={v.chain_id}>
+  <nav aria-label="Vault navigation" class="mb-6"><a class="text-sm text-primary" href="/vaults/">← Vault reports</a></nav>
+  <p class="text-sm text-muted-foreground mb-5">{isWrapper ? "Lending vault wrapper" : "Lending vault"} · {v.protocol} / {isMonad ? "Monad" : "Optimism"}</p>
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10">
+    <div class="prose-report min-w-0 [overflow-wrap:anywhere] [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_th]:min-w-[8rem] [&_td]:min-w-[8rem]"><slot /></div>
+    <aside class="bg-card border border-border p-6 space-y-6 lg:self-start text-sm" aria-label="Vault score and identity">
+      <div><div class="eyebrow mb-2">Overall vault score</div><RiskBadge score={v.overall_score} size="lg" /><p class="text-xs text-muted-foreground mt-2">Scale 1–10 · higher is safer</p></div>
+      {isMonad && <p class="text-xs text-muted-foreground">{isWrapper ? "Additional strategy and beacon-upgrade assurance limits; moo shares." : "Limited oracle and full-control assurance; direct shares only."}</p>}
+      <dl class="space-y-5 [overflow-wrap:anywhere]">
+        <div><dt class="eyebrow mb-1">Vault · {isMonad ? "Monad" : "Optimism"} {v.chain_id}</dt><dd><a class="text-primary" href={`${explorer}/address/${v.vault_address}`}>{v.vault_address}</a></dd></div>
+        <div><dt class="eyebrow mb-1">{isWrapper ? "Current strategy" : "Funded adapter"}</dt><dd><a class="text-primary" href={`${explorer}/address/${v.strategy_address}`}>{v.strategy_address}</a></dd></div>
+        {isWrapper && <div><dt class="eyebrow mb-1">Inner vault</dt><dd><a class="text-primary" href="/vaults/steakhouse-prime-eth-monad/">Steakhouse Prime ETH · direct report</a></dd></div>}
+        <div><dt class="eyebrow mb-1">Accounting assets</dt><dd>{amount(v.total_assets)} WETH</dd></div>
+        <div><dt class="eyebrow mb-1">Native idle WETH</dt><dd>{amount(v.idle_assets)} WETH · measured</dd></div>
+        <div><dt class="eyebrow mb-1">{isWrapper ? "Funded route allocation" : "Funded market allocation"}</dt><dd>{v.largest_allocation_pct.toFixed(0)}% · {isWrapper ? "one strategy / inner vault" : "one wstETH-backed market"}</dd></div>
+        <div><dt class="eyebrow mb-1">{isWrapper ? "Inner market: largest borrower" : "Largest borrower address"}</dt><dd>{v.top_borrower_pct.toFixed(2)}% of market debt</dd></div>
+        {v.thin_buffer_debt_pct !== undefined && <div><dt class="eyebrow mb-1">{isWrapper ? "Inner market: thin-buffer debt" : "Thin-buffer market debt"}</dt><dd>{v.thin_buffer_debt_pct.toFixed(2)}% at oracle HF ≤1.05</dd></div>}
+        <div><dt class="eyebrow mb-1">Oracle basis</dt><dd>{isMonad ? <>Exact basis, writer and origin unverified<br />No independent secondary-price basis verified</> : <>Rate-only wstETH/stETH mark<br />No independent stETH/ETH secondary-price leg</>}</dd></div>
+        <div><dt class="eyebrow mb-1">Shared market cash</dt><dd>{amount(v.market_cash)} WETH<br /><span class="text-xs text-muted-foreground">Not reserved for this holder</span></dd></div>
+        <div><dt class="eyebrow mb-1">{isWrapper ? "Inner alternative-exit penalty" : "Alternative-exit penalty"}</dt><dd>Current {v.force_deallocation_penalty_pct}%<br />{isMonad ? <>Setter has zero configured delay<br />Not a permanent cost guarantee</> : <>Mature {v.pending_force_deallocation_penalty_pct}% proposal pending · permissionless execution</>}<br /><span class="text-xs text-muted-foreground">Force deallocation; ordinary withdrawal is separate</span></dd></div>
+        <div><dt class="eyebrow mb-1">Financial observation</dt><dd>{v.snapshot_at.toISOString().replace("T", " ").replace(".000Z", " UTC")}<br /><a class="text-primary" href={`${explorer}/block/${v.snapshot_block}`}>Block {v.snapshot_block}</a></dd></div>
+        <div><dt class="eyebrow mb-1">Control observation</dt><dd>{v.control_snapshot_at && <>{v.control_snapshot_at.toISOString().replace("T", " ").replace(".000Z", " UTC")}<br /></>}<a class="text-primary" href={`${explorer}/block/${v.control_snapshot_block}`}>Block {v.control_snapshot_block}</a></dd></div>
+      </dl>
+      <a class="block text-primary" href="/vaults/methodology/">Vault methodology →</a>
+    </aside>
+  </div>
+</article>

@@ -1,0 +1,14 @@
+{
+  "schema_version": "public-vault-evidence-selection/1",
+  "version": "bm-beefy-monad-public-evidence-2026-11-16-v2",
+  "component": "beefy-monad-prime-weth",
+  "chain_id": "eip155:143",
+  "files": {
+    "wrapper-evidence-v1.json": {
+      "sha256": "089edcf299138309c3deed9273002b89797a1d29ce9e1317f8780d930e6850c4",
+      "bytes": 4320
+    }
+  },
+  "assessment_version": "beefy-steakhouse-prime-weth-monad-2026-11-16-v1",
+  "use": "Standardized product accounting/exit evidence for report staging; no automatic publication"
+}

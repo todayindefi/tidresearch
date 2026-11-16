@@ -21,8 +21,8 @@ const amount = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits:
     </div>
     <h2 class="text-2xl font-semibold mb-5">Vault reports</h2>
     <div class="grid lg:grid-cols-2 gap-6">
-      {vaults.map(({ data: v }) => <a href={`/vaults/${v.slug}/`} class="block border border-border bg-card p-7 hover:border-primary transition-colors">
-        <div class="flex justify-between gap-4 mb-4 text-xs uppercase tracking-wider text-muted-foreground"><span>{v.protocol} / {v.chain}</span><span>{v.assessment_status === "partial" ? "Initial review" : "Reviewed"}</span></div>
+      {vaults.map(({ data: v }) => <a href={`/vaults/${v.slug}/`} class="block min-w-0 [overflow-wrap:anywhere] border border-border bg-card p-7 hover:border-primary transition-colors" data-assessment-version={v.assessment_version} data-vault-kind={v.category}>
+        <div class="flex justify-between gap-4 mb-4 text-xs uppercase tracking-wider text-muted-foreground"><span>{v.protocol} / {v.chain}{v.category === "lending-vault-wrapper" ? " / Lending vault wrapper" : v.category === "lending-vault" ? " / Lending vault" : ""}</span><span>{v.category ? "Vault report" : v.assessment_status === "partial" ? "Initial review" : "Reviewed"}</span></div>
         <h3 class="text-2xl font-semibold mb-2">{v.symbol}</h3>
         <p class="text-sm text-muted-foreground mb-5">{v.vault}</p>
         <p class="mb-6">{v.risk_summary}</p>

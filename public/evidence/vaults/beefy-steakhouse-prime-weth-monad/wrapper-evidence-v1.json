@@ -1,0 +1,92 @@
+{
+  "schema_version": "wrapper-public-evidence/1",
+  "version": "bm-beefy-monad-public-evidence-2026-11-16-v2",
+  "component": "beefy-monad-prime-weth",
+  "network": "Monad",
+  "chain_id": "eip155:143",
+  "units": {
+    "accounting": "WETH",
+    "payout": "WETH base units,18decimals",
+    "nominal_test_size": "USD equivalent from separately clocked unpinned public API"
+  },
+  "financial_clock": {
+    "block_number": 122691043,
+    "block_hash": "0x8f5586b2bf1ada48f86da94d91a2542a97bc6e25ecf760b76007d7d9258459e8",
+    "block_timestamp": "2026-11-16T08:18:58+00:00",
+    "end_hash_verified": true
+  },
+  "simulation_clock": {
+    "block_number": 122691043,
+    "block_hash": "0x8f5586b2bf1ada48f86da94d91a2542a97bc6e25ecf760b76007d7d9258459e8",
+    "block_timestamp": "2026-11-16T08:18:58+00:00",
+    "collected_at": "2026-11-16T09:03:52.262409+00:00",
+    "basis": "Historical original evidence pin reused; later collection is not a new latest-state observation."
+  },
+  "product_accounting": {
+    "accounting_balance_weth": "26.50417227431780795",
+    "stored_pool_weth": "26.504763330566251609",
+    "locked_profit_weth": "0.000591056248443659",
+    "live_direct_claim_weth": "26.504897961678817234",
+    "live_claim_minus_stored_pool_raw": "134631112565625"
+  },
+  "fees_at_financial_pin": {
+    "underlying_performance_fee_fraction": "0.10",
+    "underlying_management_fee_fraction": "0",
+    "wrapper_performance_fee_fraction": "0.095",
+    "wrapper_deposit_fee_raw": 0,
+    "wrapper_withdraw_fee_raw": 0,
+    "basis": "Separate fee layers and bases; percentages must not simply be added. Exact deployed fee-formula correspondence remains bounded."
+  },
+  "standardized_exit": {
+    "nominal_usd": 10000,
+    "method": "Independent funded ordinary withdrawal eth_call and call trace; no state override or transaction",
+    "expected_accounting_payout_weth_raw": "5499537854812909714",
+    "observed_payout_weth_raw": "5499537854812909714",
+    "eth_call_success": true,
+    "trace_root_success": true,
+    "exact_underlying_payout_verified": true,
+    "settlement_executed": false,
+    "route": "Outer wrapper withdrawal redeems strategy inner ERC4626 claim and delivers underlying WETH; receipt redemption alone is not the cash endpoint."
+  },
+  "additional_standardized_sizes": [
+    {
+      "nominal_usd": 50000,
+      "result": null,
+      "status": "Not funded/tested: exceeds whole-wrapper capitalization at the evidence pin; not a demonstrated liquidity failure"
+    },
+    {
+      "nominal_usd": 100000,
+      "result": null,
+      "status": "Not funded/tested: exceeds whole-wrapper capitalization at the evidence pin; not a demonstrated liquidity failure"
+    }
+  ],
+  "liquidity_perimeter": [
+    "Wrapper underlying claim is already within the direct vault; wrapper TVL is not additional underlying capital",
+    "Direct and wrapper exits use shared underlying market cash; capacities are not additive",
+    "A successful pinned sample does not reserve cash or establish future/stressed maximum capacity"
+  ],
+  "assessment": {
+    "owner": "riskAnalyst",
+    "assessment_version": "beefy-steakhouse-prime-weth-monad-2026-11-16-v1",
+    "status": "completed_bounded",
+    "overall_score": 4.5,
+    "confidence_limits": [
+      "Oracle leaf basis/writer/origin/heartbeat unknown",
+      "Exact Beefy/adapter/registry source and complete role/pending/audit-build assurance incomplete",
+      "Six-hour strategy replacement view does not prove beaconupgrade delay",
+      "No independently comparable wrapper realized investor PPS/reward/fee/gas history"
+    ]
+  },
+  "limits": [
+    "Pinned simulation is not executed settlement or a future liquidity guarantee",
+    "Source/runtime, beacon, full roles/pending, audit and comparable investor-return assurance remain bounded",
+    "Oracle source/writer/origin/heartbeat and independent secondary basis are not cleared by the exit result"
+  ],
+  "nominal_usd_reference": {
+    "price_weth_usd": "1818.334606288511990277431534",
+    "source": "Original public API, not on-chain pinned price or executable sale quote",
+    "request_started_at": "2026-11-16T08:18:53.688136+00:00",
+    "received_at": "2026-11-16T08:18:54.585741+00:00",
+    "scope": "Used only to select standardized nominal USD test size; exact WETH payout is separately pinned."
+  }
+}
