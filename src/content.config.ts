@@ -114,6 +114,24 @@ const common = {
   // Two reports in a pair cross-link via companion_report (slug of the other).
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
+  assessment_version: z.string().optional(),
+  evidence_version: z.string().optional(),
+  score_status: z.enum(["provisional", "assessed", "historical"]).optional(),
+  assessment_status: z.enum(["complete", "in_progress"]).optional(),
+  axis_confidence: z.object({
+    volatility_score: z.enum(["low", "medium", "high"]), backing_score: z.enum(["low", "medium", "high"]),
+    liquidity_score: z.enum(["low", "medium", "high"]), underlying_score: z.enum(["low", "medium", "high"]),
+    structural_score: z.enum(["low", "medium", "high"]), issuer_score: z.enum(["low", "medium", "high"]),
+  }).optional(),
+  axis_assessment_status: z.object({
+    volatility_score: z.enum(["assessed", "provisional"]), backing_score: z.enum(["assessed", "provisional"]),
+    liquidity_score: z.enum(["assessed", "provisional"]), underlying_score: z.enum(["assessed", "provisional"]),
+    structural_score: z.enum(["assessed", "provisional"]), issuer_score: z.enum(["assessed", "provisional"]),
+  }).optional(),
+  score_sensitive_findings: z.array(z.object({ id: z.string(), axes: z.array(z.string()), status: z.string().optional(), current_treatment: z.string(), materiality: z.string().optional(), reassess_with: z.string() })).optional(),
+  confidence_scope: z.string().optional(),
+  score_assessed: z.coerce.date().optional(),
+  verification_scope: z.literal("bounded").optional(),
   date: z.coerce.date(),
   last_verified: z.coerce.date(),
   // Date of the most recent substantive pass, when only PART of the body was

@@ -1,0 +1,198 @@
+{
+  "producer": "riskanalyst",
+  "asset": "syrupusdt",
+  "as_of": "2026-11-16",
+  "assessment_version": "syrup-pair-transparency-correction-2026-11-16-v3",
+  "selected_evidence_version": "sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944",
+  "canonical_project": "maple",
+  "canonical_component": "syrupusdt",
+  "scope": "Exact Ethereum pool only; remote historical scores not refreshed",
+  "chain_id": "eip155:1",
+  "report_ref": "assets/syrupusdt.md",
+  "report_sha256": "4e58b3de3c845d48ecffff74df662ff1e2aac2b3cbf028cbaf415637f6fe450f",
+  "assessment_ref": "data/reviews/maple-transparency-upgrade-2026-11-16/assessment-v3-family-final.json",
+  "consumer_export_version": "syrup-transparency-correction-2026-11-16-v3",
+  "publication": "staging_only",
+  "score_status": "assessed",
+  "supplemental_evidence": {
+    "producer": "Official issuer source adoption through existing producer",
+    "source_manifest_sha256": "3e45493f3133ec887c7aa08dd5d1820f9bda3ee9d65ce506ca6cb79e958464fe",
+    "normal_export_sha256": "dfc7b01947dd5778ed4af27a992cadbad2cbda8f4d1814f6f2eda5945a8eaf0f",
+    "exact_row_proof_sha256": "7db295074af724a19df5f05b4eac1b8c4953a6e7bbbd0e41d6af3e29aec74840",
+    "basis": "Direct exact-loan issuercredit values; oldwrongselectormodel withdrawn; not newnativeaccounting or independentrecovery measurement",
+    "public_projection_sha256": "fc9464a08f68e75d8b2e8c7a16a06842e1fd31751e5ae1440ad0979dc95f15c9",
+    "family_producer_handoff_sha256": "c60ef393089ee080876f2d973afd3a65d91ba6820ee8ff8e111d7030f82ebce8",
+    "family_source_sha256": "30ceaa2c122d7d903c600e499fb74182978520ff6415b20a6f1d24588fde32a8",
+    "family_scope": "Publishercredit sum, not independentcoverage or cross-pool support. OldGraphQLpool totals withdrawn/currentnull."
+  },
+  "source_clocks": {
+    "pool_accounting": {
+      "chain_id": 1,
+      "block_number": 26424095,
+      "block_hash": "0xf8b3a5b6b0e8b56992a3d35f4ffeb1df6972397525348a6a6453f7d77e4b7db0",
+      "block_timestamp": "2026-11-16T00:48:23+00:00",
+      "retrieved_at": "2026-11-16T01:06:06.306611+00:00",
+      "collection_started_at": "2026-11-16T01:06:05.426737+00:00",
+      "finality": "RPC finalized; end hash rechecked"
+    },
+    "original_normal_producer_assembly": "2026-11-16T00:43:38Z",
+    "documentary": {
+      "reviewed_at": "2026-11-16",
+      "key_texts": "five normalized unchanged since Nov11; prior fact clocks retained",
+      "ledgerlens_observed_at": "2026-11-13T17:11:00Z",
+      "loan_assurance": "none"
+    },
+    "security": {
+      "block": 26424185,
+      "observed_at": "2026-11-16T01:06:23Z",
+      "local_retrieved_at": "2026-11-16T01:06:17.078729Z",
+      "clock_skew_seconds": 5.921271,
+      "finality_rechecked": false,
+      "prior_full_controls": "2026-11-11; not renewed"
+    },
+    "collateral_graphql_retrieval": "2026-11-16T01:18:45Z/2026-11-16T01:18:48Z",
+    "collateral_effective_observation": null,
+    "price_rounds": {
+      "BTC": "2026-11-16T00:30:59Z",
+      "ETH": "2026-11-16T00:39:47Z",
+      "XRP": null
+    },
+    "quotes": "Original per-field clocks in selected producer; no new quote or executable exit claimed",
+    "axis1_evidence_review": {
+      "primary_paired_cutoff": "2026-11-16T00:48:23Z",
+      "latest_paired_row": "2026-11-16T00:17:30.537394Z",
+      "owner_addendum_latest": "2026-11-16T01:18:20.125647Z",
+      "same_duration_cap_conclusion": true,
+      "no_new_collection": true
+    },
+    "issuer_collateral": {
+      "url": "https://maple.finance/transparency/products/syrupusdt",
+      "page_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+      "upstream_financial_observed_at": null,
+      "pricing_rounds_independently_verified": false,
+      "basis": "Publisher collateralUSD/currentlevel; retrieval is not valuationclock"
+    }
+  },
+  "schema_version": "axis-basis/1",
+  "source_snapshot_as_of": "2026-11-16T00:48:23+00:00",
+  "evidence_ref": "data/reviews/maple-weekly-credit-2026-11-16/bm-frozen-intake-v2.json",
+  "peg": {
+    "volatility_score": 7.5,
+    "volatility_score_source": "riskAnalyst:authored",
+    "volatility_score_generated_at": "2026-11-16",
+    "volatility_score_basis": "7.5: the 327-day paired record is subject to the 90–365-day evidence ceiling. This is an evidence-limit correction, not new credit deterioration.",
+    "volatility_score_persistence": "Current assessed judgment; evidence confidence and recovery limits are separate.",
+    "volatility_score_status": "assessed",
+    "confidence": "medium"
+  },
+  "backing": {
+    "backing_score": 6.0,
+    "backing_score_source": "riskAnalyst:authored",
+    "backing_score_generated_at": "2026-11-16",
+    "backing_score_basis": "6.0 after reassessment. All six issuer credit rows have published values, with 140.24% source coverage; the 50m USDC exposure is reported at nominal par. Fees, basis, issuer control and net recovery remain risks.",
+    "backing_score_persistence": "Current assessed judgment; evidence confidence and recovery limits are separate.",
+    "backing_score_display": "authored",
+    "backing_score_display_basis": "Authoredriskgrade after source-model correction; not an issuer reservepercentage",
+    "credit_coverage": {
+      "denominator_basis": "classified_credit_principal",
+      "denominator_usd": 200052547.37,
+      "measured_principal_usd": 200052547.37,
+      "measured_collateral_usd": 280550658.52,
+      "complete": true,
+      "collateral_ratio_pct": 140.24,
+      "measurement_assurance": "Complete means source values present; not verified custody, title, legal ownership or realizable proceeds"
+    },
+    "coverage_basis": "AllpublisherLendingrows valued; sourcecoverage only, not independent title/custody or creditNAV.",
+    "independent_credit_coverage": null,
+    "independent_credit_coverage_status": "unverified",
+    "accounting_identity_is_solvency_band": false,
+    "pcr_basis": "Native cash plus pool-specific accounting claims; no independent recovery NAV",
+    "reported_aggregate_collateral_ratio_pct": null,
+    "backing_score_status": "assessed",
+    "confidence": "low",
+    "legacy_model_disposition": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence"
+  },
+  "liquidity": {
+    "liquidity_score": 5.5,
+    "liquidity_score_source": "riskAnalyst:authored",
+    "liquidity_score_generated_at": "2026-11-16",
+    "liquidity_score_basis": "5.5: dated native cash of 8.913m USDT and an empty queue, with shorter recent completed-request waits. Issuer-projected DeFi/LP liquidity is not verified cash or execution capacity.",
+    "liquidity_score_persistence": "Current assessed judgment; evidence confidence and recovery limits are separate.",
+    "confidence": "medium"
+  },
+  "dependencies": {
+    "underlying_score": 4.0,
+    "underlying_score_source": "riskAnalyst:authored",
+    "underlying_score_generated_at": "2026-11-16",
+    "underlying_score_basis": "4.0: USDT settlement plus USDC/PYUSD and tokenized collateral add issuer, basis, freeze and custody dependencies. Nominal par is not independent recovery assurance.",
+    "underlying_score_persistence": "Current assessed judgment; evidence confidence and recovery limits are separate.",
+    "confidence": "medium"
+  },
+  "issuer": {
+    "issuer_score": 5.5,
+    "issuer_score_source": "riskAnalyst:authored",
+    "issuer_score_generated_at": "2026-11-16",
+    "issuer_score_basis": "5.5: named portfolio issuer and disclosed recourse, with limited independent title, custody and servicing assurance. LedgerLens is non-attest; parent financials are not pool first-loss cover.",
+    "issuer_score_persistence": "Current assessed judgment; evidence confidence and recovery limits are separate.",
+    "confidence": "medium",
+    "issuer_score_status": "assessed"
+  },
+  "overall": {
+    "overall_score": 5.5,
+    "overall_score_status": "assessed",
+    "overall_score_basis": "Current composite after removing invalid model inferences. Liquidity, authority and enforceable recovery limits still constrain the grade."
+  },
+  "overall_review": {
+    "overall_score": 5.5,
+    "overall_score_status": "assessed",
+    "overall_score_basis": "Retain current asset grade after bounded review; neither grade nor HF approves leverage.",
+    "assessment_version": "syrup-pair-transparency-correction-2026-11-16-v3",
+    "basis": "Completed reassessment with all six score decisions assessed. Backing confidence remains low; overall scores stay 6.0 for USDC and 5.5 for USDT."
+  },
+  "redemption": {
+    "redemption_score": 5.5,
+    "redemption_score_source": "riskAnalyst:authored",
+    "redemption_score_generated_at": "2026-11-16",
+    "redemption_score_basis": "5.5: dated native cash of 8.913m USDT and an empty queue, with shorter recent completed-request waits. Issuer-projected DeFi/LP liquidity is not verified cash or execution capacity."
+  },
+  "routing_note": "Ethereum authored grade only; no remote or wallet position payload.",
+  "assessment_status": "complete",
+  "axis_assessment_status": {
+    "volatility_score": "assessed",
+    "backing_score": "assessed",
+    "liquidity_score": "assessed",
+    "underlying_score": "assessed",
+    "structural_score": "assessed",
+    "issuer_score": "assessed"
+  },
+  "axis_confidence": {
+    "volatility_score": "medium",
+    "backing_score": "low",
+    "liquidity_score": "medium",
+    "underlying_score": "medium",
+    "structural_score": "medium",
+    "issuer_score": "medium"
+  },
+  "score_sensitive_findings": [
+    {
+      "id": "custody-allocation-net-recovery",
+      "axes": [
+        "backing_score",
+        "issuer_score"
+      ],
+      "status": "open_risk_limit_not_incomplete_score",
+      "current_treatment": "Current assessed grades incorporate unverified exclusive custody/control/priority, publisher valuation timestamps and net realization. No collateral cure/solvency guarantee inferred.",
+      "reassess_with": "Independent matched loan-level collateral allocation/control/title, dated valuation, realized servicing/recovery or a new credit event."
+    }
+  ],
+  "supplemental_axis1_evidence": "5dfb2a33b42ce468d10dddf65503ce2291a801a1a68b32e9305ad4cc6cef8390",
+  "closed_findings": [
+    {
+      "id": "currentAssetAmount-misbound-model",
+      "resolution": "The 30-row publisher mapping proof and canonical producer repair withdraw the old below-par, thin-buffer, 475-to-65 BTC and missing-value financial inferences. Adopted issuer figures do not establish physical collateral movements.",
+      "source_proof_sha256": "7db295074af724a19df5f05b4eac1b8c4953a6e7bbbd0e41d6af3e29aec74840"
+    }
+  ],
+  "source_correction_evidence": "3e45493f3133ec887c7aa08dd5d1820f9bda3ee9d65ce506ca6cb79e958464fe",
+  "financial_baseline_scope": "c862 originalnativeaccounting/loanprincipals/queues ONLY; its collateralmodel superseded"
+}

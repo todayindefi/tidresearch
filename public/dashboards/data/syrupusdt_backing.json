@@ -1,0 +1,4007 @@
+{
+  "schema_version": 2,
+  "asset": "syrupUSDT",
+  "asset_slug": "syrupusdt",
+  "chain": "Ethereum",
+  "timestamp": "2026-11-16T05:45:19.546776+00:00",
+  "summary": {
+    "total_supply": 214810963.56,
+    "supply_unit": "shares",
+    "total_backing": 247670564.9,
+    "collateral_ratio": 100.0,
+    "collateral_ratio_alt": {
+      "label": "Cash + accrued interest",
+      "value": 9267997.53,
+      "note": "Pool USDT balance plus accrued strategy interest; accrued interest is not immediately available cash",
+      "is_currency": true
+    },
+    "surplus_deficit": -0.0,
+    "deployment_ratio_pct": 96.26,
+    "unrealized_losses": 0.0,
+    "nav": 1.15297,
+    "liquidity_cap": 2000000000.0,
+    "cap_utilization_pct": 12.38
+  },
+  "backing_breakdown": [
+    {
+      "label": "Free USDT",
+      "value": 8913342.95,
+      "pct": 3.6,
+      "tags": [
+        "liquid"
+      ]
+    },
+    {
+      "label": "Strategy AUM (deployed)",
+      "value": 238757221.95,
+      "pct": 96.4,
+      "tags": [
+        "deployed"
+      ]
+    }
+  ],
+  "risk_flags": [
+    {
+      "severity": "info",
+      "message": "Free liquidity 2-5% — large exits will queue"
+    },
+    {
+      "severity": "warning",
+      "message": "Delegate-cover token balance is not a verified first-loss guarantee. Current version poolDelegateCover getter reverts and hasSufficientCover is pure true; no enforceable minimum or alternative guarantee is established."
+    },
+    {
+      "severity": "info",
+      "message": "Pool Delegate has discretionary loan-funding authority; EOA bytecode alone does not establish its key-management or custody controls"
+    },
+    {
+      "severity": "warning",
+      "message": "Collateral valuation incomplete: 10 positions, $18.35M principal unpriced. Missing readings are unknown; no complete economic coverage established."
+    },
+    {
+      "severity": "warning",
+      "message": "At-par (Set B) collateral: 37% of book — stablecoin/RWA issuer/peg surface is a primary risk axis"
+    },
+    {
+      "severity": "warning",
+      "message": "$50.00M USDC-at-initial-par exposure (20.97% of enumerated principal); no claim this is the largest loan overall"
+    },
+    {
+      "severity": "info",
+      "code": "collateral_source_model_corrected",
+      "message": "Prior mapped currentAssetAmount below-par/deterioration inferences are withdrawn as a misbound producer model. Official exact-address collateral figures are issuer assertions, not verified custody or a collateral cure."
+    },
+    {
+      "severity": "warning",
+      "code": "issuer_projection_unverified",
+      "message": "Publisher instant liquidity includes multi-chain LP/DeFi. It is not funded local pool cash, verified receipt ownership, unwind capacity or bridge execution. Scheduled principal/interest is not cash received."
+    }
+  ],
+  "vault_status": null,
+  "asset_specific": {
+    "type": "syrupusdt",
+    "extra_summary_cards": [
+      {
+        "label": "NAV",
+        "value": "$1.1530",
+        "subtext": "USDT per share"
+      }
+    ],
+    "card_overrides": {
+      "Collateral Ratio": {
+        "label": "Pool Coverage Ratio",
+        "subtext": "Pool accounting reconciliation; not independent collateral, custody or recoverability assurance."
+      }
+    },
+    "vault_state": {
+      "pool": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+      "pool_manager": "0x0cdA32E08B48bFDDbc7eE96B44b09cf286F9E21a",
+      "share_token_decimals": 6,
+      "asset_token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "total_assets": 247670564.9,
+      "total_supply": 214810963.56,
+      "nav": 1.15297,
+      "free_usdc": 8913342.95,
+      "strategy_aum": 238757221.95,
+      "strategy_aum_basis": "pool-specific own accounting claims; not immediately withdrawable cash or independent credit NAV",
+      "accounting_context": {
+        "schema_version": "syrup-pool-accounting/1",
+        "block": 26424068,
+        "hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+        "timestamp": 1794789779,
+        "pinning": "all_accounting_calls_pinned"
+      },
+      "accounting_raw": {
+        "units": "native underlying6decimal base units",
+        "pool_cash": "8913342952633",
+        "pool_assets": "247670564904894",
+        "own_strategy_claims": "238757221952261",
+        "pool_losses": "0",
+        "components_minus_NAV": "0"
+      },
+      "unrealized_losses_basis": "poolManager.unrealizedLosses, native underlying6decimals; not independent credit NAV",
+      "independent_credit_nav": null,
+      "principal_out": 238402567.37,
+      "free_liquidity": 9267997.53,
+      "deployment_ratio_pct": 96.26,
+      "pcr_principal_pct": 100.0,
+      "unrealized_losses": 0.0,
+      "liquidity_cap": 2000000000.0,
+      "cap_utilization_pct": 12.38,
+      "strategies": [
+        {
+          "address": "0x616022E54324eF9c13B99c229Dac8ea69AF4FAFf",
+          "is_loan_manager": true,
+          "aum_usd": 238757221.95,
+          "principal_out_usd": 238402567.37,
+          "accounted_interest_usd": 327664.24,
+          "principal_fields_supported": true,
+          "unrealized_losses_usd": null,
+          "principal_scope": "exact pool loan-manager only",
+          "aum_basis": "pool_loan_manager.assetsUnderManagement()",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0xA3F2a26f3fdFB0ea456271fD13792B976921C69a",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x68706d21B0CBe66873D2A9f19f273fC53e784F83",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x4c6fc026DF8042Cb71D46558EA221D5c42BB0024",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x433D0FBaDC48334e99f269CfF0A3800fB15251a5",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x5DDc47BDe674D4C137650e61c8193a215949C811",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x38d09539BFAfd373507F92917552648Cc47b6555",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        },
+        {
+          "address": "0x029F491A17A52a8D052F711a037C1D88C9330692",
+          "is_loan_manager": false,
+          "aum_usd": 0.0,
+          "principal_out_usd": null,
+          "accounted_interest_usd": null,
+          "principal_fields_supported": false,
+          "unrealized_losses_usd": null,
+          "principal_scope": "unavailable_shared_manager_pool_specific_principal",
+          "aum_basis": "shared_manager.assetsOf(poolManager)",
+          "aum_block": 26424068,
+          "aum_block_hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+          "aum_block_timestamp": 1794789779
+        }
+      ]
+    },
+    "yield": {
+      "base_apy_pct": 4.93,
+      "base_apy_source": "pegtracker_nav_7d",
+      "headline_apy_pct": 5.18,
+      "core_apy_pct": 5.18,
+      "boost_apy_pct": 0.0,
+      "apy_as_of": 1794614400,
+      "season_incentive_apy_pct": 0,
+      "delegate_fee_pct": 0.0,
+      "headline_apy_source": "syrup_graphql"
+    },
+    "external_collateral_verification": {
+      "source": "https://dashboard.ledgerlens.io/c/maple",
+      "reviewed_at": "2026-10-28",
+      "source_verified_at": "2026-10-27T01:00:00Z",
+      "scope": "combined syrupUSDC and syrupUSDT",
+      "summary_retrievable": true,
+      "per_pool_allocation_verified": false,
+      "per_loan_attestation_retrieved": false,
+      "limitation": "Combined summary only; custody scope and asset allocations not matched to producer collateral aggregates"
+    },
+    "loan_book": {
+      "active_loan_count": 17,
+      "borrower_count": 7,
+      "weighted_avg_rate_pct": 4.87,
+      "weighted_avg_remaining_days_to_due": 44.6,
+      "impaired_count": 0,
+      "called_count": 0,
+      "default_count": 0,
+      "top_borrower_concentration_pct": 38.69,
+      "classification_version": "issuer_transparency_ssr_v1+legacy_unmatched",
+      "classification_definition": "Exact issuer Lending membership; unmatched supporting metadata is legacy. Economic-use labels do not verify deployed version, legal ownership or custody",
+      "principal_unknown_usd": 0,
+      "credit_coverage": {
+        "denominator_basis": "classified_credit_principal",
+        "denominator_usd": 200052547.37,
+        "member_loan_addresses": [
+          "0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f",
+          "0x0d2dF2bbad7744ea7fAE8f8F7BE7bc3221E02b9A",
+          "0x01a30dE2836Db8E3Fce3168e33215018601C728F",
+          "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+          "0x7Fc443DD02Ed6A0355CD3949C62aBBd910cd87F0",
+          "0xa959FeD92C3C5183222F1E3F726420756c632477"
+        ],
+        "measured_principal_usd": 200052547.37,
+        "measured_collateral_usd": 280550658.52,
+        "complete": true,
+        "collateral_ratio_pct": 140.24,
+        "missing_loan_addresses": [],
+        "measurement_assurance": "Complete means source values present; not verified custody, title, legal ownership or realizable proceeds"
+      },
+      "concentration_loans_only": {
+        "total_borrowers": 4,
+        "top_1_share_pct": 46.1,
+        "top_3_share_pct": 98.68,
+        "top_5_share_pct": 100.0,
+        "top_10_share_pct": 100.0,
+        "hhi": 3513,
+        "hhi_bucket": "concentrated",
+        "denominator_usd": 200052547.37,
+        "denominator_basis": "classified_credit_principal",
+        "member_loan_addresses": [
+          "0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f",
+          "0x0d2dF2bbad7744ea7fAE8f8F7BE7bc3221E02b9A",
+          "0x01a30dE2836Db8E3Fce3168e33215018601C728F",
+          "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+          "0x7Fc443DD02Ed6A0355CD3949C62aBBd910cd87F0",
+          "0xa959FeD92C3C5183222F1E3F726420756c632477"
+        ],
+        "borrowers_listed": 4,
+        "borrowers_total": 4,
+        "borrowers": [
+          {
+            "address": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+            "principal_usd": 92230000.0,
+            "loan_count": 3,
+            "share_pct": 46.1,
+            "firm": null
+          },
+          {
+            "address": "0x8669F3189Ea2318d28C7183A971d65E0C352f1e9",
+            "principal_usd": 55186488.37,
+            "loan_count": 1,
+            "share_pct": 27.59,
+            "firm": null
+          },
+          {
+            "address": "0x1Af652b5e28fB0d113aDf0803cCF8F34862bBAA5",
+            "principal_usd": 50000000.0,
+            "loan_count": 1,
+            "share_pct": 24.99,
+            "firm": null
+          },
+          {
+            "address": "0x6C806A5F682243E5171A63BF49aA58b4153F93Ac",
+            "principal_usd": 2636059.0,
+            "loan_count": 1,
+            "share_pct": 1.32,
+            "firm": null
+          }
+        ],
+        "classification_version": "issuer_transparency_ssr_v1+legacy_unmatched",
+        "excluded_loan_addresses": [
+          "0x91D25b80aE8b750E31bA649Db4e726C851C27759",
+          "0x77e5c78E896fD74A3E5abcdeF642129D48Ee141F",
+          "0x7c3383282Ad717c58568952139853D6f59935f2d",
+          "0x0009BFf1fcB8C767e5894164124d3E42aACA0542",
+          "0xBe58DDA6289C964487D10748fFB3f175380dcE94",
+          "0x17553a6A30A14c21caD6F82E8004c1Bf2f5F9EDf",
+          "0xA416C294AF790251Cd208fd520Dd8c15a147A410",
+          "0x8cdc4136b8C872AEDC8BE365345643082eee9599",
+          "0xE6B86B4b2499F9c8C2e9D32E725F75869C9b4688",
+          "0x36e23ad09ee1F044AA608e70f880aA837bF5BdC5",
+          "0xe9fc83A3c9f35e3344a636253f70c8d2b90F59F4"
+        ]
+      },
+      "concentration": {
+        "total_borrowers": 7,
+        "top_1_share_pct": 38.69,
+        "top_3_share_pct": 82.81,
+        "top_5_share_pct": 96.61,
+        "top_10_share_pct": 100.0,
+        "hhi": 2605,
+        "hhi_bucket": "concentrated",
+        "denominator_usd": 238402567.37,
+        "denominator_basis": "enumerated_active_loan_principal",
+        "member_loan_addresses": [
+          "0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f",
+          "0x0d2dF2bbad7744ea7fAE8f8F7BE7bc3221E02b9A",
+          "0x01a30dE2836Db8E3Fce3168e33215018601C728F",
+          "0x91D25b80aE8b750E31bA649Db4e726C851C27759",
+          "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+          "0x77e5c78E896fD74A3E5abcdeF642129D48Ee141F",
+          "0x7c3383282Ad717c58568952139853D6f59935f2d",
+          "0x0009BFf1fcB8C767e5894164124d3E42aACA0542",
+          "0x7Fc443DD02Ed6A0355CD3949C62aBBd910cd87F0",
+          "0xa959FeD92C3C5183222F1E3F726420756c632477",
+          "0xBe58DDA6289C964487D10748fFB3f175380dcE94",
+          "0x17553a6A30A14c21caD6F82E8004c1Bf2f5F9EDf",
+          "0xA416C294AF790251Cd208fd520Dd8c15a147A410",
+          "0x8cdc4136b8C872AEDC8BE365345643082eee9599",
+          "0xE6B86B4b2499F9c8C2e9D32E725F75869C9b4688",
+          "0x36e23ad09ee1F044AA608e70f880aA837bF5BdC5",
+          "0xe9fc83A3c9f35e3344a636253f70c8d2b90F59F4"
+        ],
+        "borrowers_listed": 7,
+        "borrowers_total": 7,
+        "borrowers": [
+          {
+            "address": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+            "principal_usd": 92230000.0,
+            "loan_count": 3,
+            "share_pct": 38.69,
+            "firm": null
+          },
+          {
+            "address": "0x8669F3189Ea2318d28C7183A971d65E0C352f1e9",
+            "principal_usd": 55186488.37,
+            "loan_count": 1,
+            "share_pct": 23.15,
+            "firm": null
+          },
+          {
+            "address": "0x1Af652b5e28fB0d113aDf0803cCF8F34862bBAA5",
+            "principal_usd": 50000000.0,
+            "loan_count": 1,
+            "share_pct": 20.97,
+            "firm": null
+          },
+          {
+            "address": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+            "principal_usd": 25800020.0,
+            "loan_count": 5,
+            "share_pct": 10.82,
+            "firm": null
+          },
+          {
+            "address": "0xd6891e15CBa093BA1e13c43dbDdF988d6f4347F5",
+            "principal_usd": 7100000.0,
+            "loan_count": 1,
+            "share_pct": 2.98,
+            "firm": null
+          },
+          {
+            "address": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+            "principal_usd": 5450000.0,
+            "loan_count": 5,
+            "share_pct": 2.29,
+            "firm": null
+          },
+          {
+            "address": "0x6C806A5F682243E5171A63BF49aA58b4153F93Ac",
+            "principal_usd": 2636059.0,
+            "loan_count": 1,
+            "share_pct": 1.11,
+            "firm": null
+          }
+        ]
+      },
+      "principal_loans_only_usd": 200052547.37,
+      "principal_liquidity_usd": 38350020.0,
+      "principal_total_usd": 238402567.37,
+      "loans_only_count": 6,
+      "liquidity_count": 11,
+      "payment_ladder": {
+        "horizon_days": 180,
+        "bucket_size_days": 30,
+        "now_unix": 1794807919,
+        "buckets": [
+          {
+            "days_from_now_start": 0,
+            "days_from_now_end": 30,
+            "period_end_iso": "2026-12-16",
+            "loan_count": 5,
+            "expected_inflow_usd": 859915.94
+          },
+          {
+            "days_from_now_start": 30,
+            "days_from_now_end": 60,
+            "period_end_iso": "2027-01-15",
+            "loan_count": 0,
+            "expected_inflow_usd": 0
+          },
+          {
+            "days_from_now_start": 60,
+            "days_from_now_end": 90,
+            "period_end_iso": "2027-02-14",
+            "loan_count": 0,
+            "expected_inflow_usd": 0
+          },
+          {
+            "days_from_now_start": 90,
+            "days_from_now_end": 120,
+            "period_end_iso": "2027-03-16",
+            "loan_count": 1,
+            "expected_inflow_usd": 0.07
+          },
+          {
+            "days_from_now_start": 120,
+            "days_from_now_end": 150,
+            "period_end_iso": "2027-04-15",
+            "loan_count": 2,
+            "expected_inflow_usd": 0.0
+          },
+          {
+            "days_from_now_start": 150,
+            "days_from_now_end": 180,
+            "period_end_iso": "2027-05-15",
+            "loan_count": 8,
+            "expected_inflow_usd": 630789.21
+          }
+        ],
+        "totals": {
+          "expected_inflow_30d_usd": 859915.94,
+          "expected_inflow_60d_usd": 859915.94,
+          "expected_inflow_90d_usd": 859915.94,
+          "expected_inflow_180d_usd": 1490705.22
+        },
+        "overdue_loan_count": 1,
+        "overdue_principal_usd": 2636059.0,
+        "method": "rate_estimate"
+      },
+      "loans": [
+        {
+          "loan_addr": "0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f",
+          "borrower": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+          "principal": 70000000.0,
+          "rate_pct": 5.875,
+          "payment_interval_days": 31.0,
+          "payment_due_date": 1796819099,
+          "date_funded": 1787354795,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 336.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "BTC",
+            "amount": null,
+            "amount_decimal_unit": "BTC",
+            "usd": 104278410.46804903,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 160.0,
+            "current_level_pct": 148.9692,
+            "buffer_pp": -11.03,
+            "is_at_par": false,
+            "category": "crypto",
+            "issuer": "—",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0x8a44ff7b9e755a9ea6a4ee0708b7d46c79eace4f",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 70000000.0,
+              "principal_native_raw": "70000000",
+              "collateral_asset": "BTC",
+              "collateral_value_usd": 104278410.46804903,
+              "collateral_value_raw": "104278410.46804903",
+              "level_pct": 148.9692,
+              "level_raw": "1489692",
+              "issuer_term_label": "Open Term",
+              "date_raw": "20782",
+              "date_display": "Nov 25, 2026",
+              "days_display": "9 days",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x0d2dF2bbad7744ea7fAE8f8F7BE7bc3221E02b9A",
+          "borrower": "0x8669F3189Ea2318d28C7183A971d65E0C352f1e9",
+          "principal": 55186488.37,
+          "rate_pct": 7.75,
+          "payment_interval_days": 31.0,
+          "payment_due_date": 1795986095,
+          "date_funded": 1768245023,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "XRP",
+            "amount": null,
+            "amount_decimal_unit": "XRP",
+            "usd": 88767949.24471945,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 150.0,
+            "current_level_pct": 160.8509,
+            "buffer_pp": 10.85,
+            "is_at_par": false,
+            "category": "crypto",
+            "issuer": "—",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0x0d2df2bbad7744ea7fae8f8f7be7bc3221e02b9a",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 55186488.37,
+              "principal_native_raw": "55186488.37",
+              "collateral_asset": "XRP",
+              "collateral_value_usd": 88767949.24471945,
+              "collateral_value_raw": "88767949.24471945",
+              "level_pct": 160.8509,
+              "level_raw": "1608509",
+              "issuer_term_label": "Fixed Term",
+              "date_raw": "20833",
+              "date_display": "Jan 15, 2027",
+              "days_display": "60 days",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x01a30dE2836Db8E3Fce3168e33215018601C728F",
+          "borrower": "0x1Af652b5e28fB0d113aDf0803cCF8F34862bBAA5",
+          "principal": 50000000.0,
+          "rate_pct": 0.75,
+          "payment_interval_days": 36.0,
+          "payment_due_date": 1797364907,
+          "date_funded": 1784739155,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDC",
+            "amount": null,
+            "amount_decimal_unit": "USDC",
+            "usd": 50000000.0,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 100.0,
+            "current_level_pct": 100.0,
+            "buffer_pp": 0.0,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Circle",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0x01a30de2836db8e3fce3168e33215018601c728f",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 50000000.0,
+              "principal_native_raw": "50000000",
+              "collateral_asset": "USDC",
+              "collateral_value_usd": 50000000.0,
+              "collateral_value_raw": "50000000",
+              "level_pct": 100.0,
+              "level_raw": "1000000",
+              "issuer_term_label": "Open Term",
+              "date_raw": "20774",
+              "date_display": "Nov 17, 2026",
+              "days_display": "1 day",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x91D25b80aE8b750E31bA649Db4e726C851C27759",
+          "borrower": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+          "principal": 20000005.0,
+          "rate_pct": 3.75,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1808681603,
+          "date_funded": 1785158195,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "PYUSD",
+            "amount": 20000000.0,
+            "amount_decimal_unit": "PYUSD",
+            "usd": 20000000.0,
+            "usd_source": "peg_assumed",
+            "init_level_pct": 100.0,
+            "current_level_pct": 100.0,
+            "buffer_pp": -0.0,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Paxos",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": 1.0,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541761+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "peg_assumed",
+              "price": 1.0,
+              "upstream_updated_at": null,
+              "status": "assumption, not collateral custody or redemption assurance"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": "tBills",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "treasuries",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=tBills; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "treasuries",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+          "borrower": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+          "principal": 20000000.0,
+          "rate_pct": 5.875,
+          "payment_interval_days": 31.0,
+          "payment_due_date": 1796589575,
+          "date_funded": 1787693519,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 504.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "BTC",
+            "amount": null,
+            "amount_decimal_unit": "BTC",
+            "usd": 29767339.90903396,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 160.0,
+            "current_level_pct": 148.8367,
+            "buffer_pp": -11.16,
+            "is_at_par": false,
+            "category": "crypto",
+            "issuer": "—",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0x79c1fce425ed3ff66ddab70f6691a5dedb1cdb9c",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 20000000.0,
+              "principal_native_raw": "20000000",
+              "collateral_asset": "BTC",
+              "collateral_value_usd": 29767339.90903396,
+              "collateral_value_raw": "29767339.90903396",
+              "level_pct": 148.8367,
+              "level_raw": "1488367",
+              "issuer_term_label": "Open Term",
+              "date_raw": "20789",
+              "date_display": "Dec 2, 2026",
+              "days_display": "16 days",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x77e5c78E896fD74A3E5abcdeF642129D48Ee141F",
+          "borrower": "0xd6891e15CBa093BA1e13c43dbDdF988d6f4347F5",
+          "principal": 7100000.0,
+          "rate_pct": 5.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1809452231,
+          "date_funded": 1790686379,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 720.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 0.692561,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541806+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "termBasis",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "trading",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact address: BTC basis trade, CME/Coinbase",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "trading",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x7c3383282Ad717c58568952139853D6f59935f2d",
+          "borrower": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+          "principal": 5600005.0,
+          "rate_pct": 3.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1810143419,
+          "date_funded": 1792446851,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "aUSDT",
+            "amount": 0.0,
+            "amount_decimal_unit": "aUSDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "unknown",
+            "issuer": null,
+            "data_source": "maple_graphql",
+            "decimals_used": 18,
+            "decimals_basis": "unverified default18 fallback",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541819+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "defi",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "defi",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=defi; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "defi",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x0009BFf1fcB8C767e5894164124d3E42aACA0542",
+          "borrower": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+          "principal": 3500000.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1810056047,
+          "date_funded": 1761145187,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 48.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 0.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 17825.390885,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541830+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "amm",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "dex_lp",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=amm; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "dex_lp",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x7Fc443DD02Ed6A0355CD3949C62aBBd910cd87F0",
+          "borrower": "0x6C806A5F682243E5171A63BF49aA58b4153F93Ac",
+          "principal": 2636059.0,
+          "rate_pct": 10.0,
+          "payment_interval_days": 30.0,
+          "payment_due_date": 1794773315,
+          "date_funded": 1748462519,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 1440.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "BTC",
+            "amount": null,
+            "amount_decimal_unit": "BTC",
+            "usd": 3943175.39071611,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 137.93,
+            "current_level_pct": 149.586,
+            "buffer_pp": 11.66,
+            "is_at_par": false,
+            "category": "crypto",
+            "issuer": "—",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0x7fc443dd02ed6a0355cd3949c62abbd910cd87f0",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 2636059.0,
+              "principal_native_raw": "2636059",
+              "collateral_asset": "BTC",
+              "collateral_value_usd": 3943175.39071611,
+              "collateral_value_raw": "3943175.39071611",
+              "level_pct": 149.586,
+              "level_raw": "1495860",
+              "issuer_term_label": "Open Term",
+              "date_raw": "20774",
+              "date_display": "Nov 17, 2026",
+              "days_display": "1 day",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0xa959FeD92C3C5183222F1E3F726420756c632477",
+          "borrower": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+          "principal": 2230000.0,
+          "rate_pct": 5.6000000000000005,
+          "payment_interval_days": 31.0,
+          "payment_due_date": 1795449539,
+          "date_funded": 1785439043,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 168.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "BTC",
+            "amount": null,
+            "amount_decimal_unit": "BTC",
+            "usd": 3793783.5097335,
+            "usd_source": "issuer_transparency_ssr",
+            "init_level_pct": 160.0,
+            "current_level_pct": 170.1248,
+            "buffer_pp": 10.12,
+            "is_at_par": false,
+            "category": "crypto",
+            "issuer": "—",
+            "data_source": "issuer_transparency_ssr",
+            "decimals_used": null,
+            "decimals_basis": "No underlying per-loan quantity inferred for adopted publisher USD value",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T05:45:19.546776+00:00",
+            "source_clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+            "price_evidence": {
+              "source": "issuer_derived_valuation",
+              "upstream_updated_at": null,
+              "status": "Underlying per-loan price/quantity not published as independently timestamped inputs"
+            },
+            "source_observed_at": null,
+            "valuation_observed_at": null,
+            "raw_source_scope": "Prior GraphQL fixture retained for mapping, not direct current publisher valuation input",
+            "valuation_scope": "Official exact-address/source-principal publisher valuation, not verified custody or liquidation proceeds",
+            "legacy_currentAssetAmount_model": {
+              "status": "withdrawn_misbound_valuation_model_not_credit_deterioration_evidence",
+              "audit_scope": "Withdrawn model retained in private evidence; none of its values are active collateral data."
+            },
+            "publisher_transparency": {
+              "loan_address": "0xa959fed92c3c5183222f1e3f726420756c632477",
+              "principal_unit": "USDT",
+              "collateral_value_unit": "USD (publisher display)",
+              "level_denominator_basis": "Publisher nominal principal; no independent stablecoin/USD conversion was verified",
+              "principal_native": 2230000.0,
+              "principal_native_raw": "2230000",
+              "collateral_asset": "BTC",
+              "collateral_value_usd": 3793783.5097335,
+              "collateral_value_raw": "3793783.5097335",
+              "level_pct": 170.1248,
+              "level_raw": "1701248",
+              "issuer_term_label": "Open Term",
+              "date_raw": "20775",
+              "date_display": "Nov 18, 2026",
+              "days_display": "2 days",
+              "date_semantics": "Source column Next call / Maturity; not a native payment due date or verified callable right",
+              "underlying_quantity": null,
+              "price_observed_at": null,
+              "collateral_observed_at": null,
+              "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+              "assurance": "issuer_assertion_not_custody_allocation_or_title_verification"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "source_model_only"
+          },
+          "loan_meta_type": null,
+          "position_type": "loan",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "credit",
+            "source": "https://maple.finance/transparency/products/syrupusdt",
+            "evidence_basis": "Exact-address publisher Overcollateralized Lending table; economic-use label only, not deployed contract version or legal ownership",
+            "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+            "observed_at": null,
+            "version": "issuer_transparency_ssr_v1"
+          },
+          "strategy_subtype": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0xBe58DDA6289C964487D10748fFB3f175380dcE94",
+          "borrower": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+          "principal": 1200000.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1805655275,
+          "date_funded": 1772043263,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 0.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 6111.562589,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541907+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "amm",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "dex_lp",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=amm; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "dex_lp",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x17553a6A30A14c21caD6F82E8004c1Bf2f5F9EDf",
+          "borrower": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+          "principal": 250000.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1808765435,
+          "date_funded": 1775587787,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 0.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 1273.242206,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541919+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "amm",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "dex_lp",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=amm; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "dex_lp",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0xA416C294AF790251Cd208fd520Dd8c15a147A410",
+          "borrower": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+          "principal": 250000.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1808765591,
+          "date_funded": 1771601699,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 0.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 1273.242206,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541931+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "amm",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "dex_lp",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=amm; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "dex_lp",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x8cdc4136b8C872AEDC8BE365345643082eee9599",
+          "borrower": "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81",
+          "principal": 250000.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1808765507,
+          "date_funded": 1772138507,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 48.0,
+          "grace_period_h": 24.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDT",
+            "amount": 1273.242206,
+            "amount_decimal_unit": "USDT",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "stablecoin",
+            "issuer": "Tether",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541940+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "amm",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "dex_lp",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=amm; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "dex_lp",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0xE6B86B4b2499F9c8C2e9D32E725F75869C9b4688",
+          "borrower": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+          "principal": 200000.0,
+          "rate_pct": 3.05,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1809196979,
+          "date_funded": 1785874607,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDtb",
+            "amount": 18911.22,
+            "amount_decimal_unit": "USDtb",
+            "usd": null,
+            "usd_source": "unavailable",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "unknown",
+            "issuer": null,
+            "data_source": "maple_graphql",
+            "decimals_used": 18,
+            "decimals_basis": "unverified default18 fallback",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541954+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "unavailable",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "tBills",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "loan",
+          "economic_classification": {
+            "category": "treasuries",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Exact loan metadata tBills/USDtb; borrower 0x8DF6...6122 matches issuer USDtb custody",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "treasuries",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0x36e23ad09ee1F044AA608e70f880aA837bF5BdC5",
+          "borrower": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+          "principal": 5.0,
+          "rate_pct": 0.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1807480223,
+          "date_funded": 1778076083,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 24.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USTB",
+            "amount": 0.0,
+            "amount_decimal_unit": "USTB",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "rwa",
+            "issuer": "Superstate",
+            "data_source": "maple_graphql",
+            "decimals_used": 6,
+            "decimals_basis": "producer enum mapping",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541966+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "tBills",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "treasuries",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=tBills; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "treasuries",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        },
+        {
+          "loan_addr": "0xe9fc83A3c9f35e3344a636253f70c8d2b90F59F4",
+          "borrower": "0x8DF6721F643E796C456ee080929e01C7f18E6122",
+          "principal": 5.0,
+          "rate_pct": 3.0,
+          "payment_interval_days": 180.0,
+          "payment_due_date": 1803834539,
+          "date_funded": 1782335243,
+          "is_impaired": false,
+          "is_called": false,
+          "is_in_default": false,
+          "notice_period_h": 48.0,
+          "grace_period_h": 48.0,
+          "late_interest_premium_rate_pct": 5.0,
+          "status": "healthy",
+          "metadata_observed_at": "2026-11-16T01:18:48Z",
+          "collateral": {
+            "asset": "USDG",
+            "amount": 0.0,
+            "amount_decimal_unit": "USDG",
+            "usd": null,
+            "usd_source": "data_anomaly",
+            "init_level_pct": 100.0,
+            "current_level_pct": null,
+            "buffer_pp": null,
+            "is_at_par": true,
+            "category": "unknown",
+            "issuer": null,
+            "data_source": "maple_graphql",
+            "decimals_used": 18,
+            "decimals_basis": "unverified default18 fallback",
+            "price_usd_used": null,
+            "metadata_retrieved_at": "2026-11-16T01:18:48Z",
+            "collateral_valuation_as_of": null,
+            "valuation_computed_at": "2026-11-16T01:18:53.541977+00:00",
+            "source_clock_basis": "GraphQL retrieval only; upstream collateral valuation time not supplied",
+            "price_evidence": {
+              "source": "data_anomaly",
+              "upstream_updated_at": null,
+              "status": "unavailable or legacy price without retained clock"
+            },
+            "read_corroborated": null,
+            "read_corroboration_basis": "Independent collateral/custody corroboration unavailable; protocol status flags and omission from below-par checks do not verify this collateral reading.",
+            "legacy_status_gate_result": true,
+            "legacy_status_gate_basis": "read is not a below-par Set A collateral read",
+            "protocol_status_flag_present": false,
+            "valuation_coverage_status": "missing"
+          },
+          "loan_meta_type": "intercompany",
+          "position_type": "liquidity",
+          "position_type_legacy_heuristic": "liquidity",
+          "economic_classification": {
+            "category": "intercompany",
+            "source": "https://api.maple.finance/v2/graphql",
+            "evidence_basis": "Address-specific loanMeta.type=intercompany; issuer allocation equivalence not independently established",
+            "reviewed_at": "2026-10-28",
+            "version": "issuer_economic_v2_2026-10-28",
+            "assurance": "issuer_assertion_not_independent_verification",
+            "metadata_observed_at": "2026-11-16T01:18:48Z"
+          },
+          "strategy_subtype": "intercompany",
+          "custody": null,
+          "native_status_observed_at": "2026-11-16T00:43:38Z",
+          "native_status_clock_basis": "Frozen original producer roster; no new native status read in this offline rebuild",
+          "metadata_clock_basis": "GraphQL retrieval, not collateral/custody valuation timestamp"
+        }
+      ],
+      "enumerated_principal": 238402567.37,
+      "principal_out": 238402567.37,
+      "enumeration_residual": 0.0,
+      "enumeration_coverage_pct": 100.0,
+      "collateral_summary": {
+        "by_asset": [
+          {
+            "asset": "BTC",
+            "loans": 4,
+            "principal_usd": 94866059.0,
+            "pct_of_book": 39.79,
+            "init_level_pct_min": 137.93,
+            "init_level_pct_max": 160.0,
+            "category": "crypto",
+            "issuer": "—"
+          },
+          {
+            "asset": "XRP",
+            "loans": 1,
+            "principal_usd": 55186488.37,
+            "pct_of_book": 23.15,
+            "init_level_pct_min": 150.0,
+            "init_level_pct_max": 150.0,
+            "category": "crypto",
+            "issuer": "—"
+          },
+          {
+            "asset": "USDC",
+            "loans": 1,
+            "principal_usd": 50000000.0,
+            "pct_of_book": 20.97,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "stablecoin",
+            "issuer": "Circle"
+          },
+          {
+            "asset": "PYUSD",
+            "loans": 1,
+            "principal_usd": 20000005.0,
+            "pct_of_book": 8.39,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "stablecoin",
+            "issuer": "Paxos"
+          },
+          {
+            "asset": "USDT",
+            "loans": 6,
+            "principal_usd": 12550000.0,
+            "pct_of_book": 5.26,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "stablecoin",
+            "issuer": "Tether"
+          },
+          {
+            "asset": "aUSDT",
+            "loans": 1,
+            "principal_usd": 5600005.0,
+            "pct_of_book": 2.35,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "unknown",
+            "issuer": null
+          },
+          {
+            "asset": "USDtb",
+            "loans": 1,
+            "principal_usd": 200000.0,
+            "pct_of_book": 0.08,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "unknown",
+            "issuer": null
+          },
+          {
+            "asset": "USTB",
+            "loans": 1,
+            "principal_usd": 5.0,
+            "pct_of_book": 0.0,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "rwa",
+            "issuer": "Superstate"
+          },
+          {
+            "asset": "USDG",
+            "loans": 1,
+            "principal_usd": 5.0,
+            "pct_of_book": 0.0,
+            "init_level_pct_min": 100.0,
+            "init_level_pct_max": 100.0,
+            "category": "unknown",
+            "issuer": null
+          }
+        ],
+        "valuation_coverage": {
+          "total_positions": 17,
+          "priced_positions": 7,
+          "unpriced_positions": 10,
+          "unpriced_principal_usd": 18350015.0,
+          "complete": false,
+          "basis": "Source-model priced rows only; missing/anomalous/unpriced collateral is unknown, excluded from coverage tests and never healthy by omission"
+        },
+        "loans_below_init_count": 2,
+        "principal_below_init_usd": 90000000.0,
+        "set_a_collateral_health": {
+          "crit_level_pct": 100.0,
+          "warn_level_pct": 120.0,
+          "crit_count": 0,
+          "crit_principal_usd": 0,
+          "crit_corroborated_count": 0,
+          "crit_corroborated_principal_usd": 0,
+          "crit_uncorroborated_count": 0,
+          "crit_uncorroborated_principal_usd": 0,
+          "warn_count": 0,
+          "warn_principal_usd": 0
+        },
+        "weighted_avg_buffer_pp": -1.56,
+        "tightest_loan": {
+          "loan_addr": "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+          "borrower": "0x8fee157Cb621ac7484F8b218edd1c14Ce8722628",
+          "principal_usd": 20000000.0,
+          "asset": "BTC",
+          "init_level_pct": 160.0,
+          "current_level_pct": 148.8367,
+          "buffer_pp": -11.16,
+          "points_above_par": 48.84
+        },
+        "set_a_overcollateralized": {
+          "loans": 5,
+          "principal_usd": 150052547.37,
+          "pct_of_book": 62.94,
+          "weighted_avg_init_level_pct": 155.93
+        },
+        "set_b_at_par": {
+          "loans": 12,
+          "principal_usd": 88350020.0,
+          "pct_of_book": 37.06,
+          "named_issuers": [
+            "Circle (USDC)",
+            "Paxos (PYUSD)",
+            "Superstate (USTB)",
+            "Tether (USDT)"
+          ],
+          "largest_position_usd": 50000000.0,
+          "largest_position_asset": "USDC",
+          "largest_position_pct_of_book": 20.97
+        },
+        "pool_collateral_ratio_pct": null,
+        "pool_collateral_value_usd": null,
+        "loans_missing_collateral": 0,
+        "data_source": "issuer_transparency_ssr_plus_unmatched_legacy",
+        "data_source_timestamp": null,
+        "metadata_retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+        "computed_at": "2026-11-16T05:45:19.546776+00:00",
+        "clock_basis": "Mixed source clocks retained per loan/price; no common collateral observation time",
+        "legacy_pool_aggregate_basis": "Prior GraphQL aggregate, not recomputed publisher credit totals; retain original retrieval separately",
+        "publisher_credit_principal_native": 200052547.37,
+        "publisher_credit_collateral_usd": 280550658.5222521,
+        "publisher_credit_level_pct": 140.23848344373727,
+        "publisher_values_are_pool_owned_assets": false,
+        "legacy_graphql_pool_aggregate": {
+          "collateral_value_usd": 319761336.99,
+          "collateral_ratio_pct": 134.13,
+          "status": "withdrawn_from_current_corrected_fields_not_reconciled_to_publisher_credit_scope",
+          "observed_at": null,
+          "source": "original frozen GraphQL pool aggregate; retrieval retained in prior source lineage"
+        },
+        "source_model_initial_buffer_basis": "Corrected issuer current level minus legacy initial level; not below-principal status or independent deterioration proof"
+      },
+      "legacy_classification_version": "issuer_economic_v2_2026-10-28",
+      "classification_assurance": "Reported use classification; no legal pool ownership/custody/title/priority guarantee"
+    },
+    "loan_assurance_basis": "Source economic classifications describe reported use; they do not establish legal pool ownership, custody, title, priority or recovery. Protocol status and modeled valuations are not verified cash servicing or collateral assurance",
+    "aum_history": {
+      "source": "syrup_graphql_aum_time_series",
+      "range": "MONTH",
+      "as_of": 1794614400,
+      "entries": [
+        {
+          "timestamp": 1792108800,
+          "assets_usd": 17551382.27,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 301260712.37,
+          "collateral_usd": 322830274.8,
+          "collateral_ratio_pct": 107.16,
+          "deployment_pct": 94.49
+        },
+        {
+          "timestamp": 1792195200,
+          "assets_usd": 17394351.76,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 301260712.37,
+          "collateral_usd": 321130794.07,
+          "collateral_ratio_pct": 106.6,
+          "deployment_pct": 94.54
+        },
+        {
+          "timestamp": 1792281600,
+          "assets_usd": 17718143.62,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 301260712.37,
+          "collateral_usd": 323624730.98,
+          "collateral_ratio_pct": 107.42,
+          "deployment_pct": 94.45
+        },
+        {
+          "timestamp": 1792368000,
+          "assets_usd": 6566556.86,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 312260712.37,
+          "collateral_usd": 322969943.58,
+          "collateral_ratio_pct": 103.43,
+          "deployment_pct": 97.94
+        },
+        {
+          "timestamp": 1792454400,
+          "assets_usd": 6333103.87,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 312260712.37,
+          "collateral_usd": 327579198.57,
+          "collateral_ratio_pct": 104.91,
+          "deployment_pct": 98.01
+        },
+        {
+          "timestamp": 1792540800,
+          "assets_usd": 9362133.0,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 312260712.37,
+          "collateral_usd": 332530311.08,
+          "collateral_ratio_pct": 106.49,
+          "deployment_pct": 97.09
+        },
+        {
+          "timestamp": 1792627200,
+          "assets_usd": 8398927.12,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 320760712.37,
+          "collateral_usd": 322109199.07,
+          "collateral_ratio_pct": 100.42,
+          "deployment_pct": 97.45
+        },
+        {
+          "timestamp": 1792713600,
+          "assets_usd": 7619989.7,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 320760712.37,
+          "collateral_usd": 320580157.66,
+          "collateral_ratio_pct": 99.94,
+          "deployment_pct": 97.68
+        },
+        {
+          "timestamp": 1792800000,
+          "assets_usd": 232089.02,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 320760712.37,
+          "collateral_usd": 320295485.64,
+          "collateral_ratio_pct": 99.85,
+          "deployment_pct": 99.93
+        },
+        {
+          "timestamp": 1792886400,
+          "assets_usd": 786610.87,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 320760712.37,
+          "collateral_usd": 318788537.98,
+          "collateral_ratio_pct": 99.39,
+          "deployment_pct": 99.76
+        },
+        {
+          "timestamp": 1792972800,
+          "assets_usd": 8981872.97,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 311760712.37,
+          "collateral_usd": 319699705.55,
+          "collateral_ratio_pct": 102.55,
+          "deployment_pct": 97.2
+        },
+        {
+          "timestamp": 1793059200,
+          "assets_usd": 9362804.37,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 311760712.37,
+          "collateral_usd": 322828719.99,
+          "collateral_ratio_pct": 103.55,
+          "deployment_pct": 97.08
+        },
+        {
+          "timestamp": 1793145600,
+          "assets_usd": 5841610.94,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 312760712.37,
+          "collateral_usd": 323636868.7,
+          "collateral_ratio_pct": 103.48,
+          "deployment_pct": 98.17
+        },
+        {
+          "timestamp": 1793232000,
+          "assets_usd": 6112398.61,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 297660717.37,
+          "collateral_usd": 308775358.41,
+          "collateral_ratio_pct": 103.73,
+          "deployment_pct": 97.99
+        },
+        {
+          "timestamp": 1793318400,
+          "assets_usd": 175871.21,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 297660717.37,
+          "collateral_usd": 309646157.43,
+          "collateral_ratio_pct": 104.03,
+          "deployment_pct": 99.94
+        },
+        {
+          "timestamp": 1793404800,
+          "assets_usd": 804375.96,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 297660717.37,
+          "collateral_usd": 309655820.33,
+          "collateral_ratio_pct": 104.03,
+          "deployment_pct": 99.73
+        },
+        {
+          "timestamp": 1793491200,
+          "assets_usd": 7496.35,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 297660717.37,
+          "collateral_usd": 311441362.01,
+          "collateral_ratio_pct": 104.63,
+          "deployment_pct": 100.0
+        },
+        {
+          "timestamp": 1793577600,
+          "assets_usd": 6645217.17,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 283102567.37,
+          "collateral_usd": 308092916.13,
+          "collateral_ratio_pct": 108.83,
+          "deployment_pct": 97.71
+        },
+        {
+          "timestamp": 1793664000,
+          "assets_usd": 5066972.21,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 283102567.37,
+          "collateral_usd": 311737946.39,
+          "collateral_ratio_pct": 110.11,
+          "deployment_pct": 98.24
+        },
+        {
+          "timestamp": 1793750400,
+          "assets_usd": 3576719.15,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 283102567.37,
+          "collateral_usd": 320413426.58,
+          "collateral_ratio_pct": 113.18,
+          "deployment_pct": 98.75
+        },
+        {
+          "timestamp": 1793836800,
+          "assets_usd": 10076782.01,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 275102567.37,
+          "collateral_usd": 303198608.31,
+          "collateral_ratio_pct": 110.21,
+          "deployment_pct": 96.47
+        },
+        {
+          "timestamp": 1793923200,
+          "assets_usd": 5248174.73,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 273602567.37,
+          "collateral_usd": 300532060.91,
+          "collateral_ratio_pct": 109.84,
+          "deployment_pct": 98.12
+        },
+        {
+          "timestamp": 1794009600,
+          "assets_usd": 1566574.73,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 273602567.37,
+          "collateral_usd": 299064239.38,
+          "collateral_ratio_pct": 109.31,
+          "deployment_pct": 99.43
+        },
+        {
+          "timestamp": 1794096000,
+          "assets_usd": 1629163.95,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 273602567.37,
+          "collateral_usd": 293603727.19,
+          "collateral_ratio_pct": 107.31,
+          "deployment_pct": 99.41
+        },
+        {
+          "timestamp": 1794182400,
+          "assets_usd": 4508294.4,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 268602567.37,
+          "collateral_usd": 293561020.05,
+          "collateral_ratio_pct": 109.29,
+          "deployment_pct": 98.35
+        },
+        {
+          "timestamp": 1794268800,
+          "assets_usd": 4922091.58,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 268602567.37,
+          "collateral_usd": 310232695.32,
+          "collateral_ratio_pct": 115.5,
+          "deployment_pct": 98.2
+        },
+        {
+          "timestamp": 1794355200,
+          "assets_usd": 1351615.91,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 268602567.37,
+          "collateral_usd": 310618987.72,
+          "collateral_ratio_pct": 115.64,
+          "deployment_pct": 99.5
+        },
+        {
+          "timestamp": 1794441600,
+          "assets_usd": 6277030.37,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 257102567.37,
+          "collateral_usd": 303722730.74,
+          "collateral_ratio_pct": 118.13,
+          "deployment_pct": 97.62
+        },
+        {
+          "timestamp": 1794528000,
+          "assets_usd": 1593405.76,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 253402567.37,
+          "collateral_usd": 294638307.61,
+          "collateral_ratio_pct": 116.27,
+          "deployment_pct": 99.38
+        },
+        {
+          "timestamp": 1794614400,
+          "assets_usd": 1238792.02,
+          "assets_in_strategies_usd": 0.0,
+          "loans_usd": 253402567.37,
+          "collateral_usd": 294535127.35,
+          "collateral_ratio_pct": 116.23,
+          "deployment_pct": 99.51
+        }
+      ]
+    },
+    "withdrawal_queue": {
+      "withdrawal_manager": "0x86eBDf902d800F2a82038290B6DBb2A5eE29eB8C",
+      "next_request_id": 7577,
+      "last_request_id": 7576,
+      "queue_depth_slots": 0,
+      "queue_depth_shares": null,
+      "queue_depth_usdc_est": null,
+      "is_empty": true,
+      "timing_unavailable": true,
+      "servicing_assurance": "Queue pointers/processing observations do not verify final cash receipt"
+    },
+    "liquidity": {
+      "source": "kyberswap",
+      "chain": "ethereum",
+      "timestamp": "2026-11-15T22:31:47Z",
+      "sell_into": "USDT",
+      "fair_value": 1.1518929526696862,
+      "fair_value_basis": "market",
+      "quotes": {
+        "1000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "868136225",
+          "amount_out_raw": "998797588",
+          "requested_at": "2026-11-15T22:31:47.928206+00:00",
+          "received_at": "2026-11-15T22:31:48.398758+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 1000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 998.8,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.9988,
+          "slippage_bps": 0.0
+        },
+        "10000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "8681362254",
+          "amount_out_raw": "9987924356",
+          "requested_at": "2026-11-15T22:31:48.399064+00:00",
+          "received_at": "2026-11-15T22:31:48.967942+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 10000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841102176837867",
+          "fees_breakdown": null,
+          "output_usd": 9987.92,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998792,
+          "slippage_bps": -0.1
+        },
+        "50000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "43406811270",
+          "amount_out_raw": "49938476616",
+          "requested_at": "2026-11-15T22:31:48.968236+00:00",
+          "received_at": "2026-11-15T22:31:49.448582+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 50000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 49938.48,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.99877,
+          "slippage_bps": -0.3
+        },
+        "100000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "86813622540",
+          "amount_out_raw": "99874090468",
+          "requested_at": "2026-11-15T22:31:49.448857+00:00",
+          "received_at": "2026-11-15T22:31:50.008549+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 100000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 99874.09,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998741,
+          "slippage_bps": -0.6
+        },
+        "150000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "130220433810",
+          "amount_out_raw": "149806841804",
+          "requested_at": "2026-11-15T22:31:50.008880+00:00",
+          "received_at": "2026-11-15T22:31:50.576645+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 150000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 149806.84,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998712,
+          "slippage_bps": -0.9
+        },
+        "250000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "217034056350",
+          "amount_out_raw": "249663757910",
+          "requested_at": "2026-11-15T22:31:50.576941+00:00",
+          "received_at": "2026-11-15T22:31:51.007166+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 250000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 249663.76,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998655,
+          "slippage_bps": -1.4
+        },
+        "500000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "434068112701",
+          "amount_out_raw": "499255971350",
+          "requested_at": "2026-11-15T22:31:51.007469+00:00",
+          "received_at": "2026-11-15T22:31:51.416942+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 500000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 499255.97,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998512,
+          "slippage_bps": -2.9
+        },
+        "1000000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "868136225403",
+          "amount_out_raw": null,
+          "requested_at": "2026-11-15T22:31:51.417228+00:00",
+          "received_at": "2026-11-15T22:31:53.838750+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 1000000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": null,
+          "fees_breakdown": null,
+          "error": "http_530",
+          "attempts": 4,
+          "provider": "odos"
+        }
+      },
+      "token_address": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+      "basis_note": "Dated route assurance 2026-10-28: sampled Ethereum KyberSwap routes $1K-$1M used v4 syrupUSDT/USDT pool 0xd861038a98942312d1495dd1313fb66c7e7de48f549a15edf3a45decf7338e1d. Its exact PoolKey, zero hook, initialized state and positive liquidity were verified at Ethereum block 26292233. This does not verify every later route, router/token security, execution or settlement. Canonical ladder remains Ethereum secondary quotes into USDT, separate from the Maple withdrawal queue. Plasma quote/pool evidence exists at block 36261171; local execution, settlement and primary request-to-fill latency remain unproved. Historical TVL/volume are not current executable depth.",
+      "configured_rung_count": 8,
+      "selected_rung_count": 8,
+      "slippage_bps_basis": "PRICE IMPACT against this venue's own smallest quoted rung, which EXCLUDES that rung's own spread — it is not the holder's all-in cost. The all-in figure is fill_ratio (output_usd / size). Impact is measured this way deliberately, so peg discount and source lag do not leak into it.",
+      "slippage_reference": {
+        "basis": "venue_spot",
+        "size_usd": 1000,
+        "output_usd": 998.8
+      },
+      "status": "partial",
+      "failed_rungs": {
+        "1000000": "http_530"
+      },
+      "two_pct_depth_bracket_basis": "none",
+      "fill_ratio_basis": "ALL-IN against notional: output_usd / size, where size is converted to tokens at fair_value. Includes the venue's base spread and any gap between fair_value and the venue. 1.0 = exits at fair value; (fill_ratio - 1) * 10000 is the all-in cost in bps.",
+      "cost_conventions": {
+        "fill_ratio": "all_in_vs_notional",
+        "slippage_bps": "price_impact_vs_smallest_rung",
+        "canonical_for": {
+          "holder_exit_cost": "fill_ratio",
+          "depth_search": "slippage_bps"
+        }
+      },
+      "largest_rung_usd": 500000.0,
+      "depth": {
+        "total_2pct_depth": 500000.0,
+        "total_2pct_depth_is_floor": true,
+        "two_pct_depth_status": "ladder_exhausted",
+        "two_pct_depth_size_responsive": true,
+        "two_pct_depth_unresponsive_note": null,
+        "two_pct_depth_basis": "A FLOOR, not a measurement. The deepest rung quoted ($500,000) still clears inside 200bps, so the crossing is somewhere above where we look. Publishing it as '2% depth' would read as a limit we found. SLIPPAGE CONVENTION: TOTAL over the fill (not marginal impact at the margin), measured against this venue's own smallest quoted rung. ⚠️ That reference EXCLUDES the smallest rung's own spread, so the figure is price impact and NOT the holder's all-in cost — which is fill_ratio (output_usd / size). Both are real and they answer different questions. The same ladder classifies differently under total vs marginal and under impact vs all-in, so both halves are stated for cross-producer comparison.",
+        "primary_threshold_bps": 200.0,
+        "depth_50bps": {
+          "threshold_bps": 50.0,
+          "depth_usd": 500000.0,
+          "is_floor": true,
+          "status": "ladder_exhausted",
+          "size_responsive": true,
+          "unresponsive_note": null,
+          "basis": "A FLOOR, not a measurement. The deepest rung quoted ($500,000) still clears inside 50bps, so the crossing is somewhere above where we look. Publishing it as '0.5% depth' would read as a limit we found. SLIPPAGE CONVENTION: TOTAL over the fill (not marginal impact at the margin), measured against this venue's own smallest quoted rung. ⚠️ That reference EXCLUDES the smallest rung's own spread, so the figure is price impact and NOT the holder's all-in cost — which is fill_ratio (output_usd / size). Both are real and they answer different questions. The same ladder classifies differently under total vs marginal and under impact vs all-in, so both halves are stated for cross-producer comparison."
+        }
+      }
+    },
+    "peg": {
+      "market_price": 1.1523640275454476,
+      "theoretical_price": 1.152967,
+      "premium_discount_pct": -0.05229745990582568,
+      "source": "coingecko",
+      "timestamp": "2026-11-16T00:17:30.537394Z",
+      "source_observed_at": "2026-11-16T00:15:24Z",
+      "timestamp_basis": "Tracker row clock; original market update is source_observed_at (null if unavailable)"
+    },
+    "multi_chain": {
+      "data_source": "canonical_and_remote_observations_unreconciled",
+      "total_supply_usd_across_chains": null,
+      "ethereum_share_pct": null,
+      "non_ethereum_share_pct": null,
+      "cross_chain_supply_reconciliation_pct": null,
+      "cross_chain_supply_reconciliation_chains": [
+        "ethereum",
+        "mantle",
+        "plasma",
+        "ink",
+        "bnb"
+      ],
+      "cross_chain_supply_reconciliation_complete": false,
+      "cross_chain_supply_reconciliation_denominator": "canonical vault_state.total_assets; remote representations must not be added",
+      "chains_known": [
+        "ethereum",
+        "plasma",
+        "mantle",
+        "bnb",
+        "ink"
+      ],
+      "chains_enumerated": [
+        "ethereum",
+        "mantle",
+        "plasma",
+        "ink",
+        "bnb"
+      ],
+      "chains_unavailable": [],
+      "canonical_nav_source": "vault_state.nav",
+      "chains": [
+        {
+          "chain": "ethereum",
+          "token_address": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "supply_native": 214810963.561966,
+          "supply_raw": "214810963561966",
+          "block_number": null,
+          "chain_id": null,
+          "decimals": 6,
+          "supply_usd": 247670564.9,
+          "share_pct": null,
+          "data_source": "on_chain_token_supply",
+          "kind": "evm",
+          "note": "Canonical totalSupply includes bridge locks; resident decomposition unverified",
+          "supply_scope": "canonical_including_locked"
+        },
+        {
+          "chain": "mantle",
+          "token_address": "0x051665f2455116e929b9972c36d23070f5054ce0",
+          "supply_native": 40053470.526254,
+          "supply_raw": "40053470526254",
+          "block_number": 103329758,
+          "chain_id": 5000,
+          "decimals": 6,
+          "supply_usd": 46180443.99,
+          "share_pct": null,
+          "data_source": "on_chain_token_supply",
+          "kind": "evm",
+          "supply_scope": "remote_representation"
+        },
+        {
+          "chain": "plasma",
+          "token_address": "0xC4374775489CB9C56003BF2C9b12495fC64F0771",
+          "supply_native": 29113952.662026,
+          "supply_raw": "29113952662026",
+          "block_number": 37846443,
+          "chain_id": 9745,
+          "decimals": 6,
+          "supply_usd": 33567509.7,
+          "share_pct": null,
+          "data_source": "on_chain_token_supply",
+          "kind": "evm",
+          "supply_scope": "remote_representation"
+        },
+        {
+          "chain": "ink",
+          "token_address": "0x8A76fe7fA6da27f85a626c5C53730B38D13603d7",
+          "supply_native": 2472313.034524,
+          "supply_raw": "2472313034524",
+          "block_number": 61291419,
+          "chain_id": 57073,
+          "decimals": 6,
+          "supply_usd": 2850502.39,
+          "share_pct": null,
+          "data_source": "on_chain_token_supply",
+          "kind": "evm",
+          "supply_scope": "remote_representation"
+        },
+        {
+          "chain": "bnb",
+          "token_address": "0x8E9d4cEa39299323FE8eda678cAD449718556c4e",
+          "supply_native": 340170.39438,
+          "supply_raw": "340170394380",
+          "block_number": 133833683,
+          "chain_id": 56,
+          "decimals": 6,
+          "supply_usd": 392206.21,
+          "share_pct": null,
+          "data_source": "on_chain_token_supply",
+          "kind": "evm",
+          "supply_scope": "remote_representation"
+        }
+      ],
+      "phase_2_open_items": [
+        "Verify current Ethereum locks against all remote supplies and in-flight transfers at aligned blocks",
+        "CCT pool rate-limit and bridge headroom per chain"
+      ],
+      "canonical_total_assets_usd": 247670564.904894,
+      "canonical_total_supply_native": 214810963.561966,
+      "canonical_supply_nav_usd": 247670564.904894,
+      "chain_resident_decomposition_complete": false,
+      "bridge_lock_verification_status": "unknown_current_pool_migration_not_verified",
+      "registry_source": "https://docs.maple.finance/integrate/crosschain/syrupusd-crosschain.md",
+      "registry_reviewed_at": "2026-10-28",
+      "note": "Ethereum totalSupply includes bridge locks. Resident decomposition unavailable until current pool identities and locks reconcile; no excess backing or overissuance inference."
+    },
+    "governance": {
+      "governor": "0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b",
+      "operational_admin": "0xCe1cE7c7F436DCc4E28Bc8bf86115514d3DC34E8",
+      "security_admin": "0x6b1A78C1943b03086F7Ee53360f9b0672bD60818",
+      "pool_delegate": "0x93aA06F8a7bB4da3Eb0DD5A5a38C01A7EB35501A",
+      "pool_delegate_firm": "TBD — verify (different EOA from syrupUSDC delegate)",
+      "pool_delegate_is_eoa": true,
+      "pool_delegate_cover": "0x610d99d86d48b385b2ed17a0063e53B5c98E15A1",
+      "pool_delegate_cover_usdc": 0.0,
+      "pool_delegate_cover_eth": 0.0,
+      "min_cover_amount": null,
+      "protocol_paused": false,
+      "pm_active": true,
+      "pm_configured": true,
+      "timelock_hours": 72,
+      "timelock_floor_hours": 24,
+      "custody_topology": {
+        "scope": "per_pool",
+        "single_key_eoa_count": 1,
+        "total_capital_under_eoa_control_usd": 247670564.9,
+        "entries": [
+          {
+            "role": "Pool Delegate (syrupusdt)",
+            "address": "0x93aA06F8a7bB4da3Eb0DD5A5a38C01A7EB35501A",
+            "is_eoa": true,
+            "chain": "ethereum",
+            "capital_under_control_usd": 247670564.9,
+            "control_type": "discretionary"
+          }
+        ]
+      },
+      "min_cover_amount_status": "unknown_current_cover_getter_reverted",
+      "cover_address_binding_status": "Historical configured cover address not established by current poolDelegateCover getter",
+      "cover_source_evidence": {
+        "artifact": "security-public-source-fields.json",
+        "source_clock": {
+          "block": 26424185,
+          "hash": "0x6820a77ab329f6a009ed9b5f226089519a3d1a06427def638a0e9de9eacc55f8",
+          "timestamp": "2026-11-16T01:06:23+00:00",
+          "retrieved_at": "2026-11-16T01:06:17.078729+00:00"
+        }
+      },
+      "has_sufficient_cover_semantics": "pure_true_not_minimum_capital_assurance",
+      "cover_balance_observed_at": "2026-11-16T00:43:38Z",
+      "alternative_guarantee_verified": false
+    },
+    "chart_bands": {
+      "pcr": [
+        99.0,
+        99.8,
+        100.0,
+        100.5
+      ]
+    },
+    "axis_thresholds": {
+      "backing": {
+        "cr_pct": [
+          101,
+          100,
+          98,
+          95
+        ]
+      }
+    },
+    "issuer_transparency": {
+      "schema_version": "maple-transparency-evidence/1",
+      "product": "syrupusdt",
+      "pool": "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d",
+      "source_url": "https://maple.finance/transparency/products/syrupusdt",
+      "html_sha256": "7e46afd9ee29d2ca3309d23623682ec3077bc7e01417c7beb44ba6f37b36c863",
+      "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+      "financial_observed_at": null,
+      "clock_basis": "Per-product page retrieval is not collateral/valuation timestamp. Scoped page time labels retained separately.",
+      "headline_metrics": {
+        "Assets Under Management": "Assets Under Management $528.25M",
+        "Deposits": "Deposits $247.7M"
+      },
+      "headline_metrics_parsed": {
+        "Assets Under Management": {
+          "display": "$528.25M",
+          "approximate_value": 528250000.0,
+          "rounding_half_unit": 5000.0,
+          "status": "publisher_rounded_display"
+        },
+        "Deposits": {
+          "display": "$247.7M",
+          "approximate_value": 247700000.0,
+          "rounding_half_unit": 50000.0,
+          "status": "publisher_rounded_display"
+        }
+      },
+      "deposit_allocation_categories": [
+        {
+          "source_key": "overcollateralizedLending",
+          "display": "Overcollat. Lending 80.9% · $200.35M",
+          "amount": {
+            "display": "$200.35M",
+            "approximate_value": 200350000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        },
+        {
+          "source_key": "usTreasuries",
+          "display": "US Treasuries 8.2% · $20.23M",
+          "amount": {
+            "display": "$20.23M",
+            "approximate_value": 20230000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        },
+        {
+          "source_key": "idleCash",
+          "display": "Idle Cash 3.6% · $8.94M",
+          "amount": {
+            "display": "$8.94M",
+            "approximate_value": 8940000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        },
+        {
+          "source_key": "trading",
+          "display": "Trading 2.9% · $7.11M",
+          "amount": {
+            "display": "$7.11M",
+            "approximate_value": 7110000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        },
+        {
+          "source_key": "defi",
+          "display": "DeFi 2.2% · $5.61M",
+          "amount": {
+            "display": "$5.61M",
+            "approximate_value": 5610000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        },
+        {
+          "source_key": "dexLp",
+          "display": "DEX LP 2.2% · $5.46M",
+          "amount": {
+            "display": "$5.46M",
+            "approximate_value": 5460000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "observed_at": null
+        }
+      ],
+      "deposit_allocation_display": "Deposit allocation $247.7M Total deposits $200.35M Overcollat. Lending · 80.9% $20.23M US Treasuries · 8.2% $8.94M Idle Cash · 3.6% $7.11M Trading · 2.9% $5.61M DeFi · 2.2% $5.46M DEX LP · 2.2% Overcollat. Lending 80.9% · $200.35M US Treasuries 8.2% · $20.23M Idle Cash 3.6% · $8.94M Trading 2.9% · $7.11M DeFi 2.2% · $5.61M DEX LP 2.2% · $5.46M",
+      "allocations": [
+        {
+          "source_id": "aum-breakdown-overcollateralized-lending",
+          "summary_display": "$480.91M Overcollateralized Lending Loans to institutional borrowers, backed by collateral Collat. Assets: Collat. Ratio · 140.2% Show Details Hide Details",
+          "strategy_rows": [],
+          "financial_observed_at": null
+        },
+        {
+          "source_id": "aum-breakdown-us-treasuries",
+          "summary_display": "$20.23M US Treasuries Short-duration US Treasury bills Show Details Hide Details",
+          "strategy_rows": [
+            {
+              "columns": {
+                "Strategy": "PYUSD",
+                "AUM": "$20.03M",
+                "% of strategy": "99.0%",
+                "Address": "0x8500…36c2"
+              },
+              "links": [
+                "https://etherscan.io/address/0x85008FbB1DfcCdCb914B0873646F90C416f936c2"
+              ],
+              "addresses": [
+                "0x85008FbB1DfcCdCb914B0873646F90C416f936c2"
+              ],
+              "source_chain_label": "Ethereum (explorer label only)",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$20.03M",
+                "approximate_value": 20030000.0,
+                "rounding_half_unit": 5000.0,
+                "status": "publisher_rounded_display"
+              }
+            },
+            {
+              "columns": {
+                "Strategy": "USDtb",
+                "AUM": "$200.3K",
+                "% of strategy": "1.0%",
+                "Address": "0x8DF6…6122"
+              },
+              "links": [
+                "https://etherscan.io/address/0x8DF6721F643E796C456ee080929e01C7f18E6122"
+              ],
+              "addresses": [
+                "0x8DF6721F643E796C456ee080929e01C7f18E6122"
+              ],
+              "source_chain_label": "Ethereum (explorer label only)",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$200.3K",
+                "approximate_value": 200300.0,
+                "rounding_half_unit": 50.0,
+                "status": "publisher_rounded_display"
+              }
+            }
+          ],
+          "financial_observed_at": null
+        },
+        {
+          "source_id": "aum-breakdown-defi",
+          "summary_display": "$5.61M DeFi Supplied to onchain lending markets and savings vaults Show Details Hide Details",
+          "strategy_rows": [
+            {
+              "columns": {
+                "Strategy": "USDT",
+                "Venue": "Aave v3",
+                "AUM": "$5.61M",
+                "% of strategy": "100.0%",
+                "Address": "0x8DF6…6122"
+              },
+              "links": [
+                "https://etherscan.io/address/0x8DF6721F643E796C456ee080929e01C7f18E6122"
+              ],
+              "addresses": [
+                "0x8DF6721F643E796C456ee080929e01C7f18E6122"
+              ],
+              "source_chain_label": "Ethereum (explorer label only)",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$5.61M",
+                "approximate_value": 5610000.0,
+                "rounding_half_unit": 5000.0,
+                "status": "publisher_rounded_display"
+              }
+            }
+          ],
+          "financial_observed_at": null
+        },
+        {
+          "source_id": "aum-breakdown-dex-lp",
+          "summary_display": "$5.46M DEX LP Liquidity provided to onchain exchange pools Show Details Hide Details",
+          "strategy_rows": [
+            {
+              "columns": {
+                "Strategy": "Uniswap · Ethereum",
+                "AUM": "$3.51M",
+                "% of strategy": "64.2%",
+                "Address": "0xFbA4…5C81"
+              },
+              "links": [
+                "https://etherscan.io/address/0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "addresses": [
+                "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "source_chain_label": "Ethereum",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$3.51M",
+                "approximate_value": 3510000.0,
+                "rounding_half_unit": 5000.0,
+                "status": "publisher_rounded_display"
+              }
+            },
+            {
+              "columns": {
+                "Strategy": "Uniswap · Plasma",
+                "AUM": "$1.2M",
+                "% of strategy": "22.0%",
+                "Address": "0xFbA4…5C81"
+              },
+              "links": [
+                "https://plasmascan.to/address/0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "addresses": [
+                "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "source_chain_label": "Plasma",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$1.2M",
+                "approximate_value": 1200000.0,
+                "rounding_half_unit": 50000.0,
+                "status": "publisher_rounded_display"
+              }
+            },
+            {
+              "columns": {
+                "Strategy": "Uniswap · Ink",
+                "AUM": "$250.38K",
+                "% of strategy": "4.6%",
+                "Address": "0xFbA4…5C81"
+              },
+              "links": [
+                "https://explorer.inkonchain.com/address/0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "addresses": [
+                "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "source_chain_label": "Ink",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$250.38K",
+                "approximate_value": 250380.0,
+                "rounding_half_unit": 5.0,
+                "status": "publisher_rounded_display"
+              }
+            },
+            {
+              "columns": {
+                "Strategy": "Uniswap · BNB Chain",
+                "AUM": "$250.38K",
+                "% of strategy": "4.6%",
+                "Address": "0xFbA4…5C81"
+              },
+              "links": [
+                "https://bscscan.com/address/0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "addresses": [
+                "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "source_chain_label": "BNB Chain",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$250.38K",
+                "approximate_value": 250380.0,
+                "rounding_half_unit": 5.0,
+                "status": "publisher_rounded_display"
+              }
+            },
+            {
+              "columns": {
+                "Strategy": "Uniswap · Mantle",
+                "AUM": "$250.38K",
+                "% of strategy": "4.6%",
+                "Address": "0xFbA4…5C81"
+              },
+              "links": [
+                "https://mantlescan.xyz/address/0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "addresses": [
+                "0xFbA4BC924ba50C3b3Dd0C1aA6d2f499B4fa55C81"
+              ],
+              "source_chain_label": "Mantle",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$250.38K",
+                "approximate_value": 250380.0,
+                "rounding_half_unit": 5.0,
+                "status": "publisher_rounded_display"
+              }
+            }
+          ],
+          "financial_observed_at": null
+        },
+        {
+          "source_id": "aum-breakdown-trading",
+          "summary_display": "$7.11M Trading Capital deployed to Maple Trading strategies Show Details Hide Details",
+          "strategy_rows": [
+            {
+              "columns": {
+                "Strategy": "Basis Trade",
+                "Asset": "BTC",
+                "Venue": "CME, Coinbase",
+                "AUM": "$7.11M",
+                "% of strategy": "100.0%",
+                "Address": "0x77e5…141f"
+              },
+              "links": [
+                "https://etherscan.io/address/0x77e5c78e896fd74a3e5abcdef642129d48ee141f"
+              ],
+              "addresses": [
+                "0x77e5c78e896fd74a3e5abcdef642129d48ee141f"
+              ],
+              "source_chain_label": "Ethereum (explorer label only)",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$7.11M",
+                "approximate_value": 7110000.0,
+                "rounding_half_unit": 5000.0,
+                "status": "publisher_rounded_display"
+              }
+            }
+          ],
+          "financial_observed_at": null
+        },
+        {
+          "source_id": "aum-breakdown-idle-cash",
+          "summary_display": "$8.94M Idle Cash Unallocated cash sitting in the pool contract Show Details Hide Details",
+          "strategy_rows": [
+            {
+              "columns": {
+                "Strategy": "Pool cash",
+                "AUM": "$8.94M",
+                "% of strategy": "100.0%",
+                "Address": "0x356b…ba7d"
+              },
+              "links": [
+                "https://etherscan.io/address/0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+              ],
+              "addresses": [
+                "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d"
+              ],
+              "source_chain_label": "Ethereum (explorer label only)",
+              "chain_binding": "Explorer/label only; not a fresh deployment or owner-allocation check",
+              "amount_precision": "Rounded display, not raw accounting",
+              "aum_evidence": {
+                "display": "$8.94M",
+                "approximate_value": 8940000.0,
+                "rounding_half_unit": 5000.0,
+                "status": "publisher_rounded_display"
+              }
+            }
+          ],
+          "financial_observed_at": null
+        }
+      ],
+      "liquidity_projection": {
+        "rows": [
+          {
+            "columns": {
+              "Source": "Idle cash",
+              "Held in": "Pool contract",
+              "Typical timing": "Instant",
+              "Amount": "8.94M",
+              "Cumulative": "8.94M",
+              "Cumulative %": "3.6%"
+            },
+            "amount": {
+              "display": "8.94M",
+              "approximate_value": 8940000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "DeFi",
+              "Held in": "Aave v3",
+              "Typical timing": "Instant",
+              "Amount": "5.61M",
+              "Cumulative": "14.55M",
+              "Cumulative %": "5.9%"
+            },
+            "amount": {
+              "display": "5.61M",
+              "approximate_value": 5610000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "DEX LP",
+              "Held in": "Uniswap",
+              "Typical timing": "Instant",
+              "Amount": "5.46M",
+              "Cumulative": "20.01M",
+              "Cumulative %": "8.1%"
+            },
+            "amount": {
+              "display": "5.46M",
+              "approximate_value": 5460000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "Loans · 0-1 days",
+              "Held in": "2 loans",
+              "Typical timing": "<24 hours",
+              "Amount": "52.72M",
+              "Cumulative": "72.72M",
+              "Cumulative %": "29.4%"
+            },
+            "amount": {
+              "display": "52.72M",
+              "approximate_value": 52720000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "US Treasuries",
+              "Held in": "PYUSD, USDtb",
+              "Typical timing": "T+1 banking days",
+              "Amount": "20.23M",
+              "Cumulative": "92.95M",
+              "Cumulative %": "37.5%"
+            },
+            "amount": {
+              "display": "20.23M",
+              "approximate_value": 20230000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "Loans · 2-3 days",
+              "Held in": "1 loan",
+              "Typical timing": "<3 days",
+              "Amount": "2.23M",
+              "Cumulative": "95.19M",
+              "Cumulative %": "38.4%"
+            },
+            "amount": {
+              "display": "2.23M",
+              "approximate_value": 2230000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "Trading",
+              "Held in": "Basis",
+              "Typical timing": "<30 days",
+              "Amount": "7.11M",
+              "Cumulative": "102.30M",
+              "Cumulative %": "41.3%"
+            },
+            "amount": {
+              "display": "7.11M",
+              "approximate_value": 7110000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "Loans · 8-30 days",
+              "Held in": "2 loans",
+              "Typical timing": "<30 days",
+              "Amount": "90.14M",
+              "Cumulative": "192.43M",
+              "Cumulative %": "77.7%"
+            },
+            "amount": {
+              "display": "90.14M",
+              "approximate_value": 90140000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          },
+          {
+            "columns": {
+              "Source": "Loans · 30+ days",
+              "Held in": "1 loan",
+              "Typical timing": "30+ days",
+              "Amount": "55.27M",
+              "Cumulative": "247.70M",
+              "Cumulative %": "100%"
+            },
+            "amount": {
+              "display": "55.27M",
+              "approximate_value": 55270000.0,
+              "rounding_half_unit": 5000.0,
+              "status": "publisher_rounded_display"
+            },
+            "status": "issuer_timing_projection_not_executable_capacity",
+            "settlement_or_receipt_verified": false
+          }
+        ],
+        "not_additive_to_local_cash": true,
+        "execution_verified": false,
+        "limitations": [
+          "DEX LP and DeFi instant are issuer projections, not local funded pool cash",
+          "Receipt ownership, unwind, bridge/transport, fees and restrictions not independently measured",
+          "Scheduled principal/interest is not received cash; interest is cumulative and not an extra deposit balance"
+        ],
+        "observed_at": null,
+        "retrieved_at": "2026-11-16T05:40:24.086178+00:00"
+      },
+      "withdrawal_queue_snapshot": {
+        "display": "Withdrawal queue Pending as of Nov 16 at 4:41 AM UTC Withdrawal stats $0.00",
+        "observed_at": "2026-11-16T04:41:23.000Z",
+        "clock_scope": "Publisher pending queue snapshot only; not collateral/NAV/price time",
+        "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+        "completed_receipts_verified": false
+      },
+      "page_time_labels": [
+        {
+          "datetime": "2026-11-16T04:41:23.000Z",
+          "text": "Nov 16 at 4:41 AM UTC"
+        }
+      ],
+      "custody_allocation_verified": false,
+      "parent_treasury_or_revenue_is_pool_backing": false,
+      "collateral_wallet_inventory_summary": {
+        "reported_wallet_link_count": 8,
+        "loan_allocation": null,
+        "title_or_control_verified": false,
+        "basis": "Publisher-reported inventory, not a current ownership or allocation verification"
+      }
+    },
+    "transparency_adoption": {
+      "adopted_loan_addresses": [
+        "0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f",
+        "0x0d2dF2bbad7744ea7fAE8f8F7BE7bc3221E02b9A",
+        "0x01a30dE2836Db8E3Fce3168e33215018601C728F",
+        "0x79c1FCe425Ed3fF66Ddab70f6691a5dEdb1cDb9C",
+        "0x7Fc443DD02Ed6A0355CD3949C62aBBd910cd87F0",
+        "0xa959FeD92C3C5183222F1E3F726420756c632477"
+      ],
+      "mismatches": [],
+      "source_url": "https://maple.finance/transparency/products/syrupusdt",
+      "retrieved_at": "2026-11-16T05:40:24.086178+00:00",
+      "observed_at": null,
+      "withdrawal_of_legacy_claims": "Mapped currentAssetAmount-valuations are superseded as a misbound source model; no loss, cure or custody assurance inferred"
+    },
+    "queue_review": {
+      "outstanding": {
+        "schema_version": "syrup-native-outstanding-queue/1",
+        "native_clock": {
+          "chain_id": 1,
+          "block_number": 26424095,
+          "block_hash": "0xf8b3a5b6b0e8b56992a3d35f4ffeb1df6972397525348a6a6453f7d77e4b7db0",
+          "block_timestamp": "2026-11-16T00:48:23+00:00",
+          "retrieved_at": "2026-11-16T01:06:06.306611+00:00",
+          "collection_started_at": "2026-11-16T01:06:05.426737+00:00",
+          "finality": "RPC finalized; end hash rechecked"
+        },
+        "indexer_retrieval_window": {
+          "first_requested_at": "2026-11-16T01:10:24.853709+00:00",
+          "last_requested_at": "2026-11-16T01:11:03.939897+00:00"
+        },
+        "pointer_span": [
+          7577,
+          7576
+        ],
+        "native_positive_requests": 0,
+        "native_sum_shares_raw": "0",
+        "totalShares_raw": "0",
+        "request_share_sum_matches": true,
+        "unknown_creation_count": 0,
+        "oldest_known_age_seconds": null,
+        "oldest_complete_within_this_positive_request_set": true,
+        "oldest_known_requests": [],
+        "basis": "Positive native requests only, linked to bounded indexed creation event. Age at financial pin, not later retrieval/build; not predicted fill time. Pointer span is not independently a count of payable requests.",
+        "outstanding_amount_at_exit_nav_raw": "0",
+        "future_settlement": null
+      },
+      "completed": {
+        "schema_version": "syrup-queue-lifecycle-analysis/1",
+        "source_clock": {
+          "chain_id": 1,
+          "block_number": 26424095,
+          "block_hash": "0xf8b3a5b6b0e8b56992a3d35f4ffeb1df6972397525348a6a6453f7d77e4b7db0",
+          "block_timestamp": "2026-11-16T00:48:23+00:00",
+          "retrieved_at": "2026-11-16T01:06:06.306611+00:00",
+          "collection_started_at": "2026-11-16T01:06:05.426737+00:00",
+          "finality": "RPC finalized; end hash rechecked"
+        },
+        "windows": {
+          "last_7d": {
+            "observed_linked_fully_processed_non_cancelled_non_manual": {
+              "count": 153,
+              "median_seconds": 180.0,
+              "p90_seconds": 309.60000000000014,
+              "max_seconds": 8604.0,
+              "percentile_method": "linear interpolation at(n-1)*p; request-count unweighted, completed automatic noncancelled linked records only"
+            },
+            "processing_event_assets_raw": "37808436293746",
+            "full_period_completed_count": null,
+            "not_actual_payment_sum": true,
+            "indexer_boundary_crossed": true
+          },
+          "prior_disjoint_23d": {
+            "observed_linked_fully_processed_non_cancelled_non_manual": {
+              "count": 271,
+              "median_seconds": 252.0,
+              "p90_seconds": 173940.0,
+              "max_seconds": 311388.0,
+              "percentile_method": "linear interpolation at(n-1)*p; request-count unweighted, completed automatic noncancelled linked records only"
+            },
+            "processing_event_assets_raw": "76076506077141",
+            "full_period_completed_count": null,
+            "not_actual_payment_sum": true,
+            "indexer_boundary_crossed": true
+          }
+        },
+        "indexed_requests": 460,
+        "missing_creation_count": 1,
+        "cancelled_request_count": 29,
+        "manual_processing_request_count": 0,
+        "undecoded_events": 0,
+        "indexer_retrieval_window": {
+          "first_requested_at": "2026-11-16T01:10:24.853709+00:00",
+          "last_requested_at": "2026-11-16T01:11:03.939897+00:00"
+        },
+        "prior_source_failure": null,
+        "source_stop_reason": "crossed_30day_boundary",
+        "source_error": null,
+        "all_time_complete": false,
+        "actual_cash_settlement": null,
+        "limitations": [
+          "Waits are inclusion-time creation to full automatic processing, not fiat arrival or a maximum guarantee.",
+          "Cancellation, partial/manual and missing carry-in creation scopes remain separate. Source-indexer completeness and historical implementation equivalence remain qualified."
+        ]
+      },
+      "native_accounting": {
+        "pool_cash_raw": "8913342952633",
+        "pool_assets_raw": "247670669248997",
+        "pool_cash_pct_assets": "3.598869006031523313344660887",
+        "pool_specific_strategy_claims_raw": [
+          "238757326296364",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "reconciliation_residual_raw": "0",
+        "recognized_losses_raw": "0",
+        "loan_manager_principal_raw": "238402567370000",
+        "listed_current_principal_raw": "238402567370000",
+        "principal_not_detailed_raw": "0",
+        "unavailable_principal_getters": 0,
+        "queue_shares_raw": "0",
+        "queue_assets_at_exit_nav_raw": "0",
+        "queue_pointers": [
+          7577,
+          7576
+        ],
+        "independent_credit_nav": null
+      },
+      "update_policy": "Dated bounded weekly review, separate from existing hourly current-queue observer; no new recurring history job installed."
+    },
+    "credit_reading_coverage": {
+      "schema_version": "syrup-credit-reading-coverage/2",
+      "repeated_reading_group_count": 0,
+      "repetition_basis": "Equal issuer-reported collateral values for the same borrower and asset; separate allocation is unverified",
+      "independent_allocation_verified": false
+    }
+  },
+  "report_url": "https://tidresearch.com/reports/syrupusdt/",
+  "peg": {
+    "market_price": 1.1523640275454476,
+    "nav": 1.152967,
+    "premium_discount_pct": -0.05229745990582568,
+    "source": "coingecko",
+    "history_ref": "syrupusdt_backing_history.json",
+    "history_field": "peg_market_price",
+    "note": "Secondary mark and its original NAV reference retain their source clock; current accounting NAV is separate. Queue timing and proceeds are not guaranteed.",
+    "market_price_source": "coingecko",
+    "market_price_as_of": "2026-11-16T00:15:24Z",
+    "measured_pair_source_timestamp": "2026-11-16T00:17:30.537394Z",
+    "pair_timestamp_basis": "Tracker row clock; original market update is source_observed_at (null if unavailable)",
+    "accounting_nav": 1.15297,
+    "accounting_context": {
+      "schema_version": "syrup-pool-accounting/1",
+      "block": 26424068,
+      "hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+      "timestamp": 1794789779,
+      "pinning": "all_accounting_calls_pinned"
+    },
+    "history_observed_at_field": "peg_market_price_as_of"
+  },
+  "liquidity": {
+    "free_liquidity_pct": 3.598870521250222,
+    "band_score": 2,
+    "total_2pct_depth": null,
+    "pools": [],
+    "deployment_ratio_pct": 96.26,
+    "note": "Pool cash is funding capacity subject to queue/operator/contract constraints. Accrued interest and strategy claims are not immediately withdrawable cash.",
+    "total_2pct_depth_note": "Unmeasured, not zero when no ladder: independent dated DEX depth is not substituted by queue or NAV accounting. Where measured, original quotes remain in exit_mark.",
+    "exit_mark": {
+      "source": "kyberswap",
+      "chain": "ethereum",
+      "timestamp": "2026-11-15T22:31:47Z",
+      "sell_into": "USDT",
+      "fair_value": 1.1518929526696862,
+      "fair_value_basis": "market",
+      "quotes": {
+        "1000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "868136225",
+          "amount_out_raw": "998797588",
+          "requested_at": "2026-11-15T22:31:47.928206+00:00",
+          "received_at": "2026-11-15T22:31:48.398758+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 1000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 998.8,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.9988,
+          "slippage_bps": 0.0
+        },
+        "10000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "8681362254",
+          "amount_out_raw": "9987924356",
+          "requested_at": "2026-11-15T22:31:48.399064+00:00",
+          "received_at": "2026-11-15T22:31:48.967942+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 10000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841102176837867",
+          "fees_breakdown": null,
+          "output_usd": 9987.92,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998792,
+          "slippage_bps": -0.1
+        },
+        "50000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "43406811270",
+          "amount_out_raw": "49938476616",
+          "requested_at": "2026-11-15T22:31:48.968236+00:00",
+          "received_at": "2026-11-15T22:31:49.448582+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 50000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 49938.48,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.99877,
+          "slippage_bps": -0.3
+        },
+        "100000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "86813622540",
+          "amount_out_raw": "99874090468",
+          "requested_at": "2026-11-15T22:31:49.448857+00:00",
+          "received_at": "2026-11-15T22:31:50.008549+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 100000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 99874.09,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998741,
+          "slippage_bps": -0.6
+        },
+        "150000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "130220433810",
+          "amount_out_raw": "149806841804",
+          "requested_at": "2026-11-15T22:31:50.008880+00:00",
+          "received_at": "2026-11-15T22:31:50.576645+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 150000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 149806.84,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998712,
+          "slippage_bps": -0.9
+        },
+        "250000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "217034056350",
+          "amount_out_raw": "249663757910",
+          "requested_at": "2026-11-15T22:31:50.576941+00:00",
+          "received_at": "2026-11-15T22:31:51.007166+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 250000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11841273075818728",
+          "fees_breakdown": null,
+          "output_usd": 249663.76,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998655,
+          "slippage_bps": -1.4
+        },
+        "500000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "434068112701",
+          "amount_out_raw": "499255971350",
+          "requested_at": "2026-11-15T22:31:51.007469+00:00",
+          "received_at": "2026-11-15T22:31:51.416942+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 500000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": "0.11843282443331894",
+          "fees_breakdown": null,
+          "output_usd": 499255.97,
+          "attempts": 1,
+          "provider": "kyberswap",
+          "fill_ratio": 0.998512,
+          "slippage_bps": -2.9
+        },
+        "1000000": {
+          "token_in": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+          "token_out": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "input_decimals": 6,
+          "output_decimals": 6,
+          "amount_in_raw": "868136225403",
+          "amount_out_raw": null,
+          "requested_at": "2026-11-15T22:31:51.417228+00:00",
+          "received_at": "2026-11-15T22:31:53.838750+00:00",
+          "clock_scope": "get_quote call interval including existing retries/fallback",
+          "sizing_reference": {
+            "nominal_size_usd": 1000000,
+            "input_reference_value": 1.1518929526696862,
+            "input_reference_currency": "USD",
+            "basis": "market",
+            "source_clock": null
+          },
+          "gas_usd_estimate": null,
+          "fees_breakdown": null,
+          "error": "http_530",
+          "attempts": 4,
+          "provider": "odos"
+        }
+      },
+      "token_address": "0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+      "basis_note": "Dated route assurance 2026-10-28: sampled Ethereum KyberSwap routes $1K-$1M used v4 syrupUSDT/USDT pool 0xd861038a98942312d1495dd1313fb66c7e7de48f549a15edf3a45decf7338e1d. Its exact PoolKey, zero hook, initialized state and positive liquidity were verified at Ethereum block 26292233. This does not verify every later route, router/token security, execution or settlement. Canonical ladder remains Ethereum secondary quotes into USDT, separate from the Maple withdrawal queue. Plasma quote/pool evidence exists at block 36261171; local execution, settlement and primary request-to-fill latency remain unproved. Historical TVL/volume are not current executable depth.",
+      "configured_rung_count": 8,
+      "selected_rung_count": 8,
+      "slippage_bps_basis": "PRICE IMPACT against this venue's own smallest quoted rung, which EXCLUDES that rung's own spread — it is not the holder's all-in cost. The all-in figure is fill_ratio (output_usd / size). Impact is measured this way deliberately, so peg discount and source lag do not leak into it.",
+      "slippage_reference": {
+        "basis": "venue_spot",
+        "size_usd": 1000,
+        "output_usd": 998.8
+      },
+      "status": "partial",
+      "failed_rungs": {
+        "1000000": "http_530"
+      },
+      "two_pct_depth_bracket_basis": "none",
+      "fill_ratio_basis": "ALL-IN against notional: output_usd / size, where size is converted to tokens at fair_value. Includes the venue's base spread and any gap between fair_value and the venue. 1.0 = exits at fair value; (fill_ratio - 1) * 10000 is the all-in cost in bps.",
+      "cost_conventions": {
+        "fill_ratio": "all_in_vs_notional",
+        "slippage_bps": "price_impact_vs_smallest_rung",
+        "canonical_for": {
+          "holder_exit_cost": "fill_ratio",
+          "depth_search": "slippage_bps"
+        }
+      },
+      "largest_rung_usd": 500000.0,
+      "depth": {
+        "total_2pct_depth": 500000.0,
+        "total_2pct_depth_is_floor": true,
+        "two_pct_depth_status": "ladder_exhausted",
+        "two_pct_depth_size_responsive": true,
+        "two_pct_depth_unresponsive_note": null,
+        "two_pct_depth_basis": "A FLOOR, not a measurement. The deepest rung quoted ($500,000) still clears inside 200bps, so the crossing is somewhere above where we look. Publishing it as '2% depth' would read as a limit we found. SLIPPAGE CONVENTION: TOTAL over the fill (not marginal impact at the margin), measured against this venue's own smallest quoted rung. ⚠️ That reference EXCLUDES the smallest rung's own spread, so the figure is price impact and NOT the holder's all-in cost — which is fill_ratio (output_usd / size). Both are real and they answer different questions. The same ladder classifies differently under total vs marginal and under impact vs all-in, so both halves are stated for cross-producer comparison.",
+        "primary_threshold_bps": 200.0,
+        "depth_50bps": {
+          "threshold_bps": 50.0,
+          "depth_usd": 500000.0,
+          "is_floor": true,
+          "status": "ladder_exhausted",
+          "size_responsive": true,
+          "unresponsive_note": null,
+          "basis": "A FLOOR, not a measurement. The deepest rung quoted ($500,000) still clears inside 50bps, so the crossing is somewhere above where we look. Publishing it as '0.5% depth' would read as a limit we found. SLIPPAGE CONVENTION: TOTAL over the fill (not marginal impact at the margin), measured against this venue's own smallest quoted rung. ⚠️ That reference EXCLUDES the smallest rung's own spread, so the figure is price impact and NOT the holder's all-in cost — which is fill_ratio (output_usd / size). Both are real and they answer different questions. The same ladder classifies differently under total vs marginal and under impact vs all-in, so both halves are stated for cross-producer comparison."
+        }
+      }
+    },
+    "pool_cash_pct_nav": 3.598870521250222,
+    "free_liquidity_pct_basis": "Legacy key: actual pool cash / NAV, not executable redemption capacity",
+    "cash_plus_accrual_pct": 3.7420666172995025,
+    "accounting_context": {
+      "schema_version": "syrup-pool-accounting/1",
+      "block": 26424068,
+      "hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+      "timestamp": 1794789779,
+      "pinning": "all_accounting_calls_pinned"
+    },
+    "history_ref": "syrupusdt_backing_history.json",
+    "history_field": "pool_cash_pct_nav",
+    "issuer_projection": {
+      "rows": [
+        {
+          "columns": {
+            "Source": "Idle cash",
+            "Held in": "Pool contract",
+            "Typical timing": "Instant",
+            "Amount": "8.94M",
+            "Cumulative": "8.94M",
+            "Cumulative %": "3.6%"
+          },
+          "amount": {
+            "display": "8.94M",
+            "approximate_value": 8940000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "DeFi",
+            "Held in": "Aave v3",
+            "Typical timing": "Instant",
+            "Amount": "5.61M",
+            "Cumulative": "14.55M",
+            "Cumulative %": "5.9%"
+          },
+          "amount": {
+            "display": "5.61M",
+            "approximate_value": 5610000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "DEX LP",
+            "Held in": "Uniswap",
+            "Typical timing": "Instant",
+            "Amount": "5.46M",
+            "Cumulative": "20.01M",
+            "Cumulative %": "8.1%"
+          },
+          "amount": {
+            "display": "5.46M",
+            "approximate_value": 5460000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "Loans · 0-1 days",
+            "Held in": "2 loans",
+            "Typical timing": "<24 hours",
+            "Amount": "52.72M",
+            "Cumulative": "72.72M",
+            "Cumulative %": "29.4%"
+          },
+          "amount": {
+            "display": "52.72M",
+            "approximate_value": 52720000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "US Treasuries",
+            "Held in": "PYUSD, USDtb",
+            "Typical timing": "T+1 banking days",
+            "Amount": "20.23M",
+            "Cumulative": "92.95M",
+            "Cumulative %": "37.5%"
+          },
+          "amount": {
+            "display": "20.23M",
+            "approximate_value": 20230000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "Loans · 2-3 days",
+            "Held in": "1 loan",
+            "Typical timing": "<3 days",
+            "Amount": "2.23M",
+            "Cumulative": "95.19M",
+            "Cumulative %": "38.4%"
+          },
+          "amount": {
+            "display": "2.23M",
+            "approximate_value": 2230000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "Trading",
+            "Held in": "Basis",
+            "Typical timing": "<30 days",
+            "Amount": "7.11M",
+            "Cumulative": "102.30M",
+            "Cumulative %": "41.3%"
+          },
+          "amount": {
+            "display": "7.11M",
+            "approximate_value": 7110000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "Loans · 8-30 days",
+            "Held in": "2 loans",
+            "Typical timing": "<30 days",
+            "Amount": "90.14M",
+            "Cumulative": "192.43M",
+            "Cumulative %": "77.7%"
+          },
+          "amount": {
+            "display": "90.14M",
+            "approximate_value": 90140000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        },
+        {
+          "columns": {
+            "Source": "Loans · 30+ days",
+            "Held in": "1 loan",
+            "Typical timing": "30+ days",
+            "Amount": "55.27M",
+            "Cumulative": "247.70M",
+            "Cumulative %": "100%"
+          },
+          "amount": {
+            "display": "55.27M",
+            "approximate_value": 55270000.0,
+            "rounding_half_unit": 5000.0,
+            "status": "publisher_rounded_display"
+          },
+          "status": "issuer_timing_projection_not_executable_capacity",
+          "settlement_or_receipt_verified": false
+        }
+      ],
+      "not_additive_to_local_cash": true,
+      "execution_verified": false,
+      "limitations": [
+        "DEX LP and DeFi instant are issuer projections, not local funded pool cash",
+        "Receipt ownership, unwind, bridge/transport, fees and restrictions not independently measured",
+        "Scheduled principal/interest is not received cash; interest is cumulative and not an extra deposit balance"
+      ],
+      "observed_at": null,
+      "retrieved_at": "2026-11-16T05:40:24.086178+00:00"
+    }
+  },
+  "backing": {
+    "collateral_ratio": 100.0,
+    "collateral_ratio_scale": "percent",
+    "collateral_ratio_basis": "Pool accounting reconciliation: (pool cash + exact OTLM claim + shared-manager assetsOf(poolManager)) / pool.totalAssets; not independent economic credit coverage.",
+    "total_backing": 247670564.9,
+    "surplus_deficit": -0.0,
+    "surplus_deficit_basis": "Components minus NAV accounting residual; not independently valued credit surplus.",
+    "breakdown": [
+      {
+        "label": "Free USDT",
+        "value": 8913342.95,
+        "pct": 3.6,
+        "tags": [
+          "liquid"
+        ]
+      },
+      {
+        "label": "Strategy AUM (deployed)",
+        "value": 238757221.95,
+        "pct": 96.4,
+        "tags": [
+          "deployed"
+        ]
+      }
+    ],
+    "detail": {
+      "impaired_count": 0,
+      "called_count": 0,
+      "default_count": 0,
+      "unrealized_losses": 0.0,
+      "principal_loans_only_usd": 200052547.37,
+      "principal_liquidity_usd": 38350020.0,
+      "principal_total_usd": 238402567.37,
+      "loans_pct": 83.9,
+      "liquidity_pct": 16.1
+    },
+    "independent_credit_nav": null,
+    "independent_credit_coverage_pct": null,
+    "accounting_context": {
+      "schema_version": "syrup-pool-accounting/1",
+      "block": 26424068,
+      "hash": "0f14f246365a3925ba84029de92bb60784a5ed6392faf13ecac272e65cfac376",
+      "timestamp": 1794789779,
+      "pinning": "all_accounting_calls_pinned"
+    },
+    "history_ref": "syrupusdt_backing_history.json",
+    "history_field": "collateral_ratio",
+    "publisher_collateral_scope": "Issuer valuations of loan collateral, not pool-owned cash or independently verified legal collateral allocation"
+  },
+  "dependencies": {
+    "upstream": [
+      {
+        "kind": "borrowers",
+        "name": "Top borrowers",
+        "metric": "top-3 ≈ 99% of loan book · top-1 ≈ 46% of same loan book (inside top-3)",
+        "percentages": [
+          98.68,
+          46.1
+        ],
+        "detail": "4 counterparties",
+        "link_type": "none"
+      },
+      {
+        "kind": "collateral",
+        "name": "BTC collateral",
+        "metric": "40% of loan principal by collateral asset · 4 loans",
+        "percentages": [
+          39.79
+        ],
+        "link_type": "none",
+        "link": null
+      },
+      {
+        "kind": "collateral",
+        "name": "XRP collateral",
+        "metric": "23% of loan principal by collateral asset · 1 loans",
+        "percentages": [
+          23.15
+        ],
+        "link_type": "none",
+        "link": null
+      },
+      {
+        "kind": "curator",
+        "name": "Maple Finance — curator",
+        "metric": "Pool delegate / curator",
+        "link_type": "none"
+      }
+    ],
+    "pct_sums_to": 207.72,
+    "is_partition": false,
+    "is_partition_basis": "The displayed percentages sum to 207.72%, but they are not mutually exclusive slices. Top-1 borrower concentration is nested inside top-3, and borrower concentration and collateral composition are different dimensions.",
+    "downstream": [],
+    "downstream_tracked": false,
+    "note": "These rows are non-additive and do not partition one base. Borrower concentration and collateral composition are different dimensions; top-1 is nested within top-3. Do not sum the percentages.",
+    "source_clock_basis": "Loan metadata has its own dated source; borrower/collateral dimensions are non-additive"
+  },
+  "issuer": {
+    "report_url": "https://tidresearch.com/reports/syrupusdt/",
+    "curator": "Maple Finance",
+    "attestation_age_days": null,
+    "authored_grade_policy": "Accepted riskAnalyst authored overlay has priority; producer does not emit duplicate legacy scores"
+  },
+  "staging_evidence": {
+    "status": "offline_candidate_not_production",
+    "native_snapshot_timestamp": "2026-11-16T00:43:38Z",
+    "build_timestamp": "2026-11-16T05:45:19.546776+00:00",
+    "native_input_precision": "Recorded serialized producer fields (rounded), original accounting_raw preserved; not reconstructed full-precision original RPC state",
+    "loan_status_clock": "Original frozen native roster",
+    "collateral_clock": "Matched issuer SSR retrieval only; prior GraphQL fixture retained separately",
+    "price_clock": "Adopted publisher valuation underlying price round unknown; prior XRP oracle failure remains in legacy evidence",
+    "multichain_scope": "Carried original frozen context; not refreshed",
+    "cover_minimum_status": "Current version poolDelegateCover getter reverted; pure true sufficiency is not a funded guarantee",
+    "external_review": "Custody/title/allocation unverified"
+  }
+}

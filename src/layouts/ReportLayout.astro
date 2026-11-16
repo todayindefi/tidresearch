@@ -46,7 +46,7 @@ const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
 ---
 
 <BaseLayout title={`${reportName} — Risk Assessment | TID Research`} description={description}>
-  <article class={`container-page py-12 ${isInstitutional ? "institutional-report" : ""}`}>
+  <article class={`container-page py-12 ${isInstitutional ? "institutional-report" : ""}`} data-assessment-version={["syrupusdc", "syrupusdt"].includes(data.slug) ? data.assessment_version : undefined} data-score-status={["syrupusdc", "syrupusdt"].includes(data.slug) ? data.score_status : undefined}>
     <div class="mb-8 print-hide flex items-center justify-between gap-4">
       <a
         href={collectionPath}
@@ -129,7 +129,7 @@ const showTrustDisclaimer: boolean = Boolean(data.trust_disclaimer);
             </div>
           )}
           {isProtocol && <ScoreHero data={data} />}
-          <div class="prose-report">
+          <div class:list={["prose-report", ["syrupusdc", "syrupusdt"].includes(data.slug) && "min-w-0 [overflow-wrap:anywhere] [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_th]:min-w-[8rem] [&_td]:min-w-[8rem]"]}>
             <slot />
             {hasDashboard && (
               <section class="mt-12">
