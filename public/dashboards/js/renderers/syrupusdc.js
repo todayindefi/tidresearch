@@ -474,7 +474,7 @@ var SyrupUSDCRenderer = {
         data.backing.coverage_display_label = typeof reportedNav === 'number' && isFinite(reportedNav)
             ? 'Reported NAV ' + CommonRenderer.formatCurrency(reportedNav)
             : 'Reported NAV unavailable';
-        data.backing.collateral_ratio_basis = 'Pool NAV is reported accounting value, not independently verified collateral or recoverable cash. Source-valued collateral does not establish custody, title or recovery. Pool cash, strategy claims and loan principal have separate accounting perimeters.';
+        data.backing.collateral_ratio_basis = 'Pool NAV is reported accounting value, not independently verified collateral or recoverable cash. Missing collateral valuations and uncorroborated below-par readings remain unresolved. Pool cash, strategy claims and loan principal have separate accounting perimeters.';
         specific.card_overrides = specific.card_overrides || {};
         specific.card_overrides['Surplus / Deficit'] = { hidden: true };
         specific.card_overrides['Total Backing'] = { label: 'Reported pool NAV', subtext: 'Accounting assets; independent credit valuation incomplete' };
@@ -643,7 +643,6 @@ var SyrupUSDCRenderer = {
                 }
                 if(f && typeof f.message==='string' && /Pool Delegate first-loss cover:/i.test(f.message))return [{severity:f.severity,message:'Current funded first-loss protection is not established by the legacy delegate-cover figure; deployed-version and replacement-buffer evidence required.'}];
                 if(f && typeof f.message==='string' && /Largest single loan/i.test(f.message))return [{severity:f.severity,message:largest && principalTotal>0?'Largest source-listed instrument: '+CommonRenderer.formatCurrency(largest.principal)+' ('+CommonRenderer.formatPercent(largest.principal/principalTotal*100,2)+' of listed principal); largest borrower group '+(largestBorrower==null?'unavailable':CommonRenderer.formatPercent(largestBorrower/principalTotal*100,2))+'. Collateral title and recoverability remain separate.':'Largest instrument/concentration unavailable; no at-par collateral assurance inferred.'}];
-                if(f && typeof f.message==='string' && /^Collateral valuation incomplete:/.test(f.message) && specific.transparency_adoption && (lb.credit_coverage || {}).complete===true)return [{severity:f.severity,message:f.message.replace(/^Collateral valuation incomplete:/,'Supporting/unmatched strategy look-through incomplete:')+' All classified credit rows have issuer USD values; this warning is separate from credit-row source availability and independent recovery assurance.'}];
                 return [f];
             });
             // If the legacy at-par flag wasn't present but we have data,
@@ -707,7 +706,6 @@ var SyrupUSDCRenderer = {
             backingSlot.innerHTML = '<span id="syrup-layout-marker" hidden></span>' +
                 this._renderAuthoredReview(data) +
                 '<div class="risk-flag risk-warning mb-3">Reported pool NAV is an accounting measure. Independent collateral valuation, custody allocation and actual loan servicing remain incomplete; no reported default does not prove payment or full backing.</div>' +
-                this._renderTransparencyAdoption(specific) +
                 this._renderSourceClocks(data) +
                 this._renderCreditDiscrepancies(specific) +
                 this._renderBacking(specific, s, data.asset_slug, data.backing) +
@@ -717,7 +715,6 @@ var SyrupUSDCRenderer = {
         }
         if (liquiditySlot) {
             liquiditySlot.innerHTML =
-                this._renderIssuerLiquidityProjection(data) +
                 this._renderQueueReview(specific) +
                 this._renderLiquidityAndPeg(specific, s, data.asset_slug, data.liquidity) +
                 this._renderLiquidityLayer(specific, data.asset_slug) +
@@ -982,7 +979,7 @@ var SyrupUSDCRenderer = {
                 parts.push('<span class="font-mono text-amber-600 text-xs">' + warn + ' WARN · ' + CommonRenderer.formatCurrency(health.warn_principal_usd || 0) + '</span>');
             }
             if (parts.length === 0) {
-                return '<span class="font-mono text-green-600 font-semibold">No reported threshold breach</span>';
+                return '<span class="font-mono text-green-600 font-semibold">all clear</span>';
             }
             return parts.join('<br>');
         }
@@ -995,7 +992,7 @@ var SyrupUSDCRenderer = {
                 '<th class="text-right">syrupUSDT</th>' +
             '</tr></thead><tbody>' +
                 '<tr>' +
-                    '<td class="font-medium">Issuer-reported credit coverage <span class="text-xs font-normal text-slate-500">(source values; not independent recovery)</span></td>' +
+                    '<td class="font-medium">Loans-only CR <span class="text-xs font-normal text-slate-500">(current snapshot)</span></td>' +
                     '<td class="text-right">' + pctCell(usdcLoansOnlyCR) + '</td>' +
                     '<td class="text-right">' + pctCell(usdtLoansOnlyCR) + '</td>' +
                 '</tr>' +
@@ -1222,8 +1219,10 @@ var SyrupUSDCRenderer = {
         if (!panel) return;
         panel.style.display = '';  // unhide if common renderer suppressed it
 
-        // Show a date-based trailing seven-day viewport of the issuer series.
-        // This history is distinct from current per-loan SSR valuations.
+        // Sort then slice to the trailing 7 days. PegTracker still emits 30d
+        // in aum_history.entries[]; we narrow the viewport here to drop the
+        // documented Apr 3-20 Maple aggregation-transient dips that visually
+        // dominated the 30d chart but aren't real undercollateralization.
         var allEntries = h.entries.slice().sort(function(a, b) { return a.timestamp - b.timestamp; });
         // ⚠️ This was `slice(-7)` — the last 7 POINTS, labelled and charted as
         // "7d". aum_history is daily, so the two nearly agree and syrupUSDC was
@@ -1355,9 +1354,6 @@ var SyrupUSDCRenderer = {
             readings.length + ' current source-valued loan readings (' + CommonRenderer.formatCurrency(total) +
             ' principal) are below par. They remain unresolved; neither a reporting-error explanation nor a recoverable shortfall is established. ' +
             'Missing at-par-position valuations remain missing; initial contractual levels do not establish current backing.</div>';
-        if (specific.transparency_adoption) {
-            noteLine = '<div id="syrup-data-anomaly-note" class="mt-2 pt-2 border-t border-slate-100 text-xs leading-relaxed"><strong>Source correction:</strong> The previous loan valuation model was misbound. Its collateral alarms and inferred deterioration are withdrawn. This historical issuer aggregate is a separate series and does not validate the retired model. Current loan values come directly from the issuer transparency page; custody, allocation, title and recovery remain unverified.</div>';
-        }
         caption.innerHTML = sourceLine + initLine + noteLine;
 
         // Second stacked chart in the same panel — deployment ratio.
@@ -1786,34 +1782,6 @@ var SyrupUSDCRenderer = {
     // Liquidity-layer positions (PYUSD/USTB/USDC/sUSDS/AMM) render as their
     // own §2b panel below; this panel scopes strictly to crypto-overcollat
     // third-party borrower credit.
-    _renderTransparencyAdoption: function(specific) {
-        var adoption=specific.transparency_adoption, source=specific.issuer_transparency;
-        if(!adoption || !source)return '';
-        var esc=CommonRenderer._escapeAttr, coverage=(specific.loan_book || {}).credit_coverage || {}, loans=(specific.loan_book || {}).loans || [];
-        var withdrawn=loans.filter(function(l){var m=(l.collateral || {}).legacy_currentAssetAmount_model;return m && m.status==='withdrawn_misbound_valuation_model_not_credit_deterioration_evidence';}).length;
-        var termRows=loans.filter(function(l){return (l.collateral || {}).usd_source==='issuer_transparency_ssr';}).map(function(l){var p=l.collateral.publisher_transparency || {};return '<tr><td>'+SyrupUSDCRenderer._truncAddr(l.loan_addr || '')+'</td><td>'+esc(p.issuer_term_label || 'Unavailable')+'</td><td>'+esc(p.date_display || 'Unavailable')+'</td></tr>';}).join('');
-        return '<div class="panel" id="syrup-transparency-adoption"><div class="panel-title">Corrected issuer-reported collateral</div>' +
-            '<p>'+withdrawn+' legacy valuation records withdrawn after a source-model mapping error. The previous model-derived collateral alarms are retired. This does not establish physical movement, custody, legal priority or recoverable proceeds.</p>' +
-            '<p>Issuer-reported credit coverage: <strong>'+esc(coverage.collateral_ratio_pct==null?'Unavailable':CommonRenderer.formatPercent(coverage.collateral_ratio_pct,2))+'</strong> over '+CommonRenderer.formatCurrency(coverage.denominator_usd)+' classified credit principal. '+esc(coverage.measurement_assurance || 'Source availability is separate from independent collateral verification.')+'</p>' +
-            '<p>Official page retrieved '+esc(source.retrieved_at || 'Unavailable')+'. Upstream collateral valuation time: '+esc(source.financial_observed_at || 'unknown')+'. Underlying physical quantities and independently observed price rounds are not inferred from published USD values.</p>' +
-            '<details><summary>Issuer terms and dates ('+((adoption.adopted_loan_addresses || []).length)+')</summary><p>Publisher “Next call / Maturity” is separate from retained native payment-due dates, deployed contract type and verified call rights.</p><div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Instrument</th><th>Issuer term</th><th>Issuer next call / maturity</th></tr></thead><tbody>'+termRows+'</tbody></table></div></details></div>';
-    },
-
-    _renderIssuerLiquidityProjection: function(data) {
-        var specific=data.asset_specific || {}, source=specific.issuer_transparency, projection=(data.liquidity || {}).issuer_projection || (source || {}).liquidity_projection;
-        if(!source || !projection)return '';
-        var esc=CommonRenderer._escapeAttr;
-        var rows=(projection.rows || []).map(function(r){var c=r.columns || {};return '<tr><td>'+esc(c.Source || 'Unavailable')+'</td><td>'+esc(c['Held in'] || 'Unavailable')+'</td><td>'+esc(c['Typical timing'] || 'Unavailable')+'</td><td>'+esc(c.Amount || 'Unavailable')+'</td><td>'+esc(c.Cumulative || 'Unavailable')+'</td></tr>';}).join('');
-        var categories=(source.deposit_allocation_categories || []).map(function(c){return '<li>'+esc(c.display || 'Unavailable')+'</li>';}).join('');
-        var strategies=[];(source.allocations || []).forEach(function(group){(group.strategy_rows || []).forEach(function(r){var c=r.columns || {};var address=(r.addresses || []).join(', ');strategies.push('<tr><td>'+esc(c.Strategy || 'Unavailable')+'</td><td>'+esc(r.source_chain_label || 'Unknown')+'</td><td>'+esc(c.AUM || 'Unavailable')+'</td><td style="white-space:normal;overflow-wrap:anywhere">'+esc(address || 'Unavailable')+'</td></tr>');});});
-        var headline=Object.keys(source.headline_metrics_parsed || {}).map(function(k){return '<li>'+esc(k)+': '+esc(source.headline_metrics_parsed[k].display || 'Unavailable')+'</li>';}).join('');
-        return '<div class="panel" id="syrup-issuer-liquidity"><div class="panel-title">Issuer-projected liquidity ladder</div><p>Publisher timing estimates, not executable local cash. Multi-chain LP/DeFi positions require their own receipt ownership, unwind, transport, fees and access checks. Scheduled principal and cumulative interest are not received cash and are not added to native pool cash.</p>' +
-            '<p>Page retrieval '+esc(projection.retrieved_at || source.retrieved_at || 'Unavailable')+'; upstream financial observation '+esc(projection.observed_at || 'unknown')+'. '+esc((source.withdrawal_queue_snapshot || {}).clock_scope || '')+'</p>' +
-            '<div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Source</th><th>Held in</th><th>Publisher timing</th><th>Amount</th><th>Cumulative</th></tr></thead><tbody>'+rows+'</tbody></table></div>' +
-            '<details class="mt-3"><summary>Reported allocations, strategies and accounting perimeters</summary><ul>'+categories+'</ul><ul>'+headline+'</ul><p>Rounded publisher labels and attributed amounts remain separate from native NAV, principal, cash and collateral. Strategy addresses/chains are source-reported, not verified pool ownership or available bridge cash. Parent Treasury, revenue and buybacks are not pool backing or first-loss capital.</p>' +
-            '<div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Strategy</th><th>Reported chain</th><th>Reported AUM</th><th>Source address</th></tr></thead><tbody>'+strategies.join('')+'</tbody></table></div></details></div>';
-    },
-
     _accountingClockLabel: function(specific) {
         var timestamp=((specific.vault_state || {}).accounting_context || {}).timestamp;
         if(typeof timestamp==='number' && Number.isFinite(timestamp)){
@@ -1839,7 +1807,7 @@ var SyrupUSDCRenderer = {
         if(!proof)return '';
         var esc=CommonRenderer._escapeAttr, context=(s.vault_state || {}).accounting_context || {}, at=null, meta={}, prices={};
         if(typeof context.timestamp==='number' && Number.isFinite(context.timestamp)){var date=new Date(context.timestamp*1000);if(!isNaN(date.getTime()))at=date.toISOString();}
-        ((s.loan_book || {}).loans || []).forEach(function(l){var c=l.collateral || {}, p=c.price_evidence || {};if(c.metadata_retrieved_at)meta[c.metadata_retrieved_at]=true;if(c.asset)prices[c.asset]=c.usd_source==='issuer_transparency_ssr'?'Issuer USD value; independent price/time unknown':p.upstream_updated_at || c.usd_source || 'unavailable';});
+        ((s.loan_book || {}).loans || []).forEach(function(l){var c=l.collateral || {}, p=c.price_evidence || {};if(c.metadata_retrieved_at)meta[c.metadata_retrieved_at]=true;if(c.asset)prices[c.asset]=p.upstream_updated_at || c.usd_source || 'unavailable';});
         return '<div class="panel"><div class="panel-title">Independent source clocks and rebuild scope</div><p>Producer rebuild: '+esc(proof.build_timestamp || data.timestamp || 'unavailable')+'. Frozen producer assembly: '+esc(proof.native_snapshot_timestamp || 'unavailable')+'. Accounting block '+esc(String(context.block || 'unavailable'))+' observed '+esc(at || 'unavailable')+'.</p>' +
             '<p>Collateral metadata retrieval: '+esc(Object.keys(meta).sort().join(', ') || 'unavailable')+'. Upstream collateral valuation time remains unknown. Price source updates/bases: '+esc(Object.keys(prices).sort().map(function(k){return k+': '+prices[k];}).join('; '))+'. Failed price reads remain unknown.</p>' +
             '<p>'+esc(proof.native_input_precision || '')+'. '+esc(proof.multichain_scope || '')+'. A rebuild does not refresh the underlying observation or establish custody, legal priority, payment or execution.</p></div>';
@@ -1864,15 +1832,15 @@ var SyrupUSDCRenderer = {
         });
         function sum(rows){return rows.reduce(function(a,l){return a+Number(l.principal);},0);}
         var repeats=Object.keys(groups).filter(function(k){return groups[k].length>1;});
-        var coverage=specific.credit_reading_coverage || {}, repeatCount=typeof coverage.repeated_reading_group_count==='number'?coverage.repeated_reading_group_count:typeof coverage.repeated_quantity_group_count==='number'?coverage.repeated_quantity_group_count:repeats.length;
+        var coverage=specific.credit_reading_coverage || {}, repeatCount=typeof coverage.repeated_quantity_group_count==='number'?coverage.repeated_quantity_group_count:repeats.length;
         var borrowerValues=Object.keys(borrowerPrincipal).map(function(k){return borrowerPrincipal[k];}), largestBorrower=borrowerValues.length?Math.max.apply(null,borrowerValues):null;
         var clock=(specific.vault_state || {}).accounting_context || {};
-        return '<div class="panel" id="syrup-credit-discrepancies"><div class="panel-title">Collateral coverage and valuation scope</div>' +
+        return '<div class="panel" id="syrup-credit-discrepancies"><div class="panel-title">Unresolved credit and collateral readings</div>' +
             '<p>'+low.length+' below-par source readings: '+CommonRenderer.formatCurrency(sum(low))+' principal. '+
-            thin.length+' readings at 100–120%: '+CommonRenderer.formatCurrency(sum(thin))+' principal. These are source-reported or modelled valuations, not independently verified collateral or recoverable value.</p>' +
+            thin.length+' readings at 100–120%: '+CommonRenderer.formatCurrency(sum(thin))+' principal. These are producer price/quantity calculations, not independently verified enforceable collateral or recoverable shortfalls.</p>' +
             (principalTotal>0?'<p>Largest source-listed instrument: '+CommonRenderer.formatCurrency(largestPrincipal)+' ('+CommonRenderer.formatPercent(largestPrincipal/principalTotal*100,2)+' of listed principal); largest borrower group '+(largestBorrower==null?'unavailable':CommonRenderer.formatPercent(largestBorrower/principalTotal*100,2))+'. This includes all enumerated instrument categories, not only initial-at-par sleeves.</p>':'') +
-            '<p>'+missing.length+' initially at-par '+((specific.transparency_adoption && ((specific.loan_book || {}).credit_coverage || {}).complete===true)?'supporting/unmatched positions lack usable current look-through valuations (':'positions lack usable current collateral valuations (')+CommonRenderer.formatCurrency(sum(missing))+' principal). '+((specific.transparency_adoption && ((specific.loan_book || {}).credit_coverage || {}).complete===true)?'Classified credit rows have issuer USD values; independent recovery remains unverified. ':'')+'Initial 100% does not mean current collateral is verified at par.</p>' +
-            '<p>'+repeatCount+' repeated borrower/asset source-reading groups need allocation checks. Equal source readings do not prove separately assigned collateral. '+CommonRenderer._escapeAttr(coverage.repetition_basis || 'Read grouping does not independently establish allocation.')+'</p>' +
+            '<p>'+missing.length+' initially at-par positions lack usable current collateral valuations ('+CommonRenderer.formatCurrency(sum(missing))+' principal). Initial 100% does not mean current collateral is verified at par.</p>' +
+            '<p>'+repeatCount+' repeated borrower/asset/raw-quantity groups need allocation checks. Repeated quantities are not added as independent pledged collateral. Changes in flagged counts may reflect different loans entering/leaving the bucket.</p>' +
             '<p>Zero recorded impairment/default/loss does not establish payment, custody, title, margin cure or absence of economic deterioration. Native accounting block '+CommonRenderer._escapeAttr(String(clock.block || 'unavailable'))+'; loan metadata and price clocks remain separate.</p></div>';
     },
 
@@ -1880,7 +1848,7 @@ var SyrupUSDCRenderer = {
         var lb = specific.loan_book;
         if (!lb) return '';
 
-        var disclaimer = '<div class="risk-flag risk-warning"><strong>Credit scope:</strong> Reported off-chain collateral is not held by these loan contracts and does not establish automatic liquidation or cash recovery. Publisher term labels, native payment dates and deployed loan types are distinct. Call, notice, grace and enforcement rights require instrument-specific verification.</div>';
+        var disclaimer = '<div class="risk-flag risk-warning"><strong>Important:</strong> These are open-term loans with off-chain custodied collateral. The smart contract holds no collateral and cannot auto-liquidate — enforcement requires Pool Delegate\'s call right (24h notice + 48h grace before contract-level default). See loan list below for per-loan collateral assets / init levels.</div>';
 
         if (lb.active_loan_count === null || lb.active_loan_count === undefined) {
             return '<div class="panel">' +
@@ -2485,7 +2453,7 @@ var SyrupUSDCRenderer = {
         var collateralHeaders = hasCollateral ?
             ('<th class="cursor-pointer" data-sort="collat">Collateral</th>' +
              '<th class="text-right cursor-pointer" data-sort="init">Init</th>' +
-             '<th class="text-right cursor-pointer" data-sort="cur">Source %</th>' +
+             '<th class="text-right cursor-pointer" data-sort="cur">Cur</th>' +
              '<th class="text-right cursor-pointer" data-sort="buf">Buf</th>') : '';
 
         // ⚠️ NEITHER COLUMN IS THE PROTOCOL'S THRESHOLD, AND THE PAGE SHOULD SAY SO.
@@ -2521,7 +2489,7 @@ var SyrupUSDCRenderer = {
                 '<th class="cursor-pointer" data-sort="borrower">Borrower</th>' +
                 '<th class="text-right cursor-pointer" data-sort="principal">Princ. ▾</th>' +
                 '<th class="text-right cursor-pointer" data-sort="rate">Rate</th>' +
-                '<th class="text-right cursor-pointer" data-sort="days" title="Retained native payment-due date; not principal maturity or a received payment">Native due</th>' +
+                '<th class="text-right cursor-pointer" data-sort="days">Days</th>' +
                 '<th class="cursor-pointer" data-sort="status">S</th>' +
                 collateralHeaders +
             '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div>' +
@@ -2596,7 +2564,7 @@ var SyrupUSDCRenderer = {
                 var meta = SYRUP_COLLATERAL_META[asset] || {};
                 var usdText;
                 if (collatUsd != null) {
-                    usdText = CommonRenderer.formatCurrency(collatUsd) + (c.usd_source==='issuer_transparency_ssr'?' <span class="text-xs text-slate-400" title="Issuer-reported USD valuation; custody and recovery unverified, upstream valuation time unknown">issuer</span>':'');
+                    usdText = CommonRenderer.formatCurrency(collatUsd);
                 } else if (isAnomaly) {
                     usdText = '<span class="text-slate-400"' + anomalyAttrs + '>—</span>' + anomalyGlyph;
                 } else {
@@ -2670,8 +2638,27 @@ var SyrupUSDCRenderer = {
         '</tr>';
     },
 
-    // Qualify below-par source readings. Protocol status and recognized losses
-    // are separate observations; neither establishes collateral recoverability.
+    // ----- Collateral-read corroboration ----------------------------------
+    // Maple's per-loan GraphQL `currentAssetAmount` is understated on some
+    // crypto-collateralised loans, which makes `current_level_pct` read below
+    // par on loans that are not in distress. The producer already grades this:
+    // a below-par read only counts as a finding when the pool's on-chain
+    // `unrealizedLosses` is > 0 or the loan is impaired/called/defaulted. It
+    // publishes the verdict in aggregate (set_a_collateral_health
+    // .crit_corroborated_* vs .crit_uncorroborated_*) but stamps nothing on
+    // the loan record, so every consumer has to reconstruct the rule per row.
+    // Handoff filed upstream to stamp it; this reconstruction reproduces the
+    // published aggregate exactly (syrupUSDC 2026-09-14: 10 loans / $372.55M).
+    // Conservative by design: an unknown or live alarm leaves the read asserted.
+    // ✅ NOW READS THE PRODUCER'S OWN VERDICT. PegTracker stamped
+    // `read_corroborated` + `read_corroboration_basis` on every loan record
+    // (2026-09-14, from this repo's handoff), so the rule no longer has to be
+    // rebuilt from three separate fields on the consumer side.
+    // ⚠️ The reconstruction stays as a FALLBACK for snapshots predating the
+    // field — deleting it would blank the qualification on any older payload —
+    // but it is no longer what runs. Verified equivalent before switching:
+    // the published field flags 10 rows on syrupUSDC and 0 on syrupUSDT,
+    // matching the reconstruction exactly.
     _collateralUncorroborated: function(loan, poolUL) {
         var c = loan && loan.collateral;
         if (!c) return false;
@@ -2981,7 +2968,7 @@ var SyrupUSDCRenderer = {
 
         return '<div class="panel">' +
             '<div class="panel-title">Repayment Schedule (next ' + (pl.horizon_days || 180) + ' days)</div>' +
-            '<p class="text-sm text-slate-500 mb-3">Estimated interest-only inflows from retained native payment schedules, bucketed by next payment-due date. Principal timing depends on each instrument’s terms, call permissions and notice/grace periods; principal is not modelled here.</p>' +
+            '<p class="text-sm text-slate-500 mb-3">Expected interest-only inflows from active open-term loans, bucketed by next payment-due date. Principal repays only on a Pool-Delegate call (24h notice + 48h grace) and is not modelled here.</p>' +
             '<div class="text-xs text-slate-500 mb-2">Cumulative interest expected through each horizon (chart below shows per-bucket detail).</div>' +
             '<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">' +
                 statBlock('Within 30d', t.expected_inflow_30d_usd) +

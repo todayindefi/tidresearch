@@ -12,8 +12,9 @@ underlying_assets:
 date: '2026-05-03'
 last_verified: '2026-10-13'
 last_revised: '2026-11-16'
+issuer: Maple International Operations SPC
 yield_bearing: true
-assessment_version: syrup-pair-transparency-correction-2026-11-16-v3
+assessment_version: syrup-pair-six-axis-2026-11-16-v2
 evidence_version: sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944
 score_assessed: '2026-11-16'
 score_status: assessed
@@ -27,25 +28,25 @@ axis_confidence:
   issuer_score: medium
 axis_assessment_status:
   volatility_score: assessed
-  backing_score: assessed
+  backing_score: provisional
   liquidity_score: assessed
   underlying_score: assessed
   structural_score: assessed
   issuer_score: assessed
 score_sensitive_findings:
-- id: custody-allocation-net-recovery
+- id: collateral-meaning-allocation-recovery
   axes:
   - backing_score
-  - issuer_score
-  status: open_risk_limit_not_incomplete_score
-  current_treatment: Current assessed grades incorporate unverified exclusive custody/control/priority,
-    publisher valuation timestamps and net realization. No collateral cure/solvency
-    guarantee inferred.
-  reassess_with: Independent matched loan-level collateral allocation/control/title,
-    dated valuation, realized servicing/recovery or a new credit event.
-confidence_scope: Medium confidence on five axes; low confidence on Backing. The source-model
-  mapping issue is resolved; custody and recovery limits are incorporated in assessed
-  grades.
+  current_treatment: Backing grade under review; overall remains the current assessed
+    judgment with low-confidence backing sensitivity. No healthy-from-zero-loss inference.
+  materiality: 50m USDC-labelled initial-par exposure has no current verified recoverable
+    collateral value; attributable title/control/amount evidence could materially
+    change backing.
+  reassess_with: Dated per-loan field definitions and exclusive custody allocation/security/control
+    records, movement reconciliation and independent servicing/recovery evidence.
+confidence_scope: Medium evidence confidence except low-confidence Backing; confidence
+  is distinct from assessment completion and numerical grade.
+axis_frame: six
 assessment_type: full
 redemption_score: 5.5
 volatility_score: 7.5
@@ -57,29 +58,29 @@ issuer_score: 5.5
 overall_score: 5.5
 chains:
 - eth
-axis_frame: six
 production: true
 featured: false
 audience: retail
 verification_scope: bounded
-issuer: Maple International Operations SPC
 ---
+
 # syrupUSDT — Risk Report
 
 ## Summary
 
-**5.5/10 — assessment complete.** syrupUSDT is a USDT-denominated Maple credit-pool share. All six scores are current assessed judgments with confidence shown separately; low-confidence Backing reflects unverified custody and net recovery, not unfinished analysis.
+**5.5/10 — assessment complete.** This is the current Ethereum pool judgment, with confidence shown by axis. Backing has a specific unresolved score-decision input; it does not mean the assessment or dashboard is half-finished. The overall grade incorporates that uncertainty and can be reassessed if matched collateral evidence changes the conclusion.
 
-The issuer publishes 140.24% aggregate credit-value coverage and 50m USD / 100% for its USDC-collateral exposure. Those figures are not guaranteed net recovery. Counterparty/issuer concentration, nominal-par costs and conditional exits remain material; the old missing-value model for that loan is withdrawn.
+syrupUSDT is a USDT-denominated Maple lending-pool share, not a guaranteed bank-dollar or one-to-one stablecoin reserve claim. Credit losses, conditional exits, concentrated control and dependencies can affect a holder before formal default is recognized.
+
+The 50m USDC-at-initial-par loan has no verified current collateral value. The largest listed loan is 70m and largest borrower group 92.23m; initial-par exposure is not the largest overall loan. Cash is 8.91m USDT with an empty queue at the pin, which is no future settlement guarantee.
 
 ## Key Risks
 
-- **Credit and recovery:** issuer-reported collateral values do not prove exclusive custody, secured priority or realizable proceeds (Axis 2).
-- **Realization:** native cash, LP/DeFi unwindability, queue processing and final underlying conversion are separate legs (Axis 3).
-- **Common dependencies and control:** borrower/custody concentration, settlement-token issuers and administrative exceptions can transmit loss (Axes 4–6).
+- **Credit evidence:** collateral field meaning, exclusive allocation and enforceable recovery remain unresolved; zero recorded losses does not clear the finding (Axis 2).
+- **Realization:** queue processing, secondary size, eligibility and final underlying conversion have different limits (Axis 3).
+- **Common dependencies and control:** borrower/custody concentration, stablecoin issuers and administrative exceptions can transmit losses across otherwise separate pools (Axes 4–6).
 
 ## 1. Stability / Peg
-
 
 **Score 7.5/10; confidence medium; assessed.** The share reference accrues in USDT; a stable reference is the share's dated NAV, not a fixed $1. The primary USD price/reference history binds the exact Ethereum token and retains varying dated reference values, rather than applying today's NAV backward.
 
@@ -98,11 +99,10 @@ Reported NAV may lag an unrecognized credit loss, and market marks are not cash 
 
 ## 2. Backing and claims
 
-**Score 6.0/10; confidence low; assessed.** The issuer's credit valuations are available for every loan in its Lending table. Availability is distinct from independent custody, exclusive allocation, legal priority and net recoverability, which remain unverified and constrain this grade.
+**Score 6.0/10; confidence low; this axis's score is provisional for the named collateral finding.** The assessment work is complete. Resolving whether the reported collateral is missing, substituted, shared or misinterpreted could materially change this grade; routine offchain uncertainty alone is not the reason for that status.
 
-syrupUSDT is a pool claim supported by institutional credit and supporting strategies, not a 1:1 USDT reserve receipt. Pool lenders bear net losses. Impairment can reduce pending exits; under published terms, an exiting impaired lender forfeits later recoveries on the affected loan. [Risk disclosures](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks).
+syrupUSDT is a pool claim backed by institutional credit and supporting strategies. It is not a 1:1 USDT reserve receipt. Impairment can reduce redemption proceeds before formal default. A pending withdrawal can be haircut, and an exiting impaired lender forfeits later recoveries on that impaired loan under the disclosed terms. [Maple risk disclosures](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks).
 
-### Pool accounting perimeter
 
 The following native observations share Ethereum **block 26424095, November 16 2026 00:48:23 UTC**, with the block hash rechecked. Amounts are underlying-token units, not independently marked bank dollars.
 
@@ -117,28 +117,17 @@ The following native observations share Ethereum **block 26424095, November 16 2
 
 The listed current principal reconciles exactly to the pool’s LoanManager. Shared strategy holdings are measured with `assetsOf(poolManager)`; global manager AUM is not assigned to every registered pool. These identities verify accounting ownership and arithmetic, **not independently recoverable credit NAV**. Accrued interest is not immediately available pool cash.
 
-### Issuer-reported credit collateral
+### Concentration and initial-par exposures
 
-The upgraded [official product page](https://maple.finance/transparency/products/syrupusdt) was fetched at **2026-11-16T05:40:24.086178+00:00**. Its upstream collateral/price observation time is **not published**; fetch time is not the valuation clock. Exact loan addresses and principal amounts were matched to the separately pinned native roster.
+The normal producer’s metadata clock is November 16 00:43:30 UTC, with assembly at 00:43:38 UTC. The 50m loan `0x01a30dE2836Db8E3Fce3168e33215018601C728F` is **20.97% of enumerated principal**, or about 20.19% of pool accounting assets. Its borrower address is `0x1Af652b5e28fB0d113aDf0803cCF8F34862bBAA5`; no ultimate legal identity is inferred.
 
-| Issuer credit-table measure | Published value |
-|---|---:|
-| Matched credit rows | 6 |
-| Credit principal denominator | 200,052,547.37 USDT |
-| Summed issuer collateral values | 280,550,658.52 USD |
-| Issuer-value / stated credit-principal ratio | 140.24% |
+Its 100% label is the initial collateral term. The current source quantity is anomalous and its current collateral valuation is null, as it was on November 11. No matched custody allocation, security/control agreement, exclusive pledge, liquidation access or net recovery has been established. Stablecoin labels and assumed $1 prices do not prove enforceable collateral value.
 
-This is **complete publisher-value coverage**, not an independently verified reserve ratio or realizable credit NAV. The publisher's nominal USD/underlying valuation basis is retained. Loan claims, collateral, deposits, LP positions and headline AUM must not be added together as separate backing.
+The largest listed loan is **70m USDT**, BTC-labelled collateral, at `0x8a44ff7b9E755A9eA6a4ee0708b7D46c79eAcE4f` (29.36% of principal). The largest borrower address group totals **92.23m USDT, 38.69% of principal**. A separate XRP-labelled loan is 55.186m; the fresh XRP price read failed and remains unavailable in the staged valuation model. Largest-loan and largest-borrower measures describe different concentration risks.
 
-The 50m loan `0x01a30dE2836Db8E3Fce3168e33215018601C728F` now has a direct issuer-reported collateral value of **50mUSD/100%**. This is the page's current collateral measure, distinct from the earlier initialLevel of 100% field. The old 0.0007 USDC-derived anomaly was not a valid financial valuation and is withdrawn.
+Set B consists of **12 initially-at-par positions totaling 88.350020m USDT, 37.06% of enumerated principal**. It includes supporting strategies as well as credit. The earlier ratio was 103.550020m / 268.60256737m = 38.55%; principal reductions and the changed denominator explain the displayed 39% → 37%. These stock differences are not independently verified cash repayments or evidence of improved collateral quality.
 
-The USDC exposure is 20.97% of all enumerated principal; the largest listed loan remains 70m and the largest borrower group 92.23m / 38.69%. Current source coverage spans 100%–the higher reported crypto-collateral ratios, not an independent recovery guarantee. At nominal par there is no valuation cushion for liquidation costs, issuer freezes, an adverse USDC/USDT basis or senior claims.
-
-Set B remains 88.350020m / 37.06% of all enumerated principal and includes supporting strategies as well as credit. The 39%→37% display difference is explained by listed-principal and denominator changes, not independently confirmed cash repayment. Remaining supporting-strategy valuations are separately incomplete; no universal field switch was applied to them.
-
-The mapping proof withdraws the earlier missing-value inference for the 50m credit row. Missing historical raw USDT provenance still prevents a fabricated historical custody or price series.
-
-Coverage above 100% does not establish compliance with a loan's actual maintenance margin. Initial target levels, live cure thresholds, waivers and enforceable liquidation rights were not verified from executed loan terms.
+USDC, PYUSD, USDT and tokenized-asset exposures add issuer, freeze, eligibility, custody and conversion risks. Repayment is denominated in USDT while some collateral is denominated in another asset; initial par supplies no buffer for an adverse basis, liquidation expenses or senior recovery costs. Independent full-book recoverable coverage remains unknown.
 
 ### Servicing and recovery limits
 
@@ -147,7 +136,6 @@ Native impairment, call and default flags were false at the financial pin. Recor
 Generic borrower-MLA documentation describes legal remedies and costs before pro-rata principal and interest. A historically source-bound LoanManager code path distributes recovered funds under its own rules. Neither establishes title, first priority, deliverable collateral or net recovery from an offchain custodian for these exact loans. Executed agreements, allocation/control records, substitution rights and liquidation timing/costs remain necessary evidence. [Borrower MLA](https://docs.maple.finance/legal/borrower-mla).
 
 ## 3. Liquidity & Exit
-
 
 **Score 5.5/10; confidence medium; assessed.** Primary processing and secondary sale are separate exits. Their worse link governs the grade; inexpensive quotes do not average away queue or eligibility constraints.
 
@@ -179,14 +167,7 @@ The exact-token Ethereum KyberSwap quote ladder was observed **2026-11-15T22:31:
 
 Shortfall is `(input notional − quoted native output) / input notional`; negative values mean output above the sizing reference, not free profit or negative execution risk. Raw input/output amounts and individual request/receive clocks are retained by the producer. Gas and unestablished net fees are excluded. Quotes are neither fills nor a located slippage crossing; failed larger rungs remain unavailable. Remote-chain inventory, bridges, eligibility and the underlying's final cash conversion were not made fungible by these Ethereum quotes.
 
-### Issuer liquidity projection
-
-The publisher labels about 20.01m USDT “instant,” including about 5.61m DeFi, 5.46m LP and 8.94m displayed cash. Those rounded issuer buckets are not equivalent to native idle cash at the independent financial pin.
-
-LP/DeFi receipt ownership, withdrawal limits, unwind liquidity, transport/bridges and fees are not independently verified. Scheduled principal and interest are projections, not cash received. The page's combined “Next call / Maturity” date and term label are issuer descriptions, not a fresh deployed-contract type, a guaranteed repayment date or the native payment-due field.
-
 ## 4. Dependencies
-
 
 **Score 4.0/10; confidence medium; assessed.** Backing asks what assets support the claim; this axis asks which counterparties and systems transmit value or failure.
 
@@ -202,10 +183,7 @@ The currently reviewed books share borrower address `0x8669f3189ea2318d28c7183a9
 
 Supporting-strategy registration is not funded exposure, withdrawable cash or diversification. Chain-specific historical grades are archived and suppressed from active inheritance until the remote deployment is assessed.
 
-The upgraded source separates lending, Treasury, DeFi, trading, LP and idle allocations. Published headline AUM has a different perimeter from pool accounting assets and deposits; borrower collateral is not an additional pool-owned reserve. Parent Treasury, revenue, buybacks and other financial-page totals are not verified pool first-loss cover. [Issuer financials](https://maple.finance/transparency/financials).
-
 ## 5. Contract & Admin
-
 
 **Score 4.5/10; confidence medium; assessed.** This axis covers code and administrative authority, not borrower quality or issuer credit.
 
@@ -242,7 +220,6 @@ Strong source assurance cannot offset a cheaper emergency authority path. These 
 
 ## 6. Issuer
 
-
 **Score 5.5/10; confidence medium; assessed.** Documentary transparency and named accountable entities support a judgment, but are not a financial guarantee. Limits to independent assurance are incorporated into this grade.
 
 The issuer is Maple International Operations SPC acting for Maple USDT Segregated Portfolio 1; Syrup Ltd operates the interface. The pool funds institutional credit and supporting yield strategies. Published terms limit claims to the relevant portfolio and allocate net loan losses proportionally to lenders. Portfolio segregation is a disclosed legal structure, not independent proof of perfected collateral rights or recovery priority.
@@ -250,7 +227,7 @@ The issuer is Maple International Operations SPC acting for Maple USDT Segregate
 
 LedgerLens identifies The Network Firm Tech & Services LLC as a technology provider and expressly excludes audit, review, attest and assurance services; its source accuracy/completeness is not independently confirmed. The reviewed USDC/USDT pool observations are dated **November 13 17:11 UTC**. Pool totals and a dashboard badge do not establish per-loan custody, title, allocation or actual servicing. [LedgerLens](https://dashboard.ledgerlens.io/c/maple).
 
-The November 16 document comparison found five key document texts substantively unchanged since November 11. Unchanged disclosures do not independently establish custody, control, priority or net recovery. Executed security/custodian-control schedules, priority, segregation and actual recoverable collateral remain unavailable at loan level. Those facts constrain the current Backing and Issuer judgments without turning ordinary offchain uncertainty into an unfinished assessment. Source-value availability is not an assurance upgrade.
+DA’s November 16 comparison found five key document texts substantively unchanged since November 11. That documentary result does not clear the collateral discrepancies. Executed security/custodian-control schedules, priority, segregation and actual recoverable collateral remain unavailable at loan level. Those facts are tracked as the material Backing finding; generic issuer opacity is not counted twice or used to leave the whole report perpetually unfinished.
 
 ## Scoring Rationale
 
@@ -266,23 +243,24 @@ The November 16 document comparison found five key document texts substantively 
 
 ### Composite judgment
 
-Backing remains 6.0 after reconsidering the corrected source. Availability of the 50m nominal-par value removes an erroneous missing-value premise, but does not add a recovery cushion or independent custody assurance. Overall remains 5.5, equal to its six-axis mean; Stability retains the evidenced-record 7.5 ceiling.
+The 5.5 overall equals the six-axis mean 5.5 after applying the evidenced-record ceiling to Stability. This correction is about the support for Axis 1, not a new loan loss. The legacy redemption field mirrors Axis 3 and is not a seventh conceptual risk axis.
 
-All six score decisions are assessed. Backing confidence remains low because valuation clocks, custody/control, exclusive allocation and net recovery are not independently verified. Completion records finished analytical work, not certainty. A matched adverse credit or recovery event can reopen these scores.
+A completed assessment is not a claim of complete knowledge. “Assessed” means the current judgment has been made under stated limits; confidence describes strength of evidence. The provisional Backing grade names the unresolved decision input rather than treating routine offchain uncertainty as an unfinished report.
 
 | Axis | Confidence | Decision status |
 |---|---|---|
-| Stability | Medium | Assessed against the evidenced record and reference. |
-| Backing | Low | Assessed; wrong-field model resolved, recovery limits incorporated. |
-| Liquidity & Exit | Medium | Assessed from dated primary state, cohorts and secondary ladder. |
-| Dependencies | Medium | Assessed with ultimate-entity and exclusive-pledge limits. |
-| Contract & Admin | Medium | Assessed within current finite and prior dated verification. |
-| Issuer | Medium | Assessed with documentary and assurance limits. |
+| Stability | Medium | Assessed against the evidenced record and stated reference. |
+| Backing | Low | Score under review for the named collateral finding. |
+| Liquidity & Exit | Medium | Assessed using dated primary state, cohorts and secondary ladder. |
+| Dependencies | Medium | Assessed; ultimate entities and exclusive pledges remain limited. |
+| Contract & Admin | Medium | Assessed within current finite and prior dated verification scopes. |
+| Issuer | Medium | Assessed; disclosure and assurance limitations are incorporated. |
 
 ## Open finding and escalation triggers
 
-Assessment `syrup-pair-transparency-correction-2026-11-16-v3` retains the financial baseline `sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944` for native pool accounting, loans and queues, and uses the separately hash-pinned upgraded-source correction for issuer credit values. Publisher pages were fetched November 16, but their upstream valuation time is unknown. Source-code, native, price-history, GraphQL and documentary clocks are not renewed by rebuilding the reports.
+50m USDC-labelled initial-par exposure has no current verified recoverable collateral value; attributable title/control/amount evidence could materially change backing. Dated per-loan field definitions and exclusive custody allocation/security/control records, movement reconciliation and independent servicing/recovery evidence.
 
-Reassess on independently matched collateral/custody/control evidence, missed payment beyond its actual grace period, failed margin cure, impairment/default, custody/priority loss, stale or misbound prices, growing or aging queues or failed exit execution. Do not revive the withdrawn old-field ratios as current evidence, or infer guaranteed recovery from the replacement issuer ratios.
 
-Historical remote grades remain archived and suppressed from active inheritance. Exact account HFs and leverage sensitivity are position-specific; these asset grades neither approve a leveraged loop nor establish an emergency credit event.
+Assessment `syrup-pair-six-axis-2026-11-16-v2` uses financial evidence snapshot `sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944`, with separately recorded price-history and valuation-provenance reviews. The history analysis has a November 16 00:48:23 UTC cutoff; original pool accounting, loan metadata, GraphQL retrieval, upstream price rounds, deployed-contract checks and documentary dates remain separate. A later calculation or export does not renew those observations. BTC/ETH round times were retained; fresh XRP pricing failed, and source-specific heartbeat limits are not comprehensively verified.
+
+Reassess urgently on independently corroborated collateral release without replacement, failed margin cure, payment beyond actual grace, impairment/default, custody or priority loss, stale/misbound valuation, growing or aging withdrawals, or failed exit execution. Missing data must stay unknown, and zero recognized losses must not dismiss a collateral discrepancy. This is an exact Ethereum assessment with explicit limits; historical remote overrides are not freshly certified.

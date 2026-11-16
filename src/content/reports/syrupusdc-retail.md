@@ -14,8 +14,9 @@ underlying_assets:
 date: '2026-04-25'
 last_verified: '2026-10-13'
 last_revised: '2026-11-16'
+issuer: Maple International Operations SPC
 yield_bearing: true
-assessment_version: syrup-pair-transparency-correction-2026-11-16-v3
+assessment_version: syrup-pair-six-axis-2026-11-16-v2
 evidence_version: sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944
 score_assessed: '2026-11-16'
 score_status: assessed
@@ -29,29 +30,29 @@ axis_confidence:
   issuer_score: medium
 axis_assessment_status:
   volatility_score: assessed
-  backing_score: assessed
+  backing_score: provisional
   liquidity_score: assessed
   underlying_score: assessed
   structural_score: assessed
   issuer_score: assessed
 score_sensitive_findings:
-- id: custody-allocation-net-recovery
+- id: collateral-meaning-allocation-recovery
   axes:
   - backing_score
-  - issuer_score
-  status: open_risk_limit_not_incomplete_score
-  current_treatment: Current assessed grades incorporate unverified exclusive custody/control/priority,
-    publisher valuation timestamps and net realization. No collateral cure/solvency
-    guarantee inferred.
-  reassess_with: Independent matched loan-level collateral allocation/control/title,
-    dated valuation, realized servicing/recovery or a new credit event.
-confidence_scope: Medium confidence on five axes; low confidence on Backing. The source-model
-  mapping issue is resolved; custody and recovery limits are incorporated in assessed
-  grades.
+  current_treatment: Backing grade under review; overall remains the current assessed
+    judgment with low-confidence backing sensitivity. No healthy-from-zero-loss inference.
+  materiality: 146.5m source-model below-par principal, repeated collateral allocations
+    and16.5m reportedBTC quantity change could alter the backing grade if established
+    as physical loss or reporting/coverage error.
+  reassess_with: Dated per-loan field definitions and exclusive custody allocation/security/control
+    records, movement reconciliation and independent servicing/recovery evidence.
+confidence_scope: Medium evidence confidence except low-confidence Backing; confidence
+  is distinct from assessment completion and numerical grade.
+axis_frame: six
 assessment_type: full
 redemption_score: 6.0
 volatility_score: 8.5
-backing_score: 6.5
+backing_score: 5.5
 liquidity_score: 6.0
 underlying_score: 5.5
 structural_score: 4.5
@@ -59,29 +60,29 @@ issuer_score: 5.5
 overall_score: 6.0
 chains:
 - eth
-axis_frame: six
 production: true
 featured: false
 audience: retail
 verification_scope: bounded
-issuer: Maple International Operations SPC
 ---
+
 # syrupUSDC — Risk Report
 
 ## Summary
 
-**6.0/10 — assessment complete.** syrupUSDC is a USDC-denominated Maple credit-pool share. All six scores are current assessed judgments with confidence shown separately; low-confidence Backing reflects unverified custody and net recovery, not unfinished analysis.
+**6.0/10 — assessment complete.** This is the current Ethereum pool judgment, with confidence shown by axis. Backing has a specific unresolved score-decision input; it does not mean the assessment or dashboard is half-finished. The overall grade incorporates that uncertainty and can be reassessed if matched collateral evidence changes the conclusion.
 
-The issuer publishes 156.42% aggregate credit-value coverage, which is not independently verified collateral or pool solvency. The old undercollateralization model is withdrawn. Actual native pool cash was 130,550 USDC against 2.79m queued exit NAV at the dated financial pin, so immediate liquidity remains a separate constraint.
+syrupUSDC is a USDC-denominated Maple lending-pool share, not a guaranteed bank-dollar or one-to-one stablecoin reserve claim. Credit losses, conditional exits, concentrated control and dependencies can affect a holder before formal default is recognized.
+
+Actual cash is 130,550 USDC against 2.79m of queued exit NAV. Six loans totaling 146.5m have unresolved source-model collateral below principal; one 16.5m loan reports 475→65 BTC. Those are reasons for caution, not proof of actual collateral removal or a realized loss.
 
 ## Key Risks
 
-- **Credit and recovery:** issuer-reported collateral values do not prove exclusive custody, secured priority or realizable proceeds (Axis 2).
-- **Realization:** native cash, LP/DeFi unwindability, queue processing and final underlying conversion are separate legs (Axis 3).
-- **Common dependencies and control:** borrower/custody concentration, settlement-token issuers and administrative exceptions can transmit loss (Axes 4–6).
+- **Credit evidence:** collateral field meaning, exclusive allocation and enforceable recovery remain unresolved; zero recorded losses does not clear the finding (Axis 2).
+- **Realization:** queue processing, secondary size, eligibility and final underlying conversion have different limits (Axis 3).
+- **Common dependencies and control:** borrower/custody concentration, stablecoin issuers and administrative exceptions can transmit losses across otherwise separate pools (Axes 4–6).
 
 ## 1. Stability / Peg
-
 
 **Score 8.5/10; confidence medium; assessed.** The share reference accrues in USDC; a stable reference is the share's dated NAV, not a fixed $1. The primary USD price/reference history binds the exact Ethereum token and retains varying dated reference values, rather than applying today's NAV backward.
 
@@ -100,11 +101,10 @@ Reported NAV may lag an unrecognized credit loss, and market marks are not cash 
 
 ## 2. Backing and claims
 
-**Score 6.5/10; confidence low; assessed.** The issuer's credit valuations are available for every loan in its Lending table. Availability is distinct from independent custody, exclusive allocation, legal priority and net recoverability, which remain unverified and constrain this grade.
+**Score 5.5/10; confidence low; this axis's score is provisional for the named collateral finding.** The assessment work is complete. Resolving whether the reported collateral is missing, substituted, shared or misinterpreted could materially change this grade; routine offchain uncertainty alone is not the reason for that status.
 
-syrupUSDC is a pool claim supported by institutional credit and supporting strategies, not a 1:1 USDC reserve receipt. Pool lenders bear net losses. Impairment can reduce pending exits; under published terms, an exiting impaired lender forfeits later recoveries on the affected loan. [Risk disclosures](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks).
+syrupUSDC is a pool claim backed by institutional credit and supporting strategies. It is not a 1:1 USDC reserve receipt. Impairment can reduce redemption proceeds before formal default. A pending withdrawal can be haircut, and an exiting impaired lender forfeits later recoveries on that impaired loan under the disclosed terms. [Maple risk disclosures](https://docs.maple.finance/legal/syrupusdc-and-syrupusdt-risks).
 
-### Pool accounting perimeter
 
 The following native observations share Ethereum **block 26424095, November 16 2026 00:48:23 UTC**, with the block hash rechecked. Amounts are underlying-token units, not independently marked bank dollars.
 
@@ -119,40 +119,25 @@ The following native observations share Ethereum **block 26424095, November 16 2
 
 The listed current principal reconciles exactly to the pool’s LoanManager. Shared strategy holdings are measured with `assetsOf(poolManager)`; global manager AUM is not assigned to every registered pool. These identities verify accounting ownership and arithmetic, **not independently recoverable credit NAV**. Accrued interest is not immediately available pool cash.
 
-### Issuer-reported credit collateral
+### Flagged loans and changes
 
-The upgraded [official product page](https://maple.finance/transparency/products/syrupusdc) was fetched at **2026-11-16T05:36:06.974758+00:00**. Its upstream collateral/price observation time is **not published**; fetch time is not the valuation clock. Exact loan addresses and principal amounts were matched to the separately pinned native roster.
+The normal producer’s loan metadata was retrieved November 16 00:42:04 UTC and assembled at 00:42:47 UTC. Peg’s separate 01:18 UTC raw-source review reproduces the reported fields. All six flagged loans existed in the November 11 roster. The count stayed six while membership changed; it must not be interpreted as unchanged credit condition.
 
-| Issuer credit-table measure | Published value |
-|---|---:|
-| Matched credit rows | 24 |
-| Credit principal denominator | 866,721,505.69 USDC |
-| Summed issuer collateral values | 1,355,742,234.15 USD |
-| Issuer-value / stated credit-principal ratio | 156.42% |
+| Loan identifier | Principal USDC | Nov 11 → Nov 16 source-model collateralization |
+|---|---:|---|
+| `0x7669d26440804FBc7Af8D8E660083e80176Ce9a5` | 30,000,000 | 26.84% → 37.9% |
+| `0x3ac7badB967dc12D5423a472B3bBfFf082903043` | 25,000,000 | 13.12% → 31.9% |
+| `0x771312B001924D1ed1e33271f87F348201FA5c61` | 25,000,000 | 13.12% → 31.9% |
+| `0x3414D94A1A9adF0C2b728259790e05A3dfecDED8` | 25,000,000 | 13.12% → 31.9% |
+| `0x3b44e1345D2e8F8948048828a803E25b8E8bc7e7` | 25,000,000 | 13.12% → 31.9% |
+| `0xeB1284bf810631eFa9AC913944095b5d8180D9F5` | 25,000,000 | 88.97% → 118.06% |
+| `0xBD331e5Fd515e3CE4bdaDCCBEfa0eebc05e2fb3f` | 16,500,000 | 212.19% → 25.58% |
 
-This is **complete publisher-value coverage**, not an independently verified reserve ratio or realizable credit NAV. The publisher's nominal USD/underlying valuation basis is retained. Loan claims, collateral, deposits, LP positions and headline AUM must not be added together as separate backing.
+The 16.5m loan `0xBD331…` reports **475 → 65 BTC** with unchanged principal. The 25m ETH loan `0xeB128…` reports a larger quantity and improved from 88.97% to **118.06%**, leaving the below-par set but retaining a thin model buffer. The six remaining below-par rows total 146.5m, versus 155m in the earlier snapshot.
 
-| Selected exact loan | Principal USDC | Issuer collateral USD | Issuer coverage |
-|---|---:|---:|---:|
-| `0x7f110947d89204d674c38eb0ed97f82ce5005fd6` | 200,000,000 | 313,530,354.82 | 156.77% |
-| `0x63ea10531e976a7890f7eaef80f51da5498f9287` | 33,500,000 | 47,623,092.52 | 142.16% |
-| `0x7669d26440804fbc7af8d8e660083e80176ce9a5` | 30,000,000 | 37,166,287.44 | 123.89% |
-| `0x3ac7badb967dc12d5423a472b3bbfff082903043` | 25,000,000 | 31,415,819.51 | 125.66% |
-| `0xbd331e5fd515e3ce4bdadccbefa0eebc05e2fb3f` | 16,500,000 | 22,947,613.57 | 139.08% |
+Four 25m loans share a borrower address and identical raw collateral quantities. Their quantities rose from 44.500008 to 122.805008 BTC each in the source. Independent per-loan allocation, exclusivity and possible duplication are unresolved; do not sum the repeated fields into custody assurance. The 30m loan’s reported quantity also rose despite a lower BTC price.
 
-The previously thin-model 25m ETH loan `0xeB1284bf810631eFa9AC913944095b5d8180D9F5` has an issuer-published value of 38,184,957.15 USD / 152.74%; its old 118.06% calculation is not retained as a financial observation.
-
-All 24 issuer credit rows report at least 123.89% coverage at the page's unestablished valuation time. Four same-borrower 25m rows each publish about 31.42m USD / 125.66%; their values do not independently establish four exclusive pledges. The issuer Lending classification now includes a 10m row previously unclassified; this is a source classification, not newly funded principal or proof of legal ownership.
-
-### Source-model correction and historical comparability
-
-An earlier scalar model valued the GraphQL field `currentAssetAmount`. That field does not reproduce the official collateral measure. All 30 USDC/USDT issuer credit rows instead numerically reproduce `assetAmount` with common asset-specific inferred price scalars. Those scalars are a diagnostic reproduction, not independently observed prices or a universal interpretation of every strategy field. Current adoption uses the exact issuer collateral values directly.
-
-**The six 146.5m below-par readings, the 25m thin-buffer reading, the 200m/WBTC missing-value inferences and the 475→65 BTC deterioration inference are withdrawn as misbound-model financial evidence.** This removes an unsupported penalty; it does not prove a borrower posted new collateral or that independent recovery improved.
-
-Correct-field history also changes: the 16.5m loan's raw `assetAmount` moves from 58,500,000,000 to 35,500,000,000 across the retained November 11/16 records—compatible with 585→355 BTC under the diagnostic 8-decimal model. Physical custody movement, substitution or permitted collateral release has not been established. The current issuer value is 22.95m USD / 139.08%; the invalid old ratio must not be treated as a historical custody series or replaced with a claim that nothing changed.
-
-Coverage above 100% does not establish compliance with a loan's actual maintenance margin. Initial target levels, live cure thresholds, waivers and enforceable liquidation rights were not verified from executed loan terms.
+Other missing valuations are material. The original feed lacked valuations for 233.5m of classified credit principal, including a 200m loan. The later staged producer explicitly leaves failed XRP pricing unavailable and therefore has broader unpriced coverage. This is a change in available valuation evidence, not proof those assets were lost. Full independent credit coverage remains unknown.
 
 ### Servicing and recovery limits
 
@@ -161,7 +146,6 @@ Native impairment, call and default flags were false at the financial pin. Recor
 Generic borrower-MLA documentation describes legal remedies and costs before pro-rata principal and interest. A historically source-bound LoanManager code path distributes recovered funds under its own rules. Neither establishes title, first priority, deliverable collateral or net recovery from an offchain custodian for these exact loans. Executed agreements, allocation/control records, substitution rights and liquidation timing/costs remain necessary evidence. [Borrower MLA](https://docs.maple.finance/legal/borrower-mla).
 
 ## 3. Liquidity & Exit
-
 
 **Score 6.0/10; confidence medium; assessed.** Primary processing and secondary sale are separate exits. Their worse link governs the grade; inexpensive quotes do not average away queue or eligibility constraints.
 
@@ -195,14 +179,7 @@ The exact-token Ethereum KyberSwap quote ladder was observed **2026-11-15T22:31:
 
 Shortfall is `(input notional − quoted native output) / input notional`; negative values mean output above the sizing reference, not free profit or negative execution risk. Raw input/output amounts and individual request/receive clocks are retained by the producer. Gas and unestablished net fees are excluded. Quotes are neither fills nor a located slippage crossing; failed larger rungs remain unavailable. Remote-chain inventory, bridges, eligibility and the underlying's final cash conversion were not made fungible by these Ethereum quotes.
 
-### Issuer liquidity projection
-
-The publisher labels about 15.18m USDC “instant,” but that includes about 15.05m of multi-chain LP and only 133.57k displayed cash. It is not 15.18m of verified Ethereum pool cash.
-
-LP/DeFi receipt ownership, withdrawal limits, unwind liquidity, transport/bridges and fees are not independently verified. Scheduled principal and interest are projections, not cash received. The page's combined “Next call / Maturity” date and term label are issuer descriptions, not a fresh deployed-contract type, a guaranteed repayment date or the native payment-due field.
-
 ## 4. Dependencies
-
 
 **Score 5.5/10; confidence medium; assessed.** Backing asks what assets support the claim; this axis asks which counterparties and systems transmit value or failure.
 
@@ -218,10 +195,7 @@ The currently reviewed books share borrower address `0x8669f3189ea2318d28c7183a9
 
 Supporting-strategy registration is not funded exposure, withdrawable cash or diversification. Chain-specific historical grades are archived and suppressed from active inheritance until the remote deployment is assessed.
 
-The upgraded source separates lending, Treasury, DeFi, trading, LP and idle allocations. Published headline AUM has a different perimeter from pool accounting assets and deposits; borrower collateral is not an additional pool-owned reserve. Parent Treasury, revenue, buybacks and other financial-page totals are not verified pool first-loss cover. [Issuer financials](https://maple.finance/transparency/financials).
-
 ## 5. Contract & Admin
-
 
 **Score 4.5/10; confidence medium; assessed.** This axis covers code and administrative authority, not borrower quality or issuer credit.
 
@@ -258,7 +232,6 @@ Strong source assurance cannot offset a cheaper emergency authority path. These 
 
 ## 6. Issuer
 
-
 **Score 5.5/10; confidence medium; assessed.** Documentary transparency and named accountable entities support a judgment, but are not a financial guarantee. Limits to independent assurance are incorporated into this grade.
 
 The issuer is Maple International Operations SPC acting for Secured Loan Segregated Portfolio 1; Syrup Ltd operates the interface. The pool funds institutional credit and supporting yield strategies. Published terms limit claims to the relevant portfolio and allocate net loan losses proportionally to lenders. Portfolio segregation is a disclosed legal structure, not independent proof of perfected collateral rights or recovery priority.
@@ -266,39 +239,40 @@ The issuer is Maple International Operations SPC acting for Secured Loan Segrega
 
 LedgerLens identifies The Network Firm Tech & Services LLC as a technology provider and expressly excludes audit, review, attest and assurance services; its source accuracy/completeness is not independently confirmed. The reviewed USDC/USDT pool observations are dated **November 13 17:11 UTC**. Pool totals and a dashboard badge do not establish per-loan custody, title, allocation or actual servicing. [LedgerLens](https://dashboard.ledgerlens.io/c/maple).
 
-The November 16 document comparison found five key document texts substantively unchanged since November 11. Unchanged disclosures do not independently establish custody, control, priority or net recovery. Executed security/custodian-control schedules, priority, segregation and actual recoverable collateral remain unavailable at loan level. Those facts constrain the current Backing and Issuer judgments without turning ordinary offchain uncertainty into an unfinished assessment. Source-value availability is not an assurance upgrade.
+DA’s November 16 comparison found five key document texts substantively unchanged since November 11. That documentary result does not clear the collateral discrepancies. Executed security/custodian-control schedules, priority, segregation and actual recoverable collateral remain unavailable at loan level. Those facts are tracked as the material Backing finding; generic issuer opacity is not counted twice or used to leave the whole report perpetually unfinished.
 
 ## Scoring Rationale
 
 | Axis | Score | Basis |
 |---|---:|---|
 | Stability | 8.5 | See “1. Stability / Peg.” |
-| Backing | 6.5 | See “2. Backing and claims.” |
+| Backing | 5.5 | See “2. Backing and claims.” |
 | Liquidity & Exit | 6.0 | See “3. Liquidity & Exit.” |
 | Dependencies | 5.5 | See “4. Dependencies.” |
 | Contract & Admin | 4.5 | See “5. Contract & Admin.” |
 | Issuer | 5.5 | See “6. Issuer.” |
-| **Overall** | **6.0** | See “Composite judgment.” Six-axis mean 6.0833; overall does not exceed it. |
+| **Overall** | **6.0** | See “Composite judgment.” Six-axis mean 5.9167; positive gap 0.0833. Legacy mean 5.9286, gap 0.0714. |
 
 ### Composite judgment
 
-The unsupported model penalty on Backing is removed: the corrected 6.5 grade reflects institutional-credit and recovery risk under issuer-supplied values, rather than the invalid below-par calculation. Overall remains 6.0 against mean 6.0833 because exit and administrative constraints remain material. No above-mean exception is needed.
+The 6.0 overall is the nearest half-point to 5.9167. The +0.0833 grid gap is explicitly registered with current axis premises; it is not evidence of a protective feature beyond the component analysis. The legacy redemption field mirrors Axis 3 and is not a seventh conceptual risk axis.
 
-All six score decisions are assessed. Backing confidence remains low because valuation clocks, custody/control, exclusive allocation and net recovery are not independently verified. Completion records finished analytical work, not certainty. A matched adverse credit or recovery event can reopen these scores.
+A completed assessment is not a claim of complete knowledge. “Assessed” means the current judgment has been made under stated limits; confidence describes strength of evidence. The provisional Backing grade names the unresolved decision input rather than treating routine offchain uncertainty as an unfinished report.
 
 | Axis | Confidence | Decision status |
 |---|---|---|
-| Stability | Medium | Assessed against the evidenced record and reference. |
-| Backing | Low | Assessed; wrong-field model resolved, recovery limits incorporated. |
-| Liquidity & Exit | Medium | Assessed from dated primary state, cohorts and secondary ladder. |
-| Dependencies | Medium | Assessed with ultimate-entity and exclusive-pledge limits. |
-| Contract & Admin | Medium | Assessed within current finite and prior dated verification. |
-| Issuer | Medium | Assessed with documentary and assurance limits. |
+| Stability | Medium | Assessed against the evidenced record and stated reference. |
+| Backing | Low | Score under review for the named collateral finding. |
+| Liquidity & Exit | Medium | Assessed using dated primary state, cohorts and secondary ladder. |
+| Dependencies | Medium | Assessed; ultimate entities and exclusive pledges remain limited. |
+| Contract & Admin | Medium | Assessed within current finite and prior dated verification scopes. |
+| Issuer | Medium | Assessed; disclosure and assurance limitations are incorporated. |
 
 ## Open finding and escalation triggers
 
-Assessment `syrup-pair-transparency-correction-2026-11-16-v3` retains the financial baseline `sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944` for native pool accounting, loans and queues, and uses the separately hash-pinned upgraded-source correction for issuer credit values. Publisher pages were fetched November 16, but their upstream valuation time is unknown. Source-code, native, price-history, GraphQL and documentary clocks are not renewed by rebuilding the reports.
+146.5m source-model below-par principal, repeated collateral allocations and16.5m reportedBTC quantity change could alter the backing grade if established as physical loss or reporting/coverage error. Dated per-loan field definitions and exclusive custody allocation/security/control records, movement reconciliation and independent servicing/recovery evidence.
 
-Reassess on independently matched collateral/custody/control evidence, missed payment beyond its actual grace period, failed margin cure, impairment/default, custody/priority loss, stale or misbound prices, growing or aging queues or failed exit execution. Do not revive the withdrawn old-field ratios as current evidence, or infer guaranteed recovery from the replacement issuer ratios.
 
-Historical remote grades remain archived and suppressed from active inheritance. Exact account HFs and leverage sensitivity are position-specific; these asset grades neither approve a leveraged loop nor establish an emergency credit event.
+Assessment `syrup-pair-six-axis-2026-11-16-v2` uses financial evidence snapshot `sha256:c86253f8e5339cbebdc8747f960c181b40579240cd8abee00a588c3afde08944`, with separately recorded price-history and valuation-provenance reviews. The history analysis has a November 16 00:48:23 UTC cutoff; original pool accounting, loan metadata, GraphQL retrieval, upstream price rounds, deployed-contract checks and documentary dates remain separate. A later calculation or export does not renew those observations. BTC/ETH round times were retained; fresh XRP pricing failed, and source-specific heartbeat limits are not comprehensively verified.
+
+Reassess urgently on independently corroborated collateral release without replacement, failed margin cure, payment beyond actual grace, impairment/default, custody or priority loss, stale/misbound valuation, growing or aging withdrawals, or failed exit execution. Missing data must stay unknown, and zero recognized losses must not dismiss a collateral discrepancy. This is an exact Ethereum assessment with explicit limits; historical remote overrides are not freshly certified.

@@ -273,7 +273,7 @@ const categoryLabel = (c: string) =>
               <div class="flex items-center justify-between" data-asset-axis={isMapleCorrection ? a.key : undefined} data-asset-score={isMapleCorrection ? v : undefined} data-axis-status={isMapleCorrection ? data.axis_assessment_status[a.key] : undefined} data-axis-confidence={isMapleCorrection ? data.axis_confidence[a.key] : undefined}>
                 <span class="text-muted-foreground">
                   {a.label}
-                  {isMapleCorrection && <span class="block text-xs mt-1">Assessed · {data.axis_confidence[a.key]} confidence</span>}
+                  {isMapleCorrection && <span class="block text-xs mt-1">{data.axis_assessment_status[a.key] === "provisional" ? "Score provisional" : "Assessed"} · {data.axis_confidence[a.key]} confidence</span>}
                   {w && (
                     <span class="text-muted-foreground/60 font-mono text-xs ml-1">
                       {Math.round(w * 100)}%
