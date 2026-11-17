@@ -35,7 +35,7 @@ evidence_version: "strategy-nov16-bm-selected-v2"
 selected_evidence_sha256: "ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67"
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-downstream-2026-11-17-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-issuer-deltas-sha256="1c85fd5446ae481ad5fbf627695c40f421f84181363d5726760519a907378537">
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-editorial-revision="strategy-style-2026-11-17-v1" data-strategy-assessment="strategy-downstream-2026-11-17-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-issuer-deltas-sha256="1c85fd5446ae481ad5fbf627695c40f421f84181363d5726760519a907378537">
 
 # sUSDat — Risk Report
 
@@ -75,7 +75,7 @@ Historical reserve material described Strategy-LTV target weights intended to re
 
 Saturn describes Accountable proof-of-reserves work and a Chainlink NAV feed. A functioning independent attestation covering the current off-chain reserve was not established. [Transparency documentation](https://saturncredit.gitbook.io/saturn-docs/operations-and-governance/transparency-and-audits)
 
-STRC is preferred equity with discretionary income and market-value risk. The 99.2866% residual cannot be treated as independently verified dollar reserves. USDat’s separate M0/PYUSDx backing applies to the buffer, not to the STRC position. A 5% STRC markdown removes **4.9643% of gross assets**; there is no junior capital inside sUSDat. Strata senior protection belongs to a separate tranche structure. The carried 2.5 reflects concentration, custody dependence and incomplete reserve assurance.
+STRC is preferred equity with discretionary income and market-value risk. The 99.2866% residual cannot be treated as independently verified dollar reserves. USDat’s separate M0/PYUSDx backing applies to the buffer, not to the STRC position. A 5% STRC markdown removes **4.9643% of gross assets**; there is no junior capital inside sUSDat. Strata senior protection belongs to a separate tranche structure. Concentration, custody dependence and incomplete reserve assurance leave holders exposed to losses on that position.
 
 ## 3 · Liquidity & Exit — 2.0
 
@@ -90,7 +90,7 @@ At the dated October 14 venue observation, the two Ethereum Curve pools held **$
 
 The October 26 quote input is dollar notional converted to sUSDat at the measured market price, rather than a count of shares or a valuation at NAV. Proceeds are indicative, include route swap effects and exclude gas. They should not be multiplied by NAV or have the separately quoted NAV discount deducted again. The 2% price-impact crossing lies between the $10K passing rung and $100K failing rung; an exact capacity was not located. Poor large quotes establish a size constraint, rather than an absolute maximum output or guaranteed fill. [October 26 quote snapshot](/data/strategy/2026-10-26/susdat_backing.json)
 
-The **October 26 buffer was $325,554.99 / 0.7134% of $45,634,615.25 reported assets**, down **65.1%** from October 19’s $932,829.21. It funds shared redemptions, rather than protecting principal. The displayed zero percentile is not relied upon: the feed’s reported 30-day minimum of 0.4804% is below the snapshot’s 0.7134%. The quoted cliff lies between $10K and $100K; it is not interpolated into a precise capacity. Current primary-router reachability remains **unmeasured**, and historical fills do not establish current access. [October 26 snapshot](/data/strategy/2026-10-26/susdat_backing.json).
+The **October 26 buffer was $325,554.99 / 0.7134% of $45,634,615.25 reported assets**, down **65.1%** from October 19’s $932,829.21. It funds shared redemptions, rather than protecting principal. The quoted cliff lies between $10K and $100K; it is not interpolated into a precise capacity. Current primary-router reachability remains **unmeasured**, and historical fills do not establish current access. [October 26 snapshot](/data/strategy/2026-10-26/susdat_backing.json).
 
 Historically observed withdrawals of approximately $0.37M–$0.43M were paid from the liquid reserve. Those events do not establish that the current implementation bypasses the documented asynchronous queue. Saturn's current repository describes queued withdrawal requests and processing. Once withdrawals require the off-chain reserve, settlement also depends on asset realization and operator action. [Vault repository](https://github.com/saturn-organization/saturn-yield-dollar)
 
@@ -103,17 +103,15 @@ PT maturity does not automatically deliver cash, and one PT need not equal one v
 
 ## 4 · Dependencies — 2.5
 
-**Documented route:** Ethereum sUSDat → Ondo STRCon → STRC → Strategy. USDat’s PYUSDx/M0/PYUSD route is distinct; no other deployment or senior-tranche coverage is inferred.
+The identified Ethereum route is sUSDat → Ondo STRCon → STRC → Strategy. Ondo adds custody and settlement dependencies. The USDat buffer’s PYUSDx/M0/PYUSD route is distinct, and this preferred-share path does not establish other deployments’ exposures or senior-tranche protection.
 
-The [November 16 Strategy 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) reports November 9–15 activity and November 15 balances: **$151.2m general USD Cash**, **$4.75bn service USD Reserve**, and **850,849 BTC**. General cash rose $5.0m this week and $18.5m across two successive filings. The latest two periods show modest rebuilding. Continued access to funding remains important. The separate service reserve is not a ring-fenced STRC collateral pool.
+Strategy’s [November 16 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm), covering November 9–15 activity and November 15 balances, reports **$151.2m general cash**, a separate **$4.75bn service Reserve** and **850,849 BTC**. General cash rose $5.0m for the week and $18.5m across two filings. Common proceeds and earned interest funded the buybacks without a second deduction from ending cash. Access to market financing and discretionary support still matter; the Reserve is not ring-fenced STRC collateral.
 
-Common ATM net proceeds of **$244.7m** funded $33.4m BTC purchases, $206.3m STRC repurchases and $5.0m general cash. A further **$21.8m of earned interest** funded the rest of the **$228.1m** repurchases; these amounts must not be deducted again from reported ending cash. BTC purchases of 485 match the current holdings increase. Actual capital access is positive evidence, while market-dependent funding and discretionary support remain risks. [MSTR issuer report](/reports/mstr/), [raw STRC report](/reports/strc/).
+The board’s November 14 declaration and November 15 rate announcement set **31 December calendar-day records, totaling $1.00 per raw STRC share at 12% annually**, with payments scheduled **December 2, 2026–January 4, 2027**. These entitlements do not establish wrapper receipts, multiplier accrual, reserve cash recognition, daily token payments or guaranteed yield. DTC/broker settlement and actual receipts remain separate; daily and replaced semi-monthly streams must not be added together.
 
-The board’s November 14 declaration and November 15 rate announcement establish **31 December calendar-day records totaling $1.00 per raw STRC share at a 12% annual rate**, scheduled for payment December 2, 2026–January 4, 2027. Calendar entitlements, DTC/broker settlement and actual payment receipts differ. This does not establish wrapper receipts, multiplier accrual, reserve cash recognition, daily token payout or guaranteed yield. Daily and replaced semi-monthly streams must not be counted twice.
+MSCI’s announced common-share exclusion, effective November 30 close, can affect funding demand. It does not establish a preferred-payment failure, forced BTC sale or changed wrapper rights.
 
-MSTR’s issuer-dependency score is 3.5 and raw STRC’s is 3.0. Current STRC outstanding shares, verified cancellations, forward burden and STRC-only runway remain unavailable. Announced MSCI common-share exclusion effective November 30 close is a funding-demand risk; it does not by itself establish a preferred-payment failure, forced BTC sale or a change in this product’s rights.
-
-The preferred-share route must not be applied to every Saturn deployment or to USDat merely because the products share a name. Strata srUSDat adds its own senior/junior waterfall, bridge and exit conditions where this underlying route applies. The filing does not measure that protection, reverify token holdings or guarantee final payout.
+Strata srUSDat adds a separate senior/junior waterfall, bridge and exit path. The issuer filing does not measure that protection, token holdings or final payout.
 
 ## 5 · Contract & Admin — 3.5
 
@@ -132,7 +130,7 @@ At the October 14 comparison, the issuer repository differed from the observed i
 
 Saturn publishes contract audit materials. Their presence does not establish current deployed-code coverage, and privileged-role coverage and bug-bounty coverage remain unverified. The documented architecture includes a separately upgradeable withdrawal queue and privileged processing/compliance roles; that complete authority surface has not been walked for the current deployment.
 
-The same observed address can propose and cancel operations. No on-chain signing quorum is visible; the inherited Fireblocks 2-of-3 representation cannot be verified from an EOA-format address. Candidate checks do not enumerate all role holders. Five days is a setting that can itself be changed through a delayed action, and its usefulness depends on exit availability. Ethereum findings do not assess documented BNB or Monad deployments. The unmatched implementation is not evidence of malicious code or an observed exploit.
+The same observed address can propose and cancel operations. No on-chain signing quorum is visible; the reported Fireblocks 2-of-3 representation cannot be verified from an EOA-format address. Candidate checks do not enumerate all role holders. Five days is a setting that can itself be changed through a delayed action, and its usefulness depends on exit availability. Ethereum findings do not assess documented BNB or Monad deployments. The unmatched implementation is not evidence of malicious code or an observed exploit.
 
 ## 6 · Issuer — 5.0
 
@@ -159,15 +157,33 @@ Eligible holders seeking Strategy preferred-stock income exposure who can accept
 
 The upstream [November 16 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) covers **November 9–15 activity** and **November 15 balances**. The declaration is dated **November 14**, the rate announcement **November 15**, and the filing **November 16**. TID Research adopted the accepted issuer facts on **November 17, 2026**. Filing acceptance UTC remains unknown; a synthetic event midnight is not an acceptance timestamp.
 
-This update does not remeasure reserves, coverage, custody, trading depth, queues, receipt mechanics or settlement. Corporate record dates, actual STRC receipts and wrapper pass-through remain separate. The selected evidence is an isolated producer successor; no live-source activation is implied. [Selected public evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
+Reserve, coverage, custody, trading-depth, queue, receipt and settlement observations retain their own dates; the issuer filing does not renew them. Corporate record dates, actual STRC receipts and wrapper pass-through remain separate. Immutable filing evidence and live monitoring are distinct sources. [Selected public evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
 
-Product scores and the existing TID Research full-verification date, **2026-10-13**, remain unchanged. Earlier product measurements retain their original source dates. Current STRC outstanding shares, verified cancellations, complete future service burden and STRC-only runway remain unavailable.
+Full-verification date: **2026-10-13**. Product measurement dates are shown beside the observations. Current STRC outstanding shares, verified cancellations, complete future service burden and STRC-only runway remain unavailable.
 
 The dated USDat-buffer and STRC-valuation observations require a separate product review alongside queue and exit evidence. This issuer-fact update establishes no new buffer measurement, liquidity-failure finding or senior-tranche protection.
 
 The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
+### Dated issuer funding details
+
+The November 16 filing reports November 9–15 activity and November 15 balances. The following figures describe Strategy, not assets held in the token reserve.
+
+| Observation | Disclosed amount / meaning |
+|---|---|
+| General cash / service Reserve | $151.2m / $4.75bn; separate balances |
+| BTC holdings / purchases | 850,849 BTC / 485 BTC; purchases match the holdings increase |
+| General-cash change | +$5.0m for the week; +$18.5m across two successive filings |
+| Common ATM proceeds and allocation | $244.7m = $33.4m BTC + $206.3m STRC repurchases + $5.0m general cash |
+| STRC repurchase funding | $228.1m = $206.3m common proceeds + $21.8m earned interest; not a second deduction from ending cash |
+
+The [MSTR issuer assessment](/reports/mstr/) is 3.5 and the [raw STRC assessment](/reports/strc/) is 3.0. Neither is a wrapper custody, liquidity or distribution guarantee. Current outstanding shares, verified cancellations, forward service burden and STRC-only runway remain unavailable.
+
 ## Revision history
+
+- **2026-11-17 — source-quality note.** The October 26 feed’s zero-percentile label is inconsistent with its reported 30-day minimum of 0.4804% and snapshot value of 0.7134%; that rank is unsuitable for interpreting the buffer. The dated balances and quotes retain their separate limitations.
+
+- **2026-11-17 — editorial cleanup.** Replaced score-carrying and report-history commentary in the axes with current mechanism and risk explanations; shortened repeated issuer background and moved supporting detail to the end. Numerical judgments, financial facts, original observation clocks and full-verification dates are unchanged.
 
 - **2026-11-17 — scoped issuer-fact adoption.** Incorporated the November 16 filing, November 15 financial balances and declared December calendar. Product scores, full-verification dates and prior product measurement clocks are unchanged; no corporate-calendar-to-wrapper-payout inference or live-source activation.
 

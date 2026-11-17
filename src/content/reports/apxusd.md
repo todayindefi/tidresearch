@@ -54,7 +54,7 @@ evidence_version: "strategy-nov16-bm-selected-v2"
 selected_evidence_sha256: "ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67"
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-downstream-2026-11-17-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-issuer-deltas-sha256="1c85fd5446ae481ad5fbf627695c40f421f84181363d5726760519a907378537">
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-editorial-revision="strategy-style-2026-11-17-v1" data-strategy-assessment="strategy-downstream-2026-11-17-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-issuer-deltas-sha256="1c85fd5446ae481ad5fbf627695c40f421f84181363d5726760519a907378537">
 
 # apxUSD — Risk Report
 
@@ -66,7 +66,7 @@ Apyx synthetic dollar · preferred-equity reserve exposure
 
 ## Summary
 
-apxUSD is Apyx’s non-yield-bearing dollar token, supported by cash/equivalents and preferred-security exposure including raw or wrapped STRC. apyUSD is the separate yield-bearing wrapper. The amount, valuation and custody of each reserve sleeve require their own dated evidence; this issuer-filing update does not establish current coverage or revalue the reserves.
+apxUSD is Apyx’s non-yield-bearing dollar token, supported by cash/equivalents and preferred-security exposure including raw or wrapped STRC. apyUSD is the separate yield-bearing wrapper. Reserve quality depends on the amount, valuation and custody of each sleeve. Reported corporate cash does not independently verify Apyx’s reserve coverage.
 
 ## 1 · Stability — 3.5
 
@@ -86,7 +86,7 @@ The October 26 **14:47:09 UTC** reserve snapshot reported **$289,398,701.50** ag
 
 The **$127,437,270.44 STRC bucket** was **44.04% gross**, **58.11% excluding inventory** and approximately **83.91% of netted assets**. The tokenized slice is part of that bucket, not another reserve. The implied raw-share balance and mark were not independently verified brokerage positions. At fixed netted liabilities and other marks, a 1% loss on the bucket gives approximately **99.37%** coverage; a 5% loss gives **96.01%**. These are dated static sensitivities, not observed losses or forecasts. [Historical reserve evidence](/data/strategy/2026-10-26/apxusd_backing.json).
 
-A thin surplus can be consumed by small mark changes. The November 16 Strategy filing does not measure current Apyx weights, revalue custody positions or establish a new backing deficit.
+A thin surplus can be consumed by small mark changes. Current Apyx weights and custody positions require their own evidence; a corporate cash update neither revalues the reserve nor establishes a new backing deficit.
 
 ## 3 · Liquidity & Exit — 3.5
 
@@ -98,17 +98,15 @@ Depth depends on venue liquidity, market-maker participation, time of day and st
 
 ## 4 · Dependencies — 3.0
 
-**Documented route:** apxUSD reserve exposure through raw STRC and/or STRCx → Strategy; these are look-through paths, not additive independent backing. Current reserve weights are not remeasured here.
+Apyx’s reserve reaches Strategy through raw STRC and/or Backed STRCx. Wrapped and direct positions are look-through exposures to the same issuer, not separate sources of diversification. Current sleeve weights require their own reserve evidence.
 
-The [November 16 Strategy 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) reports November 9–15 activity and November 15 balances: **$151.2m general USD Cash**, **$4.75bn service USD Reserve**, and **850,849 BTC**. General cash rose $5.0m this week and $18.5m across two successive filings. The latest two periods show modest rebuilding. Continued access to funding remains important. The separate service reserve is not a ring-fenced STRC collateral pool.
+Strategy’s [November 16 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm), covering November 9–15 activity and November 15 balances, reports **$151.2m general cash**, a separate **$4.75bn service Reserve** and **850,849 BTC**. General cash rose $5.0m for the week and $18.5m across two filings. Common proceeds and earned interest funded the buybacks without a second deduction from ending cash. Access to market financing and discretionary support still matter; the Reserve is not ring-fenced STRC collateral.
 
-Common ATM net proceeds of **$244.7m** funded $33.4m BTC purchases, $206.3m STRC repurchases and $5.0m general cash. A further **$21.8m of earned interest** funded the rest of the **$228.1m** repurchases; these amounts must not be deducted again from reported ending cash. BTC purchases of 485 match the current holdings increase. Actual capital access is positive evidence, while market-dependent funding and discretionary support remain risks. [MSTR issuer report](/reports/mstr/), [raw STRC report](/reports/strc/).
+The board’s November 14 declaration and November 15 rate announcement set **31 December calendar-day records, totaling $1.00 per raw STRC share at 12% annually**, with payments scheduled **December 2, 2026–January 4, 2027**. These entitlements do not establish wrapper receipts, multiplier accrual, reserve cash recognition, daily token payments or guaranteed yield. DTC/broker settlement and actual receipts remain separate; daily and replaced semi-monthly streams must not be added together.
 
-The board’s November 14 declaration and November 15 rate announcement establish **31 December calendar-day records totaling $1.00 per raw STRC share at a 12% annual rate**, scheduled for payment December 2, 2026–January 4, 2027. Calendar entitlements, DTC/broker settlement and actual payment receipts differ. This does not establish wrapper receipts, multiplier accrual, reserve cash recognition, daily token payout or guaranteed yield. Daily and replaced semi-monthly streams must not be counted twice.
+MSCI’s announced common-share exclusion, effective November 30 close, can affect funding demand. It does not establish a preferred-payment failure, forced BTC sale or changed wrapper rights.
 
-MSTR’s issuer-dependency score is 3.5 and raw STRC’s is 3.0. Current STRC outstanding shares, verified cancellations, forward burden and STRC-only runway remain unavailable. Announced MSCI common-share exclusion effective November 30 close is a funding-demand risk; it does not by itself establish a preferred-payment failure, forced BTC sale or a change in this product’s rights.
-
-This propagation applies to the identified preferred-equity reserve exposure, not Apyx's separate aptUSD/alqUSD Treasury products. It does not supply new recovery rights or establish current cash accrual.
+Apyx’s separate aptUSD/alqUSD Treasury products have different reserve exposures. Preferred-share income does not establish current token cash accrual or new holder recovery rights.
 
 ## 5 · Contract & Admin — 4.5
 
@@ -126,7 +124,7 @@ At the September 9 observation, the token and custody Safes shared the same six 
 
 [Token governance](https://etherscan.io/address/0xABdd8c8eE69e5F5180eb9352AEFFC5CeeAD65e96), [reserve custody](https://etherscan.io/address/0x37b0779a66edc491df83e59a56d485835323a555), [bridge governor](https://etherscan.io/address/0xf9862EfC1704aC05e687f66E5cD8c130E5663cE2).
 
-These are dated observations, not November live-role attestations or full per-chain coverage. Audit disclosures do not alone establish current deployed-code or privileged-role coverage. The earlier published audits and formal-verification claims were not rebound to every current implementation, and current bounty coverage was not established in this refresh.
+These are dated observations, not November live-role attestations or full per-chain coverage. Audit disclosures do not alone establish current deployed-code or privileged-role coverage. A complete current implementation match to the published audits and formal-verification claims, and applicable bounty coverage, remain unestablished.
 
 ## 6 · Issuer — 5.0
 
@@ -134,7 +132,7 @@ The reviewed Wolf attestation identifies **Preference Foundation**, with directo
 
 The [attestation documents](https://docs.apyx.fi/collateral-and-custody/third-party-attestation) provide a securities-balance examination rather than a complete financial-statement audit. The reviewed June examination, signed July 22, excluded cash/stablecoins and liabilities from its securities-only scope. The [Accountable feed](https://accountable.apyx.fi) reports inputs through a TEE; it does not independently audit brokerage assets, custody practices or wallet keys.
 
-Entity jurisdiction, enforceable holder recourse, governing law/disputes and a complete current financial audit remain unestablished here. Issuer 5.0 is carried from the earlier assessment, rather than derived from a new legal review.
+Entity jurisdiction, enforceable holder recourse, governing law/disputes and a complete current financial audit remain unestablished.
 
 ## What to watch
 
@@ -146,13 +144,29 @@ Entity jurisdiction, enforceable holder recourse, governing law/disputes and a c
 
 The upstream [November 16 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) covers **November 9–15 activity** and **November 15 balances**. The declaration is dated **November 14**, the rate announcement **November 15**, and the filing **November 16**. TID Research adopted the accepted issuer facts on **November 17, 2026**. Filing acceptance UTC remains unknown; a synthetic event midnight is not an acceptance timestamp.
 
-This update does not remeasure reserves, coverage, custody, trading depth, queues, receipt mechanics or settlement. Corporate record dates, actual STRC receipts and wrapper pass-through remain separate. The selected evidence is an isolated producer successor; no live-source activation is implied. [Selected public evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
+Reserve, coverage, custody, trading-depth, queue, receipt and settlement observations retain their own dates; the issuer filing does not renew them. Corporate record dates, actual STRC receipts and wrapper pass-through remain separate. Immutable filing evidence and live monitoring are distinct sources. [Selected public evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
 
-Product scores and the existing TID Research full-verification date, **2026-08-25**, remain unchanged. Earlier product measurements retain their original source dates. Current STRC outstanding shares, verified cancellations, complete future service burden and STRC-only runway remain unavailable.
+Full-verification date: **2026-08-25**. Product measurement dates are shown beside the observations. Current STRC outstanding shares, verified cancellations, complete future service burden and STRC-only runway remain unavailable.
 
 The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
+### Dated issuer funding details
+
+The November 16 filing reports November 9–15 activity and November 15 balances. The following figures describe Strategy, not assets held in the token reserve.
+
+| Observation | Disclosed amount / meaning |
+|---|---|
+| General cash / service Reserve | $151.2m / $4.75bn; separate balances |
+| BTC holdings / purchases | 850,849 BTC / 485 BTC; purchases match the holdings increase |
+| General-cash change | +$5.0m for the week; +$18.5m across two successive filings |
+| Common ATM proceeds and allocation | $244.7m = $33.4m BTC + $206.3m STRC repurchases + $5.0m general cash |
+| STRC repurchase funding | $228.1m = $206.3m common proceeds + $21.8m earned interest; not a second deduction from ending cash |
+
+The [MSTR issuer assessment](/reports/mstr/) is 3.5 and the [raw STRC assessment](/reports/strc/) is 3.0. Neither is a wrapper custody, liquidity or distribution guarantee. Current outstanding shares, verified cancellations, forward service burden and STRC-only runway remain unavailable.
+
 ## Revision history
+
+- **2026-11-17 — editorial cleanup.** Replaced score-carrying and report-history commentary in the axes with current mechanism and risk explanations; shortened repeated issuer background and moved supporting detail to the end. Numerical judgments, financial facts, original observation clocks and full-verification dates are unchanged.
 
 - **2026-11-17 — scoped issuer-fact adoption.** Incorporated the November 16 filing, November 15 financial balances and declared December calendar. Product scores, full-verification dates and prior product measurement clocks are unchanged; no corporate-calendar-to-wrapper-payout inference or live-source activation.
 
