@@ -1,0 +1,45 @@
+{
+  "scope": [
+    "mstr",
+    "strc",
+    "strcx",
+    "apxusd",
+    "apyusd",
+    "susdat"
+  ],
+  "normal_adapter_version": "strategy-normal-primary-adapter-2026-11-17-v2",
+  "activation_commit": "625cfe29c68085f3734cf77238a9785a702e1488",
+  "mobile_layout_fix_commit": "0e3cd9183989dee2512717754bd4a0ff5ddb506c",
+  "public_files_at_release": {
+    "data/strc_backing.json": {
+      "sha256": "91291565b9eb37859bb59eaedf657511b6fbbf3d3ca8c4e24649b75571427afc",
+      "bytes": 79794
+    },
+    "data/strc_backing_history.json": {
+      "sha256": "2c831d4cd0ba86a564c05c3b364b66025a96035b7cb11a7cb18121eb312dcc60",
+      "bytes": 7257486
+    },
+    "data/strategy_filing_context.json": {
+      "sha256": "33288f196faf27249cd5bcbfcdebeba3aec45515c9ee6285fd4ec3569de37d48",
+      "bytes": 1650
+    },
+    "js/strategy-filing-evidence.js": {
+      "sha256": "fa427882a9693006b2eefe900b3b072e4b0fcf34f85c1dd7f5cdc2814699b933",
+      "bytes": 7866
+    },
+    "index.html": {
+      "sha256": "b94193a3779aab100995556383aee0185040d355fbd72f81c8e7f54d2602f1ca",
+      "bytes": 15268
+    },
+    "js/renderers/strc.js": {
+      "sha256": "eef31d67ad7ac15ef4619cdea9e2c3762079bcb3fe4f93942e5f7efc5ecf1f81",
+      "bytes": 122210
+    }
+  },
+  "normal_output_clock": "2026-11-17T02:06:26Z",
+  "financial_balance_clock": "2026-11-15",
+  "context_assembly_clock": "2026-11-17T02:09:30.159754+00:00",
+  "context_rule": "Only generated_at can differ from reviewed authored context; it does not refresh financial, product or assessment observations",
+  "delivery": "Existing query/subresource proxy retained; no static freeze of live BM data and no new jobs",
+  "report_source": "Four immutable selected issuer evidence/delta files under /evidence/strategy-2026-11-16/; grades/full dates preserved"
+}
