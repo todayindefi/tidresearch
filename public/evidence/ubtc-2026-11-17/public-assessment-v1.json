@@ -1,0 +1,29 @@
+{
+  "assessment_status": "complete",
+  "score_status": "assessed",
+  "assessment_version": "ubtc-hyperevm-2026-11-17-v1",
+  "evidence_version": "UBTC-BM-six-axis-2026-11-17-v2",
+  "overall_score": 4.0,
+  "axes": {
+    "volatility_score": 6.0,
+    "backing_score": 4.5,
+    "liquidity_score": 5.0,
+    "underlying_score": 4.0,
+    "structural_score": 3.5,
+    "issuer_score": 4.0
+  },
+  "axis_confidence": {
+    "stability": "medium",
+    "backing": "low",
+    "liquidity": "medium",
+    "dependencies": "medium",
+    "structural": "medium",
+    "issuer": "low"
+  },
+  "report_sha256": "e2eb1700818512d125878a563731af3f947a50c21081d4dccf473d9d0091ae0a",
+  "source_manifest_sha256": "84b33f687451bec1b946856697630af3f0ffe20642faa33ec167e3a699ba9c30",
+  "scope": "ExactHyperEVMUBTC asset, with selectedpubliclendingmarket illustration; not a fullvault/protocolgrade.",
+  "higher_is_safer": true,
+  "assessment_date": "2026-11-17",
+  "source_clocks": "Original financial/control/oracle/quote/documentary clocks retained in report; no assembly timestamp renews evidence."
+}

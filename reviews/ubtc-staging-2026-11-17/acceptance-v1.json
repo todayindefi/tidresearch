@@ -1,0 +1,51 @@
+{
+  "state": "staging_served_validated",
+  "url": "https://staging.tidresearch.com/reports/ubtc-hyperevm/",
+  "production": false,
+  "deploy_id": "6afbd2affa5cd76abb5b2292",
+  "assessment_version": "ubtc-hyperevm-2026-11-17-v1",
+  "evidence_version": "UBTC-BM-six-axis-2026-11-17-v2",
+  "source_report_sha256": "e2eb1700818512d125878a563731af3f947a50c21081d4dccf473d9d0091ae0a",
+  "bm_selected_manifest_sha256": "84b33f687451bec1b946856697630af3f0ffe20642faa33ec167e3a699ba9c30",
+  "scores": [
+    6,
+    4.5,
+    5,
+    4,
+    3.5,
+    4
+  ],
+  "overall": 4,
+  "source_hash_checks": "source-checks.json",
+  "local_qa": "local-qa.json",
+  "served_qa": "served-qa.json",
+  "existing_staging_preservation": "parity.json",
+  "source_links": "source-links.json",
+  "served_hashes": [
+    {
+      "url": "https://staging.tidresearch.com/reports/ubtc-hyperevm/",
+      "sha256": "ffeefc337773b77fb9472313304cb6862adaea0a2842db9ac299573cc04de4a3",
+      "matches_local": true
+    },
+    {
+      "url": "https://staging.tidresearch.com/reports/",
+      "sha256": "2521d5f5700dcc5829232f102eb4cf3a25bb33833b5a6fbeaaf78cf92c5dc32e",
+      "matches_local": true
+    },
+    {
+      "url": "https://staging.tidresearch.com/evidence/ubtc-2026-11-17/public-assessment-v1.json",
+      "sha256": "e4957810688c2604583eedb0ead8822c626a003d1cd0b5d4dc1201920a4d343d",
+      "matches_local": true
+    }
+  ],
+  "private_material_read_or_published": false,
+  "editorial_adaptations": [
+    "Six numbered axes and canonical title",
+    "Redundant status and score table removed; confidence and scoring rationale retained at end",
+    "Public assessment JSON only; raw BM/owner packets not exported",
+    "Numeric mobile table cells scroll without page overflow"
+  ],
+  "material_deviations": [],
+  "new_jobs_or_transactions": false,
+  "temporary_qa_servers_closed": true
+}

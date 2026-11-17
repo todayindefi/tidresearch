@@ -1,0 +1,58 @@
+{
+  "all_hashes_match": true,
+  "artifacts": [
+    {
+      "id": "request",
+      "sha256": "59385009084399d52a5fce6db3b20a9b727a63ddc36cc6dd2172296d0eb5f9bf"
+    },
+    {
+      "id": "report",
+      "sha256": "e2eb1700818512d125878a563731af3f947a50c21081d4dccf473d9d0091ae0a"
+    },
+    {
+      "id": "public-assessment",
+      "sha256": "e4957810688c2604583eedb0ead8822c626a003d1cd0b5d4dc1201920a4d343d"
+    },
+    {
+      "id": "validation",
+      "sha256": "39f84036e03865b849642e468ae1cafb91f664fae939183c0af8a712d78b0b1e"
+    },
+    {
+      "id": "six-axis-coverage-v1",
+      "sha256": "978ebc693e5ca7adff1ea5ea41b8249537a8750d923d31492afc8b0530be34b5"
+    },
+    {
+      "id": "lending-market-v1",
+      "sha256": "3866012a3353dc4f7d9185e3a67d2a51ac8d3e96f11dd3b40dfe6d58e9ac88a0"
+    },
+    {
+      "id": "issuer-documentary-v1",
+      "sha256": "31ce0b0f2b6fe2d0ac53a260fea6922f516e52be2507c0a0909d00cfcda52950"
+    },
+    {
+      "id": "selected-evidence-v2",
+      "sha256": "56b2dbce96f45b72cce23fff3401ac1c7abfdc53ffac83f0090a34cb08718572"
+    },
+    {
+      "id": "liquidity-v1",
+      "sha256": "25f699624937e9bbc228c5fa5a039dadbdcc4dc94363d137f554f503cab8499a"
+    },
+    {
+      "id": "financial-v1",
+      "sha256": "1039f1a6b9c0959ff3c0f997a9321e8884edae668cd022ada80d93d5b123b75a"
+    },
+    {
+      "id": "price-v1",
+      "sha256": "495d24eae42e307f4d180ca8161ccdc3648de2b29c508d9d744f18ea5ed1274c"
+    },
+    {
+      "id": "gaps-and-cadence-v1",
+      "sha256": "fbe21b5a50ede82824a69bb483e33c292dc9144a129e7474b953dda8d21f8404"
+    },
+    {
+      "id": "controls-v1",
+      "sha256": "df4c8b02b6c6c1d6539bed0900c24697fe139e1b77d30a71e33e2187037bc614"
+    }
+  ],
+  "private_artifacts_read": false
+}

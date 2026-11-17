@@ -1,0 +1,58 @@
+{
+  "all_passed": true,
+  "cases": [
+    {
+      "surface": "report",
+      "width": 1440,
+      "preference": "light",
+      "six_scores": true,
+      "source_clocks_limits_identity": true,
+      "overflow": false,
+      "min_contrast": 4.674285898380682,
+      "errors": []
+    },
+    {
+      "surface": "report",
+      "width": 1440,
+      "preference": "dark",
+      "six_scores": true,
+      "source_clocks_limits_identity": true,
+      "overflow": false,
+      "min_contrast": 4.674285898380682,
+      "errors": []
+    },
+    {
+      "surface": "report",
+      "width": 390,
+      "preference": "light",
+      "six_scores": true,
+      "source_clocks_limits_identity": true,
+      "overflow": false,
+      "min_contrast": 4.674285898380682,
+      "errors": []
+    },
+    {
+      "surface": "report",
+      "width": 390,
+      "preference": "dark",
+      "six_scores": true,
+      "source_clocks_limits_identity": true,
+      "overflow": false,
+      "min_contrast": 4.674285898380682,
+      "errors": []
+    },
+    {
+      "surface": "index",
+      "width": 1440,
+      "listed": true,
+      "overflow": false
+    },
+    {
+      "surface": "index",
+      "width": 390,
+      "listed": true,
+      "overflow": false
+    }
+  ],
+  "public_assessment_hash_match": true
+}
