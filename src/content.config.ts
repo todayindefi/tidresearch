@@ -114,6 +114,8 @@ const common = {
   // Two reports in a pair cross-link via companion_report (slug of the other).
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
+  selected_evidence_sha256: z.string().regex(/^[0-9a-f]{64}$/).optional(),
+  instrument_axis_confidence: z.record(z.enum(["low", "medium", "high"])).optional(),
   assessment_version: z.string().optional(),
   evidence_version: z.string().optional(),
   score_status: z.enum(["provisional", "assessed", "historical"]).optional(),

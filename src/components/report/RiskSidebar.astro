@@ -185,7 +185,8 @@ const liveAxisPhrase =
 // DASHBOARD_SLUGS upstream, so slug-based assets (syrup) have a dashboard with
 // no live_dashboard_url of their own. Only 27 of 59 reports have one at all —
 // on the rest this line would point at a dashboard that does not exist.
-const showLiveCaveat = !instrumentAxes && Boolean(liveDashboardUrl) && liveAxisLabels.length > 0;
+const isStrategyReview = ["mstr", "strc", "strcx", "apxusd", "apyusd", "susdat"].includes(data.slug) && data.evidence_version === "strategy-nov16-bm-selected-v2";
+const showLiveCaveat = !isStrategyReview && !instrumentAxes && Boolean(liveDashboardUrl) && liveAxisLabels.length > 0;
 const isMapleCorrection = ["syrupusdc", "syrupusdt"].includes(data.slug);
 const authoredAsOf = ((isMapleCorrection ? data.score_assessed ?? data.last_verified : data.last_verified) as Date | undefined)
   ?.toISOString?.()
@@ -256,7 +257,7 @@ const categoryLabel = (c: string) =>
         <ArrowRight className="h-3.5 w-3.5" />
       </a>
       <p class="text-xs text-muted-foreground mt-2">
-        {isMapleCorrection ? "Dated accounting, queue, market and control observations. Each source retains its own timestamp." : instrumentAxes ? "Shared issuer, market and filing observations; source dates are shown on the dashboard." : "Live reserves, collateralization, peg, and bridge state — updated hourly."}
+        {isMapleCorrection ? "Dated accounting, queue, market and control observations. Each source retains its own timestamp." : isStrategyReview ? "Dated observations; each source retains its own timestamp." : instrumentAxes ? "Shared issuer, market and filing observations; source dates are shown on the dashboard." : "Live reserves, collateralization, peg, and bridge state — updated hourly."}
       </p>
     </div>
   )}
@@ -270,7 +271,7 @@ const categoryLabel = (c: string) =>
             const v = data[a.key];
             const w = weights?.[a.key];
             return (
-              <div class="flex items-center justify-between" data-asset-axis={isMapleCorrection ? a.key : undefined} data-asset-score={isMapleCorrection ? v : undefined} data-axis-status={isMapleCorrection ? data.axis_assessment_status[a.key] : undefined} data-axis-confidence={isMapleCorrection ? data.axis_confidence[a.key] : undefined}>
+              <div class="flex items-center justify-between" data-asset-axis={isMapleCorrection || isStrategyReview ? a.key : undefined} data-asset-score={isMapleCorrection || isStrategyReview ? v : undefined} data-axis-status={isMapleCorrection ? data.axis_assessment_status[a.key] : undefined} data-axis-confidence={isMapleCorrection ? data.axis_confidence[a.key] : data.instrument_axis_confidence?.[a.key]}>
                 <span class="text-muted-foreground">
                   {a.label}
                   {isMapleCorrection && <span class="block text-xs mt-1">{data.axis_assessment_status[a.key] === "provisional" ? "Score provisional" : "Assessed"} · {data.axis_confidence[a.key]} confidence</span>}
@@ -434,14 +435,18 @@ const categoryLabel = (c: string) =>
        only surviving date were "last touched" a one-line fix would reset that
        clock silently. ⚠️ Accepted tradeoff: a reader can no longer see how much
        of a partially-refreshed page is old. */}
-    <div>
+    {isStrategyReview ? <>
+      <div data-full-verification-date={fmtDate(data.last_verified)}><div class="eyebrow mb-1">Last full verification</div><div class="font-mono">{fmtDate(data.last_verified)}</div></div>
+      <div data-targeted-review-date={fmtDate(data.last_revised)}><div class="eyebrow mb-1">Targeted issuer review</div><div class="font-mono">{fmtDate(data.last_revised)}</div></div>
+      <p class="text-xs text-muted-foreground">Measurement dates appear beside each observation. A targeted update does not renew every measurement or score.</p>
+    </> : (<div>
       <div class="eyebrow mb-1">Last Reviewed</div>
       <div class="font-mono">{fmtDate(
         data.last_revised && +new Date(data.last_revised) > +new Date(data.last_verified)
           ? data.last_revised
           : data.last_verified
       )}</div>
-    </div>
+    </div>) }
   </div>
 
   {

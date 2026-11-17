@@ -14,7 +14,7 @@ date: "2026-05-07"
 # 25,877,589 (2026-08-31). The 08-25 measurement was CORRECT WHEN WRITTEN; the
 # asset moved under it. ⚠️ The custody Safe is STILL 3-of-6 on the same six as
 # token governance, so the quorum gap survives there. `last_verified` HOLDS.
-last_revised: "2026-11-10"
+last_revised: "2026-11-17"
 last_verified: "2026-08-25"
 featured: false
 production: true
@@ -62,9 +62,12 @@ issuer_score: 5.0
 # PARKED: retire once the schema change is scoped [owner: tidr] [since: 2026-10-04]
 redemption_score: 3.5
 overall_score: 4.0
+assessment_version: "strategy-downstream-2026-11-17-v1"
+evidence_version: "strategy-nov16-bm-selected-v2"
+selected_evidence_sha256: "ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67"
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-downstream-2026-11-17-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-issuer-deltas-sha256="1c85fd5446ae481ad5fbf627695c40f421f84181363d5726760519a907378537">
 
 # apyUSD — Risk Report
 
@@ -76,9 +79,7 @@ Apyx yield-bearing vault share · apxUSD underlying
 
 ## Summary
 
-apyUSD is Apyx's yield-bearing share over [apxUSD](/reports/apxusd/). Its exchange rate accrues in apxUSD as income is recognized. A higher share rate is not a dollar peg or independent proof that the parent reserve can be realized at its reported value.
-
-The wrapper inherits Apyx’s concentrated STRC/STRCx reserve exposure and adds its own receipt-based exit. The latest Strategy week shows common-funded support and modest cash rebuilding, without establishing durable replenishment. Receipt claims into apxUSD remain distinct from a final USDC exit.
+apyUSD is Apyx’s yield-bearing share over apxUSD. Its share value depends on apxUSD’s backing and the wrapper’s accounting and exit mechanics. Receipt claims, fees, payout in apxUSD and any final USDC settlement are distinct steps. The underlying corporate dividend calendar is not a promise of daily wrapper cash delivery.
 
 ## 1 · Stability — 5.5
 
@@ -116,13 +117,15 @@ Pendle PT maturity does not automatically deliver cash. A market's accounting un
 
 ## 4 · Dependencies — 3.0
 
-The path is **apyUSD → apxUSD reserve → STRC/STRCx → Strategy**. Holding the yield-bearing and non-yield-bearing siblings together retains common collateral and issuer exposure.
+**Documented route:** apyUSD → apxUSD reserve exposure through raw STRC/STRCx → Strategy; receipt payout units, fees, eligibility and final USDC settlement are separate.
 
-Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), covering November 2–8 with balances as of November 8, reports **$283.8M common proceeds** funding **$188.3M STRC buybacks**, $81.9M BTC purchases and $13.6M general-cash allocation. General cash rose **$132.7M → $146.2M**, or **10.17%**. The common-funded buybacks are not a second deduction from cash. A **$0.1M rounded allocation/balance residual** remains unresolved. One positive week does not establish sustained cash rebuilding.
+The [November 16 Strategy 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) reports November 9–15 activity and November 15 balances: **$151.2m general USD Cash**, **$4.75bn service USD Reserve**, and **850,849 BTC**. General cash rose $5.0m this week and $18.5m across two successive filings. The latest two periods show modest rebuilding. Continued access to funding remains important. The separate service reserve is not a ring-fenced STRC collateral pool.
 
-The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
+Common ATM net proceeds of **$244.7m** funded $33.4m BTC purchases, $206.3m STRC repurchases and $5.0m general cash. A further **$21.8m of earned interest** funded the rest of the **$228.1m** repurchases; these amounts must not be deducted again from reported ending cash. BTC purchases of 485 match the current holdings increase. Actual capital access is positive evidence, while market-dependent funding and discretionary support remain risks. [MSTR issuer report](/reports/mstr/), [raw STRC report](/reports/strc/).
 
-The [MSTR issuer assessment](/reports/mstr/) and [raw STRC assessment](/reports/strc/) describe the funding and instrument risks. Wrapper rights, holdings, accrual and exits require separate evidence. The weekly filing does not supply a current reserve allocation, custody attestation or executable redemption path.
+The board’s November 14 declaration and November 15 rate announcement establish **31 December calendar-day records totaling $1.00 per raw STRC share at a 12% annual rate**, scheduled for payment December 2, 2026–January 4, 2027. Calendar entitlements, DTC/broker settlement and actual payment receipts differ. This does not establish wrapper receipts, multiplier accrual, reserve cash recognition, daily token payout or guaranteed yield. Daily and replaced semi-monthly streams must not be counted twice.
+
+MSTR’s issuer-dependency score is 3.5 and raw STRC’s is 3.0. Current STRC outstanding shares, verified cancellations, forward burden and STRC-only runway remain unavailable. Announced MSCI common-share exclusion effective November 30 close is a funding-demand risk; it does not by itself establish a preferred-payment failure, forced BTC sale or a change in this product’s rights.
 
 The route does not imply direct ownership of MSTR common equity or extend this preferred-equity exposure to Apyx's separate Treasury products. Current reserve weights, cash accrual and final payout remain outside this filing review.
 
@@ -162,13 +165,17 @@ Entity jurisdiction, enforceable holder recourse, governing law/disputes and a c
 
 ## Sources and review scope
 
-The [November 9 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers November 2–8, balances November 8. This is a targeted issuer-dependency review on **November 10**. It does not refresh token holdings, reserve weights, custody, multipliers, waterfall protection, redemption eligibility or executable cash routes. Repurchases do not establish current outstanding shares, dividend-service burden or runway. The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
+The upstream [November 16 Strategy filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm) covers **November 9–15 activity** and **November 15 balances**. The declaration is dated **November 14**, the rate announcement **November 15**, and the filing **November 16**. TID Research adopted the accepted issuer facts on **November 17, 2026**. Filing acceptance UTC remains unknown; a synthetic event midnight is not an acceptance timestamp.
 
-[Retained November 9 filing observations](/data/strategy/2026-11-09/filing-observations.json) distinguish the primary filing from older dashboard snapshots. Retained source HTML/PDF hashes were checked; live SEC retrieval was unsuccessful. The filing facts do not depend on the monitoring producer adopting a new financial anchor. Changing rates, marks, queues and quotes belong on the dashboard; dated observations below are not current executable offers.
+This update does not remeasure reserves, coverage, custody, trading depth, queues, receipt mechanics or settlement. Corporate record dates, actual STRC receipts and wrapper pass-through remain separate. The selected evidence is an isolated producer successor; no live-source activation is implied. [Selected public evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
 
-Parent-reserve and share-price observations retain their October dates; receipt clocks remain the stated November 2 blocks. All scores, including Overall **4.0**, are unchanged. Full verification remains **August 25, 2026**. November 10 records the scoped review of the November 9 filing; it does not reverify older product measurements.
+Product scores and the existing TID Research full-verification date, **2026-08-25**, remain unchanged. Earlier product measurements retain their original source dates. Current STRC outstanding shares, verified cancellations, complete future service burden and STRC-only runway remain unavailable.
+
+The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
 
 ## Revision history
+
+- **2026-11-17 — scoped issuer-fact adoption.** Incorporated the November 16 filing, November 15 financial balances and declared December calendar. Product scores, full-verification dates and prior product measurement clocks are unchanged; no corporate-calendar-to-wrapper-payout inference or live-source activation.
 
 - **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
 

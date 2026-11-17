@@ -7,113 +7,132 @@ aliases:
 - Strategy Inc
 - MicroStrategy
 chains: []
-category: tradfi-equity
 assessment_type: dependency
 date: '2026-05-30'
 last_verified: '2026-08-26'
-last_revised: "2026-11-10"
+last_revised: '2026-11-16'
 issuer: Strategy Inc. (formerly MicroStrategy Incorporated)
+underlying_assets:
+- btc
+yield_bearing: false
+overall_score: 3.5
+assessment_version: strategy-8k-2026-11-16-v1
+evidence_version: strategy-nov16-bm-selected-v2
+score_status: assessed
 balance_sheet_score: 5.0
 funding_model_score: 3.0
 refinancing_capacity_score: 4.5
 governance_score: 4.5
-overall_score: 3.5
-yield_bearing: false
-underlying_assets:
-- btc
+category: tradfi-equity
 production: true
 featured: false
+published: true
+verification_scope: bounded
+selected_evidence_sha256: ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67
+instrument_axis_confidence:
+  balance_sheet_score: medium
+  funding_model_score: medium
+  refinancing_capacity_score: low
+  governance_score: low
 live_dashboard_url: https://tidresearch.com/dashboards/?asset=mstr
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_th]:min-w-[10rem] [&_td]:min-w-[10rem]" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-16-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-16" data-strategy-page-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-selected-evidence-sha256="ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67">
+
 
 # MSTR — Risk Report
 
-**Elevated risk · 3.5/10**
-
-Strategy issuer risk · Bitcoin treasury funding · common, debt and preferred capital
-
-[Live dashboard](https://tidresearch.com/dashboards/?asset=mstr)
-
 ## Summary
 
-Strategy is a Bitcoin treasury company financed through common equity, debt and preferred stock. Its ability to fund preferred dividends and discretionary support depends on cash, asset prices and continued access to capital. This assessment concerns the issuer behind STRC and downstream claims, rather than the investment merits of MSTR common stock.
+Strategy is a Bitcoin treasury company financed through common equity, debt and preferred stock. Its large BTC asset base and demonstrated common-equity funding access sit alongside dollar liabilities and discretionary capital allocation exposed to the same market cycle.
 
-Common proceeds funded STRC repurchases and BTC purchases in the November 9 filing, while general cash increased modestly. Financing access and one positive cash week improve the reported direction; sustained rebuilding and a durable mix of funding and spending remain unestablished.
+**Overall: 3.5/10**, where higher means safer. The issuer-dependency judgment reflects the durability of that funding model.
+
+The latest filing shows a second modest general-cash increase, common-funded STRC repurchases and additional interest-funded support. Funding durability remains the binding risk: two increases improve the observed direction but do not establish recurring cash generation independent of market financing or protection against a weaker funding environment.
+
+## Current filing and cash reconciliation
+
+The [November 16 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm), accession **0001193125-26-462151**, reports activity **November 9–15** and balances **November 15**. The earliest covered event is November 14. Filing/retrieval time is distinct from the financial balance date and future dividend dates.
+
+| Measure | November 8 balance / prior week | November 15 balance / current week |
+|---|---:|---:|
+| General USD Cash | $146.2m | **$151.2m** |
+| Service USD Reserve | $4.77bn | **$4.75bn** |
+| Common ATM net proceeds | $283.8m | **$244.7m** |
+| STRC repurchase spending | $188.3m | **$228.1m** |
+| STRC shares repurchased | 1,887,464 | **2,282,510** |
+| Remaining preferred repurchase authorization | $560.3m | **$332.2m** |
+| BTC holdings | 850,364 | **850,849** |
+
+Common issuance was **2,087,040 shares**. Its $244.7m net proceeds reconcile to **$33.4m BTC purchases + $206.3m STRC repurchases + $5.0m general cash**. An additional **$21.8m of earned interest** funded the remainder of the $228.1m STRC repurchases. Those repurchases must not be subtracted again from general cash. General cash rose exactly $5.0m at the disclosed precision, or **3.42%**. Over two filings it rose **$18.5m**, from $132.7m to $151.2m; it remains **37.62% below** the October 26 filing's $242.4m balance.
+
+The service reserve funded **$18.9m of aggregate preferred dividends**. Its rounded $4.77bn-to-$4.75bn change has less precision than the payment disclosure; the $1.1m arithmetic difference is not evidence of an undisclosed loss or a complete cash-flow reconciliation. The reserve is designated for preferred dividends and debt interest; it is not a segregated STRC collateral pool or the general-purpose buyback budget.
+
+Reported purchases of **485 BTC** match the holdings increase exactly. Aggregate historical purchase cost is **$64.20bn**, not current market value. No preferred ATM sales or MSTR buybacks are reported for this period. Remaining ATM capacity and buyback authorization are permissions, not funded assets or holder price guarantees.
 
 ## 1 · Balance sheet quality — 5.0
 
-Strategy's assets are concentrated in BTC, while debt and preferred claims create dollar-denominated demands. A higher BTC mark improves measured coverage without becoming spendable cash until assets are sold or financed. Falling BTC can weaken both coverage and funding access.
+BTC concentration links asset value to financing conditions. A higher mark can improve modeled coverage without creating cash until assets are sold or financed; a lower mark can weaken assets and capital-market demand together. The sizeable service reserve provides meaningful service capacity, while its role and precision differ from general cash and from legal collateral securing a preferred holder.
 
-The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
-
-The service reserve and general cash have different purposes and are not interchangeable buyback budgets. Neither constitutes segregated collateral securing STRC. Meaningful assets and service liquidity coexist with concentrated exposure and uncertainty in precise liability and runway calculations.
+The current weekly filing updates BTC and cash observations. It does not re-certify all senior claims, investor put dates or asset realizability, so no new comprehensive liability-coverage ratio is asserted.
 
 ## 2 · Funding model durability — 3.0
 
-Strategy funds treasury activity through common equity, other securities, BTC monetization and discretionary spending choices. The durability question is whether actual proceeds replenish cash after its chosen uses, rather than whether an authorization or modeled premium exists.
+The two successive cash increases and continuing common issuance are positive funding evidence. Current buybacks are covered by disclosed common proceeds and earned interest, without a new preferred ATM service burden this week. They do not constitute a new general-cash draw in the disclosed allocation.
 
-Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers **November 2–8**, with balances **as of November 8**. Selling **2,051,348 common shares** raised **$283.8M net**, allocated to **$81.9M BTC purchases, $188.3M STRC buybacks and $13.6M general USD Cash**. The repurchases were funded by common proceeds; subtracting them again from general cash would double-count their funding.
+Financing remains dependent on capital-market demand and discretionary allocation. Average net common proceeds per share sold were approximately **$117.25**, versus **$138.35** in the prior filing's period, a **15.25% decrease**. These are issuance-period averages after commissions, not closing prices, a stand-alone stock-return calculation or proof of lost market access. They show why successful fundraising and a thinner financing price can coexist.
 
-General USD Cash rose from **$132.7M to $146.2M**, an increase of **$13.5M / 10.17%**. The **$0.1M** difference from the rounded $13.6M allocation remains unexplained; the filing is not a complete independently audited cash-flow reconciliation. Common-equity access and one week of cash rebuilding improve the reported direction, but do not establish sustained replenishment or a durable funding mix.
-
-The prior November 2 filing recorded general-cash depletion. The new week reverses that direction, but future common issuance still depends on demand and dilutes common holders. Repeated positive cash outcomes would provide stronger funding evidence than one favorable allocation.
-
-Repurchases may reduce future obligations if shares are retired, but still require financing. This week’s disclosed buybacks use common proceeds rather than a second draw on general cash. BTC-funded payments reduce the asset base; new preferred issuance adds future service demands. Restoration of funding durability would require repeated actual cash rebuilding and a sustainable mix of financing and spending. Historical mNAV observations can indicate financing flexibility, not guarantee proceeds.
+General cash has rebuilt only modestly relative to its preceding decline. The funding grade incorporates market dependence, dilution/capital-allocation tradeoffs and uncertainty over a sustainable funding mix. It does not assume cash is still falling in the latest two periods, treat discretionary buybacks as mandatory debt service, or turn a static cash/buyback ratio into a default forecast.
 
 ## 3 · Refinancing capacity — 4.5
 
-Common issuance, conversions, new securities, BTC sales and reduced discretionary spending provide several ways to meet liabilities. The November common sales demonstrate renewed access in the reported period, rather than a commitment to fund future obligations.
+Common issuance, other securities, BTC monetization and reductions in discretionary spending provide several funding choices. Their availability and cost are correlated with BTC and equity demand. Unused authorization does not establish executable funding. The weekly update reports no new refinancing transaction or fresh legal analysis of investor puts and cash settlement obligations.
 
-These routes can weaken together when BTC or equity demand falls. Convertible put rights may bring cash demands forward relative to stated maturity; possible share settlement does not eliminate every cash obligation. The weekly filing does not re-certify tranche terms, strikes or investor exercise rights.
+MSCI's November deletion list names Strategy A, effective **November 30 close**, as checked in the dated November 13 review. Announced index exclusion can weaken future demand or financing flexibility; it does not itself establish completed passive sales, forced BTC liquidation, Nasdaq delisting or inability to raise capital. The new filing provides observed funding activity, not a guarantee against the later implementation's effects. [MSCI deletion list](https://app2.msci.com/eqb/gimi/stdindex/MSCI_Nov26_STPublicList.pdf).
 
 ## 4 · Governance — 4.5
 
-Concentrated decision-making and discretionary treasury policy permit changes in issuance, repurchases, asset sales and dividend-support choices. Flexibility can help rebuild liquidity or sustain spending. Policy intentions are not creditor protections.
+Concentrated influence and discretionary treasury decisions create trust in how cash, reserve support and issuance proceeds are deployed. Policy flexibility allows both cash rebuilding and additional spending or financing obligations. December's declared STRC distributions are more concrete than a management recommendation; neither the declaration nor a support-policy intention makes all future payouts or a par price unconditional.
 
-The voting register and detailed contractual protections were not reverified by this filing. The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together.
+## Declared STRC December distributions
 
-## What to watch
+The board declared the December schedule on **November 14**; the **November 15** rate announcement maintains **12% per annum** for December record dates. The 8-K discloses **31 calendar-day records, December 1–31**, at 5 p.m. New York time. The individual $0.03/$0.04 declarations total **$1.00 per share**. Payments are scheduled **December 2, 2026–January 4, 2027**, with weekend and holiday records grouped on business-day payments.
 
-- Actual general-cash rebuilding across successive filings, alongside proceeds allocation and repurchase spending.
-- USD Reserve use and cash claims, separately from the discretionary buyback balance.
-- Evidence establishing current outstanding preferred shares and service obligations.
-- Access to funding during BTC/equity stress and legal investor put dates.
+The legal calendar differs from DTC holiday deemed record/ex-dividend dates, T+1 settlement and broker or non-DTC venue treatment. Daily records do not imply a separate cash payment every calendar day or automatic daily income inside a crypto wrapper. Future receipt and wrapper pass-through are not established by this declaration.
 
-## Dependency boundary
+Management's recommendation to keep the rate at 12% until sustained healthy trading near $100 is a policy intention, not an irrevocable rate or price guarantee. This filing contains no new certificate-of-designations exhibit or Item 5.03 amendment. The October 29 certificate's November 1 effective time remains the separate legal event; the new evidence here is the December declaration and schedule. Replacement and prior distributions must not be added together.
+## Evidence scope and open measurements
 
-Strategy issuer risk flows through [raw STRC](/reports/strc/) into specific wrappers, reserve holders and tranches. Those products need their own custody, collateral and exit assessment. MSTR common stock is not automatically an asset held by a downstream token.
+This is a **targeted filing, funding and declared-distribution review**, not a whole-issuer re-verification or a fresh exchange-price/depth review. Full-verification date: **2026-08-26**. The targeted filing review is dated **November 16, 2026**; TID Research checked this page and the selected evidence on **November 17, 2026**. The selected source is an isolated producer successor, not an activated live feed. Filing, balance, declaration and retrieval clocks remain separate. [Selected public filing evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
 
-## Sources and review scope
-
-The [November 9 filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), accession **0001193125-26-452693**, covers November 2–8 with balances as of November 8. Retained primary SEC evidence and DeFiAnalyst’s documentary hashes support the factual review; live SEC retrieval was unsuccessful in the source review. [Public filing observations](/data/strategy/2026-11-09/filing-observations.json) contain the selected facts and source clocks. No private research results or position inventory are published.
-
-The October 28 shared dashboard snapshot below is historical, with an October 26 financial anchor. Its prices, mNAV windows, cadence field and modeled service values are not November 8 measurements. The separately dated certificate described above supplies legal cadence context; the weekly filing does not certify individual payments or wrapper receipt. A current share count or service burden still requires retirement/cancellation and outstanding-share evidence. Cash and Reserve remain distinct and neither is ring-fenced STRC collateral.
-
-The June 30 filed base of 104,894,705 STRC shares and the October 28 reconciliation of 20,980,508 cumulative retirements produced a historical derived count of 83,914,197 through the October 26 filing. Those values are not advanced by subtracting newly reported repurchases without confirming their treatment. Historical October 5 repurchases were $102.6M for September 28–30 and $73.7M for October 1–4; the archived mixed-period cell remains withheld. [Reconciliation evidence](/data/strategy/reconciliation-2026-10-28/sources.json).
-
-The model's mNAV is enterprise value divided by BTC reserve value, using its debt, preferred and cash assumptions; it is not common market capitalization divided by gross BTC. Historical means include repeated closed-market quotes and depend on provisional share-count inputs. No precise cash-exhaustion, service-life or default date is established. Live model publication may retain an older financial anchor until its own producer review is complete; the primary filing facts above do not depend on that refresh.
-
-
-The filing reports **1,036 BTC purchased** and **850,364 BTC held**, versus **849,327** previously: a **1,037 BTC** weekly holdings increase. The preceding week reported 811 BTC purchased against an 810 BTC holdings increase. Two-week purchases and holdings growth both equal **1,847 BTC**, but that arithmetic does not reconcile either weekly difference. No sale, loss or rounding explanation is assumed. Reported aggregate historical cost of **$64.16B** is not current BTC market value. The reported **1,887,464 STRC shares repurchased for $188.3M** do not establish retirement/cancellation or current outstanding shares. Current outstanding, dividend-service burden and runway remain unverified or unavailable; no precise reduction is inferred from repurchases alone.
-
-Scores are unchanged: Funding **3.0**, Overall **3.5**. Full verification remains **August 26, 2026**; November 10 is a targeted review of the November 9 filing, not a full re-verification.
+The filing does not independently establish current STRC shares outstanding, cancellation/retirement of every repurchased share, total future preferred/debt service, or a precise funding runway. No null liability is treated as zero. A model based on an older share anchor is not a new share register. Market mNAV, traded-price history and complete legal refinancing/put terms are outside this targeted refresh; no precise current coverage or service-life claim is inferred from stale inputs.
 
 ## Scoring Rationale
 
-| Category | Score | Notes |
-|---|---|---|
-| Balance sheet quality | 5.0 | Substantial BTC assets and designated service liquidity, offset by concentration, senior claims and provisional liability-model precision. |
-| Funding model durability | 3.0 | Common-funded support and a modest cash rebuild improve one week; sustained restoration and a durable funding mix remain unestablished, with correlated financing and spending risks. |
-| Refinancing capacity | 4.5 | Several financing routes, but correlated market access and potentially earlier investor cash demands; no new legal maturity certification. |
-| Governance | 4.5 | Concentrated control and discretionary treasury choices; policy intentions do not create enforceable holder protections. |
-| Overall | 3.5 | The four-axis mean is 4.25; Overall is 0.75 below the mean and 0.5 above Funding. Funding durability is the binding dependency, rather than an arithmetic average of asset marks. |
+| Axis | Score | Basis |
+|---|---:|---|
+| Balance sheet quality | 5.0 | See “Balance sheet quality.” |
+| Funding model durability | 3.0 | See “Funding model durability.” |
+| Refinancing capacity | 4.5 | See “Refinancing capacity.” |
+| Governance | 4.5 | See “Governance.” |
+| Overall | 3.5 | The four-axis mean is 4.25; funding durability binds the composite. |
 
-## Historical shared evidence — October 28
+## Escalation and dependency boundary
 
-<details>
-<summary>Historical snapshot, ending October 28; not current filing or market terms</summary>
+Reassess on renewed general-cash depletion without a matching funding source, weaker service-reserve capacity, a material change in financing access or terms, a liability/cash-call change, or failed declared payments. Durable improvement requires a stronger funding mix and observed cash/service capacity across disclosures; a favorable spot price or a new authorization alone is insufficient.
+
+STRC adds preferred-holder ranking, distribution and event-driven rights. STRCx, Apyx, Saturn, tranches and PTs add product-specific custody, reserve, waterfall and exit risks. This issuer update does not automatically rescore or certify their holdings or distributions.
+
+## Revision history
+
+- **2026-11-16 — targeted filing and distribution update.** Added accession 0001193125-26-462151, November 15 financial balances, exact common/interest funding reconciliation, matching BTC purchases/holdings, and the December declared calendar. Updated latest funding reasoning and removed competing current claims of continued general-cash depletion or conditional December declaration. Full verification dates and numerical scores are unchanged; the latest filing supplies positive but insufficient evidence for a full funding-restoration judgment.
+- **2026-11-10 — November 9 filing review.** Reported cash $146.2m, Reserve $4.77bn, common proceeds $283.8m and STRC buybacks $188.3m; one-BTC weekly mismatch remained unexplained despite matching two-week arithmetic. These are historical period facts.
+- **2026-11-13 — MSCI documentary review.** Confirmed announced common-share index deletion effective November 30 close; did not certify completed passive sales or downstream losses. Current financial baseline now uses November 16 filing.
+- **2026-11-02 and October 28 — earlier reviews.** Archived prior commentary, share-count reconciliation and source limitations in the retained before-update report. Repurchase arithmetic and an aged derived share count are not independently verified current outstanding or cancellation. Earlier conditional dividend language describes those earlier source clocks only.
+
+<details class="mt-6"><summary>Historical October 28 source snapshot</summary>
+
+These archived observations and conditional terms describe the October 28 snapshot only. They are superseded for current filing balances and December declarations.
 
 <!-- strategy-shared-evidence:start -->
 Historical shared dashboard snapshot: **2026-10-28T06:50:13Z**. Financial observations retain their filing dates; a fresh feed does not make an older filing or market close new.
@@ -145,12 +164,5 @@ Archived STRC rate: **12.00%**, archived cadence field **semi-monthly**. That fi
 <!-- strategy-shared-evidence:end -->
 
 </details>
-
-## Revision history
-
-- **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
-
-- **2026-11-02:** Incorporated resumed common issuance, proceeds allocation, further cash depletion and distinct Reserve use. Scores and full-verification date unchanged. Reorganized presentation to the reader-first format.
-- **2026-10-28:** Shared-source review and historical share-count reconciliation. The October 28 quantitative snapshot retains its original dates.
 
 </div>

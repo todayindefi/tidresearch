@@ -7,111 +7,134 @@ aliases:
 - Strategy Variable Rate Preferred
 - Series A Perpetual Strategy Preferred Stock
 chains: []
-category: tradfi-equity
 assessment_type: dependency
 date: '2026-05-29'
 last_verified: '2026-08-24'
-last_revised: "2026-11-10"
+last_revised: '2026-11-16'
 issuer: Strategy Inc.
 underlying_assets:
 - mstr
+yield_bearing: true
+overall_score: 3.0
+assessment_version: strategy-8k-2026-11-16-v1
+evidence_version: strategy-nov16-bm-selected-v2
+score_status: assessed
 volatility_score: 5.0
 liquidity_score: 7.0
 counterparty_score: 3.0
 redemption_score: 5.0
-overall_score: 3.0
-yield_bearing: true
+category: tradfi-equity
 production: true
 featured: false
+published: true
+verification_scope: bounded
+selected_evidence_sha256: ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67
+instrument_axis_confidence:
+  volatility_score: low
+  liquidity_score: medium
+  counterparty_score: medium
+  redemption_score: medium
 live_dashboard_url: https://tidresearch.com/dashboards/?asset=strc
 ---
 
-<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:overflow-x-auto" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-09-v1" data-strategy-accession="0001193125-26-452693" data-strategy-review-date="2026-11-10">
+<div class="[overflow-wrap:anywhere] [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_th]:min-w-[10rem] [&_td]:min-w-[10rem]" data-strategy-scoped-report data-strategy-assessment="strategy-8k-2026-11-16-v1" data-strategy-accession="0001193125-26-462151" data-strategy-review-date="2026-11-16" data-strategy-page-review-date="2026-11-17" data-evidence-version="strategy-nov16-bm-selected-v2" data-selected-evidence-sha256="ec132f7471123d8deb6122a01290a5bcfa6e461e73d0a645bd5dd68009d95a67">
+
 
 # STRC — Risk Report
 
-**Elevated risk · 3.0/10**
-
-Strategy variable-rate perpetual preferred stock · raw Nasdaq-listed security
-
-[Live dashboard](https://tidresearch.com/dashboards/?asset=strc)
-
 ## Summary
 
-STRC is Strategy's perpetual, variable-rate preferred stock. Its market price, dividend terms and issuer funding determine holder outcomes. The $100 stated amount is a contractual reference, not an ordinary holder's guaranteed exit price.
+Raw STRC is Strategy preferred equity with an exchange exit and declared distributions. It has no ordinary cash-redemption right or direct right to withdraw corporate BTC.
 
-Common proceeds funded STRC buybacks in the November 9 filing and general cash rose to $146.2M. One positive cash week does not establish durable support capacity. This assessment covers the listed security; token wrappers add separate custody, access and liquidity risks.
+**Overall: 3.0/10**, where higher means safer. Issuer funding durability remains binding despite the general-cash improvement and meaningful service reserve.
+
+The current declaration establishes December's daily record schedule and $1.00 per-share total. It does not establish future receipt, a permanent 12% rate, an unconditional $100 exit or wrapper pass-through. This report concerns the listed security; tokenized wrappers require separate analysis.
+
+## Current filing and cash reconciliation
+
+The [November 16 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm), accession **0001193125-26-462151**, reports activity **November 9–15** and balances **November 15**. The earliest covered event is November 14. Filing/retrieval time is distinct from the financial balance date and future dividend dates.
+
+| Measure | November 8 balance / prior week | November 15 balance / current week |
+|---|---:|---:|
+| General USD Cash | $146.2m | **$151.2m** |
+| Service USD Reserve | $4.77bn | **$4.75bn** |
+| Common ATM net proceeds | $283.8m | **$244.7m** |
+| STRC repurchase spending | $188.3m | **$228.1m** |
+| STRC shares repurchased | 1,887,464 | **2,282,510** |
+| Remaining preferred repurchase authorization | $560.3m | **$332.2m** |
+| BTC holdings | 850,364 | **850,849** |
+
+Common issuance was **2,087,040 shares**. Its $244.7m net proceeds reconcile to **$33.4m BTC purchases + $206.3m STRC repurchases + $5.0m general cash**. An additional **$21.8m of earned interest** funded the remainder of the $228.1m STRC repurchases. Those repurchases must not be subtracted again from general cash. General cash rose exactly $5.0m at the disclosed precision, or **3.42%**. Over two filings it rose **$18.5m**, from $132.7m to $151.2m; it remains **37.62% below** the October 26 filing's $242.4m balance.
+
+The service reserve funded **$18.9m of aggregate preferred dividends**. Its rounded $4.77bn-to-$4.75bn change has less precision than the payment disclosure; the $1.1m arithmetic difference is not evidence of an undisclosed loss or a complete cash-flow reconciliation. The reserve is designated for preferred dividends and debt interest; it is not a segregated STRC collateral pool or the general-purpose buyback budget.
+
+Reported purchases of **485 BTC** match the holdings increase exactly. Aggregate historical purchase cost is **$64.20bn**, not current market value. No preferred ATM sales or MSTR buybacks are reported for this period. Remaining ATM capacity and buyback authorization are permissions, not funded assets or holder price guarantees.
+## Declared STRC December distributions
+
+The board declared the December schedule on **November 14**; the **November 15** rate announcement maintains **12% per annum** for December record dates. The 8-K discloses **31 calendar-day records, December 1–31**, at 5 p.m. New York time. The individual $0.03/$0.04 declarations total **$1.00 per share**. Payments are scheduled **December 2, 2026–January 4, 2027**, with weekend and holiday records grouped on business-day payments.
+
+The legal calendar differs from DTC holiday deemed record/ex-dividend dates, T+1 settlement and broker or non-DTC venue treatment. Daily records do not imply a separate cash payment every calendar day or automatic daily income inside a crypto wrapper. Future receipt and wrapper pass-through are not established by this declaration.
+
+Management's recommendation to keep the rate at 12% until sustained healthy trading near $100 is a policy intention, not an irrevocable rate or price guarantee. This filing contains no new certificate-of-designations exhibit or Item 5.03 amendment. The October 29 certificate's November 1 effective time remains the separate legal event; the new evidence here is the December declaration and schedule. Replacement and prior distributions must not be added together.
 
 ## 1 · Volatility and par behavior — 5.0
 
-STRC can trade below its $100 stated amount despite issuer support. The historical October 28 dataset showed a recent-month mean around **$99.23**, versus **$97.25** across its 90-day window. Those samples include repeated closed-market quotes and are not current execution prices.
+The $100 reference and variable distributions can encourage trading near par, but a market price is not a holder redemption promise. Support depends on market demand, issuer policy and capital access. The December rate remains 12% per annum; the declaration does not by itself prove a better traded-price distribution or successful defense in stress.
 
-Strategy may adjust dividends and repurchase shares. Its support is discretionary, not a promise to lift the rate whenever price falls or buy every offered share at par. The historical recorded rate was 12%; no new rate is established by this weekly filing. The separately reviewed certificate states a new regular payment schedule, but its price effect and actual individual payments remain separate observations.
+This filing review does not refresh exchange-price history. Prior source observations include repeated closed-market marks, so counts are not independent trades or a substitute for new executed-price evidence.
 
 ## 2 · Liquidity and exit — 7.0
 
-Holders generally sell on Nasdaq through eligible brokerage accounts. Market access, trading sessions, spreads and order size affect the proceeds. The issuer's average buyback execution is evidence of its own bid, not an executable offer to all holders.
-
-No current order-book or size-by-size executable ladder for raw STRC was measured in this review. The listed security's venue/access rating must not be transferred to STRCx or DeFi reserve tokens; their token venues and redemption permissions differ. Sale cost relative to market value is distinct from the discount to $100.
+Nasdaq and brokerage access provide the ordinary raw-security exit. The grade is a venue/access judgment, not a freshly measured dollar-size execution ladder. Exchange sessions, broker permissions, settlement and holiday handling matter. No STRCx DEX liquidity is imported into raw STRC's grade, and execution shortfall must not be measured from $100 as though par were an executable quote.
 
 ## 3 · Counterparty and support durability — 3.0
 
-STRC depends on Strategy's willingness and ability to service preferred claims. Its BTC assets and funding routes provide capacity, while concentrated assets and discretionary support expose holders to correlated stress. The prior ranking assessment places STRC behind debt and STRF; legal priority terms retain their original verification scope.
+General cash has increased across two filings, while common proceeds and earned interest funded the latest STRC repurchases. This is favorable evidence of actual funding access without new preferred ATM issuance in the period. Aggregate preferred payments from the service reserve are reported; individual STRC or wrapper receipts are not independently verified here.
 
-Strategy’s [November 9 8-K](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm) covers **November 2–8**, with balances **as of November 8**. Selling **2,051,348 common shares** raised **$283.8M net**, allocated to **$81.9M BTC purchases, $188.3M STRC buybacks and $13.6M general USD Cash**. The repurchases were funded by common proceeds; subtracting them again from general cash would double-count their funding.
+The long-term concern is capital-market-dependent support and discretionary allocation against a BTC-concentrated asset base. Average net common issuance proceeds per share fell approximately 15.25% between the two reported periods, while total common proceeds fell from $283.8m to $244.7m. These are transaction-period observations, not proof of a closed funding channel or a market-price return.
 
-General USD Cash rose from **$132.7M to $146.2M**, an increase of **$13.5M / 10.17%**. The **$0.1M** difference from the rounded $13.6M allocation remains unexplained; the filing is not a complete independently audited cash-flow reconciliation. Common-equity access and one week of cash rebuilding improve the reported direction, but do not establish sustained replenishment or a durable funding mix.
-
-The separate USD Reserve fell from **$4.79B to $4.77B**, with **$21.1M of aggregate preferred dividend payments**, not an identified STRC-only payment. Remaining preferred repurchase authorization is **$560.3M**: permission to spend, not cash or a guaranteed holder exit. No preferred ATM sales were reported.
-
-The reported **1,887,464 STRC shares repurchased for $188.3M** do not establish retirement/cancellation or current outstanding shares. Current outstanding, dividend-service burden and runway remain unverified or unavailable; no precise reduction is inferred from repurchases alone. Continued near-par trading while the issuer buys does not prove the price would persist if support slowed. The [MSTR report](/reports/mstr/) supplies the issuer funding assessment.
+The $4.75bn designated service reserve is meaningful support capacity, separate from the $151.2m general-purpose balance. It is not a segregated STRC trust or proof of STRC-only service runway. The counterparty judgment incorporates these positive resources alongside incomplete current liability/outstanding data and future financing uncertainty; no current missed-dividend or insolvency claim is made.
 
 ## 4 · Redemption and holder rights — 5.0
 
-STRC is perpetual preferred equity, without an ordinary holder right to redeem at $100 on demand. Issuer redemption rights and contingent investor remedies have specific legal conditions; they are not an everyday cash exit. Neither the designated USD Reserve nor repurchase authorization is ring-fenced holder collateral.
+STRC is perpetual preferred equity with certificate-defined dividend, liquidation and conditional repurchase rights. There is no ordinary holder demand-redemption at $100 and no corporate BTC withdrawal right. Issuer repurchases and management's near-par objective are discretionary support mechanisms rather than a holder put at every price.
 
-The separately reviewed [October 29 STRC certificate](https://www.sec.gov/Archives/edgar/data/1050446/000119312526437776/mstr-ex3_2.htm) states effectiveness **November 1 at 00:01 Eastern**, with **November 3** as the first new regular payment date. That legal schedule is distinct from evidence that an individual STRC payment, wrapper receipt or downstream pass-through occurred. Daily and replaced semi-monthly distributions must not be added together. Payment frequency alone does not increase annual entitlement or create a holder exit at par.
+The separately reviewed October 29 certificate specifies its November 1 effectiveness. December's declaration operates under the current rights; this weekly filing supplies no new charter amendment. Legal cash availability, conditions and procedures remain important for event-driven rights. A future change in declared terms or verified payment failure would require a new legal and issuer-risk review.
 
-## What to watch
+## Evidence scope and open measurements
 
-- General-cash rebuilding versus ongoing STRC buybacks and the source of financing.
-- Preferred/interest service resources separately from discretionary support cash.
-- Current legal terms, investor remedies and evidence of outstanding shares after repurchases.
-- Price and executable stock-market liquidity during a reduction in issuer support.
+This is a **targeted filing, funding and declared-distribution review**, not a whole-issuer re-verification or a fresh exchange-price/depth review. Full-verification date: **2026-08-24**. The targeted filing review is dated **November 16, 2026**; TID Research checked this page and the selected evidence on **November 17, 2026**. The selected source is an isolated producer successor, not an activated live feed. Filing, balance, declaration and retrieval clocks remain separate. [Selected public filing evidence](/evidence/strategy-2026-11-16/selected-evidence-v2.json) · [Declared calendar](/evidence/strategy-2026-11-16/dividend-calendar-v1.json).
 
-## Downstream boundary
-
-[STRCx](/reports/strcx/) adds Backed custody, accrual and token-market constraints. Apyx reserves and Ethereum Saturn sUSDat have identified STRC routes, with their own reserves and settlement rules. Strata senior shares and PTs add further conversion and loss-waterfall terms. USDat's separate PYUSDx route is not direct STRC backing.
-
-## Sources and review scope
-
-The [November 9 filing](https://www.sec.gov/Archives/edgar/data/1050446/000119312526452693/mstr-20261109.htm), accession **0001193125-26-452693**, covers November 2–8 with balances as of November 8. Retained primary SEC evidence and DeFiAnalyst’s documentary hashes support the factual review; live SEC retrieval was unsuccessful in the source review. [Public filing observations](/data/strategy/2026-11-09/filing-observations.json) contain the selected facts and source clocks. No private research results or position inventory are published.
-
-The October 28 shared dashboard snapshot below is historical, with an October 26 financial anchor. Its prices, mNAV windows, cadence field and modeled service values are not November 8 measurements. The separately dated certificate described above supplies legal cadence context; the weekly filing does not certify individual payments or wrapper receipt. A current share count or service burden still requires retirement/cancellation and outstanding-share evidence. Cash and Reserve remain distinct and neither is ring-fenced STRC collateral.
-
-The June 30 filed base of 104,894,705 STRC shares and the October 28 reconciliation of 20,980,508 cumulative retirements produced a historical derived count of 83,914,197 through the October 26 filing. Those values are not advanced by subtracting newly reported repurchases without confirming their treatment. Historical October 5 repurchases were $102.6M for September 28–30 and $73.7M for October 1–4; the archived mixed-period cell remains withheld. [Reconciliation evidence](/data/strategy/reconciliation-2026-10-28/sources.json).
-
-The model's mNAV is enterprise value divided by BTC reserve value, using its debt, preferred and cash assumptions; it is not common market capitalization divided by gross BTC. Historical means include repeated closed-market quotes and depend on provisional share-count inputs. No precise cash-exhaustion, service-life or default date is established. Live model publication may retain an older financial anchor until its own producer review is complete; the primary filing facts above do not depend on that refresh.
-
-
-The filing reports **1,036 BTC purchased** and **850,364 BTC held**, versus **849,327** previously: a **1,037 BTC** weekly holdings increase. The preceding week reported 811 BTC purchased against an 810 BTC holdings increase. Two-week purchases and holdings growth both equal **1,847 BTC**, but that arithmetic does not reconcile either weekly difference. No sale, loss or rounding explanation is assumed. Reported aggregate historical cost of **$64.16B** is not current BTC market value. The reported **1,887,464 STRC shares repurchased for $188.3M** do not establish retirement/cancellation or current outstanding shares. Current outstanding, dividend-service burden and runway remain unverified or unavailable; no precise reduction is inferred from repurchases alone.
-
-Scores are unchanged: Counterparty **3.0**, Overall **3.0**. Full verification remains **August 24, 2026**; November 10 is a targeted review of the November 9 filing, not a full re-verification.
+The filing does not independently establish current STRC shares outstanding, cancellation/retirement of every repurchased share, total future preferred/debt service, or a precise funding runway. No null liability is treated as zero. A model based on an older share anchor is not a new share register. Market mNAV, traded-price history and complete legal refinancing/put terms are outside this targeted refresh; no precise current coverage or service-life claim is inferred from stale inputs.
 
 ## Scoring Rationale
 
-| Category | Score | Notes |
-|---|---|---|
-| Volatility | 5.0 | Sustained recovery toward par in the shared history, but a discretionary anchor and a history of substantial discounts. |
-| Liquidity | 7.0 | Listed-market infrastructure and brokerage access; no order-book depth claim or substitution of a wrapper ladder. |
-| Counterparty | 3.0 | Common-funded repurchases and a modest cash rebuild improve one week; support remains discretionary and future funding-dependent. Outstanding shares and precise service reductions remain unverified. |
-| Redemption | 5.0 | Perpetual instrument without routine holder redemption at par; event-driven rights do not create an everyday exit guarantee. |
-| Overall | 3.0 | The four-axis mean is 5.0; Overall is 2.0 below the mean and equal to Counterparty. Strong secondary-market access cannot average away the binding issuer risk. |
+| Axis | Score | Basis |
+|---|---:|---|
+| Volatility | 5.0 | See “Volatility and par behavior.” |
+| Liquidity | 7.0 | See “Liquidity and exit.” |
+| Counterparty | 3.0 | See “Counterparty and support durability.” |
+| Redemption | 5.0 | See “Redemption and holder rights.” |
+| Overall | 3.0 | The four-axis mean is 5; issuer dependency binds the composite rather than exchange access. |
 
-## Historical shared evidence — October 28
+## Escalation and downstream boundary
 
-<details>
-<summary>Historical snapshot, ending October 28; not current filing or market terms</summary>
+Reassess on failed declared payments, weaker funding/service capacity, persistent loss of near-par market demand, materially changed support policy or holder rights, or new authoritative outstanding/liability data. Sustainable improvement requires funding durability and cash/service capacity, alongside price behavior, rather than repurchases or a stronger quote alone.
+
+MSCI's announced Strategy common-share exclusion, effective November 30 close, is an upstream funding-demand risk. It does not itself suspend STRC distributions or modify its preferred rights. The dated November 13 documentary review and latest financial observations retain separate clocks. [MSCI deletion list](https://app2.msci.com/eqb/gimi/stdindex/MSCI_Nov26_STPublicList.pdf).
+
+STRCx, Apyx, Saturn, tranches and PTs retain separate reserve, custody, waterfall, liquidity and settlement constraints. The December declaration does not establish their pass-through schedules or present STRC weight. This refresh does not automatically change downstream scores.
+
+## Revision history
+
+- **2026-11-16 — targeted filing and distribution update.** Added accession 0001193125-26-462151, November 15 financial balances, exact common/interest funding reconciliation, matching BTC purchases/holdings, and the December declared calendar. Updated latest funding reasoning and removed competing current claims of continued general-cash depletion or conditional December declaration. Full verification dates and numerical scores are unchanged; the latest filing supplies positive but insufficient evidence for a full funding-restoration judgment.
+- **2026-11-10 — November 9 filing review.** Reported cash $146.2m, Reserve $4.77bn, common proceeds $283.8m and STRC buybacks $188.3m; one-BTC weekly mismatch remained unexplained despite matching two-week arithmetic. These are historical period facts.
+- **2026-11-13 — MSCI documentary review.** Confirmed announced common-share index deletion effective November 30 close; did not certify completed passive sales or downstream losses. Current financial baseline now uses November 16 filing.
+- **2026-11-02 and October 28 — earlier reviews.** Archived prior commentary, share-count reconciliation and source limitations in the retained before-update report. Repurchase arithmetic and an aged derived share count are not independently verified current outstanding or cancellation. Earlier conditional dividend language describes those earlier source clocks only.
+
+<details class="mt-6"><summary>Historical October 28 source snapshot</summary>
+
+These archived observations and conditional terms describe the October 28 snapshot only. They are superseded for current filing balances and December declarations.
 
 <!-- strategy-shared-evidence:start -->
 Historical shared dashboard snapshot: **2026-10-28T06:50:13Z**. Financial observations retain their filing dates; a fresh feed does not make an older filing or market close new.
@@ -143,12 +166,5 @@ Archived STRC rate: **12.00%**, archived cadence field **semi-monthly**. That fi
 <!-- strategy-shared-evidence:end -->
 
 </details>
-
-## Revision history
-
-- **2026-11-10:** Reviewed the November 9 filing, common-funded buybacks and modest cash rebuild; retained scores, full-verification dates and older product/source clocks.
-
-- **2026-11-02:** Updated common issuance, cash allocation, buybacks and Reserve use, while retaining share-count and dividend-effectiveness gaps. Scores and full-verification date unchanged. Reorganized presentation to the reader-first format.
-- **2026-10-28:** Shared-source review and historical share-count reconciliation. The October 28 quantitative snapshot retains its original dates.
 
 </div>

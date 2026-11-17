@@ -1,0 +1,24 @@
+{
+  "schema_version": "strategy-selected-evidence/1",
+  "version": "strategy-nov16-bm-selected-v2",
+  "accession": "0001193125-26-462151",
+  "files": {
+    "financial-v1.json": {
+      "sha256": "d7d0424db507e98f8c63ea54bf6f296a1002e8e3b1c0ad07a63a22bab2daaa07",
+      "source_sha256": "d7d0424db507e98f8c63ea54bf6f296a1002e8e3b1c0ad07a63a22bab2daaa07"
+    },
+    "dividend-calendar-v1.json": {
+      "sha256": "3fae4218cbc057f24b611f1f14be9c8a47d6ec3615d715e4ce1cc2b92d7ee462",
+      "source_sha256": "3fae4218cbc057f24b611f1f14be9c8a47d6ec3615d715e4ce1cc2b92d7ee462"
+    }
+  },
+  "assessment_version": null,
+  "producer_status": "Isolated normal-producer output, no root code/live output activation",
+  "source_clock_policy": "Original balanceNov15/activityNov9-15/declarationNov14/announcementNov15/filingNov16 and distinct retrieval/build/market clocks retained. Event midnight is synthetic, acceptanceUTCunknown.",
+  "unknowns": [
+    "Current STRC outstanding/cancellation/burden/runway",
+    "Cash ringfencing and full cashflow residual",
+    "Future payment and wrapper pass-through"
+  ],
+  "publication_authorized": false
+}

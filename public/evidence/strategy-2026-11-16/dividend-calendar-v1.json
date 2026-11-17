@@ -1,0 +1,196 @@
+{
+  "source": "https://www.sec.gov/Archives/edgar/data/1050446/000119312526462151/mstr-20261116.htm",
+  "declaration_date": "2026-11-14",
+  "rate_announcement_date": "2026-11-15",
+  "filing_date": "2026-11-16",
+  "record_dates": [
+    {
+      "record_date": "2026-12-01",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-02",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-02",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-03",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-03",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-04",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-04",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-07",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-05",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-07",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-06",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-07",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-07",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-08",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-08",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-09",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-09",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-10",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-10",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-11",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-11",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-14",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-12",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-14",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-13",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-14",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-14",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-15",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-15",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-16",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-16",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-17",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-17",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-18",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-18",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-21",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-19",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-21",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-20",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-21",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-21",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-22",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-22",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-23",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-23",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-24",
+      "cash_dividend_per_share": "0.04"
+    },
+    {
+      "record_date": "2026-12-24",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-28",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-25",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-28",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-26",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-28",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-27",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-28",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-28",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-29",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-29",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-30",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-30",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2026-12-31",
+      "cash_dividend_per_share": "0.03"
+    },
+    {
+      "record_date": "2026-12-31",
+      "record_time": "17:00 America/New_York",
+      "payment_date": "2027-01-04",
+      "cash_dividend_per_share": "0.04"
+    }
+  ],
+  "total_per_share": "1.00",
+  "note": "Declared future payments, not receipts. DTC holiday deemed record/ex dates and broker/venue treatment can differ."
+}
