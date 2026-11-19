@@ -1,0 +1,5 @@
+# Approved report promotions — November 19, 2026
+
+User approved the report-ready promotion shortlist: USDtb6.0, XAUt5.5, fxSAVE4.5 and the weETH Ethereum6.5 refresh. This release changes only those authored pages and the minimal schema/rendering support they require. Scores, assessment/verification dates and original observation clocks are preserved. Existing weETH Monad summary remains separately scoped4.5; no standalone remote report is promoted. Unreviewed remotes stay null. Other staging reports, dashboards, jobs and producers are excluded. FXSave dashboard remediation is queued separately after publication.
+
+Validation: production build63 routes;18 local report/index cases at1440/390 under light/dark browser preferences; unchanged approved staging body text and grades/dates;57 unrelated production main contents preserved;22 Maple evidence pins and all previous public files unchanged. No other staging report, preview, dashboard registration or producer activation is included. Served production checks follow the explicit site deployment.

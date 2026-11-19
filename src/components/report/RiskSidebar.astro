@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { data, dashboardUrl } = Astro.props;
+const promotedReport = ["usdtb", "xaut", "fxsave", "weeth"].includes(data.slug) && data.score_status === "assessed";
 // Prefer the derived single-source URL threaded from the layout (covers DASHBOARD_SLUGS
 // assets without live_dashboard_url, e.g. syrup); fall back to frontmatter for robustness.
 const liveDashboardUrl: string | undefined =
@@ -231,7 +232,7 @@ const categoryLabel = (c: string) =>
     : c.replace("-", " ");
 ---
 
-<aside class="bg-card border border-border p-6 space-y-6 text-sm">
+<aside data-promoted-report={promotedReport ? "2026-11-19-v1" : undefined} class="bg-card border border-border p-6 space-y-6 text-sm">
   <div>
     <div class="eyebrow mb-2">Overall Score</div>
     <RiskBadge score={data.overall_score} size="lg" />
@@ -424,8 +425,11 @@ const categoryLabel = (c: string) =>
     <div>
       <div class="eyebrow mb-1">Chains</div>
       <div class="flex flex-wrap gap-1">
-        {data.chains.map((c: string) => <Badge variant="outline">{chainLabel(c)}</Badge>)}
+        {(promotedReport && data.slug === "weeth" ? ["eth"] : data.chains).map((c: string) => <Badge variant="outline">{chainLabel(c)}</Badge>)}
       </div>
+      {promotedReport && data.unassessed_chains?.length > 0 && <details class="text-xs text-muted-foreground mt-2" data-unassessed-chains={data.unassessed_chains.join(",")}><summary class="cursor-pointer">Unreviewed deployments · {data.unassessed_chains.length}</summary><p class="mt-2">{data.unassessed_chains.map(chainLabel).join(", ")}. No grade is inherited from Ethereum; ungraded does not mean inactive.</p></details>}
+      {promotedReport && data.chain_assessments?.monad && <p class="text-xs text-muted-foreground mt-2" data-reviewed-remote="monad" data-assessment-version={data.chain_assessments.monad.assessment_version}>Monad is assessed separately at {data.chain_overrides.monad.overall_score.toFixed(1)}/10, dated {data.chain_assessments.monad.last_verified.toISOString().slice(0,10)}. The displayed native grade applies to Ethereum.</p>}
+      {promotedReport && data.denomination && <div class="mt-3" data-reference-unit={data.denomination}><div class="eyebrow mb-1">Reference unit</div><p>{data.denomination === "XAU" ? "XAU · one fine troy ounce of gold" : data.denomination}</p></div>}
     </div>
 
     {/* ⚠️ ONE date, the LATER of the two, labelled "Last reviewed" — owner
@@ -484,3 +488,5 @@ const categoryLabel = (c: string) =>
     )
   }
 </aside>
+
+<style>aside[data-promoted-report] a:not(.bg-primary) {color:#ff6467;} aside[data-promoted-report] a.bg-primary {background-color:#b91c1c;color:#fff;}</style>

@@ -21,6 +21,7 @@ export interface ReportRow {
 
 const CATEGORY_LABELS: Record<string, string> = {
   stablecoin: "Stablecoin",
+  "commodity-backed-token": "Gold Token",
   "wrapped-token": "Wrapped Token",
   "vault-share": "Vault Share",
   "lending-vault": "Lending Vault",

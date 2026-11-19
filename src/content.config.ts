@@ -27,14 +27,15 @@ const score = z.number().min(0).max(10);
 
 const chainOverride = z
   .object({
-    peg_mechanism_score: score.optional(),
-    backing_score: score.optional(),
-    issuer_score: score.optional(),
-    volatility_score: score.optional(),
-    structural_score: score.optional(),
-    redemption_score: score.optional(),
-    liquidity_score: score.optional(),
-    overall_score: score.optional(),
+    peg_mechanism_score: score.nullable().optional(),
+    backing_score: score.nullable().optional(),
+    issuer_score: score.nullable().optional(),
+    volatility_score: score.nullable().optional(),
+    structural_score: score.nullable().optional(),
+    redemption_score: score.nullable().optional(),
+    liquidity_score: score.nullable().optional(),
+    underlying_score: score.nullable().optional(),
+    overall_score: score.nullable().optional(),
   })
   .partial();
 
@@ -114,6 +115,11 @@ const common = {
   // Two reports in a pair cross-link via companion_report (slug of the other).
   audience: z.enum(["retail", "institutional"]).optional(),
   companion_report: z.string().optional(),
+  denomination: z.string().optional(),
+  token_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/).optional(),
+  assessment_scope: z.string().optional(),
+  unassessed_chains: z.array(z.string()).optional(),
+  chain_assessments: z.record(z.object({ assessment_version: z.string(), evidence_version: z.string(), source_sha256: z.string().regex(/^[0-9a-f]{64}$/), token_address: z.string().regex(/^0x[0-9a-fA-F]{40}$/), last_verified: z.coerce.date(), report_url: z.string(), denomination: z.string() })).optional(),
   selected_evidence_sha256: z.string().regex(/^[0-9a-f]{64}$/).optional(),
   instrument_axis_confidence: z.record(z.enum(["low", "medium", "high"])).optional(),
   assessment_version: z.string().optional(),
@@ -169,6 +175,8 @@ const common = {
 const stablecoin = z.object({
   ...common,
   category: z.literal("stablecoin"),
+  underlying_assets: z.array(z.string()).optional(),
+  yield_bearing: z.boolean().optional(),
   peg_mechanism_score: score,
   backing_score: score,
   issuer_score: score,
@@ -205,6 +213,14 @@ const wrappedAxes = {
   underlying_assets: z.array(z.string()).default([]),
   market_cap_approx: z.number().optional(),
 };
+
+const commodityToken = z.object({
+  ...common,
+  ...wrappedAxes,
+  category: z.literal("commodity-backed-token"),
+  denomination: z.literal("XAU"),
+  audited_reserves: z.boolean().optional(),
+});
 
 const wrappedToken = z.object({
   ...common,
@@ -413,6 +429,7 @@ export const collections = {
     schema: z.discriminatedUnion("category", [
       stablecoin,
       wrappedToken,
+      commodityToken,
       vaultShare,
       tokenizedTreasury,
       lendingVault,

@@ -1,0 +1,86 @@
+{
+  "version": "report-promotions-production-2026-11-19-v1",
+  "reports": [
+    {
+      "slug": "usdtb",
+      "score": 6.0,
+      "scores": {
+        "peg_mechanism_score": 7.0,
+        "backing_score": 8.0,
+        "liquidity_score": 6.0,
+        "issuer_score": 7.0,
+        "overall_score": 6.0,
+        "underlying_score": 6.0,
+        "structural_score": 3.5
+      },
+      "assessment_version": "usdtb-six-axis-2026-11-17-v1",
+      "evidence_version": "BM:bm-material-collateral-financial-primary-v3;DA:xaut-usdtb-terms-v1;Security:material-collateral-security-2026-11-17-v2",
+      "last_verified": "2026-11-17",
+      "score_assessed": "2026-11-17",
+      "source_sha256": "48bcf53db27e988cdaa77352c356009d0515452129c4de2bf15eca08c7078c75",
+      "published_source_sha256": "aaed31f1f4e275968605816a77b76a6ca295fdc8579d054c03e0be647ca6a056",
+      "source_clock_note": "Original observation clocks retained in the report. Publication date does not renew evidence."
+    },
+    {
+      "slug": "xaut",
+      "score": 5.5,
+      "scores": {
+        "volatility_score": 5.5,
+        "liquidity_score": 5.5,
+        "structural_score": 4.5,
+        "issuer_score": 5.5,
+        "overall_score": 5.5,
+        "backing_score": 7.0,
+        "underlying_score": 5.5
+      },
+      "assessment_version": "xaut-six-axis-2026-11-17-v1",
+      "evidence_version": "BM:bm-material-collateral-financial-primary-v3;DA:xaut-usdtb-terms-v1;Security:material-collateral-security-2026-11-17-v2",
+      "last_verified": "2026-11-17",
+      "score_assessed": "2026-11-17",
+      "source_sha256": "96db4dfd9eaa34290e7be08b05f880dc20b1c8b1f7627755c322c9c5b567d6c8",
+      "published_source_sha256": "379c106923cc5b3d31484ac988279c7130946fd6e9e87df703e2f2d3b1efadc0",
+      "source_clock_note": "Original observation clocks retained in the report. Publication date does not renew evidence."
+    },
+    {
+      "slug": "fxsave",
+      "score": 4.5,
+      "scores": {
+        "volatility_score": 5.0,
+        "backing_score": 4.5,
+        "liquidity_score": 3.5,
+        "underlying_score": 4.5,
+        "structural_score": 4.0,
+        "issuer_score": 5.5,
+        "overall_score": 4.5
+      },
+      "assessment_version": "fxsave-six-axis-2026-11-17-v2",
+      "evidence_version": "BM:closure-batch1-selected-inputs-v3;Security:lending-batch1-security-2026-11-17-v1;DA:batch-1-v1",
+      "last_verified": "2026-11-17",
+      "score_assessed": "2026-11-17",
+      "source_sha256": "d966c7840c980fa97e852105ea1d70906f106e8b39458f7f7d3d004bbaf65e68",
+      "published_source_sha256": "0499ccfb5a43a9e749d7da13d4254949a70da4949c977237918d86a02bc1c731",
+      "source_clock_note": "Original observation clocks retained in the report. Publication date does not renew evidence."
+    },
+    {
+      "slug": "weeth",
+      "score": 6.5,
+      "scores": {
+        "volatility_score": 7.5,
+        "backing_score": 7.5,
+        "liquidity_score": 6.5,
+        "underlying_score": 5.5,
+        "structural_score": 6.5,
+        "issuer_score": 7.0,
+        "overall_score": 6.5
+      },
+      "assessment_version": "weeth-six-axis-2026-11-17-v1",
+      "evidence_version": "BM:bm-phase1-staking-selected-six-axis-v1;DA:staking-operating-delta-v2;TokenAnalyst:staking-token-rights-v1;Security:staking-assets-security-v1",
+      "last_verified": "2026-11-17",
+      "score_assessed": "2026-11-17",
+      "source_sha256": "7fa7fe67230714f4c636411da068563257d8e77e6cc80c9fbd0678d0d38e8c82",
+      "published_source_sha256": "2df84fb8f1c896b47379559d0ed945c93f7fd323c7585d98c2606fd69cab27e2",
+      "source_clock_note": "Original observation clocks retained in the report. Publication date does not renew evidence."
+    }
+  ],
+  "scope": "Four approved report pages only. No dashboard registration, producer activation, other asset promotion or standalone remote deployment publication."
+}
