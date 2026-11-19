@@ -50,6 +50,26 @@ interface Dashboard {
 const allDashboards: Dashboard[] = [
   // ---- production: production report AND live dashboard -------------------
   {
+    slug: "fxsave",
+    asset: "fxsave",
+    name: "fxSAVE",
+    chain: "Ethereum",
+    description:
+      "fxSP share accounting, variable fxUSD/USDC exits and dated six-axis controls. Source clocks and partial quote failures remain visible.",
+    category: "Yield",
+    production: true,
+  },
+  {
+    slug: "weeth",
+    asset: "weeth",
+    name: "weETH",
+    chain: "Ethereum",
+    description:
+      "ETH-denominated share claims, quoted exits, staking dependencies and dated controls. Manually refreshed snapshot; current settlement remains unverified.",
+    category: "Yield",
+    production: true,
+  },
+  {
     slug: "thbill-retail",
     asset: "thbill",
     name: "thBILL",

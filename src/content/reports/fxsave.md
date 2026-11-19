@@ -30,6 +30,7 @@ yield_bearing: true
 score_status: assessed
 score_assessed: '2026-11-17'
 production: true
+live_dashboard_url: https://tidresearch.com/dashboards/?asset=fxsave
 trust_disclaimer: false
 selected_evidence_sha256: 820284af19d35fe5eaf129174c083ce8aaa4199bad831c525c1a9b6d86585a61
 token_address: '0x7743e50f534a7f9f1791dde7dcd89f7783eefc39'

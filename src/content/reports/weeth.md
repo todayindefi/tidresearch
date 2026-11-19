@@ -83,6 +83,7 @@ axis_assessment_status:
   structural_score: assessed
   issuer_score: assessed
 production: true
+live_dashboard_url: https://tidresearch.com/dashboards/?asset=weeth
 trust_disclaimer: false
 assessment_version: weeth-six-axis-2026-11-17-v1
 evidence_version: BM:bm-phase1-staking-selected-six-axis-v1;DA:staking-operating-delta-v2;TokenAnalyst:staking-token-rights-v1;Security:staking-assets-security-v1
